@@ -1,0 +1,67 @@
+D:\code\ims_v3\IMS\IMS\IMSCommon\bin\Debug\IMSCommon.dll
+D:\code\ims_v3\IMS\IMS\IMSCommon\bin\Debug\IMSCommon.pdb
+D:\code\ims_v3\IMS\IMS\IMSCommon\obj\Debug\IMSCommon.dll
+D:\code\ims_v3\IMS\IMS\IMSCommon\obj\Debug\IMSCommon.pdb
+E:\IMS BACKUP\IMS(moiz)\IMS\IMSCommon\bin\Debug\IMSCommon.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMSCommon\bin\Debug\IMSCommon.pdb
+E:\IMS BACKUP\IMS(moiz)\IMS\IMSCommon\obj\Debug\IMSCommon.csprojResolveAssemblyReference.cache
+E:\IMS BACKUP\IMS(moiz)\IMS\IMSCommon\obj\Debug\IMSCommon.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMSCommon\obj\Debug\IMSCommon.pdb
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMSCommon\bin\Debug\IMSCommon.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMSCommon\bin\Debug\IMSCommon.pdb
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMSCommon\obj\Debug\IMSCommon.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMSCommon\obj\Debug\IMSCommon.pdb
+G:\IMS(Moiz)-9-45\IMS\IMSCommon\bin\Debug\IMSCommon.dll
+G:\IMS(Moiz)-9-45\IMS\IMSCommon\bin\Debug\IMSCommon.pdb
+G:\IMS(Moiz)-9-45\IMS\IMSCommon\obj\Debug\IMSCommon.dll
+G:\IMS(Moiz)-9-45\IMS\IMSCommon\obj\Debug\IMSCommon.pdb
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMSCommon\bin\Debug\IMSCommon.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMSCommon\bin\Debug\IMSCommon.pdb
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMSCommon\obj\Debug\IMSCommon.csprojResolveAssemblyReference.cache
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMSCommon\obj\Debug\IMSCommon.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMSCommon\obj\Debug\IMSCommon.pdb
+D:\code\IMS (2-28-2015)\IMS_newCode\IMSCommon\bin\Debug\IMSCommon.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMSCommon\bin\Debug\IMSCommon.pdb
+D:\code\IMS (2-28-2015)\IMS_newCode\IMSCommon\obj\Debug\IMSCommon.csprojResolveAssemblyReference.cache
+D:\code\IMS (2-28-2015)\IMS_newCode\IMSCommon\obj\Debug\IMSCommon.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMSCommon\obj\Debug\IMSCommon.pdb
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMSCommon\bin\Debug\IMSCommon.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMSCommon\bin\Debug\IMSCommon.pdb
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMSCommon\obj\Debug\IMSCommon.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMSCommon\obj\Debug\IMSCommon.pdb
+D:\code\IMS_newCode\IMSCommon\bin\Debug\IMSCommon.dll
+D:\code\IMS_newCode\IMSCommon\bin\Debug\IMSCommon.pdb
+D:\code\IMS_newCode\IMSCommon\obj\Debug\IMSCommon.dll
+D:\code\IMS_newCode\IMSCommon\obj\Debug\IMSCommon.pdb
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMSCommon\bin\Debug\IMSCommon.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMSCommon\bin\Debug\IMSCommon.pdb
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMSCommon\obj\Debug\IMSCommon.csprojResolveAssemblyReference.cache
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMSCommon\obj\Debug\IMSCommon.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMSCommon\obj\Debug\IMSCommon.pdb
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMSCommon\bin\Debug\IMSCommon.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMSCommon\bin\Debug\IMSCommon.pdb
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMSCommon\obj\Debug\IMSCommon.csprojResolveAssemblyReference.cache
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMSCommon\obj\Debug\IMSCommon.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMSCommon\obj\Debug\IMSCommon.pdb
+D:\Digital Processing System\E-Inventory\IMSCommon\bin\Debug\IMSCommon.dll
+D:\Digital Processing System\E-Inventory\IMSCommon\bin\Debug\IMSCommon.pdb
+D:\Digital Processing System\E-Inventory\IMSCommon\obj\Debug\IMSCommon.dll
+D:\Digital Processing System\E-Inventory\IMSCommon\obj\Debug\IMSCommon.pdb
+G:\Digital Processing Systems\E-Inventory\IMSCommon\bin\Debug\IMSCommon.dll
+G:\Digital Processing Systems\E-Inventory\IMSCommon\bin\Debug\IMSCommon.pdb
+G:\Digital Processing Systems\E-Inventory\IMSCommon\obj\Debug\IMSCommon.dll
+G:\Digital Processing Systems\E-Inventory\IMSCommon\obj\Debug\IMSCommon.pdb
+G:\Digital Processing Systems\E-Inventory\IMSCommon\obj\Debug\IMSCommon.csprojResolveAssemblyReference.cache
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMSCommon\bin\Debug\IMSCommon.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMSCommon\bin\Debug\IMSCommon.pdb
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMSCommon\obj\Debug\IMSCommon.csprojResolveAssemblyReference.cache
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMSCommon\obj\Debug\IMSCommon.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMSCommon\obj\Debug\IMSCommon.pdb
+D:\Naseemullah\eInvetory\eInventoryLive\IMSCommon\bin\Debug\IMSCommon.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMSCommon\bin\Debug\IMSCommon.pdb
+D:\Naseemullah\eInvetory\eInventoryLive\IMSCommon\obj\Debug\IMSCommon.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMSCommon\obj\Debug\IMSCommon.pdb
+E:\eInventoryLive\eInventoryLive\IMSCommon\bin\Debug\IMSCommon.dll
+E:\eInventoryLive\eInventoryLive\IMSCommon\bin\Debug\IMSCommon.pdb
+E:\eInventoryLive\eInventoryLive\IMSCommon\obj\Debug\IMSCommon.dll
+E:\eInventoryLive\eInventoryLive\IMSCommon\obj\Debug\IMSCommon.pdb

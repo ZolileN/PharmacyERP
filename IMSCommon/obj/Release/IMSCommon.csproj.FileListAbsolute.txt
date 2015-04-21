@@ -1,0 +1,22 @@
+G:\IMS(Moiz)-9-45\IMS\IMSCommon\bin\Release\IMSCommon.dll
+G:\IMS(Moiz)-9-45\IMS\IMSCommon\bin\Release\IMSCommon.pdb
+G:\IMS(Moiz)-9-45\IMS\IMSCommon\obj\Release\IMSCommon.dll
+G:\IMS(Moiz)-9-45\IMS\IMSCommon\obj\Release\IMSCommon.pdb
+D:\Digital Processing System\E-Inventory\IMSCommon\bin\Release\IMSCommon.dll
+D:\Digital Processing System\E-Inventory\IMSCommon\bin\Release\IMSCommon.pdb
+D:\Digital Processing System\E-Inventory\IMSCommon\obj\Release\IMSCommon.dll
+D:\Digital Processing System\E-Inventory\IMSCommon\obj\Release\IMSCommon.pdb
+G:\Digital Processing Systems\E-Inventory\IMSCommon\bin\Release\IMSCommon.dll
+G:\Digital Processing Systems\E-Inventory\IMSCommon\bin\Release\IMSCommon.pdb
+G:\Digital Processing Systems\E-Inventory\IMSCommon\obj\Release\IMSCommon.dll
+G:\Digital Processing Systems\E-Inventory\IMSCommon\obj\Release\IMSCommon.pdb
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMSCommon\bin\Release\IMSCommon.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMSCommon\bin\Release\IMSCommon.pdb
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMSCommon\obj\Release\IMSCommon.csprojResolveAssemblyReference.cache
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMSCommon\obj\Release\IMSCommon.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMSCommon\obj\Release\IMSCommon.pdb
+E:\eInventoryLive\eInventoryLive\IMSCommon\bin\Release\IMSCommon.dll
+E:\eInventoryLive\eInventoryLive\IMSCommon\bin\Release\IMSCommon.pdb
+E:\eInventoryLive\eInventoryLive\IMSCommon\obj\Release\IMSCommon.csprojResolveAssemblyReference.cache
+E:\eInventoryLive\eInventoryLive\IMSCommon\obj\Release\IMSCommon.dll
+E:\eInventoryLive\eInventoryLive\IMSCommon\obj\Release\IMSCommon.pdb

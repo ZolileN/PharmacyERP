@@ -1,0 +1,49 @@
+G:\IMS(Moiz)-9-45\IMS\IMSBusinessLogic\bin\Release\IMSBusinessLogic.dll
+G:\IMS(Moiz)-9-45\IMS\IMSBusinessLogic\bin\Release\IMSBusinessLogic.pdb
+G:\IMS(Moiz)-9-45\IMS\IMSBusinessLogic\bin\Release\IMSCommon.dll
+G:\IMS(Moiz)-9-45\IMS\IMSBusinessLogic\bin\Release\IMSCommon.pdb
+G:\IMS(Moiz)-9-45\IMS\IMSBusinessLogic\obj\Release\IMSBusinessLogic.csprojResolveAssemblyReference.cache
+G:\IMS(Moiz)-9-45\IMS\IMSBusinessLogic\obj\Release\IMSBusinessLogic.dll
+G:\IMS(Moiz)-9-45\IMS\IMSBusinessLogic\obj\Release\IMSBusinessLogic.pdb
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMSBusinessLogic\bin\Release\IMSBusinessLogic.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMSBusinessLogic\bin\Release\IMSBusinessLogic.pdb
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMSBusinessLogic\bin\Release\IMSCommon.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMSBusinessLogic\bin\Release\IMSCommon.pdb
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMSBusinessLogic\obj\Release\IMSBusinessLogic.csprojResolveAssemblyReference.cache
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMSBusinessLogic\obj\Release\IMSBusinessLogic.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMSBusinessLogic\obj\Release\IMSBusinessLogic.pdb
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMSBusinessLogic\bin\Release\IMSBusinessLogic.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMSBusinessLogic\bin\Release\IMSBusinessLogic.pdb
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMSBusinessLogic\bin\Release\IMSCommon.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMSBusinessLogic\bin\Release\IMSCommon.pdb
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMSBusinessLogic\obj\Release\IMSBusinessLogic.csprojResolveAssemblyReference.cache
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMSBusinessLogic\obj\Release\IMSBusinessLogic.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMSBusinessLogic\obj\Release\IMSBusinessLogic.pdb
+D:\Digital Processing System\E-Inventory\IMSBusinessLogic\bin\Release\IMSBusinessLogic.dll
+D:\Digital Processing System\E-Inventory\IMSBusinessLogic\bin\Release\IMSBusinessLogic.pdb
+D:\Digital Processing System\E-Inventory\IMSBusinessLogic\bin\Release\IMSCommon.dll
+D:\Digital Processing System\E-Inventory\IMSBusinessLogic\bin\Release\IMSCommon.pdb
+D:\Digital Processing System\E-Inventory\IMSBusinessLogic\obj\Release\IMSBusinessLogic.csprojResolveAssemblyReference.cache
+D:\Digital Processing System\E-Inventory\IMSBusinessLogic\obj\Release\IMSBusinessLogic.dll
+D:\Digital Processing System\E-Inventory\IMSBusinessLogic\obj\Release\IMSBusinessLogic.pdb
+G:\Digital Processing Systems\E-Inventory\IMSBusinessLogic\bin\Release\IMSBusinessLogic.dll
+G:\Digital Processing Systems\E-Inventory\IMSBusinessLogic\bin\Release\IMSBusinessLogic.pdb
+G:\Digital Processing Systems\E-Inventory\IMSBusinessLogic\bin\Release\IMSCommon.dll
+G:\Digital Processing Systems\E-Inventory\IMSBusinessLogic\bin\Release\IMSCommon.pdb
+G:\Digital Processing Systems\E-Inventory\IMSBusinessLogic\obj\Release\IMSBusinessLogic.csprojResolveAssemblyReference.cache
+G:\Digital Processing Systems\E-Inventory\IMSBusinessLogic\obj\Release\IMSBusinessLogic.dll
+G:\Digital Processing Systems\E-Inventory\IMSBusinessLogic\obj\Release\IMSBusinessLogic.pdb
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMSBusinessLogic\bin\Release\IMSBusinessLogic.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMSBusinessLogic\bin\Release\IMSBusinessLogic.pdb
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMSBusinessLogic\bin\Release\IMSCommon.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMSBusinessLogic\bin\Release\IMSCommon.pdb
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMSBusinessLogic\obj\Release\IMSBusinessLogic.csprojResolveAssemblyReference.cache
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMSBusinessLogic\obj\Release\IMSBusinessLogic.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMSBusinessLogic\obj\Release\IMSBusinessLogic.pdb
+E:\eInventoryLive\eInventoryLive\IMSBusinessLogic\bin\Release\IMSBusinessLogic.dll
+E:\eInventoryLive\eInventoryLive\IMSBusinessLogic\bin\Release\IMSBusinessLogic.pdb
+E:\eInventoryLive\eInventoryLive\IMSBusinessLogic\bin\Release\IMSCommon.dll
+E:\eInventoryLive\eInventoryLive\IMSBusinessLogic\bin\Release\IMSCommon.pdb
+E:\eInventoryLive\eInventoryLive\IMSBusinessLogic\obj\Release\IMSBusinessLogic.csprojResolveAssemblyReference.cache
+E:\eInventoryLive\eInventoryLive\IMSBusinessLogic\obj\Release\IMSBusinessLogic.dll
+E:\eInventoryLive\eInventoryLive\IMSBusinessLogic\obj\Release\IMSBusinessLogic.pdb

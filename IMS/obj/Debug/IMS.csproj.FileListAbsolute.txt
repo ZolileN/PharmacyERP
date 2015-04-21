@@ -1,0 +1,1020 @@
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\IMS.dll.config
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\IMS.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\IMS.pdb
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Antlr3.Runtime.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\AspNet.ScriptManager.bootstrap.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\AspNet.ScriptManager.jQuery.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\EntityFramework.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\EntityFramework.SqlServer.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.AspNet.FriendlyUrls.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.AspNet.Identity.Core.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.AspNet.Identity.Owin.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.Owin.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.Owin.Host.SystemWeb.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.Owin.Security.Cookies.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.Owin.Security.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.Owin.Security.Facebook.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.Owin.Security.Google.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.Owin.Security.OAuth.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.Owin.Security.Twitter.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.ScriptManager.MSAjax.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.ScriptManager.WebForms.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.Web.Infrastructure.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Newtonsoft.Json.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Owin.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\System.Web.Optimization.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\System.Web.Providers.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\WebGrease.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\System.Web.Optimization.xml
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Antlr3.Runtime.pdb
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Newtonsoft.Json.xml
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.AspNet.FriendlyUrls.xml
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\EntityFramework.xml
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\EntityFramework.SqlServer.xml
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.AspNet.Identity.Core.xml
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.AspNet.Identity.Owin.xml
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.Owin.xml
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.Owin.Host.SystemWeb.xml
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.Owin.Security.xml
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.Owin.Security.Facebook.xml
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.Owin.Security.Cookies.xml
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.Owin.Security.Google.xml
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.Owin.Security.Twitter.xml
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\bin\Microsoft.Owin.Security.OAuth.xml
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\obj\Debug\IMS.dll
+c:\users\hp probook\documents\visual studio 2013\Projects\IMS\IMS\obj\Debug\IMS.pdb
+C:\Users\HP Probook\Documents\Visual Studio 2013\Projects\IMS\IMS\obj\Debug\IMS.csprojResolveAssemblyReference.cache
+E:\IMS\IMS\IMS\bin\IMS.dll.config
+E:\IMS\IMS\IMS\bin\IMS.dll
+E:\IMS\IMS\IMS\bin\IMS.pdb
+E:\IMS\IMS\IMS\bin\Antlr3.Runtime.dll
+E:\IMS\IMS\IMS\bin\AspNet.ScriptManager.bootstrap.dll
+E:\IMS\IMS\IMS\bin\AspNet.ScriptManager.jQuery.dll
+E:\IMS\IMS\IMS\bin\EntityFramework.dll
+E:\IMS\IMS\IMS\bin\EntityFramework.SqlServer.dll
+E:\IMS\IMS\IMS\bin\Microsoft.AspNet.FriendlyUrls.dll
+E:\IMS\IMS\IMS\bin\Microsoft.AspNet.Identity.Core.dll
+E:\IMS\IMS\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+E:\IMS\IMS\IMS\bin\Microsoft.AspNet.Identity.Owin.dll
+E:\IMS\IMS\IMS\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+E:\IMS\IMS\IMS\bin\Microsoft.Owin.dll
+E:\IMS\IMS\IMS\bin\Microsoft.Owin.Host.SystemWeb.dll
+E:\IMS\IMS\IMS\bin\Microsoft.Owin.Security.Cookies.dll
+E:\IMS\IMS\IMS\bin\Microsoft.Owin.Security.dll
+E:\IMS\IMS\IMS\bin\Microsoft.Owin.Security.Facebook.dll
+E:\IMS\IMS\IMS\bin\Microsoft.Owin.Security.Google.dll
+E:\IMS\IMS\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+E:\IMS\IMS\IMS\bin\Microsoft.Owin.Security.OAuth.dll
+E:\IMS\IMS\IMS\bin\Microsoft.Owin.Security.Twitter.dll
+E:\IMS\IMS\IMS\bin\Microsoft.ScriptManager.MSAjax.dll
+E:\IMS\IMS\IMS\bin\Microsoft.ScriptManager.WebForms.dll
+E:\IMS\IMS\IMS\bin\Microsoft.Web.Infrastructure.dll
+E:\IMS\IMS\IMS\bin\Newtonsoft.Json.dll
+E:\IMS\IMS\IMS\bin\Owin.dll
+E:\IMS\IMS\IMS\bin\System.Web.Optimization.dll
+E:\IMS\IMS\IMS\bin\System.Web.Providers.dll
+E:\IMS\IMS\IMS\bin\WebGrease.dll
+E:\IMS\IMS\IMS\bin\System.Web.Optimization.xml
+E:\IMS\IMS\IMS\bin\Antlr3.Runtime.pdb
+E:\IMS\IMS\IMS\bin\Newtonsoft.Json.xml
+E:\IMS\IMS\IMS\bin\Microsoft.AspNet.FriendlyUrls.xml
+E:\IMS\IMS\IMS\bin\EntityFramework.xml
+E:\IMS\IMS\IMS\bin\EntityFramework.SqlServer.xml
+E:\IMS\IMS\IMS\bin\Microsoft.AspNet.Identity.Core.xml
+E:\IMS\IMS\IMS\bin\Microsoft.AspNet.Identity.Owin.xml
+E:\IMS\IMS\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+E:\IMS\IMS\IMS\bin\Microsoft.Owin.xml
+E:\IMS\IMS\IMS\bin\Microsoft.Owin.Host.SystemWeb.xml
+E:\IMS\IMS\IMS\bin\Microsoft.Owin.Security.xml
+E:\IMS\IMS\IMS\bin\Microsoft.Owin.Security.Facebook.xml
+E:\IMS\IMS\IMS\bin\Microsoft.Owin.Security.Cookies.xml
+E:\IMS\IMS\IMS\bin\Microsoft.Owin.Security.Google.xml
+E:\IMS\IMS\IMS\bin\Microsoft.Owin.Security.Twitter.xml
+E:\IMS\IMS\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+E:\IMS\IMS\IMS\bin\Microsoft.Owin.Security.OAuth.xml
+E:\IMS\IMS\IMS\obj\Debug\IMS.dll
+E:\IMS\IMS\IMS\obj\Debug\IMS.pdb
+D:\code\ims_v3\IMS\IMS\IMS\bin\IMS.dll.config
+D:\code\ims_v3\IMS\IMS\IMS\bin\IMS.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\IMS.pdb
+D:\code\ims_v3\IMS\IMS\IMS\bin\Antlr3.Runtime.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\AspNet.ScriptManager.bootstrap.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\AspNet.ScriptManager.jQuery.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\BarcodeLib.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\EntityFramework.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\EntityFramework.SqlServer.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.AspNet.FriendlyUrls.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.AspNet.Identity.Core.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.Owin.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.Owin.Security.Cookies.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.Owin.Security.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.Owin.Security.Facebook.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.Owin.Security.Google.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.Owin.Security.OAuth.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.Owin.Security.Twitter.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.ScriptManager.MSAjax.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.ScriptManager.WebForms.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.Web.Infrastructure.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\Newtonsoft.Json.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\Owin.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\System.Web.Optimization.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\System.Web.Providers.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\WebGrease.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\BarcodeLib.pdb
+D:\code\ims_v3\IMS\IMS\IMS\bin\System.Web.Optimization.xml
+D:\code\ims_v3\IMS\IMS\IMS\bin\Antlr3.Runtime.pdb
+D:\code\ims_v3\IMS\IMS\IMS\bin\Newtonsoft.Json.xml
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.AspNet.FriendlyUrls.xml
+D:\code\ims_v3\IMS\IMS\IMS\bin\EntityFramework.xml
+D:\code\ims_v3\IMS\IMS\IMS\bin\EntityFramework.SqlServer.xml
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.AspNet.Identity.Core.xml
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.Owin.xml
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.Owin.Security.xml
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.Owin.Security.Facebook.xml
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.Owin.Security.Cookies.xml
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.Owin.Security.Google.xml
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.Owin.Security.Twitter.xml
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\code\ims_v3\IMS\IMS\IMS\bin\Microsoft.Owin.Security.OAuth.xml
+D:\code\ims_v3\IMS\IMS\IMS\obj\Debug\IMS.csprojResolveAssemblyReference.cache
+D:\code\ims_v3\IMS\IMS\IMS\obj\Debug\IMS.dll
+D:\code\ims_v3\IMS\IMS\IMS\obj\Debug\IMS.pdb
+D:\code\ims_v3\IMS\IMS\IMS\bin\IMSBusinessLogic.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\IMSCommon.dll
+D:\code\ims_v3\IMS\IMS\IMS\bin\IMSBusinessLogic.pdb
+D:\code\ims_v3\IMS\IMS\IMS\bin\IMSCommon.pdb
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\IMS.dll.config
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\IMS.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\IMS.pdb
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Antlr3.Runtime.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\AspNet.ScriptManager.bootstrap.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\AspNet.ScriptManager.jQuery.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\EntityFramework.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\EntityFramework.SqlServer.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\IMSBusinessLogic.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\IMSCommon.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.AspNet.FriendlyUrls.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.AspNet.Identity.Core.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.AspNet.Identity.Owin.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Host.SystemWeb.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.Cookies.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.Facebook.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.Google.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.OAuth.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.Twitter.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.ScriptManager.MSAjax.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.ScriptManager.WebForms.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.Web.Infrastructure.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Newtonsoft.Json.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Owin.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\System.Web.Optimization.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\System.Web.Providers.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\WebGrease.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\IMSBusinessLogic.pdb
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\IMSCommon.pdb
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\System.Web.Optimization.xml
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Antlr3.Runtime.pdb
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Newtonsoft.Json.xml
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.AspNet.FriendlyUrls.xml
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\EntityFramework.xml
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\EntityFramework.SqlServer.xml
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.AspNet.Identity.Core.xml
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.AspNet.Identity.Owin.xml
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.xml
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Host.SystemWeb.xml
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.xml
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.Facebook.xml
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.Cookies.xml
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.Google.xml
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.Twitter.xml
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.OAuth.xml
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\obj\Debug\IMS.csprojResolveAssemblyReference.cache
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\obj\Debug\IMS.dll
+E:\IMS BACKUP\IMS(moiz)\IMS\IMS\obj\Debug\IMS.pdb
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\EntityFramework.SqlServer.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\obj\Debug\IMS.csprojResolveAssemblyReference.cache
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\IMS.dll.config
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\IMS.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\IMS.pdb
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Antlr3.Runtime.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\AspNet.ScriptManager.bootstrap.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\AspNet.ScriptManager.jQuery.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\BarcodeLib.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\EntityFramework.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\IMSBusinessLogic.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\IMSCommon.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.AspNet.FriendlyUrls.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.AspNet.Identity.Core.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.Cookies.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.Facebook.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.Google.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.OAuth.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.Twitter.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.ScriptManager.MSAjax.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.ScriptManager.WebForms.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.Web.Infrastructure.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Newtonsoft.Json.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Owin.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\System.Web.Optimization.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\System.Web.Providers.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\WebGrease.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\IMSBusinessLogic.pdb
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\IMSCommon.pdb
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\BarcodeLib.pdb
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\System.Web.Optimization.xml
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Antlr3.Runtime.pdb
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Newtonsoft.Json.xml
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.AspNet.FriendlyUrls.xml
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\EntityFramework.xml
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\EntityFramework.SqlServer.xml
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.AspNet.Identity.Core.xml
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.xml
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.xml
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.Facebook.xml
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.Cookies.xml
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.Google.xml
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.Twitter.xml
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\bin\Microsoft.Owin.Security.OAuth.xml
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\obj\Debug\IMS.dll
+D:\code\IMS(moiz) - 8pM\IMS(moiz)\IMS\IMS\obj\Debug\IMS.pdb
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\IMS.dll.config
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\IMS.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\IMS.pdb
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Antlr3.Runtime.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\AspNet.ScriptManager.bootstrap.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\AspNet.ScriptManager.jQuery.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\EntityFramework.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\EntityFramework.SqlServer.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\IMSBusinessLogic.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\IMSCommon.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.FriendlyUrls.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.Identity.Core.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.Identity.Owin.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Host.SystemWeb.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Cookies.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Facebook.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Google.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.OAuth.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Twitter.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.ScriptManager.MSAjax.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.ScriptManager.WebForms.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Web.Infrastructure.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Newtonsoft.Json.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Owin.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\System.Web.Optimization.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\System.Web.Providers.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\WebGrease.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\IMSBusinessLogic.pdb
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\IMSCommon.pdb
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\System.Web.Optimization.xml
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Antlr3.Runtime.pdb
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Newtonsoft.Json.xml
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.FriendlyUrls.xml
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\EntityFramework.xml
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\EntityFramework.SqlServer.xml
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.Identity.Core.xml
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.Identity.Owin.xml
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.xml
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Host.SystemWeb.xml
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.xml
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Facebook.xml
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Cookies.xml
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Google.xml
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Twitter.xml
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+G:\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.OAuth.xml
+G:\IMS(Moiz)-9-45\IMS\IMS\obj\Debug\IMS.dll
+G:\IMS(Moiz)-9-45\IMS\IMS\obj\Debug\IMS.pdb
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\IMS.dll.config
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\IMS.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\IMS.pdb
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Antlr3.Runtime.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\AspNet.ScriptManager.bootstrap.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\AspNet.ScriptManager.jQuery.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\EntityFramework.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\EntityFramework.SqlServer.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\IMSBusinessLogic.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\IMSCommon.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.FriendlyUrls.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.Identity.Core.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.Identity.Owin.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Host.SystemWeb.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Cookies.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Facebook.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Google.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.OAuth.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Twitter.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.ScriptManager.MSAjax.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.ScriptManager.WebForms.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Web.Infrastructure.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Newtonsoft.Json.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Owin.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\System.Web.Optimization.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\System.Web.Providers.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\WebGrease.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\IMSBusinessLogic.pdb
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\IMSCommon.pdb
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\System.Web.Optimization.xml
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Antlr3.Runtime.pdb
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Newtonsoft.Json.xml
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.FriendlyUrls.xml
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\EntityFramework.xml
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\EntityFramework.SqlServer.xml
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.Identity.Core.xml
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.Identity.Owin.xml
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.xml
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Host.SystemWeb.xml
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.xml
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Facebook.xml
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Cookies.xml
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Google.xml
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Twitter.xml
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.OAuth.xml
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\obj\Debug\IMS.csprojResolveAssemblyReference.cache
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\obj\Debug\IMS.dll
+G:\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\obj\Debug\IMS.pdb
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\IMS.dll.config
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\IMS.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\IMS.pdb
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Antlr3.Runtime.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\AspNet.ScriptManager.bootstrap.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\AspNet.ScriptManager.jQuery.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\EntityFramework.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\EntityFramework.SqlServer.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\IMSBusinessLogic.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\IMSCommon.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.FriendlyUrls.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.Identity.Core.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Cookies.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Facebook.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Google.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.OAuth.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Twitter.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.ScriptManager.MSAjax.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.ScriptManager.WebForms.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Web.Infrastructure.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Newtonsoft.Json.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Owin.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\System.Web.Optimization.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\System.Web.Providers.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\WebGrease.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\IMSBusinessLogic.pdb
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\IMSCommon.pdb
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\System.Web.Optimization.xml
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Antlr3.Runtime.pdb
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Newtonsoft.Json.xml
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.FriendlyUrls.xml
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\EntityFramework.xml
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\EntityFramework.SqlServer.xml
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.Identity.Core.xml
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.xml
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.xml
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Facebook.xml
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Cookies.xml
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Google.xml
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.Twitter.xml
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\bin\Microsoft.Owin.Security.OAuth.xml
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\obj\Debug\IMS.csprojResolveAssemblyReference.cache
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\obj\Debug\IMS.dll
+D:\code\IMS (2-28-2015)\IMS (2-28-2015)\IMS(Moiz)-9-45\IMS\IMS\obj\Debug\IMS.pdb
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\IMS.dll.config
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\IMS.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\IMS.pdb
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Antlr3.Runtime.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\AspNet.ScriptManager.bootstrap.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\AspNet.ScriptManager.jQuery.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\BarcodeLib.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\EntityFramework.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\EntityFramework.SqlServer.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\IMSBusinessLogic.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\IMSCommon.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.AspNet.FriendlyUrls.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.Core.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Cookies.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Facebook.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Google.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.OAuth.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Twitter.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.ScriptManager.MSAjax.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.ScriptManager.WebForms.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.Web.Infrastructure.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Newtonsoft.Json.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Owin.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\System.Web.Optimization.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\System.Web.Providers.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\WebGrease.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\IMSBusinessLogic.pdb
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\IMSCommon.pdb
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\BarcodeLib.pdb
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\System.Web.Optimization.xml
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Antlr3.Runtime.pdb
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Newtonsoft.Json.xml
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.AspNet.FriendlyUrls.xml
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\EntityFramework.xml
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\EntityFramework.SqlServer.xml
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.Core.xml
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.xml
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.xml
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Facebook.xml
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Cookies.xml
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Google.xml
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Twitter.xml
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.OAuth.xml
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\obj\Debug\IMS.dll
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\obj\Debug\IMS.pdb
+D:\code\IMS (2-28-2015)\IMS_newCode\IMS\obj\Debug\IMS.csprojResolveAssemblyReference.cache
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\IMS.dll.config
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\IMS.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\IMS.pdb
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Antlr3.Runtime.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\AspNet.ScriptManager.bootstrap.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\AspNet.ScriptManager.jQuery.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\EntityFramework.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\EntityFramework.SqlServer.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\IMSBusinessLogic.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\IMSCommon.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.AspNet.FriendlyUrls.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.Core.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.Owin.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.Owin.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.Owin.Host.SystemWeb.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Cookies.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.Owin.Security.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Facebook.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Google.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.Owin.Security.OAuth.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Twitter.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.ScriptManager.MSAjax.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.ScriptManager.WebForms.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.Web.Infrastructure.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Newtonsoft.Json.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Owin.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\System.Web.Optimization.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\System.Web.Providers.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\WebGrease.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\IMSBusinessLogic.pdb
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\IMSCommon.pdb
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\System.Web.Optimization.xml
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Antlr3.Runtime.pdb
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Newtonsoft.Json.xml
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.AspNet.FriendlyUrls.xml
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\EntityFramework.xml
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\EntityFramework.SqlServer.xml
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.Core.xml
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.Owin.xml
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.Owin.xml
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.Owin.Host.SystemWeb.xml
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.Owin.Security.xml
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Facebook.xml
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Cookies.xml
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Google.xml
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Twitter.xml
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\bin\Microsoft.Owin.Security.OAuth.xml
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\obj\Debug\IMS.csprojResolveAssemblyReference.cache
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\obj\Debug\IMS.dll
+G:\IMS CODES\IMS FINAL\IMS_newCode\IMS\obj\Debug\IMS.pdb
+D:\code\IMS_newCode\IMS\bin\IMS.dll.config
+D:\code\IMS_newCode\IMS\bin\IMS.dll
+D:\code\IMS_newCode\IMS\bin\IMS.pdb
+D:\code\IMS_newCode\IMS\bin\Antlr3.Runtime.dll
+D:\code\IMS_newCode\IMS\bin\AspNet.ScriptManager.bootstrap.dll
+D:\code\IMS_newCode\IMS\bin\AspNet.ScriptManager.jQuery.dll
+D:\code\IMS_newCode\IMS\bin\BarcodeLib.dll
+D:\code\IMS_newCode\IMS\bin\EntityFramework.dll
+D:\code\IMS_newCode\IMS\bin\EntityFramework.SqlServer.dll
+D:\code\IMS_newCode\IMS\bin\IMSBusinessLogic.dll
+D:\code\IMS_newCode\IMS\bin\IMSCommon.dll
+D:\code\IMS_newCode\IMS\bin\Microsoft.AspNet.FriendlyUrls.dll
+D:\code\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.Core.dll
+D:\code\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\code\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\code\IMS_newCode\IMS\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+D:\code\IMS_newCode\IMS\bin\Microsoft.Owin.dll
+D:\code\IMS_newCode\IMS\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\code\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Cookies.dll
+D:\code\IMS_newCode\IMS\bin\Microsoft.Owin.Security.dll
+D:\code\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Facebook.dll
+D:\code\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Google.dll
+D:\code\IMS_newCode\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\code\IMS_newCode\IMS\bin\Microsoft.Owin.Security.OAuth.dll
+D:\code\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Twitter.dll
+D:\code\IMS_newCode\IMS\bin\Microsoft.ScriptManager.MSAjax.dll
+D:\code\IMS_newCode\IMS\bin\Microsoft.ScriptManager.WebForms.dll
+D:\code\IMS_newCode\IMS\bin\Microsoft.Web.Infrastructure.dll
+D:\code\IMS_newCode\IMS\bin\Newtonsoft.Json.dll
+D:\code\IMS_newCode\IMS\bin\Owin.dll
+D:\code\IMS_newCode\IMS\bin\System.Web.Optimization.dll
+D:\code\IMS_newCode\IMS\bin\System.Web.Providers.dll
+D:\code\IMS_newCode\IMS\bin\WebGrease.dll
+D:\code\IMS_newCode\IMS\bin\IMSBusinessLogic.pdb
+D:\code\IMS_newCode\IMS\bin\IMSCommon.pdb
+D:\code\IMS_newCode\IMS\bin\BarcodeLib.pdb
+D:\code\IMS_newCode\IMS\bin\System.Web.Optimization.xml
+D:\code\IMS_newCode\IMS\bin\Antlr3.Runtime.pdb
+D:\code\IMS_newCode\IMS\bin\Newtonsoft.Json.xml
+D:\code\IMS_newCode\IMS\bin\Microsoft.AspNet.FriendlyUrls.xml
+D:\code\IMS_newCode\IMS\bin\EntityFramework.xml
+D:\code\IMS_newCode\IMS\bin\EntityFramework.SqlServer.xml
+D:\code\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.Core.xml
+D:\code\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\code\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\code\IMS_newCode\IMS\bin\Microsoft.Owin.xml
+D:\code\IMS_newCode\IMS\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\code\IMS_newCode\IMS\bin\Microsoft.Owin.Security.xml
+D:\code\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Facebook.xml
+D:\code\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Cookies.xml
+D:\code\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Google.xml
+D:\code\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Twitter.xml
+D:\code\IMS_newCode\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\code\IMS_newCode\IMS\bin\Microsoft.Owin.Security.OAuth.xml
+D:\code\IMS_newCode\IMS\obj\Debug\IMS.csprojResolveAssemblyReference.cache
+D:\code\IMS_newCode\IMS\obj\Debug\IMS.dll
+D:\code\IMS_newCode\IMS\obj\Debug\IMS.pdb
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\IMS.dll.config
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\IMS.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\IMS.pdb
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Antlr3.Runtime.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\AspNet.ScriptManager.bootstrap.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\AspNet.ScriptManager.jQuery.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\EntityFramework.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\EntityFramework.SqlServer.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\IMSBusinessLogic.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\IMSCommon.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.AspNet.FriendlyUrls.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.Core.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.Owin.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.Owin.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.Owin.Host.SystemWeb.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Cookies.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.Owin.Security.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Facebook.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Google.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.Owin.Security.OAuth.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Twitter.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.ScriptManager.MSAjax.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.ScriptManager.WebForms.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.Web.Infrastructure.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Newtonsoft.Json.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Owin.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\System.Web.Optimization.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\System.Web.Providers.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\WebGrease.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\IMSBusinessLogic.pdb
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\IMSCommon.pdb
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\System.Web.Optimization.xml
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Antlr3.Runtime.pdb
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Newtonsoft.Json.xml
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.AspNet.FriendlyUrls.xml
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\EntityFramework.xml
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\EntityFramework.SqlServer.xml
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.Core.xml
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.Owin.xml
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.Owin.xml
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.Owin.Host.SystemWeb.xml
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.Owin.Security.xml
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Facebook.xml
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Cookies.xml
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Google.xml
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Twitter.xml
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\bin\Microsoft.Owin.Security.OAuth.xml
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\obj\Debug\IMS.csprojResolveAssemblyReference.cache
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\obj\Debug\IMS.dll
+G:\IMS CODES\IMS_newCode_latest\IMS_newCode\IMS\obj\Debug\IMS.pdb
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\IMS.dll.config
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\IMS.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\IMS.pdb
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Antlr3.Runtime.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\AspNet.ScriptManager.bootstrap.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\AspNet.ScriptManager.jQuery.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\BarcodeLib.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\EntityFramework.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\EntityFramework.SqlServer.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\IMSBusinessLogic.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\IMSCommon.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.AspNet.FriendlyUrls.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.Core.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Cookies.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Facebook.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Google.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.OAuth.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Twitter.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.ScriptManager.MSAjax.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.ScriptManager.WebForms.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.Web.Infrastructure.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Newtonsoft.Json.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Owin.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\System.Web.Optimization.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\System.Web.Providers.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\WebGrease.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\IMSBusinessLogic.pdb
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\IMSCommon.pdb
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\BarcodeLib.pdb
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\System.Web.Optimization.xml
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Antlr3.Runtime.pdb
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Newtonsoft.Json.xml
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.AspNet.FriendlyUrls.xml
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\EntityFramework.xml
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\EntityFramework.SqlServer.xml
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.Core.xml
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.xml
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.xml
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Facebook.xml
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Cookies.xml
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Google.xml
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.Twitter.xml
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\bin\Microsoft.Owin.Security.OAuth.xml
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\obj\Debug\IMS.csprojResolveAssemblyReference.cache
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\obj\Debug\IMS.dll
+D:\code\IMS (3-6-2015)\IMS (3-6-2015)\IMS_newCode\IMS\obj\Debug\IMS.pdb
+D:\Digital Processing System\E-Inventory\IMS\bin\IMS.dll.config
+D:\Digital Processing System\E-Inventory\IMS\bin\IMS.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\IMS.pdb
+D:\Digital Processing System\E-Inventory\IMS\bin\AjaxControlToolkit.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\Antlr3.Runtime.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\AspNet.ScriptManager.bootstrap.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\AspNet.ScriptManager.jQuery.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\EntityFramework.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\EntityFramework.SqlServer.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\IMSBusinessLogic.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\IMSCommon.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.AspNet.FriendlyUrls.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.AspNet.Identity.Core.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.Owin.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.Owin.Security.Cookies.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.Owin.Security.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.Owin.Security.Facebook.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.Owin.Security.Google.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.Owin.Security.OAuth.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.Owin.Security.Twitter.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.ScriptManager.MSAjax.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.ScriptManager.WebForms.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.Web.Infrastructure.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\Newtonsoft.Json.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\Owin.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\System.Web.Optimization.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\System.Web.Providers.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\WebGrease.dll
+D:\Digital Processing System\E-Inventory\IMS\bin\IMSBusinessLogic.pdb
+D:\Digital Processing System\E-Inventory\IMS\bin\IMSCommon.pdb
+D:\Digital Processing System\E-Inventory\IMS\bin\System.Web.Optimization.xml
+D:\Digital Processing System\E-Inventory\IMS\bin\Antlr3.Runtime.pdb
+D:\Digital Processing System\E-Inventory\IMS\bin\Newtonsoft.Json.xml
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.AspNet.FriendlyUrls.xml
+D:\Digital Processing System\E-Inventory\IMS\bin\EntityFramework.xml
+D:\Digital Processing System\E-Inventory\IMS\bin\EntityFramework.SqlServer.xml
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.AspNet.Identity.Core.xml
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.Owin.xml
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.Owin.Security.xml
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.Owin.Security.Facebook.xml
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.Owin.Security.Cookies.xml
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.Owin.Security.Google.xml
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.Owin.Security.Twitter.xml
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\Digital Processing System\E-Inventory\IMS\bin\Microsoft.Owin.Security.OAuth.xml
+D:\Digital Processing System\E-Inventory\IMS\obj\Debug\IMS.csprojResolveAssemblyReference.cache
+D:\Digital Processing System\E-Inventory\IMS\obj\Debug\IMS.dll
+D:\Digital Processing System\E-Inventory\IMS\obj\Debug\IMS.pdb
+G:\Digital Processing Systems\E-Inventory\IMS\bin\IMS.dll.config
+G:\Digital Processing Systems\E-Inventory\IMS\bin\IMS.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\IMS.pdb
+G:\Digital Processing Systems\E-Inventory\IMS\bin\AjaxControlToolkit.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Antlr3.Runtime.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\AspNet.ScriptManager.bootstrap.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\AspNet.ScriptManager.jQuery.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\EntityFramework.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\EntityFramework.SqlServer.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\IMSBusinessLogic.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\IMSCommon.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\itextsharp.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\itextsharp.pdfa.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\itextsharp.xtra.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.AspNet.FriendlyUrls.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.AspNet.Identity.Core.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.AspNet.Identity.Owin.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.Owin.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.Owin.Host.SystemWeb.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.Owin.Security.Cookies.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.Owin.Security.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.Owin.Security.Facebook.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.Owin.Security.Google.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.Owin.Security.OAuth.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.Owin.Security.Twitter.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.ScriptManager.MSAjax.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.ScriptManager.WebForms.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.Web.Infrastructure.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Newtonsoft.Json.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Owin.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\System.Web.Optimization.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\System.Web.Providers.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\WebGrease.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\IMSBusinessLogic.pdb
+G:\Digital Processing Systems\E-Inventory\IMS\bin\IMSCommon.pdb
+G:\Digital Processing Systems\E-Inventory\IMS\bin\AjaxControlToolkit.pdb
+G:\Digital Processing Systems\E-Inventory\IMS\bin\itextsharp.xml
+G:\Digital Processing Systems\E-Inventory\IMS\bin\System.Web.Optimization.xml
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Antlr3.Runtime.pdb
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Newtonsoft.Json.xml
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.AspNet.FriendlyUrls.xml
+G:\Digital Processing Systems\E-Inventory\IMS\bin\EntityFramework.xml
+G:\Digital Processing Systems\E-Inventory\IMS\bin\EntityFramework.SqlServer.xml
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.AspNet.Identity.Core.xml
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.AspNet.Identity.Owin.xml
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.Owin.xml
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.Owin.Host.SystemWeb.xml
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.Owin.Security.xml
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.Owin.Security.Facebook.xml
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.Owin.Security.Cookies.xml
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.Owin.Security.Google.xml
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.Owin.Security.Twitter.xml
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+G:\Digital Processing Systems\E-Inventory\IMS\bin\Microsoft.Owin.Security.OAuth.xml
+G:\Digital Processing Systems\E-Inventory\IMS\bin\ar\AjaxControlToolkit.resources.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\cs\AjaxControlToolkit.resources.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\de\AjaxControlToolkit.resources.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\es\AjaxControlToolkit.resources.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\fr\AjaxControlToolkit.resources.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\he\AjaxControlToolkit.resources.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\hi\AjaxControlToolkit.resources.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\it\AjaxControlToolkit.resources.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\ja\AjaxControlToolkit.resources.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\ko\AjaxControlToolkit.resources.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\nl\AjaxControlToolkit.resources.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\pt\AjaxControlToolkit.resources.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\ru\AjaxControlToolkit.resources.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\tr-TR\AjaxControlToolkit.resources.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\zh-CHS\AjaxControlToolkit.resources.dll
+G:\Digital Processing Systems\E-Inventory\IMS\bin\zh-CHT\AjaxControlToolkit.resources.dll
+G:\Digital Processing Systems\E-Inventory\IMS\obj\Debug\IMS.csprojResolveAssemblyReference.cache
+G:\Digital Processing Systems\E-Inventory\IMS\obj\Debug\RdlCompile.cache
+G:\Digital Processing Systems\E-Inventory\IMS\obj\Debug\RdlCompile.compiled
+G:\Digital Processing Systems\E-Inventory\IMS\obj\Debug\IMS.dll
+G:\Digital Processing Systems\E-Inventory\IMS\obj\Debug\IMS.pdb
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\IMS.dll.config
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\IMS.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\IMS.pdb
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Antlr3.Runtime.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\AspNet.ScriptManager.bootstrap.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\AspNet.ScriptManager.jQuery.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\EntityFramework.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\EntityFramework.SqlServer.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\IMSBusinessLogic.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\IMSCommon.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.AspNet.FriendlyUrls.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.Owin.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.Owin.Security.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.ScriptManager.MSAjax.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.ScriptManager.WebForms.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Newtonsoft.Json.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Owin.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\System.Web.Optimization.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\System.Web.Providers.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\WebGrease.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\IMSBusinessLogic.pdb
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\IMSCommon.pdb
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\System.Web.Optimization.xml
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Antlr3.Runtime.pdb
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Newtonsoft.Json.xml
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.AspNet.FriendlyUrls.xml
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\EntityFramework.xml
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\EntityFramework.SqlServer.xml
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.Owin.xml
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.Owin.Security.xml
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\obj\Debug\IMS.csprojResolveAssemblyReference.cache
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\obj\Debug\RdlCompile.cache
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\obj\Debug\RdlCompile.compiled
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\obj\Debug\IMS.dll
+C:\Users\HP Probook\Documents\GitHub\E-Inventory\IMS\obj\Debug\IMS.pdb
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\IMS.dll.config
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\IMS.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\IMS.pdb
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Antlr3.Runtime.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\AspNet.ScriptManager.bootstrap.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\AspNet.ScriptManager.jQuery.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\EntityFramework.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\EntityFramework.SqlServer.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\IMSBusinessLogic.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\IMSCommon.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.AspNet.FriendlyUrls.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.AspNet.Identity.Core.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.Owin.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.Owin.Security.Cookies.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.Owin.Security.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.Owin.Security.Facebook.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.Owin.Security.Google.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.Owin.Security.OAuth.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.Owin.Security.Twitter.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.ScriptManager.MSAjax.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.ScriptManager.WebForms.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.Web.Infrastructure.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Newtonsoft.Json.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Owin.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\System.Web.Optimization.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\System.Web.Providers.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\WebGrease.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\IMSBusinessLogic.pdb
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\IMSCommon.pdb
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\System.Web.Optimization.xml
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Antlr3.Runtime.pdb
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Newtonsoft.Json.xml
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.AspNet.FriendlyUrls.xml
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\EntityFramework.xml
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\EntityFramework.SqlServer.xml
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.AspNet.Identity.Core.xml
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.Owin.xml
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.Owin.Security.xml
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.Owin.Security.Facebook.xml
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.Owin.Security.Cookies.xml
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.Owin.Security.Google.xml
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.Owin.Security.Twitter.xml
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\bin\Microsoft.Owin.Security.OAuth.xml
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\obj\Debug\IMS.csprojResolveAssemblyReference.cache
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\obj\Debug\RdlCompile.cache
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\obj\Debug\RdlCompile.compiled
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\obj\Debug\IMS.dll
+D:\Naseemullah\eInvetory\eInventoryLive\IMS\obj\Debug\IMS.pdb
+E:\eInventoryLive\eInventoryLive\IMS\bin\IMS.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\IMS.pdb
+E:\eInventoryLive\eInventoryLive\IMS\bin\Antlr3.Runtime.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\AspNet.ScriptManager.bootstrap.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\AspNet.ScriptManager.jQuery.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\EntityFramework.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\EntityFramework.SqlServer.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\IMSBusinessLogic.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\IMSCommon.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.AspNet.FriendlyUrls.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.AspNet.Identity.Core.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.AspNet.Identity.Owin.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.Owin.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.Owin.Host.SystemWeb.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.Owin.Security.Cookies.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.Owin.Security.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.Owin.Security.Facebook.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.Owin.Security.Google.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.Owin.Security.OAuth.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.Owin.Security.Twitter.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.ScriptManager.MSAjax.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.ScriptManager.WebForms.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.Web.Infrastructure.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\Newtonsoft.Json.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\Owin.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\System.Web.Optimization.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\System.Web.Providers.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\WebGrease.dll
+E:\eInventoryLive\eInventoryLive\IMS\bin\IMSBusinessLogic.pdb
+E:\eInventoryLive\eInventoryLive\IMS\bin\IMSCommon.pdb
+E:\eInventoryLive\eInventoryLive\IMS\bin\System.Web.Optimization.xml
+E:\eInventoryLive\eInventoryLive\IMS\bin\Antlr3.Runtime.pdb
+E:\eInventoryLive\eInventoryLive\IMS\bin\Newtonsoft.Json.xml
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.AspNet.FriendlyUrls.xml
+E:\eInventoryLive\eInventoryLive\IMS\bin\EntityFramework.xml
+E:\eInventoryLive\eInventoryLive\IMS\bin\EntityFramework.SqlServer.xml
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.AspNet.Identity.Core.xml
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.AspNet.Identity.Owin.xml
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.Owin.xml
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.Owin.Host.SystemWeb.xml
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.Owin.Security.xml
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.Owin.Security.Facebook.xml
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.Owin.Security.Cookies.xml
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.Owin.Security.Google.xml
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.Owin.Security.Twitter.xml
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+E:\eInventoryLive\eInventoryLive\IMS\bin\Microsoft.Owin.Security.OAuth.xml
+E:\eInventoryLive\eInventoryLive\IMS\obj\Debug\IMS.csprojResolveAssemblyReference.cache
+E:\eInventoryLive\eInventoryLive\IMS\obj\Debug\RdlCompile.cache
+E:\eInventoryLive\eInventoryLive\IMS\obj\Debug\RdlCompile.compiled
+E:\eInventoryLive\eInventoryLive\IMS\obj\Debug\IMS.dll
+E:\eInventoryLive\eInventoryLive\IMS\obj\Debug\IMS.pdb

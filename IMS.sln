@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMS", "IMS\IMS.csproj", "{4B10C05F-57B4-4868-B3C4-26C67BA98BB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMSCommon", "IMSCommon\IMSCommon.csproj", "{5E1C6171-FEAF-44CE-8BB5-5E7C741C2924}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMSBusinessLogic", "IMSBusinessLogic\IMSBusinessLogic.csproj", "{7E987A73-34AE-4A62-95FB-879E492811AB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4B10C05F-57B4-4868-B3C4-26C67BA98BB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B10C05F-57B4-4868-B3C4-26C67BA98BB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B10C05F-57B4-4868-B3C4-26C67BA98BB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B10C05F-57B4-4868-B3C4-26C67BA98BB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E1C6171-FEAF-44CE-8BB5-5E7C741C2924}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E1C6171-FEAF-44CE-8BB5-5E7C741C2924}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E1C6171-FEAF-44CE-8BB5-5E7C741C2924}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E1C6171-FEAF-44CE-8BB5-5E7C741C2924}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E987A73-34AE-4A62-95FB-879E492811AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E987A73-34AE-4A62-95FB-879E492811AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E987A73-34AE-4A62-95FB-879E492811AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E987A73-34AE-4A62-95FB-879E492811AB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
