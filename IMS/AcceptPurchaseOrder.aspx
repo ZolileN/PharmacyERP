@@ -122,7 +122,13 @@
                          </EditItemTemplate>
                         <ItemStyle  Width="110px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
-
+                     <asp:TemplateField HeaderText="Ordered Bonus Quantity" HeaderStyle-Width ="110px">
+                        <ItemTemplate>
+                            <asp:Label ID="lblOrderedBonus" runat="server" Text=' <%#Eval("OrderedBonusQuantity")==DBNull.Value?0:int.Parse( Eval("OrderedBonusQuantity").ToString())  %>'></asp:Label>
+                        </ItemTemplate>
+                         
+                        <ItemStyle  Width="110px" HorizontalAlign="Left"/>
+                    </asp:TemplateField>
                       <asp:TemplateField HeaderText="Bonus Quantity" HeaderStyle-Width ="110px">
                         <ItemTemplate>
                             <asp:Label ID="lblBonus" runat="server" Text=' <%#Eval("BonusQuantity")==DBNull.Value?0:int.Parse( Eval("BonusQuantity").ToString())  %>'></asp:Label>

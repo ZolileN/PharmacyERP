@@ -28,31 +28,34 @@
             
         </tr>
          <tr>
-            <td><b>Ordered Quantity</b></td>
-            <td><asp:Label runat="server" ID="OrdQuantity" CssClass="" /></td>
+             <td><b>Ordered Quantity</b></td>
+             <td><asp:Label runat="server" ID="OrdQuantity" CssClass="" /></td>
              <td class="auto-style1"></td>
-             <td class="auto-style2"><b>Remaining Quantity</b></td>
-            <td><asp:Label runat="server" ID="RemQuantity" CssClass="" /></td>
+             <td class="auto-style2"><b>Order Bonus Quantity</b></td>
+            <td><asp:Label runat="server" ID="OrderedbonusQuan" CssClass="" /></td>
            
         </tr>
         <tr>
-             <td><b>Received Quantity</b></td>
+            <td><b>Received Quantity</b></td>
             <td> <asp:Label runat="server" ID="RecQuantity" CssClass="" /></td>
             <td class="auto-style1"></td>
+            <td class="auto-style2"><b>Remaining Quantity</b></td>
+            <td><asp:Label runat="server" ID="RemQuantity" CssClass="" /></td>
+        </tr>
+        <tr>
             <td class="auto-style2"><b>Bonus Quantity</b></td>
             <td><asp:Label runat="server" ID="bonusQuanOrg" CssClass="" /></td>
+            <td class="auto-style1">&nbsp; &nbsp; &nbsp;</td>
+             <td><b>Defected Quantity</b></td>
+            <td> <asp:Label runat="server" ID="defQuantity" CssClass="" /></td>
         </tr>
         <tr>
-           <td><b>Defected Quantity</b></td>
-            <td> <asp:Label runat="server" ID="defQuantity" CssClass="" /></td>
-            <td class="auto-style1">&nbsp; &nbsp; &nbsp;</td>
             <td class="auto-style2"><b>Expired Quantity</b></td>
             <td> <asp:Label runat="server" ID="expQuantity" CssClass="" /></td>
-        </tr>
-        <tr>
+            <td class="auto-style1">&nbsp; &nbsp; &nbsp;</td>
             <td><b>Returned Quantity</b></td>
             <td><asp:Label runat="server" ID="retQuantity" CssClass="" /></td>
-            <td colspan="100%"></td>
+            
         </tr>
     </table>
    

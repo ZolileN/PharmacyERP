@@ -95,6 +95,10 @@ namespace IMS
         public static string WriteExcelWithSalesOrderInfo(string salesOrderNo, string salesOrderDate, string salesOrderBillTo, DataSet dataset, String FilePath)
         {
             string filePath = FILE_PATH + "SalesOrder_" + salesOrderNo + ".xlsx";
+            string fileName = "SalesOrder_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".xlsx";
+            MyApp = new Excel.Application();
+            MyApp.Visible = false;
+            lastRow = 22;
             MyBook = MyApp.Workbooks.Open(FILE_PATH + "SalesOrder.xlsx");
             MySheet = (Excel.Worksheet)MyBook.Sheets[1]; // Explict cast is not required here
             try
@@ -128,7 +132,7 @@ namespace IMS
             { //throw ex;
             }
 
-            return "SalesOrder_" + salesOrderNo + ".xlsx";
+            return FILE_PATH + ";" + fileName; 
         }
     }
 }

@@ -526,6 +526,19 @@ namespace IMS
                 StockDisplayGrid.DataSource = null;
                 StockDisplayGrid.DataSource = ds.Tables[0];
                 StockDisplayGrid.DataBind();
+
+                float TCost = 0;
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    float Cost = 0;
+                    if (float.TryParse(ds.Tables[0].Rows[i]["totalCostPrice"].ToString(), out Cost))
+                    {
+                        TCost += Cost;
+                    }
+                }
+                lblttlcst.Visible = true;
+                lblTotalCostALL.Visible = true;
+                lblTotalCostALL.Text = TCost.ToString();
             }
             catch (Exception ex)
             {
@@ -549,10 +562,14 @@ namespace IMS
             RequestTo.SelectedIndex = -1;
             btnAccept.Visible = false;
             btnDecline.Visible = false;
+            lblttlcst.Visible = false;
+            lblTotalCostALL.Visible = false;
         }
 
         protected void btnCancelOrder_Click(object sender, EventArgs e)
         {
+            lblttlcst.Visible = false;
+            lblTotalCostALL.Visible = false;
             //must be checked for sessions
             if (Session["FromViewPlacedOrders"].ToString().Equals("true") && Session["FromViewPlacedOrders"].ToString() != null && Session["FromViewPlacedOrders"] !=null)
             {

@@ -40,13 +40,13 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.Label OrdQuantity;
         
         /// <summary>
-        /// RemQuantity control.
+        /// OrderedbonusQuan control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label RemQuantity;
+        protected global::System.Web.UI.WebControls.Label OrderedbonusQuan;
         
         /// <summary>
         /// RecQuantity control.
@@ -56,6 +56,15 @@ namespace IMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label RecQuantity;
+        
+        /// <summary>
+        /// RemQuantity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label RemQuantity;
         
         /// <summary>
         /// bonusQuanOrg control.

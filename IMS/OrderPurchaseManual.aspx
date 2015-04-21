@@ -203,7 +203,19 @@
                             </EditItemTemplate>
                           <ItemStyle  Width="90px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
+                      <asp:TemplateField HeaderText="Unit Cost Price" HeaderStyle-Width="110px">
+                    <ItemTemplate>
+                        <asp:Label ID="lblUnitCost" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("UnitCost") %>'></asp:Label>
+                    </ItemTemplate>
+                    <ItemStyle Width="110px" HorizontalAlign="Left" />
+                </asp:TemplateField>
 
+                <asp:TemplateField HeaderText="Total Cost Price" HeaderStyle-Width="110px">
+                    <ItemTemplate>
+                        <asp:Label ID="lblTotalCost" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("totalCostPrice") %>'></asp:Label>
+                    </ItemTemplate>
+                    <ItemStyle Width="110px" HorizontalAlign="Left" />
+                </asp:TemplateField>
                      <asp:TemplateField HeaderText="Order Status" HeaderStyle-Width ="110px">
                         <ItemTemplate>
                             <asp:Label ID="lblStatus" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Status") %>'  Width="100px"></asp:Label>
@@ -214,6 +226,15 @@
                     
                  </Columns>
              </asp:GridView>
+          <table ID="tblDsp" cellpadding="4" cellspacing="0" align="right" visible="false">
+        	<tr>
+            	<td><asp:Label ID="lblttlcst" runat="server" AssociatedControlID="lblTotalCostALL" Visible="false">Total Cost:</asp:Label></td>
+                <td><asp:Label ID="lblTotalCostALL" Visible="false" runat="server" Style="font-weight: 700"></asp:Label></td>
+
+
+	           
+            </tr>
+         </table>
         <br />
          <asp:Button ID="btnAccept" runat="server" OnClick="btnAccept_Click" Text="GENERATE ORDER" CssClass="btn btn-large" Visible="false"/>
          <asp:Button ID="btnDecline" runat="server" OnClick="btnDecline_Click" Text="DELETE ORDER" CssClass="btn btn-large" Visible="false" />

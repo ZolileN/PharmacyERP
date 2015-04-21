@@ -42,6 +42,7 @@ namespace IMS
                 lblOMISD.Text = Session["OMID"].ToString();
                 lblPO.Text = Session["isPO"].ToString();
                 lblProdID.Text = Session["ProdID"].ToString();
+                OrderedbonusQuan.Text = Session["OrderedBonus"].ToString();
             }
             else 
             {
