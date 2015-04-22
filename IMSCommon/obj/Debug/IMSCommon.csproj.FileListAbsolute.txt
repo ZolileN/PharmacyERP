@@ -65,3 +65,7 @@ E:\eInventoryLive\eInventoryLive\IMSCommon\bin\Debug\IMSCommon.dll
 E:\eInventoryLive\eInventoryLive\IMSCommon\bin\Debug\IMSCommon.pdb
 E:\eInventoryLive\eInventoryLive\IMSCommon\obj\Debug\IMSCommon.dll
 E:\eInventoryLive\eInventoryLive\IMSCommon\obj\Debug\IMSCommon.pdb
+D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSCommon\bin\Debug\IMSCommon.dll
+D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSCommon\bin\Debug\IMSCommon.pdb
+D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSCommon\obj\Debug\IMSCommon.dll
+D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSCommon\obj\Debug\IMSCommon.pdb

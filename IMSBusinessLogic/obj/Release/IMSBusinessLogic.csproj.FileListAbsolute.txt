@@ -47,3 +47,10 @@ E:\eInventoryLive\eInventoryLive\IMSBusinessLogic\bin\Release\IMSCommon.pdb
 E:\eInventoryLive\eInventoryLive\IMSBusinessLogic\obj\Release\IMSBusinessLogic.csprojResolveAssemblyReference.cache
 E:\eInventoryLive\eInventoryLive\IMSBusinessLogic\obj\Release\IMSBusinessLogic.dll
 E:\eInventoryLive\eInventoryLive\IMSBusinessLogic\obj\Release\IMSBusinessLogic.pdb
+D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSBusinessLogic\bin\Release\IMSBusinessLogic.dll
+D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSBusinessLogic\bin\Release\IMSBusinessLogic.pdb
+D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSBusinessLogic\bin\Release\IMSCommon.dll
+D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSBusinessLogic\bin\Release\IMSCommon.pdb
+D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSBusinessLogic\obj\Release\IMSBusinessLogic.csprojResolveAssemblyReference.cache
+D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSBusinessLogic\obj\Release\IMSBusinessLogic.dll
+D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSBusinessLogic\obj\Release\IMSBusinessLogic.pdb

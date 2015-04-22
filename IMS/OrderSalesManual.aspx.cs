@@ -16,8 +16,8 @@ namespace IMS
     public partial class OrderSalesManual : System.Web.UI.Page
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
-        public static DataSet ProductSet;
-        public static DataSet systemSet;
+        public DataSet ProductSet;
+        public  DataSet systemSet;
         public static bool FirstOrder;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -307,8 +307,11 @@ namespace IMS
 
             //    UpdateStockMinus(OderDetailID, Quantity);
             //}
+            //Session["dsProducts"]
+            DataSet dsProducts = (DataSet)Session["dsProducts"];
 
-            Session["RequestedNO"] = Convert.ToInt32(ProductSet.Tables[0].Rows[0]["OrderID"].ToString());
+            Session["RequestedNO"] = Convert.ToInt32(dsProducts.Tables[0].Rows[0]["OrderID"].ToString());
+           // Session["RequestedNO"] = Convert.ToInt32(ProductSet.Tables[0].Rows[0]["OrderID"].ToString());
             if (Session["ExistingOrder"].Equals(true)) { Session["RequestedFromID"] = Session["SystemID"]; }
             Response.Redirect("ViewPackingList_SO.aspx", false);
             //Response.Redirect("PO_GENERATE.aspx", false);
@@ -793,6 +796,10 @@ namespace IMS
                 {
                     command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                 }
+
+                Session["dsProducts"] = ds;
+
+                
 
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);

@@ -20,3 +20,8 @@ E:\eInventoryLive\eInventoryLive\IMSCommon\bin\Release\IMSCommon.pdb
 E:\eInventoryLive\eInventoryLive\IMSCommon\obj\Release\IMSCommon.csprojResolveAssemblyReference.cache
 E:\eInventoryLive\eInventoryLive\IMSCommon\obj\Release\IMSCommon.dll
 E:\eInventoryLive\eInventoryLive\IMSCommon\obj\Release\IMSCommon.pdb
+D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSCommon\bin\Release\IMSCommon.dll
+D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSCommon\bin\Release\IMSCommon.pdb
+D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSCommon\obj\Release\IMSCommon.csprojResolveAssemblyReference.cache
+D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSCommon\obj\Release\IMSCommon.dll
+D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSCommon\obj\Release\IMSCommon.pdb

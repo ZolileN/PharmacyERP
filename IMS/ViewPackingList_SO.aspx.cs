@@ -9,8 +9,6 @@ using System.Data.Sql;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Configuration;
-using IMSCommon.Util;
-using System.IO;
 
 namespace IMS
 {
@@ -189,93 +187,20 @@ namespace IMS
                 sA.Fill(ds);
 
                 MyExcel.FILE_PATH = Server.MapPath(@"~\SaleOrderFormat\").ToString();
+                string convertedFilePath = MyExcel.WriteExcelWithSalesOrderInfo(SaleOrder.Text, SendDate.Text, (Environment.NewLine + To.Text + Environment.NewLine + ToAddress.Text), ds, Server.MapPath(@"~\SaleOrderFormat\"));
 
-                // Excel.Workbook myWorkBook;
-                String fileName = "";
-                fileName = MyExcel.WriteExcelWithSalesOrderInfo(SaleOrder.Text, SendDate.Text, (Environment.NewLine + To.Text + Environment.NewLine + ToAddress.Text), ds, Server.MapPath(@"~\SaleOrderFormat\"));
-                string[] files = fileName.Split(';');
-                //Byte[] fileBytes = File.ReadAllBytes(Path.Combine(MyExcel.FILE_PATH, files[1]));
-
-                //vnd.openxmlformats-officedocument.spreadsheetml.sheet
-                //application/msexcel
-
-                //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                //Response.AppendHeader("content-disposition", "attachment;filename=" + fileName);
-                //Response.TransmitFile(fileName);
-                //Response.End();
-                //using (MemoryStream MyMemoryStream = new MemoryStream())
-                //{
-                //    myWorkBook.SaveAs(MyMemoryStream);
-                //    //Response.Write(MyMemoryStream);
-                //    MyMemoryStream.WriteTo(Response.OutputStream);
-                //    //Response.Flush();
-                //    //Response.End();
-                //}
-
-
-
-
-                //Byte[] fileBytes = File.ReadAllBytes(Path.Combine(MyExcel.FILE_PATH, convertedFilePath));
-
-                //Clear the response               
-                //Response.Clear();
-                //Response.ClearContent();
-                //Response.ClearHeaders();
-                //Response.Cookies.Clear();
-                ////Add the header & other information      
-                //Response.Cache.SetCacheability(HttpCacheability.Private);
-                //Response.CacheControl = "private";
-                //Response.Charset = System.Text.UTF8Encoding.UTF8.WebName;
-                //Response.ContentEncoding = System.Text.UTF8Encoding.UTF8;
-                ////Response.AppendHeader("Content-Length", fileBytes.Length.ToString());
-                ////Response.AppendHeader("Pragma", "cache");
-                ////Response.AppendHeader("Expires", "60");
-                ////Response.AppendHeader("Content-Disposition",
-                ////"attachment; " +
-                ////"filename=\"ExcelReport.xlsx\"; " +
-                ////"size=" + fileBytes.Length.ToString() + "; " +
-                ////"creation-date=" + DateTime.Now.ToString("R") + "; " +
-                ////"modification-date=" + DateTime.Now.ToString("R") + "; " +
-                ////"read-date=" + DateTime.Now.ToString("R"));
-                //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                ////Write it back to the client    
-                //Response.BinaryWrite(fileBytes);
-                //Response.End();
-                //
-
-                Response.Clear();
-                Response.Buffer = true;
-                Response.AppendHeader("content-disposition", "attachment; filename=" + files[1]);
-                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                //Response.AddHeader("content-disposition", "attachment;filename=" + files[1]);
-                //Response.Charset = "";
-                //Response.Cache.SetCacheability(HttpCacheability.NoCache);
-                ////Response.Redirect(fileName, false);
-                ////Response.BinaryWrite(fileBytes);
-                //Response.Output.Write(files[1]);
-                //Response.Flush();
-                //Response.End();
-
-                //Response.Clear();
-                //Response.Buffer = true;
-                Response.Charset = "UTF-8";
-                //Response.ContentType = "application/vnd.ms-excel";
-                //@"SaleOrderFormat\"+
-                String Path1 = Path.Combine(files[0], files[1]);
-                string url = @"~/SaleOrderFormat/" + files[1];
-                //Response.WriteFile(Path1);
-
-                Response.Redirect(url);
+                Response.AppendHeader("content-disposition", "attachment; filename=" + convertedFilePath);
+                Response.ContentType = "Application/msexcel";
+                Response.WriteFile(convertedFilePath);
                 Response.End();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                WebMessageBoxUtil.Show(ex.Message);
+
             }
             finally
             {
                 connection.Close();
-                //Response.End();
             }
         }
 
