@@ -11,7 +11,7 @@
               $(function () { $("#<%= txtExpDate.ClientID %>").datepicker(); });
 
           </script>--%>
-      <h3> Purchase Order Details</h3> 
+      <h3> Receive Purchase Order </h3> 
     <table>
         <tr>
             <td>

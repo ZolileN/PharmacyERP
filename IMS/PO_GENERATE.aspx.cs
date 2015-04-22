@@ -262,7 +262,7 @@ namespace IMS
 
         protected void btnFax_Click(object sender, EventArgs e)
         {
-            Response.Redirect("PlaceOrder.aspx");
+            Response.Redirect("OrderPurchaseManual.aspx",false);
         }
 
         private void ReadPdfFile(String path)
