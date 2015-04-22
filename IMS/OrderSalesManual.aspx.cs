@@ -18,7 +18,7 @@ namespace IMS
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public DataSet ProductSet;
         public  DataSet systemSet;
-        public static bool FirstOrder;
+        public  bool FirstOrder;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -307,7 +307,7 @@ namespace IMS
 
             //    UpdateStockMinus(OderDetailID, Quantity);
             //}
-            //Session["dsProducts"]
+            //
             DataSet dsProducts = (DataSet)Session["dsProducts"];
 
             Session["RequestedNO"] = Convert.ToInt32(dsProducts.Tables[0].Rows[0]["OrderID"].ToString());
