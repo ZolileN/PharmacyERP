@@ -196,15 +196,25 @@ namespace IMS
         {
             try
             {
-                if (e.CommandName.Equals("Edit"))
+                if (e.CommandName.Equals("ReGen"))
+                {
+                    int Pageindex = Convert.ToInt32(StockDisplayGrid.PageIndex);
+                 
+                        Label OrderNo = (Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("OrderNO");
+                        //session is setting
+                        Session["OrderNumber"] = OrderNo.Text.ToString();
+                        Session["FromViewPlacedOrders"] = "true";
+                        Response.Redirect("OrderPurchaseManual.aspx", false);
+                    
+                }
+                else if (e.CommandName.Equals("UpdateRec")) 
                 {
                     int Pageindex = Convert.ToInt32(StockDisplayGrid.PageIndex);
 
-                    Label OrderNo = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("OrderNO");
-                    //session is setting
-                    Session["OrderNumber"] = OrderNo.Text.ToString();
-                    Session["FromViewPlacedOrders"] = "true";
-                    Response.Redirect("OrderPurchaseManual.aspx",false);
+                    Label OrderNo = (Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("OrderNO");
+                    Session["RequestedNO"] = OrderNo.Text.ToString();
+                    Session["RequestDesRole"] = "Vendor";
+                    Response.Redirect("AcceptPurchaseOrder.aspx");
                 }
                 else if (e.CommandName.Equals("Delete"))
                 {

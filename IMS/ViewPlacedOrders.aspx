@@ -8,7 +8,7 @@
           </script>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-      <h2> Placed Order(s)</h2> 
+      <h2> View Purchase Order(s)</h2> 
     <br />
      <script src="Scripts/jquery.js"  type="text/javascript"></script>
           <script src="Scripts/jquery-ui.js" type="text/javascript"></script>
@@ -129,11 +129,17 @@
                      <asp:TemplateField HeaderText="Action" HeaderStyle-Width ="150px">
                         <ItemTemplate>
                             
-                            <asp:Button CssClass="btn btn-default edit-btn" ID="btnEdit" Text="Edit" runat="server" CommandName="Edit" CommandArgument='<%# Container.DisplayIndex  %>'/>
+                            <asp:Button CssClass="btn btn-default edit-btn" ID="btnEdit" Text="Edit" runat="server" CommandName="Edit"/>
                             <span onclick="return confirm('Are you sure you want to delete this record?')">
                                 <asp:Button CssClass="btn btn-default del-btn" ID="btnDelete" Text="Delete" runat="server" CommandName="Delete" CommandArgument='<%# Container.DisplayIndex  %>'/>
                             </span>
                               </ItemTemplate>
+                          <EditItemTemplate>
+
+                            <asp:LinkButton ID="btnUpdate" Text="Re-Generate Order" CssClass="btn btn-default"  runat="server" CommandName="ReGen" />
+                            <asp:LinkButton ID="btnView" Text="Update Accepted Order" CssClass="btn btn-default"  runat="server" CommandName="UpdateRec" />
+                            <asp:LinkButton ID="btnCancel" Text="Cancel" CssClass="btn btn-default"  runat="server" CommandName="Cancel" />
+                        </EditItemTemplate>
                          <ItemStyle  Width="150px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Order No." HeaderStyle-Width ="110px">

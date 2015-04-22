@@ -127,33 +127,7 @@ namespace IMS
             if (status.Equals("Partial"))
             {
                 int ordetID= int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblOrdDet_id")).Text);
-
-                int remQuan = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblRemainQuan")).Text);
-                int orderedQuantity = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblQuantity")).Text);
-                int bonusOrg = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblBonusOrg")).Text);
-                int recQuan = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblRecQuan")).Text);
-                int expQuan = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblExpQuan")).Text);
-                int defQuan = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblDefQuan")).Text);
-                int retQuan = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblRetQuan")).Text);
-                int barSerial=int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblBrSerial")).Text);
-                int OrderedMasterID=int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblOrdMs_id")).Text);
-                int ProdID=int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblProd_id")).Text);
-                String prodDescription = ((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("ProductName2")).Text;
-                int orderedBonusQuan = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblOrderedBonus")).Text);
-                Session["ordetailID"]=ordetID;
-                Session["ordQuan"] = orderedQuantity;
-                Session["bonusQuan"] = bonusOrg;
-                Session["recQuan"] = recQuan;
-                Session["remQuan"] = remQuan;
-                Session["defQuan"] = defQuan;
-                Session["retQuan"] = retQuan;
-                Session["barserial"] = barSerial;
-                Session["expQuan"] = expQuan;
-                Session["OMID"] = OrderedMasterID;
-                Session["isPO"] = "TRUE";
-                Session["ProdID"] = ProdID;
-                Session["ProdDesc"] = prodDescription;
-                Session["OrderedBonus"] = orderedBonusQuan;
+                SetSessionValues(StockDisplayGrid.EditIndex);
                 Response.Redirect("DisplayOrderDetailEntries.aspx" ,false);
             }
             else 
@@ -181,39 +155,44 @@ namespace IMS
             else
                 return false;
         }
+        private void SetSessionValues(int RowIndex) 
+        {
+            int ordetID = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblOrdDet_id")).Text);
 
+            int remQuan = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblRemainQuan")).Text);
+            int orderedQuantity = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblQuantity")).Text);
+            int bonusOrg = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblBonusOrg")).Text);
+            int recQuan = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblRecQuan")).Text);
+            int expQuan = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblExpQuan")).Text);
+            int defQuan = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblDefQuan")).Text);
+            int retQuan = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblRetQuan")).Text);
+            int barSerial = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblBrSerial")).Text);
+            int OrderedMasterID = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblOrdMs_id")).Text);
+            int ProdID = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblProd_id")).Text);
+            String prodDescription = ((Label)StockDisplayGrid.Rows[RowIndex].FindControl("ProductName2")).Text;
+            int orderedBonusQuan = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblOrderedBonus")).Text);
+            Session["ordetailID"] = ordetID;
+            Session["ordQuan"] = orderedQuantity;
+            Session["bonusQuan"] = bonusOrg;
+            Session["recQuan"] = recQuan;
+            Session["remQuan"] = remQuan;
+            Session["defQuan"] = defQuan;
+            Session["retQuan"] = retQuan;
+            Session["barserial"] = barSerial;
+            Session["expQuan"] = expQuan;
+            Session["OMID"] = OrderedMasterID;
+            Session["isPO"] = "TRUE";
+            Session["ProdID"] = ProdID;
+            Session["ProdDesc"] = prodDescription;
+            Session["OrderedBonus"] = orderedBonusQuan;
+        }
         protected void StockDisplayGrid_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName.Equals("ViewEntry"))
             {
                 GridViewRow gvr = (GridViewRow)(((Button)e.CommandSource).NamingContainer);
                 int RowIndex = gvr.RowIndex;
-                int ordetID = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblOrdDet_id")).Text);
-
-                int remQuan = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblRemainQuan")).Text);
-                int orderedQuantity = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblQuantity")).Text);
-                int bonusOrg = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblBonusOrg")).Text);
-                int recQuan = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblRecQuan")).Text);
-                int expQuan = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblExpQuan")).Text);
-                int defQuan = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblDefQuan")).Text);
-                int retQuan = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblRetQuan")).Text);
-                int barSerial = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblBrSerial")).Text);
-                int OrderedMasterID = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblOrdMs_id")).Text);
-                int ProdID = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblProd_id")).Text);
-                String prodDescription = ((Label)StockDisplayGrid.Rows[RowIndex].FindControl("ProductName2")).Text;
-                Session["ordetailID"] = ordetID;
-                Session["ordQuan"] = orderedQuantity;
-                Session["bonusQuan"] = bonusOrg;
-                Session["recQuan"] = recQuan;
-                Session["remQuan"] = remQuan;
-                Session["defQuan"] = defQuan;
-                Session["retQuan"] = retQuan;
-                Session["barserial"] = barSerial;
-                Session["expQuan"] = expQuan;
-                Session["OMID"] = OrderedMasterID;
-                Session["isPO"] = "TRUE";
-                Session["ProdID"] = ProdID;
-                Session["ProdDesc"] = prodDescription;
+                SetSessionValues(RowIndex);
                 Response.Redirect("DisplayOrderDetailEntries.aspx", false);
             }
             if (e.CommandName.Equals("UpdateStock"))
