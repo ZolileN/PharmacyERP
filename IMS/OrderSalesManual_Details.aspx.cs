@@ -18,14 +18,15 @@ namespace IMS
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
         public static DataSet systemSet;
-        public static bool TotalExceeded;
+        //public static bool TotalExceeded;
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
             {
                 lblTotalQuantity.Text = Session["TotalQuantity"].ToString();
-                TotalExceeded = false;
+                //TotalExceeded = false;
                 BindGrid();
+                Session["TotalExceeded"] = false;
             }    
         }
         public void BindGrid()
@@ -41,6 +42,7 @@ namespace IMS
                 SqlDataAdapter dA = new SqlDataAdapter(command);
                 dA.Fill(ds);
 
+                #region Checking Exceeded Quantity
                 int Total = 0;
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
@@ -48,18 +50,20 @@ namespace IMS
                 }
                 if(Total >= Convert.ToInt32(lblTotalQuantity.Text.ToString()))
                 {
-                    TotalExceeded = true;
+                    Session["TotalExceeded"] = true;
                 }
                 else
                 {
-                    TotalExceeded = false;
+                    Session["TotalExceeded"] = false;
                 }
-                    if (ds != null || ds.Tables[0] != null)
-                    {
-                        ProductSet = ds;
-                        StockDisplayGrid.DataSource = ds.Tables[0];
-                        StockDisplayGrid.DataBind();
-                    }
+                #endregion
+
+                if (ds != null || ds.Tables[0] != null)
+                {
+                   ProductSet = ds;
+                   StockDisplayGrid.DataSource = ds.Tables[0];
+                   StockDisplayGrid.DataBind();
+                }
             }
             catch(Exception ex)
             {
@@ -75,7 +79,7 @@ namespace IMS
             int TotalQuantity = 0;
 
             #region Stock Updating Procedure
-            for (int i = 0; i < ProductSet.Tables[0].Rows.Count; i++)
+            /*for (int i = 0; i < ProductSet.Tables[0].Rows.Count; i++)
             {
                 try
                 {
@@ -109,30 +113,30 @@ namespace IMS
                 {
                     connection.Close();
                 }
-            }
+            }*/
             #endregion
 
             #region Updating Main Sale Order Detail Table 
-            try
-            {
-                int OrderDetailID = int.Parse(Session["OderDetailID"].ToString());
-                connection.Open();
-                SqlCommand command = new SqlCommand();
-                command = new SqlCommand("sp_UpdateOrdDetailQuantity", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@p_quantity", TotalQuantity);
-                command.Parameters.AddWithValue("@p_OrderDetailID", OrderDetailID);
+            //try
+            //{
+            //    int OrderDetailID = int.Parse(Session["OderDetailID"].ToString());
+            //    connection.Open();
+            //    SqlCommand command = new SqlCommand();
+            //    command = new SqlCommand("sp_UpdateOrdDetailQuantity", connection);
+            //    command.CommandType = CommandType.StoredProcedure;
+            //    command.Parameters.AddWithValue("@p_quantity", TotalQuantity);
+            //    command.Parameters.AddWithValue("@p_OrderDetailID", OrderDetailID);
 
-                command.ExecuteNonQuery();
-            }
-            catch(Exception ex)
-            {
+            //    command.ExecuteNonQuery();
+            //}
+            //catch(Exception ex)
+            //{
 
-            }
-            finally
-            {
-                connection.Close();
-            }
+            //}
+            //finally
+            //{
+            //    connection.Close();
+            //}
             #endregion
 
             Session["OrderSalesDetail"] = true;
@@ -141,28 +145,27 @@ namespace IMS
         protected void btnDeclineStock_Click(object sender, EventArgs e)
         {
             #region Canceling Selection of Stocks in OrderDetailEntry
-            try
-                {
-                    int productID = int.Parse(Session["ProductID"].ToString());
-                    int OrderDetailID = int.Parse(Session["OderDetailID"].ToString());
+                //try
+                //{
+                //    int productID = int.Parse(Session["ProductID"].ToString());
+                //    int OrderDetailID = int.Parse(Session["OderDetailID"].ToString());
 
-                    connection.Open();
-                    SqlCommand command = new SqlCommand("sp_DeleteSaleOrderDetails", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_OrderDetailID", OrderDetailID);
-                    command.Parameters.AddWithValue("@p_ProductID", productID);
+                //    connection.Open();
+                //    SqlCommand command = new SqlCommand("sp_DeleteSaleOrderDetails", connection);
+                //    command.CommandType = CommandType.StoredProcedure;
+                //    command.Parameters.AddWithValue("@p_OrderDetailID", OrderDetailID);
+                //    command.Parameters.AddWithValue("@p_ProductID", productID);
                   
-                    command.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
+                //    command.ExecuteNonQuery();
+                //}
+                //catch (Exception ex)
+                //{
 
-                }
-                finally
-                {
-                    connection.Close();
-                }
-
+                //}
+                //finally
+                //{
+                //    connection.Close();
+                //}
             #endregion
 
             Session["OrderSalesDetail"] = true;
@@ -170,13 +173,32 @@ namespace IMS
         }
         protected void StockDisplayGrid_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName == "UpdateStock")
+            if (e.CommandName == "Edit")
+            {
+                int sendquantity = int.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblQuantity")).Text);
+                int bonusquantity = int.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblBonus")).Text);
+
+                Session["PreviousValue"] = sendquantity + bonusquantity;
+            }
+            else if (e.CommandName == "UpdateStock")
             {
                     int sendquantity = int.Parse(((TextBox)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("txtQuantity")).Text);
                     int bonusquantity = int.Parse(((TextBox)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("txtBonus")).Text);
                     int availablequantity = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblAvStock")).Text);
+                    int totalquantity = sendquantity + bonusquantity;
+                    int p_totalquantity = 0;
+                    int.TryParse(Session["PreviousValue"].ToString(), out p_totalquantity);
+                    int difference = 0;//totalquantity - p_totalquantity;
 
-                    if ((sendquantity + bonusquantity) <= availablequantity && (sendquantity + bonusquantity) <= Convert.ToInt32(Session["TotalQuantity"].ToString()))
+                    if(p_totalquantity > totalquantity)
+                    {
+                        difference = p_totalquantity - totalquantity;
+                    }
+                    else
+                    {
+                        difference = totalquantity - p_totalquantity;
+                    }
+                    if (totalquantity <= availablequantity && totalquantity <= Convert.ToInt32(Session["TotalQuantity"].ToString()) && difference > 0)
                     {
                         try
                         {
@@ -211,6 +233,28 @@ namespace IMS
                             command.ExecuteNonQuery();
 
 
+                            #region Updating Stock Plus
+                                if (p_totalquantity > 0)
+                                {
+                                    command = new SqlCommand("Sp_UpdateStockBy_StockID", connection);
+                                    command.CommandType = CommandType.StoredProcedure;
+                                    command.Parameters.AddWithValue("@p_StockID", stockID);
+                                    command.Parameters.AddWithValue("@p_quantity", p_totalquantity);
+                                    command.Parameters.AddWithValue("@p_Action", "Add");
+                                    command.ExecuteNonQuery();
+                                }
+                            #endregion
+
+                            #region Updating Stock Minus
+                                command = new SqlCommand("Sp_UpdateStockBy_StockID", connection);
+                                command.CommandType = CommandType.StoredProcedure;
+                                command.Parameters.AddWithValue("@p_StockID", stockID);
+                                command.Parameters.AddWithValue("@p_quantity", totalquantity);
+                                command.Parameters.AddWithValue("@p_Action", "Minus");
+                                command.ExecuteNonQuery();
+                            #endregion
+
+
                         }
                         catch (Exception ex)
                         {
@@ -237,7 +281,9 @@ namespace IMS
                     int stockID = int.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblStockID")).Text);
                     int ProductID = int.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblProductID")).Text);
                     int OrderDetailID = int.Parse(Session["OderDetailID"].ToString());
-                  
+                    int sendquantity = int.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblQuantity")).Text);
+                    int bonusquantity = int.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblBonus")).Text);
+                    int totalquantity = sendquantity + bonusquantity;
 
                     connection.Open();
                     SqlCommand command = new SqlCommand("sp_EntryDeleteSaleOrderDetails", connection);
@@ -247,6 +293,15 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_StockID", stockID);
                   
                     command.ExecuteNonQuery();
+
+                    #region Updating Stock
+                    command = new SqlCommand("Sp_UpdateStockBy_StockID", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@p_StockID", stockID);
+                    command.Parameters.AddWithValue("@p_quantity", totalquantity);
+                    command.Parameters.AddWithValue("@p_Action", "Add");
+                    command.ExecuteNonQuery();
+                    #endregion
 
                 }
                 catch (Exception ex)
@@ -287,7 +342,7 @@ namespace IMS
                     RefreshButton.Enabled = true;
                 }
 
-                if (TotalExceeded.Equals(true))
+                if (Session["TotalExceeded"].Equals(true))
                 {
                     EditButton.Enabled = false;
                 }

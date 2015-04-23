@@ -67,6 +67,24 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.TextBox SelectQuantity;
         
         /// <summary>
+        /// SelectBonus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox SelectBonus;
+        
+        /// <summary>
+        /// SelectDiscount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox SelectDiscount;
+        
+        /// <summary>
         /// btnCreateOrder control.
         /// </summary>
         /// <remarks>

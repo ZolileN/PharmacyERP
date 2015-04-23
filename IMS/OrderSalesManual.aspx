@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-     <h3>Sale Order(s)</h3>
+     <h3>Generate Sale Orders</h3>
     <br />
     <br />
 
@@ -27,10 +27,18 @@
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="SelectProduct" CssClass="text-danger" ErrorMessage="The Product field is required." ValidationGroup="ExSave"/>
              
                 </td>
-            <td><asp:Label runat="server" AssociatedControlID="SelectQuantity" CssClass="control-label">Enter Quantity</asp:Label></td>
+            <td><asp:Label runat="server" AssociatedControlID="SelectQuantity" CssClass="control-label">Enter Send Quantity</asp:Label></td>
             <td> <asp:TextBox runat="server" ID="SelectQuantity" CssClass="form-control" /></td>
         </tr>
-
+         <tr>
+            
+            <td><asp:Label runat="server" AssociatedControlID="SelectBonus" CssClass="control-label">Enter Bonus Quantity</asp:Label></td>
+            <td> <asp:TextBox runat="server" ID="SelectBonus" CssClass="form-control" /></td>
+            
+            <td><asp:Label runat="server" AssociatedControlID="SelectDiscount" CssClass="control-label">Enter Discount %</asp:Label></td>
+            <td> <asp:TextBox runat="server" ID="SelectDiscount" CssClass="form-control" /></td>
+        </tr>
+        </tr>
         <tr>
             <td></td>
             <td colspan="100%">
@@ -140,13 +148,25 @@
                           <ItemStyle  Width="60px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
 
-                     <asp:TemplateField HeaderText="Quantity"  HeaderStyle-Width ="60px"> 
+                     <asp:TemplateField HeaderText="Sent Quantity"  HeaderStyle-Width ="120px"> 
                         <ItemTemplate>
                             <asp:Label ID="lblQuantity" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Qauntity") %>' ></asp:Label>
                         </ItemTemplate>
                         
                         <EditItemTemplate>
                             <asp:TextBox ID="txtQuantity" CssClass="form-control" runat="server" Text='<%#Eval("Qauntity") %>' ></asp:TextBox>
+                             <asp:RequiredFieldValidator runat="server" ControlToValidate="txtQuantity" CssClass="text-danger" ErrorMessage="The product quantity field is required." />
+                        </EditItemTemplate>
+                          <ItemStyle  Width="60px" HorizontalAlign="Left"/>
+                    </asp:TemplateField>
+
+                      <asp:TemplateField HeaderText="Bonus Quantity"  HeaderStyle-Width ="120px"> 
+                        <ItemTemplate>
+                            <asp:Label ID="lblBonus" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Bonus") %>' ></asp:Label>
+                        </ItemTemplate>
+                        
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtBonus" CssClass="form-control" runat="server" Text='<%#Eval("Bonus") %>' ></asp:TextBox>
                              <asp:RequiredFieldValidator runat="server" ControlToValidate="txtQuantity" CssClass="text-danger" ErrorMessage="The product quantity field is required." />
                         </EditItemTemplate>
                           <ItemStyle  Width="60px" HorizontalAlign="Left"/>

@@ -8,7 +8,7 @@
           </script>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-      <h2> Placed Sale Order(s)</h2> 
+      <h2> View Sale Orders</h2> 
     <br />
      <script src="Scripts/jquery.js"  type="text/javascript"></script>
           <script src="Scripts/jquery-ui.js" type="text/javascript"></script>

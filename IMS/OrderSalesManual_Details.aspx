@@ -17,7 +17,7 @@
                  <Columns>
                       <asp:TemplateField HeaderText="Action" HeaderStyle-Width ="220px">
                         <ItemTemplate>
-                            <asp:Button CssClass="btn btn-default" ID="btnEdit" Text="Edit" runat="server" CommandName="Edit" />
+                            <asp:Button CssClass="btn btn-default" ID="btnEdit" Text="Edit" runat="server" CommandName="Edit" CommandArgument='<%# Container.DataItemIndex %>' />
                             <asp:Button CssClass="btn btn-default" ID="btnRefresh" Text="Refresh" runat="server" CommandName="Refresh" CommandArgument='<%# Container.DataItemIndex %>' />
                         </ItemTemplate>
                         <EditItemTemplate>
@@ -115,7 +115,7 @@
              </asp:GridView>
         <br />
          <asp:Button ID="btnAcceptStock" runat="server" OnClick="btnAcceptStock_Click" Text="Accept" CssClass="btn btn-large" Visible="true"/>
-         <asp:Button ID="btnDeclineStock" runat="server" OnClick="btnDeclineStock_Click" Text="Cancel" CssClass="btn btn-large" Visible="true" />
+         <asp:Button ID="btnDeclineStock" runat="server" OnClick="btnDeclineStock_Click" Text="Cancel" CssClass="btn btn-large" Visible="false" />
       </div>
       </div>
 </asp:Content>

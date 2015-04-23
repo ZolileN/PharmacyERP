@@ -141,13 +141,13 @@ namespace IMS
             #endregion
         }
 
-        private void UpdateStockMinus(int orderDetailID, int quantity)
+        private void UpdateStockMinus(int orderDetailID, int quantity, int ProductID, float Discount, int Bonus, int Sent)
         {
             try
             {
                 DataSet stockDet;
                 connection.Open();
-                SqlCommand command = new SqlCommand("Sp_GetStockBy_OrderDetID", connection);
+                SqlCommand command = new SqlCommand("Sp_GetStockBy_SaleOrderDetID", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_OrderDetailID", orderDetailID);
                 command.Parameters.AddWithValue("@p_StoredAt", int.Parse(Session["UserSys"].ToString()));
@@ -161,17 +161,37 @@ namespace IMS
                 foreach (DataRow row in stockDet.Tables[0].Rows)
                 {
                     int exQuan = int.Parse(row["Quantity"].ToString());
-                    if (quantity > 0)
+                    if (Sent > 0 && exQuan > 0)
                     {
-                        if (exQuan >= quantity)
+                        if (exQuan >= Sent)
                         {
-                            stockSet.Add(int.Parse(row["StockID"].ToString()), quantity);
+                            stockSet.Add(int.Parse(row["StockID"].ToString()), Sent);
                             break;
                         }
-                        else if (exQuan < quantity)
+                        else if (exQuan < Sent)
                         {
                             stockSet.Add(int.Parse(row["StockID"].ToString()), exQuan);
-                            quantity = quantity - exQuan;
+                            Sent = Sent - exQuan;
+                        }
+                    }
+                }
+
+                Dictionary<int, int> stockSetBonus = new Dictionary<int, int>();
+
+                foreach (DataRow row in stockDet.Tables[0].Rows)
+                {
+                    int exQuan = int.Parse(row["Quantity"].ToString());
+                    if (Bonus > 0 && exQuan > 0)
+                    {
+                        if (exQuan >= Bonus)
+                        {
+                            stockSetBonus.Add(int.Parse(row["StockID"].ToString()), Bonus);
+                            break;
+                        }
+                        else if (exQuan < Bonus)
+                        {
+                            stockSetBonus.Add(int.Parse(row["StockID"].ToString()), exQuan);
+                            Bonus = Bonus - exQuan;
                         }
                     }
                 }
@@ -179,21 +199,78 @@ namespace IMS
 
                 foreach (int id in stockSet.Keys)
                 {
-                    command = new SqlCommand("Sp_UpdateStockBy_StockID", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_StockID", id);
-                    command.Parameters.AddWithValue("@p_quantity", stockSet[id]);
-                    command.Parameters.AddWithValue("@p_Action", "Minus");
-                    command.ExecuteNonQuery();
+                    DataView dv = stockDet.Tables[0].DefaultView;
+                    dv.RowFilter = "StockID = " + id;
+                    DataTable dt = dv.ToTable();
 
-                    #region Generation of Packing List
-                    //command = new SqlCommand("sp_PackingListGeneration", connection);
-                    //command.CommandType = CommandType.StoredProcedure;
-                    //command.Parameters.AddWithValue("@p_StockID", id);
-                    //command.Parameters.AddWithValue("@p_quantity", stockSet[id]);
-                    //command.Parameters.AddWithValue("@p_OrderDetailID", orderDetailID);
-                    //command.ExecuteNonQuery();
-                    #endregion
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        command = new SqlCommand("sp_EntrySaleOrderDetails", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@p_OrderDetailID", orderDetailID);
+                        command.Parameters.AddWithValue("@p_ProductID", dt.Rows[0]["ProductID"]);
+                        command.Parameters.AddWithValue("@p_StockID", id);
+                        command.Parameters.AddWithValue("@p_CostPrice", dt.Rows[0]["UCostPrice"]);
+                        command.Parameters.AddWithValue("@p_SalePrice", dt.Rows[0]["USalePrice"]);
+                        command.Parameters.AddWithValue("@p_Expiry", dt.Rows[0]["ExpiryDate"]);
+                        command.Parameters.AddWithValue("@p_Batch", dt.Rows[0]["BatchNumber"]);
+                        command.Parameters.AddWithValue("@p_SendQuantity", stockSet[id]);
+                        command.Parameters.AddWithValue("@p_BonusQuantity", 0);
+                        command.Parameters.AddWithValue("@p_BarCode", dt.Rows[0]["BarCode"]);
+                        command.Parameters.AddWithValue("@p_Discount", Discount);
+                        command.ExecuteNonQuery();
+
+                        command = new SqlCommand("Sp_UpdateStockBy_StockID", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@p_StockID", id);
+                        command.Parameters.AddWithValue("@p_quantity", stockSet[id]);
+                        command.Parameters.AddWithValue("@p_Action", "Minus");
+                        command.ExecuteNonQuery();
+                    }
+
+                }
+
+                foreach (int id in stockSetBonus.Keys)
+                {
+                    DataView dv = stockDet.Tables[0].DefaultView;
+                    dv.RowFilter = "StockID = " + id;
+                    DataTable dt = dv.ToTable();
+
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        command = new SqlCommand("sp_EntrySaleOrderDetails", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@p_OrderDetailID", orderDetailID);
+                        command.Parameters.AddWithValue("@p_ProductID", dt.Rows[0]["ProductID"]);
+                        command.Parameters.AddWithValue("@p_StockID", id);
+                        command.Parameters.AddWithValue("@p_CostPrice", dt.Rows[0]["UCostPrice"]);
+                        command.Parameters.AddWithValue("@p_SalePrice", dt.Rows[0]["USalePrice"]);
+                        command.Parameters.AddWithValue("@p_Expiry", dt.Rows[0]["ExpiryDate"]);
+                        command.Parameters.AddWithValue("@p_Batch", dt.Rows[0]["BatchNumber"]);
+
+                        if(stockSet.ContainsKey(id))
+                        {
+                            command.Parameters.AddWithValue("@p_SendQuantity", stockSet[id]);
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@p_SendQuantity", 0);
+                        }
+                        
+                        
+                        command.Parameters.AddWithValue("@p_BonusQuantity", stockSetBonus[id]);
+                        command.Parameters.AddWithValue("@p_BarCode", dt.Rows[0]["BarCode"]);
+                        command.Parameters.AddWithValue("@p_Discount", Discount);
+                        command.ExecuteNonQuery();
+
+                        command = new SqlCommand("Sp_UpdateStockBy_StockID", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@p_StockID", id);
+                        command.Parameters.AddWithValue("@p_quantity", stockSetBonus[id]);
+                        command.Parameters.AddWithValue("@p_Action", "Minus");
+                        command.ExecuteNonQuery();
+                    }
+
                 }
 
             }
@@ -211,7 +288,7 @@ namespace IMS
             {
                 DataSet stockDet;
                 connection.Open();
-                SqlCommand command = new SqlCommand("Sp_GetStockBy_OrderDetID", connection);
+                SqlCommand command = new SqlCommand("Sp_GetStockBy_SaleOrderDetID", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_OrderDetailID", orderDetailID);
                 command.Parameters.AddWithValue("@p_StoredAt", int.Parse(Session["UserSys"].ToString()));
@@ -220,51 +297,51 @@ namespace IMS
                 SqlDataAdapter dA = new SqlDataAdapter(command);
                 dA.Fill(ds);
                 stockDet = ds;
-                Dictionary<int, int> stockSet = new Dictionary<int, int>();
+                //Dictionary<int, int> stockSet = new Dictionary<int, int>();
 
-                foreach (DataRow row in stockDet.Tables[0].Rows)
-                {
-                    int exQuan = int.Parse(row["Quantity"].ToString());
-                    if (quantity > 0)
+                //foreach (DataRow row in stockDet.Tables[0].Rows)
+                //{
+                //    int exQuan = int.Parse(row["Quantity"].ToString());
+                //    if (quantity > 0)
+                //    {
+                //        if (exQuan >= quantity)
+                //        {
+                //            stockSet.Add(int.Parse(row["StockID"].ToString()), quantity);
+                //            break;
+                //        }
+                //        else if (exQuan < quantity)
+                //        {
+                //            stockSet.Add(int.Parse(row["StockID"].ToString()), exQuan);
+                //            quantity = quantity - exQuan;
+                //        }
+                //    }
+                //}
+
+
+                    command = new SqlCommand("sp_GetStockID_OrderDetails", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@p_orderDetID", orderDetailID);
+                    DataSet StockDs = new DataSet();
+                    SqlDataAdapter sA = new SqlDataAdapter(command);
+                    sA.Fill(StockDs);
+
+                    for (int i = 0; i < StockDs.Tables[0].Rows.Count;i++ )
                     {
-                        if (exQuan >= quantity)
-                        {
-                            stockSet.Add(int.Parse(row["StockID"].ToString()), quantity);
-                            break;
-                        }
-                        else if (exQuan < quantity)
-                        {
-                            stockSet.Add(int.Parse(row["StockID"].ToString()), exQuan);
-                            quantity = quantity - exQuan;
-                        }
+                        command = new SqlCommand("Sp_UpdateStockBy_StockID", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@p_StockID", StockDs.Tables[0].Rows[i]["StockID"]);
+                        command.Parameters.AddWithValue("@p_quantity", StockDs.Tables[0].Rows[i]["Quantity"]);
+                        command.Parameters.AddWithValue("@p_Action", "Plus");
+                        command.ExecuteNonQuery();
                     }
-                }
+                     
 
-
-                foreach (int id in stockSet.Keys)
-                {
-                    command = new SqlCommand("Sp_UpdateStockBy_StockID", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_StockID", id);
-                    command.Parameters.AddWithValue("@p_quantity", stockSet[id]);
-                    command.Parameters.AddWithValue("@p_Action", "Plus");
-                    command.ExecuteNonQuery();
-
-                    #region Deletetion of Packing List
-                    /*command = new SqlCommand("sp_PackingListGeneration", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_StockID", id);
-                    command.Parameters.AddWithValue("@p_quantity", stockSet[id]);
-                    command.Parameters.AddWithValue("@p_OrderDetailID", orderDetailID);
-                    command.ExecuteNonQuery();*/
-                    #endregion
-                }
 
             }
             catch (Exception exp) { }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open) { connection.Close(); }
                 //Response.Redirect("Warehouse_StoreRequests.aspx");
             }
         }
@@ -396,9 +473,12 @@ namespace IMS
             {
                 if (e.CommandName.Equals("UpdateStock"))
                 {
+                    //lblProductID
                     int quan = int.Parse(((TextBox)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("txtQuantity")).Text);
+                    int bonus = int.Parse(((TextBox)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("txtBonus")).Text);
                     int availablestock = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblAvStock")).Text);
                     int orderDetID = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("OrderDetailNo")).Text);
+                    int ProductID = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblProductID")).Text);
                     if (quan <= availablestock)
                     {
                         connection.Open();
@@ -408,6 +488,22 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_Qauntity", quan);
 
                         command.ExecuteNonQuery();
+
+
+                        UpdateStockPlus(orderDetID, (quan + bonus));
+
+                        #region SystemGenerated Selection of Stock
+
+                        #region Updating SelectedQuantity
+                        float Discount = 0;
+                        float.TryParse(SelectDiscount.Text.ToString(), out Discount); // Needs to check
+                        int Total = quan + bonus;
+
+                        UpdateStockMinus(orderDetID, Total, ProductID, Discount, bonus, quan);
+
+                        #endregion
+
+                        #endregion
                     }
                     else
                     {
@@ -453,9 +549,10 @@ namespace IMS
                     int orderDetID = int.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("OrderDetailNo")).Text);
                     int ProductID = int.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblProductID")).Text);
                     int quan = int.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblQuantity")).Text);
+                    int bonus = int.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblBonus")).Text);
                     Session["OderDetailID"] = orderDetID;
                     Session["ProductID"] = ProductID;
-                    Session["TotalQuantity"] = quan;
+                    Session["TotalQuantity"] = quan + bonus;
                     Session["SelectedIndex"] = StockAt.SelectedIndex;
                     Session["Invoice"] = txtIvnoice.Text;
                     Response.Redirect("OrderSalesManual_Details.aspx");
@@ -529,7 +626,7 @@ namespace IMS
                 connection.Close();
             }
 
-            if (Convert.ToInt32(SelectQuantity.Text) <= RemainingStock)
+            if ((Convert.ToInt32(SelectQuantity.Text) + Convert.ToInt32(SelectBonus.Text)) <= RemainingStock)
             {
                 if (FirstOrder.Equals(false))
                 {
@@ -613,6 +710,16 @@ namespace IMS
                         {
                             command.Parameters.AddWithValue("@p_OrderQuantity", DBNull.Value);
                         }
+
+                        if (int.TryParse(SelectBonus.Text.ToString(), out BonusOrdered))
+                        {
+                            command.Parameters.AddWithValue("@p_BonusQuantity", BonusOrdered);
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@p_BonusQuantity", DBNull.Value);
+                        }
+
                         command.Parameters.AddWithValue("@p_status", "Pending");
                         command.Parameters.AddWithValue("@p_comments", "Generated to Outside Store");
                         DataSet LinkResult = new DataSet();
@@ -631,6 +738,26 @@ namespace IMS
                     {
                         connection.Close();
                     }
+                    #endregion
+
+                    #region SystemGenerated Selection of Stock
+                    
+                    #region Updating SelectedQuantity
+                    
+                    int Product, SendQuantity, BonusQuantity;
+                    Product = SendQuantity = BonusQuantity =0;
+                    float Discount = 0;
+                    int.TryParse(SelectProduct.SelectedValue.ToString(), out Product);
+                    int.TryParse(SelectQuantity.Text.ToString(), out SendQuantity);
+                    int.TryParse(SelectBonus.Text.ToString(), out BonusQuantity);
+
+                    float.TryParse(SelectDiscount.Text.ToString(), out Discount);
+                    int Total = SendQuantity + BonusQuantity;
+
+                    UpdateStockMinus(Convert.ToInt32(Session["DetailID"].ToString()), Total, Product, Discount, BonusQuantity, SendQuantity);
+
+                    #endregion
+
                     #endregion
 
                     FirstOrder = true;
@@ -708,7 +835,14 @@ namespace IMS
                             {
                                 command.Parameters.AddWithValue("@p_OrderQuantity", DBNull.Value);
                             }
-
+                            if (int.TryParse(SelectBonus.Text.ToString(), out BonusOrdered))
+                            {
+                                command.Parameters.AddWithValue("@p_BonusQuantity", BonusOrdered);
+                            }
+                            else
+                            {
+                                command.Parameters.AddWithValue("@p_BonusQuantity", DBNull.Value);
+                            }
 
                             command.Parameters.AddWithValue("@p_status", "Pending");
                             command.Parameters.AddWithValue("@p_comments", "Generated to Outside Store");
@@ -729,6 +863,26 @@ namespace IMS
                         {
                             connection.Close();
                         }
+                        #endregion
+
+                        #region SystemGenerated Selection of Stock
+
+                        #region Updating SelectedQuantity
+
+                        int Product, SendQuantity, BonusQuantity;
+                        Product = SendQuantity = BonusQuantity = 0;
+                        float Discount = 0;
+                        int.TryParse(SelectProduct.SelectedValue.ToString(), out Product);
+                        int.TryParse(SelectQuantity.Text.ToString(), out SendQuantity);
+                        int.TryParse(SelectBonus.Text.ToString(), out BonusQuantity);
+
+                        float.TryParse(SelectDiscount.Text.ToString(), out Discount);
+                        int Total = SendQuantity + BonusQuantity;
+
+                        UpdateStockMinus(Convert.ToInt32(Session["DetailID"].ToString()), Total, Product, Discount, BonusQuantity, SendQuantity);
+
+                        #endregion
+
                         #endregion
                     }
                     else
@@ -873,7 +1027,7 @@ namespace IMS
                             command2.CommandType = CommandType.StoredProcedure;
                             command2.Parameters.AddWithValue("@p_StockID", StockID);
                             command2.Parameters.AddWithValue("@p_quantity", quantity);
-                            command2.Parameters.AddWithValue("@p_Action", "Plus");
+                            command2.Parameters.AddWithValue("@p_Action", "Add");
                             command2.ExecuteNonQuery();
                         }
 
@@ -1000,7 +1154,7 @@ namespace IMS
 
                 if(Session["ExistingOrder"].Equals(true))
                 {
-                    btnDetail.Enabled = false;
+                   // btnDetail.Enabled = false;
                 }
                 else
                 {
