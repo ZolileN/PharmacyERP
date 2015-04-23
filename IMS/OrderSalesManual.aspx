@@ -35,7 +35,7 @@
             <td></td>
             <td colspan="100%">
 
-                <asp:Button ID="btnCreateOrder" runat="server" OnClick="btnCreateOrder_Click" Text="ADD" CssClass="btn btn-primary" ValidationGroup="ExSave"/>
+                <asp:Button ID="btnCreateOrder" runat="server" OnClick="btnCreateOrder_Click" Text="ADD" CssClass="btn btn-primary" OnClientClick="ValidateForm()" ValidationGroup="ExSave"/>
                 <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Text="REFRESH" CssClass="btn btn-default" Visible="False" />
                 <asp:Button ID="btnCancelOrder" runat="server" OnClick="btnCancelOrder_Click" Text="GO BACK" CssClass="btn btn-default btn-large" />
 
@@ -182,4 +182,7 @@
             </div>
         </div>
     </div>
+
+     
 </asp:Content>
+

@@ -500,7 +500,12 @@ namespace IMS
 
         protected void btnCreateOrder_Click(object sender, EventArgs e)
         {
-
+         
+            if (txtProduct.Text.Length < 3)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please enter at least three words to search product')", true);
+                return; 
+            }
             btnAccept.Visible = true;
             btnDecline.Visible = true;
             int RemainingStock = 0;
