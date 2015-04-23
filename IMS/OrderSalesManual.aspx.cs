@@ -681,6 +681,7 @@ namespace IMS
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(QuantitySet);
                 RemainingStock = Convert.ToInt32(QuantitySet.Tables[0].Rows[0][0].ToString());
+               
             }
             catch(Exception ex)
             {
@@ -1008,7 +1009,7 @@ namespace IMS
             }
             else
             {
-                WebMessageBoxUtil.Show("Remaining Stock is less then the entered quantity, please enter less quantity to proceed");
+                WebMessageBoxUtil.Show("Available Stock ('" + RemainingStock.ToString() + "') is less than the entered quantity [BONUS + SENT]");
                 //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Remaining Stock is less then the entered quantity, please enter less quantity to proceed')", true);
             }
             BindGrid();
@@ -1294,7 +1295,45 @@ namespace IMS
                     packSize.Visible = true;
                     Label3.Visible = true;
                 }
+
+                Label OrderDetailID = (Label)e.Row.FindControl("OrderDetailNo");
+                GridView Details = (GridView)e.Row.FindControl("StockDetailDisplayGrid");
+
+                #region Display Requests
+                try
+                {
+                    if (connection.State == ConnectionState.Open)
+                    {
+                        connection.Close();
+                    }
+                    connection.Open();
+                    SqlCommand command = new SqlCommand("sp_getSaleOrderDetail", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@p_OrderDetID", Convert.ToInt32(OrderDetailID.Text));
+
+                    DataSet ds = new DataSet();
+
+                    SqlDataAdapter sA = new SqlDataAdapter(command);
+                    sA.Fill(ds);
+                    ProductSet = ds;
+                    Details.DataSource = null;
+                    Details.DataSource = ds.Tables[0];
+                    Details.DataBind();
+                }
+                catch (Exception ex)
+                {
+
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            
+                #endregion
+
             }
+
+           
         }
 
         protected void StockAt_SelectedIndexChanged(object sender, EventArgs e)
