@@ -18,7 +18,7 @@ namespace IMS
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public DataSet ProductSet;
         public  DataSet systemSet;
-        public  bool FirstOrder;
+        public static bool FirstOrder;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -29,7 +29,7 @@ namespace IMS
                 txtIvnoice.Enabled = false;
                 if (Session["OrderSalesDetail"] != null && Session["OrderSalesDetail"].Equals(true))
                 {
-                    FirstOrder = true;
+                    Session["FirstOrder"] = true;
                     systemSet = new DataSet();
                     ProductSet = new DataSet();
                     LoadData();
@@ -73,7 +73,7 @@ namespace IMS
                 }
                 else
                 {
-                    FirstOrder = false;
+                    Session["FirstOrder"] = false;
                     Session["OrderSalesDetail"] = false;
                     Session["ExistingOrder"] = false;
                     systemSet = new DataSet();
@@ -106,6 +106,67 @@ namespace IMS
                     }
                     #endregion
                     LoadData();
+                }
+            }
+        }
+
+        protected void Page_Unload(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Session["OrderNumber"] != null)
+                {
+                    int orderID = int.Parse(Session["OrderNumber"].ToString());
+                    connection.Open();
+
+                    SqlCommand command = new SqlCommand("sp_GetOrderDetailRecieve", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@p_OrderID", orderID);
+                    DataSet ds = new DataSet();
+                    SqlDataAdapter sA = new SqlDataAdapter(command);
+                    sA.Fill(ds);
+
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        int StockID = int.Parse(ds.Tables[0].Rows[i]["StockID"].ToString());
+                        int quantity = int.Parse(ds.Tables[0].Rows[i]["Quantity"].ToString());
+                        SqlCommand command2 = new SqlCommand();
+                        command2 = new SqlCommand("Sp_UpdateStockBy_StockID", connection);
+                        command2.CommandType = CommandType.StoredProcedure;
+                        command2.Parameters.AddWithValue("@p_StockID", StockID);
+                        command2.Parameters.AddWithValue("@p_quantity", quantity);
+                        command2.Parameters.AddWithValue("@p_Action", "Add");
+                        command2.ExecuteNonQuery();
+                    }
+
+                    command = new SqlCommand("sp_DeleteSO", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@p_OrderID", orderID);
+                    command.ExecuteNonQuery();
+                }
+                Session["OrderNumber"] = null;
+                Session["OrderSalesDetail"] = "false";
+                txtProduct.Text = "";
+                SelectProduct.Visible = false;
+                StockAt.Enabled = true;
+                StockDisplayGrid.DataSource = null;
+                StockDisplayGrid.DataBind();
+                SelectQuantity.Text = "";
+                SelectProduct.SelectedIndex = -1;
+                StockAt.SelectedIndex = -1;
+                btnAccept.Visible = false;
+                btnDecline.Visible = false;
+                Session["FirstOrder"] = false;
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
                 }
             }
         }
@@ -442,7 +503,7 @@ namespace IMS
                 StockAt.SelectedIndex = -1;
                 btnAccept.Visible = false;
                 btnDecline.Visible = false;
-                FirstOrder = false;
+                Session["FirstOrder"] = false;
             }
             catch (Exception ex)
             {
@@ -625,7 +686,7 @@ namespace IMS
 
             if ((Convert.ToInt32(SelectQuantity.Text) + Convert.ToInt32(SelectBonus.Text)) <= RemainingStock)
             {
-                if (FirstOrder.Equals(false))
+                if (Session["FirstOrder"].Equals(false))
                 {
                     #region Creating Order
 
@@ -757,7 +818,7 @@ namespace IMS
 
                     #endregion
 
-                    FirstOrder = true;
+                    Session["FirstOrder"] = true;
                 }
                 else
                 {
@@ -887,11 +948,7 @@ namespace IMS
                         ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Record can not be inserted, because it is already present')", true);
                     }
                 }
-            }
-            else
-            {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Remaining Stock is less then the entered quantity, please enter less quantity to proceed')", true);
-            }
+            
 
             // needs to check this //
             #region Populate Product Info
@@ -925,6 +982,13 @@ namespace IMS
             }
             #endregion
 
+
+            }
+            else
+            {
+                WebMessageBoxUtil.Show("Remaining Stock is less then the entered quantity, please enter less quantity to proceed");
+                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Remaining Stock is less then the entered quantity, please enter less quantity to proceed')", true);
+            }
             BindGrid();
             txtProduct.Text = "";
             SelectProduct.Visible = false;
@@ -1045,7 +1109,7 @@ namespace IMS
                     StockAt.SelectedIndex = -1;
                     btnAccept.Visible = false;
                     btnDecline.Visible = false;
-                    FirstOrder = false;
+                    Session["FirstOrder"] = false;
                 }
                 catch (Exception ex)
                 {
@@ -1082,7 +1146,7 @@ namespace IMS
                 connection.Open();
 
                 Text = Text + "%";
-                SqlCommand command = new SqlCommand("SELECT Distinct tbl_ProductMaster.* From tbl_ProductMaster INNER JOIN tblStock_Detail ON tbl_ProductMaster.ProductID = tblStock_Detail.ProductID Where tbl_ProductMaster.Product_Name LIKE '" + Text + "'", connection);
+                SqlCommand command = new SqlCommand("SELECT Distinct tbl_ProductMaster.* From tbl_ProductMaster INNER JOIN tblStock_Detail ON tbl_ProductMaster.ProductID = tblStock_Detail.ProductID Where tbl_ProductMaster.Product_Name LIKE '" + Text + "' AND tblStock_Detail.StoredAt = 1", connection); // Stored at must be set to UserSys in future
                 DataSet ds = new DataSet();
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
