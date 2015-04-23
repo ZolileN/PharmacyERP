@@ -110,6 +110,7 @@ namespace IMS
         }
         protected void btnAccept_Click(object sender, EventArgs e)
         {
+            Session["isGenOption"] = "true";
             Response.Redirect("PO_GENERATE.aspx", false);
         }
 
@@ -166,6 +167,8 @@ namespace IMS
                 btnAccept.Visible = false;
                 btnDecline.Visible = false;
                 FirstOrder = false;
+                lblttlcst.Visible = false;
+                lblTotalCostALL.Visible = false;
             }
             catch(Exception ex)
             {
@@ -798,8 +801,21 @@ namespace IMS
             {
                 //if (Session["FromViewPlacedOrders"].ToString().Equals("true") && Session["FromViewPlacedOrders"].ToString() != null && Session["FromViewPlacedOrders"] != null)
                 //{
-                    Session["OrderNumber"] = "";
-                    Session["FromViewPlacedOrders"] = "false";
+                if (Session["isGenOption"] != null)
+                {
+                    if (!Session["isGenOption"].ToString().Equals("true"))
+                    {
+                        Session["OrderNumber"] = "";
+                        Session["FromViewPlacedOrders"] = "false";
+                    }
+                    else 
+                    {
+                       
+                        Session["FromViewPlacedOrders"] = "false";
+                    }
+                }
+               
+                
                 //}
             }
             catch(Exception ex)
