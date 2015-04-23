@@ -9,6 +9,7 @@ using System.Data.Sql;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Configuration;
+using System.IO;
 
 namespace IMS
 {
@@ -178,7 +179,7 @@ namespace IMS
         {
             try
             {
-                connection.Open();
+                /*connection.Open();
                 SqlCommand command = new SqlCommand("sp_GetSaleOrderDetailList", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_OrderID", Convert.ToInt32(Session["RequestedNO"].ToString()));
@@ -192,6 +193,34 @@ namespace IMS
                 Response.AppendHeader("content-disposition", "attachment; filename=" + convertedFilePath);
                 Response.ContentType = "Application/msexcel";
                 Response.WriteFile(convertedFilePath);
+                Response.End();*/
+
+                connection.Open();
+                SqlCommand command = new SqlCommand("sp_GetSaleOrderDetailList", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_OrderID", Convert.ToInt32(Session["RequestedNO"].ToString()));
+                DataSet ds = new DataSet();
+                SqlDataAdapter sA = new SqlDataAdapter(command);
+                sA.Fill(ds);
+
+                MyExcel.FILE_PATH = Server.MapPath(@"~\SaleOrderFormat\").ToString();
+
+                // Excel.Workbook myWorkBook;
+                String fileName = "";
+                fileName = MyExcel.WriteExcelWithSalesOrderInfo(SaleOrder.Text, SendDate.Text, (Environment.NewLine + To.Text + Environment.NewLine + ToAddress.Text), ds, Server.MapPath(@"~\SaleOrderFormat\"));
+                string[] files = fileName.Split(';');
+                Response.Clear();
+                Response.Buffer = true;
+                Response.AppendHeader("content-disposition", "attachment; filename=" + files[1]);
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+                Response.Charset = "UTF-8";
+
+                String Path1 = Path.Combine(files[0], files[1]);
+                string url = @"~/SaleOrderFormat/" + files[1];
+
+
+                Response.Redirect(url);
                 Response.End();
             }
             catch(Exception ex)

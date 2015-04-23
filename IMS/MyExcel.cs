@@ -25,9 +25,7 @@ namespace IMS
         }
         public static void InitializeExcel()
         {
-            MyApp = new Excel.Application();
-            MyApp.Visible = false;            
-            lastRow = 22;// MySheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell).Row;
+         
         }
         #region Unused Code
         //public static BindingList<Employee> ReadMyExcel()
@@ -94,11 +92,12 @@ namespace IMS
 
         public static string WriteExcelWithSalesOrderInfo(string salesOrderNo, string salesOrderDate, string salesOrderBillTo, DataSet dataset, String FilePath)
         {
-            string filePath = FILE_PATH + "SalesOrder_" + salesOrderNo + ".xlsx";
-            string fileName = "SalesOrder_" + DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss") + ".xlsx";
+            String dateVal = DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss");
+            string filePath = FILE_PATH + "SalesOrder_" + dateVal + ".xlsx";
+            string fileName = "SalesOrder_" + dateVal + ".xlsx";
             MyApp = new Excel.Application();
             MyApp.Visible = false;
-            lastRow = 22;
+            lastRow = 22;// MySheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell).Row;
             MyBook = MyApp.Workbooks.Open(FILE_PATH + "SalesOrder.xlsx");
             MySheet = (Excel.Worksheet)MyBook.Sheets[1]; // Explict cast is not required here
             try
@@ -115,7 +114,7 @@ namespace IMS
                     DateTime dtTIme = DateTime.MinValue;
 
                     DateTime.TryParse(item["ExpiryDate"].ToString(), out dtTIme);
-                    
+
                     MySheet.Cells[lastRow, 2] = item["Description"].ToString();//ITEM DESCRIPTION
                     MySheet.Cells[lastRow, 3] = dtTIme.ToShortDateString();//Expiry Date
                     MySheet.Cells[lastRow, 4] = item["BatchNumber"].ToString();//batch No
@@ -131,8 +130,8 @@ namespace IMS
             catch (Exception ex)
             { //throw ex;
             }
-
-            return FILE_PATH + ";" + fileName; 
+            //return MyBook;
+            return FILE_PATH + ";" + fileName; // "SalesOrder_" + salesOrderNo + ".xlsx";
         }
     }
 }

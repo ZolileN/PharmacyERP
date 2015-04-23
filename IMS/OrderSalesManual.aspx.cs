@@ -38,7 +38,10 @@ namespace IMS
                     #region Populating System Types
                     try
                     {
-                        connection.Open();
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
                         SqlCommand command = new SqlCommand("Select * From tbl_System WHERE System_RoleID =2;", connection); // needs to be completed
                         DataSet ds = new DataSet();
                         SqlDataAdapter sA = new SqlDataAdapter(command);
@@ -81,7 +84,10 @@ namespace IMS
                     #region Populating System Types
                     try
                     {
-                        connection.Open();
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
                         SqlCommand command = new SqlCommand("Select * From tbl_System WHERE System_RoleID =2;", connection); // needs to be completed
                         DataSet ds = new DataSet();
                         SqlDataAdapter sA = new SqlDataAdapter(command);
@@ -211,7 +217,11 @@ namespace IMS
             try
             {
                 DataSet stockDet;
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+
                 SqlCommand command = new SqlCommand("Sp_GetStockBy_SaleOrderDetID", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_OrderDetailID", orderDetailID);
@@ -351,39 +361,8 @@ namespace IMS
         {
             try
             {
-                DataSet stockDet;
-                connection.Open();
-                SqlCommand command = new SqlCommand("Sp_GetStockBy_SaleOrderDetID", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@p_OrderDetailID", orderDetailID);
-                command.Parameters.AddWithValue("@p_StoredAt", int.Parse(Session["UserSys"].ToString()));
-
-                DataSet ds = new DataSet();
-                SqlDataAdapter dA = new SqlDataAdapter(command);
-                dA.Fill(ds);
-                stockDet = ds;
-                //Dictionary<int, int> stockSet = new Dictionary<int, int>();
-
-                //foreach (DataRow row in stockDet.Tables[0].Rows)
-                //{
-                //    int exQuan = int.Parse(row["Quantity"].ToString());
-                //    if (quantity > 0)
-                //    {
-                //        if (exQuan >= quantity)
-                //        {
-                //            stockSet.Add(int.Parse(row["StockID"].ToString()), quantity);
-                //            break;
-                //        }
-                //        else if (exQuan < quantity)
-                //        {
-                //            stockSet.Add(int.Parse(row["StockID"].ToString()), exQuan);
-                //            quantity = quantity - exQuan;
-                //        }
-                //    }
-                //}
-
-
-                    command = new SqlCommand("sp_GetStockID_OrderDetails", connection);
+                    connection.Open();
+                    SqlCommand command = new SqlCommand("sp_GetStockID_OrderDetails", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_orderDetID", orderDetailID);
                     DataSet StockDs = new DataSet();
@@ -396,7 +375,7 @@ namespace IMS
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@p_StockID", StockDs.Tables[0].Rows[i]["StockID"]);
                         command.Parameters.AddWithValue("@p_quantity", StockDs.Tables[0].Rows[i]["Quantity"]);
-                        command.Parameters.AddWithValue("@p_Action", "Plus");
+                        command.Parameters.AddWithValue("@p_Action", "Add");
                         command.ExecuteNonQuery();
                     }
                      
@@ -453,6 +432,8 @@ namespace IMS
             DataSet dsProducts = (DataSet)Session["dsProducts"];
 
             Session["RequestedNO"] = Convert.ToInt32(dsProducts.Tables[0].Rows[0]["OrderID"].ToString());
+            Session["FirstOrder"] = false;
+            Session["OrderSalesDetail"] = false;
            // Session["RequestedNO"] = Convert.ToInt32(ProductSet.Tables[0].Rows[0]["OrderID"].ToString());
             if (Session["ExistingOrder"].Equals(true)) { Session["RequestedFromID"] = Session["SystemID"]; }
             Response.Redirect("ViewPackingList_SO.aspx", false);
@@ -536,7 +517,18 @@ namespace IMS
         {
             try
             {
-                if (e.CommandName.Equals("UpdateStock"))
+                if (e.CommandName == "Edit")
+                {
+                    int sendquantity = int.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblQuantity")).Text);
+                    int bonusquantity = int.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblBonus")).Text);
+
+                    //int orderDetID = int.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("OrderDetailNo")).Text);
+                    //UpdateStockPlus(orderDetID, Convert.ToInt32(Session["PreviousValueMain"].ToString()));
+                    
+                    Session["PreviousValueMain"] = sendquantity + bonusquantity;
+                }
+
+                else if (e.CommandName.Equals("UpdateStock"))
                 {
                     //lblProductID
                     int quan = int.Parse(((TextBox)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("txtQuantity")).Text);
@@ -544,18 +536,29 @@ namespace IMS
                     int availablestock = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblAvStock")).Text);
                     int orderDetID = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("OrderDetailNo")).Text);
                     int ProductID = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblProductID")).Text);
-                    if (quan <= availablestock)
+                    int TotalQuantity = quan + bonus;
+                    if (TotalQuantity <= (availablestock + Convert.ToInt32(Session["PreviousValueMain"].ToString())))
                     {
+                        UpdateStockPlus(orderDetID, Convert.ToInt32(Session["PreviousValueMain"].ToString()));
                         connection.Open();
-                        SqlCommand command = new SqlCommand("sp_UpdateSODetailsQuantity", connection);
+
+
+                        SqlCommand command = new SqlCommand();
+                        //sp_DeleteSODetailsQuantity
+                        //SqlCommand command = new SqlCommand("sp_DeleteSODetailsQuantity", connection);
+                        //command.CommandType = CommandType.StoredProcedure;
+                       // command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
+                        //command.ExecuteNonQuery();
+
+                        command = new SqlCommand("sp_UpdateSODetailsQuantity", connection);
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
                         command.Parameters.AddWithValue("@p_Qauntity", quan);
-
+                        command.Parameters.AddWithValue("@p_Bonus", bonus);
                         command.ExecuteNonQuery();
 
 
-                        UpdateStockPlus(orderDetID, (quan + bonus));
+                        
 
                         #region SystemGenerated Selection of Stock
 
@@ -580,8 +583,7 @@ namespace IMS
                     long orderDetID = long.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("OrderDetailNo")).Text);
                     connection.Open();
 
-                    if (Session["OrderSalesDetail"] != null && Session["OrderSalesDetail"].Equals(true))
-                    {
+                    
                         SqlCommand command3 = new SqlCommand("sp_getOrderDetailRecieve_ID", connection);
                         command3.CommandType = CommandType.StoredProcedure;
                         command3.Parameters.AddWithValue("@p_OrderDetID", orderDetID);
@@ -601,7 +603,7 @@ namespace IMS
                             command2.Parameters.AddWithValue("@p_Action", "Add");
                             command2.ExecuteNonQuery();
                         }
-                    }
+                    
 
                     SqlCommand command = new SqlCommand("sp_DeleteSO_ID", connection);
                     command.CommandType = CommandType.StoredProcedure;
@@ -634,24 +636,24 @@ namespace IMS
 
         protected void StockDisplayGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            try
-            {
-                int orderDetID = int.Parse(((Label)StockDisplayGrid.Rows[e.RowIndex].FindControl("OrderDetailNo")).Text);
-                connection.Open();
-                SqlCommand command = new SqlCommand("sp_DeleteSO_ID", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
+            //try
+            //{
+            //    int orderDetID = int.Parse(((Label)StockDisplayGrid.Rows[e.RowIndex].FindControl("OrderDetailNo")).Text);
+            //    connection.Open();
+            //    SqlCommand command = new SqlCommand("sp_DeleteSO_ID", connection);
+            //    command.CommandType = CommandType.StoredProcedure;
+            //    command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
 
 
-                command.ExecuteNonQuery();
-            }
-            catch (Exception exp) { }
-            finally
-            {
-                connection.Close();
-                StockDisplayGrid.EditIndex = -1;
-                BindGrid();
-            }
+            //    command.ExecuteNonQuery();
+            //}
+            //catch (Exception exp) { }
+            //finally
+            //{
+            //    connection.Close();
+            //    StockDisplayGrid.EditIndex = -1;
+            //    BindGrid();
+            //}
         }
 
         protected void StockDisplayGrid_RowEditing(object sender, GridViewEditEventArgs e)
@@ -668,7 +670,10 @@ namespace IMS
             int RemainingStock = 0;
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("sp_getStock_Quantity", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_ProductID", Convert.ToInt32(SelectProduct.SelectedValue.ToString()));
@@ -705,7 +710,10 @@ namespace IMS
 
                     try
                     {
-                        connection.Open();
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
                         SqlCommand command = new SqlCommand("sp_CreateSaleOrder", connection);
                         command.CommandType = CommandType.StoredProcedure;
                         //sets vendor
@@ -746,7 +754,10 @@ namespace IMS
 
                     try
                     {
-                        connection.Open();
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
                         SqlCommand command = new SqlCommand("sp_InserOrderDetail_ByOutStore", connection);
                         command.CommandType = CommandType.StoredProcedure;
 
@@ -828,7 +839,10 @@ namespace IMS
                     DataSet ds = new DataSet();
                     try
                     {
-                        connection.Open();
+                        if (connection.State == ConnectionState.Open)
+                        {
+                            connection.Open();
+                        }
                         SqlCommand command = new SqlCommand("sp_GetOrderbyOutside", connection);
                         command.CommandType = CommandType.StoredProcedure;
                         int OrderNumber = 0;
@@ -872,7 +886,10 @@ namespace IMS
 
                         try
                         {
-                            connection.Open();
+                            if (connection.State == ConnectionState.Closed)
+                            {
+                                connection.Open();
+                            }
                             SqlCommand command = new SqlCommand("sp_InserOrderDetail_ByOutStore", connection);
                             command.CommandType = CommandType.StoredProcedure;
 
@@ -956,7 +973,10 @@ namespace IMS
             #region Populate Product Info
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("Sp_FillSO_Details", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 int OrderNumber,DetailID = 0;
@@ -1008,7 +1028,10 @@ namespace IMS
             #region Display Products
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("sp_GetSODetails_ID", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 int OrderNumber = 0;
@@ -1019,12 +1042,13 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                 }
 
-                Session["dsProducts"] = ds;
+                
 
                 
 
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
+                Session["dsProducts"] = ds;
                 ProductSet = ds;
                 StockDisplayGrid.DataSource = null;
                 StockDisplayGrid.DataSource = ds.Tables[0];
@@ -1072,7 +1096,10 @@ namespace IMS
                     if (Session["OrderNumber"] != null)
                     {
                         int orderID = int.Parse(Session["OrderNumber"].ToString());
-                        connection.Open();
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
 
                         SqlCommand command = new SqlCommand("sp_GetOrderDetailRecieve", connection);
                         command.CommandType = CommandType.StoredProcedure;
@@ -1145,7 +1172,10 @@ namespace IMS
 
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
 
                 Text = Text + "%";
                 SqlCommand command = new SqlCommand("SELECT Distinct tbl_ProductMaster.* From tbl_ProductMaster INNER JOIN tblStock_Detail ON tbl_ProductMaster.ProductID = tblStock_Detail.ProductID Where tbl_ProductMaster.Product_Name LIKE '" + Text + "' AND tblStock_Detail.StoredAt = 1", connection); // Stored at must be set to UserSys in future
