@@ -5,8 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div class="form-horizontal">
 
-        <asp:Button ID="btnAddNew" runat="server" Text="AddNew" CssClass="btn btn-default" OnClick="btnAddNew_Click" />
-
+        <div><h3>Salesman</h3></div>
         <table cellspacing="0" cellpadding="5" border="0" width="100%" class="formTbl">
             <tr>
                 <td>
@@ -58,6 +57,9 @@
                     <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-default" OnClick="btnSearch_Click" />
                     <asp:Button ID="btnClear" runat="server" Text="Clear" CssClass="btn btn-default" OnClick="btnClear_Click" />
                 </td>
+            </tr>
+            <tr>
+                <td><asp:Button ID="btnAddNew" runat="server" Text="Add New Salesman" CssClass="btn btn-default" OnClick="btnAddNew_Click" /></td>
             </tr>
 
         </table>

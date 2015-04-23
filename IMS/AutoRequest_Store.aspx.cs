@@ -17,7 +17,7 @@ namespace IMS
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         private static DataSet ProductSet;
-        public static DataSet systemSet;
+        public static DataSet systemSet; //This needs to be removed as not used in the entire page
         public static bool FirstOrder;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -241,8 +241,13 @@ namespace IMS
             {
                 StockDisplayGrid.EditIndex = -1;
                 ProductSet = null;
+                Session["dsProducts"] = dsManipulation;
+                DataSet dsProducts = (DataSet)Session["dsProducts"];
+
+                StockDisplayGrid.DataSource = dsProducts.Tables[0];
                 ProductSet = dsManipulation;
-                StockDisplayGrid.DataSource = ProductSet.Tables[0];
+                
+                //StockDisplayGrid.DataSource = ProductSet.Tables[0];
                 StockDisplayGrid.DataBind();
             }
         }
@@ -260,21 +265,26 @@ namespace IMS
         protected void StockDisplayGrid_RowEditing(object sender, GridViewEditEventArgs e)
         {
             StockDisplayGrid.EditIndex = e.NewEditIndex;
-            StockDisplayGrid.DataSource = ProductSet.Tables[0];
+            DataSet dsProducts = (DataSet)Session["dsProducts"];
+            StockDisplayGrid.DataSource = dsProducts.Tables[0];
             StockDisplayGrid.DataBind();
         }
 
         protected void StockDisplayGrid_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             StockDisplayGrid.EditIndex = -1;
-            StockDisplayGrid.DataSource = ProductSet.Tables[0];
+            DataSet dsProducts = (DataSet)Session["dsProducts"];
+            StockDisplayGrid.DataSource = dsProducts.Tables[0];
+            //StockDisplayGrid.DataSource = ProductSet.Tables[0];
             StockDisplayGrid.DataBind();
         }
 
         protected void StockDisplayGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             StockDisplayGrid.PageIndex = e.NewPageIndex;
-            StockDisplayGrid.DataSource = ProductSet.Tables[0];
+            DataSet dsProducts = (DataSet)Session["dsProducts"];
+            StockDisplayGrid.DataSource = dsProducts.Tables[0];
+            //StockDisplayGrid.DataSource = ProductSet.Tables[0];
             StockDisplayGrid.DataBind();
         }
 

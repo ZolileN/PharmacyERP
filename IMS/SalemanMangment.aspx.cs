@@ -126,14 +126,14 @@ namespace IMS
         }
         protected void SalemanDisplayGrid_RowEditing(object sender, GridViewEditEventArgs e)
         {
-            string DI = "";
+            string ID= "";
             SalemanDisplayGrid.EditIndex = e.NewEditIndex;
             Label UserID = (Label)SalemanDisplayGrid.Rows[e.NewEditIndex].FindControl("lblUserID");
             //Label UserID = (Label)SalemanDisplayGrid.Rows[0].FindControl("lblUserID");
 
-            DI = UserID.Text;
+            ID = UserID.Text;
 
-            Response.Redirect("RegisterUsers.aspx?ID=" + DI);
+            Response.Redirect("RegisterUsers.aspx?ID=" + ID);
             // BindGrid();
         }
         private void BindGrid()

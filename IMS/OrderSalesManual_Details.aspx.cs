@@ -17,8 +17,8 @@ namespace IMS
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
-        public static DataSet systemSet;
-        //public static bool TotalExceeded;
+        public static DataSet systemSet; //This needs to be removed as not used in the entire page
+        public static bool TotalExceeded;
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
@@ -58,12 +58,15 @@ namespace IMS
                 }
                 #endregion
 
-                if (ds != null || ds.Tables[0] != null)
-                {
-                   ProductSet = ds;
-                   StockDisplayGrid.DataSource = ds.Tables[0];
-                   StockDisplayGrid.DataBind();
-                }
+                
+                    if (ds != null || ds.Tables[0] != null)
+                    {
+                        Session["dsProducts"] = ds;
+                        ProductSet = ds;
+                        StockDisplayGrid.DataSource = ds.Tables[0];
+                        StockDisplayGrid.DataBind();
+                    }
+
             }
             catch(Exception ex)
             {
@@ -80,11 +83,16 @@ namespace IMS
 
             #region Stock Updating Procedure
             /*for (int i = 0; i < ProductSet.Tables[0].Rows.Count; i++)
+            DataSet dsProducts = (DataSet)Session["dsProducts"];
+
+            for (int i = 0; i < dsProducts.Tables[0].Rows.Count; i++)
             {
                 try
                 {
-                    int StockID = int.Parse(ProductSet.Tables[0].Rows[i]["StockID"].ToString());
-                    int quantity = int.Parse(ProductSet.Tables[0].Rows[i]["SentQuantity"].ToString()) + int.Parse(ProductSet.Tables[0].Rows[i]["BonusQuantity"].ToString());
+                    int StockID = int.Parse(dsProducts.Tables[0].Rows[i]["StockID"].ToString());
+                    int quantity = int.Parse(dsProducts.Tables[0].Rows[i]["SentQuantity"].ToString()) + int.Parse(dsProducts.Tables[0].Rows[i]["BonusQuantity"].ToString());
+                    //int StockID = int.Parse(ProductSet.Tables[0].Rows[i]["StockID"].ToString());
+                    //int quantity = int.Parse(ProductSet.Tables[0].Rows[i]["SentQuantity"].ToString()) + int.Parse(ProductSet.Tables[0].Rows[i]["BonusQuantity"].ToString());
                     int OrderDetailID = int.Parse(Session["OderDetailID"].ToString());
                     TotalQuantity += quantity;
                     connection.Open();

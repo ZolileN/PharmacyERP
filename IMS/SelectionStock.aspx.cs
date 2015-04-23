@@ -32,6 +32,8 @@ namespace IMS
                     DataSet ds = new DataSet();
                     SqlDataAdapter sA = new SqlDataAdapter(command);
                     sA.Fill(ds);
+                    Session["dsProducts"] = ds;
+                     
                     ProductSet = ds;
                     ds.Tables[0].Columns.Add("ProductInfo", typeof(string), "Product_Name+ ' '+itemStrength+' '+itemPackSize+' '+itemForm");
                     SelectProduct.DataSource = ds.Tables[0];
@@ -64,7 +66,9 @@ namespace IMS
             try
             {
                 DataView dv = new DataView();
-                dv = ProductSet.Tables[0].DefaultView;
+                DataSet dsProducts = (DataSet)Session["dsProducts"];
+
+                dv = dsProducts.Tables[0].DefaultView;
                 dv.RowFilter = "ProductID = '" + SelectProduct.SelectedValue.ToString() + "'";
                 dt = dv.ToTable();
                 String Query = "Select tblStock_Detail.ProductID AS ProductID ,tbl_ProductMaster.Description AS ProductName, tblStock_Detail.BarCode AS BarCode,tblStock_Detail.StockID AS StockID, tblStock_Detail.Quantity AS Qauntity, tblStock_Detail.ExpiryDate As Expiry, tblStock_Detail.UCostPrice AS CostPrice, tblStock_Detail.USalePrice AS SalePrice, tblStock_Detail.StoredAt AS Location From  tblStock_Detail INNER JOIN tbl_ProductMaster ON tblStock_Detail.ProductID = tbl_ProductMaster.ProductID Where tblStock_Detail.ProductID = '" + Int32.Parse(dt.Rows[0]["ProductID"].ToString()) + "'";
@@ -147,7 +151,8 @@ namespace IMS
                     Label expiry = (Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblExpiry");
                     Label _StockID = (Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblStockID");
                     int stockID = int.Parse(_StockID.Text);
-                    DataView dv = ProductSet.Tables[0].DefaultView;
+                    DataSet dsProducts = (DataSet)Session["dsProducts"];
+                    DataView dv = dsProducts.Tables[0].DefaultView;
                     dv.RowFilter = "Product_Id_Org = '" + long.Parse(Barcode.Text.ToString()) + "'";
                     DataTable dt = dv.ToTable();
                    // int ProductID = Int32.Parse(dt.Rows[0]["ProductID"].ToString());

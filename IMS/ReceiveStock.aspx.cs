@@ -14,8 +14,8 @@ namespace IMS
     public partial class ReceiveStock : System.Web.UI.Page
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
-        public static DataSet ProductSet;
-        public static DataSet systemSet;
+        public static DataSet ProductSet; //This needs to be removed as not used in the entire page
+        public static DataSet systemSet;  //This needs to be removed as not used in the entire page
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)

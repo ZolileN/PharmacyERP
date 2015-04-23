@@ -28,7 +28,7 @@ namespace IMS
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
-        public static DataSet systemSet;
+        public static DataSet systemSet; 
         public static bool FirstOrder;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -40,21 +40,22 @@ namespace IMS
                 LoadData();
                 #region Getting & Populating Values
                 PO_Number.Text = Session["OrderNumber"].ToString();
-                PO_Date.Text = ((DateTime) ProductSet.Tables[0].Rows[0]["OrderDate"]).Date.ToString();
+                DataSet dsProducts = (DataSet)Session["dsProducts"];
+                PO_Date.Text = ((DateTime)dsProducts.Tables[0].Rows[0]["OrderDate"]).Date.ToString();
 
-                PO_FromName.Text = ProductSet.Tables[0].Rows[0]["SystemName"].ToString();
-                PO_FromAddress.Text = ProductSet.Tables[0].Rows[0]["SystemAddress"].ToString();
-                PO_FromPhone.Text = "Phone: " + ProductSet.Tables[0].Rows[0]["SystemPhone"].ToString();
+                PO_FromName.Text = dsProducts.Tables[0].Rows[0]["SystemName"].ToString();
+                PO_FromAddress.Text = dsProducts.Tables[0].Rows[0]["SystemAddress"].ToString();
+                PO_FromPhone.Text = "Phone: " + dsProducts.Tables[0].Rows[0]["SystemPhone"].ToString();
 
-                PO_ToName.Text = ProductSet.Tables[0].Rows[0]["SupName"].ToString();
-                PO_ToAddress.Text = ProductSet.Tables[0].Rows[0]["VendorAddress"].ToString();
-                PO_ToPhone.Text = "Phone:" + ProductSet.Tables[0].Rows[0]["VendorPhone"].ToString();
-                PO_ToEmail.Text = "Email:" + ProductSet.Tables[0].Rows[0]["VendorEmail"].ToString();
+                PO_ToName.Text = dsProducts.Tables[0].Rows[0]["SupName"].ToString();
+                PO_ToAddress.Text = dsProducts.Tables[0].Rows[0]["VendorAddress"].ToString();
+                PO_ToPhone.Text = "Phone:" + dsProducts.Tables[0].Rows[0]["VendorPhone"].ToString();
+                PO_ToEmail.Text = "Email:" + dsProducts.Tables[0].Rows[0]["VendorEmail"].ToString();
                 float TCost = 0;
-                for(int i=0;i<ProductSet.Tables[0].Rows.Count;i++)
+                for (int i = 0; i < dsProducts.Tables[0].Rows.Count; i++)
                 {
                     float Cost =0;
-                    if (float.TryParse(ProductSet.Tables[0].Rows[i]["totalCostPrice"].ToString(), out Cost ))
+                    if (float.TryParse(dsProducts.Tables[0].Rows[i]["totalCostPrice"].ToString(), out Cost))
                     {
                         TCost += Cost;
                     }
@@ -81,8 +82,15 @@ namespace IMS
                 }
 
                 SqlDataAdapter dA = new SqlDataAdapter(command);
-                dA.Fill(ProductSet);
-                StockDisplayGrid.DataSource = ProductSet;
+                DataSet ds = new DataSet();
+                 
+                dA.Fill(ds);
+                Session["dsProducts"] = ds;
+
+                ProductSet = ds;
+                DataSet dsProducts = (DataSet)Session["dsProducts"];
+                //dA.Fill(ProductSet);
+                StockDisplayGrid.DataSource = dsProducts;
                 StockDisplayGrid.DataBind();
             }
             catch (Exception ex)
@@ -283,8 +291,9 @@ namespace IMS
             if (PO_ToEmail.Text != null && PO_ToEmail.Text != "")
             {
                 ExportGridToPDF();
-
-                String ToAddress = ProductSet.Tables[0].Rows[0]["VendorEmail"].ToString();
+                DataSet dsProducts = (DataSet)Session["dsProducts"];
+                String ToAddress = dsProducts.Tables[0].Rows[0]["VendorEmail"].ToString();
+                //String ToAddress = ProductSet.Tables[0].Rows[0]["VendorEmail"].ToString();
                 try
                 {
                 MailMessage msg = new MailMessage();

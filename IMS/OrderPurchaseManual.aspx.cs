@@ -117,11 +117,34 @@ namespace IMS
         {
             try
             {
+                DataSet delDs = new DataSet();
                 if (Session["OrderNumber"] != null)
                 {
                     int orderID = int.Parse(Session["OrderNumber"].ToString());
                     connection.Open();
-                    SqlCommand command = new SqlCommand("sp_DeleteOrder", connection);
+                    //fetch order detail entries
+                    SqlCommand command = new SqlCommand("Sp_GetPOReceiveEntry_byOMID", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@p_OrderID", orderID);
+                    SqlDataAdapter sA = new SqlDataAdapter(command);
+                    sA.Fill(delDs);
+                    for (int i = 0; i < delDs.Tables[0].Rows.Count; i++)
+                    {
+
+                       //remove entries and remove values from stock
+                        command = new SqlCommand("Sp_RemovePOEntries", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@p_OrderDetailID", delDs.Tables[0].Rows[i]["orderDetailID"].ToString());
+                        command.Parameters.AddWithValue("@p_expiryOriginal", delDs.Tables[0].Rows[i]["ExpiryDate"].ToString());
+                        command.Parameters.AddWithValue("@p_entryID", delDs.Tables[0].Rows[i]["entryID"].ToString());
+                        command.Parameters.AddWithValue("@p_ProductID", delDs.Tables[0].Rows[i]["ProductID"].ToString());
+                        command.Parameters.AddWithValue("@p_StoreID", delDs.Tables[0].Rows[i]["OrderRequestBy"].ToString());
+
+                        command.ExecuteNonQuery();
+                    }
+                    //delete order master and order detail
+                    command = new SqlCommand("sp_DeleteOrder", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_OrderID", orderID);
                     command.ExecuteNonQuery();
@@ -767,6 +790,23 @@ namespace IMS
                 connection.Close();
             }
             #endregion
+        }
+
+        protected void Page_Unload(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Session["FromViewPlacedOrders"].ToString().Equals("true") && Session["FromViewPlacedOrders"].ToString() != null && Session["FromViewPlacedOrders"] != null)
+                {
+                    Session["OrderNumber"] = "";
+                    Session["FromViewPlacedOrders"] = "false";
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+          
         }
     }
 }

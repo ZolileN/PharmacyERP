@@ -53,7 +53,9 @@ namespace IMS
             try
             {
                 DataView dv = new DataView();
-                dv = ProductSet.Tables[0].DefaultView;
+                DataSet dsProducts = (DataSet)Session["dsProducts"];
+                dv = dsProducts.Tables[0].DefaultView;
+               // dv = ProductSet.Tables[0].DefaultView;
                 dv.RowFilter = "ProductID = '"+SelectProduct.SelectedValue.ToString()+"'";
                 dt = dv.ToTable();
                 String Query = "Select tblSub_Category.Sub_CatID as SubcatID, tblSub_Category.Name AS SUBCAT,tblCategory.Name AS CAT,tblDepartment.Name AS DEPT From tblSub_Category INNER JOIN tblCategory ON tblSub_Category.CategoryID = tblCategory.CategoryID INNER JOIN tblDepartment ON tblCategory.DepartmentID = tblDepartment.DepId Where Sub_CatID = '" + dt.Rows[0]["SubCategoryID"] + "'";
@@ -427,6 +429,9 @@ namespace IMS
                 }
 
                 ProductSet = null;
+
+                Session["dsProducts"] = ds;
+
                 ProductSet = ds;
                 SelectProduct.DataSource = ds.Tables[0];
                 SelectProduct.DataTextField = "Product_Name";

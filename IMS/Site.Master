@@ -122,30 +122,31 @@
                             <li><a href="ManageOrders.aspx">Manage Orders</a>
 
                                 <ul>
-                                    <li class="hasChild"><a href="PlaceOrder.aspx">Place Orders</a>
+                                    <li class="hasChild"><a href="PlaceOrder.aspx">Generate Purchase Orders</a>
 
                                         <ul>
-                                            <li><a href="PlaceOrder.aspx">Auto Purchase</a></li>
+                                            <%--<li><a href="PlaceOrder.aspx">Auto Purchase</a></li>--%>
                                             <li><a href="OrderPurchaseManual.aspx">Manual Purchase</a></li>
                                        </ul>
 
                                     </li>
-                                    <li><a href="OrderSalesManual.aspx">Generate Sale Order</a></li>
-                                     <li><a href="ViewSalesOrders.aspx">View Sale Orders</a></li>
-                                    <li class="hasChild"><a href="RecieveOrder.aspx">Recieve Orders</a>
+                                    <li><a href="OrderSalesManual.aspx">Generate Sale Orders</a></li>
+                                    <li><a href="ViewSalesOrders.aspx">View Sale Orders</a></li>
+                                    <li><a href="ViewPlacedOrders.aspx">View Purchase Orders</a></li>
+                                    <li class="hasChild"><a href="RecieveOrder.aspx">Recieve Purchase Orders</a>
 
                                         <ul>
-                                            <li><a href="RecieveOrder.aspx">Auto Recieving</a></li>
+                                            <%--<li><a href="RecieveOrder.aspx">Auto Recieving</a></li>--%>
                                             <li><a href="ViewPurchaseOrders.aspx">Manual Recieving</a></li>
                                        </ul>
 
                                     </li>
-                                    <li><a href="ViewPlacedOrders.aspx">View Orders</a></li>
+                                    
                                </ul>
 
                             </li>
-                            <li><a href="ManageVendor.aspx">Manage Vendor</a>
-                                <ul><li><a href="SalemanMangment.aspx">Saleman Manage</a></li></ul>
+                            <li><a href="ManageVendor.aspx">Manage Vendors</a>
+                                <%--<ul><li><a href="SalemanMangment.aspx">Saleman Manage</a></li></ul>--%>
                             </li>
                             <li><a href="Warehouse_StoreRequests.aspx">Store Requests</a></li>
                             <li><a href="PackingListGeneration.aspx">Generate Packing List</a></li>
@@ -158,7 +159,7 @@
                             <li><a href="ReceiveStock.aspx">Store Receivings</a></li>
                             <li><a href="StoreRequestsMain.aspx">Store Requests</a>
                                 <ul>
-                                    <li><a href="AutoRequest_Store.aspx">Auto Generate Requests</a></li>
+                                    <%--<li><a href="AutoRequest_Store.aspx">Auto Generate Request(s)</a></li>--%>
                                     <li><a href="StoreRequests.aspx">Manual Generate Requests</a></li>
                                 </ul>
                             </li>
@@ -173,7 +174,7 @@
                             <li><a href="ManageWarehouse.aspx">Manage WareHouse</a></li>
                             <li><a href="CompanySettings.aspx">Manage Company Information</a></li>
                             <li><a href="Reports.aspx">View Reports</a></li>
-                            <li><a href="RegisterUsers.aspx">Register User</a></li>
+                            <li><a href="RegisterUsers.aspx">Register Users</a></li>
 	                    </ul>
                     
             </asp:Literal>

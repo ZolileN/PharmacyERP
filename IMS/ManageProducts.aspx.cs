@@ -42,6 +42,7 @@ namespace IMS
                     SqlDataAdapter SA = new SqlDataAdapter(command);
                     ProductSet = null;
                     SA.Fill(ds);
+                    Session["dsProducts"] = ds;
                     ProductSet = ds;
                     StockDisplayGrid.DataSource = ds;
                     StockDisplayGrid.DataBind();
@@ -126,8 +127,10 @@ namespace IMS
                     Session["MS_ItemNo"] = ItemNo.Text.ToString();
                     Session["MS_ItemName"] = ItemName.Text.ToString();
                     Session["MS_ItemType"] = ItemType.Text.ToString();
-                    
-                    DataView dv = ProductSet.Tables[0].DefaultView;
+
+                    DataSet dsProducts = (DataSet)Session["dsProducts"];
+                    DataView dv = dsProducts.Tables[0].DefaultView;
+                   // DataView dv = ProductSet.Tables[0].DefaultView;
                     dv.RowFilter = "Product_Id_Org = '"+ ItemNo.Text + "'";
                     DataTable dt = dv.ToTable();
                     Session["MS_Manufacterer"] = "";
@@ -169,7 +172,9 @@ namespace IMS
                             
                             int res6 =0;
 
-                            DataView dv = ProductSet.Tables[0].DefaultView;
+                            DataSet dsProducts = (DataSet)Session["dsProducts"];
+                            DataView dv = dsProducts.Tables[0].DefaultView;
+                            //DataView dv = ProductSet.Tables[0].DefaultView;
                             dv.RowFilter = "Product_Id_Org = '" + ItemNo.Text + "'";
                             DataTable dt = dv.ToTable();
                             Session["MS_ProductID"] = dt.Rows[0]["ProductID"].ToString();
