@@ -69,3 +69,8 @@ D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSCommon\bin\Debug\IMSCommon.dll
 D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSCommon\bin\Debug\IMSCommon.pdb
 D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSCommon\obj\Debug\IMSCommon.dll
 D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSCommon\obj\Debug\IMSCommon.pdb
+D:\Naseemullah\PharmacyERP\IMSCommon\bin\Debug\IMSCommon.dll
+D:\Naseemullah\PharmacyERP\IMSCommon\bin\Debug\IMSCommon.pdb
+D:\Naseemullah\PharmacyERP\IMSCommon\obj\Debug\IMSCommon.csprojResolveAssemblyReference.cache
+D:\Naseemullah\PharmacyERP\IMSCommon\obj\Debug\IMSCommon.dll
+D:\Naseemullah\PharmacyERP\IMSCommon\obj\Debug\IMSCommon.pdb

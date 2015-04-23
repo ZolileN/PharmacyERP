@@ -117,3 +117,10 @@ D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSBusinessLogic\bin\Debug\IMSComm
 D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSBusinessLogic\obj\Debug\IMSBusinessLogic.csprojResolveAssemblyReference.cache
 D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSBusinessLogic\obj\Debug\IMSBusinessLogic.dll
 D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMSBusinessLogic\obj\Debug\IMSBusinessLogic.pdb
+D:\Naseemullah\PharmacyERP\IMSBusinessLogic\bin\Debug\IMSBusinessLogic.dll
+D:\Naseemullah\PharmacyERP\IMSBusinessLogic\bin\Debug\IMSBusinessLogic.pdb
+D:\Naseemullah\PharmacyERP\IMSBusinessLogic\bin\Debug\IMSCommon.dll
+D:\Naseemullah\PharmacyERP\IMSBusinessLogic\bin\Debug\IMSCommon.pdb
+D:\Naseemullah\PharmacyERP\IMSBusinessLogic\obj\Debug\IMSBusinessLogic.csprojResolveAssemblyReference.cache
+D:\Naseemullah\PharmacyERP\IMSBusinessLogic\obj\Debug\IMSBusinessLogic.dll
+D:\Naseemullah\PharmacyERP\IMSBusinessLogic\obj\Debug\IMSBusinessLogic.pdb

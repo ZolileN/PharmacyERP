@@ -144,7 +144,9 @@
                                </ul>
 
                             </li>
-                            <li><a href="ManageVendor.aspx">Manage Vendor</a></li>
+                            <li><a href="ManageVendor.aspx">Manage Vendor</a>
+                                <ul><li><a href="SalemanMangment.aspx">Saleman Manage</a></li></ul>
+                            </li>
                             <li><a href="Warehouse_StoreRequests.aspx">Store Requests</a></li>
                             <li><a href="PackingListGeneration.aspx">Generate Packing List</a></li>
 	                    </ul>

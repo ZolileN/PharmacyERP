@@ -37,6 +37,8 @@ namespace IMS
                         ddlURole.Items.Insert(0, "Select User Role");
                         ddlURole.SelectedIndex = 0;
                     }
+
+
                 }
                 catch (Exception ex)
                 {
@@ -75,12 +77,46 @@ namespace IMS
                     connection.Close();
                 }
                 #endregion
+
+                EmpID.Text = "";
+                uPwd.Text = "";
+
+                string var = Request.QueryString["ID"];
+                // Start here
+                if (!string.IsNullOrEmpty(var))
+                { UpdateSaleman(var); }
+                else
+                {
+                    btnSave.Visible = false;
+                }
+                // End Here
             }
+        }
+
+        private void UpdateSaleman(string var)
+        {
+            SqlCommand command1;
+            command1 = new SqlCommand("SELECT *  FROM [eIventoryLiveRestored01].[dbo].[tbl_Users] where UserID=" + var + "", connection);
+            DataSet ds2 = new DataSet();
+            SqlDataAdapter sA2 = new SqlDataAdapter(command1);
+            sA2.Fill(ds2);
+            ddlSysID.DataSource = ds2.Tables[0];
+            EmpID.Text = ds2.Tables[0].Rows[0]["U_EmpID"].ToString();
+            // EmpID.Enabled = false;
+            uPwd.Text = ds2.Tables[0].Rows[0]["U_Password"].ToString();
+            //uPwd.Enabled = false;
+            ddlURole.SelectedValue = ds2.Tables[0].Rows[0]["U_RolesID"].ToString();
+            ddlURole.Enabled = false;
+            fName.Text = ds2.Tables[0].Rows[0]["U_FirstName"].ToString();
+            lstName.Text = ds2.Tables[0].Rows[0]["U_LastName"].ToString();
+            Address.Text = ds2.Tables[0].Rows[0]["Address"].ToString();
+            ContactNo.Text = ds2.Tables[0].Rows[0]["Contact"].ToString();
+            btnAddEmployee.Visible = false;
         }
 
         protected void btnBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("HeadOfficeMain.aspx", false);
+            Response.Redirect("salemanMangment.aspx", false);
         }
 
         protected void btnAddEmployee_Click(object sender, EventArgs e)
@@ -98,8 +134,8 @@ namespace IMS
                 command.Parameters.AddWithValue("@p_SystemID", ddlSysID.SelectedValue.ToString());
                 command.Parameters.AddWithValue("@p_FirstName", fName.Text);
                 command.Parameters.AddWithValue("@p_LastName", lstName.Text);
-                command.Parameters.AddWithValue("@p_Contact", Address.Text);
-                command.Parameters.AddWithValue("@p_Address", ContactNo.Text);
+                command.Parameters.AddWithValue("@p_Contact", ContactNo.Text);
+                command.Parameters.AddWithValue("@p_Address", Address.Text);
 
                 command.Parameters.AddWithValue("@p_Name", "");
                 command.Parameters.AddWithValue("@p_DisplayName", "");
@@ -129,11 +165,18 @@ namespace IMS
                 ddlSysID.SelectedIndex = -1;
                 fName.Text = "";
                 lstName.Text = "";
+                Address.Text = "";
+                ContactNo.Text = "";
             }
             else
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert(''"+Errormessage+"'')", true);
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert(''" + Errormessage + "'')", true);
             }
+        }
+
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
+            btnAddEmployee_Click(null, null);
         }
     }
 }
