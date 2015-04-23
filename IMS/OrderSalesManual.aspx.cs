@@ -112,63 +112,65 @@ namespace IMS
 
         protected void Page_Unload(object sender, EventArgs e)
         {
-            try
-            {
-                if (Session["OrderNumber"] != null)
-                {
-                    int orderID = int.Parse(Session["OrderNumber"].ToString());
-                    connection.Open();
+            #region For Unknown Crash Logic
+            //try
+            //{
+            //    if (Session["OrderNumber"] != null)
+            //    {
+            //        int orderID = int.Parse(Session["OrderNumber"].ToString());
+            //        connection.Open();
 
-                    SqlCommand command = new SqlCommand("sp_GetOrderDetailRecieve", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_OrderID", orderID);
-                    DataSet ds = new DataSet();
-                    SqlDataAdapter sA = new SqlDataAdapter(command);
-                    sA.Fill(ds);
+            //        SqlCommand command = new SqlCommand("sp_GetOrderDetailRecieve", connection);
+            //        command.CommandType = CommandType.StoredProcedure;
+            //        command.Parameters.AddWithValue("@p_OrderID", orderID);
+            //        DataSet ds = new DataSet();
+            //        SqlDataAdapter sA = new SqlDataAdapter(command);
+            //        sA.Fill(ds);
 
-                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-                    {
-                        int StockID = int.Parse(ds.Tables[0].Rows[i]["StockID"].ToString());
-                        int quantity = int.Parse(ds.Tables[0].Rows[i]["Quantity"].ToString());
-                        SqlCommand command2 = new SqlCommand();
-                        command2 = new SqlCommand("Sp_UpdateStockBy_StockID", connection);
-                        command2.CommandType = CommandType.StoredProcedure;
-                        command2.Parameters.AddWithValue("@p_StockID", StockID);
-                        command2.Parameters.AddWithValue("@p_quantity", quantity);
-                        command2.Parameters.AddWithValue("@p_Action", "Add");
-                        command2.ExecuteNonQuery();
-                    }
+            //        for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            //        {
+            //            int StockID = int.Parse(ds.Tables[0].Rows[i]["StockID"].ToString());
+            //            int quantity = int.Parse(ds.Tables[0].Rows[i]["Quantity"].ToString());
+            //            SqlCommand command2 = new SqlCommand();
+            //            command2 = new SqlCommand("Sp_UpdateStockBy_StockID", connection);
+            //            command2.CommandType = CommandType.StoredProcedure;
+            //            command2.Parameters.AddWithValue("@p_StockID", StockID);
+            //            command2.Parameters.AddWithValue("@p_quantity", quantity);
+            //            command2.Parameters.AddWithValue("@p_Action", "Add");
+            //            command2.ExecuteNonQuery();
+            //        }
 
-                    command = new SqlCommand("sp_DeleteSO", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_OrderID", orderID);
-                    command.ExecuteNonQuery();
-                }
-                Session["OrderNumber"] = null;
-                Session["OrderSalesDetail"] = "false";
-                txtProduct.Text = "";
-                SelectProduct.Visible = false;
-                StockAt.Enabled = true;
-                StockDisplayGrid.DataSource = null;
-                StockDisplayGrid.DataBind();
-                SelectQuantity.Text = "";
-                SelectProduct.SelectedIndex = -1;
-                StockAt.SelectedIndex = -1;
-                btnAccept.Visible = false;
-                btnDecline.Visible = false;
-                Session["FirstOrder"] = false;
-            }
-            catch (Exception ex)
-            {
+            //        command = new SqlCommand("sp_DeleteSO", connection);
+            //        command.CommandType = CommandType.StoredProcedure;
+            //        command.Parameters.AddWithValue("@p_OrderID", orderID);
+            //        command.ExecuteNonQuery();
+            //    }
+            //    Session["OrderNumber"] = null;
+            //    Session["OrderSalesDetail"] = "false";
+            //    txtProduct.Text = "";
+            //    SelectProduct.Visible = false;
+            //    StockAt.Enabled = true;
+            //    StockDisplayGrid.DataSource = null;
+            //    StockDisplayGrid.DataBind();
+            //    SelectQuantity.Text = "";
+            //    SelectProduct.SelectedIndex = -1;
+            //    StockAt.SelectedIndex = -1;
+            //    btnAccept.Visible = false;
+            //    btnDecline.Visible = false;
+            //    Session["FirstOrder"] = false;
+            //}
+            //catch (Exception ex)
+            //{
 
-            }
-            finally
-            {
-                if (connection.State == ConnectionState.Open)
-                {
-                    connection.Close();
-                }
-            }
+            //}
+            //finally
+            //{
+            //    if (connection.State == ConnectionState.Open)
+            //    {
+            //        connection.Close();
+            //    }
+            //}
+            #endregion
         }
         private void LoadData()
         {
