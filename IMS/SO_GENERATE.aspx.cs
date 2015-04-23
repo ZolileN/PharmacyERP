@@ -40,22 +40,24 @@ namespace IMS
                 LoadData();
                 #region Getting & Populating Values
                 PO_Number.Text = Session["OrderNumber"].ToString();
-                PO_Date.Text = ProductSet.Tables[0].Rows[0]["OrderDate"].ToString();
+                DataSet dsProducts = (DataSet)Session["dsProducts"];
 
-                PO_FromName.Text = ProductSet.Tables[0].Rows[0]["SystemName"].ToString();
-                PO_FromAddress.Text = ProductSet.Tables[0].Rows[0]["SystemAddress"].ToString();
-                PO_FromPhone.Text = "Phone: " + ProductSet.Tables[0].Rows[0]["SystemPhone"].ToString();
+                PO_Date.Text = dsProducts.Tables[0].Rows[0]["OrderDate"].ToString();
 
-                PO_ToName.Text = ProductSet.Tables[0].Rows[0]["SendtoName"].ToString();
-                PO_ToAddress.Text = ProductSet.Tables[0].Rows[0]["SendtoAddress"].ToString();
-                PO_ToPhone.Text = "Phone:" + ProductSet.Tables[0].Rows[0]["SendtoPhone"].ToString();
+                PO_FromName.Text = dsProducts.Tables[0].Rows[0]["SystemName"].ToString();
+                PO_FromAddress.Text = dsProducts.Tables[0].Rows[0]["SystemAddress"].ToString();
+                PO_FromPhone.Text = "Phone: " + dsProducts.Tables[0].Rows[0]["SystemPhone"].ToString();
+
+                PO_ToName.Text = dsProducts.Tables[0].Rows[0]["SendtoName"].ToString();
+                PO_ToAddress.Text = dsProducts.Tables[0].Rows[0]["SendtoAddress"].ToString();
+                PO_ToPhone.Text = "Phone:" + dsProducts.Tables[0].Rows[0]["SendtoPhone"].ToString();
                 PO_ToEmail.Visible = false;
                 //PO_ToEmail.Text = "Email:";// +ProductSet.Tables[0].Rows[0]["VendorEmail"].ToString();
                 float TCost = 0;
-                for (int i = 0; i < ProductSet.Tables[0].Rows.Count; i++)
+                for (int i = 0; i < dsProducts.Tables[0].Rows.Count; i++)
                 {
                     float Cost = 0;
-                    if (float.TryParse(ProductSet.Tables[0].Rows[i]["totalSalePrice"].ToString(), out Cost))
+                    if (float.TryParse(dsProducts.Tables[0].Rows[i]["totalSalePrice"].ToString(), out Cost))
                     {
                         TCost += Cost;
                     }
@@ -81,9 +83,15 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_OrderNo", OrderNumber);
                 }
 
+                DataSet ds = new DataSet();
                 SqlDataAdapter dA = new SqlDataAdapter(command);
-                dA.Fill(ProductSet);
-                StockDisplayGrid.DataSource = ProductSet;
+                dA.Fill(ds);
+                ProductSet = ds;
+
+                Session["dsProducts"] = ds;
+
+                DataSet dsProducts = (DataSet)Session["dsProducts"];
+                StockDisplayGrid.DataSource = dsProducts;
                 StockDisplayGrid.DataBind();
             }
             catch (Exception ex)
