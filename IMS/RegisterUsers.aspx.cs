@@ -96,7 +96,7 @@ namespace IMS
         private void UpdateSaleman(string var)
         {
             SqlCommand command1;
-            command1 = new SqlCommand("SELECT *  FROM [eIventoryLiveRestored01].[dbo].[tbl_Users] where UserID=" + var + "", connection);
+            command1 = new SqlCommand("SELECT *  FROM [dbo].[tbl_Users] where UserID=" + var + "", connection);
             DataSet ds2 = new DataSet();
             SqlDataAdapter sA2 = new SqlDataAdapter(command1);
             sA2.Fill(ds2);
@@ -176,7 +176,62 @@ namespace IMS
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            btnAddEmployee_Click(null, null);
+           // btnAddEmployee_Click(null, null);
+            string var = Request.QueryString["ID"];
+            int x = 0;
+            String Errormessage = "";
+            
+            try
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("Sp_UpdateNewUser", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_UserID", var);
+                
+                command.Parameters.AddWithValue("@p_EmpID", EmpID.Text);
+                command.Parameters.AddWithValue("@p_password", uPwd.Text);
+                command.Parameters.AddWithValue("@p_UserRoleID", ddlURole.SelectedValue.ToString());
+                command.Parameters.AddWithValue("@p_SystemID", ddlSysID.SelectedValue.ToString());
+                command.Parameters.AddWithValue("@p_FirstName", fName.Text);
+                command.Parameters.AddWithValue("@p_LastName", lstName.Text);
+                command.Parameters.AddWithValue("@p_Contact", ContactNo.Text);
+                command.Parameters.AddWithValue("@p_Address", Address.Text);
+
+               // command.Parameters.AddWithValue("@p_Name", "");
+                //command.Parameters.AddWithValue("@p_DisplayName", "");
+               // command.Parameters.AddWithValue("@p_email", "");
+
+                x = command.ExecuteNonQuery();
+
+
+
+            }
+            catch (Exception ex)
+            {
+                Errormessage = ex.Message;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+
+            if (x == 1)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Record Updated Successfully')", true);
+                EmpID.Text = "";
+                uPwd.Text = "";
+                ddlURole.SelectedIndex = -1;
+                ddlSysID.SelectedIndex = -1;
+                fName.Text = "";
+                lstName.Text = "";
+                Address.Text = "";
+                ContactNo.Text = "";
+            }
+            else
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert(''" + Errormessage + "'')", true);
+            }
         }
     }
 }
