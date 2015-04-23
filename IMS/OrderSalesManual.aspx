@@ -35,7 +35,7 @@
             <td></td>
             <td colspan="100%">
 
-                <asp:Button ID="btnCreateOrder" runat="server" OnClick="btnCreateOrder_Click" Text="ADD" CssClass="btn btn-primary" OnClientClick="ValidateForm()" ValidationGroup="ExSave"/>
+                <asp:Button ID="btnCreateOrder" runat="server" OnClick="btnCreateOrder_Click" Text="ADD" CssClass="btn btn-primary" OnClientClick="return ValidateForm();" ValidationGroup="ExSave"/>
                 <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Text="REFRESH" CssClass="btn btn-default" Visible="False" />
                 <asp:Button ID="btnCancelOrder" runat="server" OnClick="btnCancelOrder_Click" Text="GO BACK" CssClass="btn btn-default btn-large" />
 
@@ -183,6 +183,21 @@
         </div>
     </div>
 
-     
+    <script type="text/javascript">
+        function ValidateForm() {
+            var valid = true;
+            if (document.getElementById("MainContent_txtProduct").value == null || document.getElementById("MainContent_txtProduct").value == '') {
+                alert("Please enter at least three words to search product");
+                valid = false;
+            }
+            return valid;
+
+            //var e = document.getElementById("SelectProduct");
+            //var strProduct = e.options[e.selectedIndex].value;
+           
+        }
+        
+
+</script>
 </asp:Content>
 

@@ -195,8 +195,11 @@ namespace IMS
             #region Getting Product Details
             try
             {
+                DataSet dsProducts = (DataSet)Session["dsProducts"];
+
                 DataView dv = new DataView();
-                dv = ProductSet.Tables[0].DefaultView;
+                dv = dsProducts.Tables[0].DefaultView;
+                //dv = ProductSet.Tables[0].DefaultView; 
                 dv.RowFilter = "ProductID = '" + SelectProduct.Text.ToString() + "'";
                 dt = dv.ToTable();
 
@@ -255,8 +258,12 @@ namespace IMS
                 #region Getting Product Details
                 try
                 {
+                    DataSet dsProducts = (DataSet)Session["dsProducts"];
+
                     DataView dv = new DataView();
-                    dv = ProductSet.Tables[0].DefaultView;
+                    dv = dsProducts.Tables[0].DefaultView;
+
+                    //dv = ProductSet.Tables[0].DefaultView;
                     dv.RowFilter = "ProductID = '" + ProductList.SelectedValue.ToString() + "'";
                     dt = dv.ToTable();
 
@@ -303,6 +310,8 @@ namespace IMS
                 {
                     ProductList.DataSource = null;
                 }
+
+                Session["dsProducts"] = ds;
 
                 ProductSet = null;
                 ProductSet = ds;

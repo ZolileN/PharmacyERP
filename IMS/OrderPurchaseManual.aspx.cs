@@ -791,5 +791,22 @@ namespace IMS
             }
             #endregion
         }
+
+        protected void Page_Unload(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Session["FromViewPlacedOrders"].ToString().Equals("true") && Session["FromViewPlacedOrders"].ToString() != null && Session["FromViewPlacedOrders"] != null)
+                {
+                    Session["OrderNumber"] = "";
+                    Session["FromViewPlacedOrders"] = "false";
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+          
+        }
     }
 }
