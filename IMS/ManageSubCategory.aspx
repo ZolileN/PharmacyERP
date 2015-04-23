@@ -87,7 +87,7 @@
                         </EditItemTemplate>
                         
                         <FooterTemplate>
-                            <asp:Button ID="btnAddRecord" runat="server" CssClass="btn btn-default"  Text="Add" CommandName="Add"></asp:Button>
+                            <asp:Button ID="btnAddRecord" runat="server" CssClass="btn btn-default"   OnClientClick="return ValidateForm();"  Text="Add" CommandName="Add"></asp:Button>
                         </FooterTemplate>
                     </asp:TemplateField>
                  </Columns>
@@ -95,5 +95,22 @@
     <asp:Button ID="btnBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnBack_Click"/>
 
 
+      <script type="text/javascript">
+          function ValidateForm() {
 
+              if (document.getElementById("MainContent_SubCategoryDisplayGrid_txtAddname").value == null || document.getElementById("MainContent_SubCategoryDisplayGrid_txtAddname").value == '') {
+                  alert("Please enter Sub Category name");
+                  return false;
+              }
+              if (document.getElementById("MainContent_SubCategoryDisplayGrid_ddlAddDepName").value == 'Department' || document.getElementById("MainContent_SubCategoryDisplayGrid_ddlAddDepName").value == '') {
+                  alert("Please select Departement");
+                  return false;
+              }
+
+              return true;
+
+          }
+
+
+</script>
 </asp:Content>

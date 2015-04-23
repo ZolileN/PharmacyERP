@@ -59,7 +59,8 @@
             <tr>
                 <td></td>
                 <td colspan="100%">
-              <asp:Button ID="btnCreateVendor" runat="server" OnClick="btnCreateVendor_Click"  Text="ADD" CssClass="btn btn-default" ValidationGroup="exSave"/>
+              <asp:Button ID="btnCreateVendor" runat="server" OnClick="btnCreateVendor_Click"  Text="ADD" CssClass="btn btn-default" OnClientClick="return 
+                  ();" ValidationGroup="exSave"/>
                  <asp:Button ID="btnUpdateVendor" runat="server" OnClick="btnUpdateVendor_Click"  Text="UPDATE" CssClass="btn btn-default" Visible="false"/>
                 <asp:Button ID="btnCancelVendor" runat="server" OnClick="btnCancelVendor_Click" Text="CANCEL" CssClass="btn btn-default" />
                 <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnGoBack_Click"/>
@@ -67,4 +68,27 @@
             </tr>
             </table>
     </div>
+
+
+    <script type="text/javascript">
+        function ValidateForm() {
+
+            if (document.getElementById("MainContent_txtVendorName").value == null || document.getElementById("MainContent_txtVendorName").value == '') {
+                alert("Please enter Vendor name");
+                return false;
+            }
+            if (document.getElementById("MainContent_txtcity").value == null || document.getElementById("MainContent_txtcity").value == '') {
+                alert("Please enter City");
+                return false;
+            }
+            if (document.getElementById("MainContent_txtCounty").value == null || document.getElementById("MainContent_txtCounty").value == '') {
+                alert("Please enter Country");
+                return false;
+            }
+            return true;
+ 
+        }
+
+
+</script>
 </asp:Content>
