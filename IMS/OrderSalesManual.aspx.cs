@@ -187,12 +187,12 @@ namespace IMS
                     command.ExecuteNonQuery();
 
                     #region Generation of Packing List
-                    command = new SqlCommand("sp_PackingListGeneration", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_StockID", id);
-                    command.Parameters.AddWithValue("@p_quantity", stockSet[id]);
-                    command.Parameters.AddWithValue("@p_OrderDetailID", orderDetailID);
-                    command.ExecuteNonQuery();
+                    //command = new SqlCommand("sp_PackingListGeneration", connection);
+                    //command.CommandType = CommandType.StoredProcedure;
+                    //command.Parameters.AddWithValue("@p_StockID", id);
+                    //command.Parameters.AddWithValue("@p_quantity", stockSet[id]);
+                    //command.Parameters.AddWithValue("@p_OrderDetailID", orderDetailID);
+                    //command.ExecuteNonQuery();
                     #endregion
                 }
 

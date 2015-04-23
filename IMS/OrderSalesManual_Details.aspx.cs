@@ -73,6 +73,8 @@ namespace IMS
         protected void btnAcceptStock_Click(object sender, EventArgs e)
         {
             int TotalQuantity = 0;
+
+            #region Stock Updating Procedure
             for (int i = 0; i < ProductSet.Tables[0].Rows.Count; i++)
             {
                 try
@@ -108,7 +110,9 @@ namespace IMS
                     connection.Close();
                 }
             }
+            #endregion
 
+            #region Updating Main Sale Order Detail Table 
             try
             {
                 int OrderDetailID = int.Parse(Session["OderDetailID"].ToString());
@@ -129,13 +133,15 @@ namespace IMS
             {
                 connection.Close();
             }
+            #endregion
 
             Session["OrderSalesDetail"] = true;
             Response.Redirect("OrderSalesManual.aspx");
         }
         protected void btnDeclineStock_Click(object sender, EventArgs e)
         {
-                try
+            #region Canceling Selection of Stocks in OrderDetailEntry
+            try
                 {
                     int productID = int.Parse(Session["ProductID"].ToString());
                     int OrderDetailID = int.Parse(Session["OderDetailID"].ToString());
@@ -156,6 +162,9 @@ namespace IMS
                 {
                     connection.Close();
                 }
+
+            #endregion
+
             Session["OrderSalesDetail"] = true;
             Response.Redirect("OrderSalesManual.aspx");
         }
