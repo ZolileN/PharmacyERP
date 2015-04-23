@@ -59,8 +59,7 @@
             <tr>
                 <td></td>
                 <td colspan="100%">
-              <asp:Button ID="btnCreateVendor" runat="server" OnClick="btnCreateVendor_Click"  Text="ADD" CssClass="btn btn-default" OnClientClick="return 
-                  ();" ValidationGroup="exSave"/>
+              <asp:Button ID="btnCreateVendor" runat="server" OnClick="btnCreateVendor_Click"  Text="ADD" CssClass="btn btn-default" OnClientClick="return ValidateForm();" ValidationGroup="exSave"/>
                  <asp:Button ID="btnUpdateVendor" runat="server" OnClick="btnUpdateVendor_Click"  Text="UPDATE" CssClass="btn btn-default" Visible="false"/>
                 <asp:Button ID="btnCancelVendor" runat="server" OnClick="btnCancelVendor_Click" Text="CANCEL" CssClass="btn btn-default" />
                 <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnGoBack_Click"/>

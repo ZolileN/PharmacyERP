@@ -70,10 +70,25 @@
                         </EditItemTemplate>
 
                         <FooterTemplate>
-                            <asp:Button ID="btnAddRecord" CssClass="btn btn-default"  runat="server" Text="Add" CommandName="Add"></asp:Button>
+                            <asp:Button ID="btnAddRecord" CssClass="btn btn-default"  runat="server" Text="Add" CommandName="Add"  OnClientClick="return ValidateForm();" ></asp:Button>
                         </FooterTemplate>
                     </asp:TemplateField>
                 </Columns>
             </asp:GridView>
     <asp:Button ID="btnBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnBack_Click"/>
+
+     <script type="text/javascript">
+         function ValidateForm() {
+
+             if (document.getElementById("MainContent_CategoryDisplayGrid_txtAddname").value == null || document.getElementById("MainContent_CategoryDisplayGrid_txtAddname").value == '') {
+                 alert("Please enter Category name");
+                 return false;
+             }
+              
+             return true;
+
+         }
+
+
+</script>
 </asp:Content>
