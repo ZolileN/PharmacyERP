@@ -53,7 +53,7 @@
                     
                      <asp:TemplateField HeaderText="Action" HeaderStyle-Width ="200px">
                         <ItemTemplate>
-                            <asp:Button CssClass="btn btn-default" ID="btnEdit" Text="GENERATE" runat="server" CommandName="Edit" CommandArgument='<%# Container.DisplayIndex  %>'/>
+                            <asp:Button CssClass="btn btn-default btn-sm" ID="btnEdit" Text="GENERATE" runat="server" CommandName="Edit" CommandArgument='<%# Container.DisplayIndex  %>'/>
                         </ItemTemplate>
                          <ItemStyle  Width="200px" HorizontalAlign="Left"/>
                     </asp:TemplateField>

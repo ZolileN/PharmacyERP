@@ -38,6 +38,8 @@
             <td><asp:Label runat="server" AssociatedControlID="SelectDiscount" CssClass="control-label">Enter Discount %</asp:Label></td>
             <td> <asp:TextBox runat="server" ID="SelectDiscount" CssClass="form-control" /></td>
         </tr>
+        <tr>
+            <td colspan="100%">&nbsp;</td>
         </tr>
         <tr>
             <td></td>

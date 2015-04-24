@@ -64,9 +64,9 @@
             </tr>
             <tr>
                 <td></td>
-                <td colspan="100%"><asp:Button ID="btnCreateProduct" runat="server" OnClick="btnCreateProduct_Click" Enabled="false" Text="ADD" CssClass="btn btn-default" ValidationGroup="ExSave"/>
+                <td colspan="100%"><asp:Button ID="btnCreateProduct" runat="server" OnClick="btnCreateProduct_Click" Enabled="false" Text="ADD" CssClass="btn btn-primary" ValidationGroup="ExSave"/>
                 <asp:Button ID="btnCancelProduct" runat="server" OnClick="btnCancelProduct_Click" Text="CANCEL" CssClass="btn btn-default" />
-                <asp:Button ID="btnBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnBack_Click"/></td>
+                <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnBack_Click"/></td>
             </tr>
             </table>
     </div>

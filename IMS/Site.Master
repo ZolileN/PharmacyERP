@@ -109,7 +109,7 @@
                     
                     <asp:Literal runat="server" ID="warehouseNav">
                     <ul class="main-menu no-print">
-                            <li><a href="ManageInventory.aspx">Manage Inventory</a>
+                            <li><a href="#">Manage Inventory</a>
 
                                <ul>
                                     <li><a href="ManageProducts.aspx">Manage Products</a></li>
@@ -119,10 +119,10 @@
                                </ul>
 
                             </li>
-                            <li><a href="ManageOrders.aspx">Manage Orders</a>
+                            <li><a href="#">Manage Orders</a>
 
                                 <ul>
-                                    <li class="hasChild"><a href="PlaceOrder.aspx">Generate Purchase Orders</a>
+                                    <li class="hasChild"><a href="#">Generate Purchase Orders</a>
 
                                         <ul>
                                             <%--<li><a href="PlaceOrder.aspx">Auto Purchase</a></li>--%>
@@ -133,7 +133,7 @@
                                     <li><a href="OrderSalesManual.aspx">Generate Sale Orders</a></li>
                                     <li><a href="ViewSalesOrders.aspx">View Sale Orders</a></li>
                                     <li><a href="ViewPlacedOrders.aspx">View Purchase Orders</a></li>
-                                    <li class="hasChild"><a href="RecieveOrder.aspx">Recieve Purchase Orders</a>
+                                    <li class="hasChild"><a href="#">Recieve Purchase Orders</a>
 
                                         <ul>
                                             <%--<li><a href="RecieveOrder.aspx">Auto Recieving</a></li>--%>
@@ -157,7 +157,7 @@
                             <li><a href="ViewInventory.aspx">Store Inventory</a></li>
                             <li><a href="StoreTransfers_StoreRequests.aspx">Store Transfers</a></li>
                             <li><a href="ReceiveStock.aspx">Store Receivings</a></li>
-                            <li><a href="StoreRequestsMain.aspx">Store Requests</a>
+                            <li><a href="#">Store Requests</a>
                                 <ul>
                                     <%--<li><a href="AutoRequest_Store.aspx">Auto Generate Request(s)</a></li>--%>
                                     <li><a href="StoreRequests.aspx">Manual Generate Requests</a></li>

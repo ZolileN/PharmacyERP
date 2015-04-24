@@ -6,12 +6,12 @@
       <h3>Manual Purchase Order(s)</h3>
     <br />
     <br />
-    <div class="row">
+    
      
     
-    <div class="form-group">
+ 
             <%--<asp:Label runat="server"  AssociatedControlID="RequestTo" CssClass="col-md-2 control-label">Select Vendor</asp:Label>--%>
-            <div class="col-md-10">
+            
                 <%--<asp:TextBox runat="server" ID="txtVendor" CssClass="form-control product"/>
                 <asp:ImageButton ID="btnSearchVendor" runat="server" OnClick="btnSearchVendor_Click" Height="35px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
                 <br />
@@ -19,12 +19,11 @@
                 <%--class="chzn-select"   <asp:ListItem Text="" Value=""></asp:ListItem>
                   <asp:ListItem Value=''> ------------------- Select ------------------ </asp:ListItem>--%>
                  <%--</asp:DropDownList>--%>
-                <br />
-            </div>
+               
        <%--  <script src="Scripts/jquery.min.js" type="text/javascript"></script>
          <script src="Scripts/chosen.jquery.js" type="text/javascript"></script>
          <script type="text/javascript"> $(".chzn-select").chosen(); $(".chzn-select-deselect").chosen({ allow_single_deselect: true }); </script>--%>
-    </div>
+    
    <table cellspacing="5" cellpadding="5" border="0" width="100%">
 
        <tr>
@@ -111,7 +110,7 @@
                 <asp:Button ID="btnCancelOrder" runat="server" OnClick="btnCancelOrder_Click" Text="GO BACK" CssClass="btn btn-primary btn-large" />--%>
             </div>
         </div>
-    </div>
+    
     
     <br />
     <br />
