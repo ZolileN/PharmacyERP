@@ -20,11 +20,31 @@ namespace IMS
         public static bool FirstOrder;
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             if (!IsPostBack)
             {
                 if (Session["OrderNumber"] != null && Session["FromViewPlacedOrders"] != null)
                 {
-                    FirstOrder = true;
+                    Session["FirstOrder"] = true;
+                    if (!Session["FromViewPlacedOrders"].ToString().Equals("true")) 
+                    {
+                        if (Session["isGenOption"] != null)
+                        {
+                            if (!Session["isGenOption"].ToString().Equals("true"))
+                            {
+                                Session["OrderNumber"] = "";
+                            }
+                            else 
+                            {
+                                Session["isGenOption"] = "false";
+                            }
+                        }
+                        else 
+                        {
+                            Session["OrderNumber"] = "";
+                        }
+                       
+                    }
                     systemSet = new DataSet();
                     ProductSet = new DataSet();
                     LoadData();
@@ -38,7 +58,23 @@ namespace IMS
                 }
                 else
                 {
-                    FirstOrder = false;
+                    Session["OrderNumber"] = "";
+                    Session["FromViewPlacedOrders"] = "false";
+                    Session["FirstOrder"] = false;
+                    if (Session["isGenOption"] != null)
+                    {
+                        if (!Session["isGenOption"].ToString().Equals("true"))
+                        {
+                            Session["OrderNumber"] = "";
+                            Session["FromViewPlacedOrders"] = "false";
+                        }
+                        else
+                        {
+                            Session["FirstOrder"] = false;
+                            Session["FromViewPlacedOrders"] = "false";
+                        }
+                    }
+                    Session["FirstOrder"] = false;
                     systemSet = new DataSet();
                     ProductSet = new DataSet();
                     LoadData();
@@ -111,6 +147,7 @@ namespace IMS
         protected void btnAccept_Click(object sender, EventArgs e)
         {
             Session["isGenOption"] = "true";
+            Session["FirstOrder"] = false;
             Response.Redirect("PO_GENERATE.aspx", false);
         }
 
@@ -166,7 +203,7 @@ namespace IMS
                 RequestTo.SelectedIndex = -1;
                 btnAccept.Visible = false;
                 btnDecline.Visible = false;
-                FirstOrder = false;
+                Session["FirstOrder"] = false;
                 lblttlcst.Visible = false;
                 lblTotalCostALL.Visible = false;
             }
@@ -269,7 +306,7 @@ namespace IMS
 
             btnAccept.Visible = true;
             btnDecline.Visible = true;
-            if (FirstOrder.Equals(false))
+            if (Session["FirstOrder"].Equals(false))
             {
                 #region Creating Order
                 
@@ -384,8 +421,8 @@ namespace IMS
                     connection.Close();
                 }
                 #endregion
-                
-                FirstOrder = true;
+
+                Session["FirstOrder"] = true;
             }
             else
             {
@@ -608,12 +645,16 @@ namespace IMS
                 
                 if (Session["OrderNumber"] != null)
                 {
-                    int orderID = int.Parse(Session["OrderNumber"].ToString());
-                    connection.Open();
-                    SqlCommand command = new SqlCommand("sp_DeleteOrder", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_OrderID", orderID);
-                    command.ExecuteNonQuery();
+                    //order number is "" after coming from page unload()
+                    if (!Session["OrderNumber"].ToString().Equals(""))
+                    {
+                        int orderID = int.Parse(Session["OrderNumber"].ToString());
+                        connection.Open();
+                        SqlCommand command = new SqlCommand("sp_DeleteOrder", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@p_OrderID", orderID);
+                        command.ExecuteNonQuery();
+                    }
                 }
                 Session["OrderNumber"] = "";
                 Session["FromViewPlacedOrders"] = "false";
@@ -799,8 +840,8 @@ namespace IMS
         {
             try
             {
-                //if (Session["FromViewPlacedOrders"].ToString().Equals("true") && Session["FromViewPlacedOrders"].ToString() != null && Session["FromViewPlacedOrders"] != null)
-                //{
+
+
                 if (Session["isGenOption"] != null)
                 {
                     if (!Session["isGenOption"].ToString().Equals("true"))
@@ -808,17 +849,19 @@ namespace IMS
                         Session["OrderNumber"] = "";
                         Session["FromViewPlacedOrders"] = "false";
                     }
-                    else 
+                    else
                     {
-                       
+                        Session["FirstOrder"] = false;
                         Session["FromViewPlacedOrders"] = "false";
                     }
                 }
-               
-                
-                //}
+                else 
+                {
+                    Session["FirstOrder"] = false;
+                    Session["FromViewPlacedOrders"] = "false";
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
