@@ -6,7 +6,7 @@
 			font-family:"Calibri", Arial, Helvetica, sans-serif;
 			font-size:16px;
 			margin:0px auto;
-			width:860px;
+			width:747px;
 			position:relative;
 			}
 			
@@ -46,7 +46,7 @@
 		.datarow td{
 			border-bottom:0px !important;
 			}
-			
+		
 		.fr{
 			float:right;
 			font-size:18px;
@@ -62,6 +62,23 @@
 		.signs{
 			font-size:14px;
 			}
+		.arabic{
+			font-family:Simplified Arabic Fixed;
+			}
+		.scHead{
+			font-size:34px;
+			font-weight:bold;
+			display:block;
+			margin-bottom:6px;
+			color:#00b0f0;
+			}
+		.afH{font-size:16px;color:#a5a5a5;}
+		.flt{float:left;font-weight:bold;}
+		.frt{float:right;font-weight:bold;}
+		.clear{clear:both}
+		.instructions{
+			border:1px solid #000;
+			}
 
         @media print {
             .no-print, .no-print * {
@@ -69,10 +86,39 @@
             }
         }
 	</style>
+    
+        
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div class="main" id="MAINDIV" runat="server">
+         <table cellpadding="5" width="100%" cellspacing="0">
+    	<tr>
+        	<td width="39%" valign="top">
+            	<span class="scHead">AL AHLIYA</span>
+                <span class="afH">PHARMACEUTICAL TRADING</span><br />
+                Tel: 026584223 Fax: 026584229<br />
+                Behind safeline<br />
+                Street No. 16<br />
+                Musaffah Industrial M-44<br />
+                P.O. Box : 3032<br />
+                Abu Dhabi - U.A.E.<br />
+                Email : ahliya.pharmaceutical@gmail.com
+            </td>
+            <td width="21%"><img src="Images/apt-logo.gif" /></td>
+            <td width="40%" align="right" valign="top"><span  class="arabic scHead">الأهلية</span>
+            <span class="arabic afH">لتجارة الأدوية</span><br />
+            هاتف : 6584223-02 فاكس:6584229-02<br />
+            خلف سيف لأئن<br />
+			شارع - 16<br />
+            مصفح الصناعية م - 44<br />
+            ص.ب: 3032<br />
+			أبوظبي - أ.ع.م.<br />
+            بريد الكتروني:  ahliya.pharmaceutical@gmail.com
+            </td>
+        </tr>
+    </table>
         <h1 class="main-h">PURCHASE ORDER</h1>
+
         <table cellpadding="5" width="100%" cellspacing="0">
         	<tr>
             	<td> <asp:Label runat="server" ID="PO_Numberlbl" CssClass="col-md-2 control-label" Width="200px">P.O Number : </asp:Label> <asp:Label runat="server" ID="PO_Number" CssClass="col-md-2 control-label" Text="---" Width="100px"></asp:Label></td></td>
@@ -81,32 +127,42 @@
         </tr>
         </table>
         <br /><br />
-         <table cellpadding="5" width="100%" cellspacing="0">
+
+          <table cellpadding="5" width="100%" cellspacing="0">
         	<tr>
-            	<td width="403" valign="top"><strong>ORDER BY:</strong><br />
-           	    <asp:Label runat="server" ID="PO_FromName" CssClass="col-md-2 control-label" Text="---" Width="100%"></asp:Label><br />
-           	    <asp:Label runat="server" ID="PO_FromAddress" CssClass="col-md-2 control-label" Text="---" Width="100%"></asp:Label><br />
-       	        <asp:Label runat="server" ID="PO_FromPhone" CssClass="col-md-2 control-label" Text="---" Width="100%"></asp:Label><br /></td>
+               <td valign="top"><strong>ORDER TO:</strong><br />
+           	   <asp:Label runat="server" ID="PO_ToName" CssClass="col-md-2 control-label" Text="---" Width="100%"></asp:Label><br />
+       	       <asp:Label runat="server" ID="PO_ToAddress" CssClass="col-md-2 control-label" Text="---" Width="100%"></asp:Label><br />           
+               <asp:Label runat="server" ID="PO_ToPhone" CssClass="col-md-2 control-label" Text="---" Width="100%"></asp:Label><br />
+               <asp:Label runat="server" ID="PO_ToEmail" CssClass="col-md-2 control-label" Text="---" Width="100%"></asp:Label><br />
+               </td>
+            </tr>
+        </table>
+
+         <!--<table cellpadding="5" width="100%" cellspacing="0">
+        	<tr>
+            	<!--<td width="403" valign="top"><strong>ORDER BY:</strong><br />
+           	    <asp:Label runat="server" ID="PO_FromName" CssClass="col-md-2 control-label" Text="---" Width="100%" Visible ="false"></asp:Label><br />
+           	    <asp:Label runat="server" ID="PO_FromAddress" CssClass="col-md-2 control-label" Text="---" Width="100%" Visible ="false"></asp:Label><br />
+       	        <asp:Label runat="server" ID="PO_FromPhone" CssClass="col-md-2 control-label" Text="---" Width="100%" Visible ="false"></asp:Label><br /></td>
                 <td width="322" valign="top" ><strong>ORDER FROM:</strong><br />
-           	    <asp:Label runat="server" ID="PO_ToName" CssClass="col-md-2 control-label" Text="---" Width="100%"></asp:Label><br />
-           	    <asp:Label runat="server" ID="PO_ToAddress" CssClass="col-md-2 control-label" Text="---" Width="100%"></asp:Label><br />
-       	        <asp:Label runat="server" ID="PO_ToPhone" CssClass="col-md-2 control-label" Text="---" Width="100%"></asp:Label><br />
-                <asp:Label runat="server" ID="PO_ToEmail" CssClass="col-md-2 control-label" Text="---" Width="100%"></asp:Label><br />
+           	    <br />
+           	    <br />
+       	       
               </td>
             </tr>
         </table>
+             -->
+
         <br /><br /><br />
-
-
-   
         <asp:GridView ID="StockDisplayGrid" CssClass="table table-striped table-bordered table-condensed" Visible="true" runat="server" AllowPaging="false" PageSize="10"
             AutoGenerateColumns="false" OnPageIndexChanging="StockDisplayGrid_PageIndexChanging" OnRowDataBound="StockDisplayGrid_RowDataBound">
             <Columns>
-                <asp:TemplateField HeaderText="Ordered Product" Visible="true" HeaderStyle-Width="350px">
+                <asp:TemplateField HeaderText="Ordered Product" Visible="true" HeaderStyle-Width="250px">
                     <ItemTemplate>
-                        <asp:Label ID="ProductName" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Description") %>' Width="350px"></asp:Label>
+                        <asp:Label ID="ProductName" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Description") %>' Width="250px"></asp:Label>
                     </ItemTemplate>
-                    <ItemStyle Width="350px" HorizontalAlign="Left" />
+                    <ItemStyle Width="250px" HorizontalAlign="Left" />
                 </asp:TemplateField>
 
                 <asp:TemplateField HeaderText="Ordered Quantity" HeaderStyle-Width="150px">
@@ -139,6 +195,8 @@
 
             </Columns>
         </asp:GridView>
+        <br />
+        <br />
 
         <table cellpadding="4" cellspacing="0" align="right">
         	<tr>
@@ -181,6 +239,7 @@
         </table>
         <br />
     </div>
+    <br />
     <div class="form-horizontal">
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
