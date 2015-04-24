@@ -1197,3 +1197,40 @@ table.table-striped tr td .control-label {
 }
 
 
+.gridInput {
+    width:110px !important;
+}
+
+.details-btn {
+    width:23px;
+    height:21px;
+    background: url(../Images/view.png) top left no-repeat;
+    border: 0px;
+    text-indent: -444em;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+}
+
+
+.update-btn {
+    width:21px;
+    height:21px;
+    background: url(../Images/update.png) top left no-repeat;
+    border: 0px;
+    text-indent: -444em;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+}
+
+.cancel-btn {
+    width:21px;
+    height:21px;
+    background: url(../Images/cancel.png) top left no-repeat;
+    border: 0px;
+    text-indent: -444em;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+}

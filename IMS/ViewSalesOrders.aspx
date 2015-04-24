@@ -17,12 +17,15 @@
               $(function () { $("#<%= DateTextBox.ClientID %>").datepicker(); });
 
           </script>
+
+        
+
     <div class="form-horizontal">
      <div class="form-group">
         <asp:Label runat="server" AssociatedControlID="StockAt" CssClass="col-md-2 control-label">Store Name </asp:Label>
             <div class="col-md-10">
                 <asp:TextBox runat="server" ID="SelectProduct" CssClass="form-control product"/>
-                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click" Text="SearchProduct" Height="35px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
+                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click" Text="SearchProduct" Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
                 <br />
                 <asp:DropDownList runat="server" ID="StockAt" CssClass="form-control" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="StockAt_SelectedIndexChanged" Visible="false"/>
                 <br/>
@@ -71,9 +74,9 @@
                  <Columns>
                      <asp:TemplateField HeaderText="Action" HeaderStyle-Width ="150px">
                         <ItemTemplate>
-                            <asp:Button CssClass="btn btn-default" ID="btnEdit" Text="Edit" runat="server" CommandName="Edit" CommandArgument='<%# Container.DisplayIndex  %>'/>
+                            <asp:Button CssClass="btn btn-default edit-btn" ID="btnEdit" Text="Edit" runat="server" CommandName="Edit" CommandArgument='<%# Container.DisplayIndex  %>'/>
                             <span onclick="return confirm('Are you sure you want to delete this record?')">
-                                <asp:Button CssClass="btn btn-default" ID="btnDelete" Text="Delete" runat="server" CommandName="Delete" CommandArgument='<%# Container.DisplayIndex  %>'/>
+                                <asp:Button CssClass="btn btn-default del-btn" ID="btnDelete" Text="Delete" runat="server" CommandName="Delete" CommandArgument='<%# Container.DisplayIndex  %>'/>
                             </span>
                               </ItemTemplate>
                          <ItemStyle  Width="150px" HorizontalAlign="Left"/>

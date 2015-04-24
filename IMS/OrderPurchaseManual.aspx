@@ -76,47 +76,34 @@
            </td>
        </tr>
     </table>
-    <div class="form-group">
+   
             <%--<asp:Label runat="server" AssociatedControlID="txtProduct" CssClass="col-md-2 control-label">Select Product</asp:Label>--%>
-            <div class="col-md-10">
+          
                 <%--<asp:TextBox runat="server" ID="txtProduct" CssClass="form-control product"/>
                 <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click"  Height="35px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
                 <br />
                 <asp:DropDownList runat="server" ID="SelectProduct" Visible="false" CssClass="form-control" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="SelectProduct_SelectedIndexChanged"/>
                 <br/>--%>
-            </div>
-    </div>
-
-    <div class="form-group">
+    
             <%--<asp:Label runat="server" AssociatedControlID="SelectQuantity" CssClass="col-md-2 control-label">Enter Quantity</asp:Label>--%>
-            <div class="col-md-10">
+           
                 <%--<asp:TextBox runat="server" ID="SelectQuantity" CssClass="form-control" autocomplete="off" />--%>
-                <br />
-            </div>
-    </div>
+             
 
-    <div class="form-group">
+    
             <%--<asp:Label runat="server" AssociatedControlID="SelectPrice" CssClass="col-md-2 control-label">Enter Bonus Quantity</asp:Label>--%>
-            <div class="col-md-10">
+          
                 <%--<asp:TextBox runat="server" ID="SelectPrice" CssClass="form-control" autocomplete="off" />--%>
-                <br />
-            </div>
-    </div>
+            
 
-    <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+   
                 <%--<asp:Button ID="btnCreateOrder" runat="server" OnClick="btnCreateOrder_Click" Text="ADD" CssClass="btn btn-default" />
                 <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Text="REFRESH" CssClass="btn btn-default" Visible="False" />
                 <asp:Button ID="btnCancelOrder" runat="server" OnClick="btnCancelOrder_Click" Text="GO BACK" CssClass="btn btn-primary btn-large" />--%>
-            </div>
-        </div>
-    
-    
-    <br />
+         
     <br />
 
-    <div class="form-horizontal">
-    <div class="form-group">
+   
         <asp:GridView ID="StockDisplayGrid" CssClass="table table-striped table-bordered table-condensed"  Visible="true" runat="server" AllowPaging="True" PageSize="10" 
                 AutoGenerateColumns="false" OnPageIndexChanging="StockDisplayGrid_PageIndexChanging"   onrowcancelingedit="StockDisplayGrid_RowCancelingEdit" 
                 onrowcommand="StockDisplayGrid_RowCommand"  onrowdeleting="StockDisplayGrid_RowDeleting" onrowediting="StockDisplayGrid_RowEditing" OnRowDataBound="StockDisplayGrid_RowDataBound" >
@@ -145,9 +132,9 @@
 
                       <asp:TemplateField HeaderText="Action" HeaderStyle-Width ="110px">
                         <ItemTemplate>
-                            <asp:Button CssClass="btn btn-default" ID="btnEdit" Text="Edit" runat="server" CommandName="Edit" />
+                            <asp:Button CssClass="btn btn-default edit-btn" ID="btnEdit" Text="Edit" runat="server" CommandName="Edit" />
                             <span onclick="return confirm('Are you sure you want to delete this record?')">
-                                <asp:Button CssClass="btn btn-default" ID="btnDelete" Text="Delete" runat="server" CommandName="Delete"/>
+                                <asp:Button CssClass="btn btn-default del-btn" ID="btnDelete" Text="Delete" runat="server" CommandName="Delete"/>
                             </span>
                         </ItemTemplate>
                           
@@ -242,14 +229,7 @@
         <br />
          <asp:Button ID="btnAccept" runat="server" OnClick="btnAccept_Click" Text="GENERATE ORDER" CssClass="btn btn-large" Visible="false"/>
          <asp:Button ID="btnDecline" runat="server" OnClick="btnDecline_Click" Text="DELETE ORDER" CssClass="btn btn-large" Visible="false" />
-    </div>
-    <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-               
-            </div>
-        </div>
-    </div>
-      
+   
 
     <script type="text/javascript">
         function ValidateForm() {
