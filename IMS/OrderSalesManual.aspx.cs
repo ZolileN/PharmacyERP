@@ -29,11 +29,16 @@ namespace IMS
                 txtIvnoice.Enabled = false;
                 if (Session["OrderSalesDetail"] != null && Session["OrderSalesDetail"].Equals(true))
                 {
+                    if (Session["ViewSalesOrders"] != null && Session["ViewSalesOrders"].Equals(true))
+                    {
+                        btnAccept.Text = "RE-GENERATE ORDER";
+                    }
                     Session["FirstOrder"] = true;
                     systemSet = new DataSet();
                     ProductSet = new DataSet();
                     LoadData();
                     btnAccept.Visible = true;
+                    
                     btnDecline.Visible = true;
                     #region Populating System Types
                     try
@@ -119,6 +124,11 @@ namespace IMS
         protected void Page_Unload(object sender, EventArgs e)
         {
             #region For Unknown Crash Logic
+
+            if (!IsPostBack)
+            {
+                Session.Remove("OrderSalesDetail");
+            }
             //try
             //{
             //    if (Session["OrderNumber"] != null)

@@ -21,6 +21,7 @@ namespace IMS
         {
             if (!IsPostBack)
             {
+                Session["ViewSalesOrders"] = false;
                 #region Getting Vendors
                 //try
                 //{
@@ -73,6 +74,14 @@ namespace IMS
                     LoadData(StockAt.SelectedValue);
                 }
 
+            }
+        }
+
+        protected void Page_UnLoad(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                Session["ViewSalesOrders"] = true;
             }
         }
         public void LoadData(String VendorID)
