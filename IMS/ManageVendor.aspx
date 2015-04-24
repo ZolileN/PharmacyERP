@@ -23,7 +23,7 @@
         <asp:Label runat="server" AssociatedControlID="StockAt" CssClass="col-md-2 control-label">Search by Name </asp:Label>
             <div class="col-md-10">
                 <asp:TextBox runat="server" ID="SelectProduct" CssClass="form-control product" OnTextChanged="SelectProduct_TextChanged"/>
-                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click" Text="SearchProduct" Height="35px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
+                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click" Text="SearchProduct" Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
                 <br />
                 <asp:DropDownList runat="server" ID="StockAt" CssClass="form-control" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="StockAt_SelectedIndexChanged" Visible="false"/>
                 <br/>

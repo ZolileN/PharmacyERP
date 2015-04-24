@@ -49,9 +49,9 @@
 
                     <asp:TemplateField HeaderText="Edit">
                         <ItemTemplate>
-                            <asp:LinkButton ID="btnEdit" CssClass="btn btn-default"  Text="Edit" runat="server" CommandName="Edit" />
+                            <asp:LinkButton ID="btnEdit" CssClass="btn btn-default edit-btn"  Text="Edit" runat="server" CommandName="Edit" />
                             <span onclick="return confirm('Are you sure you want to delete this record?')">
-                                <asp:LinkButton ID="btnDelete" Text="Delete" CssClass="btn btn-default"  runat="server" CommandName="Delete"/>
+                                <asp:LinkButton ID="btnDelete" Text="Delete" CssClass="btn btn-default del-btn"  runat="server" CommandName="Delete"/>
                             </span>
                         </ItemTemplate>
 
