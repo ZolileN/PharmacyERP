@@ -54,8 +54,8 @@
                </td>
            </tr>
         <tr>
-            <td><asp:Label runat="server" AssociatedControlID="SelectQuantity" CssClass="control-label">Enter Quantity</asp:Label></td>
-            <td><asp:TextBox runat="server" ID="SelectQuantity" CssClass="form-control" autocomplete="off" /></td>
+            <td><asp:Label runat="server" AssociatedControlID="SelectQuantity" CssClass="control-label">Quantity</asp:Label></td>
+            <td><asp:TextBox runat="server" ID="SelectQuantity" CssClass="form-control" autocomplete="off" Width="47px" /></td>
        
            <td><asp:Label runat="server" AssociatedControlID="SelectPrice" CssClass="control-label">Enter Bonus Quantity</asp:Label></td>
            <td><asp:TextBox runat="server" ID="SelectPrice" CssClass="form-control" autocomplete="off" /></td>
