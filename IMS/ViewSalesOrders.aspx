@@ -127,6 +127,7 @@
                     
                      
                  </Columns>
+                    <PagerStyle CssClass = "GridPager" />
              </asp:GridView>
    
     <div class="form-horizontal">

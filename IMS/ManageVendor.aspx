@@ -105,6 +105,7 @@
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
+            <PagerStyle CssClass = "GridPager" />
     </asp:GridView>
      <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnGoBack_Click"/> 
 </asp:Content>

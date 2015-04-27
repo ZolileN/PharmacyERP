@@ -74,6 +74,7 @@
                         </FooterTemplate>
                     </asp:TemplateField>
                 </Columns>
+                <PagerStyle CssClass = "GridPager" />
             </asp:GridView>
     <asp:Button ID="btnBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnBack_Click"/>
 

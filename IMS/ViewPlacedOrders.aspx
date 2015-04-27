@@ -177,6 +177,7 @@
                     
                      
                  </Columns>
+                <PagerStyle CssClass = "GridPager" />
              </asp:GridView>
     </div>
     <div class="form-group">

@@ -1234,3 +1234,22 @@ table.table-striped tr td .control-label {
     margin-bottom: 5px;
 
 }
+
+.GridPager td table tr td {
+    padding:0px !important;
+}
+
+.GridPager td table tr td a {
+    padding:3px 10px;
+    display:block;    
+        }
+.GridPager td table tr td span {
+    padding:3px 10px;
+    display:block;
+    background:#61b0e9;
+    color:white;
+}
+
+.form-fields tr td {
+padding:3px;
+}

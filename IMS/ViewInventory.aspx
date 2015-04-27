@@ -109,6 +109,7 @@
                      <%-- org command argument CommandArgument='<%# Eval("BarCode") %>'--%>
                      
                  </Columns>
+            <PagerStyle CssClass = "GridPager" />
              </asp:GridView>
        
         <div class="form-group">

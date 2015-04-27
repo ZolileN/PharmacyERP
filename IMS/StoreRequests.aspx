@@ -3,46 +3,52 @@
      <h3>Store Request(s) Generation Form</h3>
     <br />
     <br />
-    <div class="row">
-     
-    
-    <div class="form-group">
-            <asp:Label runat="server" AssociatedControlID="RequestTo" CssClass="col-md-2 control-label">Request To</asp:Label>
-            <div class="col-md-10">
+
+    <table border="0" cellspacing="0" cellpadding="0" width="700">
+
+        <tr>
+            <td>
+                <asp:Label runat="server" AssociatedControlID="RequestTo" CssClass="control-label">Request To</asp:Label>
+            </td>
+            <td>
                 <asp:DropDownList runat="server" ID="RequestTo" CssClass="form-control" Width="29%" AutoPostBack="true" OnSelectedIndexChanged="RequestTo_SelectedIndexChanged"/>
-                <br />
-            </div>
-    </div>
-    
-   <div class="form-group">
-            <asp:Label runat="server" AssociatedControlID="ProductList" CssClass="col-md-2 control-label">Select Product</asp:Label>
-            <div class="col-md-10">
-                <asp:TextBox runat="server" ID="ProductList" CssClass="form-control product"/>
-                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click" Text="SearchProduct" Height="35px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
-                <br />
-                <asp:DropDownList runat="server" ID="SelectProduct" Visible="false" CssClass="form-control" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="SelectProduct_SelectedIndexChanged"/>
-                <br/>
-            </div>
-            </div>
-
-
-
-    <div class="form-group">
-            <asp:Label runat="server" AssociatedControlID="SelectQuantity" CssClass="col-md-2 control-label">Enter Quantity</asp:Label>
-            <div class="col-md-10">
-                <asp:TextBox runat="server" ID="SelectQuantity" CssClass="form-control" Width="29%"/>
-                <br />
-            </div>
-    </div>
-    
-    <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <asp:Button ID="btnCreateOrder" runat="server" OnClick="btnCreateOrder_Click" Text="ADD" CssClass="btn btn-default" />
+            </td>
+            <td>
+                <asp:Label runat="server" AssociatedControlID="ProductList" CssClass="control-label">Select Product</asp:Label>
+            </td>
+            <td>
+                 <asp:TextBox runat="server" ID="ProductList" CssClass="form-control product"/>
+                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click" Text="SearchProduct" Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
+                
+                <asp:DropDownList runat="server" ID="SelectProduct" Visible="false" CssClass="form-control" Width="" AutoPostBack="True" OnSelectedIndexChanged="SelectProduct_SelectedIndexChanged"/>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Label runat="server" AssociatedControlID="SelectQuantity" CssClass="control-label">Enter Quantity</asp:Label>
+            </td>
+            <td>
+                <asp:TextBox runat="server" ID="SelectQuantity" CssClass="form-control" Width=""/>
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="100%">&nbsp;</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="100%"> <asp:Button ID="btnCreateOrder" runat="server" OnClick="btnCreateOrder_Click" Text="ADD" CssClass="btn btn-default" />
                 <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Text="REFRESH" CssClass="btn btn-default" />
                 <asp:Button ID="btnCancelOrder" runat="server" OnClick="btnCancelOrder_Click" Text="GO BACK" CssClass="btn btn-primary btn-large" />
-            </div>
-        </div>
-    </div>
+
+            </td>
+        </tr>
+
+    </table>
+
+
     
     <br />
     <br />
@@ -129,6 +135,7 @@
 
                   
                  </Columns>
+            <PagerStyle CssClass = "GridPager" />
              </asp:GridView>
         <br />
          <asp:Button ID="btnAccept" runat="server" OnClick="btnAccept_Click" Text="ACCEPT LIST" CssClass="btn btn-large" Visible="false"/>
