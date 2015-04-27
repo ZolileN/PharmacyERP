@@ -32,8 +32,9 @@ namespace IMS
                     if (Session["ViewSalesOrders"] != null && Session["ViewSalesOrders"].Equals(true))
                     {
                         btnAccept.Text = "RE-GENERATE ORDER";
+                        Session["ViewSalesOrders"] = false;
                     }
-                    Session["FirstOrder"] = true;
+                    Session["FirstOrderSO"] = true;
                     systemSet = new DataSet();
                     ProductSet = new DataSet();
                     LoadData();
@@ -58,7 +59,7 @@ namespace IMS
                         if (StockAt != null)
                         {
                             StockAt.Items.Insert(0, "Select System");
-                            StockAt.SelectedValue = Session["SystemID"].ToString();
+                            StockAt.SelectedValue = Session["SelectedIndex"].ToString();
                             StockAt.Enabled = false;
                         }
                     }
@@ -81,7 +82,7 @@ namespace IMS
                 }
                 else
                 {
-                    Session["FirstOrder"] = false;
+                    Session["FirstOrderSO"] = false;
                     Session["OrderSalesDetail"] = false;
                     Session["ExistingOrder"] = false;
                     systemSet = new DataSet();
@@ -128,64 +129,10 @@ namespace IMS
             if (!IsPostBack)
             {
                 Session.Remove("OrderSalesDetail");
+                //Session.Remove("FirstOrderSO");
+                //Session.Remove("ExistingOrder");
+                //Session.Remove("ViewSalesOrders");
             }
-            //try
-            //{
-            //    if (Session["OrderNumber"] != null)
-            //    {
-            //        int orderID = int.Parse(Session["OrderNumber"].ToString());
-            //        connection.Open();
-
-            //        SqlCommand command = new SqlCommand("sp_GetOrderDetailRecieve", connection);
-            //        command.CommandType = CommandType.StoredProcedure;
-            //        command.Parameters.AddWithValue("@p_OrderID", orderID);
-            //        DataSet ds = new DataSet();
-            //        SqlDataAdapter sA = new SqlDataAdapter(command);
-            //        sA.Fill(ds);
-
-            //        for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-            //        {
-            //            int StockID = int.Parse(ds.Tables[0].Rows[i]["StockID"].ToString());
-            //            int quantity = int.Parse(ds.Tables[0].Rows[i]["Quantity"].ToString());
-            //            SqlCommand command2 = new SqlCommand();
-            //            command2 = new SqlCommand("Sp_UpdateStockBy_StockID", connection);
-            //            command2.CommandType = CommandType.StoredProcedure;
-            //            command2.Parameters.AddWithValue("@p_StockID", StockID);
-            //            command2.Parameters.AddWithValue("@p_quantity", quantity);
-            //            command2.Parameters.AddWithValue("@p_Action", "Add");
-            //            command2.ExecuteNonQuery();
-            //        }
-
-            //        command = new SqlCommand("sp_DeleteSO", connection);
-            //        command.CommandType = CommandType.StoredProcedure;
-            //        command.Parameters.AddWithValue("@p_OrderID", orderID);
-            //        command.ExecuteNonQuery();
-            //    }
-            //    Session["OrderNumber"] = null;
-            //    Session["OrderSalesDetail"] = "false";
-            //    txtProduct.Text = "";
-            //    SelectProduct.Visible = false;
-            //    StockAt.Enabled = true;
-            //    StockDisplayGrid.DataSource = null;
-            //    StockDisplayGrid.DataBind();
-            //    SelectQuantity.Text = "";
-            //    SelectProduct.SelectedIndex = -1;
-            //    StockAt.SelectedIndex = -1;
-            //    btnAccept.Visible = false;
-            //    btnDecline.Visible = false;
-            //    Session["FirstOrder"] = false;
-            //}
-            //catch (Exception ex)
-            //{
-
-            //}
-            //finally
-            //{
-            //    if (connection.State == ConnectionState.Open)
-            //    {
-            //        connection.Close();
-            //    }
-            //}
             #endregion
         }
         private void LoadData()
@@ -429,31 +376,22 @@ namespace IMS
         }
         protected void btnAccept_Click(object sender, EventArgs e)
         {
-            //for (int i = 0; i < ProductSet.Tables[0].Rows.Count; i++)
-            //{
-            //    int  OderDetailID = Convert.ToInt32(ProductSet.Tables[0].Rows[i]["OrderDetailID"].ToString());
-            //    int  Quantity = Convert.ToInt32(ProductSet.Tables[0].Rows[i]["Qauntity"].ToString());
-
-            //    Session["RequestedNO"] = Convert.ToInt32(ProductSet.Tables[0].Rows[i]["OrderID"].ToString());
-
-            //    UpdateStockMinus(OderDetailID, Quantity);
-            //}
-            //
             DataSet dsProducts = (DataSet)Session["dsProducts"];
 
             Session["RequestedNO"] = Convert.ToInt32(dsProducts.Tables[0].Rows[0]["OrderID"].ToString());
-            Session["FirstOrder"] = false;
+            Session["FirstOrderSO"] = false;
             Session["OrderSalesDetail"] = false;
-           // Session["RequestedNO"] = Convert.ToInt32(ProductSet.Tables[0].Rows[0]["OrderID"].ToString());
+            
             if (Session["ExistingOrder"].Equals(true)) { Session["RequestedFromID"] = Session["SystemID"]; }
+
             Response.Redirect("ViewPackingList_SO.aspx", false);
-            //Response.Redirect("PO_GENERATE.aspx", false);
         }
 
         protected void btnDecline_Click(object sender, EventArgs e)
         {
             try
             {
+                #region Order Deletion 
                 if (Session["OrderNumber"] != null)
                 {
                     int orderID = int.Parse(Session["OrderNumber"].ToString());
@@ -484,8 +422,13 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_OrderID", orderID);
                     command.ExecuteNonQuery();
                 }
+                #endregion
+
                 Session["OrderNumber"] = null;
-                Session["OrderSalesDetail"] = "false";
+                Session["OrderSalesDetail"] = false;
+                Session["FirstOrderSO"] = false;
+                Session["ExistingOrder"] = false;
+
                 txtProduct.Text = "";
                 SelectProduct.Visible = false;
                 StockAt.Enabled = true;
@@ -494,13 +437,14 @@ namespace IMS
                 SelectQuantity.Text = "";
                 SelectProduct.SelectedIndex = -1;
                 StockAt.SelectedIndex = -1;
+                
                 btnAccept.Visible = false;
                 btnDecline.Visible = false;
-                Session["FirstOrder"] = false;
+                
             }
             catch (Exception ex)
             {
-
+                WebMessageBoxUtil.Show(ex.Message);
             }
             finally
             {
@@ -532,10 +476,7 @@ namespace IMS
                     int sendquantity = int.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblQuantity")).Text);
                     int bonusquantity = int.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblBonus")).Text);
 
-                    //int orderDetID = int.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("OrderDetailNo")).Text);
-                    //UpdateStockPlus(orderDetID, Convert.ToInt32(Session["PreviousValueMain"].ToString()));
-                    
-                    Session["PreviousValueMain"] = sendquantity + bonusquantity;
+                    Session["PreviousValueMain"] = sendquantity + bonusquantity;  // must be checked
                 }
 
                 else if (e.CommandName.Equals("UpdateStock"))
@@ -552,19 +493,12 @@ namespace IMS
                         UpdateStockPlus(orderDetID, Convert.ToInt32(Session["PreviousValueMain"].ToString()));
                         connection.Open();
 
-
+                        //need to test this
                         SqlCommand command = new SqlCommand();
-                        //sp_DeleteSODetailsQuantity
-                        //SqlCommand command = new SqlCommand("sp_DeleteSODetailsQuantity", connection);
-                        //command.CommandType = CommandType.StoredProcedure;
-                       // command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
-                        //command.ExecuteNonQuery();
-
-                        command = new SqlCommand("sp_UpdateSODetailsQuantity", connection);
+                        command = new SqlCommand("sp_DeleteSaleOrderDetails", connection);
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
-                        command.Parameters.AddWithValue("@p_Qauntity", quan);
-                        command.Parameters.AddWithValue("@p_Bonus", bonus);
+                        command.Parameters.AddWithValue("@p_ProductID", ProductID);
                         command.ExecuteNonQuery();
 
 
@@ -587,6 +521,8 @@ namespace IMS
                     {
                         WebMessageBoxUtil.Show("Entered Amount Exceed Available Stock, cannot be updated");
                     }
+
+
                 }
                 else if (e.CommandName.Equals("Delete"))
                 {
@@ -646,24 +582,6 @@ namespace IMS
 
         protected void StockDisplayGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            //try
-            //{
-            //    int orderDetID = int.Parse(((Label)StockDisplayGrid.Rows[e.RowIndex].FindControl("OrderDetailNo")).Text);
-            //    connection.Open();
-            //    SqlCommand command = new SqlCommand("sp_DeleteSO_ID", connection);
-            //    command.CommandType = CommandType.StoredProcedure;
-            //    command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
-
-
-            //    command.ExecuteNonQuery();
-            //}
-            //catch (Exception exp) { }
-            //finally
-            //{
-            //    connection.Close();
-            //    StockDisplayGrid.EditIndex = -1;
-            //    BindGrid();
-            //}
         }
 
         protected void StockDisplayGrid_RowEditing(object sender, GridViewEditEventArgs e)
@@ -704,7 +622,7 @@ namespace IMS
 
             if ((Convert.ToInt32(SelectQuantity.Text) + Convert.ToInt32(SelectBonus.Text)) <= RemainingStock)
             {
-                if (Session["FirstOrder"].Equals(false))
+                if (Session["FirstOrderSO"].Equals(false))
                 {
                     #region Creating Order
 
@@ -842,7 +760,7 @@ namespace IMS
 
                     #endregion
 
-                    Session["FirstOrder"] = true;
+                    Session["FirstOrderSO"] = true;
                 }
                 else
                 {
@@ -1025,6 +943,8 @@ namespace IMS
             BindGrid();
             txtProduct.Text = "";
             SelectProduct.Visible = false;
+            SelectBonus.Text = "";
+            SelectDiscount.Text = "";
             StockAt.Enabled = false;
             SelectQuantity.Text = "";
             
@@ -1035,7 +955,6 @@ namespace IMS
         private void BindGrid()
         {
             DataSet ds = new DataSet();
-
             #region Display Products
             try
             {
@@ -1064,6 +983,11 @@ namespace IMS
                 StockDisplayGrid.DataSource = null;
                 StockDisplayGrid.DataSource = ds.Tables[0];
                 StockDisplayGrid.DataBind();
+
+                if(StockDisplayGrid.DataSource == null)
+                {
+                    Session["FirstOrderSO"] = false;
+                }
             }
             catch (Exception ex)
             {
@@ -1078,23 +1002,13 @@ namespace IMS
         }
         protected void btnRefresh_Click(object sender, EventArgs e)
         {
-            //txtVendor.Text = "";
-            //RequestTo.Visible = false;
-            //RequestTo.Enabled = true;
-            //StockDisplayGrid.DataSource = null;
-            //StockDisplayGrid.DataBind();
-            //SelectQuantity.Text = "";
-            //SelectProduct.SelectedIndex = -1;
-            //RequestTo.SelectedIndex = -1;
-            //btnAccept.Visible = false;
-            //btnDecline.Visible = false;
         }
 
         protected void btnCancelOrder_Click(object sender, EventArgs e)
         {
             
             //must be checked for sessions
-            if (Session["OrderSalesDetail"].Equals(true) && Session["OrderSalesDetail"].ToString() != null && Session["OrderSalesDetail"] != null)
+            if (Session["OrderSalesDetail"] != null && Session["OrderSalesDetail"].Equals(true) && Session["OrderSalesDetail"].ToString() != null)
             {
                 Session["OrderNumber"] = "";
                 Session["OrderSalesDetail"] = false;
@@ -1149,7 +1063,7 @@ namespace IMS
                     StockAt.SelectedIndex = -1;
                     btnAccept.Visible = false;
                     btnDecline.Visible = false;
-                    Session["FirstOrder"] = false;
+                    Session["FirstOrderSO"] = false;
                 }
                 catch (Exception ex)
                 {
@@ -1204,8 +1118,7 @@ namespace IMS
 
                 ProductSet = null;
                 ProductSet = ds;
-                //ds.Tables[0].Columns.Add("ProductInfo", typeof(string), "Product_Name+ ' '+itemStrength+' '+itemPackSize+' '+itemForm");
-
+                
                 SelectProduct.DataSource = ds.Tables[0];
                 SelectProduct.DataTextField = "Description";
                 SelectProduct.DataValueField = "ProductID";

@@ -22,36 +22,7 @@ namespace IMS
             if (!IsPostBack)
             {
                 Session["ViewSalesOrders"] = false;
-                #region Getting Vendors
-                //try
-                //{
-                //    connection.Open();
-                //    DataSet ds = new DataSet();
-                //    SqlCommand command = new SqlCommand("Sp_GetVendor", connection);
-                //    command.CommandType = CommandType.StoredProcedure;
-                //    SqlDataAdapter dA = new SqlDataAdapter(command);
-                //    dA.Fill(ds);
-
-                //    StockAt.DataSource = ds.Tables[0];
-                //    StockAt.DataTextField = "SupName";
-                //    StockAt.DataValueField = "SuppID";
-                //    StockAt.DataBind();
-                //    if (StockAt != null)
-                //    {
-                //        StockAt.Items.Insert(0, "Select Vendor");
-                //        StockAt.SelectedIndex = 0;
-                //    }
-                //}
-                //catch (Exception ex)
-                //{
-
-                //}
-                //finally
-                //{
-                //    connection.Close();
-                //}
-                #endregion
-
+                
                 #region Populating Order Status DropDown
                 OrderStatus.Items.Add("Pending");
                 OrderStatus.Items.Add("Partial");
