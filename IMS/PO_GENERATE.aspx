@@ -121,8 +121,8 @@
 
         <table cellpadding="5" width="100%" cellspacing="0">
         	<tr>
-            	<td> <asp:Label runat="server" ID="PO_Numberlbl" CssClass="col-md-2 control-label" Width="200px">P.O Number : </asp:Label> <asp:Label runat="server" ID="PO_Number" CssClass="col-md-2 control-label" Text="---" Width="100px"></asp:Label></td></td>
-                <td align="right"><asp:Label runat="server" ID="PO_Datelbl" CssClass="col-md-2 control-label" Width="200px">P.O Date : </asp:Label> <span class="date"><asp:Label runat="server" ID="PO_Date" CssClass="col-md-2 control-label" Text="---" Width="300px"></asp:Label></span></td>
+            	<td> <asp:Label runat="server" ID="PO_Numberlbl" CssClass="control-label">P.O Number : </asp:Label> <asp:Label runat="server" ID="PO_Number" CssClass="control-label" Text="---" Width="100px"></asp:Label></td></td>
+                <td align="right"><asp:Label runat="server" ID="PO_Datelbl" CssClass="control-label">P.O Date : </asp:Label> <span class="date"><asp:Label runat="server" ID="PO_Date" CssClass="control-label" Text="---" Width="300px"></asp:Label></span></td>
                
         </tr>
         </table>
@@ -131,10 +131,10 @@
           <table cellpadding="5" width="100%" cellspacing="0">
         	<tr>
                <td valign="top"><strong>ORDER TO:</strong><br />
-           	   <asp:Label runat="server" ID="PO_ToName" CssClass="col-md-2 control-label" Text="---" Width="100%"></asp:Label><br />
-       	       <asp:Label runat="server" ID="PO_ToAddress" CssClass="col-md-2 control-label" Text="---" Width="100%"></asp:Label><br />           
-               <asp:Label runat="server" ID="PO_ToPhone" CssClass="col-md-2 control-label" Text="---" Width="100%"></asp:Label><br />
-               <asp:Label runat="server" ID="PO_ToEmail" CssClass="col-md-2 control-label" Text="---" Width="100%"></asp:Label><br />
+           	   <asp:Label runat="server" ID="PO_ToName" CssClass="control-label" Text="---" Width="100%"></asp:Label><br />
+       	       <asp:Label runat="server" ID="PO_ToAddress" CssClass="control-label" Text="---" Width="100%"></asp:Label><br />           
+               <asp:Label runat="server" ID="PO_ToPhone" CssClass="control-label" Text="---" Width="100%"></asp:Label><br />
+               <asp:Label runat="server" ID="PO_ToEmail" CssClass="control-label" Text="---" Width="100%"></asp:Label><br />
                </td>
             </tr>
         </table>
@@ -160,7 +160,7 @@
             <Columns>
                 <asp:TemplateField HeaderText="Ordered Product" Visible="true" HeaderStyle-Width="250px">
                     <ItemTemplate>
-                        <asp:Label ID="ProductName" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Description") %>' Width="250px"></asp:Label>
+                        <asp:Label ID="ProductName" CssClass="control-label" runat="server" Text='<%# Eval("Description") %>' Width="250px"></asp:Label>
                     </ItemTemplate>
                     <ItemStyle Width="250px" HorizontalAlign="Left" />
                 </asp:TemplateField>

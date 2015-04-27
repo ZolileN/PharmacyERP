@@ -306,7 +306,7 @@ ul.main-menu ul ul, ul.main-menu ul li:hover ul ul
     display:none !important;
     position:absolute;
     top:-5px !important;
-    left:215px !important;
+    left:210px !important;
     z-index:99999;
 }
 
@@ -1182,6 +1182,10 @@ img {
 .formTbl tr td {
     padding:5px;
 }
+
+.formStriped {
+    padding:10px 5px !important;
+}
 table.table-striped tr td .control-label {
     text-align:left;
 }
@@ -1268,3 +1272,8 @@ padding:3px;
 .table-condensed tr td {
     padding:3px 4px !important;
     }
+
+
+.grid-input-form {
+    width:65px !important;
+}
