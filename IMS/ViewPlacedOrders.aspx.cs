@@ -377,7 +377,7 @@ namespace IMS
 
         protected Boolean IsStatusComplete(String status)
         {
-            if (status.Equals("Complete"))
+            if (status.Equals("Complete") || status.Equals("Partial"))
             {
                 return true;
             }

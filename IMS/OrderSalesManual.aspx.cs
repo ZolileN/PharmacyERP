@@ -619,8 +619,11 @@ namespace IMS
             {
                 connection.Close();
             }
-
-            if ((Convert.ToInt32(SelectQuantity.Text) + Convert.ToInt32(SelectBonus.Text)) <= RemainingStock)
+            int quan, bonQuan;
+            quan = bonQuan = 0;
+            int.TryParse(SelectQuantity.Text, out quan);
+            int.TryParse(SelectBonus.Text, out bonQuan);
+            if ((quan+bonQuan) <= RemainingStock)
             {
                 if (Session["FirstOrderSO"].Equals(false))
                 {
