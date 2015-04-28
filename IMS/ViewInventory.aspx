@@ -54,7 +54,7 @@
                     </asp:TemplateField>
                      <asp:TemplateField Visible="true" HeaderText="Product Description" HeaderStyle-Width="330px">
                         <ItemTemplate>
-                            <asp:Label ID="ProductName" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("prodDesc") %>' Width="330px"></asp:Label>
+                            <asp:Label ID="ProductName" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("prodDesc")==DBNull.Value?"":Eval("prodDesc") %>' Width="330px"></asp:Label>
                         </ItemTemplate>
                          <ItemStyle  Width="330px" HorizontalAlign="Left"/>
                     </asp:TemplateField>

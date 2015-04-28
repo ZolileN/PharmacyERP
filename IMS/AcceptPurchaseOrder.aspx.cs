@@ -171,6 +171,8 @@ namespace IMS
             int ProdID = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblProd_id")).Text);
             String prodDescription = ((Label)StockDisplayGrid.Rows[RowIndex].FindControl("ProductName2")).Text;
             int orderedBonusQuan = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblOrderedBonus")).Text);
+            Decimal orgCp=Decimal.Round(Decimal.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblCP")).Text),2);
+            Decimal orgSp=Decimal.Round(Decimal.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblSP")).Text),2);
             Session["ordetailID"] = ordetID;
             Session["ordQuan"] = orderedQuantity;
             Session["bonusQuan"] = bonusOrg;
@@ -185,6 +187,8 @@ namespace IMS
             Session["ProdID"] = ProdID;
             Session["ProdDesc"] = prodDescription;
             Session["OrderedBonus"] = orderedBonusQuan;
+            Session["OrgCP"]= orgCp;
+            Session["OrgSP"] = orgSp;
         }
         protected void StockDisplayGrid_RowCommand(object sender, GridViewCommandEventArgs e)
         {

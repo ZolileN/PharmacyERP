@@ -135,10 +135,10 @@
                             </span>
                               </ItemTemplate>
                           <EditItemTemplate>
-
-                            <asp:LinkButton ID="btnUpdate" Text="Re-Generate Order" CssClass="btn btn-default btn-xs"  runat="server" CommandName="ReGen" />
+                            <asp:LinkButton ID="btnUpdate" Text="Re-Generate Order" CssClass="btn btn-default btn-xs"  runat="server" CommandName="ReGen" Visible= '<%# IsStatusComplete((String) Eval("Status")) %>' />
                             <asp:LinkButton ID="btnView" Text="Update Accepted Order" CssClass="btn btn-default btn-xs"  runat="server" CommandName="UpdateRec" />
                             <asp:LinkButton ID="btnCancel" Text="Cancel" CssClass="btn btn-default btn-xs"  runat="server" CommandName="Cancel" />
+
                         </EditItemTemplate>
                          <ItemStyle  Width="150px" HorizontalAlign="Left"/>
                     </asp:TemplateField>

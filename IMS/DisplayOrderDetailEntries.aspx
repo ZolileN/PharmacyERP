@@ -32,30 +32,33 @@
              <td><b>Ordered Quantity</b></td>
              <td><asp:Label runat="server" ID="OrdQuantity" CssClass="" /></td>
              <td class="auto-style1"></td>
-             <td class="auto-style2"><b>Order Bonus Quantity</b></td>
-            <td><asp:Label runat="server" ID="OrderedbonusQuan" CssClass="" /></td>
+             <td><b>Received Quantity</b></td>
+            <td> <asp:Label runat="server" ID="RecQuantity" CssClass="" /></td>
+            
            
         </tr>
         <tr>
-            <td><b>Received Quantity</b></td>
-            <td> <asp:Label runat="server" ID="RecQuantity" CssClass="" /></td>
+            <td class="auto-style2"><b>Order Bonus Quantity</b></td>
+            <td><asp:Label runat="server" ID="OrderedbonusQuan" CssClass="" /></td>
             <td class="auto-style1"></td>
-            <td class="auto-style2"><b>Remaining Quantity</b></td>
-            <td><asp:Label runat="server" ID="RemQuantity" CssClass="" /></td>
+             <td class="auto-style2"><b>Received Bonus Quantity</b></td>
+            <td><asp:Label runat="server" ID="bonusQuanOrg" CssClass="" /></td>
+            
         </tr>
         <tr>
-            <td class="auto-style2"><b>Bonus Quantity</b></td>
-            <td><asp:Label runat="server" ID="bonusQuanOrg" CssClass="" /></td>
+           <td class="auto-style2"><b>Remaining Quantity</b></td>
+            <td><asp:Label runat="server" ID="RemQuantity" CssClass="" /></td>
             <td class="auto-style1">&nbsp; &nbsp; &nbsp;</td>
-             <td><b>Defected Quantity</b></td>
-            <td> <asp:Label runat="server" ID="defQuantity" CssClass="" /></td>
+            <td><b>Returned Quantity</b></td>
+            <td><asp:Label runat="server" ID="retQuantity" CssClass="" /></td>
+            
         </tr>
         <tr>
             <td class="auto-style2"><b>Expired Quantity</b></td>
             <td> <asp:Label runat="server" ID="expQuantity" CssClass="" /></td>
             <td class="auto-style1">&nbsp; &nbsp; &nbsp;</td>
-            <td><b>Returned Quantity</b></td>
-            <td><asp:Label runat="server" ID="retQuantity" CssClass="" /></td>
+             <td><b>Defected Quantity</b></td>
+            <td> <asp:Label runat="server" ID="defQuantity" CssClass="" /></td>
             
         </tr>
     </table>
@@ -169,7 +172,7 @@
                             <asp:Label ID="lblCP"  runat="server" Text='<%# Eval("CostPrice") %>'></asp:Label>
                         </ItemTemplate>
                          <EditItemTemplate>
-                             <asp:TextBox ID="retCP"  runat="server" Text=' <%#Eval("CostPrice")==DBNull.Value?0:float.Parse( Eval("CostPrice").ToString())  %>' Width="47px"></asp:TextBox>
+                             <asp:TextBox ID="retCP"  runat="server" Text=' <%#Eval("CostPrice")==DBNull.Value?0:Decimal.Round(Decimal.Parse( Eval("CostPrice").ToString()),2)  %>' Width="47px"></asp:TextBox>
                          </EditItemTemplate>
                           <FooterTemplate>
                             <asp:TextBox ID="txtAddCP" runat="server" CssClass="grid-input-form" Width="47px"></asp:TextBox>
@@ -182,7 +185,7 @@
                             <asp:Label ID="lblSP"  runat="server" Text='<%# Eval("SalePrice") %>'></asp:Label>
                         </ItemTemplate>
                           <EditItemTemplate>
-                             <asp:TextBox ID="retSP"  runat="server" Text=' <%#Eval("SalePrice")==DBNull.Value?0:float.Parse( Eval("SalePrice").ToString())  %>' Width="47px"></asp:TextBox>
+                             <asp:TextBox ID="retSP"  runat="server" Text=' <%#Eval("SalePrice")==DBNull.Value?0:Decimal.Round(Decimal.Parse( Eval("SalePrice").ToString()),2)  %>' Width="47px"></asp:TextBox>
                          </EditItemTemplate>
                           <FooterTemplate>
                             <asp:TextBox ID="txtAddSP" runat="server" CssClass="grid-input-form" Width="47px"></asp:TextBox>

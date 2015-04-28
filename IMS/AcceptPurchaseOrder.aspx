@@ -11,7 +11,7 @@
               $(function () { $("#<%= txtExpDate.ClientID %>").datepicker(); });
 
           </script>--%>
-      <h3> Receive Purchase Order </h3> 
+      <h3>Accept PO </h3> 
     <table>
         <tr>
             <td>
@@ -35,7 +35,7 @@
                       <asp:TemplateField HeaderText="Action" HeaderStyle-Width ="200px">
                         <ItemTemplate>
                             <asp:Button CssClass="btn btn-default edit-btn" ID="btnEdit" Text="Accept" runat="server" CommandName="Edit" Enabled= '<%# IsStatusNotComplete((String) Eval("Status")) %>' Visible= '<%# IsStatusNotComplete((String) Eval("Status")) %>'/>
-                            <asp:Button CssClass="btn btn-default details-btn" ID="btnView" Text="View" runat="server" CommandName="ViewEntry" Visible= '<%# IsStatusComplete((String) Eval("Status")) %>'/>
+                            <asp:Button CssClass="btn btn-default " ID="btnView" Text="View" runat="server" CommandName="ViewEntry" Visible= '<%# IsStatusComplete((String) Eval("Status")) %>'/>
                              <%--CommandArgument='<%# Container.DisplayIndex  %>'--%>
                         </ItemTemplate>
                         <EditItemTemplate>
