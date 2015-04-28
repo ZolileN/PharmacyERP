@@ -204,6 +204,7 @@
     <Content Include="Images\body-bg.jpg" />
     <Content Include="Images\btm-bg.gif" />
     <Content Include="Images\cancel.png" />
+    <Content Include="Images\close-ico.png" />
     <Content Include="Images\close-icon.png" />
     <Content Include="Images\del-icon.png" />
     <Content Include="Images\delete-icon.png" />

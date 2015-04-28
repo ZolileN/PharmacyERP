@@ -219,6 +219,26 @@
                
                 $(".table-striped").parent("div").addClass("putScroll");
 
+             
+            var h = $(document).height();
+            $(".overLaypop").height(h);
+
+            $(".opPop").click(function (e) {
+                e.preventDefault();
+                var pH = $(".popupMain").height();
+                var pH = pH / 2;
+                var pH = 0 - pH;
+                $(".popupMain").css("margin-top", pH);
+
+                $(".popupMain, .overLaypop").fadeIn();
+            });
+
+            $(".close").click(function () {
+                
+                $(".popupMain, .overLaypop").fadeOut();
+
+            });
+
             });
         </script>
 </body>

@@ -99,11 +99,11 @@
                           
                         <EditItemTemplate>
 
-                            <asp:LinkButton CssClass="btn btn-default" ID="btnUpdate" Text="Update" runat="server" CommandName="UpdateStock" />
-                            <asp:LinkButton CssClass="btn btn-default" ID="btnCancel" Text="Cancel" runat="server" CommandName="Cancel" />
+                            <asp:LinkButton CssClass="btn btn-default btn-xs" ID="btnUpdate" Text="Update" runat="server" CommandName="UpdateStock" />
+                            <asp:LinkButton CssClass="btn btn-default btn-xs" ID="btnCancel" Text="Cancel" runat="server" CommandName="Cancel" />
                         </EditItemTemplate>
                          
-                         <ItemStyle  Width="280px" HorizontalAlign="Left"/>
+                         <ItemStyle  Width="100px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
 
                       <asp:TemplateField Visible="false" HeaderText="Name : Strength : Form : Pack Size" HeaderStyle-Width="500" HeaderStyle-HorizontalAlign="Center">
@@ -158,7 +158,7 @@
                         </ItemTemplate>
                         
                         <EditItemTemplate>
-                            <asp:TextBox ID="txtQuantity" CssClass="form-control" runat="server" Text='<%#Eval("Qauntity") %>' ></asp:TextBox>
+                            <asp:TextBox ID="txtQuantity" CssClass="form-control grid-input-form" runat="server" Text='<%#Eval("Qauntity") %>' ></asp:TextBox>
                              <asp:RequiredFieldValidator runat="server" ControlToValidate="txtQuantity" CssClass="text-danger" ErrorMessage="The product quantity field is required." />
                         </EditItemTemplate>
                           <ItemStyle  Width="60px" HorizontalAlign="Left"/>
@@ -170,7 +170,7 @@
                         </ItemTemplate>
                         
                         <EditItemTemplate>
-                            <asp:TextBox ID="txtBonus" CssClass="form-control" runat="server" Text='<%#Eval("Bonus") %>' ></asp:TextBox>
+                            <asp:TextBox ID="txtBonus" CssClass="form-control grid-input-form" runat="server" Text='<%#Eval("Bonus") %>' ></asp:TextBox>
                              <asp:RequiredFieldValidator runat="server" ControlToValidate="txtQuantity" CssClass="text-danger" ErrorMessage="The product quantity field is required." />
                         </EditItemTemplate>
                           <ItemStyle  Width="60px" HorizontalAlign="Left"/>
