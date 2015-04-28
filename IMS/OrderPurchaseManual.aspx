@@ -32,7 +32,7 @@
 
                 <asp:TextBox runat="server" ID="txtVendor" CssClass="form-control product"/>
                 <asp:ImageButton ID="btnSearchVendor" runat="server" OnClick="btnSearchVendor_Click" Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
-                <br />
+               
                 <asp:DropDownList runat="server" ID="RequestTo" CssClass="form-control" Width="280" AutoPostBack="true" OnSelectedIndexChanged="RequestTo_SelectedIndexChanged" Visible="false" >
                 
                     <%--class="chzn-select"   <asp:ListItem Text="" Value=""></asp:ListItem>
@@ -54,11 +54,28 @@
                </td>
            </tr>
         <tr>
-            <td><asp:Label runat="server" AssociatedControlID="SelectQuantity" CssClass="control-label">Quantity</asp:Label></td>
-            <td><asp:TextBox runat="server" ID="SelectQuantity" CssClass="form-control" autocomplete="off" Width="47px" /></td>
+            
+            <td colspan="100%">
+                <div class="qtyBox">
+                    <table>
+                    <tr>
+                        <td>
+                            <asp:Label runat="server" AssociatedControlID="SelectQuantity" CssClass="control-label">Quantity</asp:Label>
+                        </td>
+                        <td>
+                            <asp:TextBox runat="server" ID="SelectQuantity" CssClass="form-control" autocomplete="off" Width="60px" />
+                        </td>
+                        <td>
+                            <asp:Label runat="server" AssociatedControlID="SelectPrice" CssClass="control-label">Bonus Quantity</asp:Label>
+                        </td>
+                        <td>
+                            <asp:TextBox runat="server" ID="SelectPrice" CssClass="form-control" autocomplete="off" Width="60px" />
+                        </td>
+                    </tr>
+                    </table>
+                </div>
        
-           <td><asp:Label runat="server" AssociatedControlID="SelectPrice" CssClass="control-label">Enter Bonus Quantity</asp:Label></td>
-           <td><asp:TextBox runat="server" ID="SelectPrice" CssClass="form-control" autocomplete="off" /></td>
+          
            
        </tr>
        <tr>

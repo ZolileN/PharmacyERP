@@ -1275,5 +1275,27 @@ padding:3px;
 
 
 .grid-input-form {
-    width:65px !important;
+    width:47px !important;
 }
+
+.qtyBox {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  width:318px;
+  padding: 10px;
+  overflow: hidden;
+  /*border: 1px solid rgba(247,200,98,1);*/
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+  /*margin-left:150px;*/
+  color: rgba(28,28,28,1);
+  
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  
+}
+
+    .qtyBox table tr td{
+        padding:5px;
+    }
