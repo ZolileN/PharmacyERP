@@ -214,20 +214,20 @@
                             </EditItemTemplate>
                           <ItemStyle  Width="90px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
-                      <asp:TemplateField HeaderText="Unit Cost Price" HeaderStyle-Width="110px">
+                      <asp:TemplateField HeaderText="Unit<br>Cost Price" HeaderStyle-Width="110px">
                     <ItemTemplate>
                         <asp:Label ID="lblUnitCost" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("UnitCost") %>'></asp:Label>
                     </ItemTemplate>
                     <ItemStyle Width="110px" HorizontalAlign="Left" />
                 </asp:TemplateField>
 
-                <asp:TemplateField HeaderText="Total Cost Price" HeaderStyle-Width="110px">
+                <asp:TemplateField HeaderText="Total<br>Cost Price" HeaderStyle-Width="110px">
                     <ItemTemplate>
                         <asp:Label ID="lblTotalCost" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("totalCostPrice") %>'></asp:Label>
                     </ItemTemplate>
                     <ItemStyle Width="110px" HorizontalAlign="Left" />
                 </asp:TemplateField>
-                     <asp:TemplateField HeaderText="Order Status" HeaderStyle-Width ="110px">
+                     <asp:TemplateField HeaderText="Order<br>Status" HeaderStyle-Width ="110px">
                         <ItemTemplate>
                             <asp:Label ID="lblStatus" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Status") %>'  Width="100px"></asp:Label>
                         </ItemTemplate>
