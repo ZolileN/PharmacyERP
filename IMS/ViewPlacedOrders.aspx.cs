@@ -349,7 +349,7 @@ namespace IMS
         {
             try
             {
-               // StockDisplayGrid.EditIndex = e.NewEditIndex;
+                StockDisplayGrid.EditIndex = e.NewEditIndex;
                 //DataTable filterSet = StockDisplayGrid.DataSource as DataTable;
                 //DataView dataView = filterSet.DefaultView;
                 //Label OrderNo = (Label)StockDisplayGrid.Rows[e.NewEditIndex].FindControl("OrderNO");
@@ -377,7 +377,7 @@ namespace IMS
 
         protected Boolean IsStatusComplete(String status)
         {
-            if (status.Equals("Complete"))
+            if (status.Equals("Complete") || status.Equals("Partial"))
             {
                 return true;
             }

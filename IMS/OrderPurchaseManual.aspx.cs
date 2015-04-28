@@ -46,7 +46,7 @@ namespace IMS
                 else
                 {
                     Session["OrderNumber"] = "";
-                    Session["FromViewPlacedOrders"] = "false";
+                    Session["FromViewPlacedOrders"] = null;
                     Session["FirstOrder"] = false;
                     //Session["isGenOption"] = null;
                    
@@ -169,7 +169,7 @@ namespace IMS
                     command.ExecuteNonQuery();
                 }
                 Session["OrderNumber"] = null;
-                Session["FromViewPlacedOrders"] = "false";
+                Session["FromViewPlacedOrders"] = null;
                 txtVendor.Text = "";
                 txtProduct.Text = "";
                 txtVendor.Enabled = true;
@@ -651,7 +651,8 @@ namespace IMS
             if (Session["FromViewPlacedOrders"] !=null && Session["FromViewPlacedOrders"].ToString().Equals("true") && Session["FromViewPlacedOrders"].ToString() != null)
             {
                 Session["OrderNumber"] = "";
-                Session["FromViewPlacedOrders"] = "false";
+                Session["FromViewPlacedOrders"] = null;
+                Session["FirstOrder"] = false;
                // Session["isGenOption"] = null;
                 Response.Redirect("ViewPlacedOrders.aspx", false);
             }
@@ -675,7 +676,8 @@ namespace IMS
                     }
                 }
                 Session["OrderNumber"] = "";
-                Session["FromViewPlacedOrders"] = "false";
+                Session["FromViewPlacedOrders"] = null;
+                Session["FirstOrder"] = false;
                 Response.Redirect("PlaceOrder.aspx",false);
             }
         }
