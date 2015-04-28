@@ -26,7 +26,7 @@ namespace IMS
             if (!IsPostBack)
             {
 
-                if ((Session["OrderNumber"] != null && Session["FromViewPlacedOrders"] != null) || Session["isGenOption"] != null)
+                if ((Session["OrderNumber"] != null && Session["FromViewPlacedOrders"] != null)) //|| Session["isGenOption"] != null)
                 {
                     Session["FirstOrder"] = true;
                    
@@ -41,14 +41,14 @@ namespace IMS
                         btnDecline.Visible = true;
                     }
                     Session["FromViewPlacedOrders"] = null;
-                    Session["isGenOption"] = null;
+                    //Session["isGenOption"] = null;
                 }
                 else
                 {
                     Session["OrderNumber"] = "";
                     Session["FromViewPlacedOrders"] = "false";
                     Session["FirstOrder"] = false;
-                    Session["isGenOption"] = null;
+                    //Session["isGenOption"] = null;
                    
                     systemSet = new DataSet();
                     ProductSet = new DataSet();
@@ -185,7 +185,7 @@ namespace IMS
                 btnAccept.Visible = false;
                 btnDecline.Visible = false;
                 Session["FirstOrder"] = false;
-                Session["isGenOption"] = null;
+               // Session["isGenOption"] = null;
                 lblttlcst.Visible = false;
                 lblTotalCostALL.Visible = false;
             }
@@ -648,11 +648,11 @@ namespace IMS
             lblttlcst.Visible = false;
             lblTotalCostALL.Visible = false;
             //must be checked for sessions
-            if (Session["FromViewPlacedOrders"].ToString().Equals("true") && Session["FromViewPlacedOrders"].ToString() != null && Session["FromViewPlacedOrders"] !=null)
+            if (Session["FromViewPlacedOrders"] !=null && Session["FromViewPlacedOrders"].ToString().Equals("true") && Session["FromViewPlacedOrders"].ToString() != null)
             {
                 Session["OrderNumber"] = "";
                 Session["FromViewPlacedOrders"] = "false";
-                Session["isGenOption"] = null;
+               // Session["isGenOption"] = null;
                 Response.Redirect("ViewPlacedOrders.aspx", false);
             }
             else

@@ -270,7 +270,7 @@ namespace IMS
 
         protected void btnFax_Click(object sender, EventArgs e)
         {
-            Session["isGenOption"] = true;
+           // Session["isGenOption"] = true;
             Response.Redirect("OrderPurchaseManual.aspx",false);
         }
 
