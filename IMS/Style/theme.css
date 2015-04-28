@@ -1186,10 +1186,17 @@ img {
 .formStriped {
     padding:10px 5px !important;
 }
-table.table-striped tr td .control-label {
+table.table-striped tr td .control-label{
     text-align:left;
       white-space: normal;
-      width:inherit;
+      /*width:inherit;*/
+}
+
+ .ProductDescription {
+    text-align:left;
+      white-space: normal;
+       min-width:170px;
+       display:block;
 }
 
 

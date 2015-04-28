@@ -4,7 +4,9 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     
-    
+   
+
+        
 
       <h3>Manual Purchase Order(s)</h3>
     <br />
@@ -26,7 +28,7 @@
        <%--  <script src="Scripts/jquery.min.js" type="text/javascript"></script>
          <script src="Scripts/chosen.jquery.js" type="text/javascript"></script>
          <script type="text/javascript"> $(".chzn-select").chosen(); $(".chzn-select-deselect").chosen({ allow_single_deselect: true }); </script>--%>
-   
+    
    <table cellspacing="5" cellpadding="5" border="0" width="100%">
 
        <tr>
@@ -169,9 +171,9 @@
                     </asp:TemplateField>
                      <asp:TemplateField HeaderText="Product Description" Visible="true" HeaderStyle-Width ="430px">
                         <ItemTemplate>
-                            <asp:Label ID="ProductName" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Description") %>'  Width="330px" ></asp:Label>
+                            <asp:Label ID="ProductName" CssClass="control-label ProductDescription" runat="server" Text='<%# Eval("Description") %>'></asp:Label>
                         </ItemTemplate>
-                         <ItemStyle  Width="330px" HorizontalAlign="Left"/>
+                         <ItemStyle   HorizontalAlign="Left"/>
                     </asp:TemplateField>
                     
                       <asp:TemplateField HeaderText="Strength" Visible="false" HeaderStyle-Width ="150px">

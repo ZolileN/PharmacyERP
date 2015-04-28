@@ -52,9 +52,9 @@
                         </ItemTemplate>
                          <ItemStyle  Width="280px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
-                      <asp:TemplateField HeaderText="Description" HeaderStyle-Width="500" HeaderStyle-HorizontalAlign="Center">
+                      <asp:TemplateField HeaderText="Description" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <asp:Label ID="ProductName2" padding-right="5px" runat="server" Text='<%# Eval("descp") %>'></asp:Label>
+                            <asp:Label ID="ProductName2" CssClass="ProductDescription" runat="server" Text='<%# Eval("descp") %>'></asp:Label>
                             <!--<asp:Label ID="Label1" padding-right="5px" runat="server" Text=" : "></asp:Label>
                             <asp:Label ID="ProductStrength2" padding-right="5px" runat="server" Text='<%# Eval("strength") %>'  ></asp:Label>
                             <asp:Label ID="Label2" runat="server" Text=" : " padding-right="5px"></asp:Label>
