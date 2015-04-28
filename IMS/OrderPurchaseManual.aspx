@@ -3,6 +3,9 @@
     
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    
+    
+
       <h3>Manual Purchase Order(s)</h3>
     <br />
     <br />
@@ -23,7 +26,7 @@
        <%--  <script src="Scripts/jquery.min.js" type="text/javascript"></script>
          <script src="Scripts/chosen.jquery.js" type="text/javascript"></script>
          <script type="text/javascript"> $(".chzn-select").chosen(); $(".chzn-select-deselect").chosen({ allow_single_deselect: true }); </script>--%>
-    
+   
    <table cellspacing="5" cellpadding="5" border="0" width="100%">
 
        <tr>
@@ -46,7 +49,7 @@
        
             <td><asp:Label runat="server" AssociatedControlID="txtProduct" CssClass="control-label">Select Product</asp:Label></td>
             <td><asp:TextBox runat="server" ID="txtProduct" CssClass="form-control product"/>
-                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click"  Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
+                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click"   Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
                 
                 <asp:DropDownList runat="server" ID="SelectProduct" Visible="false" CssClass="form-control" Width="280" AutoPostBack="True" OnSelectedIndexChanged="SelectProduct_SelectedIndexChanged"/>
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="SelectProduct" CssClass="text-danger" ErrorMessage="The Product field is required." ValidationGroup="ExSave"/>
