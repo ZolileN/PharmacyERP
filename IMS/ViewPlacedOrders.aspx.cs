@@ -349,7 +349,7 @@ namespace IMS
         {
             try
             {
-               // StockDisplayGrid.EditIndex = e.NewEditIndex;
+                StockDisplayGrid.EditIndex = e.NewEditIndex;
                 //DataTable filterSet = StockDisplayGrid.DataSource as DataTable;
                 //DataView dataView = filterSet.DefaultView;
                 //Label OrderNo = (Label)StockDisplayGrid.Rows[e.NewEditIndex].FindControl("OrderNO");

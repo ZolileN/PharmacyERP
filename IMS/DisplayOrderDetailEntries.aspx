@@ -169,7 +169,7 @@
                     </asp:TemplateField>
                      <asp:TemplateField HeaderText="Cost<br>Price">
                         <ItemTemplate>
-                            <asp:Label ID="lblCP"  runat="server" Text='<%# Eval("CostPrice") %>'></asp:Label>
+                            <asp:Label ID="lblCP"  runat="server" Text=' <%#Eval("CostPrice")==DBNull.Value?0:Decimal.Round(Decimal.Parse( Eval("CostPrice").ToString()),2)  %>'></asp:Label>
                         </ItemTemplate>
                          <EditItemTemplate>
                              <asp:TextBox ID="retCP"  runat="server" Text=' <%#Eval("CostPrice")==DBNull.Value?0:Decimal.Round(Decimal.Parse( Eval("CostPrice").ToString()),2)  %>' Width="47px"></asp:TextBox>
@@ -182,7 +182,7 @@
                     
                      <asp:TemplateField HeaderText="Sale<br>Price">
                         <ItemTemplate>
-                            <asp:Label ID="lblSP"  runat="server" Text='<%# Eval("SalePrice") %>'></asp:Label>
+                            <asp:Label ID="lblSP"  runat="server" Text=' <%#Eval("SalePrice")==DBNull.Value?0:Decimal.Round(Decimal.Parse( Eval("SalePrice").ToString()),2)  %>'></asp:Label>
                         </ItemTemplate>
                           <EditItemTemplate>
                              <asp:TextBox ID="retSP"  runat="server" Text=' <%#Eval("SalePrice")==DBNull.Value?0:Decimal.Round(Decimal.Parse( Eval("SalePrice").ToString()),2)  %>' Width="47px"></asp:TextBox>
