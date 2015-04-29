@@ -335,11 +335,18 @@ namespace IMS
             if(e.Row.RowType == DataControlRowType.DataRow)
             {
                 int AvailableStock = Convert.ToInt32(((Label)e.Row.FindControl("lblAvStock")).Text.ToString());
+                int SentQuantity = Convert.ToInt32(((Label)e.Row.FindControl("lblQuantity")).Text.ToString());
+                int BonusQuantity = Convert.ToInt32(((Label)e.Row.FindControl("lblBonus")).Text.ToString());
                 Button EditButton = (Button)e.Row.FindControl("btnEdit");
                 Button RefreshButton = (Button)e.Row.FindControl("btnRefresh");
- 
-              
-                if(AvailableStock.Equals(0))
+
+
+                if (AvailableStock.Equals(0) && SentQuantity.Equals(0) && BonusQuantity.Equals(0))
+                {
+                    EditButton.Enabled = false;
+                    RefreshButton.Enabled = true;
+                }
+                else if(AvailableStock.Equals(0))
                 {
                     EditButton.Enabled = false;
                     RefreshButton.Enabled = false;

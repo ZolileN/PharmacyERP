@@ -67,15 +67,6 @@ namespace IMS {
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtSearch;
         
         /// <summary>
-        /// btnSearchProduct control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton btnSearchProduct;
-        
-        /// <summary>
         /// SelectProduct control.
         /// </summary>
         /// <remarks>

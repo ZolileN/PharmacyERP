@@ -43,8 +43,9 @@ namespace IMS
                 lblPO.Text = Session["isPO"].ToString();
                 lblProdID.Text = Session["ProdID"].ToString();
                 OrderedbonusQuan.Text = Session["OrderedBonus"].ToString();
+              
             }
-            else 
+            else
             {
                 try
                 {
@@ -68,7 +69,7 @@ namespace IMS
                     defQuantity.Text = ds.Tables[0].Rows[0]["DefectedQuantity"].ToString();
                     retQuantity.Text = ds.Tables[0].Rows[0]["ReturnedQuantity"].ToString();
                     expQuantity.Text = ds.Tables[0].Rows[0]["ExpiredQuantity"].ToString();
-                   
+
                     #endregion
                 }
                 catch (Exception exp) { }
@@ -102,7 +103,9 @@ namespace IMS
                 ProductSet = ds;
                 StockDisplayGrid.DataSource = null;
                 StockDisplayGrid.DataSource = ds.Tables[0];
-                StockDisplayGrid.DataBind(); 
+                StockDisplayGrid.DataBind();
+                ((TextBox)StockDisplayGrid.FooterRow.FindControl("txtAddCP")).Text = Session["OrgCP"].ToString();
+                ((TextBox)StockDisplayGrid.FooterRow.FindControl("txtAddSP")).Text = Session["OrgSP"].ToString();
                 #endregion
             }
             catch (Exception exp) { }

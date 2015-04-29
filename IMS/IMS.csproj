@@ -204,6 +204,7 @@
     <Content Include="Images\body-bg.jpg" />
     <Content Include="Images\btm-bg.gif" />
     <Content Include="Images\cancel.png" />
+    <Content Include="Images\close-ico.png" />
     <Content Include="Images\close-icon.png" />
     <Content Include="Images\del-icon.png" />
     <Content Include="Images\delete-icon.png" />
@@ -213,6 +214,7 @@
     <Content Include="Images\login-bg.png" />
     <Content Include="Images\logo1.png" />
     <Content Include="Images\Mail.png" />
+    <Content Include="Images\search-ico.png" />
     <Content Include="Images\search-icon-512.png" />
     <Content Include="Images\update.png" />
     <Content Include="Images\view.png" />

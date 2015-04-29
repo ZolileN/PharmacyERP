@@ -29,9 +29,9 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-     
 
-      <h3>Manual Purchase Order(s)</h3>
+      <h3>Manual PO(s)</h3>
+
     <br />
     <br />
     
@@ -47,9 +47,7 @@
        <tr>
            <td><asp:Label runat="server"  AssociatedControlID="RequestTo" CssClass="control-label">Select Vendor</asp:Label></td>
            <td >
-                 
-                
-                   <cc1:ComboBox ID="CmbVendors" runat="server" AutoCompleteMode="SuggestAppend" DataSourceID="VendorsDataSource" DataTextField="SupName" DataValueField="SuppID" MaxLength="0" style="display: inline; width: 10px;" OnSelectedIndexChanged="CmbVendors_SelectedIndexChanged">
+              <cc1:ComboBox ID="CmbVendors" runat="server" AutoCompleteMode="SuggestAppend" DataSourceID="VendorsDataSource" DataTextField="SupName" DataValueField="SuppID" MaxLength="0" style="display: inline; width: 10px;" OnSelectedIndexChanged="CmbVendors_SelectedIndexChanged">
                 </cc1:ComboBox> 
                 <asp:ImageButton ID="btnSearchVendor" runat="server"  Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="40px" />
               <asp:SqlDataSource ID="VendorsDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:IMSConnectionString %>" SelectCommand="SELECT DISTINCT [SupName], [SuppID] FROM [tblVendor]"></asp:SqlDataSource>
@@ -64,12 +62,15 @@
            </td>
        
             <td><asp:Label runat="server" AssociatedControlID="txtProduct" CssClass="control-label">Select Product</asp:Label></td>
+
             <td>
 
                 <input type="text" id="txtSearch" runat="server" name="txtSearch"  onkeyup="searchSuggest(event);" autocomplete="off"  /> 
                 <div id="search_suggest"  ></div>
 
-                  <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click"  Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
+                  <%--<asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click"  Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />--%>
+
+            
                 
                 <asp:DropDownList runat="server" ID="SelectProduct" Visible="false" CssClass="form-control" Width="280" AutoPostBack="True" OnSelectedIndexChanged="SelectProduct_SelectedIndexChanged"/>
                 <asp:TextBox runat="server" ID="txtProduct" CssClass="form-control product" Visible="False"/>
@@ -77,11 +78,28 @@
                </td>
            </tr>
         <tr>
-            <td><asp:Label runat="server" AssociatedControlID="SelectQuantity" CssClass="control-label">Enter Quantity</asp:Label></td>
-            <td><asp:TextBox runat="server" ID="SelectQuantity" CssClass="form-control" autocomplete="off" /></td>
+            
+            <td colspan="100%">
+                <div class="qtyBox">
+                    <table>
+                    <tr>
+                        <td>
+                            <asp:Label runat="server" AssociatedControlID="SelectQuantity" CssClass="control-label">Quantity</asp:Label>
+                        </td>
+                        <td>
+                            <asp:TextBox runat="server" ID="SelectQuantity" CssClass="form-control" autocomplete="off" Width="60px" />
+                        </td>
+                        <td>
+                            <asp:Label runat="server" AssociatedControlID="SelectPrice" CssClass="control-label">Bonus Quantity</asp:Label>
+                        </td>
+                        <td>
+                            <asp:TextBox runat="server" ID="SelectPrice" CssClass="form-control" autocomplete="off" Width="60px" />
+                        </td>
+                    </tr>
+                    </table>
+                </div>
        
-           <td><asp:Label runat="server" AssociatedControlID="SelectPrice" CssClass="control-label">Enter Bonus Quantity</asp:Label></td>
-           <td><asp:TextBox runat="server" ID="SelectPrice" CssClass="form-control" autocomplete="off" /></td>
+          
            
        </tr>
        <tr>
@@ -167,9 +185,9 @@
                     </asp:TemplateField>
                      <asp:TemplateField HeaderText="Product Description" Visible="true" HeaderStyle-Width ="430px">
                         <ItemTemplate>
-                            <asp:Label ID="ProductName" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Description") %>'  Width="330px" ></asp:Label>
+                            <asp:Label ID="ProductName" CssClass="control-label ProductDescription" runat="server" Text='<%# Eval("Description") %>'></asp:Label>
                         </ItemTemplate>
-                         <ItemStyle  Width="330px" HorizontalAlign="Left"/>
+                         <ItemStyle   HorizontalAlign="Left"/>
                     </asp:TemplateField>
                     
                       <asp:TemplateField HeaderText="Strength" Visible="false" HeaderStyle-Width ="150px">
@@ -212,20 +230,20 @@
                             </EditItemTemplate>
                           <ItemStyle  Width="90px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
-                      <asp:TemplateField HeaderText="Unit Cost Price" HeaderStyle-Width="110px">
+                      <asp:TemplateField HeaderText="Unit<br>Cost Price" HeaderStyle-Width="110px">
                     <ItemTemplate>
                         <asp:Label ID="lblUnitCost" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("UnitCost") %>'></asp:Label>
                     </ItemTemplate>
                     <ItemStyle Width="110px" HorizontalAlign="Left" />
                 </asp:TemplateField>
 
-                <asp:TemplateField HeaderText="Total Cost Price" HeaderStyle-Width="110px">
+                <asp:TemplateField HeaderText="Total<br>Cost Price" HeaderStyle-Width="110px">
                     <ItemTemplate>
                         <asp:Label ID="lblTotalCost" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("totalCostPrice") %>'></asp:Label>
                     </ItemTemplate>
                     <ItemStyle Width="110px" HorizontalAlign="Left" />
                 </asp:TemplateField>
-                     <asp:TemplateField HeaderText="Order Status" HeaderStyle-Width ="110px">
+                     <asp:TemplateField HeaderText="Order<br>Status" HeaderStyle-Width ="110px">
                         <ItemTemplate>
                             <asp:Label ID="lblStatus" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Status") %>'  Width="100px"></asp:Label>
                         </ItemTemplate>
