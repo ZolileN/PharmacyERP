@@ -3,17 +3,14 @@
 <%@ Register TagPrefix="uc" TagName="print_uc" Src="~/UserControl/uc_printBarcode.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <br />
-    <div class="form-group">
-            <asp:Label runat="server" ID="NoProductMessage" CssClass="col-md-2 control-label" Visible="false" Text="No Stock Available"></asp:Label> 
-    </div>
-    <br />
-    <div class="row">
-    <div class="form-group">
-            <h1>CURRENT STOCK</h1>
-        </div>
-    </div>
-    <table cellspacing="0" cellpadding="5" border="0" width="100%" class="formTbl">
+   
+    
+            <asp:Label runat="server" ID="NoProductMessage" CssClass="control-label" Visible="false" Text="No Stock Available"></asp:Label> 
+   
+   
+            <h4>Current Stock</h4>
+            <hr />
+     <table cellspacing="0" cellpadding="5" border="0" width="100%" class="formTbl">
         <tr>
             <td> <asp:Label runat="server" AssociatedControlID="ProductDept" CssClass="control-label" Visible="true">Product Department</asp:Label></td>
             <td><asp:DropDownList runat="server" ID="ProductDept" CssClass="form-control" Width="29%" Visible="true" AppendDataBoundItems="True" AutoPostBack="True" OnSelectedIndexChanged="ProductDept_SelectedIndexChanged"/></td>

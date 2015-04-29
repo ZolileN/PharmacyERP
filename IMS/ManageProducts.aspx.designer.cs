@@ -49,15 +49,6 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.Button btnAddProduct;
         
         /// <summary>
-        /// btnGoBack control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGoBack;
-        
-        /// <summary>
         /// btnDeleteProduct control.
         /// </summary>
         /// <remarks>
@@ -74,6 +65,15 @@ namespace IMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnEditProduct;
+        
+        /// <summary>
+        /// btnGoBack control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnGoBack;
         
         /// <summary>
         /// StockDisplayGrid control.

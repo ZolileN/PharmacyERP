@@ -1271,15 +1271,15 @@ padding:3px;
     font-size:12px !important;
 }
 .table-condensed tr th {
-    padding:5px 2px !important;
+    padding:5px 2px;
     font-size:13px !important;
     height:auto !important;
-    text-align:center !important;
+    /*text-align:center !important;*/
     vertical-align:middle !important;
     }
 
 .table-condensed tr td {
-    padding:3px 4px !important;
+    padding:3px 4px;
     }
 
 
@@ -1378,7 +1378,33 @@ padding:3px;
     outline:none;
 }
 
+.invoLeftHighlighted {
+    background:#f6f7f9;
+    border:1px solid #ededed;
+    width:50%;
+    padding:4px;
+}
+
+h4 {
+    font-weight:bold;
+    padding:6px 0;
+    font-family: 'Droid Sans';
+}
+
+hr{
+			margin:0px 0 15px 0;
+			}
 
 
+.DeptTbl th {
+    text-align:left;
+    padding-left:10px;
+    }
 
+table.table-striped tr td {
+    padding-left:10px;
+    }
 
+    table.table-striped tr td a.btn-primary {
+    color:#FFF !important;
+    }

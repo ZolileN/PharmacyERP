@@ -1,7 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ManageCategory.aspx.cs" Inherits="IMS.ManageCategory" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-     <br />
-      <br />
+    
     <h4>Manage Category</h4>
      
         <hr />
