@@ -493,15 +493,25 @@ namespace IMS
                         UpdateStockPlus(orderDetID, Convert.ToInt32(Session["PreviousValueMain"].ToString()));
                         connection.Open();
 
+                        #region remove entry from sales order receiving
                         //need to test this
                         SqlCommand command = new SqlCommand();
                         command = new SqlCommand("sp_DeleteSaleOrderDetails", connection);
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
                         command.Parameters.AddWithValue("@p_ProductID", ProductID);
-                        command.ExecuteNonQuery();
+                        command.ExecuteNonQuery(); 
+                        #endregion
 
-
+                        #region Update entry in sales order detail 
+                        command = new SqlCommand();
+                        command = new SqlCommand("Sp_UpdateSODetails", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
+                        command.Parameters.AddWithValue("@p_OrderQuantity", quan);
+                        command.Parameters.AddWithValue("@p_BonusQuantity", bonus);
+                        command.ExecuteNonQuery(); 
+                        #endregion
                         
 
                         #region SystemGenerated Selection of Stock

@@ -80,72 +80,30 @@ namespace IMS
         protected void btnAcceptStock_Click(object sender, EventArgs e)
         {
             int TotalQuantity = 0;
-
-            #region Stock Updating Procedure
-            /*for (int i = 0; i < ProductSet.Tables[0].Rows.Count; i++)
-            DataSet dsProducts = (DataSet)Session["dsProducts"];
-
-            for (int i = 0; i < dsProducts.Tables[0].Rows.Count; i++)
+            int.TryParse(lblTotalQuantity.Text, out TotalQuantity);
+            ////DataTable filterSet = this.StockDisplayGrid as DataTable;
+            
+            //DataView dataView =  StockDisplayGrid.DataSource;
+            DataSet ds = Session["dsProducts"] as DataSet;
+            int selectedSum = 0;
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
-                try
-                {
-                    int StockID = int.Parse(dsProducts.Tables[0].Rows[i]["StockID"].ToString());
-                    int quantity = int.Parse(dsProducts.Tables[0].Rows[i]["SentQuantity"].ToString()) + int.Parse(dsProducts.Tables[0].Rows[i]["BonusQuantity"].ToString());
-                    //int StockID = int.Parse(ProductSet.Tables[0].Rows[i]["StockID"].ToString());
-                    //int quantity = int.Parse(ProductSet.Tables[0].Rows[i]["SentQuantity"].ToString()) + int.Parse(ProductSet.Tables[0].Rows[i]["BonusQuantity"].ToString());
-                    int OrderDetailID = int.Parse(Session["OderDetailID"].ToString());
-                    TotalQuantity += quantity;
-                    connection.Open();
-                    SqlCommand command = new SqlCommand();
-                    command = new SqlCommand("Sp_UpdateStockBy_StockID", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_StockID", StockID);
-                    command.Parameters.AddWithValue("@p_quantity", quantity);
-                    command.Parameters.AddWithValue("@p_Action", "Minus");
-                    command.ExecuteNonQuery();
-
-                    #region Generation of Packing List
-                    command = new SqlCommand("sp_PackingListGeneration", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_StockID", StockID);
-                    command.Parameters.AddWithValue("@p_quantity", quantity);
-                    command.Parameters.AddWithValue("@p_OrderDetailID", OrderDetailID);
-                    command.ExecuteNonQuery();
-                    #endregion
-                }
-                catch(Exception ex)
-                {
-
-                }
-                finally
-                {
-                    connection.Close();
-                }
-            }*/
-            #endregion
-
-            #region Updating Main Sale Order Detail Table 
-            //try
-            //{
-            //    int OrderDetailID = int.Parse(Session["OderDetailID"].ToString());
-            //    connection.Open();
-            //    SqlCommand command = new SqlCommand();
-            //    command = new SqlCommand("sp_UpdateOrdDetailQuantity", connection);
-            //    command.CommandType = CommandType.StoredProcedure;
-            //    command.Parameters.AddWithValue("@p_quantity", TotalQuantity);
-            //    command.Parameters.AddWithValue("@p_OrderDetailID", OrderDetailID);
-
-            //    command.ExecuteNonQuery();
-            //}
-            //catch(Exception ex)
-            //{
-
-            //}
-            //finally
-            //{
-            //    connection.Close();
-            //}
-            #endregion
+                //if (Convert.ToInt32(filterSet.Rows[i]["ProductID"]).Equals(ProductNO))
+                //{
+                //    ProductPresent = true;
+                //    break;
+                //}
+                int val,bonVal= 0;
+                int.TryParse(ds.Tables[0].Rows[i]["SentQuantity"].ToString(), out val);
+                int.TryParse(ds.Tables[0].Rows[i]["BonusQuantity"].ToString(), out bonVal);
+                selectedSum += (val+bonVal);
+            }
+            if (selectedSum > TotalQuantity) 
+            {
+                WebMessageBoxUtil.Show("Selected Quantity can not be larger than "+ TotalQuantity.ToString());
+                return;
+            }
+          
 
             Session["OrderSalesDetail"] = true;
             Response.Redirect("OrderSalesManual.aspx");
