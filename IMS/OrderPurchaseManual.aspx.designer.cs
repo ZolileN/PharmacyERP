@@ -13,13 +13,13 @@ namespace IMS {
     public partial class OrderPurchaseManual {
         
         /// <summary>
-        /// txtVendor control.
+        /// CmbVendors control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtVendor;
+        protected global::AjaxControlToolkit.ComboBox CmbVendors;
         
         /// <summary>
         /// btnSearchVendor control.
@@ -31,6 +31,24 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.ImageButton btnSearchVendor;
         
         /// <summary>
+        /// VendorsDataSource control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource VendorsDataSource;
+        
+        /// <summary>
+        /// txtVendor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtVendor;
+        
+        /// <summary>
         /// RequestTo control.
         /// </summary>
         /// <remarks>
@@ -40,13 +58,13 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.DropDownList RequestTo;
         
         /// <summary>
-        /// txtProduct control.
+        /// txtSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtProduct;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtSearch;
         
         /// <summary>
         /// btnSearchProduct control.
@@ -65,6 +83,15 @@ namespace IMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList SelectProduct;
+        
+        /// <summary>
+        /// txtProduct control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtProduct;
         
         /// <summary>
         /// SelectQuantity control.

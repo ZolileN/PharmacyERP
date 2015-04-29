@@ -72,15 +72,25 @@ namespace IMS
                 SqlDataAdapter dA = new SqlDataAdapter(command);
                 dA.Fill(ds);
 
-                RequestTo.DataSource = ds.Tables[0];
-                RequestTo.DataTextField = "SupName";
-                RequestTo.DataValueField = "SuppID";
-                RequestTo.DataBind();
-                if (RequestTo != null)
-                {
-                    RequestTo.Items.Insert(0, "Select Vendor");
-                    RequestTo.SelectedIndex = 0;
-                }
+                //CmbVendors.DataSource = ds.Tables[0];
+                //CmbVendors.DataTextField = "SupName";
+                //CmbVendors.DataValueField = "SuppID";
+                //CmbVendors.DataBind();
+                //if (CmbVendors != null)
+                //{
+                //    CmbVendors.Items.Insert(0, "Select Vendor");
+                //    CmbVendors.SelectedIndex = 0;
+                //}
+                
+                //RequestTo.DataSource = ds.Tables[0];
+                //RequestTo.DataTextField = "SupName";
+                //RequestTo.DataValueField = "SuppID";
+                //RequestTo.DataBind();
+                //if (RequestTo != null)
+                //{
+                //    RequestTo.Items.Insert(0, "Select Vendor");
+                //    RequestTo.SelectedIndex = 0;
+                //}
             }
             catch (Exception ex)
             {
@@ -175,6 +185,8 @@ namespace IMS
                 txtVendor.Enabled = true;
                 btnSearchVendor.Enabled = true;
                 SelectProduct.Visible = false;
+                CmbVendors.Enabled = true;
+
                 RequestTo.Visible = false;
                 RequestTo.Enabled = true;
                 StockDisplayGrid.DataSource = null;
@@ -306,11 +318,11 @@ namespace IMS
                 String OrderMode = "";
                 int OrderType = 3;//incase of vendor this should be 3
 
-                if (RequestTo.SelectedItem.ToString().Contains("store")) // neeed to check it, because name doesn't always contains Store
+                if (CmbVendors.SelectedItem.ToString().Contains("store")) // neeed to check it, because name doesn't always contains Store
                 {
                     OrderMode = "Store";
                 }
-                else if (RequestTo.SelectedItem.ToString().Contains("warehouse"))
+                else if (CmbVendors.SelectedItem.ToString().Contains("warehouse"))
                 {
                     OrderMode = "Warehouse";
                 }
@@ -332,7 +344,7 @@ namespace IMS
                     SqlCommand command = new SqlCommand("sp_CreateOrder", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     //sets vendor
-                    if (int.TryParse(RequestTo.SelectedValue.ToString(), out pRequestTo))
+                    if (int.TryParse(CmbVendors.SelectedValue.ToString(), out pRequestTo))
                     {
                         command.Parameters.AddWithValue("@p_RequestTO", pRequestTo);
                     }
@@ -375,18 +387,15 @@ namespace IMS
                     }
                     SqlCommand command = new SqlCommand("sp_InserOrderDetail_ByStore", connection);
                     command.CommandType = CommandType.StoredProcedure;
-
-                    int OrderNumber, BonusOrdered, ProductNumber, Quantity;
-                    OrderNumber = BonusOrdered = ProductNumber = Quantity = 0;
+                    string ProductNumber = "";
+                    int OrderNumber, BonusOrdered, Quantity;
+                    OrderNumber = BonusOrdered = Quantity = 0;
 
                     if (int.TryParse(Session["OrderNumber"].ToString(), out OrderNumber))
                     {
                         command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                     }
-                    if (int.TryParse(SelectProduct.SelectedValue.ToString(), out ProductNumber))
-                    {
-                        command.Parameters.AddWithValue("@p_ProductID", ProductNumber);
-                    }
+                    command.Parameters.AddWithValue("@p_ProductID", txtSearch.Value.ToString());
                     if (int.TryParse(SelectQuantity.Text.ToString(), out Quantity))
                     {
                         command.Parameters.AddWithValue("@p_OrderQuantity", Quantity);
@@ -403,10 +412,10 @@ namespace IMS
                     {
                         command.Parameters.AddWithValue("@p_OrderBonusQuantity", DBNull.Value);
                     }
-                   
+
                     command.Parameters.AddWithValue("@p_status", "Pending");
                     command.Parameters.AddWithValue("@p_comments", "Generated to Vendor");
-                    
+
                     command.ExecuteNonQuery();
                 }
                 catch (Exception ex)
@@ -478,10 +487,7 @@ namespace IMS
                                     command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                                 }
 
-                                if (int.TryParse(SelectProduct.SelectedValue.ToString(), out ProductNumber))
-                                {
-                                    command.Parameters.AddWithValue("@p_ProductID", ProductNumber);
-                                }
+                                command.Parameters.AddWithValue("@p_ProductID", txtSearch.Value.ToString());
 
                                 if (int.TryParse(SelectQuantity.Text.ToString(), out Quantity))
                                 {
@@ -630,6 +636,8 @@ namespace IMS
         protected void btnRefresh_Click(object sender, EventArgs e)
         {
             txtVendor.Text = "";
+            CmbVendors.Enabled = true;
+            CmbVendors.SelectedIndex = -1;
             RequestTo.Visible = false;
             RequestTo.Enabled = true;
             StockDisplayGrid.DataSource = null;
@@ -812,7 +820,7 @@ namespace IMS
             if (txtVendor.Text.Length >= 3)
             {
                 PopulateDropDownVendor(txtVendor.Text);
-                RequestTo.Visible = true;
+                RequestTo.Visible = false;
             }
         }
 
@@ -891,48 +899,36 @@ namespace IMS
           
         //}
 
-        [WebMethod()]
-        public  void GetProductList(string Text)
+          
+
+        [WebMethod]
+
+        public static List<string>  GetAutoCompleteData(string vendor)
         {
-            #region Populating Product Name Dropdown
+            List<string> result = new List<string>();
 
-            try
+            if (connection.State == ConnectionState.Closed)
             {
-                if (connection.State == ConnectionState.Closed)
+                connection.Open();
+            }
+            using (SqlCommand cmd = new SqlCommand("select DISTINCT SuppID,SupName from tblVendor where SupName LIKE '%'+@SearchText+'%'", connection))
+            {
+                
+                cmd.Parameters.AddWithValue("@SearchText", vendor);
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
                 {
-                    connection.Open();
+                    result.Add(dr["SupName"].ToString());
                 }
-
-                Text = Text + "%";
-                SqlCommand command = new SqlCommand("SELECT * From tbl_ProductMaster Where tbl_ProductMaster.Product_Name LIKE '" + Text + "' AND Status = 1", connection);
-                DataSet ds = new DataSet();
-                SqlDataAdapter sA = new SqlDataAdapter(command);
-                sA.Fill(ds);
-
-                ProductSet = null;
-                ProductSet = ds;
-                // ds.Tables[0].Columns.Add("ProductInfo", typeof(string), "Product_Name+ ' '+itemStrength+' '+itemPackSize+' '+itemForm");
-
-                SelectProduct.DataSource = ds.Tables[0];
-                SelectProduct.DataTextField = "Description";
-                SelectProduct.DataValueField = "ProductID";
-                SelectProduct.DataBind();
-                if (SelectProduct != null)
-                {
-                    SelectProduct.Items.Insert(0, "Select Product");
-                    SelectProduct.SelectedIndex = 0;
-                }
+                return result;
             }
-            catch (Exception ex)
-            {
-
-            }
-            finally
-            {
-                connection.Close();
-            }
-            #endregion
         }
- 
+
+        protected void CmbVendors_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CmbVendors.Enabled = false;
+        }
+
+         
     }
 }

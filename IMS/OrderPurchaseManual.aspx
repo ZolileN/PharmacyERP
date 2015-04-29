@@ -1,8 +1,36 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="OrderPurchaseManual.aspx.cs" Inherits="IMS.OrderPurchaseManual" %>
+<%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-    
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="Scripts/SearchSuggest.js"></script>
+   <style>
+
+       .suggest_link 
+	   {
+	   background-color: #FFFFFF;
+	   padding: 2px 6px 2px 6px;
+	   }	
+	   .suggest_link_over
+	   {
+	   background-color: #3366CC;
+	   padding: 2px 6px 2px 6px;	
+	   }	
+	   #search_suggest 
+	   {
+	   position: absolute;
+	   background-color: #FFFFFF;
+	   text-align: left;
+	   border: 1px solid #000000;	
+       overflow:auto;
+       		
+	   }
+
+   </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+
+     
+
       <h3>Manual Purchase Order(s)</h3>
     <br />
     <br />
@@ -10,46 +38,41 @@
      
     
  
-            <%--<asp:Label runat="server"  AssociatedControlID="RequestTo" CssClass="col-md-2 control-label">Select Vendor</asp:Label>--%>
-            
-                <%--<asp:TextBox runat="server" ID="txtVendor" CssClass="form-control product"/>
-                <asp:ImageButton ID="btnSearchVendor" runat="server" OnClick="btnSearchVendor_Click" Height="35px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
-                <br />
-                <asp:DropDownList runat="server" ID="RequestTo" CssClass="form-control" Width="29%" AutoPostBack="true" OnSelectedIndexChanged="RequestTo_SelectedIndexChanged" Visible="false" >
-                <%--class="chzn-select"   <asp:ListItem Text="" Value=""></asp:ListItem>
-                  <asp:ListItem Value=''> ------------------- Select ------------------ </asp:ListItem>--%>
-                 <%--</asp:DropDownList>--%>
-               
-       <%--  <script src="Scripts/jquery.min.js" type="text/javascript"></script>
-         <script src="Scripts/chosen.jquery.js" type="text/javascript"></script>
-         <script type="text/javascript"> $(".chzn-select").chosen(); $(".chzn-select-deselect").chosen({ allow_single_deselect: true }); </script>--%>
+            <%--<asp:TextBox runat="server" ID="SelectQuantity" CssClass="form-control" autocomplete="off" />--%>                <%--<asp:Label runat="server" AssociatedControlID="SelectPrice" CssClass="col-md-2 control-label">Enter Bonus Quantity</asp:Label>--%><%--<asp:TextBox runat="server" ID="SelectPrice" CssClass="form-control" autocomplete="off" />--%>       <%--<asp:Button ID="btnCreateOrder" runat="server" OnClick="btnCreateOrder_Click" Text="ADD" CssClass="btn btn-default" />
+                <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Text="REFRESH" CssClass="btn btn-default" Visible="False" />
+                <asp:Button ID="btnCancelOrder" runat="server" OnClick="btnCancelOrder_Click" Text="GO BACK" CssClass="btn btn-primary btn-large" />--%>
     
    <table cellspacing="5" cellpadding="5" border="0" width="100%">
 
        <tr>
            <td><asp:Label runat="server"  AssociatedControlID="RequestTo" CssClass="control-label">Select Vendor</asp:Label></td>
-           <td>
-
-                <asp:TextBox runat="server" ID="txtVendor" CssClass="form-control product"/>
-                <asp:ImageButton ID="btnSearchVendor" runat="server" OnClick="btnSearchVendor_Click" Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
-                <br />
-                <asp:DropDownList runat="server" ID="RequestTo" CssClass="form-control" Width="280" AutoPostBack="true" OnSelectedIndexChanged="RequestTo_SelectedIndexChanged" Visible="false" >
+           <td >
+                 
                 
-                    <%--class="chzn-select"   <asp:ListItem Text="" Value=""></asp:ListItem>
-                  <asp:ListItem Value=''> ------------------- Select ------------------ </asp:ListItem>--%>
-                    
+                   <cc1:ComboBox ID="CmbVendors" runat="server" AutoCompleteMode="SuggestAppend" DataSourceID="VendorsDataSource" DataTextField="SupName" DataValueField="SuppID" MaxLength="0" style="display: inline; width: 10px;" OnSelectedIndexChanged="CmbVendors_SelectedIndexChanged">
+                </cc1:ComboBox> 
+                <asp:ImageButton ID="btnSearchVendor" runat="server"  Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="40px" />
+              <asp:SqlDataSource ID="VendorsDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:IMSConnectionString %>" SelectCommand="SELECT DISTINCT [SupName], [SuppID] FROM [tblVendor]"></asp:SqlDataSource>
+                 
+                <asp:TextBox runat="server" ID="txtVendor"  class="autosuggest" Visible="False"/>
+                
+                <asp:DropDownList runat="server" ID="RequestTo" CssClass="form-control" Width="280" AutoPostBack="true" OnSelectedIndexChanged="RequestTo_SelectedIndexChanged" Visible="false" >
+                       
                  </asp:DropDownList>
-                 <asp:RequiredFieldValidator runat="server" ControlToValidate="RequestTo" CssClass="text-danger" ErrorMessage="The Vendor field is required." ValidationGroup="ExSave"/>
                 
                 
            </td>
        
             <td><asp:Label runat="server" AssociatedControlID="txtProduct" CssClass="control-label">Select Product</asp:Label></td>
-            <td><asp:TextBox runat="server" ID="txtProduct" CssClass="form-control product"/>
-                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click"  Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
+            <td>
+
+                <input type="text" id="txtSearch" runat="server" name="txtSearch"  onkeyup="searchSuggest(event);" autocomplete="off"  /> 
+                <div id="search_suggest"  ></div>
+
+                  <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click"  Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
                 
                 <asp:DropDownList runat="server" ID="SelectProduct" Visible="false" CssClass="form-control" Width="280" AutoPostBack="True" OnSelectedIndexChanged="SelectProduct_SelectedIndexChanged"/>
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="SelectProduct" CssClass="text-danger" ErrorMessage="The Product field is required." ValidationGroup="ExSave"/>
+                <asp:TextBox runat="server" ID="txtProduct" CssClass="form-control product" Visible="False"/>
                  
                </td>
            </tr>
@@ -77,17 +100,12 @@
        </tr>
     </table>
    
-            <%--<asp:Label runat="server" AssociatedControlID="txtProduct" CssClass="col-md-2 control-label">Select Product</asp:Label>--%>
-          
-                <%--<asp:TextBox runat="server" ID="txtProduct" CssClass="form-control product"/>
-                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click"  Height="35px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
-                <br />
-                <asp:DropDownList runat="server" ID="SelectProduct" Visible="false" CssClass="form-control" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="SelectProduct_SelectedIndexChanged"/>
-                <br/>--%>
-    
-            <%--<asp:Label runat="server" AssociatedControlID="SelectQuantity" CssClass="col-md-2 control-label">Enter Quantity</asp:Label>--%>
-           
-                <%--<asp:TextBox runat="server" ID="SelectQuantity" CssClass="form-control" autocomplete="off" />--%>
+            <%--<asp:Label runat="server" AssociatedControlID="SelectPrice" CssClass="col-md-2 control-label">Enter Bonus Quantity</asp:Label>--%>                <%--<asp:TextBox runat="server" ID="SelectPrice" CssClass="form-control" autocomplete="off" />--%>            <%--<asp:Button ID="btnCreateOrder" runat="server" OnClick="btnCreateOrder_Click" Text="ADD" CssClass="btn btn-default" />
+                <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Text="REFRESH" CssClass="btn btn-default" Visible="False" />
+                <asp:Button ID="btnCancelOrder" runat="server" OnClick="btnCancelOrder_Click" Text="GO BACK" CssClass="btn btn-primary btn-large" />--%>           
+                <%--<asp:Button ID="btnCreateOrder" runat="server" OnClick="btnCreateOrder_Click" Text="ADD" CssClass="btn btn-default" />
+                <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Text="REFRESH" CssClass="btn btn-default" Visible="False" />
+                <asp:Button ID="btnCancelOrder" runat="server" OnClick="btnCancelOrder_Click" Text="GO BACK" CssClass="btn btn-primary btn-large" />--%>
              
 
     
@@ -247,18 +265,15 @@
                 alert("Please enter Quantity");
                 return false;
             }
-            //if (document.getElementById("MainContent_SelectPrice").value == null || document.getElementById("MainContent_SelectPrice").value == '') {
-            //    alert("Please enter Bonus Quantity");
-            //    return false;
-            //}
+         
             return true;
 
             //var e = document.getElementById("SelectProduct");
             //var strProduct = e.options[e.selectedIndex].value;
 
         }
-
-
+         
+       
 </script>
-
+    
 </asp:Content>
