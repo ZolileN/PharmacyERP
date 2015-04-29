@@ -13,6 +13,24 @@ namespace IMS {
     public partial class OrderPurchaseManual {
         
         /// <summary>
+        /// hdnVendorName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnVendorName;
+        
+        /// <summary>
+        /// hdnVendorId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnVendorId;
+        
+        /// <summary>
         /// CmbVendors control.
         /// </summary>
         /// <remarks>
@@ -38,6 +56,24 @@ namespace IMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource VendorsDataSource;
+        
+        /// <summary>
+        /// mpeCongratsMessageDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ModalPopupExtender mpeCongratsMessageDiv;
+        
+        /// <summary>
+        /// VendorsPopupGrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::IMS.UserControl.VendorsPopupGrid VendorsPopupGrid;
         
         /// <summary>
         /// txtVendor control.

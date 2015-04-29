@@ -56,6 +56,8 @@ namespace IMS
                 }
 
             }
+            
+            
         }
         private void LoadData()
         {
@@ -132,10 +134,14 @@ namespace IMS
             //}
             #endregion
         }
+
+
+        
+        
         protected void btnAccept_Click(object sender, EventArgs e)
         {
 
-          
+           
             Response.Redirect("PO_GENERATE.aspx", false);
         }
 
@@ -354,10 +360,27 @@ namespace IMS
                     SqlCommand command = new SqlCommand("sp_CreateOrder", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     //sets vendor
+
                     if (int.TryParse(CmbVendors.SelectedValue.ToString(), out pRequestTo))
                     {
                         command.Parameters.AddWithValue("@p_RequestTO", pRequestTo);
                     }
+
+                    //if (!string.IsNullOrEmpty(Session["VendorName"].ToString()))
+                    //{
+                    //    if (int.TryParse(Session["VendorId"].ToString(), out pRequestTo))
+                    //    {
+                    //        command.Parameters.AddWithValue("@p_RequestTO", pRequestTo);
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    if (int.TryParse(CmbVendors.SelectedValue.ToString(), out pRequestTo))
+                    //    {
+                    //        command.Parameters.AddWithValue("@p_RequestTO", pRequestTo);
+                    //    }
+                    //}
+                    
                     //sets warehouse/store
                     if (int.TryParse(Session["UserSys"].ToString(), out pRequestFrom))
                     {
@@ -880,37 +903,7 @@ namespace IMS
             #endregion
         }
 
-        //protected void Page_Unload(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (Session["isGenOption"] != null && Session["isGenOption"].ToString().Equals("false") )//&& Session["FirstOrder"].Equals(true))
-        //        {
-
-        //            Session["OrderNumber"] = "";
-        //            Session["FromViewPlacedOrders"] = "false";
-
-
-        //        }
-        //        else
-        //        {
-        //            //Session["FirstOrder"] = false;
-        //            Session["FromViewPlacedOrders"] = "false";
-        //        }
-        //        if (!IsPostBack)
-        //        {
-        //            //Session["FirstOrder"] = false;
-        //            Session["FromViewPlacedOrders"] = "false";
-        //            Session["isGenOption"] = null;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //    }
-          
-        //}
-
+        
           
 
         [WebMethod]
@@ -941,6 +934,6 @@ namespace IMS
             CmbVendors.Enabled = false;
         }
 
-         
+          
     }
 }

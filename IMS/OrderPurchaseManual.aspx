@@ -1,7 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="OrderPurchaseManual.aspx.cs" Inherits="IMS.OrderPurchaseManual" %>
 <%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="cc1" %>
+<%@ Register TagName="VendorsPopup" TagPrefix="UCVendorsPopup"  Src="~/UserControl/VendorsPopupGrid.ascx"%>
+
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="Scripts/SearchSuggest.js"></script>
    <style>
 
@@ -29,6 +33,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
+    <asp:HiddenField ID="hdnVendorName" runat="server" Value="" />
+    <asp:HiddenField ID="hdnVendorId" runat="server" Value="" />
 
       <h4>Manual PO(s)</h4>
        <hr />
@@ -48,8 +54,24 @@
               <cc1:ComboBox ID="CmbVendors" runat="server" AutoCompleteMode="SuggestAppend" DataSourceID="VendorsDataSource" DataTextField="SupName" DataValueField="SuppID" MaxLength="0" style="display: inline; width: 10px;" OnSelectedIndexChanged="CmbVendors_SelectedIndexChanged">
                 </cc1:ComboBox> 
                 <asp:ImageButton ID="btnSearchVendor" runat="server"  Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="40px" />
-              <asp:SqlDataSource ID="VendorsDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:IMSConnectionString %>" SelectCommand="SELECT DISTINCT [SupName], [SuppID] FROM [tblVendor]"></asp:SqlDataSource>
+                  <asp:SqlDataSource ID="VendorsDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:IMSConnectionString %>" SelectCommand="SELECT DISTINCT [SupName], [SuppID] FROM [tblVendor]"></asp:SqlDataSource>
                  
+                   <cc1:ModalPopupExtender ID="mpeCongratsMessageDiv" runat="server" BackgroundCssClass="modalBackground"
+                       RepositionMode="None" TargetControlID="btnSearchVendor" ClientIDMode="AutoID"
+                       PopupControlID="_CongratsMessageDiv"  OkControlID="_okPopupButton" CancelControlID="_cancelPopupButton"
+                            BehaviorID="EditModalPopupMessage"  >
+                    </cc1:ModalPopupExtender>
+                    <div class="_popupButtons" style="display: none">
+                             <input id="_okPopupButton" value="OK" type="button" />
+                             <input id="_cancelPopupButton" value="Cancel" type="button" />
+                        </div>
+                        <div id="_CongratsMessageDiv" class="congrats-cont" style="display: none;">
+                            <UCVendorsPopup:VendorsPopup  id="VendorsPopupGrid" runat="server"/>
+                        </div>
+                    
+
+                    
+
                 <asp:TextBox runat="server" ID="txtVendor"  class="autosuggest" Visible="False"/>
                 
                 <asp:DropDownList runat="server" ID="RequestTo" CssClass="form-control" Width="280" AutoPostBack="true" OnSelectedIndexChanged="RequestTo_SelectedIndexChanged" Visible="false" >
@@ -270,6 +292,8 @@
      <span onclick="return confirm('Are you sure you want to delete this order?')">
          <asp:Button ID="btnDecline" runat="server" OnClick="btnDecline_Click" Text="DELETE ORDER" CssClass="btn btn-large" Visible="false" />
    </span>
+
+
 
     <script type="text/javascript">
         function ValidateForm() {
