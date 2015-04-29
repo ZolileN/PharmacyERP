@@ -1,11 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ManageDepartment.aspx.cs" Inherits="IMS.ManageDepartment" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-     <br />
-      <br />
+     
     <h4>Manage Department</h4>
      
         <hr />
-    <asp:GridView ID="DepDisplayGrid" runat="server" width="100%" AllowPaging="True" PageSize="10" CssClass="table table-striped table-bordered table-condensed"
+    <asp:GridView ID="DepDisplayGrid" runat="server" width="100%" AllowPaging="True" PageSize="10" CssClass="table table-striped table-bordered table-condensed DeptTbl"
                 AutoGenerateColumns="false" OnPageIndexChanging="DepDisplayGrid_PageIndexChanging"   onrowcancelingedit="DepDisplayGrid_RowCancelingEdit" ShowFooter="true"
             onrowcommand="DepDisplayGrid_RowCommand"  onrowdeleting="DepDisplayGrid_RowDeleting" onrowediting="DepDisplayGrid_RowEditing">
                 <Columns>
@@ -57,12 +56,12 @@
 
                         <EditItemTemplate>
 
-                            <asp:LinkButton ID="btnUpdate" Text="Update" CssClass="btn btn-default"  runat="server" CommandName="UpdateDep" />
-                            <asp:LinkButton ID="btnCancel" Text="Cancel" CssClass="btn btn-default"  runat="server" CommandName="Cancel" />
+                            <asp:LinkButton ID="btnUpdate" Text="Update" CssClass="btn btn-primary btn-xs"  runat="server" CommandName="UpdateDep" />
+                            <asp:LinkButton ID="btnCancel" Text="Cancel" CssClass="btn btn-default btn-xs"  runat="server" CommandName="Cancel" />
                         </EditItemTemplate>
                         
                         <FooterTemplate>
-                            <asp:Button ID="btnAddRecord" runat="server" Text="Add" CssClass="btn btn-default"  OnClientClick="return ValidateForm();" CommandName="Add"></asp:Button>
+                            <asp:Button ID="btnAddRecord" runat="server" Text="Add" CssClass="btn btn-default btn-sm"  OnClientClick="return ValidateForm();" CommandName="Add"></asp:Button>
                         </FooterTemplate>
                     </asp:TemplateField>
                 </Columns>

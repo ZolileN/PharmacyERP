@@ -1,31 +1,39 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ManageProducts.aspx.cs" Inherits="IMS.ManageProducts" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <h3>Product Management</h3>
-    <br />
-    <br />
-    <div class="row">
-    <div class="form-group">
-            <asp:Label runat="server" AssociatedControlID="txtProduct" CssClass="col-md-2 control-label">Select Product</asp:Label>
-            <div class="col-md-10">
+    <h4>Product Management</h4>
+    <hr />
+
+    <table width="100%">
+
+        <tr>
+            <td width="100">
+                <asp:Label runat="server" AssociatedControlID="txtProduct" CssClass="control-label">Select Product</asp:Label>
+            </td>
+            <td>
                 <asp:TextBox runat="server" ID="txtProduct" CssClass="form-control product"/>
-                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click"  Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
-                <br />
+                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click" cssClass="search-btn" />
                 <asp:DropDownList runat="server" ID="SelectProduct" Visible="false" CssClass="form-control" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="SelectProduct_SelectedIndexChanged"/>
-                <br/>
-            </div>
-    </div>
-    </div>
-    <br />
+                
+            </td>
+            <td align="right">
+                <asp:Button ID="btnAddProduct" runat="server" CssClass="btn btn-success btn-large" Text=" + Add Product" OnClick="btnAddProduct_Click"/>
+                <asp:Button ID="btnDeleteProduct" runat="server" CssClass="btn btn-danger btn-large" Text="Delete Product" OnClick="btnDeleteProduct_Click" Visible="False"/>
+                <asp:Button ID="btnEditProduct" runat="server" CssClass="btn btn-info btn-large" Text="Edit Product" OnClick="btnEditProduct_Click" Visible="False"/>
+            </td>
+        </tr>
 
-    <div class="row">
+    </table>
+    
+   
+
+    
         
-         <asp:Button ID="btnAddProduct" runat="server" CssClass="btn btn-primary btn-large" Text="Add Product" OnClick="btnAddProduct_Click"/>
-        <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnBack_Click"/>
-         <asp:Button ID="btnDeleteProduct" runat="server" CssClass="btn btn-primary btn-large" Text="Delete Product" OnClick="btnDeleteProduct_Click" Visible="False"/>
-         <asp:Button ID="btnEditProduct" runat="server" CssClass="btn btn-primary btn-large" Text="Edit Product" OnClick="btnEditProduct_Click" Visible="False"/>
-     </div>
+         
+        <%--<asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnBack_Click"/>--%>
+         
+     
 
-    <br />
+    
     <div class="form-horizontal">
     <div class="form-group">
         <br />
