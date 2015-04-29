@@ -8,8 +8,8 @@
           </script>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-      <h2> View Purchase Order(s)</h2> 
-    <br />
+      <h4> View Purchase Order(s)</h4> 
+    <hr />
      <script src="Scripts/jquery.js"  type="text/javascript"></script>
           <script src="Scripts/jquery-ui.js" type="text/javascript"></script>
           <link rel="stylesheet" href="Style/jquery-ui.css" />

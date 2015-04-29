@@ -11,7 +11,8 @@
               $(function () { $("#<%= txtExpDate.ClientID %>").datepicker(); });
 
           </script>--%>
-      <h3>Accept PO </h3> 
+      <h4>Accept PO </h4> 
+    <hr />
     <table>
         <tr>
             <td>
@@ -89,7 +90,7 @@
                     </asp:TemplateField>
                      <asp:TemplateField HeaderText="Remaining<br>Qty" Visible="True" HeaderStyle-Width ="130px">
                         <ItemTemplate>
-                            <asp:Label ID="lblRemainQuan" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("RemainingQuantity") %>' ></asp:Label>
+                            <asp:Label ID="lblRemainQuan" CssClass="control-label" runat="server" Text='<%# Eval("RemainingQuantity") %>' ></asp:Label>
                         </ItemTemplate>
                           <ItemStyle  Width="130px" HorizontalAlign="Left"/>
                     </asp:TemplateField>

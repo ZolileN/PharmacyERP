@@ -30,10 +30,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
 
-      <h3>Manual PO(s)</h3>
-
-    <br />
-    <br />
+      <h4>Manual PO(s)</h4>
+       <hr />
     
      
     

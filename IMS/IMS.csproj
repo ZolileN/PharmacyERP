@@ -300,6 +300,10 @@
     <Content Include="StoreTransfers_StoreRequestsResponse.aspx" />
     <Content Include="Style\chosen.css" />
     <Content Include="Style\demo.css" />
+    <Content Include="Style\font-awesome\css\font-awesome-ie7.css" />
+    <Content Include="Style\font-awesome\css\font-awesome-ie7.min.css" />
+    <Content Include="Style\font-awesome\css\font-awesome.css" />
+    <Content Include="Style\font-awesome\css\font-awesome.min.css" />
     <Content Include="Style\fonts.css" />
     <Content Include="Style\jquery-ui.css" />
     <Content Include="Style\jquery-ui.min.css" />
@@ -345,6 +349,29 @@
     <Content Include="Style\fonts\cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff" />
     <Content Include="Style\fonts\MTP_ySUJH_bn48VBG8sNSnhCUOGz7vYGh680lGh-uXM.woff" />
     <Content Include="Style\fonts\s-BiyweUPV0v-yRb-cjciBsxEYwM7FgeyaSgU71cLG0.woff" />
+    <Content Include="Style\font-awesome\font\fontawesome-webfont.eot" />
+    <Content Include="Style\font-awesome\font\fontawesome-webfont.svg" />
+    <Content Include="Style\font-awesome\font\fontawesome-webfont.ttf" />
+    <Content Include="Style\font-awesome\font\fontawesome-webfont.woff" />
+    <Content Include="Style\font-awesome\font\FontAwesome.otf" />
+    <Content Include="Style\font-awesome\less\bootstrap.less" />
+    <Content Include="Style\font-awesome\less\core.less" />
+    <Content Include="Style\font-awesome\less\extras.less" />
+    <Content Include="Style\font-awesome\less\font-awesome-ie7.less" />
+    <Content Include="Style\font-awesome\less\font-awesome.less" />
+    <Content Include="Style\font-awesome\less\icons.less" />
+    <Content Include="Style\font-awesome\less\mixins.less" />
+    <Content Include="Style\font-awesome\less\path.less" />
+    <Content Include="Style\font-awesome\less\variables.less" />
+    <Content Include="Style\font-awesome\scss\font-awesome-ie7.scss" />
+    <Content Include="Style\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Style\font-awesome\scss\_bootstrap.scss" />
+    <Content Include="Style\font-awesome\scss\_core.scss" />
+    <Content Include="Style\font-awesome\scss\_extras.scss" />
+    <Content Include="Style\font-awesome\scss\_icons.scss" />
+    <Content Include="Style\font-awesome\scss\_mixins.scss" />
+    <Content Include="Style\font-awesome\scss\_path.scss" />
+    <Content Include="Style\font-awesome\scss\_variables.scss" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

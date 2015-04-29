@@ -2,7 +2,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <h3>Receive PO(s) </h3> 
+    <h4>Receive PO(s) </h4> 
+    <hr />
      <div class="form-horizontal">
           <div class="form-group">
         <asp:Label runat="server" AssociatedControlID="StockAt" CssClass="col-md-2 control-label">Search by Vendor Name </asp:Label>

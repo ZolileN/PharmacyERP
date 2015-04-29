@@ -2,9 +2,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-     <h3>Generate Sale Orders</h3>
-    <br />
-    <br />
+     <h4>Generate Sale Orders</h4>
+     <hr />
 
     <table cellspacing="5" cellpadding="5" border="0" width="100%">
 

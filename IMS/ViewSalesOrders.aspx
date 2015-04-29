@@ -8,8 +8,8 @@
           </script>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-      <h2> View Sale Orders</h2> 
-    <br />
+      <h4> View Sale Orders</h4> 
+    <hr />
      <script src="Scripts/jquery.js"  type="text/javascript"></script>
           <script src="Scripts/jquery-ui.js" type="text/javascript"></script>
           <link rel="stylesheet" href="Style/jquery-ui.css" />
@@ -85,7 +85,7 @@
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Order No." HeaderStyle-Width ="110px">
                         <ItemTemplate>
-                            <asp:Label ID="OrderNO" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("OrderID") %>' Width="100px" ></asp:Label>
+                            <asp:Label ID="OrderNO" CssClass="control-label" runat="server" Text='<%# Eval("OrderID") %>'></asp:Label>
                         </ItemTemplate>
                         <ItemStyle  Width="110px" HorizontalAlign="Left"/>
 
@@ -106,21 +106,21 @@
                       </asp:TemplateField>
                      <asp:TemplateField HeaderText="Order Date" HeaderStyle-Width ="150px">
                         <ItemTemplate>
-                            <asp:Label ID="OrderDate" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("OrderDate") %>'  Width="180px"></asp:Label>
+                            <asp:Label ID="OrderDate" CssClass="control-label" runat="server" Text='<%# Eval("OrderDate") %>' ></asp:Label>
                         </ItemTemplate>
                         <ItemStyle  Width="180px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
 
                      <asp:TemplateField HeaderText="Order To" HeaderStyle-Width ="200px">
                         <ItemTemplate>
-                            <asp:Label ID="OrderTo" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Location") %>'  Width="300px" ></asp:Label>
+                            <asp:Label ID="OrderTo" CssClass="control-label" runat="server" Text='<%# Eval("Location") %>'></asp:Label>
                         </ItemTemplate>
                          <ItemStyle  Width="300px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
 
                      <asp:TemplateField HeaderText="Order Status" HeaderStyle-Width ="130px">
                         <ItemTemplate>
-                            <asp:Label ID="OrderStatus" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Status") %>' ></asp:Label>
+                            <asp:Label ID="OrderStatus" CssClass="control-label" runat="server" Text='<%# Eval("Status") %>' ></asp:Label>
                         </ItemTemplate>
                           <ItemStyle  Width="130px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
