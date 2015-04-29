@@ -64,12 +64,12 @@
 
                         <EditItemTemplate>
 
-                            <asp:LinkButton ID="btnUpdate" CssClass="btn btn-default"  Text="Update" runat="server" CommandName="UpdateCategory"></asp:LinkButton>
-                            <asp:LinkButton ID="btnCancel" CssClass="btn btn-default"  Text="Cancel" runat="server" CommandName="Cancel"></asp:LinkButton>
+                            <asp:LinkButton ID="btnUpdate" CssClass="btn btn-primary btn-xs"  Text="Update" runat="server" CommandName="UpdateCategory"></asp:LinkButton>
+                            <asp:LinkButton ID="btnCancel" CssClass="btn btn-default btn-xs"  Text="Cancel" runat="server" CommandName="Cancel"></asp:LinkButton>
                         </EditItemTemplate>
 
                         <FooterTemplate>
-                            <asp:Button ID="btnAddRecord" CssClass="btn btn-default"  runat="server" Text="Add" CommandName="Add"  OnClientClick="return ValidateForm();" ></asp:Button>
+                            <asp:Button ID="btnAddRecord" CssClass="btn btn-default btn-sm"  runat="server" Text="Add" CommandName="Add"  OnClientClick="return ValidateForm();" ></asp:Button>
                         </FooterTemplate>
                     </asp:TemplateField>
                 </Columns>
