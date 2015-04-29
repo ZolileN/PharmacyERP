@@ -250,7 +250,12 @@
                          <ItemStyle  Width="110px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
 
-                    
+                   <%--Hidden Fields--%>   
+                     <asp:TemplateField HeaderText="Quantity Org" Visible="false"  HeaderStyle-Width ="30px">
+                        <ItemTemplate>
+                            <asp:Label ID="lblQuantityOrg" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Qauntity") %>'></asp:Label>
+                        </ItemTemplate>
+                     </asp:TemplateField>
                  </Columns>
              </asp:GridView>
           <table ID="tblDsp" cellpadding="4" cellspacing="0" align="right" visible="false">

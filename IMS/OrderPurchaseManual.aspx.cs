@@ -232,12 +232,13 @@ namespace IMS
             {
                 if (e.CommandName.Equals("UpdateStock"))
                 {
-                    int quan, bonusquantity;
-                    quan = bonusquantity = 0;
+                    int quan, bonusquantity,quanOrg;
+                    quan = bonusquantity = quanOrg = 0;
                     int.TryParse(((TextBox)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("txtQuantity")).Text,out quan);
                     int orderDetID = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("OrderDetailNo")).Text);
                     int.TryParse(((TextBox)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("txtBonusQuantity")).Text, out bonusquantity);
-
+                    int.TryParse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblQuantityOrg")).Text, out quanOrg);
+                    string status = ((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblStatus")).Text;
                     if (connection.State == ConnectionState.Closed)
                     {
                         connection.Open();
@@ -249,6 +250,15 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_bonusQauntity", bonusquantity);
                     
                     command.ExecuteNonQuery();
+
+                    if (!status.Equals("Pending")) 
+                    {
+                        command = new SqlCommand("Sp_UpdateOrderStatus", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
+                        command.Parameters.AddWithValue("@p_Status", "Partial");
+                        command.ExecuteNonQuery();
+                    }
                 }
                 else if (e.CommandName.Equals("Delete"))
                 {
