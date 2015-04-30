@@ -1310,18 +1310,17 @@ padding:3px;
     }
 
 .overLaypop {
-    width:100%;
-    height:100%;
-    position:absolute;
-    top:0px;
-    left:0px;
-    z-index:9998;
-    background:#000;
-    opacity:0.6;
-    display:none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 9998;
+    background: #000;
+    opacity: 0.6;
 }
 .popupMain {
-    display:none;
+    /*display:none;*/
     width:800px;
     margin-left:-400px;
     left:50%;
@@ -1330,7 +1329,7 @@ padding:3px;
     position:absolute;
     z-index:9999;
 }
-
+ 
 .popupHead {
     -webkit-box-shadow: inset 1px 1px 1px #6fb4eb;
 	-moz-box-shadow: inset 1px 1px 1px #6fb4eb;
