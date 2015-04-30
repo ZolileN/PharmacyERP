@@ -113,9 +113,16 @@
 
                                <ul>
                                     <li><a href="ManageProducts.aspx">Manage Products</a></li>
+                                    <li><a href="ManageSubCategory.aspx">Manage SubCategories</a></li>
                                     <li><a href="ManageCategory.aspx">Manage Categories</a></li>
                                     <li><a href="ManageDepartment.aspx">Manage Departments</a></li>
-                                    <li><a href="ViewInventory.aspx">Manage Stocks</a></li>
+                                    <li class="hasChild"><a href="#">Manage Stocks</a>
+                                        <ul>
+                                            <li><a href="AddStock.aspx">Add Stock</a></li>
+                                            <li><a href="SelectionStock.aspx">Edit Stock</a></li>
+                                            <li><a href="ViewInventory.aspx">Current Stock</a></li>
+                                       </ul>
+                                    </li>
                                </ul>
 
                             </li>
@@ -154,7 +161,13 @@
             </asp:Literal>
             <asp:Literal runat="server" ID="storeNav">
                  <ul class="main-menu">
-                            <li><a href="ViewInventory.aspx">Store Inventory</a></li>
+                            <li class="hasChild"><a href="#">Manage Stocks</a>
+                                        <ul>
+                                            <li><a href="AddStock.aspx">Add Stock</a></li>
+                                            <li><a href="SelectionStock.aspx">Edit Stock</a></li>
+                                            <li><a href="ViewInventory.aspx">Current Stock</a></li>
+                                       </ul>
+                            </li>
                             <li><a href="StoreTransfers_StoreRequests.aspx">Store Transfers</a></li>
                             <li><a href="ReceiveStock.aspx">Store Receivings</a></li>
                             <li><a href="#">Store Requests</a>

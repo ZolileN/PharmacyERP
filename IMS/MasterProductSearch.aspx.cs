@@ -114,7 +114,7 @@ namespace IMS
                    Session["MS_itemStrength"] = itemStrength.Text.ToString();
                    Session["MS_itemPackType"] = itemPackType.Text.ToString();
                    Session["MS_itemPackSize"] = itemPackSize.Text.ToString();
-
+                 
                    Response.Redirect("Addproduct.aspx");
 
 
