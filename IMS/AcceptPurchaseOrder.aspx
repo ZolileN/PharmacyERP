@@ -163,10 +163,10 @@
                     </asp:TemplateField>
                      <asp:TemplateField HeaderText="Expiry<br>Date" >
                         <ItemTemplate>
-                            <asp:Label ID="lblExpDate" runat="server" Text='<%# Eval("Expiry")==DBNull.Value?"":Convert.ToDateTime( Eval("Expiry")).ToString("MMM dd ,yyyy") %>'></asp:Label>
+                            <asp:Label ID="lblExpDate"  runat="server" Text='<%# Eval("Expiry")==DBNull.Value?"":Convert.ToDateTime( Eval("Expiry")).ToString("MMM dd ,yyyy") %>'></asp:Label>
                         </ItemTemplate>
                           <EditItemTemplate>
-                             <asp:TextBox ID="txtExpDate"  runat="server" Text='<%# Eval("Expiry")==DBNull.Value?"":Convert.ToDateTime( Eval("Expiry")).ToString("MMM dd ,yyyy") %>' Width="47px"></asp:TextBox>
+                             <asp:TextBox ID="txtExpDate" CssClass="clDate"  runat="server" Text='<%# Eval("Expiry")==DBNull.Value?"":Convert.ToDateTime( Eval("Expiry")).ToString("MMM dd ,yyyy") %>' Width="47px"></asp:TextBox>
                          </EditItemTemplate>
                         <ItemStyle  Width="110px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
@@ -251,7 +251,9 @@
           <script src="Scripts/jquery-ui.js" type="text/javascript"></script>
           <link rel="stylesheet" href="Style/jquery-ui.css" />
           <script>
-              $(function () { $("[id$=MainContent_StockDisplayGrid_txtExpDate_0]").datepicker(); });
-
+              //$(function () { $("[id$=MainContent_StockDisplayGrid_txtExpDate]").datepicker(); });
+              $(function () {
+                  $(".clDate").datepicker();
+              });
           </script>
 </asp:Content>
