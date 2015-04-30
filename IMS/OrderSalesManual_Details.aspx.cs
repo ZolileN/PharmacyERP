@@ -164,7 +164,7 @@ namespace IMS
                     {
                         difference = totalquantity - p_totalquantity;
                     }
-                    if (totalquantity <= availablequantity && totalquantity <= Convert.ToInt32(Session["TotalQuantity"].ToString()) && difference > 0)
+                    if (totalquantity <= availablequantity && totalquantity <= Convert.ToInt32(Session["TotalQuantity"].ToString()) && difference >= 0)
                     {
                         try
                         {

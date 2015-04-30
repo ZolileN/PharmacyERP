@@ -79,35 +79,35 @@
                           <ItemStyle  Width="60px" HorizontalAlign="Left"/>
                       </asp:TemplateField>
 
-                      <asp:TemplateField HeaderText="Sent<br>Quantity"  HeaderStyle-Width ="100px"> 
+                      <asp:TemplateField HeaderText="Sent<br>Quantity"  HeaderStyle-Width ="60px"> 
                         <ItemTemplate>
                             <asp:Label ID="lblQuantity" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("SentQuantity") %>' ></asp:Label>
                         </ItemTemplate>
                         
                         <EditItemTemplate>
-                            <asp:TextBox ID="txtQuantity" CssClass="form-control" runat="server" Text='<%#Eval("SentQuantity") %>' ></asp:TextBox>
+                            <asp:TextBox ID="txtQuantity" CssClass="form-control" runat="server" Text='<%#Eval("SentQuantity") %>' Width="47px"></asp:TextBox>
                         </EditItemTemplate>
                           <ItemStyle  Width="60px" HorizontalAlign="Left"/>
                       </asp:TemplateField>
 
-                      <asp:TemplateField HeaderText="Bonus<br>Quantity"  HeaderStyle-Width ="120px"> 
+                      <asp:TemplateField HeaderText="Bonus<br>Quantity"  HeaderStyle-Width ="60px"> 
                         <ItemTemplate>
                             <asp:Label ID="lblBonus" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("BonusQuantity") %>' ></asp:Label>
                         </ItemTemplate>
                         
                         <EditItemTemplate>
-                            <asp:TextBox ID="txtBonus" CssClass="form-control" runat="server" Text='<%#Eval("BonusQuantity") %>' ></asp:TextBox>
+                            <asp:TextBox ID="txtBonus" CssClass="form-control" runat="server" Text='<%#Eval("BonusQuantity") %>' Width="47px" ></asp:TextBox>
                         </EditItemTemplate>
                           <ItemStyle  Width="60px" HorizontalAlign="Left"/>
                       </asp:TemplateField>
 
-                      <asp:TemplateField HeaderText="Discount %"  HeaderStyle-Width ="100px"> 
+                      <asp:TemplateField HeaderText="Discount %"  HeaderStyle-Width ="47px"> 
                         <ItemTemplate>
                             <asp:Label ID="lblDiscount" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Discount") %>' ></asp:Label>
                         </ItemTemplate>
                         
                         <EditItemTemplate>
-                            <asp:TextBox ID="txtDiscount" CssClass="form-control" runat="server" Text='<%#Eval("Discount") %>' ></asp:TextBox>
+                            <asp:TextBox ID="txtDiscount" CssClass="form-control" runat="server" Text='<%#Eval("Discount") %>' Width="47px"></asp:TextBox>
                         </EditItemTemplate>
                           <ItemStyle  Width="60px" HorizontalAlign="Left"/>
                       </asp:TemplateField>
