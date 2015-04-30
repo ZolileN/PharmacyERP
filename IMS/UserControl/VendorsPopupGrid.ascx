@@ -1,5 +1,13 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="VendorsPopupGrid.ascx.cs" Inherits="IMS.UserControl.VendorsPopupGrid" %>
-<asp:GridView ID="gdvVendor" runat="server"  Width="100%" CssClass="table table-striped table-bordered table-condensed" AllowPaging="True" PageSize="10"
+
+ 
+ <div class="popupHead"  >Vendor List
+
+     <input type="submit" class="close" value="" />
+            <%--<a href="#" class="close" id="close"></a>--%>
+     
+     
+     <asp:GridView ID="gdvVendor" runat="server"  Width="100%" CssClass="table table-striped table-bordered table-condensed" AllowPaging="True" PageSize="10"
                 AutoGenerateColumns="false" OnRowDataBound="gdvVendor_RowDataBound" OnPageIndexChanging="gdvVendor_PageIndexChanging"  ShowFooter="true"
                 OnRowCommand="gdvVendor_RowCommand" OnRowDeleting="gdvVendor_RowDeleting" OnRowEditing="gdvVendor_RowEditing" >
                 <Columns>
@@ -44,14 +52,43 @@
                     </asp:TemplateField>
                   <asp:TemplateField HeaderText="Action">
                         <ItemTemplate> 
-                            <%--<asp:Label ID="Label1"  CssClass="btn btn-default edit-btn" runat="server" Text=''> 
-                       <a href="AddEditVendor.aspx?Id=<%# Eval("SuppID")%>">
-                                     Edit</asp:Label>--%>
+                          
                        <asp:Label ID="Label2" runat="server" Text=''>
+                           
                               <asp:LinkButton ID="lnkDelete"  CssClass=""  runat="server" CommandName="Delete">
                              Select </asp:LinkButton></asp:Label>  
                       </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
             <PagerStyle CssClass = "GridPager" />
+
+         
     </asp:GridView>
+      
+      
+    </div>
+ 
+  
+<script type="text/javascript">
+     
+    //$(document).ready(function () {
+
+    //    document.getElementById("vendors").style.display = "block";
+    //});
+
+   
+    //$(document).ready(function () {
+        
+    //    $("#close").click(function () {
+    //        $("#vendors").hide();
+    //    });
+        
+    //});
+    //window.onload = function(){
+    //    document.getElementById("vendors").style.display = "block";
+
+    //}
+    
+
+
+</script>

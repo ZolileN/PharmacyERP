@@ -6,6 +6,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link href="Style/theme.css" rel="stylesheet" />
     <script src="Scripts/SearchSuggest.js"></script>
    <style>
 
@@ -47,7 +48,7 @@
                 <asp:Button ID="btnCancelOrder" runat="server" OnClick="btnCancelOrder_Click" Text="GO BACK" CssClass="btn btn-primary btn-large" />--%>
     
    <table cellspacing="5" cellpadding="5" border="0" width="100%">
-
+     
        <tr>
            <td><asp:Label runat="server"  AssociatedControlID="RequestTo" CssClass="control-label">Select Vendor</asp:Label></td>
            <td >
@@ -55,23 +56,21 @@
                 </cc1:ComboBox> 
                 <asp:ImageButton ID="btnSearchVendor" runat="server"  Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="40px" />
                   <asp:SqlDataSource ID="VendorsDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:IMSConnectionString %>" SelectCommand="SELECT DISTINCT [SupName], [SuppID] FROM [tblVendor]"></asp:SqlDataSource>
-                 
-                   <cc1:ModalPopupExtender ID="mpeCongratsMessageDiv" runat="server" BackgroundCssClass="modalBackground"
-                       RepositionMode="None" TargetControlID="btnSearchVendor" ClientIDMode="AutoID"
+                    
+                
+                 <cc1:ModalPopupExtender ID="mpeCongratsMessageDiv" runat="server" BackgroundCssClass="overLaypop"
+                       RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="btnSearchVendor" ClientIDMode="AutoID"
                        PopupControlID="_CongratsMessageDiv"  OkControlID="_okPopupButton" CancelControlID="_cancelPopupButton"
-                            BehaviorID="EditModalPopupMessage"  >
+                            BehaviorID="EditModalPopupMessage" >
                     </cc1:ModalPopupExtender>
                     <div class="_popupButtons" style="display: none">
                              <input id="_okPopupButton" value="OK" type="button" />
                              <input id="_cancelPopupButton" value="Cancel" type="button" />
                         </div>
-                        <div id="_CongratsMessageDiv" class="congrats-cont" style="display: none;">
+                        <div id="_CongratsMessageDiv" class="congrats-cont" style="display: none; ">
                             <UCVendorsPopup:VendorsPopup  id="VendorsPopupGrid" runat="server"/>
                         </div>
-                    
-
-                    
-
+                     
                 <asp:TextBox runat="server" ID="txtVendor"  class="autosuggest" Visible="False"/>
                 
                 <asp:DropDownList runat="server" ID="RequestTo" CssClass="form-control" Width="280" AutoPostBack="true" OnSelectedIndexChanged="RequestTo_SelectedIndexChanged" Visible="false" >
@@ -296,12 +295,19 @@
 
 
     <script type="text/javascript">
+
+        //$(document).ready(function () {
+
+        //    $("#btnSearchVendor").click(function () {
+        //        document.getElementById("vendors").style.display = "block";
+        //        //$("#vendors").show();
+        //    });
+
+        //});
+
         function ValidateForm() {
             
-            //if (document.getElementById("MainContent_txtVendor").value == null || document.getElementById("MainContent_txtVendor").value == '') {
-            //    alert("Please enter at least three words to search vendor");
-            //    return false;
-            //}
+           
             if (document.getElementById("MainContent_txtProduct").value == null || document.getElementById("MainContent_txtProduct").value == '') {
                 alert("Please enter at least three words to search product");
                 return false;
@@ -317,7 +323,11 @@
             //var strProduct = e.options[e.selectedIndex].value;
 
         }
-         
+        //window.onload = function () {
+        //    document.getElementById("vendors").style.display = "none";
+        //    document.getElementById("overLaypop").style.display = "none";
+             
+        //}
        
 </script>
     
