@@ -309,5 +309,13 @@
             </div>
         </div>
     </div>
+
+     <script src="Scripts/jquery.js"  type="text/javascript"></script>
+          <script src="Scripts/jquery-ui.js" type="text/javascript"></script>
+          <link rel="stylesheet" href="Style/jquery-ui.css" />
+          <script>
+              $(function () { $("[id$=MainContent_StockDisplayGrid_txtExpDate_0]").datepicker(); });
+              $(function () { $("[id$=MainContent_StockDisplayGrid_txtAddExpDate]").datepicker(); });
+          </script>
 </asp:Content>
 
