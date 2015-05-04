@@ -72,8 +72,10 @@ namespace IMS
                 dv.RowFilter = "ProductID = '" + SelectProduct.SelectedValue.ToString() + "'";
                 dt = dv.ToTable();
                 String Query = "Select tblStock_Detail.ProductID AS ProductID ,tbl_ProductMaster.Description AS ProductName, tblStock_Detail.BarCode AS BarCode,tblStock_Detail.StockID AS StockID, tblStock_Detail.Quantity AS Qauntity, tblStock_Detail.ExpiryDate As Expiry, tblStock_Detail.UCostPrice AS CostPrice, tblStock_Detail.USalePrice AS SalePrice, tblStock_Detail.StoredAt AS Location From  tblStock_Detail INNER JOIN tbl_ProductMaster ON tblStock_Detail.ProductID = tbl_ProductMaster.ProductID Where tblStock_Detail.ProductID = '" + Int32.Parse(dt.Rows[0]["ProductID"].ToString()) + "'";
-
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand(Query, connection);
                 SqlDataAdapter SA = new SqlDataAdapter(command);
                 SA.Fill(ds);
@@ -86,7 +88,10 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
             }
             #endregion
         }
@@ -200,9 +205,9 @@ namespace IMS
             }
             finally
             {
-                
-                BindGrid();
                 StockDisplayGrid.EditIndex = -1;
+                BindGrid();
+               
             }
         }
 

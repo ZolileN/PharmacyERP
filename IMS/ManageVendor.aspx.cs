@@ -34,7 +34,7 @@ namespace IMS
         private void BindGrid()
         {
             ds = VendorBLL.GetAllVendors(connection);
-            ProductSet = ds;
+            //ProductSet = ds;
             gdvVendor.DataSource = null;
             gdvVendor.DataSource = ds;
             gdvVendor.DataBind();
@@ -51,7 +51,7 @@ namespace IMS
             Vendor vendor = new Vendor();
             vendor.supp_ID = ID;
             ds = VendorBLL.GetDistinct(connection, vendor);
-            ProductSet = ds;
+            //ProductSet = ds;
             gdvVendor.DataSource = null;
             gdvVendor.DataSource = ds;
             gdvVendor.DataBind();
@@ -81,7 +81,7 @@ namespace IMS
 
         protected void gdvVendor_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-
+           
         }
 
         protected void gdvVendor_RowEditing(object sender, GridViewEditEventArgs e)

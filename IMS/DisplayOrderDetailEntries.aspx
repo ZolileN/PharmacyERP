@@ -89,7 +89,9 @@
                       <asp:TemplateField HeaderText="Action" HeaderStyle-Width ="150px">
                         <ItemTemplate>
                             <asp:Button CssClass="btn btn-default edit-btn" ID="btnEdit" Text="Edit" runat="server" CommandName="Edit" />
+                             <span onclick="return confirm('Are you sure you want to delete this entry?')">
                              <asp:Button CssClass="btn btn-default del-btn" ID="btnDelete" Text="Delete" runat="server" CommandName="Delete" />
+                             </span>
                              <%--CommandArgument='<%# Container.DisplayIndex  %>'--%>
                         </ItemTemplate>
                         <EditItemTemplate>

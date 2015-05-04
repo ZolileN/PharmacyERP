@@ -83,27 +83,28 @@
                         </ItemTemplate>
                     </asp:TemplateField>
                     <%-- hidden fields --%>
-                    <asp:TemplateField HeaderText="ID" Visible="false">
+                    <asp:TemplateField HeaderText="ID" Visible="true">
                         <ItemTemplate>
                             <asp:Label ID="lblSupID" runat="server" Text='<%# Eval("SuppID") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
                   <asp:TemplateField HeaderText="Action">
                         <ItemTemplate>
-
-
                             <asp:Label ID="Label1"  CssClass="btn btn-default edit-btn" runat="server" Text=''> 
-
                                  <a href="AddEditVendor.aspx?Id=<%# Eval("SuppID")%>">
-                                     Edit</asp:Label>
-
+                                     Edit
+                            </asp:Label>
                             <asp:Label ID="Label2" runat="server" Text=''>
                               <%--  CommandName="del" CommandArgument='<%# Eval("SuppID")%>' --%>
-                                <asp:LinkButton ID="lnkDelete"  CssClass="btn btn-default del-btn"  runat="server" CommandName="Delete">
-                             Delete </asp:LinkButton></asp:Label>
-
+                                <span onclick="return confirm('Are you sure you want to delete this record?')">
+                                    <asp:LinkButton ID="lnkDelete"  CssClass="btn btn-default del-btn"  runat="server" CommandName="Delete">
+                                    Delete
+                                    </asp:LinkButton>
+                                </span>
+                             </asp:Label>
+                             
                         </ItemTemplate>
-                    </asp:TemplateField>
+                     </asp:TemplateField>
                 </Columns>
             <PagerStyle CssClass = "GridPager" />
     </asp:GridView>

@@ -240,7 +240,9 @@
              </asp:GridView>
         <br />
          <asp:Button ID="btnAccept" runat="server" OnClick="btnAccept_Click" Text="GENERATE ORDER" CssClass="btn btn-large" Visible="false"/>
-         <asp:Button ID="btnDecline" runat="server" OnClick="btnDecline_Click" Text="DELETE ORDER" CssClass="btn btn-large" Visible="false" />
+          <span onclick="return confirm('Are you sure you want to delete this record?')">
+            <asp:Button ID="btnDecline" runat="server" OnClick="btnDecline_Click" Text="DELETE ORDER" CssClass="btn btn-large" Visible="false" />
+          </span>
     </div>
     <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

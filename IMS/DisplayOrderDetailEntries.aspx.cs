@@ -195,6 +195,14 @@ namespace IMS
                         BindGrid();
                         return;
                     }
+
+                    if (remQuan < (recQuan + expQuan + defQuan + retQuan))
+                    {
+                        WebMessageBoxUtil.Show("Entered Quantity cannout exceed remaining quantity " + remQuan);
+                        StockDisplayGrid.EditIndex = -1;
+                        BindGrid();
+                        return;
+                    }
                     else
                     {
                         
@@ -217,6 +225,7 @@ namespace IMS
                         BindGrid();
                         return;
                     }
+
                     #endregion
 
                     #region barcode generation
@@ -423,21 +432,28 @@ namespace IMS
                             return;
                         }
                     }
+                    if (remQuan < (recQuan + expQuan + defQuan + retQuan)) 
+                    {
+                        WebMessageBoxUtil.Show("Entered Quantity cannout exceed remaining quantity " + remQuan);
+                        StockDisplayGrid.EditIndex = -1;
+                        BindGrid();
+                        return;
+                    }
                     else
                     {
                         int val = 0;
-                        if (recQuan != recQuanOrg) 
+                        if (recQuan != recQuanOrg)
                         {
                             if (recQuan < recQuanOrg)
                             {
                                 val -= (recQuanOrg - recQuan);
                             }
-                            else 
+                            else
                             {
                                 val += (recQuan - recQuanOrg);
                             }
                         }
-                        if (expQuan != expQuanOrg) 
+                        if (expQuan != expQuanOrg)
                         {
                             if (expQuan < expQuanOrg)
                             {
@@ -447,9 +463,9 @@ namespace IMS
                             {
                                 val += (expQuan - expQuanOrg);
                             }
-                            
+
                         }
-                        if (defQuan != defQuanOrg) 
+                        if (defQuan != defQuanOrg)
                         {
                             if (defQuan < defQuanOrg)
                             {
@@ -460,7 +476,7 @@ namespace IMS
                                 val += (defQuan - defQuanOrg);
                             }
                         }
-                        if (retQuan != retQuanOrg) 
+                        if (retQuan != retQuanOrg)
                         {
                             if (retQuan < retQuanOrg)
                             {
