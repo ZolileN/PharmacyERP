@@ -3,7 +3,30 @@
 <%@ Register TagPrefix="uc" TagName="print_uc" Src="~/UserControl/uc_printBarcode.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-   
+   <script src="Scripts/SearchSuggest.js"></script>
+       <style>
+
+           .suggest_link 
+	       {
+	       background-color: #FFFFFF;
+	       padding: 2px 6px 2px 6px;
+	       }	
+	       .suggest_link_over
+	       {
+	       background-color: #3366CC;
+	       padding: 2px 6px 2px 6px;	
+	       }	
+	       #search_suggest 
+	       {
+	       position: absolute;
+	       background-color: #FFFFFF;
+	       text-align: left;
+	       border: 1px solid #000000;	
+           overflow:auto;
+       		
+	       }
+
+       </style>
     
             <asp:Label runat="server" ID="NoProductMessage" CssClass="control-label" Visible="false" Text="No Stock Available"></asp:Label> 
    
@@ -25,8 +48,12 @@
              </tr>
         <tr>
             <td><asp:Label runat="server" AssociatedControlID="SelectProduct" CssClass="control-label">Select Product</asp:Label></td>
-            <td> <asp:TextBox runat="server" ID="SelectProduct" CssClass="form-control product"/>
-                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click" Text="SearchProduct" Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
+            <td> 
+               <%-- <input type="text" id="txtSearch" runat="server" name="txtSearch"   onkeyup="searchSuggest(event);" autocomplete="off"  /> 
+                 <div id="search_suggest" style="visibility: hidden;" ></div>--%>
+
+                <asp:TextBox runat="server" ID="SelectProduct" CssClass="form-control product"  />
+                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click"  Text="SearchProduct" Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
                 <asp:DropDownList runat="server" ID="ProductList" Visible="false" CssClass="form-control" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="ProductList_SelectedIndexChanged"/></td>
             <td><asp:Label runat="server" AssociatedControlID="ProductType" Visible="true" CssClass=" control-label">Product Type</asp:Label></td>
              <td><asp:DropDownList runat="server" ID="ProductType" Visible="true" OnSelectedIndexChanged="ProductType_SelectedIndexChanged" CssClass="form-control" Width="29%"/></td>

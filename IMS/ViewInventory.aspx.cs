@@ -262,6 +262,15 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_ProdType", ProductType.SelectedItem.ToString());
                     }
 
+                    //if (txtSearch.Value == null)
+                    //{
+                    //    command.Parameters.AddWithValue("@p_ProdID", DBNull.Value);
+                    //}
+                    //else
+                    //{
+                    //    command.Parameters.AddWithValue("@p_ProdID", txtSearch.Value);
+                    //}
+
                     if (ProductList.SelectedIndex <= 0)
                     {
                         command.Parameters.AddWithValue("@p_ProdID", DBNull.Value);

@@ -271,11 +271,28 @@ namespace IMS
 
         protected void btnSearchProduct_Click(object sender, ImageClickEventArgs e)
         {
-            if (txtProduct.Text.Length >= 3)
+            connection.Open();
+
+            String Text = txtSearch.Value.ToString() + "%";
+            SqlCommand command = new SqlCommand("SELECT * From tbl_ProductMaster Where tbl_ProductMaster.Product_Name LIKE '" + Text + "' AND Status = 1", connection);
+            DataSet ds = new DataSet();
+            SqlDataAdapter sA = new SqlDataAdapter(command);
+            sA.Fill(ds);
+            if (SelectProduct.DataSource != null)
             {
-                PopulateDropDown(txtProduct.Text);
-                SelectProduct.Visible = true;
+                SelectProduct.DataSource = null;
             }
+
+            ProductSet = null;
+            ProductSet = ds;
+
+            StockDisplayGrid.DataSource = ds;
+            StockDisplayGrid.DataBind();
+            //if (txtProduct.Text.Length >= 3)
+            //{
+            //    PopulateDropDown(txtProduct.Text);
+            //    SelectProduct.Visible = true;
+            //}
         }
 
         public void PopulateDropDown(String Text)

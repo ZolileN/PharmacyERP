@@ -1,5 +1,31 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="OrderSalesManual.aspx.cs" Inherits="IMS.OrderSalesManual" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+
+     <script src="Scripts/SearchSuggest.js"></script>
+   <style>
+
+       .suggest_link 
+	   {
+	   background-color: #FFFFFF;
+	   padding: 2px 6px 2px 6px;
+	   }	
+	   .suggest_link_over
+	   {
+	   background-color: #3366CC;
+	   padding: 2px 6px 2px 6px;	
+	   }	
+	   #search_suggest 
+	   {
+	   position: absolute;
+	   background-color: #FFFFFF;
+	   text-align: left;
+	   border: 1px solid #000000;	
+       overflow:auto;
+       		
+	   }
+
+   </style>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
      <h4>Generate Sale Orders</h4>
@@ -19,12 +45,15 @@
         </tr>
         <tr>
             <td><asp:Label runat="server" AssociatedControlID="txtProduct" CssClass="control-label">Select Product</asp:Label></td>
-            <td><asp:TextBox runat="server" ID="txtProduct" CssClass="form-control product"/>
-                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click"  Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
+            <td>
+                <input type="text" id="txtSearch" runat="server" name="txtSearch"   onkeyup="searchSuggest(event);" autocomplete="off"  /> 
+                <div id="search_suggest" style="visibility: hidden;" ></div>
+
+                <asp:TextBox runat="server" ID="txtProduct" CssClass="form-control product" Visible="false"/>
+                <asp:ImageButton ID="btnSearchProduct" runat="server" Visible="false" OnClick="btnSearchProduct_Click"  Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
                 
                 <asp:DropDownList runat="server" ID="SelectProduct" Visible="false" CssClass="form-control" Width="280" AutoPostBack="True" OnSelectedIndexChanged="SelectProduct_SelectedIndexChanged"/>
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="SelectProduct" CssClass="text-danger" ErrorMessage="The Product field is required." ValidationGroup="ExSave"/>
-             
+                 
                 </td>
             <td><asp:Label runat="server" AssociatedControlID="SelectQuantity" CssClass="control-label">Enter Send Quantity</asp:Label></td>
             <td> <asp:TextBox runat="server" ID="SelectQuantity" CssClass="form-control" /></td>

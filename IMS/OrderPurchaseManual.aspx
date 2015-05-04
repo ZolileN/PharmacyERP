@@ -107,7 +107,7 @@
             <td>
 
                 <input type="text" id="txtSearch" runat="server" name="txtSearch"   onkeyup="searchSuggest(event);" autocomplete="off"  /> 
-                <div id="search_suggest"  ></div>
+                <div id="search_suggest"  style="visibility: hidden;"></div>
 
                   <%--<asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click"  Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />--%>
 

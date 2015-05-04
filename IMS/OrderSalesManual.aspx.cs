@@ -429,6 +429,7 @@ namespace IMS
                 Session["FirstOrderSO"] = false;
                 Session["ExistingOrder"] = false;
 
+                txtSearch.Value = "";
                 txtProduct.Text = "";
                 SelectProduct.Visible = false;
                 StockAt.Enabled = true;
@@ -626,7 +627,7 @@ namespace IMS
                     }
                     SqlCommand command = new SqlCommand("sp_getStock_Quantity", connection);
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_ProductID", Convert.ToInt32(SelectProduct.SelectedValue.ToString()));
+                    command.Parameters.AddWithValue("@p_ProductID",  txtSearch.Value);
                     DataSet QuantitySet = new DataSet();
                     SqlDataAdapter sA = new SqlDataAdapter(command);
                     sA.Fill(QuantitySet);
@@ -720,10 +721,11 @@ namespace IMS
                             {
                                 command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                             }
-                            if (int.TryParse(SelectProduct.SelectedValue.ToString(), out ProductNumber))
-                            {
-                                command.Parameters.AddWithValue("@p_ProductID", ProductNumber);
-                            }
+                            command.Parameters.AddWithValue("@p_ProductID", txtSearch.Value);
+                            //if (int.TryParse(SelectProduct.SelectedValue.ToString(), out ProductNumber))
+                            //{
+                            //    command.Parameters.AddWithValue("@p_ProductID", ProductNumber);
+                            //}
                             if (int.TryParse(SelectQuantity.Text.ToString(), out Quantity))
                             {
                                 command.Parameters.AddWithValue("@p_OrderQuantity", Quantity);
@@ -769,6 +771,7 @@ namespace IMS
                         int Product, SendQuantity, BonusQuantity;
                         Product = SendQuantity = BonusQuantity = 0;
                         float Discount = 0;
+
                         int.TryParse(SelectProduct.SelectedValue.ToString(), out Product);
                         int.TryParse(SelectQuantity.Text.ToString(), out SendQuantity);
                         int.TryParse(SelectBonus.Text.ToString(), out BonusQuantity);
@@ -851,10 +854,11 @@ namespace IMS
                                 {
                                     command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                                 }
-                                if (int.TryParse(SelectProduct.SelectedValue.ToString(), out ProductNumber))
-                                {
-                                    command.Parameters.AddWithValue("@p_ProductID", ProductNumber);
-                                }
+                                command.Parameters.AddWithValue("@p_ProductID", txtSearch.Value);
+                                //if (int.TryParse(SelectProduct.SelectedValue.ToString(), out ProductNumber))
+                                //{
+                                //    command.Parameters.AddWithValue("@p_ProductID", ProductNumber);
+                                //}
                                 if (int.TryParse(SelectQuantity.Text.ToString(), out Quantity))
                                 {
                                     command.Parameters.AddWithValue("@p_OrderQuantity", Quantity);
@@ -964,6 +968,7 @@ namespace IMS
                     //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Remaining Stock is less then the entered quantity, please enter less quantity to proceed')", true);
                 }
                 BindGrid();
+                txtSearch.Value = "";
                 txtProduct.Text = "";
                 SelectProduct.Visible = false;
                 SelectBonus.Text = "";
@@ -1080,6 +1085,7 @@ namespace IMS
                     }
                     Session["OrderNumber"] = null;
                     Session["FromViewPlacedOrders"] = "false";
+                    txtSearch.Value = "";
                     txtProduct.Text = "";
                     SelectProduct.Visible = false;
                     StockAt.Enabled = true;
