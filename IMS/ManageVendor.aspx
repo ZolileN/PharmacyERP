@@ -90,10 +90,11 @@
                     </asp:TemplateField>
                   <asp:TemplateField HeaderText="Action">
                         <ItemTemplate>
-                            <asp:Label ID="Label1"  CssClass="btn btn-default edit-btn" runat="server" Text=''> 
+                            <asp:LinkButton CssClass="btn btn-default edit-btn" ID="btnEdit" Text="Edit" runat="server" CommandName="Edit" CommandArgument='<%# Container.DisplayIndex%>'/>
+                            <%--<asp:Label ID="Label1"  CssClass="btn btn-default edit-btn" runat="server" Text=''> 
                                  <a href="AddEditVendor.aspx?Id=<%# Eval("SuppID")%>">
                                      Edit
-                            </asp:Label>
+                            </asp:Label>--%>
                             <asp:Label ID="Label2" runat="server" Text=''>
                               <%--  CommandName="del" CommandArgument='<%# Eval("SuppID")%>' --%>
                                 <span onclick="return confirm('Are you sure you want to delete this record?')">

@@ -86,7 +86,9 @@ namespace IMS
 
         protected void gdvVendor_RowEditing(object sender, GridViewEditEventArgs e)
         {
-            //gdvVendor.EditIndex = -1;
+            //gdvVendor.EditIndex = e.NewEditIndex;
+            Label SuppID = (Label)gdvVendor.Rows[e.NewEditIndex].FindControl("lblSupID");
+            Response.Redirect("AddEditVendor.aspx?Id="+SuppID.Text, false);
             //BindGrid();
         }
 
