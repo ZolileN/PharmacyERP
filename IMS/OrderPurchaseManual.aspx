@@ -5,6 +5,26 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+
+     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <script src="Scripts/fancybox/jquery.easing-1.3.pack.js" type="text/javascript"></script>
+    <link href="Scripts/fancybox/jquery.fancybox-1.3.4.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/fancybox/jquery.fancybox-1.3.4.js" type="text/javascript"></script>
+    <script src="Scripts/fancybox/jquery.fancybox-1.3.4.pack.js" type="text/javascript"></script>
+    <script src="Scripts/fancybox/jquery.mousewheel-3.0.4.pack.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            $("a.popup").fancybox({
+                'overlayShow': false,
+                'transitionIn': 'elastic',
+                'transitionOut': 'elastic'
+            });
+
+        });
+    </script>
+
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link href="Style/theme.css" rel="stylesheet" />
     <script src="Scripts/SearchSuggest.js"></script>
@@ -54,6 +74,8 @@
            <td >
               <cc1:ComboBox ID="CmbVendors" runat="server" AutoCompleteMode="SuggestAppend" DataSourceID="VendorsDataSource" DataTextField="SupName" DataValueField="SuppID" MaxLength="0" style="display: inline; width: 10px;" OnSelectedIndexChanged="CmbVendors_SelectedIndexChanged">
                 </cc1:ComboBox> 
+               <%--<a href="VendorsPopup.aspx" class="popup" ><img src="/Images/search-icon-512.png" alt="img" /></a>--%>
+                 
                 <asp:ImageButton ID="btnSearchVendor" runat="server"  Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="40px" />
                   <asp:SqlDataSource ID="VendorsDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:IMSConnectionString %>" SelectCommand="SELECT DISTINCT [SupName], [SuppID] FROM [tblVendor]"></asp:SqlDataSource>
                     
@@ -84,7 +106,7 @@
 
             <td>
 
-                <input type="text" id="txtSearch" runat="server" name="txtSearch"  onkeyup="searchSuggest(event);" autocomplete="off"  /> 
+                <input type="text" id="txtSearch" runat="server" name="txtSearch"   onkeyup="searchSuggest(event);" autocomplete="off"  /> 
                 <div id="search_suggest"  ></div>
 
                   <%--<asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click"  Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />--%>
