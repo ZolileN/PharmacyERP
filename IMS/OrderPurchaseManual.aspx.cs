@@ -207,6 +207,7 @@ namespace IMS
                // Session["isGenOption"] = null;
                 lblttlcst.Visible = false;
                 lblTotalCostALL.Visible = false;
+                WebMessageBoxUtil.Show("Order and stock has been successfully removed");
             }
             catch(Exception ex)
             {
@@ -620,7 +621,7 @@ namespace IMS
                 txtVendor.Text = "";
                 txtProduct.Text = "";
                 SelectProduct.Visible = false;
-
+                txtSearch.Value = "";
                 // RequestTo.Visible = false;
                 SelectQuantity.Text = "";
                 SelectPrice.Text = "";
