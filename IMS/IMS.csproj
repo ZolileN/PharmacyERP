@@ -340,6 +340,7 @@
     <Content Include="UserControl\uc_printBarcode.ascx" />
     <Content Include="UserControl\uc_Select_System.ascx" />
     <Content Include="UserControl\VendorsPopupGrid.ascx" />
+    <Content Include="VendorsPopup.aspx" />
     <Content Include="ViewInventory.aspx" />
     <Content Include="ViewPackingList.aspx" />
     <Content Include="ViewPackingList_SO.aspx" />
@@ -833,6 +834,13 @@
     </Compile>
     <Compile Include="UserControl\VendorsPopupGrid.ascx.designer.cs">
       <DependentUpon>VendorsPopupGrid.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="VendorsPopup.aspx.cs">
+      <DependentUpon>VendorsPopup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VendorsPopup.aspx.designer.cs">
+      <DependentUpon>VendorsPopup.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewInventory.aspx.cs">
       <DependentUpon>ViewInventory.aspx</DependentUpon>

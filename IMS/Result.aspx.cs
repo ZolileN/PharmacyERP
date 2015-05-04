@@ -35,7 +35,7 @@ namespace IMS
             }
             if (clientName.Length >= 2)
             {
-                using (SqlCommand cmd = new SqlCommand("select DISTINCT ProductID,Product_Name from tbl_ProductMaster where Product_Name LIKE  @Client_Name+'%'", connection))
+                using (SqlCommand cmd = new SqlCommand("select DISTINCT Product_Name from tbl_ProductMaster where Product_Name LIKE  @Client_Name+'%'", connection))
                 {
 
                     SqlParameter parClientName = new SqlParameter("@Client_Name", SqlDbType.VarChar);
@@ -47,11 +47,11 @@ namespace IMS
                     da.Fill(dt);
                     StringBuilder sb = new StringBuilder();
 
-                    if (dt.Rows.Count > 0)
+                    if (dt.Rows.Count > 1)
                     {
                         for (int i = 0; i < dt.Rows.Count; i++)
                         {
-                            sb.Append(dt.Rows[i].ItemArray[1].ToString() + "~");   //Create Con
+                            sb.Append(dt.Rows[i].ItemArray[0].ToString() + "~");   //Create Con
 
                         }
                     }

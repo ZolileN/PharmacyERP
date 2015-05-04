@@ -26,7 +26,7 @@ namespace IMS
             
             if (!IsPostBack)
             {
-
+                
                 if ((Session["OrderNumber"] != null && Session["FromViewPlacedOrders"] != null)) //|| Session["isGenOption"] != null)
                 {
                     Session["FirstOrder"] = true;
@@ -55,8 +55,13 @@ namespace IMS
                     ProductSet = new DataSet();
                     LoadData();
                 }
+                if (Session["VendorId"] != null)
+                {
+                    CmbVendors.SelectedValue = Session["VendorId"].ToString();
+                }
 
             }
+             
             
             
         }
@@ -190,7 +195,6 @@ namespace IMS
                 txtVendor.Text = "";
                 txtProduct.Text = "";
                 txtVendor.Enabled = true;
-                btnSearchVendor.Enabled = true;
                 SelectProduct.Visible = false;
                 CmbVendors.Enabled = true;
 
@@ -500,9 +504,10 @@ namespace IMS
 
                             int ProductNO = 0;
                             bool ProductPresent = false;
-                            if (int.TryParse(SelectProduct.SelectedValue.ToString(), out ProductNO))
-                            {
-                            }
+                            command.Parameters.AddWithValue("@p_ProductID", txtSearch.Value.ToString());
+                            //if (int.TryParse(SelectProduct.SelectedValue.ToString(), out ProductNO))
+                            //{
+                            //}
 
                             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                             {
@@ -626,7 +631,6 @@ namespace IMS
                 SelectQuantity.Text = "";
                 SelectPrice.Text = "";
                 txtVendor.Enabled = false;
-                btnSearchVendor.Enabled = false;
                 SelectProduct.SelectedIndex = -1;
                 //RequestTo.SelectedIndex = -1;
             }

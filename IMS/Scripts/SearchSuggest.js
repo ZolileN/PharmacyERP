@@ -28,6 +28,15 @@ function searchSuggest(e)
     }
     else {
         var key = window.event ? e.keyCode : e.which;
+         
+        //if (key == 13) {
+        //    alert("111")
+        //    var ss = document.getElementById('search_suggest');
+
+
+        //    ss.innerHTML = '';
+        //    ss.style.visibility = 'hidden';
+        //}
 
         if (key == 40 || key == 38) {
             scrolldiv(key);
@@ -39,6 +48,8 @@ function searchSuggest(e)
                 searchReq.open("GET", 'Result.aspx?search=' + str, true);
                 searchReq.onreadystatechange = handleSearchSuggest;
                 searchReq.send(null);
+
+                
             }
 
         }
@@ -51,7 +62,8 @@ function searchSuggest(e)
 function handleSearchSuggest()
  {
   if (searchReq.readyState == 4) 
-      {
+  {
+      //alert(searchReq.responseText);
           var ss = document.getElementById('search_suggest');
           ss.innerHTML = '';
           var str = searchReq.responseText.split("~");
@@ -108,13 +120,14 @@ function handleSearchSuggest()
  //Click function
  function setSearch(value) 
  {
-    var ss = document.getElementById('search_suggest');
-    
-    document.getElementById('MainContent_txtSearch').value = value;
      
-    ss.innerHTML = '';
-    ss.style.visibility='hidden';
- }
+      var ss = document.getElementById('search_suggest');
+
+         document.getElementById('MainContent_txtSearch').value = value;
+
+         ss.innerHTML = '';
+         ss.style.visibility = 'hidden';
+    }
  
  function scrolldiv(key)
  {
@@ -148,35 +161,31 @@ function handleSearchSuggest()
          
          }
     }
-    else if (key==38)
-    {
-         if(currentDivId==-1)
-         {
-         tempID=maxDivId;
-         setScroll(maxDivId,maxDivId) 
-         }
-         else
-         {
-         if (currentDivId==0)
-            {
-                 tempID='div'+currentDivId;  
-                 var a=document.getElementById(tempID);
-                 currentDivId=-1;
-                 suggestOut(a) 
-                 document.getElementById('MainContent_txtSearch').value = strOriginal;
-             
-            }
-          else
-         {
-            tempID=currentDivId-1;
-            setScroll(currentDivId,tempID)  
-            
-         }
-       
-    } 
     
- 
-  }
+    else if (key == 38) {
+        if (currentDivId == -1) {
+            tempID = maxDivId;
+            setScroll(maxDivId, maxDivId)
+        }
+        else {
+            if (currentDivId == 0) {
+                tempID = 'div' + currentDivId;
+                var a = document.getElementById(tempID);
+                currentDivId = -1;
+                suggestOut(a)
+                document.getElementById('MainContent_txtSearch').value = strOriginal;
+
+            }
+            else {
+                tempID = currentDivId - 1;
+                setScroll(currentDivId, tempID)
+
+            }
+
+        }
+
+
+    }
  }
 function setScroll(Old,New)
 {
