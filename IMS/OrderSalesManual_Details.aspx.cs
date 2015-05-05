@@ -24,6 +24,8 @@ namespace IMS
             if(!IsPostBack)
             {
                 lblTotalQuantity.Text = Session["TotalQuantity"].ToString();
+                lblQuan.Text = Session["SO_Quan"].ToString();
+                lblBonQuan.Text = Session["SO_BQuan"].ToString();
                 //TotalExceeded = false;
                 BindGrid();
                 Session["TotalExceeded"] = false;
@@ -79,73 +81,50 @@ namespace IMS
         }
         protected void btnAcceptStock_Click(object sender, EventArgs e)
         {
-            int TotalQuantity = 0;
-
-            #region Stock Updating Procedure
-            /*for (int i = 0; i < ProductSet.Tables[0].Rows.Count; i++)
-            DataSet dsProducts = (DataSet)Session["dsProducts"];
-
-            for (int i = 0; i < dsProducts.Tables[0].Rows.Count; i++)
+            int TotalQuantity,quan,bQuan;
+            TotalQuantity=quan=bQuan=0;
+            int.TryParse(lblQuan.Text,out quan);
+            int.TryParse(lblBonQuan.Text,out bQuan);
+            int.TryParse(lblTotalQuantity.Text, out TotalQuantity);
+            ////DataTable filterSet = this.StockDisplayGrid as DataTable;
+            int totVal, totBonVal;
+            totVal = totBonVal = 0;
+            //DataView dataView =  StockDisplayGrid.DataSource;
+            DataSet ds = Session["dsProducts"] as DataSet;
+            int selectedSum = 0;
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
-                try
-                {
-                    int StockID = int.Parse(dsProducts.Tables[0].Rows[i]["StockID"].ToString());
-                    int quantity = int.Parse(dsProducts.Tables[0].Rows[i]["SentQuantity"].ToString()) + int.Parse(dsProducts.Tables[0].Rows[i]["BonusQuantity"].ToString());
-                    //int StockID = int.Parse(ProductSet.Tables[0].Rows[i]["StockID"].ToString());
-                    //int quantity = int.Parse(ProductSet.Tables[0].Rows[i]["SentQuantity"].ToString()) + int.Parse(ProductSet.Tables[0].Rows[i]["BonusQuantity"].ToString());
-                    int OrderDetailID = int.Parse(Session["OderDetailID"].ToString());
-                    TotalQuantity += quantity;
-                    connection.Open();
-                    SqlCommand command = new SqlCommand();
-                    command = new SqlCommand("Sp_UpdateStockBy_StockID", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_StockID", StockID);
-                    command.Parameters.AddWithValue("@p_quantity", quantity);
-                    command.Parameters.AddWithValue("@p_Action", "Minus");
-                    command.ExecuteNonQuery();
+                int val, bonVal;
+                val = bonVal = 0;
+                //if (Convert.ToInt32(filterSet.Rows[i]["ProductID"]).Equals(ProductNO))
+                //{
+                //    ProductPresent = true;
+                //    break;
+                //}
+                
+                int.TryParse(ds.Tables[0].Rows[i]["SentQuantity"].ToString(), out val);
+                int.TryParse(ds.Tables[0].Rows[i]["BonusQuantity"].ToString(), out bonVal);
+                selectedSum += (val+bonVal);
+                totVal += val;
+                totBonVal += bonVal;
+            }
 
-                    #region Generation of Packing List
-                    command = new SqlCommand("sp_PackingListGeneration", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_StockID", StockID);
-                    command.Parameters.AddWithValue("@p_quantity", quantity);
-                    command.Parameters.AddWithValue("@p_OrderDetailID", OrderDetailID);
-                    command.ExecuteNonQuery();
-                    #endregion
-                }
-                catch(Exception ex)
-                {
-
-                }
-                finally
-                {
-                    connection.Close();
-                }
-            }*/
-            #endregion
-
-            #region Updating Main Sale Order Detail Table 
-            //try
-            //{
-            //    int OrderDetailID = int.Parse(Session["OderDetailID"].ToString());
-            //    connection.Open();
-            //    SqlCommand command = new SqlCommand();
-            //    command = new SqlCommand("sp_UpdateOrdDetailQuantity", connection);
-            //    command.CommandType = CommandType.StoredProcedure;
-            //    command.Parameters.AddWithValue("@p_quantity", TotalQuantity);
-            //    command.Parameters.AddWithValue("@p_OrderDetailID", OrderDetailID);
-
-            //    command.ExecuteNonQuery();
-            //}
-            //catch(Exception ex)
-            //{
-
-            //}
-            //finally
-            //{
-            //    connection.Close();
-            //}
-            #endregion
+            if (totVal > quan) 
+            {
+                WebMessageBoxUtil.Show("Selected Quantity can not be larger than " + quan.ToString());
+                return;
+            }
+            if (totBonVal > bQuan)
+            {
+                WebMessageBoxUtil.Show("Selected Bonus Quantity can not be larger than " + bQuan.ToString());
+                return;
+            }
+            if (selectedSum > TotalQuantity) 
+            {
+                WebMessageBoxUtil.Show("Selected Quantity can not be larger than "+ TotalQuantity.ToString());
+                return;
+            }
+          
 
             Session["OrderSalesDetail"] = true;
             Response.Redirect("OrderSalesManual.aspx");
@@ -206,7 +185,7 @@ namespace IMS
                     {
                         difference = totalquantity - p_totalquantity;
                     }
-                    if (totalquantity <= availablequantity && totalquantity <= Convert.ToInt32(Session["TotalQuantity"].ToString()) && difference > 0)
+                    if (totalquantity <= availablequantity && totalquantity <= Convert.ToInt32(Session["TotalQuantity"].ToString()) && difference >= 0)
                     {
                         try
                         {
@@ -335,15 +314,22 @@ namespace IMS
             if(e.Row.RowType == DataControlRowType.DataRow)
             {
                 int AvailableStock = Convert.ToInt32(((Label)e.Row.FindControl("lblAvStock")).Text.ToString());
+                int SentQuantity = Convert.ToInt32(((Label)e.Row.FindControl("lblQuantity")).Text.ToString());
+                int BonusQuantity = Convert.ToInt32(((Label)e.Row.FindControl("lblBonus")).Text.ToString());
                 Button EditButton = (Button)e.Row.FindControl("btnEdit");
                 Button RefreshButton = (Button)e.Row.FindControl("btnRefresh");
- 
-              
-                if(AvailableStock.Equals(0))
+
+
+                if (AvailableStock.Equals(0) && SentQuantity.Equals(0) && BonusQuantity.Equals(0))
                 {
                     EditButton.Enabled = false;
-                    RefreshButton.Enabled = false;
+                    RefreshButton.Enabled = true;
                 }
+                //else if(AvailableStock.Equals(0))
+                //{
+                //    EditButton.Enabled = false;
+                //    RefreshButton.Enabled = false;
+                //}
                 else
                 {
                     EditButton.Enabled = true;

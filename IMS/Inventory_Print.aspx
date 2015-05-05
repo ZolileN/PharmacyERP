@@ -20,22 +20,20 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
    
-    <div class="form-horizontal">
-        <div class="form-group">
+
              
             <table style="width: 100%;" align="center" border="0">
             <tr>
                 <td class="auto-style2">
-                   <h3><strong>Inventory List</strong></h3>
+                   <h3>Inventory List</h3>
                 </td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-               <td><strong>Date: </strong></td>
-                <td> <%: DateTime.Now.Date %></td>
+               <td></td>
+                <td align="right"> <strong>Date: </strong><%: DateTime.Now.Date %></td>
             </tr>
                 </table>
-            <br />
-            <br />
+            <hr />
         <asp:GridView ID="StockDisplayGrid" runat="server" CssClass="table table-striped table-bordered table-condensed" AllowPaging="false" 
                 AutoGenerateColumns="false" OnRowDataBound="StockDisplayGrid_RowDataBound" >
                  <Columns>
@@ -79,21 +77,21 @@
                                         
                      <asp:TemplateField HeaderText="Expiry" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
-                            <asp:Label ID="lblExpiry" CssClass="col-md-2 control-label"  runat="server" Text='<%# Eval(("Expiry").ToString(), "{0:dd/MM/yyyy}")%>' Width="100px"></asp:Label>
+                            <asp:Label ID="lblExpiry" CssClass="control-label"  runat="server" Text='<%# Eval(("Expiry").ToString(), "{0:dd/MM/yyyy}")%>'></asp:Label>
                         </ItemTemplate>
                          <ItemStyle  Width="100px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
 
                      <asp:TemplateField HeaderText="Unit Cost" HeaderStyle-HorizontalAlign="Justify">
                         <ItemTemplate>
-                            <asp:Label ID="lblUnitCostPrice" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("CostPrice") %>' Width="60px"></asp:Label>
+                            <asp:Label ID="lblUnitCostPrice" CssClass="control-label" runat="server" Text='<%# Eval("CostPrice") %>'></asp:Label>
                         </ItemTemplate>
                         <ItemStyle  Width="60px" HorizontalAlign="Justify"/>
                        
                     </asp:TemplateField>
                       <asp:TemplateField HeaderText="Quantity" HeaderStyle-HorizontalAlign="Justify">
                         <ItemTemplate>
-                            <asp:Label ID="lblQuantity" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Qauntity") %>' Width="40px"></asp:Label>
+                            <asp:Label ID="lblQuantity" CssClass="control-label" runat="server" Text='<%# Eval("Qauntity") %>'></asp:Label>
                         </ItemTemplate>
                         <ItemStyle  Width="50px" HorizontalAlign="Justify"/>
                     </asp:TemplateField>
@@ -144,14 +142,11 @@
                  </Columns>
              </asp:GridView>
        
-         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+         
                 <asp:Button ID="btnBack" runat="server" CssClass="btn btn-primary btn-large no-print" Text="Go Back" OnClick="btnBack_Click"/>
                 <asp:Button ID="btnPrint" runat="server" OnClientClick="window.print();" Text="Confirm" CssClass="btn btn-large no-print" Visible="true" />
-                <asp:Button ID="btnFax" runat="server" visible="false" Text="BACK" CssClass="btn btn-large no-print" />
-                <asp:Button ID="btnEmail" runat="server"  Text="EMAIL" CssClass="btn btn-large no-print" Visible="false" />
-            </div>
-        </div>
-    </div>
-    </div>
+                <asp:Button ID="btnFax" runat="server" visible="false" Text="BACK" CssClass="btn btn-info btn-large no-print" />
+                <asp:Button ID="btnEmail" runat="server"  Text="EMAIL" CssClass="btn btn-default btn-large no-print" Visible="false" />
+            
+   
 </asp:Content>

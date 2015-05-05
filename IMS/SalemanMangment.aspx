@@ -59,7 +59,7 @@
                 </td>
             </tr>
             <tr>
-                <td><asp:Button ID="btnAddNew" runat="server" Text="Add New Salesman" CssClass="btn btn-default" OnClick="btnAddNew_Click" /></td>
+                <td><asp:Button ID="btnAddNew" runat="server" Text="Add New Salesman" CssClass="btn btn-primary" OnClick="btnAddNew_Click" /></td>
             </tr>
 
         </table>
@@ -127,9 +127,9 @@
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Action">
                 <ItemTemplate>
-                    <asp:LinkButton CssClass="btn btn-default" ID="btnEdit" Text="Edit" runat="server" CommandName="Edit" CommandArgument='<%# Container.DisplayIndex  %>' />
+                    <asp:LinkButton CssClass="btn btn-default edit-btn" ID="btnEdit" Text="Edit" runat="server" CommandName="Edit" CommandArgument='<%# Container.DisplayIndex  %>' />
                     <span onclick="return confirm('Are you sure you want to delete this record?')">
-                        <asp:LinkButton CssClass="btn btn-default" ID="btnDelete" Text="Delete" runat="server" CommandName="Delete" CommandArgument='<%# Container.DisplayIndex  %>' />
+                        <asp:LinkButton CssClass="btn btn-default del-btn" ID="btnDelete" Text="Delete" runat="server" CommandName="Delete" CommandArgument='<%# Container.DisplayIndex  %>' />
                     </span>
                 </ItemTemplate>
                 <EditItemTemplate>

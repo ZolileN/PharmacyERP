@@ -13,6 +13,7 @@ using System.Configuration;
 
 namespace IMS
 {
+    
     public partial class ViewPlacedOrders : System.Web.UI.Page
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
@@ -76,6 +77,90 @@ namespace IMS
 
             }
         }
+        private void LoadParameterized(string par, int id) 
+        {
+            #region Display Orders
+            try
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("sp_GetPendingOrders_ByVendorID", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                switch (id)
+                {
+                    case 1:
+                        if (String.IsNullOrWhiteSpace(par))
+                        {
+                            command.Parameters.AddWithValue("@p_VendID", DBNull.Value);
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@p_VendID", par);
+                        }
+                        command.Parameters.AddWithValue("@p_OrderDate", DBNull.Value);
+                        command.Parameters.AddWithValue("@p_OrderID", DBNull.Value);
+                        command.Parameters.AddWithValue("@p_OrderStatus", DBNull.Value);
+                        break;
+                    case 2:
+                        if (OrderStatus.SelectedIndex <= 0)
+                        {
+                            command.Parameters.AddWithValue("@p_OrderStatus", DBNull.Value);
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@p_OrderStatus", OrderStatus.SelectedValue.ToString());
+                        }
+                        command.Parameters.AddWithValue("@p_OrderDate", DBNull.Value);
+                        command.Parameters.AddWithValue("@p_OrderID", DBNull.Value);
+                        command.Parameters.AddWithValue("@p_VendID", DBNull.Value);
+                        break;
+                    case 3:
+                        if (String.IsNullOrWhiteSpace(par))
+                        {
+                            command.Parameters.AddWithValue("@p_OrderDate", DBNull.Value);
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@p_OrderDate", Convert.ToDateTime(par));
+                        }
+                        command.Parameters.AddWithValue("@p_OrderID", DBNull.Value);
+                        command.Parameters.AddWithValue("@p_VendID", DBNull.Value);
+                        command.Parameters.AddWithValue("@p_OrderStatus", DBNull.Value);
+                        break;
+                    case 4:
+                        if (String.IsNullOrWhiteSpace(par))
+                        {
+                            command.Parameters.AddWithValue("@p_OrderID", DBNull.Value);
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@p_OrderID", Convert.ToInt32(par));
+                        }
+                        command.Parameters.AddWithValue("@p_OrderDate", DBNull.Value);
+                        command.Parameters.AddWithValue("@p_VendID", DBNull.Value);
+                        command.Parameters.AddWithValue("@p_OrderStatus", DBNull.Value);
+                        break;
+                }
+              
+                DataSet ds = new DataSet();
+
+                SqlDataAdapter sA = new SqlDataAdapter(command);
+                sA.Fill(ds);
+                //ProductSet = ds;
+                //StockDisplayGrid.DataSource = null;
+                StockDisplayGrid.DataSource = ds;
+                StockDisplayGrid.DataBind();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                connection.Close();
+            }
+            #endregion
+        }
+        
         public void LoadData(String VendorID)
         {
             #region Display Orders
@@ -196,11 +281,17 @@ namespace IMS
         {
             try
             {
+                int rowIndex=-1;
+                if (Session["SelecetedRowIndex"] != null) 
+                {
+                    rowIndex = int.Parse(Session["SelecetedRowIndex"].ToString());
+                    
+                }
                 if (e.CommandName.Equals("ReGen"))
                 {
                     int Pageindex = Convert.ToInt32(StockDisplayGrid.PageIndex);
-                 
-                        Label OrderNo = (Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("OrderNO");
+
+                    Label OrderNo = (Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("OrderNO");
                         //session is setting
                         Session["OrderNumber"] = OrderNo.Text.ToString();
                         Session["FromViewPlacedOrders"] = "true";
@@ -253,9 +344,27 @@ namespace IMS
             }
         }
 
+       
         protected void StockDisplayGrid_RowEditing(object sender, GridViewEditEventArgs e)
         {
-            StockDisplayGrid.EditIndex = e.NewEditIndex;
+            try
+            {
+                StockDisplayGrid.EditIndex = e.NewEditIndex;
+                //DataTable filterSet = StockDisplayGrid.DataSource as DataTable;
+                //DataView dataView = filterSet.DefaultView;
+                //Label OrderNo = (Label)StockDisplayGrid.Rows[e.NewEditIndex].FindControl("OrderNO");
+                ////session is setting
+                //Session["SelecetedRowIndex"] = e.NewEditIndex;
+                //dataView.RowFilter = "OrderID = " + OrderNo.Text.ToString();
+                //Session["SelecetedRowIndex"] = e.NewEditIndex;
+                //StockDisplayGrid.EditIndex = 0;
+                //LoadParameterized(OrderNo.Text.ToString(),4);
+                
+                //StockDisplayGrid.DataSource = dataView;
+                //StockDisplayGrid.DataBind();
+                //StockDisplayGrid.EditIndex = 0;
+            }
+            catch (Exception exp) { }
             if (StockAt.SelectedIndex <= 0)
             {
                 LoadData("");
@@ -266,6 +375,15 @@ namespace IMS
             }
         }
 
+        protected Boolean IsStatusComplete(String status)
+        {
+            if (status.Equals("Complete") || status.Equals("Partial"))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
         protected void btnBack_Click(object sender, EventArgs e)
         {
             Session["OrderNumber"] = null;

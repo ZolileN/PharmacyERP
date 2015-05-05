@@ -9,8 +9,8 @@
      <div class="form-horizontal">
      <asp:Label runat="server" AssociatedControlID="txtProduct" CssClass="col-md-2 control-label">Search Product </asp:Label>
             <div class="col-md-10">
-                <asp:TextBox runat="server" ID="txtProduct" CssClass="form-control product"/>
-                <asp:Button runat="server" ID="btnMasterSearch" CssClass ="btn btn-default" Text="Master Search" OnClick="btnMasterSearch_Click"/>
+                <asp:TextBox runat="server" ID="txtProduct" CssClass="form-control product master-search"/>
+                <asp:Button runat="server" ID="btnMasterSearch" CssClass ="btn btn-sm btn-primary" Text="Master Search" OnClick="btnMasterSearch_Click"/>
                 <br />
             </div>
      </div>
@@ -103,9 +103,9 @@
              </tr>
              <tr>
                  <td></td>
-                 <td colspan="100%"><asp:Button ID="btnCreateProduct" runat="server" OnClick="btnCreateProduct_Click"  Text="ADD" CssClass="btn btn-default" ValidationGroup="exSave"/>
+                 <td colspan="100%"><asp:Button ID="btnCreateProduct" runat="server" OnClick="btnCreateProduct_Click"  Text="ADD" CssClass="btn btn-primary" ValidationGroup="exSave"/>
                  <asp:Button ID="btnCancelProduct" runat="server" OnClick="btnCancelProduct_Click" Text="CANCEL" CssClass="btn btn-default" />
-                 <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnGoBack_Click"/></td>
+                 <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnGoBack_Click"/></td>
              </tr>
                 </table>
 </asp:Content>

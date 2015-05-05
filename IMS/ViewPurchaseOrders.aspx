@@ -2,7 +2,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <h3>View Purchase Orders </h3> 
+    <h4>Receive PO(s) </h4> 
+    <hr />
      <div class="form-horizontal">
           <div class="form-group">
         <asp:Label runat="server" AssociatedControlID="StockAt" CssClass="col-md-2 control-label">Search by Vendor Name </asp:Label>
@@ -70,12 +71,13 @@
                     
                      <asp:TemplateField HeaderText="Action" HeaderStyle-Width ="200px">
                         <ItemTemplate>
-                            <asp:Button CssClass="btn btn-default" ID="btnEdit" Text="View Request Details" runat="server" CommandName="Edit" CommandArgument='<%# Container.DisplayIndex  %>'/>
+                            <asp:Button CssClass="btn btn-sm btn-default" ID="btnEdit" Text="View Request Details" runat="server" CommandName="Edit" CommandArgument='<%# Container.DisplayIndex  %>'/>
                         </ItemTemplate>
                          <ItemStyle  Width="200px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
                      
                  </Columns>
+                <PagerStyle CssClass = "GridPager" />
              </asp:GridView>
     </div>
     <div class="form-group">

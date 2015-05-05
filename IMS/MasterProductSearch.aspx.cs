@@ -114,8 +114,14 @@ namespace IMS
                    Session["MS_itemStrength"] = itemStrength.Text.ToString();
                    Session["MS_itemPackType"] = itemPackType.Text.ToString();
                    Session["MS_itemPackSize"] = itemPackSize.Text.ToString();
-
-                   Response.Redirect("Addproduct.aspx");
+                   Session["MS_Bonus12"]=""; 
+                   Session["MS_Bonus25"]="";
+                   Session["MS_Bonus50"] = "";
+                   Session["MS_Control"] = "";
+                   Session["MS_BinNumber"] = "";
+                   Session["MS_GreenRainCode"] = "";
+                   Session["MS_Description"] = "";
+                   Response.Redirect("Addproduct.aspx",false);
 
 
                }

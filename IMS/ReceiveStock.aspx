@@ -57,6 +57,7 @@
                          <ItemStyle  Width="200px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
                  </Columns>
+                <PagerStyle CssClass = "GridPager" />
              </asp:GridView>
     </div>
     <div class="form-group">

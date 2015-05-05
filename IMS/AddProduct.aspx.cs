@@ -182,7 +182,7 @@ namespace IMS
         public void FromMaster_Load(String ItemNo, String ItemName, String ItemType, String Manufacturer, String Category, String GenericName,
                                     String Control, String BinNumber, String GreenRain, String BrandName, String MaxDiscount, String LineID, 
                                     String UnitSale, String UnitCost, String ItemAwt, String Form, String Strength, String itemPackType,
-                                    String itemPackSize, String Description,string b12,string b25,string b50)
+                                    String itemPackSize, String Description="", string b12 = "", string b25 = "", string b50 = "")
         {
             GreenRainCode.Text = GreenRain;
             ProductName.Text = ItemName;

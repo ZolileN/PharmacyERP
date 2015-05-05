@@ -3,17 +3,37 @@
 <%@ Register TagPrefix="uc" TagName="print_uc" Src="~/UserControl/uc_printBarcode.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <br />
-    <div class="form-group">
-            <asp:Label runat="server" ID="NoProductMessage" CssClass="col-md-2 control-label" Visible="false" Text="No Stock Available"></asp:Label> 
-    </div>
-    <br />
-    <div class="row">
-    <div class="form-group">
-            <h1>CURRENT STOCK</h1>
-        </div>
-    </div>
-    <table cellspacing="0" cellpadding="5" border="0" width="100%" class="formTbl">
+   <script src="Scripts/SearchSuggest.js"></script>
+       <style>
+
+           .suggest_link 
+	       {
+	       background-color: #FFFFFF;
+	       padding: 2px 6px 2px 6px;
+	       }	
+	       .suggest_link_over
+	       {
+	       background-color: #3366CC;
+	       padding: 2px 6px 2px 6px;	
+	       }	
+	       #search_suggest 
+	       {
+	       position: absolute;
+	       background-color: #FFFFFF;
+	       text-align: left;
+	       border: 1px solid #000000;	
+           overflow:auto;
+       		
+	       }
+
+       </style>
+    
+            <asp:Label runat="server" ID="NoProductMessage" CssClass="control-label" Visible="false" Text="No Stock Available"></asp:Label> 
+   
+   
+            <h4>Current Stock</h4>
+            <hr />
+     <table cellspacing="0" cellpadding="5" border="0" width="100%" class="formTbl">
         <tr>
             <td> <asp:Label runat="server" AssociatedControlID="ProductDept" CssClass="control-label" Visible="true">Product Department</asp:Label></td>
             <td><asp:DropDownList runat="server" ID="ProductDept" CssClass="form-control" Width="29%" Visible="true" AppendDataBoundItems="True" AutoPostBack="True" OnSelectedIndexChanged="ProductDept_SelectedIndexChanged"/></td>
@@ -28,15 +48,19 @@
              </tr>
         <tr>
             <td><asp:Label runat="server" AssociatedControlID="SelectProduct" CssClass="control-label">Select Product</asp:Label></td>
-            <td> <asp:TextBox runat="server" ID="SelectProduct" CssClass="form-control product"/>
-                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click" Text="SearchProduct" Height="35px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
+            <td> 
+                <input type="text" id="txtSearch" runat="server" name="txtSearch"   onkeyup="searchSuggest(event);" autocomplete="off"  /> 
+                 <div id="search_suggest" style="visibility: hidden;" ></div>
+
+                <asp:TextBox runat="server" ID="SelectProduct" CssClass="form-control product" Visible="false" />
+                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click" Visible="false"  Text="SearchProduct" Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
                 <asp:DropDownList runat="server" ID="ProductList" Visible="false" CssClass="form-control" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="ProductList_SelectedIndexChanged"/></td>
             <td><asp:Label runat="server" AssociatedControlID="ProductType" Visible="true" CssClass=" control-label">Product Type</asp:Label></td>
              <td><asp:DropDownList runat="server" ID="ProductType" Visible="true" OnSelectedIndexChanged="ProductType_SelectedIndexChanged" CssClass="form-control" Width="29%"/></td>
              </tr>
         <tr>
             <td></td>
-            <td colspan="100%"> <asp:Button ID="btnSearch" runat="server" OnClick="btnSearch_Click" Enabled="true" Text="SEARCH" CssClass="btn btn-default"/>
+            <td colspan="100%"> <asp:Button ID="btnSearch" runat="server" OnClick="btnSearch_Click" Enabled="true" Text="SEARCH" CssClass="btn btn-primary"/>
                 <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Enabled="true" Text="REFRESH" CssClass="btn btn-default"/></td>
         </tr>
         </table>
@@ -54,7 +78,7 @@
                     </asp:TemplateField>
                      <asp:TemplateField Visible="true" HeaderText="Product Description" HeaderStyle-Width="330px">
                         <ItemTemplate>
-                            <asp:Label ID="ProductName" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("prodDesc") %>' Width="330px"></asp:Label>
+                            <asp:Label ID="ProductName" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("prodDesc")==DBNull.Value?"":Eval("prodDesc") %>' Width="330px"></asp:Label>
                         </ItemTemplate>
                          <ItemStyle  Width="330px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
@@ -109,6 +133,7 @@
                      <%-- org command argument CommandArgument='<%# Eval("BarCode") %>'--%>
                      
                  </Columns>
+            <PagerStyle CssClass = "GridPager" />
              </asp:GridView>
        
         <div class="form-group">

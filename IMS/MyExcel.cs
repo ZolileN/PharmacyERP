@@ -119,7 +119,7 @@ namespace IMS
                     MySheet.Cells[lastRow, 3] = dtTIme.ToShortDateString();//Expiry Date
                     MySheet.Cells[lastRow, 4] = item["BatchNumber"].ToString();//batch No
                     MySheet.Cells[lastRow, 5] = item["SendQuantity"].ToString();//Qty
-                    MySheet.Cells[lastRow, 6] = item["SalePrice"].ToString();//Net price
+                    MySheet.Cells[lastRow, 6] = item["CostPrice"].ToString();//Net price
                     MySheet.Cells[lastRow, 7] = item["DiscountPercentage"].ToString();//Discount
                     MySheet.Cells[lastRow, 8] = item["Amount"].ToString();//Amount
                     lastRow += 1;

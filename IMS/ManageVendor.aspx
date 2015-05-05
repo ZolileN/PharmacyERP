@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ManageVendor.aspx.cs" Inherits="IMS.ManageVendor" %>
+﻿<%@ Page Title="    " Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ManageVendor.aspx.cs" Inherits="IMS.ManageVendor" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
      <script  type="text/javascript">
 
@@ -19,21 +19,32 @@
     <h4>Manage Vendors</h4>
      
     <hr />
-    <div class="form-group">
-        <asp:Label runat="server" AssociatedControlID="StockAt" CssClass="col-md-2 control-label">Search by Name </asp:Label>
-            <div class="col-md-10">
+    
+        <table cellspacing="3" cellpadding="3">
+            <tr>
+                <td>
+                     <asp:Label runat="server" AssociatedControlID="StockAt" CssClass="control-label">Search by Name </asp:Label>
+                </td>
+
+            <td>
                 <asp:TextBox runat="server" ID="SelectProduct" CssClass="form-control product" OnTextChanged="SelectProduct_TextChanged"/>
-                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click" Text="SearchProduct" Height="35px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
-                <br />
+                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click" Text="SearchProduct" Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
+                
+            
                 <asp:DropDownList runat="server" ID="StockAt" CssClass="form-control" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="StockAt_SelectedIndexChanged" Visible="false"/>
-                <br/>
-            </div>
-    </div>
+            </td>
+                </tr>
+          
+  
+    <tr>
+        <td></td>
+        <td> <asp:Button ID="btnAddVendor" runat="server" OnClick="btnAddVendor_Click" Text="ADD Vendor" CssClass="btn  btn-primary" />
+    <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Text="Refresh List" CssClass="btn btn-default" /></td>
+    </tr>
+   </table>
+
     <br />
-    <asp:Button ID="btnAddVendor" runat="server" OnClick="btnAddVendor_Click" Text="ADD Vendor" CssClass="btn btn-default" />
-    <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Text="Refresh List" CssClass="btn btn-default" />
-    <br/>
-    <br />
+    
     <asp:GridView ID="gdvVendor" runat="server"  Width="100%" CssClass="table table-striped table-bordered table-condensed" AllowPaging="True" PageSize="10"
                 AutoGenerateColumns="false" OnRowDataBound="gdvVendor_RowDataBound" OnPageIndexChanging="gdvVendor_PageIndexChanging"  ShowFooter="true"
                 OnRowCommand="gdvVendor_RowCommand" OnRowDeleting="gdvVendor_RowDeleting" OnRowEditing="gdvVendor_RowEditing" >
@@ -79,21 +90,24 @@
                     </asp:TemplateField>
                   <asp:TemplateField HeaderText="Action">
                         <ItemTemplate>
-
-
-                            <asp:Label ID="Label1"  CssClass="btn btn-default" runat="server" Text=''> 
-
+                            <asp:LinkButton CssClass="btn btn-default edit-btn" ID="btnEdit" Text="Edit" runat="server" CommandName="Edit" CommandArgument='<%# Container.DisplayIndex%>'/>
+                            <%--<asp:Label ID="Label1"  CssClass="btn btn-default edit-btn" runat="server" Text=''> 
                                  <a href="AddEditVendor.aspx?Id=<%# Eval("SuppID")%>">
-                                     Edit</asp:Label>
-
+                                     Edit
+                            </asp:Label>--%>
                             <asp:Label ID="Label2" runat="server" Text=''>
                               <%--  CommandName="del" CommandArgument='<%# Eval("SuppID")%>' --%>
-                                <asp:LinkButton ID="lnkDelete"  CssClass="btn btn-default"  runat="server" CommandName="Delete">
-                             Delete </asp:LinkButton></asp:Label>
-
+                                <span onclick="return confirm('Are you sure you want to delete this record?')">
+                                    <asp:LinkButton ID="lnkDelete"  CssClass="btn btn-default del-btn"  runat="server" CommandName="Delete">
+                                    Delete
+                                    </asp:LinkButton>
+                                </span>
+                             </asp:Label>
+                             
                         </ItemTemplate>
-                    </asp:TemplateField>
+                     </asp:TemplateField>
                 </Columns>
+            <PagerStyle CssClass = "GridPager" />
     </asp:GridView>
      <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnGoBack_Click"/> 
 </asp:Content>

@@ -41,13 +41,15 @@ namespace IMS
                     #region with parameter approach
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_SysID", id);
-                    int depID,catID,subCatID,prodIDOrg,prodType,prodID = -1;
+                    string prodID;
+                    int depID,catID,subCatID,prodIDOrg,prodType = -1;
                     int.TryParse(Session["Search_DepID"].ToString(),out depID);
                     int.TryParse(Session["Search_CatID"].ToString(), out catID);
                     int.TryParse(Session["Search_SubCatID"].ToString(), out subCatID);
                     int.TryParse(Session["Search_ProdIdOrg"].ToString(), out prodIDOrg);
                     int.TryParse(Session["Search_ProdType"].ToString(), out prodType);
-                    int.TryParse(Session["Search_ProdId"].ToString(), out prodID);
+                   // int.TryParse(Session["Search_ProdId"].ToString(), out prodID);
+                    prodID = Session["Search_ProdId"].ToString();
                    
                     if (depID <= 0)
                     {
@@ -95,7 +97,7 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_ProdType", prodType);
                     }
 
-                    if (prodID <= 0)
+                    if (prodID == null)
                     {
                         command.Parameters.AddWithValue("@p_ProdID", DBNull.Value);
                     }

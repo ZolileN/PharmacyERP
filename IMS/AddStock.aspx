@@ -6,6 +6,31 @@
      <script src="Scripts/jquery.js"  type="text/javascript"></script>
           <script src="Scripts/jquery-ui.js" type="text/javascript"></script>
           <link rel="stylesheet" href="Style/jquery-ui.css" />
+
+     <script src="Scripts/SearchSuggest.js"></script>
+       <style>
+
+           .suggest_link 
+	       {
+	       background-color: #FFFFFF;
+	       padding: 2px 6px 2px 6px;
+	       }	
+	       .suggest_link_over
+	       {
+	       background-color: #3366CC;
+	       padding: 2px 6px 2px 6px;	
+	       }	
+	       #search_suggest 
+	       {
+	       position: absolute;
+	       background-color: #FFFFFF;
+	       text-align: left;
+	       border: 1px solid #000000;	
+           overflow:auto;
+       		
+	       }
+
+       </style>
           <script>
               $(function () { $("#<%= DateTextBox.ClientID %>").datepicker(); });
 
@@ -23,8 +48,13 @@
     <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="SelectProduct" CssClass="col-md-2 control-label">Select Product</asp:Label>
             <div class="col-md-10">
-                <asp:TextBox runat="server" ID="SelectProduct" CssClass="form-control product"/>
-                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click"  Height="35px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
+                 <input type="text" id="txtSearch" runat="server" name="txtSearch"   onkeyup="searchSuggest(event);" autocomplete="off"  /> 
+                 <div id="search_suggest" style="visibility: hidden;" ></div>
+
+                <asp:TextBox runat="server" ID="SelectProduct" CssClass="form-control product" Visible="false" />
+               
+
+                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click"  Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
                 <br />
                 <asp:DropDownList runat="server" ID="ProductList" Visible="false" CssClass="form-control" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="ProductList_SelectedIndexChanged"/>
                 <br/>
@@ -64,9 +94,9 @@
             </tr>
             <tr>
                 <td></td>
-                <td colspan="100%"><asp:Button ID="btnCreateProduct" runat="server" OnClick="btnCreateProduct_Click" Enabled="false" Text="ADD" CssClass="btn btn-default" ValidationGroup="ExSave"/>
+                <td colspan="100%"><asp:Button ID="btnCreateProduct" runat="server" OnClick="btnCreateProduct_Click" Enabled="false" Text="ADD" CssClass="btn btn-primary" ValidationGroup="ExSave"/>
                 <asp:Button ID="btnCancelProduct" runat="server" OnClick="btnCancelProduct_Click" Text="CANCEL" CssClass="btn btn-default" />
-                <asp:Button ID="btnBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnBack_Click"/></td>
+                <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnBack_Click"/></td>
             </tr>
             </table>
     </div>

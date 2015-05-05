@@ -203,6 +203,8 @@
     <Content Include="Images\body-bg-w.jpg" />
     <Content Include="Images\body-bg.jpg" />
     <Content Include="Images\btm-bg.gif" />
+    <Content Include="Images\cancel.png" />
+    <Content Include="Images\close-ico.png" />
     <Content Include="Images\close-icon.png" />
     <Content Include="Images\del-icon.png" />
     <Content Include="Images\delete-icon.png" />
@@ -212,7 +214,10 @@
     <Content Include="Images\login-bg.png" />
     <Content Include="Images\logo1.png" />
     <Content Include="Images\Mail.png" />
+    <Content Include="Images\search-ico.png" />
     <Content Include="Images\search-icon-512.png" />
+    <Content Include="Images\update.png" />
+    <Content Include="Images\view.png" />
     <Content Include="ImportingData.aspx" />
     <Content Include="IMSLogin.aspx" />
     <Content Include="Inventory_Print.aspx" />
@@ -243,10 +248,36 @@
     <Content Include="RegisterUsers.aspx" />
     <Content Include="ReportFormat_simple.aspx" />
     <Content Include="Reports.aspx" />
+    <Content Include="Result.aspx" />
     <Content Include="SalemanMangment.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\chosen.jquery.js" />
+    <Content Include="Scripts\fancybox\blank.gif" />
+    <Content Include="Scripts\fancybox\fancybox-x.png" />
+    <Content Include="Scripts\fancybox\fancybox-y.png" />
+    <Content Include="Scripts\fancybox\fancybox.png" />
+    <Content Include="Scripts\fancybox\fancy_close.png" />
+    <Content Include="Scripts\fancybox\fancy_loading.png" />
+    <Content Include="Scripts\fancybox\fancy_nav_left.png" />
+    <Content Include="Scripts\fancybox\fancy_nav_right.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_e.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_n.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_ne.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_nw.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_s.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_se.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_sw.png" />
+    <Content Include="Scripts\fancybox\fancy_shadow_w.png" />
+    <Content Include="Scripts\fancybox\fancy_title_left.png" />
+    <Content Include="Scripts\fancybox\fancy_title_main.png" />
+    <Content Include="Scripts\fancybox\fancy_title_over.png" />
+    <Content Include="Scripts\fancybox\fancy_title_right.png" />
+    <Content Include="Scripts\fancybox\jquery.easing-1.3.pack.js" />
+    <Content Include="Scripts\fancybox\jquery.fancybox-1.3.4.css" />
+    <Content Include="Scripts\fancybox\jquery.fancybox-1.3.4.js" />
+    <Content Include="Scripts\fancybox\jquery.fancybox-1.3.4.pack.js" />
+    <Content Include="Scripts\fancybox\jquery.mousewheel-3.0.4.pack.js" />
     <Content Include="Scripts\holder.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery-ui.min.js" />
@@ -257,6 +288,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\SearchSuggest.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
     <Content Include="Scripts\WebForms\Focus.js" />
     <Content Include="Scripts\WebForms\GridView.js" />
@@ -293,6 +325,10 @@
     <Content Include="StoreTransfers_StoreRequestsResponse.aspx" />
     <Content Include="Style\chosen.css" />
     <Content Include="Style\demo.css" />
+    <Content Include="Style\font-awesome\css\font-awesome-ie7.css" />
+    <Content Include="Style\font-awesome\css\font-awesome-ie7.min.css" />
+    <Content Include="Style\font-awesome\css\font-awesome.css" />
+    <Content Include="Style\font-awesome\css\font-awesome.min.css" />
     <Content Include="Style\fonts.css" />
     <Content Include="Style\jquery-ui.css" />
     <Content Include="Style\jquery-ui.min.css" />
@@ -303,6 +339,8 @@
     <Content Include="UserControl\SuperMasterProducts.ascx" />
     <Content Include="UserControl\uc_printBarcode.ascx" />
     <Content Include="UserControl\uc_Select_System.ascx" />
+    <Content Include="UserControl\VendorsPopupGrid.ascx" />
+    <Content Include="VendorsPopup.aspx" />
     <Content Include="ViewInventory.aspx" />
     <Content Include="ViewPackingList.aspx" />
     <Content Include="ViewPackingList_SO.aspx" />
@@ -338,6 +376,29 @@
     <Content Include="Style\fonts\cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff" />
     <Content Include="Style\fonts\MTP_ySUJH_bn48VBG8sNSnhCUOGz7vYGh680lGh-uXM.woff" />
     <Content Include="Style\fonts\s-BiyweUPV0v-yRb-cjciBsxEYwM7FgeyaSgU71cLG0.woff" />
+    <Content Include="Style\font-awesome\font\fontawesome-webfont.eot" />
+    <Content Include="Style\font-awesome\font\fontawesome-webfont.svg" />
+    <Content Include="Style\font-awesome\font\fontawesome-webfont.ttf" />
+    <Content Include="Style\font-awesome\font\fontawesome-webfont.woff" />
+    <Content Include="Style\font-awesome\font\FontAwesome.otf" />
+    <Content Include="Style\font-awesome\less\bootstrap.less" />
+    <Content Include="Style\font-awesome\less\core.less" />
+    <Content Include="Style\font-awesome\less\extras.less" />
+    <Content Include="Style\font-awesome\less\font-awesome-ie7.less" />
+    <Content Include="Style\font-awesome\less\font-awesome.less" />
+    <Content Include="Style\font-awesome\less\icons.less" />
+    <Content Include="Style\font-awesome\less\mixins.less" />
+    <Content Include="Style\font-awesome\less\path.less" />
+    <Content Include="Style\font-awesome\less\variables.less" />
+    <Content Include="Style\font-awesome\scss\font-awesome-ie7.scss" />
+    <Content Include="Style\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Style\font-awesome\scss\_bootstrap.scss" />
+    <Content Include="Style\font-awesome\scss\_core.scss" />
+    <Content Include="Style\font-awesome\scss\_extras.scss" />
+    <Content Include="Style\font-awesome\scss\_icons.scss" />
+    <Content Include="Style\font-awesome\scss\_mixins.scss" />
+    <Content Include="Style\font-awesome\scss\_path.scss" />
+    <Content Include="Style\font-awesome\scss\_variables.scss" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -647,6 +708,13 @@
     <Compile Include="Reports.aspx.designer.cs">
       <DependentUpon>Reports.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Result.aspx.cs">
+      <DependentUpon>Result.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Result.aspx.designer.cs">
+      <DependentUpon>Result.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SalemanMangment.aspx.cs">
       <DependentUpon>SalemanMangment.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -759,6 +827,20 @@
     </Compile>
     <Compile Include="UserControl\uc_Select_System.ascx.designer.cs">
       <DependentUpon>uc_Select_System.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\VendorsPopupGrid.ascx.cs">
+      <DependentUpon>VendorsPopupGrid.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControl\VendorsPopupGrid.ascx.designer.cs">
+      <DependentUpon>VendorsPopupGrid.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="VendorsPopup.aspx.cs">
+      <DependentUpon>VendorsPopup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VendorsPopup.aspx.designer.cs">
+      <DependentUpon>VendorsPopup.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewInventory.aspx.cs">
       <DependentUpon>ViewInventory.aspx</DependentUpon>

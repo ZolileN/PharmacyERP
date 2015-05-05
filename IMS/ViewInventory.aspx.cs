@@ -144,15 +144,31 @@ namespace IMS
                 int id;
                 if (int.TryParse(Session["UserSys"].ToString(), out id))
                 {
-                    String Query = "Select tblStock_Detail.ProductID AS ProductID ,tbl_ProductMaster.Product_Name AS ProductName, tblStock_Detail.BarCode AS BarCode, tblStock_Detail.Quantity AS Qauntity, tblStock_Detail.ExpiryDate As Expiry,tbl_ProductMaster.Product_Name AS ProductName,"+
-                 " tbl_ProductMaster.itemPackSize as PackageSize, tbl_ProductMaster.itemStrength as strength, tbl_ProductMaster.itemForm as dosageForm, FORMAT(tblStock_Detail.UCostPrice, 'N2') AS CostPrice, FORMAT(tblStock_Detail.USalePrice, 'N2') AS SalePrice, tbl_System.SystemName AS Location" +
-                 " From  tblStock_Detail INNER JOIN tbl_ProductMaster ON tblStock_Detail.ProductID = tbl_ProductMaster.ProductID INNER JOIN tbl_System ON tblStock_Detail.StoredAt = tbl_System.SystemID AND tblStock_Detail.StoredAt = '" + id.ToString() + "'";
+                    #region original query
+                    //   String Query = "Select tblStock_Detail.ProductID AS ProductID ,tbl_ProductMaster.Product_Name AS ProductName, tblStock_Detail.BarCode AS BarCode, tblStock_Detail.Quantity AS Qauntity, tblStock_Detail.ExpiryDate As Expiry,tbl_ProductMaster.Product_Name AS ProductName,"+
+                    //" tbl_ProductMaster.itemPackSize as PackageSize, tbl_ProductMaster.itemStrength as strength, tbl_ProductMaster.itemForm as dosageForm, FORMAT(tblStock_Detail.UCostPrice, 'N2') AS CostPrice, FORMAT(tblStock_Detail.USalePrice, 'N2') AS SalePrice, tbl_System.SystemName AS Location" +
+                    //" From  tblStock_Detail INNER JOIN tbl_ProductMaster ON tblStock_Detail.ProductID = tbl_ProductMaster.ProductID INNER JOIN tbl_System ON tblStock_Detail.StoredAt = tbl_System.SystemID AND tblStock_Detail.StoredAt = '" + id.ToString() + "'";
 
-                    connection.Open();
-                    SqlCommand command = new SqlCommand(Query, connection);
+                    #endregion
+
+
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
+                    SqlCommand command = new SqlCommand("sp_ViewInventory_byFilters", connection);
+                   
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@p_SysID", id);
+                    command.Parameters.AddWithValue("@p_DeptID", DBNull.Value);
+                    command.Parameters.AddWithValue("@p_CatID", DBNull.Value);
+                    command.Parameters.AddWithValue("@p_SubCatID", DBNull.Value);
+                    command.Parameters.AddWithValue("@p_productOrderType", DBNull.Value);
+                    command.Parameters.AddWithValue("@p_ProdType", DBNull.Value);
+                    command.Parameters.AddWithValue("@p_ProdID", DBNull.Value);
                     SqlDataAdapter SA = new SqlDataAdapter(command);
                     SA.Fill(ds);
-                    if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count >0)
+                    if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                     {
                         StockDisplayGrid.DataSource = ds;
                         StockDisplayGrid.DataBind();
@@ -170,6 +186,7 @@ namespace IMS
                         btnRefresh.Enabled = false;
                     }
                 }
+
 
             }
             catch (Exception ex)
@@ -245,14 +262,23 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_ProdType", ProductType.SelectedItem.ToString());
                     }
 
-                    if (ProductList.SelectedIndex <= 0)
+                    if (string.IsNullOrEmpty(txtSearch.Value))
                     {
                         command.Parameters.AddWithValue("@p_ProdID", DBNull.Value);
                     }
                     else
                     {
-                        command.Parameters.AddWithValue("@p_ProdID", Convert.ToInt32(ProductList.SelectedValue.ToString()));
+                        command.Parameters.AddWithValue("@p_ProdID", txtSearch.Value);
                     }
+
+                    //if (ProductList.SelectedIndex <= 0)
+                    //{
+                    //    command.Parameters.AddWithValue("@p_ProdID", DBNull.Value);
+                    //}
+                    //else
+                    //{
+                    //    command.Parameters.AddWithValue("@p_ProdID", Convert.ToInt32(ProductList.SelectedValue.ToString()));
+                    //}
                     #endregion
 
                     SqlDataAdapter SA = new SqlDataAdapter(command);
@@ -424,6 +450,11 @@ namespace IMS
 
         protected void btnRefresh_Click(object sender, EventArgs e)
         {
+            txtSearch.Value = "";
+            ddlProductOrderType.SelectedIndex = -1;
+            ProductSubCat.SelectedIndex = -1;
+            ProductCat.SelectedIndex = -1;
+            ProductDept.SelectedIndex = -1;
             BindGridbyFilters();
         }
 
@@ -536,18 +567,19 @@ namespace IMS
         {
 
             #region Setting  parameters
-                Session["Search_DepID"] = ProductDept.SelectedValue.ToString() ;
-                Session["Search_CatID"] =ProductCat.SelectedValue.ToString();
-                Session["Search_SubCatID"] = ProductSubCat.SelectedValue.ToString();
-                Session["Search_ProdIdOrg"] = ddlProductOrderType.SelectedValue.ToString();
-                Session["Search_ProdType"] = ProductType.SelectedItem.ToString();
-                Session["Search_ProdId"] = ProductList.SelectedValue.ToString();
-               
-           
+            Session["Search_DepID"] = ProductDept.SelectedValue.ToString();
+            Session["Search_CatID"] = ProductCat.SelectedValue.ToString();
+            Session["Search_SubCatID"] = ProductSubCat.SelectedValue.ToString();
+            Session["Search_ProdIdOrg"] = ddlProductOrderType.SelectedValue.ToString();
+            Session["Search_ProdType"] = ProductType.SelectedItem.ToString();
+           // Session["Search_ProdId"] = ProductList.SelectedValue.ToString();
+            Session["Search_ProdId"] = txtSearch.Value.ToString();
+
+
             #endregion
 
             Response.Redirect("Inventory_Print.aspx");
-          
+
 
         }
     }

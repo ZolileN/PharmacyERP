@@ -21,36 +21,8 @@ namespace IMS
         {
             if (!IsPostBack)
             {
-                #region Getting Vendors
-                //try
-                //{
-                //    connection.Open();
-                //    DataSet ds = new DataSet();
-                //    SqlCommand command = new SqlCommand("Sp_GetVendor", connection);
-                //    command.CommandType = CommandType.StoredProcedure;
-                //    SqlDataAdapter dA = new SqlDataAdapter(command);
-                //    dA.Fill(ds);
-
-                //    StockAt.DataSource = ds.Tables[0];
-                //    StockAt.DataTextField = "SupName";
-                //    StockAt.DataValueField = "SuppID";
-                //    StockAt.DataBind();
-                //    if (StockAt != null)
-                //    {
-                //        StockAt.Items.Insert(0, "Select Vendor");
-                //        StockAt.SelectedIndex = 0;
-                //    }
-                //}
-                //catch (Exception ex)
-                //{
-
-                //}
-                //finally
-                //{
-                //    connection.Close();
-                //}
-                #endregion
-
+                Session["ViewSalesOrders"] = false;
+                
                 #region Populating Order Status DropDown
                 OrderStatus.Items.Add("Pending");
                 OrderStatus.Items.Add("Partial");
@@ -73,6 +45,14 @@ namespace IMS
                     LoadData(StockAt.SelectedValue);
                 }
 
+            }
+        }
+
+        protected void Page_UnLoad(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                Session["ViewSalesOrders"] = true;
             }
         }
         public void LoadData(String VendorID)

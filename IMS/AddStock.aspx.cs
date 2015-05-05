@@ -76,6 +76,8 @@ namespace IMS
                     connection.Close();
                 }
                 #endregion
+                PopulateDropDown(null);
+;
             }
 
             //if( Session["SelectProduct"].Equals(null))
@@ -286,11 +288,42 @@ namespace IMS
 
         protected void btnSearchProduct_Click(object sender, ImageClickEventArgs e)
         {
-            if (SelectProduct.Text.Length >= 3)
+            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
+
+
+            #region Getting Product Details
+            try
             {
-                PopulateDropDown(SelectProduct.Text);
-                ProductList.Visible = true;
+                DataSet dsProducts = (DataSet)Session["dsProducts"];
+
+                DataView dv = new DataView();
+                dv = dsProducts.Tables[0].DefaultView;
+
+                //dv = ProductSet.Tables[0].DefaultView;
+                dv.RowFilter = "ProductID = '" + txtSearch.Value.ToString() + "'";
+                dt = dv.ToTable();
+
+                BarCodeSerial.Text = dt.Rows[0]["Product_Id_Org"].ToString();
+                ProductName.Text = dt.Rows[0]["Product_Name"].ToString();
+                ProductCost.Text = dt.Rows[0]["UnitCost"].ToString();
+                ProductSale.Text = dt.Rows[0]["SP"].ToString();
+                btnCreateProduct.Enabled = true;
             }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                connection.Close();
+            }
+            #endregion
+             
+            //if (SelectProduct.Text.Length >= 3)
+            //{
+            //    PopulateDropDown(SelectProduct.Text);
+            //    ProductList.Visible = true;
+            //}
         }
 
         public void PopulateDropDown(String Text)

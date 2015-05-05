@@ -16,7 +16,7 @@ namespace IMS
                 
                 if (Session["isHeadOffice"].ToString().ToLower().Equals("true"))
                 {
-                    ButtonBack.Visible = true;
+                  //  ButtonBack.Visible = true;
                 }
             }
         }

@@ -58,33 +58,6 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.Label PO_Date;
         
         /// <summary>
-        /// PO_FromName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PO_FromName;
-        
-        /// <summary>
-        /// PO_FromAddress control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PO_FromAddress;
-        
-        /// <summary>
-        /// PO_FromPhone control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PO_FromPhone;
-        
-        /// <summary>
         /// PO_ToName control.
         /// </summary>
         /// <remarks>
@@ -119,6 +92,33 @@ namespace IMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label PO_ToEmail;
+        
+        /// <summary>
+        /// PO_FromName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label PO_FromName;
+        
+        /// <summary>
+        /// PO_FromAddress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label PO_FromAddress;
+        
+        /// <summary>
+        /// PO_FromPhone control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label PO_FromPhone;
         
         /// <summary>
         /// StockDisplayGrid control.

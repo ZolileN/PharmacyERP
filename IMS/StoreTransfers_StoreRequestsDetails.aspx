@@ -47,6 +47,7 @@
                          <ItemStyle  Width="110px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
                  </Columns>
+                <PagerStyle CssClass = "GridPager" />
              </asp:GridView>
              <br />
              <asp:Button ID="btnResponse" runat="server" OnClick="btnResponse_Click" Text="RESPOND" CssClass="btn btn-large" Visible="true"/>

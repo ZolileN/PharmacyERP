@@ -8,8 +8,8 @@
           </script>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-      <h2> View Purchase Order(s)</h2> 
-    <br />
+      <h4> View Purchase Order(s)</h4> 
+    <hr />
      <script src="Scripts/jquery.js"  type="text/javascript"></script>
           <script src="Scripts/jquery-ui.js" type="text/javascript"></script>
           <link rel="stylesheet" href="Style/jquery-ui.css" />
@@ -135,10 +135,10 @@
                             </span>
                               </ItemTemplate>
                           <EditItemTemplate>
+                            <asp:LinkButton ID="btnUpdate" Text="Re-Generate Order" CssClass="btn btn-default btn-xs"  runat="server" CommandName="ReGen"></asp:LinkButton>
+                            <asp:LinkButton ID="btnView" Text="Update Accepted Order" CssClass="btn btn-default btn-xs"  runat="server" CommandName="UpdateRec"  Visible='<%# IsStatusComplete((String) Eval("Status")) %>' />
+                            <asp:LinkButton ID="btnCancel" Text="Cancel" CssClass="btn btn-default btn-xs"  runat="server" CommandName="Cancel" />
 
-                            <asp:LinkButton ID="btnUpdate" Text="Re-Generate Order" CssClass="btn btn-default"  runat="server" CommandName="ReGen" />
-                            <asp:LinkButton ID="btnView" Text="Update Accepted Order" CssClass="btn btn-default"  runat="server" CommandName="UpdateRec" />
-                            <asp:LinkButton ID="btnCancel" Text="Cancel" CssClass="btn btn-default"  runat="server" CommandName="Cancel" />
                         </EditItemTemplate>
                          <ItemStyle  Width="150px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
@@ -177,6 +177,7 @@
                     
                      
                  </Columns>
+                <PagerStyle CssClass = "GridPager" />
              </asp:GridView>
     </div>
     <div class="form-group">

@@ -13,13 +13,31 @@ namespace IMS {
     public partial class OrderPurchaseManual {
         
         /// <summary>
-        /// txtVendor control.
+        /// hdnVendorName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtVendor;
+        protected global::System.Web.UI.WebControls.HiddenField hdnVendorName;
+        
+        /// <summary>
+        /// hdnVendorId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnVendorId;
+        
+        /// <summary>
+        /// CmbVendors control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ComboBox CmbVendors;
         
         /// <summary>
         /// btnSearchVendor control.
@@ -31,6 +49,42 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.ImageButton btnSearchVendor;
         
         /// <summary>
+        /// VendorsDataSource control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource VendorsDataSource;
+        
+        /// <summary>
+        /// mpeCongratsMessageDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ModalPopupExtender mpeCongratsMessageDiv;
+        
+        /// <summary>
+        /// VendorsPopupGrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::IMS.UserControl.VendorsPopupGrid VendorsPopupGrid;
+        
+        /// <summary>
+        /// txtVendor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtVendor;
+        
+        /// <summary>
         /// RequestTo control.
         /// </summary>
         /// <remarks>
@@ -40,22 +94,13 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.DropDownList RequestTo;
         
         /// <summary>
-        /// txtProduct control.
+        /// txtSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtProduct;
-        
-        /// <summary>
-        /// btnSearchProduct control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton btnSearchProduct;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtSearch;
         
         /// <summary>
         /// SelectProduct control.
@@ -65,6 +110,15 @@ namespace IMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList SelectProduct;
+        
+        /// <summary>
+        /// txtProduct control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtProduct;
         
         /// <summary>
         /// SelectQuantity control.

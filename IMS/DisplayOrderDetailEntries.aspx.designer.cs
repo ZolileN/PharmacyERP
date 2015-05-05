@@ -40,15 +40,6 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.Label OrdQuantity;
         
         /// <summary>
-        /// OrderedbonusQuan control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label OrderedbonusQuan;
-        
-        /// <summary>
         /// RecQuantity control.
         /// </summary>
         /// <remarks>
@@ -58,13 +49,13 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.Label RecQuantity;
         
         /// <summary>
-        /// RemQuantity control.
+        /// OrderedbonusQuan control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label RemQuantity;
+        protected global::System.Web.UI.WebControls.Label OrderedbonusQuan;
         
         /// <summary>
         /// bonusQuanOrg control.
@@ -76,13 +67,22 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.Label bonusQuanOrg;
         
         /// <summary>
-        /// defQuantity control.
+        /// RemQuantity control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label defQuantity;
+        protected global::System.Web.UI.WebControls.Label RemQuantity;
+        
+        /// <summary>
+        /// retQuantity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label retQuantity;
         
         /// <summary>
         /// expQuantity control.
@@ -94,13 +94,13 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.Label expQuantity;
         
         /// <summary>
-        /// retQuantity control.
+        /// defQuantity control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label retQuantity;
+        protected global::System.Web.UI.WebControls.Label defQuantity;
         
         /// <summary>
         /// lblPO control.

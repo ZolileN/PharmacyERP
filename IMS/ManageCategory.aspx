@@ -1,7 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ManageCategory.aspx.cs" Inherits="IMS.ManageCategory" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-     <br />
-      <br />
+    
     <h4>Manage Category</h4>
      
         <hr />
@@ -57,23 +56,24 @@
 
                     <asp:TemplateField HeaderText="Edit">
                         <ItemTemplate>
-                            <asp:LinkButton ID="btnEdit" CssClass="btn btn-default"  Text="Edit" runat="server" CommandName="Edit"></asp:LinkButton>
+                            <asp:LinkButton ID="btnEdit" CssClass="btn btn-default edit-btn"  Text="Edit" runat="server" CommandName="Edit"></asp:LinkButton>
                             <span onclick="return confirm('Are you sure you want to delete this record?')">
-                                <asp:LinkButton ID="btnDelete" CssClass="btn btn-default"  Text="Delete" runat="server" CommandName="Delete"></asp:LinkButton>
+                                <asp:LinkButton ID="btnDelete" CssClass="btn btn-default del-btn"  Text="Delete" runat="server" CommandName="Delete"></asp:LinkButton>
                             </span>
                         </ItemTemplate>
 
                         <EditItemTemplate>
 
-                            <asp:LinkButton ID="btnUpdate" CssClass="btn btn-default"  Text="Update" runat="server" CommandName="UpdateCategory"></asp:LinkButton>
-                            <asp:LinkButton ID="btnCancel" CssClass="btn btn-default"  Text="Cancel" runat="server" CommandName="Cancel"></asp:LinkButton>
+                            <asp:LinkButton ID="btnUpdate" CssClass="btn btn-primary btn-xs"  Text="Update" runat="server" CommandName="UpdateCategory"></asp:LinkButton>
+                            <asp:LinkButton ID="btnCancel" CssClass="btn btn-default btn-xs"  Text="Cancel" runat="server" CommandName="Cancel"></asp:LinkButton>
                         </EditItemTemplate>
 
                         <FooterTemplate>
-                            <asp:Button ID="btnAddRecord" CssClass="btn btn-default"  runat="server" Text="Add" CommandName="Add"  OnClientClick="return ValidateForm();" ></asp:Button>
+                            <asp:Button ID="btnAddRecord" CssClass="btn btn-default btn-sm"  runat="server" Text="Add" CommandName="Add"  OnClientClick="return ValidateForm();" ></asp:Button>
                         </FooterTemplate>
                     </asp:TemplateField>
                 </Columns>
+                <PagerStyle CssClass = "GridPager" />
             </asp:GridView>
     <asp:Button ID="btnBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnBack_Click"/>
 
