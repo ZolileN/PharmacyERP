@@ -4,9 +4,19 @@
           
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-          
-      <h4>Accept PO </h4> 
-    <hr />
+     <table width="100%">
+
+        <tbody><tr>
+        	<td> <h4>Accept PO</h4></td>
+            <td align="right">
+            	
+               <asp:Button ID="btnBack" runat="server" OnClick="btnBack_Click" Text="Go Back" CssClass="btn btn-default btn-large" Visible="true" />
+                
+          </td>
+        </tr>
+		<tr><td height="5"></td></tr>
+    </tbody></table>
+     <hr>
     <table>
         <tr>
             <td>
@@ -34,9 +44,9 @@
                              <%--CommandArgument='<%# Container.DisplayIndex  %>'--%>
                         </ItemTemplate>
                         <EditItemTemplate>
-                           <asp:LinkButton ID="btnUpdate" Text="Update" runat="server" CommandName="UpdateStock" />
+                           <asp:LinkButton ID="btnUpdate" Text="Update" runat="server" CommandName="UpdateStock" CssClass="btn btn-primary btn-sm"/>
                             <br />
-                            <asp:LinkButton  ID="btnCancel" Text="Cancel" runat="server" CommandName="Cancel" />
+                            <asp:LinkButton  ID="btnCancel" Text="Cancel" runat="server" CommandName="Cancel" CssClass="btn btn-default btn-sm"/>
                         </EditItemTemplate>
                          
                     </asp:TemplateField>
@@ -238,7 +248,7 @@
              </asp:GridView>
              <br />
             
-             <asp:Button ID="btnBack" runat="server" OnClick="btnBack_Click" Text="BACK" CssClass="btn btn-large" Visible="true" />
+             
     </div>
 
     <div class="form-group">

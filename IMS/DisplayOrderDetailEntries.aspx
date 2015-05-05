@@ -17,8 +17,19 @@
               $(function () { $("#<%= txtExpDate.ClientID %>").datepicker(); });
 
           </script>--%>
-      <h3> Order Detail Entries</h3> 
-    <hr />
+      <table width="100%">
+
+        <tbody><tr>
+        	<td> <h4>Accept PO</h4></td>
+            <td align="right">
+            	
+                <asp:Button ID="btnBack" runat="server" OnClick="btnBack_Click" Text="Go Back" CssClass="btn btn-default btn-large" Visible="true" />
+                
+          </td>
+        </tr>
+		<tr><td height="5"></td></tr>
+    </tbody></table>
+     <hr> 
     <table Width="100%" class="formStriped table-striped">
         <tr>
             <td><b>Order ID</b></td>
@@ -95,12 +106,12 @@
                              <%--CommandArgument='<%# Container.DisplayIndex  %>'--%>
                         </ItemTemplate>
                         <EditItemTemplate>
-                           <asp:LinkButton ID="btnUpdate" Text="Update" runat="server" CommandName="UpdateStock" />
-                            <br />
-                            <asp:LinkButton  ID="btnCancel" Text="Cancel" runat="server" CommandName="Cancel" />
+                           <asp:LinkButton ID="btnUpdate" CssClass="btn btn-primary btn-sm" Text="Update" runat="server" CommandName="UpdateStock" />
+                           
+                            <asp:LinkButton  ID="btnCancel" CssClass="btn btn-default btn-sm" Text="Cancel" runat="server" CommandName="Cancel" />
                         </EditItemTemplate>
                           <FooterTemplate>
-                            <asp:Button ID="btnAddRecord" CssClass="btn btn-default"  runat="server" Text="Add" CommandName="AddRec"></asp:Button>
+                            <asp:Button ID="btnAddRecord" CssClass="btn btn-primary btn-sm"  runat="server" Text="Save" CommandName="AddRec"></asp:Button>
                         </FooterTemplate>
                     </asp:TemplateField>
 
@@ -302,7 +313,7 @@
              </asp:GridView>
              <br />
             
-             <asp:Button ID="btnBack" runat="server" OnClick="btnBack_Click" Text="BACK" CssClass="btn btn-large" Visible="true" />
+            
     </div>
 
     <div class="form-group">

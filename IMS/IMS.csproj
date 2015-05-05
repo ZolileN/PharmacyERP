@@ -211,9 +211,11 @@
     <Content Include="Images\edit-icon.png" />
     <Content Include="Images\Gakuseisean-Ivista-2-Start-Menu-Search %281%29.ico" />
     <Content Include="Images\Gakuseisean-Ivista-2-Start-Menu-Search.ico" />
+    <Content Include="Images\ims-main.png" />
     <Content Include="Images\login-bg.png" />
     <Content Include="Images\logo1.png" />
     <Content Include="Images\Mail.png" />
+    <Content Include="Images\po-img.png" />
     <Content Include="Images\search-ico.png" />
     <Content Include="Images\search-icon-512.png" />
     <Content Include="Images\update.png" />

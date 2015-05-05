@@ -388,7 +388,7 @@ namespace IMS
         {
             Session["OrderNumber"] = null;
             Session["FromViewPlacedOrders"] = "false";
-            Response.Redirect("ManageOrders.aspx");
+            Response.Redirect("WarehouseMain.aspx");
         }
 
         protected void StockDisplayGrid_RowDataBound(object sender, GridViewRowEventArgs e)

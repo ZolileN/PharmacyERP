@@ -3,8 +3,21 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-  <h2> Packing List Generation </h2> 
-    <br />
+<table width="100%">
+
+        <tbody><tr>
+        	<td> <h4>Packing List Generation</h4></td>
+            <td align="right">
+            	
+               		 
+                	
+                 <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnBack_Click"/>
+                
+          </td>
+        </tr>
+		<tr><td height="5"></td></tr>
+    </tbody></table>
+     <hr>
 
     <div class="form-horizontal">
     <div class="form-group">
@@ -61,19 +74,6 @@
                 <PagerStyle CssClass = "GridPager" />
              </asp:GridView>
     </div>
-    <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-               <!-- Back Button if needed-->
-            </div>
-        </div>
-    </div>
-
-    <div class="form-horizontal">
-    <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <asp:Button ID="btnBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnBack_Click"/>
-            </div>
-     </div>
-     </div>
+   <img src="images/po-img.png" width="344" height="344" class="poImg">
 
 </asp:Content>

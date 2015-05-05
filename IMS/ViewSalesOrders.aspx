@@ -8,8 +8,22 @@
           </script>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-      <h4> View Sale Orders</h4> 
-    <hr />
+     
+    <table width="100%">
+
+        <tbody><tr>
+        	<td> <h4>View Sale Orders</h4></td>
+            <td align="right">
+            <asp:Button ID="btnSearch" runat="server" OnClick="btnSearch_Click" Enabled="true" Text="SEARCH" CssClass="btn btn-primary btn-default"/>
+            <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Enabled="true" Text="REFRESH" CssClass="btn btn-info"/>
+            <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnBack_Click"/>    
+            </td>
+        </tr>
+		<tr><td height="5"></td></tr>
+    </tbody>
+
+    </table>
+     <hr>
      <script src="Scripts/jquery.js"  type="text/javascript"></script>
           <script src="Scripts/jquery-ui.js" type="text/javascript"></script>
           <link rel="stylesheet" href="Style/jquery-ui.css" />
@@ -20,7 +34,7 @@
 
        
 
-    <table>
+   <table width="100%" class="formTbl">
 
         <tr>
             <td><asp:Label runat="server" AssociatedControlID="StockAt" CssClass="control-label">Store Name </asp:Label></td>
@@ -50,27 +64,14 @@
                 <asp:DropDownList runat="server" ID="OrderStatus" CssClass="form-control" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="OrderStatus_SelectedIndexChanged"/>
             </td>
         </tr>
-        <tr>
-            <td colspan="100%">&nbsp;</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>
-                <asp:Button ID="btnSearch" runat="server" OnClick="btnSearch_Click" Enabled="true" Text="SEARCH" CssClass="btn btn-primary btn-default"/>
-                <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Enabled="true" Text="REFRESH" CssClass="btn btn-default"/>
-            </td>
-            <td>
-
-            </td>
-            <td></td>
-        </tr>
+       
+       
 
     </table>
 
     
     <br />
-    
-        <asp:GridView ID="StockDisplayGrid" CssClass="table table-striped table-bordered table-condensed"  Visible="true" runat="server" AllowPaging="True" PageSize="10" 
+       <asp:GridView ID="StockDisplayGrid" CssClass="table table-striped table-bordered table-condensed"  Visible="true" runat="server" AllowPaging="True" PageSize="10" 
                 AutoGenerateColumns="false" OnSelectedIndexChanged="StockDisplayGrid_SelectedIndexChanged" OnPageIndexChanging="StockDisplayGrid_PageIndexChanging"   onrowcancelingedit="StockDisplayGrid_RowCancelingEdit" 
                 onrowcommand="StockDisplayGrid_RowCommand" onrowediting="StockDisplayGrid_RowEditing"  OnRowDataBound="StockDisplayGrid_RowDataBound" OnRowDeleting="StockDisplayGrid_RowDeleting">
                  <Columns>
@@ -130,11 +131,5 @@
                     <PagerStyle CssClass = "GridPager" />
              </asp:GridView>
    
-    <div class="form-horizontal">
-    <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <asp:Button ID="btnBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnBack_Click"/>
-            </div>
-     </div>
-     </div>
+    
 </asp:Content>

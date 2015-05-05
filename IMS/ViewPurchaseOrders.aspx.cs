@@ -107,7 +107,7 @@ namespace IMS
 
         protected void btnBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("ManageOrders.aspx");
+            Response.Redirect("WarehouseMain.aspx");
         }
         protected void StockDisplayGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {

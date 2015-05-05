@@ -2,8 +2,20 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <h3>Sale Order Generation - Stock Details</h3>
-    <br />
+    <table width="100%">
+
+        <tbody><tr>
+        	<td> <h4>Sale Order Generation - Stock Details</h4></td>
+            
+          <td align="right">
+            <asp:Button ID="btnAcceptStock" runat="server" OnClick="btnAcceptStock_Click" Text="Accept" CssClass="btn btn-success btn-large" Visible="true"/>
+            <asp:Button ID="btnDeclineStock" runat="server" OnClick="btnDeclineStock_Click" Text="Go Back" CssClass="btn btn-default btn-large" Visible="false" />
+                
+            </td>
+        </tr>
+		<tr><td height="5"></td></tr>
+    </tbody></table>
+    <hr>
     <div class="form-group">
         <asp:Label ID="lblTotalSent" CssClass="col-md-2 control-label" runat="server" Text="Total Sent Quantity: "  Width="180px"></asp:Label>
         <asp:Label ID="lblTotalQuantity" CssClass="col-md-2 control-label" runat="server" Text="---"  Width="50px"></asp:Label>
@@ -25,8 +37,8 @@
                             <asp:Button CssClass="btn btn-default update-btn" ID="btnRefresh" Text="Refresh" runat="server" CommandName="Refresh" CommandArgument='<%# Container.DataItemIndex %>' />
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:LinkButton CssClass="btn btn-default" ID="btnUpdate" Text="Update" runat="server" CommandName="UpdateStock" />
-                            <asp:LinkButton CssClass="btn btn-default" ID="btnCancel" Text="Cancel" runat="server" CommandName="Cancel" />
+                            <asp:LinkButton CssClass="btn btn-primary btn-sm" ID="btnUpdate" Text="Update" runat="server" CommandName="UpdateStock" />
+                            <asp:LinkButton CssClass="btn btn-default btn-sm" ID="btnCancel" Text="Cancel" runat="server" CommandName="Cancel" />
                         </EditItemTemplate>
                          
                          <ItemStyle  Width="120px" HorizontalAlign="Left"/>
@@ -118,9 +130,8 @@
                       
                  </Columns>
              </asp:GridView>
-        <br />
-         <asp:Button ID="btnAcceptStock" runat="server" OnClick="btnAcceptStock_Click" Text="Accept" CssClass="btn btn-large" Visible="true"/>
-         <asp:Button ID="btnDeclineStock" runat="server" OnClick="btnDeclineStock_Click" Text="Cancel" CssClass="btn btn-large" Visible="false" />
+  
+       
       </div>
       </div>
 </asp:Content>
