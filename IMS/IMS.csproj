@@ -214,6 +214,7 @@
     <Content Include="Images\login-bg.png" />
     <Content Include="Images\logo1.png" />
     <Content Include="Images\Mail.png" />
+    <Content Include="Images\po-img.png" />
     <Content Include="Images\search-ico.png" />
     <Content Include="Images\search-icon-512.png" />
     <Content Include="Images\update.png" />
@@ -314,6 +315,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="SelectionStock.aspx" />
+    <Content Include="SelectVendor.aspx" />
     <Content Include="Site.Master" />
     <Content Include="SO_GENERATE.aspx" />
     <Content Include="StoreMain.aspx" />
@@ -334,6 +336,7 @@
     <Content Include="Style\jquery-ui.min.css" />
     <Content Include="Style\jquery.navgoco.css" />
     <Content Include="Style\popup-theme.css" />
+    <Content Include="Style\theme-old.css" />
     <Content Include="Style\theme.css" />
     <Content Include="UserControl\ProductSearch.ascx" />
     <Content Include="UserControl\SuperMasterProducts.ascx" />
@@ -728,6 +731,13 @@
     </Compile>
     <Compile Include="SelectionStock.aspx.designer.cs">
       <DependentUpon>SelectionStock.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SelectVendor.aspx.cs">
+      <DependentUpon>SelectVendor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SelectVendor.aspx.designer.cs">
+      <DependentUpon>SelectVendor.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>

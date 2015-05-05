@@ -132,7 +132,7 @@
                                     <li class="hasChild"><a href="#">Generate Purchase Orders</a>
 
                                         <ul>
-                                            <%--<li><a href="PlaceOrder.aspx">Auto Purchase</a></li>--%>
+                                            <li><a href="SelectVendor.aspx">Select Vendor</a></li>
                                             <li><a href="OrderPurchaseManual.aspx">Manual Purchase</a></li>
                                        </ul>
 
