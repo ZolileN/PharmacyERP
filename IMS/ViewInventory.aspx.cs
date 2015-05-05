@@ -262,23 +262,23 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_ProdType", ProductType.SelectedItem.ToString());
                     }
 
-                    //if (txtSearch.Value == null)
-                    //{
-                    //    command.Parameters.AddWithValue("@p_ProdID", DBNull.Value);
-                    //}
-                    //else
-                    //{
-                    //    command.Parameters.AddWithValue("@p_ProdID", txtSearch.Value);
-                    //}
-
-                    if (ProductList.SelectedIndex <= 0)
+                    if (string.IsNullOrEmpty(txtSearch.Value))
                     {
                         command.Parameters.AddWithValue("@p_ProdID", DBNull.Value);
                     }
                     else
                     {
-                        command.Parameters.AddWithValue("@p_ProdID", Convert.ToInt32(ProductList.SelectedValue.ToString()));
+                        command.Parameters.AddWithValue("@p_ProdID", txtSearch.Value);
                     }
+
+                    //if (ProductList.SelectedIndex <= 0)
+                    //{
+                    //    command.Parameters.AddWithValue("@p_ProdID", DBNull.Value);
+                    //}
+                    //else
+                    //{
+                    //    command.Parameters.AddWithValue("@p_ProdID", Convert.ToInt32(ProductList.SelectedValue.ToString()));
+                    //}
                     #endregion
 
                     SqlDataAdapter SA = new SqlDataAdapter(command);
@@ -450,6 +450,11 @@ namespace IMS
 
         protected void btnRefresh_Click(object sender, EventArgs e)
         {
+            txtSearch.Value = "";
+            ddlProductOrderType.SelectedIndex = -1;
+            ProductSubCat.SelectedIndex = -1;
+            ProductCat.SelectedIndex = -1;
+            ProductDept.SelectedIndex = -1;
             BindGridbyFilters();
         }
 
@@ -562,18 +567,19 @@ namespace IMS
         {
 
             #region Setting  parameters
-                Session["Search_DepID"] = ProductDept.SelectedValue.ToString() ;
-                Session["Search_CatID"] =ProductCat.SelectedValue.ToString();
-                Session["Search_SubCatID"] = ProductSubCat.SelectedValue.ToString();
-                Session["Search_ProdIdOrg"] = ddlProductOrderType.SelectedValue.ToString();
-                Session["Search_ProdType"] = ProductType.SelectedItem.ToString();
-                Session["Search_ProdId"] = ProductList.SelectedValue.ToString();
-               
-           
+            Session["Search_DepID"] = ProductDept.SelectedValue.ToString();
+            Session["Search_CatID"] = ProductCat.SelectedValue.ToString();
+            Session["Search_SubCatID"] = ProductSubCat.SelectedValue.ToString();
+            Session["Search_ProdIdOrg"] = ddlProductOrderType.SelectedValue.ToString();
+            Session["Search_ProdType"] = ProductType.SelectedItem.ToString();
+           // Session["Search_ProdId"] = ProductList.SelectedValue.ToString();
+            Session["Search_ProdId"] = txtSearch.Value.ToString();
+
+
             #endregion
 
             Response.Redirect("Inventory_Print.aspx");
-          
+
 
         }
     }
