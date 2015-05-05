@@ -30,6 +30,8 @@ namespace IMS {
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox uPwd;
         
+        
+        
         /// <summary>
         /// ddlURole control.
         /// </summary>
@@ -110,6 +112,8 @@ namespace IMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnBack;
+        
+       
         
         /// <summary>
         /// btnAssociatedStore control.
