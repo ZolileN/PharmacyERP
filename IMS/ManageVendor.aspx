@@ -83,7 +83,7 @@
                         </ItemTemplate>
                     </asp:TemplateField>
                     <%-- hidden fields --%>
-                    <asp:TemplateField HeaderText="ID" Visible="true">
+                    <asp:TemplateField HeaderText="ID" Visible="false">
                         <ItemTemplate>
                             <asp:Label ID="lblSupID" runat="server" Text='<%# Eval("SuppID") %>'></asp:Label>
                         </ItemTemplate>

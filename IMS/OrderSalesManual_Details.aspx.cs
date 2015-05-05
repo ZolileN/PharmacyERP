@@ -24,6 +24,8 @@ namespace IMS
             if(!IsPostBack)
             {
                 lblTotalQuantity.Text = Session["TotalQuantity"].ToString();
+                lblQuan.Text = Session["SO_Quan"].ToString();
+                lblBonQuan.Text = Session["SO_BQuan"].ToString();
                 //TotalExceeded = false;
                 BindGrid();
                 Session["TotalExceeded"] = false;
@@ -79,24 +81,43 @@ namespace IMS
         }
         protected void btnAcceptStock_Click(object sender, EventArgs e)
         {
-            int TotalQuantity = 0;
+            int TotalQuantity,quan,bQuan;
+            TotalQuantity=quan=bQuan=0;
+            int.TryParse(lblQuan.Text,out quan);
+            int.TryParse(lblBonQuan.Text,out bQuan);
             int.TryParse(lblTotalQuantity.Text, out TotalQuantity);
             ////DataTable filterSet = this.StockDisplayGrid as DataTable;
-            
+            int totVal, totBonVal;
+            totVal = totBonVal = 0;
             //DataView dataView =  StockDisplayGrid.DataSource;
             DataSet ds = Session["dsProducts"] as DataSet;
             int selectedSum = 0;
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
+                int val, bonVal;
+                val = bonVal = 0;
                 //if (Convert.ToInt32(filterSet.Rows[i]["ProductID"]).Equals(ProductNO))
                 //{
                 //    ProductPresent = true;
                 //    break;
                 //}
-                int val,bonVal= 0;
+                
                 int.TryParse(ds.Tables[0].Rows[i]["SentQuantity"].ToString(), out val);
                 int.TryParse(ds.Tables[0].Rows[i]["BonusQuantity"].ToString(), out bonVal);
                 selectedSum += (val+bonVal);
+                totVal += val;
+                totBonVal += bonVal;
+            }
+
+            if (totVal > quan) 
+            {
+                WebMessageBoxUtil.Show("Selected Quantity can not be larger than " + quan.ToString());
+                return;
+            }
+            if (totBonVal > bQuan)
+            {
+                WebMessageBoxUtil.Show("Selected Bonus Quantity can not be larger than " + bQuan.ToString());
+                return;
             }
             if (selectedSum > TotalQuantity) 
             {
@@ -304,11 +325,11 @@ namespace IMS
                     EditButton.Enabled = false;
                     RefreshButton.Enabled = true;
                 }
-                else if(AvailableStock.Equals(0))
-                {
-                    EditButton.Enabled = false;
-                    RefreshButton.Enabled = false;
-                }
+                //else if(AvailableStock.Equals(0))
+                //{
+                //    EditButton.Enabled = false;
+                //    RefreshButton.Enabled = false;
+                //}
                 else
                 {
                     EditButton.Enabled = true;

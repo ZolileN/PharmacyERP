@@ -179,6 +179,7 @@ namespace IMS
                     connection.Open();
                 }
 
+                #region Query stock
                 SqlCommand command = new SqlCommand("Sp_GetStockBy_SaleOrderDetID", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_OrderDetailID", orderDetailID);
@@ -187,9 +188,11 @@ namespace IMS
                 DataSet ds = new DataSet();
                 SqlDataAdapter dA = new SqlDataAdapter(command);
                 dA.Fill(ds);
-                stockDet = ds;
+                stockDet = ds; 
+                #endregion
+                
+                #region Set value for ordered quantity
                 Dictionary<int, int> stockSet = new Dictionary<int, int>();
-
                 foreach (DataRow row in stockDet.Tables[0].Rows)
                 {
                     int exQuan = int.Parse(row["Quantity"].ToString());
@@ -208,26 +211,10 @@ namespace IMS
                     }
                 }
 
-                Dictionary<int, int> stockSetBonus = new Dictionary<int, int>();
-
-                foreach (DataRow row in stockDet.Tables[0].Rows)
-                {
-                    int exQuan = int.Parse(row["Quantity"].ToString());
-                    if (Bonus > 0 && exQuan > 0)
-                    {
-                        if (exQuan >= Bonus)
-                        {
-                            stockSetBonus.Add(int.Parse(row["StockID"].ToString()), Bonus);
-                            break;
-                        }
-                        else if (exQuan < Bonus)
-                        {
-                            stockSetBonus.Add(int.Parse(row["StockID"].ToString()), exQuan);
-                            Bonus = Bonus - exQuan;
-                        }
-                    }
-                }
-
+                
+                #endregion     
+               
+                #region update stock
 
                 foreach (int id in stockSet.Keys)
                 {
@@ -260,8 +247,44 @@ namespace IMS
                         command.ExecuteNonQuery();
                     }
 
-                }
+                } 
+                #endregion
 
+                #region re-query stock
+                command = new SqlCommand("Sp_GetStockBy_SaleOrderDetID", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_OrderDetailID", orderDetailID);
+                command.Parameters.AddWithValue("@p_StoredAt", int.Parse(Session["UserSys"].ToString()));
+
+                ds = new DataSet();
+                dA = new SqlDataAdapter(command);
+                dA.Fill(ds);
+                stockDet = ds; 
+                #endregion
+
+                #region set bonus values
+                Dictionary<int, int> stockSetBonus = new Dictionary<int, int>();
+
+                foreach (DataRow row in stockDet.Tables[0].Rows)
+                {
+                    int exQuan = int.Parse(row["Quantity"].ToString());
+                    if (Bonus > 0 && exQuan > 0)
+                    {
+                        if (exQuan >= Bonus)
+                        {
+                            stockSetBonus.Add(int.Parse(row["StockID"].ToString()), Bonus);
+                            break;
+                        }
+                        else if (exQuan < Bonus)
+                        {
+                            stockSetBonus.Add(int.Parse(row["StockID"].ToString()), exQuan);
+                            Bonus = Bonus - exQuan;
+                        }
+                    }
+                } 
+                #endregion
+
+                #region Update stock for bonus values
                 foreach (int id in stockSetBonus.Keys)
                 {
                     DataView dv = stockDet.Tables[0].DefaultView;
@@ -280,7 +303,7 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_Expiry", dt.Rows[0]["ExpiryDate"]);
                         command.Parameters.AddWithValue("@p_Batch", dt.Rows[0]["BatchNumber"]);
 
-                        if(stockSet.ContainsKey(id))
+                        if (stockSet.ContainsKey(id))
                         {
                             command.Parameters.AddWithValue("@p_SendQuantity", stockSet[id]);
                         }
@@ -288,8 +311,8 @@ namespace IMS
                         {
                             command.Parameters.AddWithValue("@p_SendQuantity", 0);
                         }
-                        
-                        
+
+
                         command.Parameters.AddWithValue("@p_BonusQuantity", stockSetBonus[id]);
                         command.Parameters.AddWithValue("@p_BarCode", dt.Rows[0]["BarCode"]);
                         command.Parameters.AddWithValue("@p_Discount", Discount);
@@ -301,7 +324,8 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_quantity", stockSetBonus[id]);
                         command.Parameters.AddWithValue("@p_Action", "Minus");
                         command.ExecuteNonQuery();
-                    }
+                    } 
+                #endregion
 
                 }
 
@@ -573,6 +597,8 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
 
                     command.ExecuteNonQuery();
+                    btnAccept.Visible = false;
+                    btnDecline.Visible = false;
                 }
                 else if (e.CommandName.Equals("Details"))
                 {
@@ -583,6 +609,8 @@ namespace IMS
                     Session["OderDetailID"] = orderDetID;
                     Session["ProductID"] = ProductID;
                     Session["TotalQuantity"] = quan + bonus;
+                    Session["SO_BQuan"] = bonus;
+                    Session["SO_Quan"] = quan;
                     Session["SelectedIndex"] = StockAt.SelectedIndex;
                     Session["Invoice"] = txtIvnoice.Text;
                     Response.Redirect("OrderSalesManual_Details.aspx");

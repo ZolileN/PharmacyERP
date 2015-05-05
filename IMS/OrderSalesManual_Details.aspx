@@ -7,6 +7,10 @@
     <div class="form-group">
         <asp:Label ID="lblTotalSent" CssClass="col-md-2 control-label" runat="server" Text="Total Sent Quantity: "  Width="180px"></asp:Label>
         <asp:Label ID="lblTotalQuantity" CssClass="col-md-2 control-label" runat="server" Text="---"  Width="50px"></asp:Label>
+         <asp:Label ID="Label1" CssClass="col-md-2 control-label" runat="server" Text="Quantity: "  Width="180px"></asp:Label>
+        <asp:Label ID="lblQuan" CssClass="col-md-2 control-label" runat="server" Text="Quantity: "  Width="50px"></asp:Label>
+         <asp:Label ID="Label2" CssClass="col-md-2 control-label" runat="server" Text="Bonus Quantity: "  Width="180px"></asp:Label>
+        <asp:Label ID="lblBonQuan" CssClass="col-md-2 control-label" runat="server" Text=" "  Width="50px"></asp:Label>
     </div>
     <br />
   <div class="form-horizontal">
