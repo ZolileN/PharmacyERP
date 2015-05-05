@@ -77,7 +77,7 @@
     <asp:GridView ID="SalemanDisplayGrid" CssClass="table table-striped table-bordered table-condensed" runat="server" AllowPaging="True" PageSize="10"
         AutoGenerateColumns="false"  OnRowEditing=" SalemanDisplayGrid_RowEditing" OnRowUpdating="SalemanDisplayGrid_RowUpdating" OnRowDeleting="SalemanDisplayGrid_RowDeleting" OnPageIndexChanging="SalemanDisplayGrid_PageIndexChanging" OnRowCancelingEdit="SalemanDisplayGrid_RowCancelingEdit">
         <Columns>
-
+           
             <asp:TemplateField HeaderText="User ID" Visible="false">
                 <ItemTemplate>
                     <asp:Label ID="lblUserID" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("UserID") %>' Width="110px"></asp:Label>

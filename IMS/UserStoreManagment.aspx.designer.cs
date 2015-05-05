@@ -10,88 +10,61 @@
 namespace IMS {
     
     
-    public partial class RegisterUsers {
+    public partial class UserStoreManagment {
         
         /// <summary>
-        /// EmpID control.
+        /// gvAllAvailableStore control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox EmpID;
+        protected global::System.Web.UI.WebControls.GridView gvAllAvailableStore;
         
         /// <summary>
-        /// uPwd control.
+        /// btnSwapeAll control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox uPwd;
+        protected global::System.Web.UI.WebControls.Button btnSwapeAll;
         
         /// <summary>
-        /// ddlURole control.
+        /// btnSwapeOne control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlURole;
+        protected global::System.Web.UI.WebControls.Button btnSwapeOne;
         
         /// <summary>
-        /// ddlSysID control.
+        /// btnBackSwape control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlSysID;
+        protected global::System.Web.UI.WebControls.Button btnBackSwape;
         
         /// <summary>
-        /// fName control.
+        /// btnBackSwapeAll control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox fName;
+        protected global::System.Web.UI.WebControls.Button btnBackSwapeAll;
         
         /// <summary>
-        /// lstName control.
+        /// gvAssociatesStore control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox lstName;
-        
-        /// <summary>
-        /// Address control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Address;
-        
-        /// <summary>
-        /// ContactNo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ContactNo;
-        
-        /// <summary>
-        /// btnAddEmployee control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddEmployee;
+        protected global::System.Web.UI.WebControls.GridView gvAssociatesStore;
         
         /// <summary>
         /// btnSave control.
@@ -110,23 +83,5 @@ namespace IMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnBack;
-        
-        /// <summary>
-        /// btnAssociatedStore control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAssociatedStore;
-        
-        /// <summary>
-        /// RegisterUserDisplayGrid control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView RegisterUserDisplayGrid;
     }
 }

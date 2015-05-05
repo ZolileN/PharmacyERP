@@ -16,6 +16,7 @@ namespace IMS
     public partial class RegisterUsers : System.Web.UI.Page
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
+        private string USERID = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -23,6 +24,9 @@ namespace IMS
                 #region Populating User Role Drop Down DropDown
                 try
                 {
+                    if (connection.State == ConnectionState.Open)
+                    { connection.Close();
+                    }
                     connection.Open();
                     SqlCommand command = new SqlCommand("Select * From tbl_UserRoles", connection);
                     DataSet ds = new DataSet();
@@ -35,7 +39,8 @@ namespace IMS
                     if (ddlURole != null)
                     {
                         ddlURole.Items.Insert(0, "Select User Role");
-                        ddlURole.SelectedIndex = 0;
+                        ddlURole.SelectedIndex = 3;
+                        ddlURole.Enabled = false;
                     }
 
 
@@ -54,7 +59,7 @@ namespace IMS
                 try
                 {
                     connection.Open();
-                    SqlCommand command = new SqlCommand("Select * From tbl_System", connection);
+                    SqlCommand command = new SqlCommand("SELECT *  FROM [dbo].[tbl_System] where System_RoleID=1 or System_RoleID=3", connection);
                     DataSet ds1 = new DataSet();
                     SqlDataAdapter sA1 = new SqlDataAdapter(command);
                     sA1.Fill(ds1);
@@ -78,31 +83,31 @@ namespace IMS
                 }
                 #endregion
 
-                EmpID.Text = "";
-                uPwd.Text = "";
-
-                string var = Request.QueryString["ID"];
+                USERID = Request.QueryString["ID"];
                 // Start here
-                if (!string.IsNullOrEmpty(var))
-                { UpdateSaleman(var); }
+                if (!string.IsNullOrEmpty(USERID))
+                { UpdateSaleman(USERID); }
                 else
                 {
                     btnSave.Visible = false;
+                    btnAssociatedStore.Visible = false;
                 }
+
                 // End Here
             }
+            
         }
 
         private void UpdateSaleman(string var)
         {
             int x = 0;
-           
-           
-           
+
+            btnAssociatedStore.Visible = true;
+
             //Start here SP 
             SqlCommand command = new SqlCommand("Sp_SearchByUser_ID", connection);
             command.CommandType = CommandType.StoredProcedure;
-           
+
             DataSet ds2 = new DataSet();
 
             command.Parameters.AddWithValue("@p_UserID", var);
@@ -114,7 +119,7 @@ namespace IMS
             string PwdValue = ds2.Tables[0].Rows[0]["U_Password"].ToString();
             uPwd.TextMode = TextBoxMode.SingleLine;
             uPwd.Text = PwdValue;
-            uPwd.TextMode = TextBoxMode.Password;
+            //uPwd.TextMode = TextBoxMode.Password;
             ddlURole.SelectedValue = ds2.Tables[0].Rows[0]["U_RolesID"].ToString();
             ddlURole.Enabled = false;
             fName.Text = ds2.Tables[0].Rows[0]["U_FirstName"].ToString();
@@ -147,15 +152,12 @@ namespace IMS
                 command.Parameters.AddWithValue("@p_LastName", lstName.Text);
                 command.Parameters.AddWithValue("@p_Contact", ContactNo.Text);
                 command.Parameters.AddWithValue("@p_Address", Address.Text);
-
+                command.Parameters.AddWithValue("@ReturnOut", SqlDbType.Int).Direction = ParameterDirection.Output; ;
                 command.Parameters.AddWithValue("@p_Name", "");
                 command.Parameters.AddWithValue("@p_DisplayName", "");
                 command.Parameters.AddWithValue("@p_email", "");
-
                 x = command.ExecuteNonQuery();
-
-
-
+                x = Convert.ToInt32(command.Parameters["@ReturnOut"].Value);
             }
             catch (Exception ex)
             {
@@ -167,38 +169,46 @@ namespace IMS
             }
 
 
-            if (x == 1)
+            if (x == 2)
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Record Inserted Successfully')", true);
-                EmpID.Text = "";
-                uPwd.Text = "";
-                ddlURole.SelectedIndex = -1;
-                ddlSysID.SelectedIndex = -1;
-                fName.Text = "";
-                lstName.Text = "";
-                Address.Text = "";
-                ContactNo.Text = "";
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Salesman with ID =  " + EmpID.Text + " saved Successfully')", true);
+                //EmpID.Text = "";
+                //uPwd.Text = "";
+                //ddlURole.SelectedIndex = 3;
+                //ddlSysID.SelectedIndex = -1;
+                //fName.Text = "";
+                //lstName.Text = "";
+                //Address.Text = "";
+                //ContactNo.Text = "";
+                btnAssociatedStore.Visible = true;
+                btnAddEmployee.Visible = false;
+                btnSave.Visible = true;
+            }
+            else if (x == -2)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Salesman with ID = " + EmpID.Text + " already eist.')", true);
             }
             else
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert(''" + Errormessage + "'')", true);
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert(" + Errormessage + ")", true);
             }
+
         }
 
-        protected void btnSave_Click(object sender, EventArgs e)
+        protected void btnUpdate_Click(object sender, EventArgs e)
         {
-           // btnAddEmployee_Click(null, null);
+            // btnAddEmployee_Click(null, null);
             string var = Request.QueryString["ID"];
             int x = 0;
             String Errormessage = "";
-            
+
             try
             {
                 connection.Open();
                 SqlCommand command = new SqlCommand("Sp_UpdateNewUser", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_UserID", var);
-                
+
                 command.Parameters.AddWithValue("@p_EmpID", EmpID.Text);
                 command.Parameters.AddWithValue("@p_password", uPwd.Text);
                 command.Parameters.AddWithValue("@p_UserRoleID", ddlURole.SelectedValue.ToString());
@@ -208,9 +218,9 @@ namespace IMS
                 command.Parameters.AddWithValue("@p_Contact", ContactNo.Text);
                 command.Parameters.AddWithValue("@p_Address", Address.Text);
 
-               // command.Parameters.AddWithValue("@p_Name", "");
+                // command.Parameters.AddWithValue("@p_Name", "");
                 //command.Parameters.AddWithValue("@p_DisplayName", "");
-               // command.Parameters.AddWithValue("@p_email", "");
+                // command.Parameters.AddWithValue("@p_email", "");
 
                 x = command.ExecuteNonQuery();
 
@@ -229,20 +239,39 @@ namespace IMS
 
             if (x == 1)
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Record Updated Successfully')", true);
-                EmpID.Text = "";
-                uPwd.Text = "";
-                ddlURole.SelectedIndex = -1;
-                ddlSysID.SelectedIndex = -1;
-                fName.Text = "";
-                lstName.Text = "";
-                Address.Text = "";
-                ContactNo.Text = "";
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Salesman with ID " + EmpID.Text + " updated successfully.')", true);
+                //string NewID = EmpID.Text;
+                //uPwd.Text = "";
+                //ddlURole.SelectedIndex = -1;
+                //ddlSysID.SelectedIndex = -1;
+                //fName.Text = "";
+                //lstName.Text = "";
+                //Address.Text = "";
+                //ContactNo.Text = "";
             }
             else
             {
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert(''" + Errormessage + "'')", true);
             }
+        }
+
+        protected void btnAssociatedStore_Click(object sender, EventArgs e)
+        {
+            string USERID = Request.QueryString["ID"];
+            connection.Open();
+            SqlCommand commandUserID = new SqlCommand("SELECT MAX(UserID) from [tbl_Users]", connection);
+
+            long id = Convert.ToInt64(commandUserID.ExecuteScalar());
+            if (string.IsNullOrWhiteSpace(USERID))
+            {
+
+                Response.Redirect("UserStoreManagment.aspx?ID=" + id);
+            }
+            else
+            {
+                Response.Redirect("UserStoreManagment.aspx?ID=" + USERID);
+            }
+            connection.Close();
         }
     }
 }
