@@ -1,4 +1,5 @@
-﻿using IMSCommon.Util;
+﻿using AjaxControlToolkit;
+using IMSCommon.Util;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -700,6 +701,22 @@ namespace IMS
                     connection.Close();
                 }
             }
+        }
+
+        protected void btnSearchProduct_Click(object sender, ImageClickEventArgs e)
+        {
+            ModalPopupExtender mpe = (ModalPopupExtender)this.Parent.FindControl("mpeCongratsMessageDiv");
+            mpe.Show();
+        }
+
+        protected void btnSearchProduct_Click1(object sender, ImageClickEventArgs e)
+        {
+            String Text = txtSearch.Text+'%';
+            Session["Text"] = Text;
+            ProductsPopupGrid.PopulateGrid();
+            //ProductsPopupGrid.BindGrid();
+            mpeCongratsMessageDiv.Show();
+            
         }
 
     }

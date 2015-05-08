@@ -15,7 +15,7 @@
 
         <tbody><tr>
         	<td> <h4 id="topHead">Manual PO(s)</h4>
-                <asp:Label ID="lblVendor" runat="server"></asp:Label>
+                <asp:Label ID="lblVendor" runat="server" style="color:#2c81da"></asp:Label>
         	</td>
             <td align="right">
                 <asp:Button ID="btnAccept" runat="server" OnClick="btnAccept_Click" Text="Generate PO" CssClass="btn btn-success"  />
@@ -41,14 +41,15 @@
      
        <tr>
            <td>
-               <asp:Label runat="server"  CssClass="control-label">Select Product</asp:Label></td>
+               <asp:Label runat="server" ID="lblProd"  CssClass="control-label">Select Product</asp:Label></td>
            <td>
                <asp:TextBox ID="txtSearch" runat="server" CssClass="product"></asp:TextBox>
                 
-               <asp:ImageButton ID="btnSearchProduct" runat="server"   CssClass="search-btn getProducts" />
+               <asp:ImageButton ID="btnSearchProduct" runat="server"   CssClass="search-btn getProducts" OnClick="btnSearchProduct_Click1" />
+ 
 
                <cc1:ModalPopupExtender ID="mpeCongratsMessageDiv" runat="server" BackgroundCssClass="overLaypop"
-                       RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="btnSearchProduct" ClientIDMode="AutoID"
+                       RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="lblProd" ClientIDMode="AutoID"
                        PopupControlID="_CongratsMessageDiv2" BehaviorID="EditModalPopupMessage" >
                     </cc1:ModalPopupExtender>
 

@@ -13,17 +13,63 @@ namespace IMS.UserControl
 {
     public partial class ProductsPopupGrid : System.Web.UI.UserControl
     {
+        string text = "";
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                Control ctl = this.Parent;
+                TextBox txtsearch = null;
+                txtsearch = (TextBox)ctl.FindControl("txtSearch");
+                if (txtsearch.Text != null)
+                {
+                    text = txtsearch.Text;
+                }
                 BindGrid();
             }
         }
 
-        private void BindGrid()
+        public void PopulateGrid()
+        {
+            if (Session["Text"] != null)
+            {
+                DataTable dt = new DataTable();
+                DataSet ds = new DataSet();
+                #region Getting Product Details
+                try
+                {
+                    int id;
+                    if (int.TryParse(Session["UserSys"].ToString(), out id))
+                    {
+                        String Query = "Select * FROM tbl_ProductMaster Where Status = 1 and Product_Name Like '" + Session["Text"].ToString() + "'";
+
+                        connection.Open();
+                        SqlCommand command = new SqlCommand(Query, connection);
+                        SqlDataAdapter SA = new SqlDataAdapter(command);
+                        ProductSet = null;
+                        SA.Fill(ds);
+                        Session["dsProducts"] = ds;
+                        ProductSet = ds;
+                        StockDisplayGrid.DataSource = ds;
+                        StockDisplayGrid.DataBind();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                }
+                finally
+                {
+                    connection.Close();
+                }
+                #endregion
+            }
+        }
+
+        public void BindGrid()
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();

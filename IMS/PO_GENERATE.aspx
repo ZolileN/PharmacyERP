@@ -237,16 +237,17 @@
             </tr>
            
         </table>
-        <br />
+        
+              <br /><br /> 
     </div>
-    <br />
-    <div class="form-horizontal">
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <asp:Button ID="btnPrint" runat="server" OnClientClick="window.print();" Text="PRINT" CssClass="btn btn-large no-print" Visible="true" />
-                <asp:Button ID="btnFax" runat="server" OnClick="btnFax_Click" Text="BACK" CssClass="btn btn-large no-print" />
-                <asp:Button ID="btnEmail" runat="server" OnClick="btnEmail_Click" Text="EMAIL" CssClass="btn btn-large no-print" Visible="true" />
-            </div>
+    <br /><br />
+    <div class="clear">
+
+    </div>
+    <div class="main">
+     <asp:Button ID="btnPrint" runat="server" OnClientClick="window.print();" Text="PRINT" CssClass="btn btn-primary btn-large no-print" Visible="true" />
+                <asp:Button ID="btnEmail" runat="server" OnClick="btnEmail_Click" Text="EMAIL" CssClass="btn btn-info btn-large no-print" Visible="true" />
+                <asp:Button ID="btnFax" runat="server" OnClick="btnFax_Click" Text="BACK" CssClass="btn btn-default btn-large no-print" />
         </div>
-    </div>
+   
 </asp:Content>

@@ -148,15 +148,6 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.Button btnPrint;
         
         /// <summary>
-        /// btnFax control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnFax;
-        
-        /// <summary>
         /// btnEmail control.
         /// </summary>
         /// <remarks>
@@ -164,5 +155,14 @@ namespace IMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnEmail;
+        
+        /// <summary>
+        /// btnFax control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFax;
     }
 }

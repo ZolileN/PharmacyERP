@@ -116,13 +116,14 @@
                                     <li><a href="ManageSubCategory.aspx">Manage SubCategories</a></li>
                                     <li><a href="ManageCategory.aspx">Manage Categories</a></li>
                                     <li><a href="ManageDepartment.aspx">Manage Departments</a></li>
-                                    <li class="hasChild"><a href="#">Manage Stocks</a>
+                                   <li><a href="ViewInventory.aspx">Manage Stocks</a></li>
+                                    <%--<li class="hasChild"><a href="#">Manage Stocks</a>
                                         <ul>
                                             <li><a href="AddStock.aspx">Add Stock</a></li>
                                             <li><a href="SelectionStock.aspx">Edit Stock</a></li>
                                             <li><a href="ViewInventory.aspx">Current Stock</a></li>
                                        </ul>
-                                    </li>
+                                    </li>--%>
                                </ul>
 
                             </li>
