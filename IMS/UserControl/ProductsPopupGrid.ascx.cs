@@ -21,13 +21,6 @@ namespace IMS.UserControl
         {
             if (!IsPostBack)
             {
-                Control ctl = this.Parent;
-                TextBox txtsearch = null;
-                txtsearch = (TextBox)ctl.FindControl("txtSearch");
-                if (txtsearch.Text != null)
-                {
-                    text = txtsearch.Text;
-                }
                 BindGrid();
             }
         }

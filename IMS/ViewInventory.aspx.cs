@@ -181,7 +181,7 @@ namespace IMS
                         ProductDept.Enabled = false;
                         ProductSubCat.Enabled = false;
                         ProductType.Enabled = false;
-                        SelectProduct.Enabled = false;
+                        //SelectProduct.Enabled = false;
                         btnSearch.Enabled = false;
                         btnRefresh.Enabled = false;
                     }
@@ -262,13 +262,13 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_ProdType", ProductType.SelectedItem.ToString());
                     }
 
-                    if (string.IsNullOrEmpty(txtSearch.Value))
+                    if (string.IsNullOrEmpty(txtSearch.Text))
                     {
                         command.Parameters.AddWithValue("@p_ProdID", DBNull.Value);
                     }
                     else
                     {
-                        command.Parameters.AddWithValue("@p_ProdID", txtSearch.Value);
+                        command.Parameters.AddWithValue("@p_ProdID", txtSearch.Text);
                     }
 
                     //if (ProductList.SelectedIndex <= 0)
@@ -450,7 +450,7 @@ namespace IMS
 
         protected void btnRefresh_Click(object sender, EventArgs e)
         {
-            txtSearch.Value = "";
+            txtSearch.Text = "";
             ddlProductOrderType.SelectedIndex = -1;
             ProductSubCat.SelectedIndex = -1;
             ProductCat.SelectedIndex = -1;
@@ -460,54 +460,54 @@ namespace IMS
 
         protected void btnSearchProduct_Click(object sender, ImageClickEventArgs e)
         {
-            if (SelectProduct.Text.Length >= 3)
-            {
-                PopulateDropDown(SelectProduct.Text);
-                ProductList.Visible = true;
-            }
+            //if (SelectProduct.Text.Length >= 3)
+            //{
+            //    PopulateDropDown(SelectProduct.Text);
+            //    ProductList.Visible = true;
+            //}
         }
 
-        public void PopulateDropDown(String Text)
-        {
-            #region Populating Product Name Dropdown
+        //public void PopulateDropDown(String Text)
+        //{
+        //    #region Populating Product Name Dropdown
 
-            try
-            {
-                connection.Open();
+        //    try
+        //    {
+        //        connection.Open();
 
-                Text = Text + "%";
-                SqlCommand command = new SqlCommand("SELECT * From tbl_ProductMaster Where tbl_ProductMaster.Product_Name LIKE '" + Text + "' AND Status = 1", connection);
-                DataSet ds = new DataSet();
-                SqlDataAdapter sA = new SqlDataAdapter(command);
-                sA.Fill(ds);
-                if (ProductList.DataSource != null)
-                {
-                    ProductList.DataSource = null;
-                }
+        //        Text = Text + "%";
+        //        SqlCommand command = new SqlCommand("SELECT * From tbl_ProductMaster Where tbl_ProductMaster.Product_Name LIKE '" + Text + "' AND Status = 1", connection);
+        //        DataSet ds = new DataSet();
+        //        SqlDataAdapter sA = new SqlDataAdapter(command);
+        //        sA.Fill(ds);
+        //        if (ProductList.DataSource != null)
+        //        {
+        //            ProductList.DataSource = null;
+        //        }
 
-                ProductSet = null;
-                ProductSet = ds;
-                //ds.Tables[0].Columns.Add("ProductInfo", typeof(string), "Product_Name+ ' '+itemStrength+' '+itemPackSize+' '+itemForm");
-                ProductList.DataSource = ds.Tables[0];
-                ProductList.DataTextField = "Description";
-                ProductList.DataValueField = "ProductID";
-                ProductList.DataBind();
-                if (ProductList != null)
-                {
-                    ProductList.Items.Insert(0, "Select Product");
-                    ProductList.SelectedIndex = 0;
-                }
-            }
-            catch (Exception ex)
-            {
+        //        ProductSet = null;
+        //        ProductSet = ds;
+        //        //ds.Tables[0].Columns.Add("ProductInfo", typeof(string), "Product_Name+ ' '+itemStrength+' '+itemPackSize+' '+itemForm");
+        //        ProductList.DataSource = ds.Tables[0];
+        //        ProductList.DataTextField = "Description";
+        //        ProductList.DataValueField = "ProductID";
+        //        ProductList.DataBind();
+        //        if (ProductList != null)
+        //        {
+        //            ProductList.Items.Insert(0, "Select Product");
+        //            ProductList.SelectedIndex = 0;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-            }
-            finally
-            {
-                connection.Close();
-            }
-            #endregion
-        }
+        //    }
+        //    finally
+        //    {
+        //        connection.Close();
+        //    }
+        //    #endregion
+        //}
 
         protected void ProductList_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -573,7 +573,7 @@ namespace IMS
             Session["Search_ProdIdOrg"] = ddlProductOrderType.SelectedValue.ToString();
             Session["Search_ProdType"] = ProductType.SelectedItem.ToString();
            // Session["Search_ProdId"] = ProductList.SelectedValue.ToString();
-            Session["Search_ProdId"] = txtSearch.Value.ToString();
+            Session["Search_ProdId"] = txtSearch.Text.ToString();
 
 
             #endregion
@@ -581,6 +581,14 @@ namespace IMS
             Response.Redirect("Inventory_Print.aspx");
 
 
+        }
+
+        protected void btnSearchProduct_Click1(object sender, ImageClickEventArgs e)
+        {
+            String Text = txtSearch.Text + '%';
+            Session["Text"] = Text;
+            ProductsPopupGrid.PopulateGrid();
+            mpeCongratsMessageDiv.Show();
         }
     }
 }

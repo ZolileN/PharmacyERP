@@ -112,22 +112,22 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.DropDownList ddlProductOrderType;
         
         /// <summary>
+        /// lblProd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblProd;
+        
+        /// <summary>
         /// txtSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtSearch;
-        
-        /// <summary>
-        /// SelectProduct control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox SelectProduct;
+        protected global::System.Web.UI.WebControls.TextBox txtSearch;
         
         /// <summary>
         /// btnSearchProduct control.
@@ -139,13 +139,22 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.ImageButton btnSearchProduct;
         
         /// <summary>
-        /// ProductList control.
+        /// mpeCongratsMessageDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ProductList;
+        protected global::AjaxControlToolkit.ModalPopupExtender mpeCongratsMessageDiv;
+        
+        /// <summary>
+        /// ProductsPopupGrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::IMS.UserControl.ProductsPopupGrid ProductsPopupGrid;
         
         /// <summary>
         /// ProductType control.
@@ -173,15 +182,6 @@ namespace IMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _editPopupButton;
-        
-        /// <summary>
-        /// mpeEditProduct control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::AjaxControlToolkit.ModalPopupExtender mpeEditProduct;
         
         /// <summary>
         /// _prodEditPanel control.

@@ -2,6 +2,9 @@
 <%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="cc1" %>
 <%@ Register TagPrefix="uc" TagName="print_uc" Src="~/UserControl/uc_printBarcode.ascx" %>
 
+ 
+<%@ Register TagName="ProductsPopup"  TagPrefix="UCProductsPopup" Src="~/UserControl/ProductsPopupGrid.ascx" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
    <script src="Scripts/SearchSuggest.js"></script>
        <style>
@@ -63,15 +66,24 @@
             <td><asp:DropDownList runat="server" ID="ddlProductOrderType" CssClass="form-control" Width="29%"/></td>
              </tr>
         <tr>
-            <td><asp:Label runat="server" AssociatedControlID="SelectProduct" CssClass="control-label">Select Product</asp:Label></td>
+            <td><asp:Label runat="server" ID="lblProd"   CssClass="control-label">Select Product</asp:Label></td>
+             
             <td> 
-                <input type="text" id="txtSearch" runat="server" name="txtSearch"   onkeyup="searchSuggest(event);" autocomplete="off"  /> 
-                 <div id="search_suggest" style="visibility: hidden;" ></div>
+                <asp:TextBox ID="txtSearch" runat="server" CssClass="product"></asp:TextBox>
+                
+               <asp:ImageButton ID="btnSearchProduct" runat="server"   CssClass="search-btn getProducts" OnClick="btnSearchProduct_Click1" />
 
-                <asp:TextBox runat="server" ID="SelectProduct" CssClass="form-control product" Visible="false" />
-                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click" Visible="false"  Text="SearchProduct" Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
-                <asp:DropDownList runat="server" ID="ProductList" Visible="false" CssClass="form-control" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="ProductList_SelectedIndexChanged"/></td>
-            <td><asp:Label runat="server" AssociatedControlID="ProductType" Visible="true" CssClass=" control-label">Product Type</asp:Label></td>
+               <cc1:ModalPopupExtender ID="mpeCongratsMessageDiv" runat="server" BackgroundCssClass="overLaypop"
+                       RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="lblProd" ClientIDMode="AutoID"
+                       PopupControlID="_CongratsMessageDiv2" BehaviorID="EditModalPopupMessage" >
+                    </cc1:ModalPopupExtender>
+
+               <div id="_CongratsMessageDiv2" class="congrats-cont" style="display: none; ">
+                            <UCProductsPopup:ProductsPopup  id="ProductsPopupGrid" runat="server"/>
+                        </div>
+
+
+                  </td><td><asp:Label runat="server" AssociatedControlID="ProductType" Visible="true" CssClass=" control-label">Product Type</asp:Label></td>
              <td><asp:DropDownList runat="server" ID="ProductType" Visible="true" OnSelectedIndexChanged="ProductType_SelectedIndexChanged" CssClass="form-control" Width="29%"/></td>
              </tr>        
         </table>
@@ -157,9 +169,9 @@
     </div>
 
      <asp:Button ID="_editPopupButton" runat="server" Style="display: none" />
-        <cc1:ModalPopupExtender ID="mpeEditProduct" runat="server" RepositionMode="RepositionOnWindowResizeAndScroll" DropShadow="true" 
+        <%--<cc1:ModalPopupExtender ID="mpeEditProduct" runat="server" RepositionMode="RepositionOnWindowResizeAndScroll" DropShadow="true" 
             PopupDragHandleControlID="_prodEditPanel" TargetControlID="_editPopupButton" PopupControlID="_prodEditPanel" BehaviorID="EditModalPopupMessage">
-        </cc1:ModalPopupExtender>
+        </cc1:ModalPopupExtender>--%>
 
         <asp:Panel ID="_prodEditPanel" runat="server" Width="100%" Style="display: none">
             <asp:UpdatePanel ID="_prodEdit" runat="server">
