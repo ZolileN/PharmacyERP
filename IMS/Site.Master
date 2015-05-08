@@ -126,37 +126,59 @@
                                </ul>
 
                             </li>
-                            <li><a href="#">Manage Orders</a>
-
-                                <ul>
-                                    <li class="hasChild"><a href="#">Generate Purchase Orders</a>
+                            <li><a href="#">Manage Purchase Orders</a>
+                                                    
+                                 <ul>
+                                    <li><a href="#">PO Request to WareHouse</a>
+									<li class="hasChild"><a href="#">Generate PO</a>
 
                                         <ul>
-                                            <li><a href="SelectVendor.aspx">Select Vendor</a></li>
-                                            <li><a href="OrderPurchaseManual.aspx">Manual Purchase</a></li>
+                                            
+                                            <li><a href="#">Auto PO</a></li>
+                                            <li><a href="SelectVendor.aspx">Manual PO</a></li>
                                        </ul>
 
                                     </li>
-                                    <li><a href="OrderSalesManual.aspx">Generate Sale Orders</a></li>
-                                    <li><a href="ViewSalesOrders.aspx">View Sale Orders</a></li>
-                                    <li><a href="ViewPlacedOrders.aspx">View Purchase Orders</a></li>
-                                    <li class="hasChild"><a href="#">Recieve Purchase Orders</a>
+                                    <li><a href="ViewPlacedOrders.aspx">View PO</a></li>
+                                    <li class="hasChild"><a href="#">Recieve PO</a>
 
                                         <ul>
-                                            <%--<li><a href="RecieveOrder.aspx">Auto Recieving</a></li>--%>
+                                            <li><a href="#">Auto Recieving</a></li>
                                             <li><a href="ViewPurchaseOrders.aspx">Manual Recieving</a></li>
                                        </ul>
+									<li><a href="#">Send Returned Items</a>
+                                    </li>
+                               </ul>
+                            </li>
+                            <li><a href="#">Manage Sale Orders</a>
+                            	<ul>
+                                	 <li><a href="OrderSalesManual.aspx">Generate SO</a></li>
+                                    <li><a href="ViewSalesOrders.aspx">View SO</a></li>
+                                    <li class="hasChild"><a href="#">Receive SO</a>
+
+                                        <ul>
+                                            <li><a href="#">Auto Receiving</a></li>
+                                            <li><a href="#">Manual Receiving</a></li>
+                                       </ul>
 
                                     </li>
-                                    
-                               </ul>
-
+                                    <li><a href="#">Receive Store Request</a></li>
+                                    <li><a href="#">Receive Salesman Request</a></li>
+                                    <li><a href="#">Receive Returned Items</a>
+                                </ul>
                             </li>
                             <li><a href="ManageVendor.aspx">Manage Vendors</a>
                                 <%--<ul><li><a href="SalemanMangment.aspx">Saleman Manage</a></li></ul>--%>
                             </li>
                             <li><a href="Warehouse_StoreRequests.aspx">Store Requests</a></li>
-                            <li><a href="PackingListGeneration.aspx">Generate Packing List</a></li>
+                            
+                            <li><a href="#">Reports</a>
+                            	<ul>
+                                	<li><a href="#">Print PO</a></li>
+                                	<li><a href="PackingListGeneration.aspx">Packing List</a></li>
+                                    <li><a href="#">Stock Report</a></li>
+                                </ul>
+                            </li>
 	                    </ul>
             </asp:Literal>
             <asp:Literal runat="server" ID="storeNav">
@@ -229,28 +251,28 @@
 
         <script>
             $(document).ready(function () {
-               
+
                 $(".table-striped").parent("div").addClass("putScroll");
 
-             
-            var h = $(document).height();
-            $(".overLaypop").height(h);
 
-            $(".opPop").click(function (e) {
-                e.preventDefault();
-                var pH = $(".popupMain").height();
-                var pH = pH / 2;
-                var pH = 0 - pH;
-                $(".popupMain").css("margin-top", pH);
+                var h = $(document).height();
+                $(".overLaypop").height(h);
 
-                $(".popupMain, .overLaypop").fadeIn();
-            });
+                $(".opPop").click(function (e) {
+                    e.preventDefault();
+                    var pH = $(".popupMain").height();
+                    var pH = pH / 2;
+                    var pH = 0 - pH;
+                    $(".popupMain").css("margin-top", pH);
 
-            $(".close").click(function () {
-                
-                $(".popupMain, .overLaypop").fadeOut();
+                    $(".popupMain, .overLaypop").fadeIn();
+                });
 
-            });
+                $(".close").click(function () {
+
+                    $(".popupMain, .overLaypop").fadeOut();
+
+                });
 
             });
         </script>
