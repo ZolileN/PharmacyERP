@@ -21,6 +21,11 @@ namespace IMS
         {
             if(!IsPostBack)
             {
+                string searchVal = txtSearch.Text;
+                if (!string.IsNullOrEmpty(searchVal))
+                {
+                    //do here
+                }
                 BindGrid();
             }
         }
@@ -236,113 +241,123 @@ namespace IMS
 
         #endregion
 
-        protected void SelectProduct_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                connection.Open();
+        //protected void SelectProduct_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        connection.Open();
 
-                String Text = SelectProduct.SelectedItem.ToString() + "%";
-                SqlCommand command = new SqlCommand("SELECT * From tbl_ProductMaster Where tbl_ProductMaster.Product_Name LIKE '" + Text + "' AND Status = 1", connection);
-                DataSet ds = new DataSet();
-                SqlDataAdapter sA = new SqlDataAdapter(command);
-                sA.Fill(ds);
-                if (SelectProduct.DataSource != null)
-                {
-                    SelectProduct.DataSource = null;
-                }
+        //        String Text = SelectProduct.SelectedItem.ToString() + "%";
+        //        SqlCommand command = new SqlCommand("SELECT * From tbl_ProductMaster Where tbl_ProductMaster.Product_Name LIKE '" + Text + "' AND Status = 1", connection);
+        //        DataSet ds = new DataSet();
+        //        SqlDataAdapter sA = new SqlDataAdapter(command);
+        //        sA.Fill(ds);
+        //        if (SelectProduct.DataSource != null)
+        //        {
+        //            SelectProduct.DataSource = null;
+        //        }
 
-                ProductSet = null;
-                ProductSet = ds;
+        //        ProductSet = null;
+        //        ProductSet = ds;
 
-                StockDisplayGrid.DataSource = ds;
-                StockDisplayGrid.DataBind();
-            }
-            catch(Exception ex)
-            {
+        //        StockDisplayGrid.DataSource = ds;
+        //        StockDisplayGrid.DataBind();
+        //    }
+        //    catch(Exception ex)
+        //    {
 
-            }
-            finally
-            {
-                connection.Close();
+        //    }
+        //    finally
+        //    {
+        //        connection.Close();
 
-            }
-        }
+        //    }
+        //}
 
-        protected void btnSearchProduct_Click(object sender, ImageClickEventArgs e)
-        {
-            connection.Open();
+        //protected void btnSearchProduct_Click(object sender, ImageClickEventArgs e)
+        //{
+        //    connection.Open();
 
-            String Text = txtSearch.Value.ToString() + "%";
-            SqlCommand command = new SqlCommand("SELECT * From tbl_ProductMaster Where tbl_ProductMaster.Product_Name LIKE '" + Text + "' AND Status = 1", connection);
-            DataSet ds = new DataSet();
-            SqlDataAdapter sA = new SqlDataAdapter(command);
-            sA.Fill(ds);
-            if (SelectProduct.DataSource != null)
-            {
-                SelectProduct.DataSource = null;
-            }
+        //    String Text = txtSearch.Value.ToString() + "%";
+        //    SqlCommand command = new SqlCommand("SELECT * From tbl_ProductMaster Where tbl_ProductMaster.Product_Name LIKE '" + Text + "' AND Status = 1", connection);
+        //    DataSet ds = new DataSet();
+        //    SqlDataAdapter sA = new SqlDataAdapter(command);
+        //    sA.Fill(ds);
+        //    if (SelectProduct.DataSource != null)
+        //    {
+        //        SelectProduct.DataSource = null;
+        //    }
 
-            ProductSet = null;
-            ProductSet = ds;
+        //    ProductSet = null;
+        //    ProductSet = ds;
 
-            StockDisplayGrid.DataSource = ds;
-            StockDisplayGrid.DataBind();
-            //if (txtProduct.Text.Length >= 3)
-            //{
-            //    PopulateDropDown(txtProduct.Text);
-            //    SelectProduct.Visible = true;
-            //}
-        }
+        //    StockDisplayGrid.DataSource = ds;
+        //    StockDisplayGrid.DataBind();
+        //    //if (txtProduct.Text.Length >= 3)
+        //    //{
+        //    //    PopulateDropDown(txtProduct.Text);
+        //    //    SelectProduct.Visible = true;
+        //    //}
+        //}
 
-        public void PopulateDropDown(String Text)
-        {
-            #region Populating Product Name Dropdown
+        //public void PopulateDropDown(String Text)
+        //{
+        //    #region Populating Product Name Dropdown
 
-            try
-            {
-                connection.Open();
+        //    try
+        //    {
+        //        connection.Open();
 
-                Text = Text + "%";
-                SqlCommand command = new SqlCommand("SELECT * From tbl_ProductMaster Where tbl_ProductMaster.Product_Name LIKE '" + Text + "' AND Status = 1", connection);
-                DataSet ds = new DataSet();
-                SqlDataAdapter sA = new SqlDataAdapter(command);
-                sA.Fill(ds);
-                if (SelectProduct.DataSource != null)
-                {
-                    SelectProduct.DataSource = null;
-                }
+        //        Text = Text + "%";
+        //        SqlCommand command = new SqlCommand("SELECT * From tbl_ProductMaster Where tbl_ProductMaster.Product_Name LIKE '" + Text + "' AND Status = 1", connection);
+        //        DataSet ds = new DataSet();
+        //        SqlDataAdapter sA = new SqlDataAdapter(command);
+        //        sA.Fill(ds);
+        //        if (SelectProduct.DataSource != null)
+        //        {
+        //            SelectProduct.DataSource = null;
+        //        }
 
-                ProductSet = null;
-                ProductSet = ds;
+        //        ProductSet = null;
+        //        ProductSet = ds;
                 
-                StockDisplayGrid.DataSource = ds;
-                StockDisplayGrid.DataBind();
+        //        StockDisplayGrid.DataSource = ds;
+        //        StockDisplayGrid.DataBind();
                 
-                SelectProduct.DataSource = ds.Tables[0];
-                SelectProduct.DataTextField = "Product_Name";
-                SelectProduct.DataValueField = "ProductID";
-                SelectProduct.DataBind();
-                if (SelectProduct != null)
-                {
-                    SelectProduct.Items.Insert(0, "Select Product");
-                    SelectProduct.SelectedIndex = 0;
-                }
-            }
-            catch (Exception ex)
-            {
+        //        SelectProduct.DataSource = ds.Tables[0];
+        //        SelectProduct.DataTextField = "Product_Name";
+        //        SelectProduct.DataValueField = "ProductID";
+        //        SelectProduct.DataBind();
+        //        if (SelectProduct != null)
+        //        {
+        //            SelectProduct.Items.Insert(0, "Select Product");
+        //            SelectProduct.SelectedIndex = 0;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-            }
-            finally
-            {
-                connection.Close();
-            }
-            #endregion
-        }
+        //    }
+        //    finally
+        //    {
+        //        connection.Close();
+        //    }
+        //    #endregion
+        //}
 
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
             Response.Redirect("WarehouseMain.aspx", false);
+        }
+
+        
+
+        protected void btnSearchProduct_Click(object sender, ImageClickEventArgs e)
+        {
+            String Text = txtSearch.Text + '%';
+            Session["Text"] = Text;
+            ProductsPopupGrid.PopulateGrid();
+            mpeCongratsMessageDiv.Show();
         }
     }
 }

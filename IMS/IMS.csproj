@@ -346,6 +346,7 @@
     <Content Include="Style\theme.css" />
     <Content Include="UserControl\ProductSearch.ascx" />
     <Content Include="UserControl\ProductsPopupGrid.ascx" />
+    <Content Include="UserControl\Product_Search_Popup.ascx" />
     <Content Include="UserControl\SuperMasterProducts.ascx" />
     <Content Include="UserControl\uc_printBarcode.ascx" />
     <Content Include="UserControl\uc_Select_System.ascx" />
@@ -865,6 +866,13 @@
     </Compile>
     <Compile Include="UserControl\ProductsPopupGrid.ascx.designer.cs">
       <DependentUpon>ProductsPopupGrid.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\Product_Search_Popup.ascx.cs">
+      <DependentUpon>Product_Search_Popup.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControl\Product_Search_Popup.ascx.designer.cs">
+      <DependentUpon>Product_Search_Popup.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserControl\SuperMasterProducts.ascx.cs">
       <DependentUpon>SuperMasterProducts.ascx</DependentUpon>

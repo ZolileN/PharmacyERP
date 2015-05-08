@@ -1,4 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ManageProducts.aspx.cs" Inherits="IMS.ManageProducts" %>
+
+<%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="cc1" %>
+ 
+<%@ Register TagName="ProductsPopup"  TagPrefix="UCProductsPopup" Src="~/UserControl/Product_Search_Popup.ascx" %>
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
      <table width="100%">
@@ -44,11 +50,32 @@
     <table width="100%">
 
         <tr>
-            <td width="100">
-                <asp:Label runat="server" AssociatedControlID="txtProduct" CssClass="control-label">Select Product</asp:Label>
-            </td>
+
+            <td  width="100"><asp:Label runat="server" ID="lblProd" AssociatedControlID="txtSearch" CssClass="control-label">Select Product</asp:Label></td>
             <td>
-                 <input type="text" id="txtSearch" runat="server" name="txtSearch"   onkeyup="searchSuggest(event);" autocomplete="off"  /> 
+               <asp:TextBox ID="txtSearch" runat="server" CssClass="product"></asp:TextBox>
+                
+               <asp:ImageButton ID="btnSearchProduct" runat="server"   CssClass="search-btn getProducts" OnClick="btnSearchProduct_Click" />
+
+               <cc1:ModalPopupExtender ID="mpeCongratsMessageDiv" runat="server" BackgroundCssClass="overLaypop"
+                       RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="lblProd" ClientIDMode="AutoID"
+                       PopupControlID="_CongratsMessageDiv2" BehaviorID="EditModalPopupMessage" >
+                    </cc1:ModalPopupExtender>
+
+               <div id="_CongratsMessageDiv2" class="congrats-cont" style="display: none; ">
+                            <UCProductsPopup:ProductsPopup  id="ProductsPopupGrid" runat="server"/>
+                        </div>
+
+                 <asp:TextBox runat="server" ID="TextBox2" CssClass="form-control product" Visible="false"/>
+                
+                 
+             
+           </td>
+
+            <%--<td width="100">
+                <asp:Label runat="server" AssociatedControlID="txtProduct" CssClass="control-label">Select Product</asp:Label>
+            </td> <td>
+                 <%--<input type="text" id="txtSearch" runat="server" name="txtSearch"   onkeyup="searchSuggest(event);" autocomplete="off"  /> 
                 <div id="search_suggest" style="visibility: hidden;" ></div>
 
 
@@ -57,7 +84,7 @@
                 <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click" cssClass="search-btn" />
                 <asp:DropDownList runat="server" ID="SelectProduct" Visible="false" CssClass="form-control" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="SelectProduct_SelectedIndexChanged"/>
                 
-            </td>
+            </td>--%>
             <td align="right">
                 <%--<asp:Button ID="btnAddProduct" runat="server" CssClass="btn btn-success btn-large" Text=" + Add Product" OnClick="btnAddProduct_Click"/>--%>
                 <asp:Button ID="btnDeleteProduct" runat="server" CssClass="btn btn-danger btn-large" Text="Delete Product" OnClick="btnDeleteProduct_Click" Visible="False"/>

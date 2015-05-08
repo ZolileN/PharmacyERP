@@ -714,7 +714,6 @@ namespace IMS
             String Text = txtSearch.Text+'%';
             Session["Text"] = Text;
             ProductsPopupGrid.PopulateGrid();
-            //ProductsPopupGrid.BindGrid();
             mpeCongratsMessageDiv.Show();
             
         }

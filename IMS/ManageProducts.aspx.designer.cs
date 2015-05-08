@@ -31,22 +31,22 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.Button btnGoBack;
         
         /// <summary>
+        /// lblProd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblProd;
+        
+        /// <summary>
         /// txtSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtSearch;
-        
-        /// <summary>
-        /// txtProduct control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtProduct;
+        protected global::System.Web.UI.WebControls.TextBox txtSearch;
         
         /// <summary>
         /// btnSearchProduct control.
@@ -58,13 +58,31 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.ImageButton btnSearchProduct;
         
         /// <summary>
-        /// SelectProduct control.
+        /// mpeCongratsMessageDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList SelectProduct;
+        protected global::AjaxControlToolkit.ModalPopupExtender mpeCongratsMessageDiv;
+        
+        /// <summary>
+        /// ProductsPopupGrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::IMS.UserControl.Product_Search_Popup ProductsPopupGrid;
+        
+        /// <summary>
+        /// TextBox2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBox2;
         
         /// <summary>
         /// btnDeleteProduct control.

@@ -11,12 +11,12 @@ using System.Web.UI.WebControls;
 
 namespace IMS.UserControl
 {
-    public partial class ProductsPopupGrid : System.Web.UI.UserControl
+    public partial class Product_Search_Popup : System.Web.UI.UserControl
     {
         string text = "";
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -278,6 +278,41 @@ namespace IMS.UserControl
                         if (ltMetaTags != null)
                         {
                             ltMetaTags.Text = row.Cells[1].Text;
+
+                            GridView gvParent = (GridView)ctl.FindControl("StockDisplayGrid");
+
+                            DataTable dt = new DataTable();
+                            DataSet ds = new DataSet();
+                            #region Getting Product Details
+                            try
+                            {
+                                int id;
+                                if (int.TryParse(Session["UserSys"].ToString(), out id))
+                                {
+                                    String Query = "Select * FROM tbl_ProductMaster Where Status = 1 and Product_Name Like '" + ltMetaTags.Text + "'";
+                                   
+                                    connection.Open();
+                                    SqlCommand command = new SqlCommand(Query, connection);
+                                    SqlDataAdapter SA = new SqlDataAdapter(command);
+                                    ProductSet = null;
+                                    gvParent.DataSource = null;
+                                    SA.Fill(ds);
+                                    Session["dsProducts"] = ds;
+                                    ProductSet = ds;
+                                    gvParent.DataSource = ds;
+                                    gvParent.DataBind();
+                                }
+
+                            }
+                            catch (Exception ex)
+                            {
+                            }
+                            finally
+                            {
+                                connection.Close();
+                            }
+                            #endregion
+
                         }
                     }
                 }

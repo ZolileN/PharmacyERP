@@ -72,14 +72,14 @@
                         
         </tr>
         <tr>
-            <td><asp:Label runat="server" AssociatedControlID="txtProduct" CssClass="control-label">Select Product</asp:Label></td>
+            <td><asp:Label runat="server" ID="lblProd" AssociatedControlID="txtProduct" CssClass="control-label">Select Product</asp:Label></td>
             <td>
                <asp:TextBox ID="txtSearch" runat="server" CssClass="product"></asp:TextBox>
                 
-               <asp:ImageButton ID="btnSearchProduct" runat="server"   CssClass="search-btn getProducts" />
+               <asp:ImageButton ID="btnSearchProduct" runat="server"   CssClass="search-btn getProducts" OnClick="btnSearchProduct_Click1" />
 
                <cc1:ModalPopupExtender ID="mpeCongratsMessageDiv" runat="server" BackgroundCssClass="overLaypop"
-                       RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="btnSearchProduct" ClientIDMode="AutoID"
+                       RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="lblProd" ClientIDMode="AutoID"
                        PopupControlID="_CongratsMessageDiv2" BehaviorID="EditModalPopupMessage" >
                     </cc1:ModalPopupExtender>
 

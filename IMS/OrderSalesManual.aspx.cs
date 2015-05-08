@@ -1338,6 +1338,14 @@ namespace IMS
             Response.Redirect("SO_GENERATE.aspx",false);
         }
 
+        protected void btnSearchProduct_Click1(object sender, ImageClickEventArgs e)
+        {
+            String Text = txtSearch.Text + '%';
+            Session["Text"] = Text;
+            ProductsPopupGrid.PopulateGrid();
+            mpeCongratsMessageDiv.Show();
+        }
+
         
     }
 }
