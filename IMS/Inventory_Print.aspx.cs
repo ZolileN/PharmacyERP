@@ -41,70 +41,81 @@ namespace IMS
                     #region with parameter approach
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_SysID", id);
-                    string prodID;
-                    int depID,catID,subCatID,prodIDOrg,prodType = -1;
-                    int.TryParse(Session["Search_DepID"].ToString(),out depID);
-                    int.TryParse(Session["Search_CatID"].ToString(), out catID);
-                    int.TryParse(Session["Search_SubCatID"].ToString(), out subCatID);
-                    int.TryParse(Session["Search_ProdIdOrg"].ToString(), out prodIDOrg);
-                    int.TryParse(Session["Search_ProdType"].ToString(), out prodType);
-                   // int.TryParse(Session["Search_ProdId"].ToString(), out prodID);
-                    prodID = Session["Search_ProdId"].ToString();
+                    command.Parameters.AddWithValue("@p_DeptID", DBNull.Value);
+                    command.Parameters.AddWithValue("@p_CatID", DBNull.Value);
+                    command.Parameters.AddWithValue("@p_SubCatID", DBNull.Value);
+                    command.Parameters.AddWithValue("@p_productOrderType", DBNull.Value);
+                    command.Parameters.AddWithValue("@p_ProdType", DBNull.Value);
+                    command.Parameters.AddWithValue("@p_ProdID", DBNull.Value);
+
+                    #region Unused Filtered Conditions
+                    // string prodID;
+                   // int depID,catID,subCatID,prodIDOrg,prodType = -1;
+                   // int.TryParse(Session["Search_DepID"].ToString(),out depID);
+                   // int.TryParse(Session["Search_CatID"].ToString(), out catID);
+                   // int.TryParse(Session["Search_SubCatID"].ToString(), out subCatID);
+                   // int.TryParse(Session["Search_ProdIdOrg"].ToString(), out prodIDOrg);
+                   // int.TryParse(Session["Search_ProdType"].ToString(), out prodType);
+                   //// int.TryParse(Session["Search_ProdId"].ToString(), out prodID);
+                   // prodID = Session["Search_ProdId"].ToString();
                    
-                    if (depID <= 0)
-                    {
-                        command.Parameters.AddWithValue("@p_DeptID", DBNull.Value);
-                    }
-                    else
-                    {
-                        command.Parameters.AddWithValue("@p_DeptID", depID);
-                    }
+                    //if (depID <= 0)
+                    //{
+                        
 
-                    if (catID <= 0)
-                    {
-                        command.Parameters.AddWithValue("@p_CatID", DBNull.Value);
-                    }
-                    else
-                    {
-                        command.Parameters.AddWithValue("@p_CatID", catID);
-                    }
+                    //}
+                    //else
+                    //{
+                    //    command.Parameters.AddWithValue("@p_DeptID", depID);
+                    //}
 
-                    if (subCatID <= 0)
-                    {
-                        command.Parameters.AddWithValue("@p_SubCatID", DBNull.Value);
-                    }
-                    else
-                    {
-                        command.Parameters.AddWithValue("@p_SubCatID", subCatID);
-                    }
+                    //if (catID <= 0)
+                    //{
+                        
+                    //}
+                    //else
+                    //{
+                    //    command.Parameters.AddWithValue("@p_CatID", catID);
+                    //}
 
-                    if (prodIDOrg <= 0)
-                    {
-                        command.Parameters.AddWithValue("@p_productOrderType", DBNull.Value);
-                    }
-                    else
-                    {
-                        command.Parameters.AddWithValue("@p_productOrderType", prodIDOrg);
-                    }
+                    //if (subCatID <= 0)
+                    //{
+                       
+                    //}
+                    //else
+                    //{
+                    //    command.Parameters.AddWithValue("@p_SubCatID", subCatID);
+                    //}
+
+                    //if (prodIDOrg <= 0)
+                    //{
+                        
+                    //}
+                    //else
+                    //{
+                    //    command.Parameters.AddWithValue("@p_productOrderType", prodIDOrg);
+                    //}
 
 
-                    if (prodType <= 0)
-                    {
-                        command.Parameters.AddWithValue("@p_ProdType", DBNull.Value);
-                    }
-                    else
-                    {
-                        command.Parameters.AddWithValue("@p_ProdType", prodType);
-                    }
+                    //if (prodType <= 0)
+                    //{
+                        
+                    //}
+                    //else
+                    //{
+                    //    command.Parameters.AddWithValue("@p_ProdType", prodType);
+                    //}
 
-                    if (prodID == null)
-                    {
-                        command.Parameters.AddWithValue("@p_ProdID", DBNull.Value);
-                    }
-                    else
-                    {
-                        command.Parameters.AddWithValue("@p_ProdID", prodID);
-                    }
+                    //if (prodID == null)
+                    //{
+                        
+                    //}
+                    //else
+                    //{
+                    //    command.Parameters.AddWithValue("@p_ProdID", prodID);
+                    //}
+                    #endregion
+                    
                     #endregion
 
                     SqlDataAdapter SA = new SqlDataAdapter(command);
