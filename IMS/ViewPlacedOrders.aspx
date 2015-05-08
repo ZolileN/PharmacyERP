@@ -8,8 +8,19 @@
           </script>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-      <h4> View Purchase Order(s)</h4> 
-    <hr />
+      <table width="100%">
+
+        <tbody><tr>
+        	<td> <h4>View Purchase Order(s)</h4></td>
+            <td align="right">
+                <asp:Button ID="btnSearch" runat="server" OnClick="btnSearch_Click" Enabled="true" Text="SEARCH" CssClass="btn btn-primary"/>
+                <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Enabled="true" Text="REFRESH" CssClass="btn btn-info"/>
+                <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnBack_Click"/>
+            </td>
+        </tr>
+		<tr><td height="5"></td></tr>
+    </tbody></table>
+     <hr>
      <script src="Scripts/jquery.js"  type="text/javascript"></script>
           <script src="Scripts/jquery-ui.js" type="text/javascript"></script>
           <link rel="stylesheet" href="Style/jquery-ui.css" />
@@ -18,17 +29,20 @@
 
           </script>
 
-   <table cellspacing="0" cellpadding="5" border="0" width="100%">
-        <tr>
+        <table cellspacing="0" cellpadding="5" border="0" width="100%" class="formTbl">
+            <tr>
                <td>
                    <asp:Label runat="server" AssociatedControlID="StockAt" CssClass="control-label">Vendor Name </asp:Label>
                </td>
 
              <td>
-                   <asp:TextBox runat="server" ID="SelectProduct" CssClass="form-control product"/>
-                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click" Text="SearchProduct" Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
+                <asp:DropDownList runat="server" ID="StockAt" CssClass="form-control product" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="StockAt_SelectedIndexChanged" DataSourceID="StockAtDataSource" DataTextField="SupName" DataValueField="SuppID"  />
+
+                   <asp:SqlDataSource ID="StockAtDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:IMSConnectionString %>" SelectCommand="SELECT [SuppID], [SupName] FROM [tblVendor]"></asp:SqlDataSource>
+
+                   <asp:TextBox runat="server" ID="SelectProduct" CssClass="form-control product" Visible="false"/>
+                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click" Visible="false" Text="SearchProduct" Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
                 
-                <asp:DropDownList runat="server" ID="StockAt" CssClass="form-control" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="StockAt_SelectedIndexChanged" Visible="false"/>
                 
                </td>
         
@@ -41,8 +55,7 @@
                 
                </td>
          </tr>
-
-          <tr>
+            <tr>
                <td>
                    <asp:Label runat="server" AssociatedControlID="txtOrderNO"  CssClass="control-label">Order Number</asp:Label>
                </td>
@@ -61,16 +74,12 @@
                 
                </td>
          </tr>
-
-         <tr>
+            <tr>
              <td></td>
-             <td colspan="100%" class="btnSpace">
+             <td colspan="100%">
                  
-            <asp:Button ID="btnSearch" runat="server" OnClick="btnSearch_Click" Enabled="true" Text="SEARCH" CssClass="btn btn-primary"/>
-                <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Enabled="true" Text="REFRESH" CssClass="btn btn-default"/>
             </td>
-         </tr>
-
+         </tr>     
         </table>
 
 
@@ -135,9 +144,9 @@
                             </span>
                               </ItemTemplate>
                           <EditItemTemplate>
-                            <asp:LinkButton ID="btnUpdate" Text="Re-Generate Order" CssClass="btn btn-default btn-xs"  runat="server" CommandName="ReGen"></asp:LinkButton>
-                            <asp:LinkButton ID="btnView" Text="Update Accepted Order" CssClass="btn btn-default btn-xs"  runat="server" CommandName="UpdateRec"  Visible='<%# IsStatusComplete((String) Eval("Status")) %>' />
-                            <asp:LinkButton ID="btnCancel" Text="Cancel" CssClass="btn btn-default btn-xs"  runat="server" CommandName="Cancel" />
+                            <asp:LinkButton ID="btnUpdate" CssClass="btn btn-primary btn-sm" Text="Re-Generate Order" runat="server" CommandName="ReGen"></asp:LinkButton>
+                            <asp:LinkButton ID="btnView" CssClass="btn btn-primary btn-sm"  Text="Update Accepted Order" runat="server" CommandName="UpdateRec"  Visible='<%# IsStatusComplete((String) Eval("Status")) %>' />
+                            <asp:LinkButton ID="btnCancel" Text="Cancel" CssClass="btn btn-default btn-sm"  runat="server" CommandName="Cancel" />
 
                         </EditItemTemplate>
                          <ItemStyle  Width="150px" HorizontalAlign="Left"/>
@@ -180,18 +189,5 @@
                 <PagerStyle CssClass = "GridPager" />
              </asp:GridView>
     </div>
-    <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-               <!-- Back Button if needed-->
-            </div>
-        </div>
-    </div>
-
-    <div class="form-horizontal">
-    <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <asp:Button ID="btnBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnBack_Click"/>
-            </div>
-     </div>
-     </div>
+   
 </asp:Content>

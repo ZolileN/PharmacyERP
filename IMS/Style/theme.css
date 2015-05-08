@@ -1320,10 +1320,10 @@ padding:3px;
     z-index:9998;
     background:#000;
     opacity:0.6;
-    display:none;
+    /*display:none;*/
 }
 .popupMain {
-    display:none;
+    /*display:none;*/
     width:800px;
     margin-left:-400px;
     left:50%;

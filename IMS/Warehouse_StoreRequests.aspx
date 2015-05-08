@@ -1,18 +1,39 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Warehouse_StoreRequests.aspx.cs" Inherits="IMS.Warehouse_StoreRequests" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+ 
+    <table width="100%">
 
-    <h2> Store Requests</h2> 
-    <br />
+        <tbody><tr>
+        	<td> <h4>Store Requests</h4></td>
+            <td align="right"> 
+                <asp:Button ID="btnBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnBack_Click"/>
+          </td>
+        </tr>
+		<tr><td height="5"></td></tr>
+    </tbody></table>
+     <hr>
 
-    <div class="form-horizontal">
-    <div class="form-group">
-        <asp:Label runat="server" AssociatedControlID="StockAt" CssClass="col-md-2 control-label">Select Store </asp:Label>
-            <div class="col-md-10">
+     <table cellspacing="5" cellpadding="5" border="0" width="50%" class="formTbl">
+
+        <tbody><tr>
+            <td>          
+                <asp:Label runat="server" AssociatedControlID="StockAt" CssClass="col-md-2 control-label">Select Store </asp:Label>
+            </td>
+            <td>
                 <asp:DropDownList runat="server" ID="StockAt" CssClass="form-control" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="StockAt_SelectedIndexChanged"/>
+            </td>
+            <td></td>
+          <td></td>
+      </tr></tbody></table>
+
+
+    <%--<div class="form-horizontal">
+    <div class="form-group">
+            <div class="col-md-10">
                 <br/>
             </div>
     </div>
-    </div>
+    </div>--%>
 
     <div class="form-horizontal">
     <div class="form-group">
@@ -58,6 +79,10 @@
                  </Columns>
             <PagerStyle CssClass = "GridPager" />
              </asp:GridView>
+
+          <img src="images/po-img.png" width="344" height="344" class="poImg">
+
+
     </div>
     <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -70,7 +95,6 @@
     <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <asp:Button ID="btnPackingList" runat="server" OnClick="btnPackingList_Click" Enabled="false" Text="Generate Packing List" CssClass="btn btn-default" Visible="false"/>
-                <asp:Button ID="btnBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnBack_Click"/>
             </div>
      </div>
      </div>

@@ -1,7 +1,21 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ManageCategory.aspx.cs" Inherits="IMS.ManageCategory" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     
-    <h4>Manage Category</h4>
+    <table width="100%">
+
+        <tbody><tr>
+        	<td><h4>Manage Category</h4></td>
+            <td align="right">
+
+                   <asp:Button ID="btnAddCategory" runat="server"  Text=" + Add Category" CssClass="btn btn-success btn-large" OnClick="btnAddCategory_Click"   />
+                   <asp:Button ID="btnGoBack" runat="server"  Text="Go Back" CssClass="btn btn-default btn-large" OnClick="btnGoBack_Click"    />
+
+             
+            </td>
+        </tr>
+		<tr><td height="5"></td></tr>
+    </tbody></table>
+      
      
         <hr />
     <asp:GridView ID="CategoryDisplayGrid" runat="server"  Width="100%" CssClass="table table-striped table-bordered table-condensed" AllowPaging="True" PageSize="10"
@@ -17,9 +31,9 @@
                             <asp:Label ID="lblCat_ID" runat="server" Text='<%# Eval("categoryId") %>'></asp:Label>
                         </ItemTemplate>
 
-                        <FooterTemplate>
+                        <%--<FooterTemplate>
                             <asp:Label ID="lblAdd" runat="server"></asp:Label>
-                        </FooterTemplate>
+                        </FooterTemplate>--%>
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="Name" SortExpression="categoryName">
@@ -27,13 +41,13 @@
                             <asp:Label ID="lblCat_Name" runat="server" Text='<%# Eval("categoryName") %>'></asp:Label>
                         </ItemTemplate>
 
-                        <EditItemTemplate>
+                        <%--<EditItemTemplate>
                             <asp:TextBox ID="txtname" runat="server" Text='<%#Eval("categoryName") %>'></asp:TextBox>
-                        </EditItemTemplate>
+                        </EditItemTemplate>--%>
 
-                        <FooterTemplate>
+                        <%--<FooterTemplate>
                             <asp:TextBox ID="txtAddname" runat="server"></asp:TextBox>
-                        </FooterTemplate>
+                        </FooterTemplate>--%>
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="Department Name">
@@ -41,15 +55,15 @@
                             <asp:Label ID="lblDep_Id" runat="server" Text='<%#Eval("DepartmentName") %>'></asp:Label>
                         </ItemTemplate>
 
-                        <EditItemTemplate>
+                        <%--<EditItemTemplate>
                             <asp:DropDownList ID="ddlDepName" runat="server">
                             </asp:DropDownList>
 
-                        </EditItemTemplate>
+                        </EditItemTemplate>--%>
 
                         <FooterTemplate>
                             <asp:TextBox ID="txtAddDepID" runat="server" Visible="false"></asp:TextBox>
-                            <asp:DropDownList ID="ddlAddDepName" runat="server">
+                            <asp:DropDownList ID="ddlAddDepName" runat="server"  Visible="false" >
                             </asp:DropDownList>
                         </FooterTemplate>
                     </asp:TemplateField>
@@ -69,26 +83,15 @@
                         </EditItemTemplate>
 
                         <FooterTemplate>
-                            <asp:Button ID="btnAddRecord" CssClass="btn btn-default btn-sm"  runat="server" Text="Add" CommandName="Add"  OnClientClick="return ValidateForm();" ></asp:Button>
+                            <%--<asp:Button ID="btnAddRecord" CssClass="btn btn-default btn-sm"  runat="server" Text="Add" CommandName="Add"  OnClientClick="return ValidateForm();" ></asp:Button>--%>
                         </FooterTemplate>
                     </asp:TemplateField>
                 </Columns>
                 <PagerStyle CssClass = "GridPager" />
             </asp:GridView>
-    <asp:Button ID="btnBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnBack_Click"/>
+    <%--<asp:Button ID="btnBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnBack_Click"/>--%>
 
-     <script type="text/javascript">
-         function ValidateForm() {
-
-             if (document.getElementById("MainContent_CategoryDisplayGrid_txtAddname").value == null || document.getElementById("MainContent_CategoryDisplayGrid_txtAddname").value == '') {
-                 alert("Please enter Category name");
-                 return false;
-             }
-              
-             return true;
-
-         }
-
+     
 
 </script>
 </asp:Content>

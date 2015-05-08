@@ -181,6 +181,9 @@
   <ItemGroup>
     <Content Include="AcceptOrder.aspx" />
     <Content Include="AcceptPurchaseOrder.aspx" />
+    <Content Include="AddDepartment.aspx" />
+    <Content Include="AddEditCategory.aspx" />
+    <Content Include="AddEditSubCategory.aspx" />
     <Content Include="AddEditVendor.aspx" />
     <Content Include="AddProduct.aspx" />
     <Content Include="AddStock.aspx" />
@@ -211,6 +214,7 @@
     <Content Include="Images\edit-icon.png" />
     <Content Include="Images\Gakuseisean-Ivista-2-Start-Menu-Search %281%29.ico" />
     <Content Include="Images\Gakuseisean-Ivista-2-Start-Menu-Search.ico" />
+    <Content Include="Images\ims-main.png" />
     <Content Include="Images\login-bg.png" />
     <Content Include="Images\logo1.png" />
     <Content Include="Images\Mail.png" />
@@ -227,12 +231,14 @@
     <Content Include="ManageDepartment.aspx" />
     <Content Include="ManageInventory.aspx" />
     <Content Include="ManageOrders.aspx" />
+    <Content Include="ManageProduct.aspx" />
     <Content Include="ManageProducts.aspx" />
     <Content Include="ManageStocks.aspx" />
     <Content Include="ManageStore.aspx" />
     <Content Include="ManageSubCategory.aspx" />
     <Content Include="ManageVendor.aspx" />
     <Content Include="ManageWarehouse.aspx" />
+    <Content Include="ManualPurchase.aspx" />
     <Content Include="MasterProductSearch.aspx" />
     <Content Include="OrderPurchaseManual.aspx" />
     <Content Include="OrderSalesManual.aspx" />
@@ -339,6 +345,7 @@
     <Content Include="Style\theme-old.css" />
     <Content Include="Style\theme.css" />
     <Content Include="UserControl\ProductSearch.ascx" />
+    <Content Include="UserControl\ProductsPopupGrid.ascx" />
     <Content Include="UserControl\SuperMasterProducts.ascx" />
     <Content Include="UserControl\uc_printBarcode.ascx" />
     <Content Include="UserControl\uc_Select_System.ascx" />
@@ -423,6 +430,27 @@
     </Compile>
     <Compile Include="AcceptPurchaseOrder.aspx.designer.cs">
       <DependentUpon>AcceptPurchaseOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddDepartment.aspx.cs">
+      <DependentUpon>AddDepartment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddDepartment.aspx.designer.cs">
+      <DependentUpon>AddDepartment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddEditCategory.aspx.cs">
+      <DependentUpon>AddEditCategory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddEditCategory.aspx.designer.cs">
+      <DependentUpon>AddEditCategory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddEditSubCategory.aspx.cs">
+      <DependentUpon>AddEditSubCategory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddEditSubCategory.aspx.designer.cs">
+      <DependentUpon>AddEditSubCategory.aspx</DependentUpon>
     </Compile>
     <Compile Include="AddEditVendor.aspx.cs">
       <DependentUpon>AddEditVendor.aspx</DependentUpon>
@@ -582,6 +610,13 @@
     <Compile Include="ManageOrders.aspx.designer.cs">
       <DependentUpon>ManageOrders.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ManageProduct.aspx.cs">
+      <DependentUpon>ManageProduct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ManageProduct.aspx.designer.cs">
+      <DependentUpon>ManageProduct.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ManageProducts.aspx.cs">
       <DependentUpon>ManageProducts.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -623,6 +658,13 @@
     </Compile>
     <Compile Include="ManageWarehouse.aspx.designer.cs">
       <DependentUpon>ManageWarehouse.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ManualPurchase.aspx.cs">
+      <DependentUpon>ManualPurchase.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ManualPurchase.aspx.designer.cs">
+      <DependentUpon>ManualPurchase.aspx</DependentUpon>
     </Compile>
     <Compile Include="MasterProductSearch.aspx.cs">
       <DependentUpon>MasterProductSearch.aspx</DependentUpon>
@@ -816,6 +858,13 @@
     </Compile>
     <Compile Include="UserControl\ProductSearch.ascx.designer.cs">
       <DependentUpon>ProductSearch.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\ProductsPopupGrid.ascx.cs">
+      <DependentUpon>ProductsPopupGrid.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControl\ProductsPopupGrid.ascx.designer.cs">
+      <DependentUpon>ProductsPopupGrid.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserControl\SuperMasterProducts.ascx.cs">
       <DependentUpon>SuperMasterProducts.ascx</DependentUpon>

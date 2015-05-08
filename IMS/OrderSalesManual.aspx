@@ -1,4 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="OrderSalesManual.aspx.cs" Inherits="IMS.OrderSalesManual" %>
+
+<%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="cc1" %>
+ 
+<%@ Register TagName="ProductsPopup"  TagPrefix="UCProductsPopup" Src="~/UserControl/ProductsPopupGrid.ascx" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 
      <script src="Scripts/SearchSuggest.js"></script>
@@ -28,10 +33,33 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-     <h4>Generate Sale Orders</h4>
-     <hr />
 
-    <table cellspacing="5" cellpadding="5" border="0" width="100%">
+     <table width="100%">
+
+        <tbody>
+            <tr>
+        	<td> <h4>Generate Sale Orders</h4></td>
+            <td align="right">
+            		                		                 	 
+                <asp:Button ID="btnCreateOrder" runat="server" OnClick="btnCreateOrder_Click" Text="ADD"  CssClass="btn btn-primary" OnClientClick="return ValidateForm();" ValidationGroup="ExSave"/>
+                <asp:Button ID="btnAccept" runat="server" OnClick="btnAccept_Click" Text="Generate SO" CssClass="btn btn-success btn-large" Visible="false"/>
+                <span onclick="return confirm('Are you sure you want to delete this record?')">
+                    <asp:Button ID="btnDecline" runat="server" OnClick="btnDecline_Click" Text="Delete SO" CssClass="btn btn-danger btn-large" Visible="false" />
+                </span>
+                <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Text="REFRESH" CssClass="btn btn-default btn-large" Visible="False" />
+                <asp:Button ID="btnCancelOrder" runat="server" OnClick="btnCancelOrder_Click" Text="Go Back" CssClass="btn btn-default btn-large" />
+                
+            </td>
+        </tr>
+		<tr>
+            <td height="5"></td>
+
+		</tr>
+    </tbody>
+
+     </table>
+     <hr>
+    <table cellspacing="5" cellpadding="5" border="0" width="100%" class="formTbl">
 
         <tr>
             <td><asp:Label runat="server" AssociatedControlID="txtIvnoice" CssClass="control-label">Invoice No </asp:Label></td>
@@ -46,6 +74,26 @@
         <tr>
             <td><asp:Label runat="server" AssociatedControlID="txtProduct" CssClass="control-label">Select Product</asp:Label></td>
             <td>
+               <asp:TextBox ID="txtSearch" runat="server" CssClass="product"></asp:TextBox>
+                
+               <asp:ImageButton ID="btnSearchProduct" runat="server"   CssClass="search-btn getProducts" />
+
+               <cc1:ModalPopupExtender ID="mpeCongratsMessageDiv" runat="server" BackgroundCssClass="overLaypop"
+                       RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="btnSearchProduct" ClientIDMode="AutoID"
+                       PopupControlID="_CongratsMessageDiv2" BehaviorID="EditModalPopupMessage" >
+                    </cc1:ModalPopupExtender>
+
+               <div id="_CongratsMessageDiv2" class="congrats-cont" style="display: none; ">
+                            <UCProductsPopup:ProductsPopup  id="ProductsPopupGrid" runat="server"/>
+                        </div>
+
+                 <asp:TextBox runat="server" ID="txtProduct" CssClass="form-control product" Visible="false"/>
+                
+                <asp:DropDownList runat="server" ID="SelectProduct" Visible="false" CssClass="form-control" Width="280" AutoPostBack="True" OnSelectedIndexChanged="SelectProduct_SelectedIndexChanged"/>
+                 
+             
+           </td>
+            <%--<td>
                 <input type="text" id="txtSearch" runat="server" name="txtSearch"   onkeyup="searchSuggest(event);" autocomplete="off"  /> 
                 <div id="search_suggest" style="visibility: hidden;" ></div>
 
@@ -54,7 +102,7 @@
                 
                 <asp:DropDownList runat="server" ID="SelectProduct" Visible="false" CssClass="form-control" Width="280" AutoPostBack="True" OnSelectedIndexChanged="SelectProduct_SelectedIndexChanged"/>
                  
-                </td>
+                </td>--%>
             <td><asp:Label runat="server" AssociatedControlID="SelectQuantity" CssClass="control-label">Enter Send Quantity</asp:Label></td>
             <td> <asp:TextBox runat="server" ID="SelectQuantity" CssClass="form-control" /></td>
         </tr>
@@ -66,22 +114,8 @@
             <td><asp:Label runat="server" AssociatedControlID="SelectDiscount" CssClass="control-label">Enter Discount %</asp:Label></td>
             <td> <asp:TextBox runat="server" ID="SelectDiscount" CssClass="form-control" /></td>
         </tr>
-        <tr>
-            <td colspan="100%">&nbsp;</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td colspan="100%">
-
-                <asp:Button ID="btnCreateOrder" runat="server" OnClick="btnCreateOrder_Click" Text="ADD" CssClass="btn btn-primary" OnClientClick="return ValidateForm();" ValidationGroup="ExSave"/>
-                <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Text="REFRESH" CssClass="btn btn-default" Visible="False" />
-                <asp:Button ID="btnCancelOrder" runat="server" OnClick="btnCancelOrder_Click" Text="GO BACK" CssClass="btn btn-default btn-large" />
-
-            </td>
-
-
-        </tr>
-
+       
+       
     </table>
 
     
@@ -127,8 +161,8 @@
                           
                         <EditItemTemplate>
 
-                            <asp:LinkButton CssClass="btn btn-default btn-xs" ID="btnUpdate" Text="Update" runat="server" CommandName="UpdateStock" />
-                            <asp:LinkButton CssClass="btn btn-default btn-xs" ID="btnCancel" Text="Cancel" runat="server" CommandName="Cancel" />
+                            <asp:LinkButton CssClass="btn btn-primary btn-sm" ID="btnUpdate" Text="Update" runat="server" CommandName="UpdateStock" />
+                            <asp:LinkButton CssClass="btn btn-default btn-sm" ID="btnCancel" Text="Cancel" runat="server" CommandName="Cancel" />
                         </EditItemTemplate>
                          
                          <ItemStyle  Width="100px" HorizontalAlign="Left"/>
@@ -268,10 +302,7 @@
                  </Columns>
              </asp:GridView>
         <br />
-         <asp:Button ID="btnAccept" runat="server" OnClick="btnAccept_Click" Text="GENERATE ORDER" CssClass="btn btn-large" Visible="false"/>
-          <span onclick="return confirm('Are you sure you want to delete this record?')">
-            <asp:Button ID="btnDecline" runat="server" OnClick="btnDecline_Click" Text="DELETE ORDER" CssClass="btn btn-large" Visible="false" />
-          </span>
+         
     </div>
     <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

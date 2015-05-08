@@ -131,7 +131,19 @@ namespace IMS
         protected void CategoryDisplayGrid_RowEditing(object sender, GridViewEditEventArgs e)
         {
             CategoryDisplayGrid.EditIndex = e.NewEditIndex;
-            BindGrid(false);
+
+            GridViewRow row = CategoryDisplayGrid.Rows[CategoryDisplayGrid.EditIndex];
+            Label id = (Label)row.FindControl("lblCat_ID");
+            Label name = (Label)row.FindControl("lblCat_Name");
+            Label depId = (Label)row.FindControl("lblDep_Id");
+
+            Session["Catname"] = name.Text;
+            Session["depId"] = depId.Text;
+            Session["CatId"] = id.Text;
+ 
+            Response.Redirect("AddEditCategory.aspx");
+
+            //BindGrid(false);
         }
 
         private void BindGrid(bool isSearch)
@@ -237,6 +249,17 @@ namespace IMS
             {
                 ViewState["directionState"] = value;
             }
+        }
+
+        protected void btnAddCategory_Click(object sender, EventArgs e)
+        {
+            Session["CatId"] = "0";
+            Response.Redirect("AddEditCategory.aspx");
+        }
+
+        protected void btnGoBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("WarehouseMain.aspx", false);
         }
     }
 }

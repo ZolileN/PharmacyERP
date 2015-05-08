@@ -76,36 +76,40 @@ namespace IMS
         {
             try
             {
-                if (e.CommandName.Equals("Add"))
-                {
-                    DepartmentBLL depManager = new DepartmentBLL();
-                    TextBox txtname = (TextBox)DepDisplayGrid.FooterRow.FindControl("txtAddname");
-                    TextBox txtCode = (TextBox)DepDisplayGrid.FooterRow.FindControl("txtAddCode");
+                //if (e.CommandName.Equals("Add"))
+                //{
+                //    DepartmentBLL depManager = new DepartmentBLL();
+                //    TextBox txtname = (TextBox)DepDisplayGrid.FooterRow.FindControl("txtAddname");
+                //    TextBox txtCode = (TextBox)DepDisplayGrid.FooterRow.FindControl("txtAddCode");
 
-                    Department depToAdd = new Department();
-                    depToAdd.Name = txtname.Text;
-                    depToAdd.Code = txtCode.Text;
+                //    Department depToAdd = new Department();
+                //    depToAdd.Name = txtname.Text;
+                //    depToAdd.Code = txtCode.Text;
 
-                    depManager.Add(depToAdd,connection);
+                //    depManager.Add(depToAdd,connection);
 
 
-                }
-                else if (e.CommandName.Equals("UpdateDep"))
-                {
+                //}
+                //else if (e.CommandName.Equals("UpdateDep"))
+                //{
 
-                    DepartmentBLL depManager = new DepartmentBLL();
-                    GridViewRow row = DepDisplayGrid.Rows[DepDisplayGrid.EditIndex];
-                    Label id = (Label)row.FindControl("lblDep_Id");
-                    TextBox name = (TextBox)DepDisplayGrid.Rows[DepDisplayGrid.EditIndex].Cells[0].FindControl("txtname");
-                    TextBox code = (TextBox)DepDisplayGrid.Rows[DepDisplayGrid.EditIndex].FindControl("txtCode");
+                //    DepartmentBLL depManager = new DepartmentBLL();
+                //    GridViewRow row = DepDisplayGrid.Rows[DepDisplayGrid.EditIndex];
+                //    Label id = (Label)row.FindControl("lblDep_Id");
+                //    //TextBox name = (TextBox)DepDisplayGrid.Rows[DepDisplayGrid.EditIndex].Cells[0].FindControl("txtname");
+                //    //TextBox code = (TextBox)DepDisplayGrid.Rows[DepDisplayGrid.EditIndex].FindControl("txtCode");
 
-                    int selectedId = int.Parse(id.Text);
-                    Department depToUpdate = new Department();//= empid.Text;
-                    depToUpdate.DepartmentID = selectedId;
-                    depToUpdate.Name = name.Text;
-                    depToUpdate.Code = code.Text;
-                    depManager.Update(depToUpdate,connection);
-                }
+                //    Session["dname"] = DepDisplayGrid.Rows[DepDisplayGrid.EditIndex].Cells[0].FindControl("txtname");
+                //    Session["dcode"] = DepDisplayGrid.Rows[DepDisplayGrid.EditIndex].Cells[0].FindControl("txtCode");
+                //    Session["dId"] = id.Text;
+                //    Response.Redirect("AddDepartment.aspx");
+                //   // int selectedId = int.Parse(id.Text);
+                //    //Department depToUpdate = new Department();//= empid.Text;
+                //    //depToUpdate.DepartmentID = selectedId;
+                //    //depToUpdate.Name = name.Text;
+                //    //depToUpdate.Code = code.Text;
+                //    //depManager.Update(depToUpdate,connection);
+                //}
             }
             catch (Exception exp) { }
             finally
@@ -119,6 +123,17 @@ namespace IMS
         protected void DepDisplayGrid_RowEditing(object sender, GridViewEditEventArgs e)
         {
             DepDisplayGrid.EditIndex = e.NewEditIndex;
+             
+            GridViewRow row = DepDisplayGrid.Rows[DepDisplayGrid.EditIndex];
+            Label id = (Label)row.FindControl("lblDep_Id");
+            Label name = (Label)row.FindControl("lblDep_Name");
+            Label code = (Label)row.FindControl("lblDep_Code");
+
+            Session["dname"] = name.Text;
+            Session["dcode"] = code.Text;
+            Session["dId"] = id.Text;
+            Response.Redirect("AddDepartment.aspx");
+
             // BindGrid();
         }
         private void BindGrid(bool isSearch)
@@ -137,6 +152,17 @@ namespace IMS
             }
             DepDisplayGrid.DataSource = ds;
             DepDisplayGrid.DataBind();
+        }
+
+        protected void btnAddDepartment_Click(object sender, EventArgs e)
+        {
+            Session["dId"] = "0";
+            Response.Redirect("AddDepartment.aspx");
+        }
+
+        protected void btnGoBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("WarehouseMain.aspx", false);
         }
     }
 }

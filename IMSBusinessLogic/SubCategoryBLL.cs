@@ -140,5 +140,52 @@ namespace IMSBusinessLogic
                 connection.Close();
             }
         }
+
+        public void AddNew(SubCategory subCategory, SqlConnection connection)
+        {
+            try
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("Sp_AddNewSubCategorys", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_Name", subCategory.Name);
+                command.Parameters.AddWithValue("@p_categoryId", subCategory.CategoryID);
+                 
+                command.ExecuteNonQuery();
+                WebMessageBoxUtil.Show("SubCategory Successfully Added ");
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public void UpdateSubCat(SubCategory subCategory, SqlConnection connection)
+        {
+            try
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("Sp_UpdateSubCategory", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_Id", subCategory.SubCategoryID);
+                command.Parameters.AddWithValue("@p_Name", subCategory.Name);
+                command.Parameters.AddWithValue("@p_CategoryID", subCategory.CategoryID);
+                
+                command.ExecuteNonQuery();
+                WebMessageBoxUtil.Show("SubCategory Successfully Updated ");
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
     }
 }

@@ -77,7 +77,7 @@ namespace IMS.UserControl
             try
             {
                 Label ID = (Label)gdvVendor.Rows[e.RowIndex].FindControl("lblSupID");
-                                                                                                              int id = int.Parse(ID.Text);
+                int id = int.Parse(ID.Text);
                 Vendor vendor = new Vendor();//= empid.Text;
                 vendor.supp_ID = id;
                 ds = VendorBLL.GetDistinct(connection, vendor);
@@ -86,15 +86,43 @@ namespace IMS.UserControl
                 Session["VendorId"] = ds.Tables[0].Rows[0]["SuppID"];
 
                 Control ctl = this.Parent;
-                ComboBox ltMetaTags = null;
-                ltMetaTags = (ComboBox)ctl.FindControl("CmbVendors");
+                TextBox ltMetaTags = null;
+                ltMetaTags = (TextBox)ctl.FindControl("txtVendor");
                 if (ltMetaTags != null)
                 {
-                    ltMetaTags.SelectedValue = Session["VendorId"].ToString();
+                    ltMetaTags.Text = ds.Tables[0].Rows[0]["SupName"].ToString();
                 }
             }
             catch (Exception exp) { }
              
+        }
+
+        protected void SelectVendor_Click(object sender, EventArgs e)
+        {
+
+            GridViewRow rows = gdvVendor.SelectedRow;
+            string data = "";
+            foreach (GridViewRow row in gdvVendor.Rows)
+            {
+                if (row.RowType == DataControlRowType.DataRow)
+                {
+                    CheckBox chkRow = (row.Cells[0].FindControl("chkCtrl") as CheckBox);
+                    if (chkRow.Checked)
+                    {
+                        Control ctl = this.Parent;
+                        TextBox ltMetaTags = null;
+                        Button btnContinue = (Button)ctl.FindControl("btnContinue");
+                        btnContinue.Visible = true;
+                        ltMetaTags = (TextBox)ctl.FindControl("txtVendor");
+                        if (ltMetaTags != null)
+                        {
+                            ltMetaTags.Text = row.Cells[1].Text;
+                        }
+                    }
+                }
+            }
+
+
         }
     }
 }

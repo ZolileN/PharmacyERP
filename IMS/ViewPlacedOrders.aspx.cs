@@ -290,12 +290,13 @@ namespace IMS
                 if (e.CommandName.Equals("ReGen"))
                 {
                     int Pageindex = Convert.ToInt32(StockDisplayGrid.PageIndex);
-
+                    Session["Vendorname"] = StockAt.SelectedItem.Text;
                     Label OrderNo = (Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("OrderNO");
                         //session is setting
                         Session["OrderNumber"] = OrderNo.Text.ToString();
                         Session["FromViewPlacedOrders"] = "true";
-                        Response.Redirect("OrderPurchaseManual.aspx", false);
+                        Response.Redirect("ManualPurchase.aspx", false);
+                       // Response.Redirect("OrderPurchaseManual.aspx", false);
                     
                 }
                 else if (e.CommandName.Equals("UpdateRec")) 
@@ -388,7 +389,7 @@ namespace IMS
         {
             Session["OrderNumber"] = null;
             Session["FromViewPlacedOrders"] = "false";
-            Response.Redirect("ManageOrders.aspx");
+            Response.Redirect("WarehouseMain.aspx");
         }
 
         protected void StockDisplayGrid_RowDataBound(object sender, GridViewRowEventArgs e)

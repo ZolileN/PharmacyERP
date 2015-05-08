@@ -14,33 +14,43 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <br />
-    <br />
-    <h4>Manage Vendors</h4>
-     
-    <hr />
+    <table width="100%">
+
+        <tbody><tr>
+        	<td> <h4>Manage Vendors</h4></td>
+            <td align="right">
+                <asp:Button ID="btnAddVendor" runat="server" OnClick="btnAddVendor_Click" Text=" + Add Vendor" CssClass="btn btn-success btn-large" />
+                <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Text="Refresh List" CssClass="btn btn-info btn-large" />
+                <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnGoBack_Click"/>       
+          </td>
+        </tr>
+		<tr><td height="5"></td></tr>
+    </tbody></table>
+     <hr>
     
-        <table cellspacing="3" cellpadding="3">
+        <table cellspacing="5" cellpadding="5" border="0" width="50%" class="formTbl">
             <tr>
                 <td>
                      <asp:Label runat="server" AssociatedControlID="StockAt" CssClass="control-label">Search by Name </asp:Label>
                 </td>
 
             <td>
-                <asp:TextBox runat="server" ID="SelectProduct" CssClass="form-control product" OnTextChanged="SelectProduct_TextChanged"/>
-                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click" Text="SearchProduct" Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
+                <asp:TextBox runat="server" ID="SelectProduct" CssClass="form-control product"  />
+                <asp:Button ID="btnSearch" runat="server" CssClass="btn btn-sm btn-primary" Text="Search" OnClick="btnSearch_Click" />
+              
+
+
+                <asp:DropDownList runat="server" ID="StockAt" CssClass="form-control product" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="StockAt_SelectedIndexChanged" DataSourceID="StockAtSqlDataSource" DataTextField="SupName" Visible="false" DataValueField="SuppID" />
+                <asp:SqlDataSource ID="StockAtSqlDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:IMSConnectionString %>" SelectCommand="SELECT [SuppID], [SupName] FROM [tblVendor]"></asp:SqlDataSource>
+
+                <asp:ImageButton ID="btnSearchProduct" runat="server" Visible="false" OnClick="btnSearchProduct_Click" Text="SearchProduct" Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
                 
             
-                <asp:DropDownList runat="server" ID="StockAt" CssClass="form-control" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="StockAt_SelectedIndexChanged" Visible="false"/>
             </td>
                 </tr>
           
   
-    <tr>
-        <td></td>
-        <td> <asp:Button ID="btnAddVendor" runat="server" OnClick="btnAddVendor_Click" Text="ADD Vendor" CssClass="btn  btn-primary" />
-    <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Text="Refresh List" CssClass="btn btn-default" /></td>
-    </tr>
+    
    </table>
 
     <br />
@@ -109,5 +119,5 @@
                 </Columns>
             <PagerStyle CssClass = "GridPager" />
     </asp:GridView>
-     <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnGoBack_Click"/> 
+    
 </asp:Content>

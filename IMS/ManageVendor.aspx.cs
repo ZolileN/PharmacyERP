@@ -195,5 +195,16 @@ namespace IMS
         {
             BindGrid();
         }
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            Vendor vendor = new Vendor();
+            vendor.SupName = SelectProduct.Text;
+            ds = VendorBLL.GetDistinctByNane(connection, vendor);
+            //ProductSet = ds;
+            gdvVendor.DataSource = null;
+            gdvVendor.DataSource = ds;
+            gdvVendor.DataBind();
+        }
     }
 }

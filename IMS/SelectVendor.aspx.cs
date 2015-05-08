@@ -40,9 +40,7 @@ namespace IMS
         {
             ds = VendorBLL.GetAllVendors(connection);
             ProductSet = ds;
-            gdvVendor.DataSource = null;
-            gdvVendor.DataSource = ds;
-            gdvVendor.DataBind();
+                 
 
         }
 
@@ -58,8 +56,7 @@ namespace IMS
 
         protected void gdvVendor_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            gdvVendor.PageIndex = e.NewPageIndex;
-            BindGrid();
+             BindGrid();
             //ModalPopupExtender mpe = (ModalPopupExtender)this.Parent.FindControl("mpeCongratsMessageDiv");
             //mpe.Show();
 
@@ -79,27 +76,15 @@ namespace IMS
 
         protected void gdvVendor_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            try
-            {
-                Label ID = (Label)gdvVendor.Rows[e.RowIndex].FindControl("lblSupID");
-                int id = int.Parse(ID.Text);
-                Vendor vendor = new Vendor();//= empid.Text;
-                vendor.supp_ID = id;
-                ds = VendorBLL.GetDistinct(connection, vendor);
+             
 
-                Session["VendorName"] = ds.Tables[0].Rows[0]["SupName"];
-                Session["VendorId"] = ds.Tables[0].Rows[0]["SuppID"];
+        }
 
-                //Control ctl = this.Parent;
-                //ComboBox ltMetaTags = null;
-                //ltMetaTags = (ComboBox)ctl.FindControl("CmbVendors");
-                //if (ltMetaTags != null)
-                //{
-                //    ltMetaTags.SelectedValue = Session["VendorId"].ToString();
-                //}
-            }
-            catch (Exception exp) { }
-
+        protected void btnContinue_Click(object sender, EventArgs e)
+        {
+            string Vendorname = txtVendor.Text;
+            Session["Vendorname"] = Vendorname; 
+            Response.Redirect("ManualPurchase.aspx?" + Vendorname);
         }
     }
 }

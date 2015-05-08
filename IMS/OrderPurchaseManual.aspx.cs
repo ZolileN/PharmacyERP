@@ -926,32 +926,7 @@ namespace IMS
             }
             #endregion
         }
-
-        
-          
-
-        [WebMethod]
-
-        public static List<string>  GetAutoCompleteData(string vendor)
-        {
-            List<string> result = new List<string>();
-
-            if (connection.State == ConnectionState.Closed)
-            {
-                connection.Open();
-            }
-            using (SqlCommand cmd = new SqlCommand("select DISTINCT SuppID,SupName from tblVendor where SupName LIKE '%'+@SearchText+'%'", connection))
-            {
-                
-                cmd.Parameters.AddWithValue("@SearchText", vendor);
-                SqlDataReader dr = cmd.ExecuteReader();
-                while (dr.Read())
-                {
-                    result.Add(dr["SupName"].ToString());
-                }
-                return result;
-            }
-        }
+         
 
         protected void CmbVendors_SelectedIndexChanged(object sender, EventArgs e)
         {

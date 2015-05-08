@@ -2,7 +2,23 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
      <br />
       <br />
-    <h4>Manage SubCategory</h4>
+   <table width="100%">
+
+        <tbody><tr>
+        <td> <h4>Manage Sub Category</h4> </td>
+            <td align="right">
+            	 
+                <asp:Button ID="btnAddSubCategory" runat="server"  Text=" + Add SubCategory" CssClass="btn btn-success btn-large" OnClick="btnAddSubCategory_Click"   />
+                <asp:Button ID="btnGoBack" runat="server"  Text="Go Back" CssClass="btn btn-default btn-large" OnClick="btnGoBack_Click"  />
+         
+               		 <%--<input type="submit" value=" + Add Department" class="btn btn-success btn-large">--%>
+                     <%--<a href="imsMain.html" class="btn btn-default btn-large">Go Back</a>--%>
+               
+                
+            </td>
+        </tr>
+		<tr><td height="5"></td></tr>
+    </tbody></table>
      
         <hr />
     <asp:GridView ID="SubCategoryDisplayGrid" runat="server"  width="100%" CssClass="table table-striped table-bordered table-condensed" AllowPaging="True" PageSize="10" 
@@ -14,9 +30,9 @@
                             <asp:Label ID="lblSubCat_ID" runat="server" Text='<%# Eval("subCatID") %>'></asp:Label>
                         </ItemTemplate>
                         
-                        <FooterTemplate>
+                        <%--<FooterTemplate>
                             <asp:Label ID="lblAdd" runat="server"></asp:Label>
-                        </FooterTemplate>
+                        </FooterTemplate>--%>
                     </asp:TemplateField>
 
                      <asp:TemplateField HeaderText="Name">
@@ -28,9 +44,9 @@
                             <asp:TextBox ID="txtname" runat="server" Text='<%#Eval("subCatName") %>'></asp:TextBox>
                         </EditItemTemplate>
                         
-                        <FooterTemplate>
+                        <%--<FooterTemplate>
                             <asp:TextBox ID="txtAddname" runat="server"></asp:TextBox>
-                        </FooterTemplate>
+                        </FooterTemplate>--%>
                     </asp:TemplateField>
 
                      <asp:TemplateField HeaderText="Category Name">
@@ -40,14 +56,14 @@
                         
                         <EditItemTemplate>
                             <%--<asp:TextBox ID="txtCatID" runat="server" Text='<%#Eval("categoryName") %>'></asp:TextBox>--%>
-                             <asp:DropDownList ID="ddlCategoryName" AutoPostBack="true" runat="server" OnSelectedIndexChanged="ddlCategoryName_SelectedIndexChanged">
+                             <asp:DropDownList ID="ddlCategoryName" AutoPostBack="true" runat="server" Visible="false" OnSelectedIndexChanged="ddlCategoryName_SelectedIndexChanged">
 
                              </asp:DropDownList>
                         </EditItemTemplate>
                         
-                        <FooterTemplate>
-                            <%--<asp:TextBox ID="txtAddCatID" runat="server"></asp:TextBox>--%>
-                             <asp:DropDownList ID="ddlAddCategoryName" AutoPostBack="true" runat="server"  OnSelectedIndexChanged="ddlAddCategoryName_SelectedIndexChanged">
+                         <FooterTemplate>
+                            <%--<asp:TextBox ID="txtAddCatID" runat="server"></asp:TextBox>  --%>
+                             <asp:DropDownList ID="ddlAddCategoryName" AutoPostBack="true" runat="server" Visible="false"  OnSelectedIndexChanged="ddlAddCategoryName_SelectedIndexChanged">
 
                              </asp:DropDownList>
                         </FooterTemplate>
@@ -60,13 +76,13 @@
                         
                          <EditItemTemplate>
                             <%--<asp:TextBox ID="txtCatID" runat="server" Text='<%#Eval("categoryName") %>'></asp:TextBox>--%>
-                             <asp:DropDownList ID="ddlDepName" runat="server" >
+                             <%--<asp:DropDownList ID="ddlDepName" runat="server" >
 
-                             </asp:DropDownList>
+                             </asp:DropDownList>--%>
                         </EditItemTemplate>                   
                         <FooterTemplate>
                             <%--<asp:TextBox ID="txtAddCatID" runat="server"></asp:TextBox>--%>
-                             <asp:DropDownList ID="ddlAddDepName" runat="server">
+                             <asp:DropDownList ID="ddlAddDepName" Visible="false" runat="server">
 
                              </asp:DropDownList>
                         </FooterTemplate>
@@ -80,37 +96,20 @@
                             </span>
                         </ItemTemplate>
 
-                        <EditItemTemplate>
+                        <%--<EditItemTemplate>
 
                             <asp:LinkButton ID="btnUpdate" Text="Update" CssClass="btn btn-default"  runat="server" CommandName="UpdateSubCategory" />
                             <asp:LinkButton ID="btnCancel" Text="Cancel" CssClass="btn btn-default"  runat="server" CommandName="Cancel" />
-                        </EditItemTemplate>
+                        </EditItemTemplate>--%>
                         
-                        <FooterTemplate>
+                        <%--<FooterTemplate>
                             <asp:Button ID="btnAddRecord" runat="server" CssClass="btn btn-default"   OnClientClick="return ValidateForm();"  Text="Add" CommandName="Add"></asp:Button>
-                        </FooterTemplate>
+                        </FooterTemplate>--%>
                     </asp:TemplateField>
                  </Columns>
              </asp:GridView>
-    <asp:Button ID="btnBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnBack_Click"/>
+    <%--<asp:Button ID="btnBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnBack_Click"/>--%>
 
 
-      <script type="text/javascript">
-          function ValidateForm() {
-
-              if (document.getElementById("MainContent_SubCategoryDisplayGrid_txtAddname").value == null || document.getElementById("MainContent_SubCategoryDisplayGrid_txtAddname").value == '') {
-                  alert("Please enter Sub Category name");
-                  return false;
-              }
-              if (document.getElementById("MainContent_SubCategoryDisplayGrid_ddlAddDepName").value == 'Department' || document.getElementById("MainContent_SubCategoryDisplayGrid_ddlAddDepName").value == '') {
-                  alert("Please select Departement");
-                  return false;
-              }
-
-              return true;
-
-          }
-
-
-</script>
+     
 </asp:Content>

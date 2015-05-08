@@ -2,19 +2,42 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <h4>Receive PO(s) </h4> 
-    <hr />
-     <div class="form-horizontal">
-          <div class="form-group">
-        <asp:Label runat="server" AssociatedControlID="StockAt" CssClass="col-md-2 control-label">Search by Vendor Name </asp:Label>
-            <div class="col-md-10">
+    <table width="100%">
+
+        <tbody><tr>
+        	<td> <h4>Receive PO(s)</h4></td>
+            <td align="right">
+               <asp:Button ID="btnBack" runat="server" OnClick="btnBack_Click" Text="Go Back" CssClass="btn btn-default btn-large" Visible="true" /> 
+               
+            </td>
+        </tr>
+		<tr><td height="5"></td></tr>
+    </tbody></table>
+     <hr>
+      <table cellspacing="5" cellpadding="5" border="0" width="50%" class="formTbl">
+        <tbody>
+            <tr>
+            <td><label>Vendor Name </label></td>
+            <td>
+                <asp:DropDownList runat="server" ID="StockAt" CssClass="form-control product" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="StockAt_SelectedIndexChanged" DataSourceID="StockAtDataSource" DataTextField="SupName" DataValueField="SuppID"  />
+
+                   <asp:SqlDataSource ID="StockAtDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:IMSConnectionString %>" SelectCommand="SELECT [SuppID], [SupName] FROM [tblVendor]"></asp:SqlDataSource>
+
+                   <asp:TextBox runat="server" ID="SelectProduct" CssClass="form-control product" Visible="false"/>
+                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click" Visible="false" Text="SearchProduct" Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
+                
+                
+               </td>
+             <%--<td>
+
                 <asp:TextBox runat="server" ID="SelectProduct" CssClass="form-control product"/>
                 <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click" Text="SearchProduct" Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
                 <br />
                 <asp:DropDownList runat="server" ID="StockAt" CssClass="form-control" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="StockAt_SelectedIndexChanged" Visible="false"/>
                 <br/>
-            </div>
-    </div>
+             </td>--%>
+      </tr></tbody></table>
+
          <br />
     <div class="form-group">
         <asp:GridView ID="StockDisplayGrid" CssClass="table table-striped table-bordered table-condensed"  Visible="true" runat="server" AllowPaging="True" PageSize="10" 
@@ -80,10 +103,5 @@
                 <PagerStyle CssClass = "GridPager" />
              </asp:GridView>
     </div>
-    <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-              <asp:Button ID="btnBack" runat="server" OnClick="btnBack_Click" Text="BACK" CssClass="btn btn-large" Visible="true" />
-            </div>
-        </div>
-    </div>
+  
 </asp:Content>

@@ -50,40 +50,40 @@ namespace IMS
         {
             try
             {
-                if (e.CommandName.Equals("Add"))
-                {
-                    SubCategoryBLL subCategoryManager = new SubCategoryBLL();
-                    TextBox txtname = (TextBox)SubCategoryDisplayGrid.FooterRow.FindControl("txtAddname");
-                    string catName = ((DropDownList)(SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddCategoryName"))).SelectedItem.Text;
-                    string depName = ((DropDownList)(SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddDepName"))).SelectedItem.Text;
-                    SubCategory subCategoryToAdd = new SubCategory();
-                    subCategoryToAdd.Name = txtname.Text;
-                    subCategoryToAdd.CategoryName = catName;
-                    subCategoryToAdd.DepartmentName = depName;
-                    subCategoryManager.Add(subCategoryToAdd, connection);
+                //if (e.CommandName.Equals("Add"))
+                //{
+                //    SubCategoryBLL subCategoryManager = new SubCategoryBLL();
+                //    TextBox txtname = (TextBox)SubCategoryDisplayGrid.FooterRow.FindControl("txtAddname");
+                //    string catName = ((DropDownList)(SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddCategoryName"))).SelectedItem.Text;
+                //    string depName = ((DropDownList)(SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddDepName"))).SelectedItem.Text;
+                //    SubCategory subCategoryToAdd = new SubCategory();
+                //    subCategoryToAdd.Name = txtname.Text;
+                //    subCategoryToAdd.CategoryName = catName;
+                //    subCategoryToAdd.DepartmentName = depName;
+                //    subCategoryManager.Add(subCategoryToAdd, connection);
 
-                }
-                else if (e.CommandName.Equals("UpdateSubCategory"))
-                {
-                    SubCategoryBLL subCategoryManager = new SubCategoryBLL();
-                    Label id = (Label)SubCategoryDisplayGrid.Rows[SubCategoryDisplayGrid.EditIndex].FindControl("lblSubCat_ID");
-                    TextBox name = (TextBox)SubCategoryDisplayGrid.Rows[SubCategoryDisplayGrid.EditIndex].FindControl("txtname");
-                    DropDownList ddlCat = (DropDownList)(SubCategoryDisplayGrid.Rows[SubCategoryDisplayGrid.EditIndex].FindControl("ddlCategoryName"));
-                    string catName = ddlCat.SelectedItem.Text;
+                //}
+                //else if (e.CommandName.Equals("UpdateSubCategory"))
+                //{
+                //    SubCategoryBLL subCategoryManager = new SubCategoryBLL();
+                //    Label id = (Label)SubCategoryDisplayGrid.Rows[SubCategoryDisplayGrid.EditIndex].FindControl("lblSubCat_ID");
+                //    TextBox name = (TextBox)SubCategoryDisplayGrid.Rows[SubCategoryDisplayGrid.EditIndex].FindControl("txtname");
+                //    DropDownList ddlCat = (DropDownList)(SubCategoryDisplayGrid.Rows[SubCategoryDisplayGrid.EditIndex].FindControl("ddlCategoryName"));
+                //    string catName = ddlCat.SelectedItem.Text;
 
-                    DropDownList ddlDep = (DropDownList)(SubCategoryDisplayGrid.Rows[SubCategoryDisplayGrid.EditIndex].FindControl("ddlDepName"));
-                    string depName = ddlDep.SelectedItem.Text;
+                //    DropDownList ddlDep = (DropDownList)(SubCategoryDisplayGrid.Rows[SubCategoryDisplayGrid.EditIndex].FindControl("ddlDepName"));
+                //    string depName = ddlDep.SelectedItem.Text;
 
-                    int selectedId = int.Parse(id.Text);
-                    SubCategory subCategoryToUpdate = new SubCategory();//= empid.Text;
-                    subCategoryToUpdate.SubCategoryID = selectedId;
-                    subCategoryToUpdate.Name = name.Text;
-                    subCategoryToUpdate.CategoryName = catName;
-                    subCategoryToUpdate.DepartmentName = depName;
+                //    int selectedId = int.Parse(id.Text);
+                //    SubCategory subCategoryToUpdate = new SubCategory();//= empid.Text;
+                //    subCategoryToUpdate.SubCategoryID = selectedId;
+                //    subCategoryToUpdate.Name = name.Text;
+                //    subCategoryToUpdate.CategoryName = catName;
+                //    subCategoryToUpdate.DepartmentName = depName;
 
-                    subCategoryManager.Update(subCategoryToUpdate, connection);
+                //    subCategoryManager.Update(subCategoryToUpdate, connection);
 
-                }
+                //}
             }
             catch (Exception exp) { }
             finally
@@ -117,7 +117,20 @@ namespace IMS
         protected void SubCategoryDisplayGrid_RowEditing(object sender, GridViewEditEventArgs e)
         {
             SubCategoryDisplayGrid.EditIndex = e.NewEditIndex;
-            BindGrid(false);
+
+            GridViewRow row = SubCategoryDisplayGrid.Rows[SubCategoryDisplayGrid.EditIndex];
+            Label subcatid = (Label)row.FindControl("lblSubCat_ID");
+            Label subcatname = (Label)row.FindControl("lblSubCat_Name");
+            Label catname = (Label)row.FindControl("lblCat_Id");
+
+            Session["subcatname"] = subcatname.Text;
+            Session["catname"] = catname.Text;
+            Session["subcatid"] = subcatid.Text;
+            Response.Redirect("AddEditSubCategory.aspx");
+
+            
+
+            //BindGrid(false);
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
@@ -234,5 +247,17 @@ namespace IMS
             depList.DataValueField = "DepId";
             depList.DataBind();
         }
+
+        protected void btnGoBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("WarehouseMain.aspx", false);
+        }
+
+        protected void btnAddSubCategory_Click(object sender, EventArgs e)
+        {
+            Session["subcatid"] = "0";
+            Response.Redirect("AddEditSubCategory.aspx");
+        }
+
     }
 }

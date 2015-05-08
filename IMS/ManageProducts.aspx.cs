@@ -339,5 +339,10 @@ namespace IMS
             }
             #endregion
         }
+
+        protected void btnGoBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("WarehouseMain.aspx", false);
+        }
     }
 }

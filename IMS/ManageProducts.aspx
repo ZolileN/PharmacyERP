@@ -1,6 +1,20 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ManageProducts.aspx.cs" Inherits="IMS.ManageProducts" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+
+     <table width="100%">
+    <tr><td>
     <h4>Product Management</h4>
+    </td>
+    <td align="right"> 
+         <asp:Button ID="btnAddProduct" runat="server" CssClass="btn btn-success btn-large" Text=" + Add Product" OnClick="btnAddProduct_Click"/>
+         <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnGoBack_Click"  />
+				 
+                 </td>
+                </tr>
+                <tr><td height="5"></td></tr>
+                </table>
+
+    
     <hr />
     <script src="Scripts/SearchSuggest.js"></script>
    <style>
@@ -45,7 +59,7 @@
                 
             </td>
             <td align="right">
-                <asp:Button ID="btnAddProduct" runat="server" CssClass="btn btn-success btn-large" Text=" + Add Product" OnClick="btnAddProduct_Click"/>
+                <%--<asp:Button ID="btnAddProduct" runat="server" CssClass="btn btn-success btn-large" Text=" + Add Product" OnClick="btnAddProduct_Click"/>--%>
                 <asp:Button ID="btnDeleteProduct" runat="server" CssClass="btn btn-danger btn-large" Text="Delete Product" OnClick="btnDeleteProduct_Click" Visible="False"/>
                 <asp:Button ID="btnEditProduct" runat="server" CssClass="btn btn-info btn-large" Text="Edit Product" OnClick="btnEditProduct_Click" Visible="False"/>
             </td>

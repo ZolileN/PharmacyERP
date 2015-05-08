@@ -453,7 +453,7 @@ namespace IMS
                 Session["FirstOrderSO"] = false;
                 Session["ExistingOrder"] = false;
 
-                txtSearch.Value = "";
+                txtSearch.Text = "";
                 txtProduct.Text = "";
                 SelectProduct.Visible = false;
                 StockAt.Enabled = true;
@@ -655,7 +655,7 @@ namespace IMS
                     }
                     SqlCommand command = new SqlCommand("sp_getStock_Quantity", connection);
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_ProductID",  txtSearch.Value);
+                    command.Parameters.AddWithValue("@p_ProductID",  txtSearch.Text);
                     DataSet QuantitySet = new DataSet();
                     SqlDataAdapter sA = new SqlDataAdapter(command);
                     sA.Fill(QuantitySet);
@@ -749,7 +749,7 @@ namespace IMS
                             {
                                 command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                             }
-                            command.Parameters.AddWithValue("@p_ProductID", txtSearch.Value);
+                            command.Parameters.AddWithValue("@p_ProductID", txtSearch.Text);
                             //if (int.TryParse(SelectProduct.SelectedValue.ToString(), out ProductNumber))
                             //{
                             //    command.Parameters.AddWithValue("@p_ProductID", ProductNumber);
@@ -882,7 +882,7 @@ namespace IMS
                                 {
                                     command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                                 }
-                                command.Parameters.AddWithValue("@p_ProductID", txtSearch.Value);
+                                command.Parameters.AddWithValue("@p_ProductID", txtSearch.Text);
                                 //if (int.TryParse(SelectProduct.SelectedValue.ToString(), out ProductNumber))
                                 //{
                                 //    command.Parameters.AddWithValue("@p_ProductID", ProductNumber);
@@ -996,7 +996,7 @@ namespace IMS
                     //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Remaining Stock is less then the entered quantity, please enter less quantity to proceed')", true);
                 }
                 BindGrid();
-                txtSearch.Value = "";
+                txtSearch.Text = "";
                 txtProduct.Text = "";
                 SelectProduct.Visible = false;
                 SelectBonus.Text = "";
@@ -1113,7 +1113,7 @@ namespace IMS
                     }
                     Session["OrderNumber"] = null;
                     Session["FromViewPlacedOrders"] = "false";
-                    txtSearch.Value = "";
+                    txtSearch.Text = "";
                     txtProduct.Text = "";
                     SelectProduct.Visible = false;
                     StockAt.Enabled = true;

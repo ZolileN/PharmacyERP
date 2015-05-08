@@ -159,5 +159,30 @@ namespace IMSBusinessLogic
                 connection.Close();
             }
         }
+
+        public static DataSet GetDistinctByNane(SqlConnection connection, Vendor vendor)
+        {
+            DataSet resultSet = new DataSet();
+            try
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("Sp_GetVendorByName", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_Supp_Name", vendor.SupName);
+                SqlDataAdapter SA = new SqlDataAdapter(command);
+                SA.Fill(resultSet);
+
+            }
+            catch (Exception exp)
+            {
+
+            }
+            finally
+            {
+                connection.Close();
+
+            }
+            return resultSet;
+        }
     }
 }

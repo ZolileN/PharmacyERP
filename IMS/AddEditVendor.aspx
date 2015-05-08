@@ -4,8 +4,26 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
       <br />
      <div class="form-horizontal">
-        <h4 id="regTitleWH" runat="server">Add Vendor</h4>
-        <h4 id="EditTitleWH" visible="false" runat="server">Edit Vendor</h4>
+       
+          <table width="100%">
+
+        <tbody>
+            <tr>
+        	    <td>  
+                    <h4 id="regTitleWH" runat="server">Add Vendor</h4>
+                    <h4 id="EditTitleWH" visible="false" runat="server">Edit Vendor</h4>
+                <td>
+                <td align="right">
+                    <asp:Button ID="btnCreateVendor" runat="server" OnClick="btnCreateVendor_Click"  Text="ADD" CssClass="btn btn-primary" OnClientClick="return ValidateForm();" ValidationGroup="exSave"/>
+                    <asp:Button ID="btnUpdateVendor" runat="server" OnClick="btnUpdateVendor_Click"  Text="UPDATE" CssClass="btn btn-primary" Visible="false"/>
+                    <asp:Button ID="btnCancelVendor" runat="server" OnClick="btnCancelVendor_Click" Text="CANCEL" CssClass="btn btn-default" />
+                    <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnGoBack_Click"/>
+                </td>
+            </tr>
+		<tr><td height="5"></td></tr>
+        </tbody>
+
+          </table>
         <hr />
         <table cellspacing="0" cellpadding="5" border="0" width="100%" class="formTbl">
             <tr>
@@ -56,15 +74,7 @@
                 <td></td>
                 <td></td>
             </tr>
-            <tr>
-                <td></td>
-                <td colspan="100%">
-              <asp:Button ID="btnCreateVendor" runat="server" OnClick="btnCreateVendor_Click"  Text="ADD" CssClass="btn btn-default" OnClientClick="return ValidateForm();" ValidationGroup="exSave"/>
-                 <asp:Button ID="btnUpdateVendor" runat="server" OnClick="btnUpdateVendor_Click"  Text="UPDATE" CssClass="btn btn-default" Visible="false"/>
-                <asp:Button ID="btnCancelVendor" runat="server" OnClick="btnCancelVendor_Click" Text="CANCEL" CssClass="btn btn-default" />
-                <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnGoBack_Click"/>
-                </td>
-            </tr>
+           
             </table>
     </div>
 

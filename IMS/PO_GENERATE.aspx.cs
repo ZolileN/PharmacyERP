@@ -270,8 +270,9 @@ namespace IMS
 
         protected void btnFax_Click(object sender, EventArgs e)
         {
+            Response.Redirect("WarehouseMain.aspx", false);
            // Session["isGenOption"] = true;
-            Response.Redirect("OrderPurchaseManual.aspx",false);
+           // Response.Redirect("SelectVendor.aspx", false);
         }
 
         private void ReadPdfFile(String path)
