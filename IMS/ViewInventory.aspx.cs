@@ -360,7 +360,7 @@ namespace IMS
         {
             if (Convert.ToInt32(Session["UserSys"]).Equals(1))
             {
-                Response.Redirect("ManageStocks.aspx", false);
+                Response.Redirect("WarehouseMain.aspx", false);
             }
             else
             {
