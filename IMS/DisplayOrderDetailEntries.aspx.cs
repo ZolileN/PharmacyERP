@@ -188,9 +188,25 @@ namespace IMS
                         return;
                     }
 
+                    if (txtCP < 0 || txtSP < 0)
+                    {
+                        WebMessageBoxUtil.Show("Entered value cannot be negative");
+                        StockDisplayGrid.EditIndex = -1;
+                        BindGrid();
+                        return;
+                    }
+
+                    if (recQuan < 0 || expQuan < 0 || defQuan < 0 || retQuan < 0)
+                    {
+                        WebMessageBoxUtil.Show("Entered value cannot be negative");
+                        StockDisplayGrid.EditIndex = -1;
+                        BindGrid();
+                        return;
+                    }
+
                     if (recQuan > remQuan||defQuan >remQuan || expQuan >remQuan || retQuan>remQuan)
                     {
-                        WebMessageBoxUtil.Show("Entered Quantity cannout exceed remaining quantity " + remQuan);
+                        WebMessageBoxUtil.Show("Entered Quantity cannot exceed remaining quantity " + remQuan);
                         StockDisplayGrid.EditIndex = -1;
                         BindGrid();
                         return;
@@ -198,7 +214,7 @@ namespace IMS
 
                     if (remQuan < (recQuan + expQuan + defQuan + retQuan))
                     {
-                        WebMessageBoxUtil.Show("Entered Quantity cannout exceed remaining quantity " + remQuan);
+                        WebMessageBoxUtil.Show("Entered Quantity cannot exceed remaining quantity " + remQuan);
                         StockDisplayGrid.EditIndex = -1;
                         BindGrid();
                         return;
@@ -210,21 +226,7 @@ namespace IMS
 
                     }
 
-                    if (txtCP < 0 || txtSP < 0)
-                    {
-                        WebMessageBoxUtil.Show("Entered value cannot be negative");
-                        StockDisplayGrid.EditIndex = -1;
-                        BindGrid();
-                        return;
-                    }
-
-                    if (recQuan < 0 || expQuan < 0 || defQuan < 0 || retQuan<0)
-                    {
-                        WebMessageBoxUtil.Show("Entered value cannot be negative");
-                        StockDisplayGrid.EditIndex = -1;
-                        BindGrid();
-                        return;
-                    }
+                   
 
                     #endregion
 
@@ -416,25 +418,50 @@ namespace IMS
                         return;
                     }
 
-                    if (recQuan > remQuan || defQuan > remQuan || expQuan > remQuan || retQuan > remQuan)
+                    if (txtCP < 0 || txtSP < 0)
                     {
-                       
-                  
-                        if (recQuan == recQuanOrg) { }
-                        else if (defQuan == defQuanOrg) { }
-                        else if(expQuan == expQuanOrg){}
-                        else if(retQuan == retQuanOrg){}
-                        else
-                        {
-                            WebMessageBoxUtil.Show("Entered Quantity cannout exceed remaining quantity " + remQuan);
-                            StockDisplayGrid.EditIndex = -1;
-                            BindGrid();
-                            return;
-                        }
+                        WebMessageBoxUtil.Show("Entered value cannot be negative");
+                        StockDisplayGrid.EditIndex = -1;
+                        BindGrid();
+                        return;
                     }
-                    if (remQuan < (recQuan + expQuan + defQuan + retQuan)) 
+
+                    if (recQuan < 0 || expQuan < 0 || defQuan < 0 || retQuan < 0)
                     {
-                        WebMessageBoxUtil.Show("Entered Quantity cannout exceed remaining quantity " + remQuan);
+                        WebMessageBoxUtil.Show("Entered value cannot be negative");
+                        StockDisplayGrid.EditIndex = -1;
+                        BindGrid();
+                        return;
+                    }
+
+                    //if (recQuan > remQuan || defQuan > remQuan || expQuan > remQuan || retQuan > remQuan)
+                    //{
+
+
+                    //    if (recQuan == recQuanOrg)
+                    //    {
+                    //        if (defQuan == defQuanOrg)
+                    //        {
+                    //            if (expQuan == expQuanOrg)
+                    //            {
+                    //                if (retQuan == retQuanOrg) { }
+                    //                else
+                    //                {
+                    //                    WebMessageBoxUtil.Show("Entered Quantity cannot exceed remaining quantity " + remQuan);
+                    //                    StockDisplayGrid.EditIndex = -1;
+                    //                    BindGrid();
+                    //                    return;
+                    //                }
+                    //            }
+                    //        }
+                    //    }
+
+                    //}
+
+
+                    if ((remQuan + (recQuanOrg + defQuanOrg + expQuanOrg + retQuanOrg)) < (recQuan + expQuan + defQuan + retQuan))
+                    {
+                        WebMessageBoxUtil.Show("Entered Quantity cannot exceed remaining quantity " + remQuan);
                         StockDisplayGrid.EditIndex = -1;
                         BindGrid();
                         return;
@@ -490,22 +517,9 @@ namespace IMS
                         remQuan = remQuan - (val);
 
                     }
+                    
 
-                    if (txtCP < 0 || txtSP < 0)
-                    {
-                        WebMessageBoxUtil.Show("Entered value cannot be negative");
-                        StockDisplayGrid.EditIndex = -1;
-                        BindGrid();
-                        return;
-                    }
-
-                    if (recQuan < 0 || expQuan < 0 || defQuan < 0 || retQuan < 0)
-                    {
-                        WebMessageBoxUtil.Show("Entered value cannot be negative");
-                        StockDisplayGrid.EditIndex = -1;
-                        BindGrid();
-                        return;
-                    }
+                   
                     #endregion
 
                     #region barcode generation
