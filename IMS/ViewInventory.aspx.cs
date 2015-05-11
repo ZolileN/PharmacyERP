@@ -21,6 +21,7 @@ namespace IMS
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
+       
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
@@ -262,23 +263,23 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_ProdType", ProductType.SelectedItem.ToString());
                     }
 
-                    if (string.IsNullOrEmpty(txtSearch.Text))
-                    {
-                        command.Parameters.AddWithValue("@p_ProdID", DBNull.Value);
-                    }
-                    else
-                    {
-                        command.Parameters.AddWithValue("@p_ProdID", txtSearch.Text);
-                    }
-
-                    //if (ProductList.SelectedIndex <= 0)
+                    //if (string.IsNullOrEmpty(txtSearch.Text))
                     //{
                     //    command.Parameters.AddWithValue("@p_ProdID", DBNull.Value);
                     //}
                     //else
                     //{
-                    //    command.Parameters.AddWithValue("@p_ProdID", Convert.ToInt32(ProductList.SelectedValue.ToString()));
+                    //    command.Parameters.AddWithValue("@p_ProdID", txtSearch.Text);
                     //}
+
+                    if (lblProductId.Text == null)
+                    {
+                        command.Parameters.AddWithValue("@p_ProdID", DBNull.Value);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_ProdID", Convert.ToInt32(lblProductId.Text.ToString()));
+                    }
                     #endregion
 
                     SqlDataAdapter SA = new SqlDataAdapter(command);
