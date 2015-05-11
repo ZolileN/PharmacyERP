@@ -266,8 +266,7 @@ namespace IMS.UserControl
                     if (chkRow.Checked)
                     {
                         Control ctl = this.Parent;
-                        TextBox ltMetaTags = null;
-                        GridView gvStockDisplayGrid = (GridView)ctl.FindControl("StockDisplayGrid");
+                        TextBox ltMetaTags = null;                       
 
                         ltMetaTags = (TextBox)ctl.FindControl("txtSearch");
                          
@@ -281,8 +280,18 @@ namespace IMS.UserControl
                         {
                             lbProdId.Text = Server.HtmlDecode(row.Cells[7].Text);
                         }
-                        gvStockDisplayGrid.DataSource = null;
-                        gvStockDisplayGrid.DataBind();
+                        DataSet dsProducts_ProdPopUp = (DataSet)Session["dsProdcts"];
+                        if (dsProducts_ProdPopUp != null && dsProducts_ProdPopUp.Tables.Count > 0 && dsProducts_ProdPopUp.Tables[0].Rows.Count > 0)
+                        {
+                            DataRow[] drs = dsProducts_ProdPopUp.Tables[0].Select("ProductID = '" + lbProdId.Text + "'");
+                            if (drs.Length > 0)
+                            {
+                                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Product already added to the Sales Order.')", true);
+                                return;
+                            }
+                        }
+                        //gvStockDisplayGrid.DataSource = null;
+                        //gvStockDisplayGrid.DataBind();
                     }
                 }
                 Session.Remove("Text");

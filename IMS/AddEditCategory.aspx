@@ -6,7 +6,7 @@
 
      <table width="100%">
          <tr><td>
-        <h4>Add Category</h4>
+        <h4 ><asp:Label ID="lblHeading" runat="server" Text="Add Category"></asp:Label> </h4>
         </td>
         <td align="right">
         	

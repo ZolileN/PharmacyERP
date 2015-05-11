@@ -26,8 +26,16 @@ namespace IMS
                     if (Convert.ToInt32(Session["CatId"].ToString()) > 0)
                     {
                         CategoryName.Text = Session["Catname"].ToString();
-                         
-                        CategoryDepartment.SelectedItem.Text = Session["depId"].ToString();
+                        lblHeading.Text = "Edit Category";
+                        foreach (ListItem Items in CategoryDepartment.Items)
+                        {
+                            if (Items.Text.Equals(Session["depId"].ToString()))
+                            {
+                                CategoryDepartment.SelectedIndex = CategoryDepartment.Items.IndexOf(Items);
+                                break;
+                            }
+                        }
+                       // CategoryDepartment.SelectedItem.Text = Session["depId"].ToString();
                         btnSaveCategory.Text = "Update";
                     }
                 }
