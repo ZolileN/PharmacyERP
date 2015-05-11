@@ -24,8 +24,17 @@ namespace IMS
                 if (Convert.ToInt32(Session["subcatid"].ToString()) > 0)
                 {
                     txtSubCategoryName.Text = Session["subcatname"].ToString();
-                    ddDepartment.SelectedItem.Text = Session["catname"].ToString();
-                    ddCategory.SelectedItem.Text = Session["catname"].ToString();
+                    ddDepartment.SelectedIndex= 1;
+                    
+                    foreach (ListItem Items  in ddCategory.Items) 
+                    {
+                        if (Items.Text.Equals(Session["catname"].ToString())) 
+                        {
+                           ddCategory.SelectedIndex = ddCategory.Items.IndexOf( Items);
+                            break;
+                        }
+                    }
+                   
                     btnSaveSubCategory.Text = "Update";
                 }
             }
@@ -94,12 +103,12 @@ namespace IMS
         }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect("ManageCategory.aspx");
+            Response.Redirect("ManageSubCategory.aspx");
         }
 
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("ManageCategory.aspx");
+            Response.Redirect("ManageSubCategory.aspx");
         }
 
         protected void btnSaveSubCategory_Click(object sender, EventArgs e)
@@ -118,7 +127,7 @@ namespace IMS
                 subCategoryToUpdate.CategoryID = int.Parse(catId);
 
                 subCategoryManager.UpdateSubCat(subCategoryToUpdate, connection);
-
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('SubCategory SuccessFully Updated.')", true);
                
             }
             else

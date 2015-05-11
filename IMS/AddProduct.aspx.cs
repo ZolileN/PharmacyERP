@@ -502,6 +502,7 @@ namespace IMS
 
 
                             int x = command.ExecuteNonQuery();
+                            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Product SuccessFully Updated.')", true);
                             if (x > 0)
                             {
                                 WebMessageBoxUtil.Show("SuccessFully Updated");
@@ -537,6 +538,7 @@ namespace IMS
                         {
                             connection.Close();
                         }
+                        
                         Response.Redirect("ManageProducts.aspx");
                         #endregion
                     }

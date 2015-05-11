@@ -229,7 +229,8 @@ namespace IMS
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_OrderID", orderID);
                     command.ExecuteNonQuery();
-                    WebMessageBoxUtil.Show("Sales order Successfully Deleted");
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Saless order Successfully Deleted.')", true);
+                   // WebMessageBoxUtil.Show("");
                     #endregion
                 }
             }

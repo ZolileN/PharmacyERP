@@ -83,6 +83,7 @@ namespace IMSBusinessLogic
                 command.Parameters.AddWithValue("@p_DepartmentName", subCategory.DepartmentName);
 
                 command.ExecuteNonQuery();
+                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Product SuccessFully Updated.')", true);
                 WebMessageBoxUtil.Show("SubCategory Successfully Updated ");
             }
             catch (Exception ex)
