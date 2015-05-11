@@ -9,6 +9,7 @@ using System.Data.Sql;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Configuration;
+using IMSCommon.Util;
 
 namespace IMS
 {
@@ -198,14 +199,38 @@ namespace IMS
 
                     Label OrderNo = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("OrderNO");
 
-                   
+
                     int orderID = int.Parse(OrderNo.Text.ToString());
                     connection.Open();
-                    SqlCommand command = new SqlCommand("sp_DeleteSO", connection);
+                    #region Order Deletion
+
+
+                    SqlCommand command = new SqlCommand("sp_GetOrderDetailRecieve", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_OrderID", orderID);
+                    DataSet ds = new DataSet();
+                    SqlDataAdapter sA = new SqlDataAdapter(command);
+                    sA.Fill(ds);
 
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        int StockID = int.Parse(ds.Tables[0].Rows[i]["StockID"].ToString());
+                        int quantity = int.Parse(ds.Tables[0].Rows[i]["Quantity"].ToString());
+                        SqlCommand command2 = new SqlCommand();
+                        command2 = new SqlCommand("Sp_UpdateStockBy_StockID", connection);
+                        command2.CommandType = CommandType.StoredProcedure;
+                        command2.Parameters.AddWithValue("@p_StockID", StockID);
+                        command2.Parameters.AddWithValue("@p_quantity", quantity);
+                        command2.Parameters.AddWithValue("@p_Action", "Add");
+                        command2.ExecuteNonQuery();
+                    }
+
+                    command = new SqlCommand("sp_DeleteSO", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@p_OrderID", orderID);
                     command.ExecuteNonQuery();
+                    WebMessageBoxUtil.Show("Sales order Successfully Deleted");
+                    #endregion
                 }
             }
             catch (Exception ex)

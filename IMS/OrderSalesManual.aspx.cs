@@ -498,8 +498,11 @@ namespace IMS
             {
                 if (e.CommandName == "Edit")
                 {
-                    int sendquantity = int.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblQuantity")).Text);
-                    int bonusquantity = int.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblBonus")).Text);
+                    int sendquantity =0;
+                    int bonusquantity=0;
+                    
+                    int.TryParse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblQuantity")).Text,out sendquantity);
+                    int.TryParse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblBonus")).Text,out bonusquantity);
 
                     Session["PreviousValueMain"] = sendquantity + bonusquantity;  // must be checked
                 }
@@ -507,11 +510,16 @@ namespace IMS
                 else if (e.CommandName.Equals("UpdateStock"))
                 {
                     //lblProductID
-                    int quan = int.Parse(((TextBox)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("txtQuantity")).Text);
-                    int bonus = int.Parse(((TextBox)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("txtBonus")).Text);
-                    int availablestock = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblAvStock")).Text);
-                    int orderDetID = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("OrderDetailNo")).Text);
-                    int ProductID = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblProductID")).Text);
+                    int quan = 0; 
+                    int.TryParse(((TextBox)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("txtQuantity")).Text,out quan);
+                    int bonus = 0; 
+                    int.TryParse(((TextBox)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("txtBonus")).Text,out bonus);
+                    int availablestock = 0; 
+                    int.TryParse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblAvStock")).Text,out availablestock);
+                    int orderDetID = 0;
+                    int.TryParse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("OrderDetailNo")).Text,out orderDetID);
+                    int ProductID = 0;
+                    int.TryParse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblProductID")).Text,out ProductID);
                     int TotalQuantity = quan + bonus;
                     if (quan + bonus > 0)
                     {

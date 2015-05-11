@@ -272,7 +272,7 @@ namespace IMS
                     //    command.Parameters.AddWithValue("@p_ProdID", txtSearch.Text);
                     //}
 
-                    if (lblProductId.Text == null)
+                    if (String.IsNullOrEmpty(lblProductId.Text))
                     {
                         command.Parameters.AddWithValue("@p_ProdID", DBNull.Value);
                     }
