@@ -40,7 +40,7 @@ namespace IMS
                 LoadData();
                 #region Getting & Populating Values
                 PO_Number.Text = Session["OrderNumber"].ToString();
-                DataSet dsProducts = (DataSet)Session["dsProducts"];
+                DataSet dsProducts = (DataSet)Session["dsProducts_PO"];
                 PO_Date.Text = ((DateTime)dsProducts.Tables[0].Rows[0]["OrderDate"]).Date.ToString();
 
                 PO_FromName.Text = dsProducts.Tables[0].Rows[0]["SystemName"].ToString();
@@ -85,10 +85,10 @@ namespace IMS
                 DataSet ds = new DataSet();
                  
                 dA.Fill(ds);
-                Session["dsProducts"] = ds;
+                Session["dsProducts_PO"] = ds;
 
                 ProductSet = ds;
-                DataSet dsProducts = (DataSet)Session["dsProducts"];
+                DataSet dsProducts = (DataSet)Session["dsProducts_PO"];
                 //dA.Fill(ProductSet);
                 StockDisplayGrid.DataSource = dsProducts;
                 StockDisplayGrid.DataBind();
@@ -293,7 +293,7 @@ namespace IMS
             if (PO_ToEmail.Text != null && PO_ToEmail.Text != "")
             {
                 ExportGridToPDF();
-                DataSet dsProducts = (DataSet)Session["dsProducts"];
+                DataSet dsProducts = (DataSet)Session["dsProducts_PO"];
                 String ToAddress = dsProducts.Tables[0].Rows[0]["VendorEmail"].ToString();
                 //String ToAddress = ProductSet.Tables[0].Rows[0]["VendorEmail"].ToString();
                 try

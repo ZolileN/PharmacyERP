@@ -31,6 +31,42 @@ namespace IMS.UserControl
                 catch (Exception exp) { }
             }
         }
+
+        public void PopulateGrid()
+        {
+            if (Session["txtVendor"] != null)
+            {
+                DataTable dt = new DataTable();
+                DataSet ds = new DataSet();
+                #region Getting Product Details
+                try
+                {
+                    int id;
+                    if (int.TryParse(Session["UserSys"].ToString(), out id))
+                    {
+                        String Query = "Select * FROM tblVendor Where  SupName Like '" + Session["txtVendor"].ToString() + "'";
+
+                        connection.Open();
+                        SqlCommand command = new SqlCommand(Query, connection);
+                        SqlDataAdapter SA = new SqlDataAdapter(command);
+                        ProductSet = null;
+                        SA.Fill(ds);
+                        
+                        gdvVendor.DataSource = ds;
+                        gdvVendor.DataBind();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                }
+                finally
+                {
+                    connection.Close();
+                }
+                #endregion
+            }
+        }
         private void BindGrid()
         {
             ds = VendorBLL.GetAllVendors(connection);
@@ -54,7 +90,14 @@ namespace IMS.UserControl
         protected void gdvVendor_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gdvVendor.PageIndex = e.NewPageIndex;
-            BindGrid();
+            if (Session["txtVendor"] != null)
+            {
+                PopulateGrid();
+            }
+            else
+            {
+                BindGrid();
+            }
             ModalPopupExtender mpe = (ModalPopupExtender)this.Parent.FindControl("mpeCongratsMessageDiv");
             mpe.Show();
             
@@ -63,7 +106,16 @@ namespace IMS.UserControl
         protected void gdvVendor_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             VendorBLL _vendorBll = new VendorBLL();
-            
+            if (e.CommandName.Equals("CheckChanged"))
+            {
+                Label ID = (Label)gdvVendor.Rows[0].FindControl("lblSupID");
+                int SupID = int.Parse(ID.Text);
+                if (SupID > 0)
+                {
+
+                }
+                
+            }
         }
 
         protected void gdvVendor_RowEditing(object sender, GridViewEditEventArgs e)
@@ -101,7 +153,6 @@ namespace IMS.UserControl
         {
 
             GridViewRow rows = gdvVendor.SelectedRow;
-            string data = "";
             foreach (GridViewRow row in gdvVendor.Rows)
             {
                 if (row.RowType == DataControlRowType.DataRow)
@@ -116,13 +167,21 @@ namespace IMS.UserControl
                         ltMetaTags = (TextBox)ctl.FindControl("txtVendor");
                         if (ltMetaTags != null)
                         {
-                            ltMetaTags.Text = row.Cells[1].Text;
+                            ltMetaTags.Text = Server.HtmlDecode(row.Cells[1].Text);
                         }
                     }
                 }
             }
 
+            Session.Remove("txtVendor");
+        }
 
+        protected void chkCtrl_CheckedChanged(object sender, EventArgs e)
+        {
+            if(sender is CheckBox)
+            {
+
+            }
         }
     }
 }

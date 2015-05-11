@@ -40,7 +40,7 @@ namespace IMS
                 LoadData();
                 #region Getting & Populating Values
                 PO_Number.Text = Session["OrderNumber"].ToString();
-                DataSet dsProducts = (DataSet)Session["dsProducts"];
+                DataSet dsProducts = (DataSet)Session["dsProducts_SOGen"];
 
                 PO_Date.Text = dsProducts.Tables[0].Rows[0]["OrderDate"].ToString();
 
@@ -88,9 +88,9 @@ namespace IMS
                 dA.Fill(ds);
                 ProductSet = ds;
 
-                Session["dsProducts"] = ds;
+                Session["dsProducts_SOGen"] = ds;
 
-                DataSet dsProducts = (DataSet)Session["dsProducts"];
+                DataSet dsProducts = (DataSet)Session["dsProducts_SOGen"];
                 StockDisplayGrid.DataSource = dsProducts;
                 StockDisplayGrid.DataBind();
             }

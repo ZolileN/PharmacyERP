@@ -63,8 +63,8 @@ namespace IMS
                 
                     if (ds != null || ds.Tables[0] != null)
                     {
-                        Session["dsProducts"] = ds;
                         ProductSet = ds;
+                         
                         StockDisplayGrid.DataSource = ds.Tables[0];
                         StockDisplayGrid.DataBind();
                     }
@@ -90,7 +90,7 @@ namespace IMS
             int totVal, totBonVal;
             totVal = totBonVal = 0;
             //DataView dataView =  StockDisplayGrid.DataSource;
-            DataSet ds = Session["dsProducts"] as DataSet;
+            DataSet ds = ProductSet;
             int selectedSum = 0;
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {

@@ -40,10 +40,11 @@
    <table cellspacing="5" cellpadding="5" border="0" style="margin-left:10px;" class="formTbl" id="vendorSelect" width="">
 
        <tr>
-           <td><label for="MainContent_RequestTo" >Select Vendor</label></td>
+           <td><label id="lblSelectVendor" runat="server" >Select Vendor</label></td>
            <td>
                <asp:TextBox ID="txtVendor" runat="server" CssClass="form-control product" ></asp:TextBox>
-                <input type="submit" runat="server" id="btnSearchVendor" class="search-btn opPop"  />
+               <asp:Button ID="btnSearch" runat="server" CssClass="search-btn getProducts" OnClick="btnSearch_Click" />
+                <%--<input type="submit" runat="server" id="btnSearchVendor" class="search-btn opPop"  />--%>
 
            </td>
            <td>
@@ -51,7 +52,7 @@
            	  
            </td>
             <cc1:ModalPopupExtender ID="mpeCongratsMessageDiv" runat="server" BackgroundCssClass="overLaypop"
-                       RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="btnSearchVendor" ClientIDMode="AutoID"
+                       RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="lblSelectVendor" ClientIDMode="AutoID"
                        PopupControlID="_CongratsMessageDiv" BehaviorID="EditModalPopupMessage" >
                     </cc1:ModalPopupExtender>
                     

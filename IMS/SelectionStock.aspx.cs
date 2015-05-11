@@ -32,7 +32,7 @@ namespace IMS
                     DataSet ds = new DataSet();
                     SqlDataAdapter sA = new SqlDataAdapter(command);
                     sA.Fill(ds);
-                    Session["dsProducts"] = ds;
+                    Session["dsProducts_SelectST"] = ds;
                      
                     ProductSet = ds;
                     ds.Tables[0].Columns.Add("ProductInfo", typeof(string), "Product_Name+ ' '+itemStrength+' '+itemPackSize+' '+itemForm");
@@ -66,7 +66,7 @@ namespace IMS
             try
             {
                 DataView dv = new DataView();
-                DataSet dsProducts = (DataSet)Session["dsProducts"];
+                DataSet dsProducts = (DataSet)Session["dsProducts_SelectST"];
 
                 dv = dsProducts.Tables[0].DefaultView;
                 dv.RowFilter = "ProductID = '" + SelectProduct.SelectedValue.ToString() + "'";
@@ -156,7 +156,7 @@ namespace IMS
                     Label expiry = (Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblExpiry");
                     Label _StockID = (Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblStockID");
                     int stockID = int.Parse(_StockID.Text);
-                    DataSet dsProducts = (DataSet)Session["dsProducts"];
+                    DataSet dsProducts = (DataSet)Session["dsProducts_SelectST"];
                     DataView dv = dsProducts.Tables[0].DefaultView;
                     dv.RowFilter = "Product_Id_Org = '" + long.Parse(Barcode.Text.ToString()) + "'";
                     DataTable dt = dv.ToTable();

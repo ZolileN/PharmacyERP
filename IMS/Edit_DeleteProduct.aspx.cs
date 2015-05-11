@@ -53,7 +53,7 @@ namespace IMS
             try
             {
                 DataView dv = new DataView();
-                DataSet dsProducts = (DataSet)Session["dsProducts"];
+                DataSet dsProducts = (DataSet)Session["dsProductts"];
                 dv = dsProducts.Tables[0].DefaultView;
                // dv = ProductSet.Tables[0].DefaultView;
                 dv.RowFilter = "ProductID = '"+SelectProduct.SelectedValue.ToString()+"'";
@@ -430,7 +430,7 @@ namespace IMS
 
                 ProductSet = null;
 
-                Session["dsProducts"] = ds;
+                Session["dsProductts"] = ds;
 
                 ProductSet = ds;
                 SelectProduct.DataSource = ds.Tables[0];

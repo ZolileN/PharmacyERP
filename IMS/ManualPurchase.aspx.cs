@@ -230,8 +230,8 @@ namespace IMS
                         SqlDataAdapter SA = new SqlDataAdapter(commnd);
 
                         SA.Fill(ds1);
-                        Session["dsProducts"] = ds1;
-
+                        Session["dsProducts_MP"] = ds1;
+                        
                         SqlCommand command = new SqlCommand("sp_CreateOrder", connection);
                         command.CommandType = CommandType.StoredProcedure;
                         //sets vendor

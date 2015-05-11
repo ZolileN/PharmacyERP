@@ -75,7 +75,7 @@
             <td><asp:Label runat="server" ID="lblProd" AssociatedControlID="txtProduct" CssClass="control-label">Select Product</asp:Label></td>
             <td>
                <asp:TextBox ID="txtSearch" runat="server" CssClass="product"></asp:TextBox>
-                
+                <asp:Label ID="lblProductId" runat="server" Visible="false"></asp:Label>
                <asp:ImageButton ID="btnSearchProduct" runat="server"   CssClass="search-btn getProducts" OnClick="btnSearchProduct_Click1" />
 
                <cc1:ModalPopupExtender ID="mpeCongratsMessageDiv" runat="server" BackgroundCssClass="overLaypop"
@@ -314,16 +314,17 @@
 
     <script type="text/javascript">
         function ValidateForm() {
-            var valid = true;
-            if (document.getElementById("MainContent_txtProduct").value == null || document.getElementById("MainContent_txtProduct").value == '') {
-                alert("Please enter at least three words to search product");
-                valid = false;
+            var e = document.getElementById("MainContent_StockAt");
+            var ddStockAt = e.options[e.selectedIndex].value;
+            if (ddStockAt == 'Select System') {
+                alert("Please select Store");
+                return false;
             }
-            return valid;
-
-            //var e = document.getElementById("SelectProduct");
-            //var strProduct = e.options[e.selectedIndex].value;
-           
+            if (document.getElementById("MainContent_txtSearch").value == null || document.getElementById("MainContent_txtSearch").value == '') {
+                alert("Please enter at least three words to search product");
+                return false;
+            }
+ 
         }
         
 

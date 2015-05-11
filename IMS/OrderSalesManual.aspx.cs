@@ -400,7 +400,7 @@ namespace IMS
         }
         protected void btnAccept_Click(object sender, EventArgs e)
         {
-            DataSet dsProducts = (DataSet)Session["dsProducts"];
+            DataSet dsProducts = (DataSet)Session["dsProdcts"];
 
             Session["RequestedNO"] = Convert.ToInt32(dsProducts.Tables[0].Rows[0]["OrderID"].ToString());
             Session["FirstOrderSO"] = false;
@@ -655,7 +655,9 @@ namespace IMS
                     }
                     SqlCommand command = new SqlCommand("sp_getStock_Quantity", connection);
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_ProductID",  txtSearch.Text);
+                    command.Parameters.AddWithValue("@p_ProductID", Convert.ToInt32(lblProductId.Text));
+
+                   // command.Parameters.AddWithValue("@p_ProductID",  txtSearch.Text);
                     DataSet QuantitySet = new DataSet();
                     SqlDataAdapter sA = new SqlDataAdapter(command);
                     sA.Fill(QuantitySet);
@@ -749,7 +751,7 @@ namespace IMS
                             {
                                 command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                             }
-                            command.Parameters.AddWithValue("@p_ProductID", txtSearch.Text);
+                            command.Parameters.AddWithValue("@p_ProductID", lblProductId.Text);
                             //if (int.TryParse(SelectProduct.SelectedValue.ToString(), out ProductNumber))
                             //{
                             //    command.Parameters.AddWithValue("@p_ProductID", ProductNumber);
@@ -882,7 +884,8 @@ namespace IMS
                                 {
                                     command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                                 }
-                                command.Parameters.AddWithValue("@p_ProductID", txtSearch.Text);
+                               // command.Parameters.AddWithValue("@p_ProductID", txtSearch.Text);
+                                command.Parameters.AddWithValue("@p_ProductID", Convert.ToInt32(lblProductId.Text));
                                 //if (int.TryParse(SelectProduct.SelectedValue.ToString(), out ProductNumber))
                                 //{
                                 //    command.Parameters.AddWithValue("@p_ProductID", ProductNumber);
@@ -1038,7 +1041,7 @@ namespace IMS
 
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
-                Session["dsProducts"] = ds;
+                Session["dsProdcts"] = ds;
                 ProductSet = ds;
                 StockDisplayGrid.DataSource = null;
                 StockDisplayGrid.DataSource = ds.Tables[0];

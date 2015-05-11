@@ -26,14 +26,14 @@
                     <asp:Label runat="server" AssociatedControlID="EmpID" CssClass="control-label">User ID</asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox runat="server" ID="EmpID" CssClass="form-control" Enabled="True" />
+                    <%--<asp:TextBox runat="server" ID="EmpID" CssClass="form-control" Enabled="True" />--%>
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="EmpID" CssClass="text-danger" ErrorMessage="The Employee ID field is required." ValidationGroup="exSave" />
                 </td>
                 <td>
                     <asp:Label runat="server" AssociatedControlID="uPwd" CssClass="control-label">User Password</asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox runat="server" ID="uPwd" CssClass="form-control" TextMode="Password" />
+                    <%--<asp:TextBox runat="server" ID="uPwd" CssClass="form-control" TextMode="Password" />--%>
 
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="uPwd" CssClass="text-danger" ErrorMessage="The user password field is required." ValidationGroup="exSave" />
                 </td>
@@ -100,11 +100,11 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
 
-                <asp:Button ID="btnAddEmployee" runat="server" OnClick="btnAddEmployee_Click" Text="Save" CssClass="btn btn-default" ValidationGroup="exSave" />
+                <%--<asp:Button ID="btnAddEmployee" runat="server" OnClick="btnAddEmployee_Click" Text="Save" CssClass="btn btn-default" ValidationGroup="exSave" />--%>
 
-                 <asp:Button ID="btnSave" runat="server"  Text="Update" CssClass="btn btn-default" ValidationGroup="exSave" OnClick="btnUpdate_Click" />
+                 <%--<asp:Button ID="btnSave" runat="server"  Text="Update" CssClass="btn btn-default" ValidationGroup="exSave" OnClick="btnUpdate_Click" />--%>
                 <%--<asp:Button ID="btnCancelProduct" runat="server" OnClick="btnCancelProduct_Click" Text="CANCEL" CssClass="btn btn-default" />--%>
-                <asp:Button ID="btnBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnBack_Click"/>
+                <%--<asp:Button ID="btnBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnBack_Click"/>--%>
                 <asp:Button ID="btnAssociatedStore" runat="server" CssClass="btn btn-primary btn-large" Text="Associated Store" OnClick="btnAssociatedStore_Click"/>
 
             </div>

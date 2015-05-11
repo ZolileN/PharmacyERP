@@ -86,5 +86,13 @@ namespace IMS
             Session["Vendorname"] = Vendorname; 
             Response.Redirect("ManualPurchase.aspx?" + Vendorname);
         }
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            String Text = txtVendor.Text + '%';
+            Session["txtVendor"] = Text;
+            VendorsPopupGrid.PopulateGrid();
+            mpeCongratsMessageDiv.Show();
+        }
     }
 }

@@ -51,7 +51,7 @@ namespace IMS
                         DataSet ds = new DataSet();
                         SqlDataAdapter dA = new SqlDataAdapter(command);
                         dA.Fill(ds);
-                        Session["dsProducts"] = ds;
+                        Session["dsProducts_SRE"] = ds;
                          
                         ProductSet = ds;
                         
@@ -295,7 +295,7 @@ namespace IMS
             #region Accepting Order
             try
             {
-                DataSet dsProducts = (DataSet)Session["dsProducts"];
+                DataSet dsProducts = (DataSet)Session["dsProducts_SRE"];
 
                 DataTable temptbl = dsProducts.Tables[0];
 

@@ -16,7 +16,7 @@
 
                      <asp:TemplateField HeaderText="Action">
                         <ItemTemplate>
-                            <asp:CheckBox ID="chkCtrl" runat="server" />
+                            <asp:CheckBox ID="chkCtrl" runat="server"  onClick="CheckSingleCheckbox(this);"  />
                         </ItemTemplate>
                     </asp:TemplateField>
 
@@ -28,11 +28,11 @@
                         </ItemTemplate>
                          <ItemStyle  Width="120px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
-                    
                      <asp:BoundField DataField="Description" HeaderText="Description"   /> 
                      <asp:BoundField DataField="itemStrength" HeaderText="Item Strength"   />
                      <asp:BoundField DataField="itemForm" HeaderText="Item Form"   />
                      <asp:BoundField DataField="itemPackSize" HeaderText="Pack Size"   />
+                    <asp:BoundField DataField="ProductID" HeaderText="Product" />
 
                      <%--<asp:TemplateField HeaderText="Product Type">
                         <ItemTemplate>
@@ -61,3 +61,17 @@
      
      <asp:Button ID="SelectProduct" runat="server" CssClass="btn btn-primary fl-r btn-sm" Text="Select" OnClick="SelectProduct_Click"  />
  </div>
+
+ <script type="text/javascript">
+     function CheckSingleCheckbox(ob) {
+         var grid = ob.parentNode.parentNode.parentNode;
+         var inputs = grid.getElementsByTagName("input");
+         for (var i = 0; i < inputs.length; i++) {
+             if (inputs[i].type == "checkbox") {
+                 if (ob.checked && inputs[i] != ob && inputs[i].checked) {
+                     inputs[i].checked = false;
+                 }
+             }
+         }
+     }
+    </script>

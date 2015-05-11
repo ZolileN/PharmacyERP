@@ -13,8 +13,9 @@
         <Columns>
            
              <asp:TemplateField HeaderText="Action">
-                <ItemTemplate>
-                    <asp:CheckBox ID="chkCtrl" runat="server" />
+                <ItemTemplate >
+                     
+                    <asp:CheckBox ID="chkCtrl" runat="server" onClick="CheckSingleCheckbox(this);"  />
                    
                 </ItemTemplate>
             </asp:TemplateField>
@@ -68,3 +69,18 @@
      
      <asp:Button ID="SelectVendor" runat="server" CssClass="btn btn-primary fl-r btn-sm" Text="Select" OnClick="SelectVendor_Click" />
  </div>
+
+
+ <script type="text/javascript">
+     function CheckSingleCheckbox(ob) {
+         var grid = ob.parentNode.parentNode.parentNode;
+         var inputs = grid.getElementsByTagName("input");
+         for (var i = 0; i < inputs.length; i++) {
+             if (inputs[i].type == "checkbox") {
+                 if (ob.checked && inputs[i] != ob && inputs[i].checked) {
+                     inputs[i].checked = false;
+                 }
+             }
+         }
+     }
+    </script>

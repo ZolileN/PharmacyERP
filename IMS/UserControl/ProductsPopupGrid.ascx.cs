@@ -44,7 +44,7 @@ namespace IMS.UserControl
                         SqlDataAdapter SA = new SqlDataAdapter(command);
                         ProductSet = null;
                         SA.Fill(ds);
-                        Session["dsProducts"] = ds;
+                        Session["dsProducts_ProdPopUp"] = ds;
                         ProductSet = ds;
                         StockDisplayGrid.DataSource = ds;
                         StockDisplayGrid.DataBind();
@@ -79,7 +79,7 @@ namespace IMS.UserControl
                     SqlDataAdapter SA = new SqlDataAdapter(command);
                     ProductSet = null;
                     SA.Fill(ds);
-                    Session["dsProducts"] = ds;
+                    Session["dsProducts_ProdPopUp"] = ds;
                     ProductSet = ds;
                     StockDisplayGrid.DataSource = ds;
                     StockDisplayGrid.DataBind();
@@ -148,7 +148,7 @@ namespace IMS.UserControl
                     Session["MS_ItemName"] = ItemName.Text.ToString();
                     Session["MS_ItemType"] = ItemType.Text.ToString();
 
-                    DataSet dsProducts = (DataSet)Session["dsProducts"];
+                    DataSet dsProducts = (DataSet)Session["dsProducts_ProdPopUp"];
                     DataView dv = dsProducts.Tables[0].DefaultView;
                     // DataView dv = ProductSet.Tables[0].DefaultView;
                     dv.RowFilter = "Product_Id_Org = '" + ItemNo.Text + "'";
@@ -192,7 +192,7 @@ namespace IMS.UserControl
 
                         int res6 = 0;
 
-                        DataSet dsProducts = (DataSet)Session["dsProducts"];
+                        DataSet dsProducts = (DataSet)Session["dsProducts_ProdPopUp"];
                         DataView dv = dsProducts.Tables[0].DefaultView;
                         //DataView dv = ProductSet.Tables[0].DefaultView;
                         dv.RowFilter = "Product_Id_Org = '" + ItemNo.Text + "'";
@@ -267,11 +267,22 @@ namespace IMS.UserControl
                     {
                         Control ctl = this.Parent;
                         TextBox ltMetaTags = null;
+                        GridView gvStockDisplayGrid = (GridView)ctl.FindControl("StockDisplayGrid");
+
                         ltMetaTags = (TextBox)ctl.FindControl("txtSearch");
+                         
+                        Label lbProdId = (Label)ctl.FindControl("lblProductId");
                         if (ltMetaTags != null)
                         {
-                            ltMetaTags.Text = row.Cells[1].Text;
+                            ltMetaTags.Text = Server.HtmlDecode(row.Cells[1].Text);
+                             
                         }
+                        if(lbProdId !=null)
+                        {
+                            lbProdId.Text = Server.HtmlDecode(row.Cells[7].Text);
+                        }
+                        gvStockDisplayGrid.DataSource = null;
+                        gvStockDisplayGrid.DataBind();
                     }
                 }
                 Session.Remove("Text");
