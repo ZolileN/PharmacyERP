@@ -76,7 +76,15 @@ namespace IMS
         protected void gdvVendor_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gdvVendor.PageIndex = e.NewPageIndex;
-            BindGrid();
+
+            Vendor vendor = new Vendor();
+            vendor.SupName = SelectProduct.Text;
+            ds = VendorBLL.GetDistinctByNane(connection, vendor);
+            //ProductSet = ds;
+            gdvVendor.DataSource = null;
+            gdvVendor.DataSource = ds;
+            gdvVendor.DataBind();
+            //BindGrid();
         }
 
         protected void gdvVendor_RowCommand(object sender, GridViewCommandEventArgs e)
