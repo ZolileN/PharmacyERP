@@ -23,6 +23,8 @@ namespace IMS
         {
             if (!IsPostBack)
             {
+                Session.Remove("dsProdcts");
+                Session.Remove("dsProducts_MP");
                 btnCreateOrder.Attributes.Add("OnClientClick", "if(ValidateForm()) {return false; }");
 
                 txtIvnoice.Text = "SO-" + DateTime.Now.TimeOfDay.Hours + "_" + DateTime.Now.TimeOfDay.Minutes;
@@ -128,7 +130,7 @@ namespace IMS
 
             if (!IsPostBack)
             {
-                Session.Remove("OrderSalesDetail");
+                //Session.Remove("OrderSalesDetail");
                 //Session.Remove("FirstOrderSO");
                 //Session.Remove("ExistingOrder");
                 //Session.Remove("ViewSalesOrders");
@@ -1079,11 +1081,11 @@ namespace IMS
         {
             
             //must be checked for sessions
-            if (Session["OrderSalesDetail"] != null && Session["OrderSalesDetail"].Equals(true) && Session["OrderSalesDetail"].ToString() != null)
+            if (Session["OrderSalesDetail"] != null   && Session["OrderSalesDetail"].ToString() != null)
             {
                 Session["OrderNumber"] = "";
                 Session["OrderSalesDetail"] = false;
-                Response.Redirect("ViewSalesOrders.aspx", false); //must be rechecked
+                Response.Redirect("WarehouseMain.aspx", false); //must be rechecked
             }
             else
             {

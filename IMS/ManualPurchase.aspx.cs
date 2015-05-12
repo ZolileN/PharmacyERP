@@ -230,8 +230,7 @@ namespace IMS
                         SqlDataAdapter SA = new SqlDataAdapter(commnd);
 
                         SA.Fill(ds1);
-                        Session["dsProducts_MP"] = ds1;
-                        
+                         
                         SqlCommand command = new SqlCommand("sp_CreateOrder", connection);
                         command.CommandType = CommandType.StoredProcedure;
                         //sets vendor
@@ -518,9 +517,11 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                 }
 
+
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
                 StockDisplayGrid.DataSource = null;
+                Session["dsProducts_MP"] = ds;
                 StockDisplayGrid.DataSource = ds.Tables[0];
                 StockDisplayGrid.DataBind();
 

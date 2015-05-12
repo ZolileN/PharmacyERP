@@ -44,6 +44,7 @@
                <asp:Label runat="server" ID="lblProd"  CssClass="control-label">Select Product</asp:Label></td>
            <td>
                <asp:TextBox ID="txtSearch" runat="server" CssClass="product"></asp:TextBox>
+               <asp:Label ID="lblProductId" runat="server" Visible="false"></asp:Label>
                 
                <asp:ImageButton ID="btnSearchProduct" runat="server"   CssClass="search-btn getProducts" OnClick="btnSearchProduct_Click1" />
  

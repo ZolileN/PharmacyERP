@@ -171,8 +171,8 @@ namespace IMS
                     SA.Fill(ds);
                     if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                     {
-                        StockDisplayGrid.DataSource = ds;
-                        StockDisplayGrid.DataBind();
+                        dgvStockDisplayGrid.DataSource = ds;
+                        dgvStockDisplayGrid.DataBind();
                     }
                     else
                     {
@@ -284,8 +284,8 @@ namespace IMS
 
                     SqlDataAdapter SA = new SqlDataAdapter(command);
                     SA.Fill(ds);
-                    StockDisplayGrid.DataSource = ds;
-                    StockDisplayGrid.DataBind();
+                    dgvStockDisplayGrid.DataSource = ds;
+                    dgvStockDisplayGrid.DataBind();
                 }
 
             }
@@ -303,7 +303,7 @@ namespace IMS
 
         protected void StockDisplayGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            StockDisplayGrid.PageIndex = e.NewPageIndex;
+            dgvStockDisplayGrid.PageIndex = e.NewPageIndex;
             BindGrid();
         }
 
@@ -316,9 +316,9 @@ namespace IMS
                    // Image BarcodeImage=new Image();
                    // //int 
                    
-                   // Label Barcode = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("BarCode");
-                   // Label Quantity = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("lblQuantity");
-                   // Label ProductName = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("ProductName");
+                   // Label Barcode = (Label)dgvStockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("BarCode");
+                   // Label Quantity = (Label)dgvStockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("lblQuantity");
+                   // Label ProductName = (Label)dgvStockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("ProductName");
                    // long ProductBarCode = long.Parse(e.CommandArgument.ToString());
                    //// int PrintQuantity = Int32.Parse(Quantity.Text.ToString());
 
@@ -526,7 +526,7 @@ namespace IMS
                 sw.WriteLine("");
                 HtmlTextWriter hw = new HtmlTextWriter(sw);
                
-                StockDisplayGrid.RenderControl(hw);
+                dgvStockDisplayGrid.RenderControl(hw);
                 
                 StringReader sr = new StringReader(sw.ToString());
                 Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 0f);
@@ -547,8 +547,8 @@ namespace IMS
                 //Response.SuppressContent = true; 
                 //Response.End();
                 //Response.Redirect("PO_GENEREATE.aspx");
-                //StockDisplayGrid.AllowPaging = true;
-                //StockDisplayGrid.DataBind();
+                //dgvStockDisplayGrid.AllowPaging = true;
+                //dgvStockDisplayGrid.DataBind();
             }
             catch (Exception ex)
             {

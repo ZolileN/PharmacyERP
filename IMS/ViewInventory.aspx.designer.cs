@@ -175,13 +175,13 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.DropDownList ProductType;
         
         /// <summary>
-        /// StockDisplayGrid control.
+        /// dgvStockDisplayGrid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView StockDisplayGrid;
+        protected global::System.Web.UI.WebControls.GridView dgvStockDisplayGrid;
         
         /// <summary>
         /// _editPopupButton control.
