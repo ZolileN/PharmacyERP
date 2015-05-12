@@ -125,6 +125,7 @@ namespace IMS
                 }
                 else if (e.CommandName.Equals("Delete"))
                 {
+                     
                     int orderDetID = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("OrderDetailNo")).Text);
                     if (connection.State == ConnectionState.Closed)
                     {
@@ -633,6 +634,8 @@ namespace IMS
         {
             try
             {
+                Session.Remove("dsProdcts");
+                Session.Remove("dsProducts_MP");
                 DataSet delDs = new DataSet();
                 if (Session["OrderNumber"] != null)
                 {

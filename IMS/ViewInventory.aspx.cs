@@ -26,6 +26,8 @@ namespace IMS
         {
             if(!IsPostBack)
             {
+                Session.Remove("dsProdcts");
+                Session.Remove("dsProducts_MP");
 
                 #region Populating Product Type DropDown
                 ProductType.Items.Add("Select Product Type");
