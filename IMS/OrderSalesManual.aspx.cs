@@ -623,8 +623,11 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
 
                     command.ExecuteNonQuery();
-                    btnAccept.Visible = false;
-                    btnDecline.Visible = false;
+                    if (StockDisplayGrid.Rows.Count == 1)
+                    {
+                        btnAccept.Visible = false;
+                        btnDecline.Visible = false;
+                    }
                 }
                 else if (e.CommandName.Equals("Details"))
                 {
