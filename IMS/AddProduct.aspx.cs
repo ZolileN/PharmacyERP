@@ -184,6 +184,7 @@ namespace IMS
                                     String UnitSale, String UnitCost, String ItemAwt, String Form, String Strength, String itemPackType,
                                     String itemPackSize, String Description="", string b12 = "", string b25 = "", string b50 = "")
         {
+            BarCodeSerial.Text = ItemNo;
             GreenRainCode.Text = GreenRain;
             ProductName.Text = ItemName;
             ProdcutBrand.Text = BrandName;

@@ -38,7 +38,7 @@
                  <td>
                 <asp:Label runat="server" AssociatedControlID="BarCodeSerial" CssClass="control-label">BarCode Serial</asp:Label>
                  </td>
-                 <td><asp:TextBox runat="server" ID="BarCodeSerial" CssClass="form-control" Enabled="false" />
+                 <td><asp:TextBox runat="server" ID="BarCodeSerial" CssClass="form-control" Enabled="false" Visible="true" />
                  </td>
                  <td><asp:Label runat="server" AssociatedControlID="GreenRainCode" CssClass="control-label">GreenRain Code</asp:Label></td>
                  <td><asp:TextBox runat="server" ID="GreenRainCode" CssClass="form-control" /></td>
