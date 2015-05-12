@@ -430,8 +430,8 @@ namespace IMS
             Session["OrderNumber"] = null;
             Session["FromViewPlacedOrders"] = "false";
             SelectProduct.Text = "";
-            StockAt.Visible = false;
-            StockAt.SelectedIndex = -1;
+           // StockAt.Visible = false;
+             StockAt.SelectedIndex = 0;
             txtOrderNO.Text = "";
             DateTextBox.Text = "";
             OrderStatus.SelectedIndex = 0;
