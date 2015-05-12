@@ -183,9 +183,10 @@ namespace IMS
                     Label OrderNo = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("OrderNO");
                     Label SystemID = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("SystemID");
                     Label Invoice = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("Invoice");
-
+                     Label OrderTo = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("OrderTo");
                     //session is setting
-                    Session["OrderNumber"] = OrderNo.Text.ToString();
+                    Session["OrderNumberSO"] = OrderNo.Text.ToString();
+                    Session["SelectedIndexValue"] = OrderTo.Text.ToString();
                     Session["OrderSalesDetail"] = true;
                     Session["SystemID"] = SystemID.Text;
                     Session["ExistingOrder"] = true;
@@ -271,8 +272,8 @@ namespace IMS
 
         protected void btnBack_Click(object sender, EventArgs e)
         {
-            Session["OrderNumber"] = null;
-            Session["FromViewPlacedOrders"] = "false";
+            Session["OrderNumberSO"] = null;
+          //  Session["ViewSalesOrders"] = "false";
             Response.Redirect("WarehouseMain.aspx");
         }
 
@@ -308,8 +309,9 @@ namespace IMS
 
         protected void btnRefresh_Click(object sender, EventArgs e)
         {
-            Session["OrderNumber"] = null;
-            Session["FromViewPlacedOrders"] = "false";
+            Session["OrderNumberSO"] = null;
+           // Session["FromViewPlacedOrders"] = "false";
+           // Session["ViewSalesOrders"] = "false";
             SelectProduct.Text = "";
             StockAt.Visible = false;
             StockAt.SelectedIndex = -1;

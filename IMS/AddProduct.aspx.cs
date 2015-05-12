@@ -87,7 +87,7 @@ namespace IMS
                 else if (Session["MODE"].Equals("EDIT"))
                 {
                     btnCreateProduct.Text = "UPDATE";
-                    BarCodeSerial.Visible = false;
+                    //BarCodeSerial.Visible = false;
                 }
 
                 #region Master Search Mechanism

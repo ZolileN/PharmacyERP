@@ -127,6 +127,7 @@ namespace IMS
           
 
             Session["OrderSalesDetail"] = true;
+            Session["ViewSalesOrders"] = false;
             Response.Redirect("OrderSalesManual.aspx");
         }
         protected void btnDeclineStock_Click(object sender, EventArgs e)

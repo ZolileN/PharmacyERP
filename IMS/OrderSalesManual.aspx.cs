@@ -29,13 +29,14 @@ namespace IMS
 
                 txtIvnoice.Text = "SO-" + DateTime.Now.TimeOfDay.Hours + "_" + DateTime.Now.TimeOfDay.Minutes;
                 txtIvnoice.Enabled = false;
-                if (Session["OrderSalesDetail"] != null && Session["OrderSalesDetail"].Equals(true))
+                if (Session["OrderNumberSO"] != null && Session["OrderSalesDetail"] != null && Session["OrderSalesDetail"].Equals(true) && Session["ViewSalesOrders"] != null)
                 {
                     if (Session["ViewSalesOrders"] != null && Session["ViewSalesOrders"].Equals(true))
                     {
                         btnAccept.Text = "RE-GENERATE ORDER";
                         Session["ViewSalesOrders"] = false;
                     }
+                    Session["ViewSalesOrders"] = null;
                     Session["FirstOrderSO"] = true;
                     systemSet = new DataSet();
                     ProductSet = new DataSet();
@@ -61,8 +62,20 @@ namespace IMS
                         if (StockAt != null)
                         {
                             StockAt.Items.Insert(0, "Select System");
-                            StockAt.SelectedValue = Session["SelectedIndex"].ToString();
-                            StockAt.Enabled = false;
+                            if (Session["SelectedIndexValue"] != null)
+                            {
+                                // set index based on value
+                                foreach (ListItem Items in StockAt.Items)
+                                {
+                                    if (Items.Text.Equals(Session["SelectedIndexValue"].ToString()))
+                                    {
+                                        StockAt.SelectedIndex = StockAt.Items.IndexOf(Items);
+                                        break;
+                                    }
+                                }
+                                StockAt.Enabled = false;
+                            }
+                            
                         }
                     }
                     catch (Exception ex)
@@ -84,6 +97,7 @@ namespace IMS
                 }
                 else
                 {
+                    Session["OrderNumberSO"] = "";
                     Session["FirstOrderSO"] = false;
                     Session["OrderSalesDetail"] = false;
                     Session["ExistingOrder"] = false;
@@ -407,7 +421,7 @@ namespace IMS
             Session["RequestedNO"] = Convert.ToInt32(dsProducts.Tables[0].Rows[0]["OrderID"].ToString());
             Session["FirstOrderSO"] = false;
             Session["OrderSalesDetail"] = false;
-            
+            Session["SelectedIndexValue"] = StockAt.SelectedItem;
             if (Session["ExistingOrder"].Equals(true)) { Session["RequestedFromID"] = Session["SystemID"]; }
 
             Response.Redirect("ViewPackingList_SO.aspx", false);
@@ -418,9 +432,9 @@ namespace IMS
             try
             {
                 #region Order Deletion 
-                if (Session["OrderNumber"] != null)
+                if (Session["OrderNumberSO"] != null)
                 {
-                    int orderID = int.Parse(Session["OrderNumber"].ToString());
+                    int orderID = int.Parse(Session["OrderNumberSO"].ToString());
                     connection.Open();
 
                     SqlCommand command = new SqlCommand("sp_GetOrderDetailRecieve", connection);
@@ -450,11 +464,13 @@ namespace IMS
                 }
                 #endregion
 
-                Session["OrderNumber"] = null;
+                Session["OrderNumberSO"] = null;
                 Session["OrderSalesDetail"] = false;
                 Session["FirstOrderSO"] = false;
                 Session["ExistingOrder"] = false;
-
+                Session["SelectedIndexValue"] = null;
+                Session.Remove("dsProdcts");
+                Session.Remove("dsProducts_MP");
                 txtSearch.Text = "";
                 txtProduct.Text = "";
                 SelectProduct.Visible = false;
@@ -464,7 +480,7 @@ namespace IMS
                 SelectQuantity.Text = "";
                 SelectProduct.SelectedIndex = -1;
                 StockAt.SelectedIndex = -1;
-                
+                btnAccept.Text = "GENERATE ORDER";
                 btnAccept.Visible = false;
                 btnDecline.Visible = false;
                 
@@ -566,7 +582,7 @@ namespace IMS
                         }
                         else
                         {
-                            WebMessageBoxUtil.Show("Entered Amount Exceed Available Stock, cannot be updated");
+                            WebMessageBoxUtil.Show("Entered Amount Exceed Available Stock [ " + availablestock.ToString() + " ]");
                         }
                     }
                     else
@@ -612,18 +628,22 @@ namespace IMS
                 }
                 else if (e.CommandName.Equals("Details"))
                 {
-                    int orderDetID = int.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("OrderDetailNo")).Text);
-                    int ProductID = int.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblProductID")).Text);
-                    int quan = int.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblQuantity")).Text);
-                    int bonus = int.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblBonus")).Text);
+                    int orderDetID = 0;
+                    int.TryParse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("OrderDetailNo")).Text,out orderDetID);
+                    int ProductID = 0;
+                    int.TryParse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblProductID")).Text,out ProductID);
+                    int quan = 0;
+                    int.TryParse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblQuantity")).Text,out quan);
+                    int bonus = 0;
+                    int.TryParse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblBonus")).Text,out bonus);
                     Session["OderDetailID"] = orderDetID;
                     Session["ProductID"] = ProductID;
                     Session["TotalQuantity"] = quan + bonus;
                     Session["SO_BQuan"] = bonus;
                     Session["SO_Quan"] = quan;
-                    Session["SelectedIndex"] = StockAt.SelectedIndex;
+                    Session["SelectedIndexValue"] = StockAt.SelectedItem;
                     Session["Invoice"] = txtIvnoice.Text;
-                    Response.Redirect("OrderSalesManual_Details.aspx");
+                    Response.Redirect("OrderSalesManual_Details.aspx",false);
                 }
             }
             catch (Exception exp) { }
@@ -729,7 +749,7 @@ namespace IMS
                             dA.Fill(dt);
                             if (dt.Rows.Count != 0)
                             {
-                                Session["OrderNumber"] = dt.Rows[0][0].ToString();
+                                Session["OrderNumberSO"] = dt.Rows[0][0].ToString();
                             }
                         }
                         catch (Exception ex)
@@ -757,7 +777,7 @@ namespace IMS
                             int OrderNumber, BonusOrdered, ProductNumber, Quantity;
                             OrderNumber = BonusOrdered = ProductNumber = Quantity = 0;
 
-                            if (int.TryParse(Session["OrderNumber"].ToString(), out OrderNumber))
+                            if (int.TryParse(Session["OrderNumberSO"].ToString(), out OrderNumber))
                             {
                                 command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                             }
@@ -842,7 +862,7 @@ namespace IMS
                             int OrderNumber = 0;
 
 
-                            if (int.TryParse(Session["OrderNumber"].ToString(), out OrderNumber))
+                            if (int.TryParse(Session["OrderNumberSO"].ToString(), out OrderNumber))
                             {
                                 command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                             }
@@ -890,7 +910,7 @@ namespace IMS
                                 int OrderNumber, BonusOrdered, ProductNumber, Quantity;
                                 OrderNumber = BonusOrdered = ProductNumber = Quantity = 0;
 
-                                if (int.TryParse(Session["OrderNumber"].ToString(), out OrderNumber))
+                                if (int.TryParse(Session["OrderNumberSO"].ToString(), out OrderNumber))
                                 {
                                     command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                                 }
@@ -976,7 +996,7 @@ namespace IMS
                         SqlCommand command = new SqlCommand("Sp_FillSO_Details", connection);
                         command.CommandType = CommandType.StoredProcedure;
                         int OrderNumber, DetailID = 0;
-                        if (int.TryParse(Session["OrderNumber"].ToString(), out OrderNumber))
+                        if (int.TryParse(Session["OrderNumberSO"].ToString(), out OrderNumber))
                         {
                             command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                             //command.ExecuteNonQuery();
@@ -1040,7 +1060,7 @@ namespace IMS
                 int OrderNumber = 0;
                 
 
-                if (int.TryParse(Session["OrderNumber"].ToString(), out OrderNumber))
+                if (int.TryParse(Session["OrderNumberSO"].ToString(), out OrderNumber))
                 {
                     command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                 }
@@ -1081,19 +1101,21 @@ namespace IMS
         {
             
             //must be checked for sessions
-            if (Session["OrderSalesDetail"] != null   && Session["OrderSalesDetail"].ToString() != null)
+            if (Session["OrderSalesDetail"] != null && Session["OrderSalesDetail"].Equals(true)  && Session["OrderSalesDetail"].ToString() != null)
             {
-                Session["OrderNumber"] = "";
+                Session["OrderNumberSO"] = "";
                 Session["OrderSalesDetail"] = false;
+                Session["SelectedIndexValue"] = null;
+                btnAccept.Text = "GENERATE ORDER";
                 Response.Redirect("WarehouseMain.aspx", false); //must be rechecked
             }
             else
             {
                 try
                 {
-                    if (Session["OrderNumber"] != null)
+                    if (Session["OrderNumberSO"] != null)
                     {
-                        int orderID = int.Parse(Session["OrderNumber"].ToString());
+                        int orderID = int.Parse(Session["OrderNumberSO"].ToString());
                         if (connection.State == ConnectionState.Closed)
                         {
                             connection.Open();
@@ -1124,8 +1146,9 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_OrderID", orderID);
                         command.ExecuteNonQuery();
                     }
-                    Session["OrderNumber"] = null;
-                    Session["FromViewPlacedOrders"] = "false";
+                    Session["OrderNumberSO"] = null;
+                    Session["SelectedIndexValue"] = null;
+                    btnAccept.Text = "GENERATE ORDER";
                     txtSearch.Text = "";
                     txtProduct.Text = "";
                     SelectProduct.Visible = false;
@@ -1150,7 +1173,7 @@ namespace IMS
                         connection.Close();
                     }
                 }
-                Session["OrderNumber"] = "";
+                Session["OrderNumberSO"] = "";
                 Session["OrderSalesDetail"] = false;
                 Response.Redirect("WarehouseMain.aspx", false);
             }
