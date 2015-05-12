@@ -271,6 +271,7 @@ namespace IMS
 
         protected void btnFax_Click(object sender, EventArgs e)
         {
+            Session["OrderSalesDetail"] = false;
             Response.Redirect("ManageOrders.aspx");
         }
 

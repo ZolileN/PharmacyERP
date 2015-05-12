@@ -30,6 +30,8 @@ namespace IMS
             {
                 try
                 {
+                    Session.Remove("dsProdcts");
+                    Session.Remove("dsProducts_MP");
                     BindGrid();
 
                 }

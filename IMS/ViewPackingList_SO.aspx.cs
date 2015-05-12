@@ -167,7 +167,8 @@ namespace IMS
 
         protected void btnBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("OrderSalesManual.aspx", false);
+            Session["OrderSalesDetail"] = false;
+            Response.Redirect("OrderSalesManual.aspx");
             //Response.Redirect("ManageOrders.aspx", false);
         }
 
