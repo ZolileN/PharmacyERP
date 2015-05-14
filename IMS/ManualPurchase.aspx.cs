@@ -299,12 +299,13 @@ namespace IMS
                         string ProductNumber = "";
                         int OrderNumber, BonusOrdered, Quantity;
                         OrderNumber = BonusOrdered = Quantity = 0;
-
+                        int prodID = 0;
                         if (int.TryParse(Session["OrderNumber"].ToString(), out OrderNumber))
                         {
                             command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                         }
-                        command.Parameters.AddWithValue("@p_ProductID", txtSearch.Text.ToString());
+                        int.TryParse(lblProductId.Text.ToString(), out prodID);
+                        command.Parameters.AddWithValue("@p_ProductID", prodID);
                         if (int.TryParse(SelectQuantity.Text.ToString(), out Quantity))
                         {
                             command.Parameters.AddWithValue("@p_OrderQuantity", Quantity);
@@ -362,11 +363,10 @@ namespace IMS
 
                             int ProductNO = 0;
                             bool ProductPresent = false;
-                            command.Parameters.AddWithValue("@p_ProductID", txtSearch.Text.ToString());
-                            //if (int.TryParse(SelectProduct.SelectedValue.ToString(), out ProductNO))
-                            //{
-                            //}
 
+                            int.TryParse(lblProductId.Text.ToString(), out ProductNO);
+                            
+                            command.Parameters.AddWithValue("@p_ProductID", ProductNO);
                             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                             {
                                 if (Convert.ToInt32(ds.Tables[0].Rows[i]["ProductID"]).Equals(ProductNO))
@@ -397,7 +397,7 @@ namespace IMS
                                         command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                                     }
 
-                                    command.Parameters.AddWithValue("@p_ProductID", txtSearch.Text.ToString());
+                                    command.Parameters.AddWithValue("@p_ProductID", ProductNO);
 
                                     if (int.TryParse(SelectQuantity.Text.ToString(), out Quantity))
                                     {

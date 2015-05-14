@@ -280,7 +280,11 @@ namespace IMS.UserControl
                             ltMetaTags.Text = Server.HtmlDecode(row.Cells[1].Text);
 
                             GridView gvParent = (GridView)ctl.FindControl("StockDisplayGrid");
-
+                            Label lbProdId = (Label)ctl.FindControl("lblProductId");
+                            if (lbProdId != null)
+                            {
+                                lbProdId.Text = Server.HtmlDecode(row.Cells[7].Text);
+                            }
                             DataTable dt = new DataTable();
                             DataSet ds = new DataSet();
                             #region Getting Product Details
@@ -289,7 +293,7 @@ namespace IMS.UserControl
                                 int id;
                                 if (int.TryParse(Session["UserSys"].ToString(), out id))
                                 {
-                                    String Query = "Select * FROM tbl_ProductMaster Where Status = 1 and Product_Name Like '" + ltMetaTags.Text + "'";
+                                    String Query = "Select * FROM tbl_ProductMaster Where Status = 1 and ProductID = " + int.Parse(lbProdId.Text.ToString()) ;
                                    
                                     connection.Open();
                                     SqlCommand command = new SqlCommand(Query, connection);

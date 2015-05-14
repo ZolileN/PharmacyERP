@@ -56,10 +56,10 @@
                <asp:TextBox ID="txtSearch" runat="server" CssClass="product"></asp:TextBox>
                 
                <asp:ImageButton ID="btnSearchProduct" runat="server"   CssClass="search-btn getProducts" OnClick="btnSearchProduct_Click" />
-
+                 <asp:Label ID="lblProductId" runat="server" Visible="false"></asp:Label>
                <cc1:ModalPopupExtender ID="mpeCongratsMessageDiv" runat="server" BackgroundCssClass="overLaypop"
                        RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="lblProd" ClientIDMode="AutoID"
-                       PopupControlID="_CongratsMessageDiv2" BehaviorID="EditModalPopupMessage" >
+                       PopupControlID="_CongratsMessageDiv2" BehaviorID="EditModalPopupMessage" PopupDragHandleControlID="ProductsPopupGrid">
                     </cc1:ModalPopupExtender>
 
                <div id="_CongratsMessageDiv2" class="congrats-cont" style="display: none; ">

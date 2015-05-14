@@ -33,7 +33,7 @@
                      <asp:BoundField DataField="itemStrength" HeaderText="Item Strength"   />
                      <asp:BoundField DataField="itemForm" HeaderText="Item Form"   />
                      <asp:BoundField DataField="itemPackSize" HeaderText="Pack Size"   />
-
+                      <asp:BoundField DataField="ProductID" HeaderText="Product" />
                      
                       
                  </Columns>

@@ -350,14 +350,18 @@ namespace IMS
             Response.Redirect("WarehouseMain.aspx", false);
         }
 
-        
+
 
         protected void btnSearchProduct_Click(object sender, ImageClickEventArgs e)
         {
+            int prodID = 0;
+
+
             String Text = txtSearch.Text + '%';
             Session["Text"] = Text;
             ProductsPopupGrid.PopulateGrid();
             mpeCongratsMessageDiv.Show();
+
         }
     }
 }
