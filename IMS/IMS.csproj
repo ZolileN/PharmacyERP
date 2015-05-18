@@ -181,6 +181,7 @@
   <ItemGroup>
     <Content Include="AcceptOrder.aspx" />
     <Content Include="AcceptPurchaseOrder.aspx" />
+    <Content Include="AcceptSalesOrders.aspx" />
     <Content Include="AddDepartment.aspx" />
     <Content Include="AddEditCategory.aspx" />
     <Content Include="AddEditSubCategory.aspx" />
@@ -252,6 +253,8 @@
     <Content Include="PO_GENERATE.aspx" />
     <Content Include="ReceiveStock.aspx" />
     <Content Include="RecieveOrder.aspx" />
+    <Content Include="RecieveSOFull.aspx" />
+    <Content Include="RecieveSOFullEdit.aspx" />
     <Content Include="RegisterUsers.aspx" />
     <Content Include="ReportFormat_simple.aspx" />
     <Content Include="Reports.aspx" />
@@ -357,6 +360,7 @@
     <Content Include="ViewPackingList_SO.aspx" />
     <Content Include="ViewPlacedOrders.aspx" />
     <Content Include="ViewPurchaseOrders.aspx" />
+    <Content Include="ReceiveSalesOrder.aspx" />
     <Content Include="ViewSalesOrders.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="WarehouseMain.aspx" />
@@ -431,6 +435,13 @@
     </Compile>
     <Compile Include="AcceptPurchaseOrder.aspx.designer.cs">
       <DependentUpon>AcceptPurchaseOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AcceptSalesOrders.aspx.cs">
+      <DependentUpon>AcceptSalesOrders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AcceptSalesOrders.aspx.designer.cs">
+      <DependentUpon>AcceptSalesOrders.aspx</DependentUpon>
     </Compile>
     <Compile Include="AddDepartment.aspx.cs">
       <DependentUpon>AddDepartment.aspx</DependentUpon>
@@ -733,6 +744,20 @@
     <Compile Include="RecieveOrder.aspx.designer.cs">
       <DependentUpon>RecieveOrder.aspx</DependentUpon>
     </Compile>
+    <Compile Include="RecieveSOFull.aspx.cs">
+      <DependentUpon>RecieveSOFull.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RecieveSOFull.aspx.designer.cs">
+      <DependentUpon>RecieveSOFull.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RecieveSOFullEdit.aspx.cs">
+      <DependentUpon>RecieveSOFullEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RecieveSOFullEdit.aspx.designer.cs">
+      <DependentUpon>RecieveSOFullEdit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="RegisterUsers.aspx.cs">
       <DependentUpon>RegisterUsers.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -943,6 +968,13 @@
     </Compile>
     <Compile Include="ViewPurchaseOrders.aspx.designer.cs">
       <DependentUpon>ViewPurchaseOrders.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReceiveSalesOrder.aspx.cs">
+      <DependentUpon>ReceiveSalesOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReceiveSalesOrder.aspx.designer.cs">
+      <DependentUpon>ReceiveSalesOrder.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSalesOrders.aspx.cs">
       <DependentUpon>ViewSalesOrders.aspx</DependentUpon>

@@ -159,7 +159,7 @@
 
                                         <ul>
                                             <li><a href="#">Auto Receiving</a></li>
-                                            <li><a href="#">Manual Receiving</a></li>
+                                            <li><a href="ReceiveSalesOrder.aspx">Manual Receiving</a></li>
                                        </ul>
 
                                     </li>

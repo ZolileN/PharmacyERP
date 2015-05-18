@@ -10,106 +10,142 @@
 namespace IMS {
     
     
-    public partial class ManageProducts {
+    public partial class AcceptSalesOrders {
         
         /// <summary>
-        /// btnAddProduct control.
+        /// btnBack control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddProduct;
+        protected global::System.Web.UI.WebControls.Button btnBack;
         
         /// <summary>
-        /// btnGoBack control.
+        /// lblOMISD control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGoBack;
+        protected global::System.Web.UI.WebControls.Label lblOMISD;
         
         /// <summary>
-        /// lblProd control.
+        /// ProdName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProd;
+        protected global::System.Web.UI.WebControls.Label ProdName;
         
         /// <summary>
-        /// txtSearch control.
+        /// OrdQuantity control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSearch;
+        protected global::System.Web.UI.WebControls.Label OrdQuantity;
         
         /// <summary>
-        /// btnSearchProduct control.
+        /// RecQuantity control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton btnSearchProduct;
+        protected global::System.Web.UI.WebControls.Label RecQuantity;
         
         /// <summary>
-        /// lblProductId control.
+        /// OrderedbonusQuan control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProductId;
+        protected global::System.Web.UI.WebControls.Label OrderedbonusQuan;
         
         /// <summary>
-        /// mpeCongratsMessageDiv control.
+        /// bonusQuanOrg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.ModalPopupExtender mpeCongratsMessageDiv;
+        protected global::System.Web.UI.WebControls.Label bonusQuanOrg;
         
         /// <summary>
-        /// ProductsPopupGrid control.
+        /// RemQuantity control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::IMS.UserControl.Product_Search_Popup ProductsPopupGrid;
+        protected global::System.Web.UI.WebControls.Label RemQuantity;
         
         /// <summary>
-        /// TextBox2 control.
+        /// retQuantity control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox2;
+        protected global::System.Web.UI.WebControls.Label retQuantity;
         
         /// <summary>
-        /// btnDeleteProduct control.
+        /// expQuantity control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDeleteProduct;
+        protected global::System.Web.UI.WebControls.Label expQuantity;
         
         /// <summary>
-        /// btnEditProduct control.
+        /// defQuantity control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEditProduct;
+        protected global::System.Web.UI.WebControls.Label defQuantity;
+        
+        /// <summary>
+        /// lblPO control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPO;
+        
+        /// <summary>
+        /// lblBarSerial control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBarSerial;
+        
+        /// <summary>
+        /// lblOrderDetID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOrderDetID;
+        
+        /// <summary>
+        /// lblProdID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblProdID;
         
         /// <summary>
         /// StockDisplayGrid control.
