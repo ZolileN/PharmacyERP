@@ -24,10 +24,12 @@ namespace IMS
        
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack)
+            if (!IsPostBack)
             {
+
                 Session.Remove("dsProdcts");
                 Session.Remove("dsProducts_MP");
+
 
                 #region Populating Product Type DropDown
                 ProductType.Items.Add("Select Product Type");
@@ -48,7 +50,7 @@ namespace IMS
                     ProductDept.DataTextField = "Name";
                     ProductDept.DataValueField = "DepId";
                     ProductDept.DataBind();
-                    if (ProductDept != null) 
+                    if (ProductDept != null)
                     {
                         ProductDept.Items.Insert(0, "Select Department");
                         ProductDept.SelectedIndex = 0;
@@ -131,11 +133,72 @@ namespace IMS
                 {
                     ddlProductOrderType.Items.Insert(0, "Select Product Order Type");
                     ddlProductOrderType.SelectedIndex = 0;
-                } 
+                }
                 #endregion
-
-                BindGridbyFilters();
+                if (Request.QueryString["Id"] != null)
+                {
+                    BindByProductID();
+                }
+                else
+                {
+                    BindGridbyFilters();
+                }
             }
+        }
+
+        private void BindByProductID()
+        {
+
+            int prod_ID = int.Parse(Request.QueryString["Id"].ToString());
+
+            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
+            #region Getting Product Details
+            try
+            {
+                int id;
+                if (int.TryParse(Session["UserSys"].ToString(), out id))
+                {
+
+                    connection.Open();
+                    SqlCommand command = new SqlCommand("sp_ViewInventory_byFilters", connection);
+                    #region with parameter approach
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@p_SysID", id);
+
+
+                    command.Parameters.AddWithValue("@p_DeptID", DBNull.Value);
+
+                    command.Parameters.AddWithValue("@p_CatID", DBNull.Value);
+
+                    command.Parameters.AddWithValue("@p_SubCatID", DBNull.Value);
+
+                    command.Parameters.AddWithValue("@p_productOrderType", DBNull.Value);
+
+                    command.Parameters.AddWithValue("@p_ProdType", DBNull.Value);
+
+
+
+                    command.Parameters.AddWithValue("@p_ProdID", prod_ID);
+
+                    #endregion
+
+                    SqlDataAdapter SA = new SqlDataAdapter(command);
+                    SA.Fill(ds);
+                    dgvStockDisplayGrid.DataSource = ds;
+                    dgvStockDisplayGrid.DataBind();
+                }
+
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                connection.Close();
+            }
+            #endregion
+
         }
         private void BindGrid()
         {
@@ -313,39 +376,33 @@ namespace IMS
         {
             try
             {
-                if (e.CommandName.Equals("Print"))
+                if (e.CommandName.Equals("AddVal"))
                 {
-                   // Image BarcodeImage=new Image();
-                   // //int 
-                   
-                   // Label Barcode = (Label)dgvStockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("BarCode");
-                   // Label Quantity = (Label)dgvStockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("lblQuantity");
-                   // Label ProductName = (Label)dgvStockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("ProductName");
-                   // long ProductBarCode = long.Parse(e.CommandArgument.ToString());
-                   //// int PrintQuantity = Int32.Parse(Quantity.Text.ToString());
+                    Label prodNum = (Label)dgvStockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("lblprodID");
+                   // Label ItemName = (Label)dgvStockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("ProductName");
+                    Response.Redirect("AddStock.aspx?Id=" + prodNum.Text, false);
+                }
+                if (e.CommandName.Equals("Edit"))
+                {
+                    Label stockNum = (Label)dgvStockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("lblstockid");
+                    // Label ItemName = (Label)dgvStockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("ProductName");
+                    Response.Redirect("SelectionStock.aspx?Id=" + stockNum.Text, false);
+                }
+                if (e.CommandName.Equals("Delete"))
+                {
+                    Label stockNum = (Label)dgvStockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("lblstockid");
 
-                   // #region barcode creation
-                   // #region previous approach
-                   // //System.Drawing.Image barcodeImage = null;
-                   // //BarcodeLib.Barcode b = new BarcodeLib.Barcode();
-                   // //b.IncludeLabel = true;
-                   // //barcodeImage = b.Encode(BarcodeLib.TYPE.EAN13, ProductBarCode.ToString(), System.Drawing.ColorTranslator.FromHtml("#" + "000000"), System.Drawing.ColorTranslator.FromHtml("#" + "FFFFFF"), 300, 150);
-                   // ////string strImageURL = "generateBarCode.aspx?d=" + ProductBarCode + "&h=" + 300 + "&w=" + 150;
-                   // ////BarcodeImage.ImageUrl = strImageURL;
-                   // ////BarcodeImage.Width = 300;
-                   // ////BarcodeImage.Height = 150;
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
+                    SqlCommand command = new SqlCommand("Sp_DeleteStock", connection);
 
-                   // //BarcodeUtility bUtil = new BarcodeUtility();
-                   // //bUtil.Print(barcodeImage); 
-                   // #endregion
-                   // ucPrint.ProductName = ProductName.Text;
-                   // ucPrint.CompanyName = "Pharmacy";
-                   // ucPrint.PrintCount = int.Parse(Quantity.Text);
-                   // ucPrint.BarcodeValue = Barcode.Text;
-                    
-                   // mpeEditProduct.Show();
-                   // #endregion
-                    
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@p_stockID", int.Parse(stockNum.Text));
+
+                    command.ExecuteNonQuery();
+                    WebMessageBoxUtil.Show("Stock Successfully Deleted ");
                 }
             }
             catch(Exception ex)
@@ -354,7 +411,18 @@ namespace IMS
             }
             finally
             {
-
+                if (connection.State == ConnectionState.Open) 
+                {
+                    connection.Close();
+                }
+                if (Request.QueryString["Id"] != null)
+                {
+                    BindByProductID();
+                }
+                else
+                {
+                    BindGridbyFilters();
+                }
             }
         }
 
@@ -581,7 +649,7 @@ namespace IMS
 
             #endregion
 
-            Response.Redirect("Inventory_Print.aspx");
+            Response.Redirect("Inventory_Print.aspx",false);
 
 
         }
@@ -592,6 +660,16 @@ namespace IMS
             Session["Text"] = Text;
             ProductsPopupGrid.PopulateGrid();
             mpeCongratsMessageDiv.Show();
+        }
+
+        protected void dgvStockDisplayGrid_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            dgvStockDisplayGrid.EditIndex = e.NewEditIndex;
+        }
+
+        protected void dgvStockDisplayGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            
         }
     }
 }

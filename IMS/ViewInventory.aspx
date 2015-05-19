@@ -91,9 +91,19 @@
      <div class="form-horizontal">
     <div class="form-group">
         <asp:GridView ID="dgvStockDisplayGrid" runat="server" CssClass="table table-striped table-bordered table-condensed" AllowPaging="True" PageSize="10" 
-                AutoGenerateColumns="false" OnPageIndexChanging="StockDisplayGrid_PageIndexChanging" 
+                AutoGenerateColumns="false" OnPageIndexChanging="StockDisplayGrid_PageIndexChanging" OnRowEditing="dgvStockDisplayGrid_RowEditing" OnRowDeleting="dgvStockDisplayGrid_RowDeleting"
             onrowcommand="StockDisplayGrid_RowCommand" OnRowDataBound="StockDisplayGrid_RowDataBound">
                  <Columns>
+                   <asp:TemplateField HeaderText="Action">
+                        <ItemTemplate>
+                            <asp:LinkButton CssClass="btn btn-default add-btn" ID="btnAdd" Text="Add" runat="server" CommandName="AddVal" CommandArgument='<%# Container.DisplayIndex%>'/>
+                            <asp:LinkButton CssClass="btn btn-default edit-btn" ID="btnEdit" Text="Edit" runat="server" CommandName="Edit" CommandArgument='<%# Container.DisplayIndex%>'/>
+                            <span onclick="return confirm('Are you sure you want to delete this record?')">
+                                <asp:LinkButton CssClass="btn btn-default del-btn" ID="btnDelete" Text="Delete" runat="server" CommandName="Delete" CommandArgument='<%# Container.DisplayIndex  %>'/>
+                            </span>
+                        </ItemTemplate>
+                         <ItemStyle  Width="180px" HorizontalAlign="Left"/>
+                    </asp:TemplateField>
                      <asp:TemplateField HeaderText="BarCode">
                         <ItemTemplate>
                             <asp:Label ID="BarCode" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("BarCode") %>' Width="100px"></asp:Label>
@@ -156,6 +166,18 @@
                     
                      <%-- org command argument CommandArgument='<%# Eval("BarCode") %>'--%>
                      
+                       <asp:TemplateField HeaderText="stockID" Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="lblstockid" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("StockID") %>' Width="40px"></asp:Label>
+                        </ItemTemplate>
+                        <ItemStyle  Width="50px" HorizontalAlign="Left"/>
+                    </asp:TemplateField>
+                      <asp:TemplateField HeaderText="prodID" Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="lblprodID" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("ProductID") %>' Width="40px"></asp:Label>
+                        </ItemTemplate>
+                        <ItemStyle  Width="50px" HorizontalAlign="Left"/>
+                    </asp:TemplateField>
                  </Columns>
             <PagerStyle CssClass = "GridPager" />
              </asp:GridView>

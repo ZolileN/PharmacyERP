@@ -71,29 +71,29 @@ namespace IMS
         protected void btnAddProduct_Click(object sender, EventArgs e)
         {
             Session["MODE"] = "ADD";
-            Response.Redirect("AddProduct.aspx");
+            Response.Redirect("AddProduct.aspx",false);
         }
 
         protected void btnDeleteProduct_Click(object sender, EventArgs e)
         {
             Session["Linkto"] = "DELETE";
-            Response.Redirect("Edit_DeleteProduct.aspx");
+            Response.Redirect("Edit_DeleteProduct.aspx", false);
         }
 
         protected void btnEditProduct_Click(object sender, EventArgs e)
         {
             Session["Linkto"] = "EDIT";
-            Response.Redirect("Edit_DeleteProduct.aspx");
+            Response.Redirect("Edit_DeleteProduct.aspx", false);
         }
 
         protected void btnBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("ManageInventory.aspx");
+            Response.Redirect("ManageInventory.aspx", false);
         }
 
         protected void btnStocks_Click(object sender, EventArgs e)
         {
-            Response.Redirect("ManageStocks.aspx");
+            Response.Redirect("ManageStocks.aspx", false);
         }
 
         #region GridView Functions & Events
@@ -160,7 +160,7 @@ namespace IMS
                     Session["MS_Bonus12"] = dt.Rows[0]["Bonus12Quantity"].ToString();
                     Session["MS_Bonus25"] = dt.Rows[0]["Bonus25Quantity"].ToString();
                     Session["MS_Bonus50"] = dt.Rows[0]["Bonus50Quantity"].ToString();
-                    Response.Redirect("Addproduct.aspx");
+                    Response.Redirect("Addproduct.aspx",false);
                     #endregion
 
                 }

@@ -13,49 +13,31 @@ namespace IMS {
     public partial class AddStock {
         
         /// <summary>
-        /// StockAt control.
+        /// btnCreateProduct control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList StockAt;
+        protected global::System.Web.UI.WebControls.Button btnCreateProduct;
         
         /// <summary>
-        /// txtSearch control.
+        /// btnCancelProduct control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtSearch;
+        protected global::System.Web.UI.WebControls.Button btnCancelProduct;
         
         /// <summary>
-        /// SelectProduct control.
+        /// btnBack control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox SelectProduct;
-        
-        /// <summary>
-        /// btnSearchProduct control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton btnSearchProduct;
-        
-        /// <summary>
-        /// ProductList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ProductList;
+        protected global::System.Web.UI.WebControls.Button btnBack;
         
         /// <summary>
         /// BarCodeSerial control.
@@ -112,30 +94,57 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.TextBox ProductCost;
         
         /// <summary>
-        /// btnCreateProduct control.
+        /// BatchNo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCreateProduct;
+        protected global::System.Web.UI.WebControls.TextBox BatchNo;
         
         /// <summary>
-        /// btnCancelProduct control.
+        /// StockAt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancelProduct;
+        protected global::System.Web.UI.WebControls.DropDownList StockAt;
         
         /// <summary>
-        /// btnBack control.
+        /// txtSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBack;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtSearch;
+        
+        /// <summary>
+        /// SelectProduct control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox SelectProduct;
+        
+        /// <summary>
+        /// btnSearchProduct control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton btnSearchProduct;
+        
+        /// <summary>
+        /// ProductList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ProductList;
     }
 }

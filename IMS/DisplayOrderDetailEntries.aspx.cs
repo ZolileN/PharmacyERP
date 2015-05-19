@@ -571,7 +571,18 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_ReturnedQuantity", retQuan);
                         command.Parameters.AddWithValue("@p_ReturnedQuantityOrg", retQuanOrg);
                         command.Parameters.AddWithValue("@p_ProductID", int.Parse(lblProdID.Text));
-                        command.Parameters.AddWithValue("@p_BarCode", newBarcode);
+                        if (!lblBarcode.Equals("0") && newBarcode != 0)
+                        {
+                            command.Parameters.AddWithValue("@p_BarCode", newBarcode);
+                        }
+                        else if (!lblBarcode.Equals("0") && newBarcode == 0)
+                        {
+                            command.Parameters.AddWithValue("@p_BarCode", long.Parse(lblBarcode));
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@p_BarCode", newBarcode);
+                        }
                         command.Parameters.AddWithValue("@p_DiscountPercentage", txtDisc);
                         command.Parameters.AddWithValue("@p_Bonus", bonusQuan);
                         command.Parameters.AddWithValue("@p_bonusOriginal", bonusOrg);

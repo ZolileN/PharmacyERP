@@ -201,6 +201,7 @@
     <Content Include="generateBarCode.aspx" />
     <Content Include="HAADPopulation.aspx" />
     <Content Include="HeadOfficeMain.aspx" />
+    <Content Include="Images\add-icon.png" />
     <Content Include="Images\apt-logo.gif" />
     <Content Include="Images\arrow.gif" />
     <Content Include="Images\body-bg-login.jpg" />

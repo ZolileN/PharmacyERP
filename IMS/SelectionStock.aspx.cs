@@ -27,23 +27,29 @@ namespace IMS
                 #region Populating Product List
                 try
                 {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand("Select DISTINCT tbl_ProductMaster.* From tbl_ProductMaster INNER JOIN tblStock_Detail ON tbl_ProductMaster.ProductID = tblStock_Detail.ProductID Where  tbl_ProductMaster.Status = 1", connection);
-                    DataSet ds = new DataSet();
-                    SqlDataAdapter sA = new SqlDataAdapter(command);
-                    sA.Fill(ds);
-                    Session["dsProducts_SelectST"] = ds;
-                     
-                    ProductSet = ds;
-                    ds.Tables[0].Columns.Add("ProductInfo", typeof(string), "Product_Name+ ' '+itemStrength+' '+itemPackSize+' '+itemForm");
-                    SelectProduct.DataSource = ds.Tables[0];
-                    SelectProduct.DataTextField = "ProductInfo";
-                    SelectProduct.DataValueField = "ProductID";
-                    SelectProduct.DataBind();
-                    if (SelectProduct != null)
+                    #region previous code
+                    // connection.Open();
+                    //SqlCommand command = new SqlCommand("Select DISTINCT tbl_ProductMaster.* From tbl_ProductMaster INNER JOIN tblStock_Detail ON tbl_ProductMaster.ProductID = tblStock_Detail.ProductID Where  tbl_ProductMaster.Status = 1", connection);
+                    //DataSet ds = new DataSet();
+                    //SqlDataAdapter sA = new SqlDataAdapter(command);
+                    //sA.Fill(ds);
+                    //Session["dsProducts_SelectST"] = ds;
+
+                    //ProductSet = ds;
+                    //ds.Tables[0].Columns.Add("ProductInfo", typeof(string), "Product_Name+ ' '+itemStrength+' '+itemPackSize+' '+itemForm");
+                    //SelectProduct.DataSource = ds.Tables[0];
+                    //SelectProduct.DataTextField = "ProductInfo";
+                    //SelectProduct.DataValueField = "ProductID";
+                    //SelectProduct.DataBind();
+                    //if (SelectProduct != null)
+                    //{
+                    //    SelectProduct.Items.Insert(0, "Select Product");
+                    //    SelectProduct.SelectedIndex = 0;
+                    //} 
+                    #endregion
+                    if (Request.QueryString["Id"] != null)
                     {
-                        SelectProduct.Items.Insert(0, "Select Product");
-                        SelectProduct.SelectedIndex = 0;
+                        BindGrid();
                     }
                 }
                 catch (Exception ex)
@@ -66,19 +72,24 @@ namespace IMS
             try
             {
                 DataView dv = new DataView();
-                DataSet dsProducts = (DataSet)Session["dsProducts_SelectST"];
-
-                dv = dsProducts.Tables[0].DefaultView;
-                dv.RowFilter = "ProductID = '" + SelectProduct.SelectedValue.ToString() + "'";
-                dt = dv.ToTable();
-                String Query = "Select tblStock_Detail.ProductID AS ProductID ,tbl_ProductMaster.Description AS ProductName, tblStock_Detail.BarCode AS BarCode,tblStock_Detail.StockID AS StockID, tblStock_Detail.Quantity AS Qauntity, tblStock_Detail.ExpiryDate As Expiry, tblStock_Detail.UCostPrice AS CostPrice, tblStock_Detail.USalePrice AS SalePrice, tblStock_Detail.StoredAt AS Location From  tblStock_Detail INNER JOIN tbl_ProductMaster ON tblStock_Detail.ProductID = tbl_ProductMaster.ProductID Where tblStock_Detail.ProductID = '" + Int32.Parse(dt.Rows[0]["ProductID"].ToString()) + "'";
+                //  DataSet dsProducts = (DataSet)Session["dsProducts_SelectST"];
+                
+                //dv = dsProducts.Tables[0].DefaultView;
+                //dv.RowFilter = "ProductID = '" + SelectProduct.SelectedValue.ToString() + "'";
+                //dt = dv.ToTable();
+                int stock_ID = int.Parse(Request.QueryString["Id"].ToString());
+               
                 if (connection.State == ConnectionState.Closed)
                 {
                     connection.Open();
                 }
-                SqlCommand command = new SqlCommand(Query, connection);
+                SqlCommand command = new SqlCommand("Sp_GetStock", connection);
+
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_StockID", stock_ID);
                 SqlDataAdapter SA = new SqlDataAdapter(command);
                 SA.Fill(ds);
+            
                 StockDisplayGrid.DataSource = ds;
                 StockDisplayGrid.DataBind();
 
@@ -149,29 +160,77 @@ namespace IMS
                 }
                 if (e.CommandName.Equals("UpdateStock"))
                 {
+                    int quantity = 0;
+                    float cp = 0;
+                    float sp = 0;
                     Label Barcode = (Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("BarCode");
                     TextBox Quantity = (TextBox)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("txtQuantity");
                     TextBox UnitCostPrice = (TextBox)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("txtUnitCostPrice");
                     TextBox UnitSalePrice = (TextBox)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("txtUnitSalePrice");
-                    Label expiry = (Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblExpiry");
+                   
                     Label _StockID = (Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblStockID");
+                    Label _barcode = (Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("BarCode");
+                    string batch = ((TextBox)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("txtBatch")).Text;
+                    String prodID = ((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblProdID")).Text;
+                    string lblexpiry = ((TextBox)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("txtExpDate")).Text;
+                    string lblExpOrg = ((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblExpOrg")).Text;
+                    string BarCodeSerial = ((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblBarSerial")).Text;
+                        
+                    #region Parsing fields
                     int stockID = int.Parse(_StockID.Text);
-                    DataSet dsProducts = (DataSet)Session["dsProducts_SelectST"];
-                    DataView dv = dsProducts.Tables[0].DefaultView;
-                    dv.RowFilter = "Product_Id_Org = '" + long.Parse(Barcode.Text.ToString()) + "'";
-                    DataTable dt = dv.ToTable();
-                   // int ProductID = Int32.Parse(dt.Rows[0]["ProductID"].ToString());
+                    int QuanOrg = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblQuantityOrg")).Text);
+                    int prodNo = int.Parse(prodID);
+                    DateTime expiryOrg = new DateTime();
+                    if (!string.IsNullOrEmpty(lblExpOrg))
+                    {
+                        DateTime.TryParse(lblExpOrg, out expiryOrg);
+                    }
                     
-                    if (Barcode.Text.Equals(""))
+                    DateTime expiryDate = new DateTime();
+                    DateTime.TryParse(lblexpiry, out expiryDate);
+
+                    if (int.TryParse(Quantity.Text, out quantity))
+                    { }
+                    else 
+                    {
+                        WebMessageBoxUtil.Show("Invalid value for quantity");
+                        return;
+                    }
+                    if (float.TryParse(UnitCostPrice.Text, out cp)) { }
+                    else 
+                    {
+                        WebMessageBoxUtil.Show("Invalid value for Cost Price");
+                        return;
+                    }
+
+                    if (float.TryParse(UnitSalePrice.Text, out sp)) { }
+                    else
+                    {
+                        WebMessageBoxUtil.Show("Invalid value for Sale Price");
+                        return;
+                    }
+                    #endregion
+
+
+                    #region value checks
+                    if (quantity < 0) 
+                    {
+                        WebMessageBoxUtil.Show("Invalid value for quantity");
+                        return;
+                    }
+
+                    #endregion
+                    #region Barcode generation
+                   long BarCodeNumber = 0;
+                    if (Barcode.Text.Equals("") || (!lblexpiry.Equals(lblExpOrg)))
                     {
                         #region Barcode Generation
-          
-                        string BarCodeSerial = dt.Rows[0]["BarCode"].ToString();
 
-                        DateTime dateValue = (Convert.ToDateTime(expiry.Text.ToString()));
+            
 
-                       
-                        long BarCodeNumber = 0;
+                        DateTime dateValue = expiryDate;
+
+
                         String mm = dateValue.Month.ToString();
                         String yy = dateValue.ToString("yy", DateTimeFormatInfo.InvariantInfo);
                         string p1 = BarCodeSerial + mm + yy;
@@ -185,18 +244,63 @@ namespace IMS
                         }
                         #endregion
 
-                        String Query = "Update tblStock_Detail Set BarCode= '" + BarCodeNumber + "', Quantity = '" + Decimal.Parse(Quantity.Text.ToString()) + "', UCostPrice = '" + Math.Round(Decimal.Parse(UnitCostPrice.Text.ToString()),2) + "', USalePrice = '" + Math.Round(Decimal.Parse(UnitSalePrice.Text.ToString()),2) + "' Where StockID = '" +stockID + "'";
-                        connection.Open();
-                        SqlCommand command = new SqlCommand(Query, connection);
-                        command.ExecuteNonQuery();
+
+                    } 
+                    #endregion
+
+                    #region query execution
+
+                    connection.Open();
+                    SqlCommand command = new SqlCommand("Sp_UpdateStock", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                   
+                    command.Parameters.AddWithValue("@p_ReceivedQuantity", quantity);
+                    command.Parameters.AddWithValue("@p_ReceivedQuantityOrg", QuanOrg);
+                    command.Parameters.AddWithValue("@p_StoreID", Session["UserSys"]);
+                    command.Parameters.AddWithValue("@p_ProductID", prodNo);
+                    command.Parameters.AddWithValue("@p_stockID", stockID);
+                    if (!_barcode.Text.Equals("0") && BarCodeNumber != 0)
+                    {
+                        command.Parameters.AddWithValue("@p_BarCode", BarCodeNumber);
+                    }
+                    else if (!_barcode.Text.Equals("0") && BarCodeNumber == 0)
+                    {
+                        command.Parameters.AddWithValue("@p_BarCode", long.Parse(_barcode.Text));
                     }
                     else
                     {
-                        String Query = "Update tblStock_Detail Set Quantity = '" + Decimal.Parse(Quantity.Text.ToString()) + "', UCostPrice = '" + Math.Round(Decimal.Parse(UnitCostPrice.Text.ToString()),2) + "', USalePrice = '" + Math.Round(Decimal.Parse(UnitSalePrice.Text.ToString()),2) + "' Where StockID = '" + stockID + "'";
-                        connection.Open();
-                        SqlCommand command = new SqlCommand(Query, connection);
-                        command.ExecuteNonQuery();
+                        command.Parameters.AddWithValue("@p_BarCode", BarCodeNumber);
                     }
+                   
+                    command.Parameters.AddWithValue("@p_DiscountPercentage", 0);
+                    command.Parameters.AddWithValue("@p_Bonus", 0);
+                    command.Parameters.AddWithValue("@p_bonusOriginal", 0);// total bonus added
+                    command.Parameters.AddWithValue("@p_BatchNumber", batch);
+                    if (string.IsNullOrEmpty(lblexpiry))
+                    {
+                        command.Parameters.AddWithValue("@p_Expiry", DBNull.Value);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_Expiry", expiryDate);
+                    }
+                    command.Parameters.AddWithValue("@p_Cost", cp);
+                    command.Parameters.AddWithValue("@p_Sales", cp);
+                   
+                    command.Parameters.AddWithValue("@p_isPO", "False");
+                    if (!(string.IsNullOrEmpty(lblExpOrg) || string.IsNullOrWhiteSpace(lblExpOrg)))
+                    {
+                        command.Parameters.AddWithValue("@p_expiryOriginal", expiryOrg);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_expiryOriginal", DBNull.Value);
+                    }
+                   
+                    command.ExecuteNonQuery(); 
+
+                    #endregion
+                                       
                     WebMessageBoxUtil.Show("Stock Successfully Updated ");
                 }
             }
@@ -252,7 +356,9 @@ namespace IMS
         }
         protected void btnBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("ManageStocks.aspx", false);
+            String prodID = ((Label)StockDisplayGrid.Rows[0].FindControl("lblProdID")).Text;
+            int prod_ID = int.Parse(prodID);
+            Response.Redirect("ViewInventory.aspx?Id=" + prod_ID, false);
         }
     }
 }
