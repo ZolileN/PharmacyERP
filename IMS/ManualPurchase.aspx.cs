@@ -296,7 +296,7 @@ namespace IMS
                         }
                         SqlCommand command = new SqlCommand("sp_InserOrderDetail_ByStore", connection);
                         command.CommandType = CommandType.StoredProcedure;
-                        string ProductNumber = "";
+                        int ProductNumber = 0;
                         int OrderNumber, BonusOrdered, Quantity;
                         OrderNumber = BonusOrdered = Quantity = 0;
 
@@ -304,7 +304,8 @@ namespace IMS
                         {
                             command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                         }
-                        command.Parameters.AddWithValue("@p_ProductID", txtSearch.Text.ToString());
+                        int.TryParse(lblProductId.Text.ToString(),out ProductNumber);
+                        command.Parameters.AddWithValue("@p_ProductID", ProductNumber);
                         if (int.TryParse(SelectQuantity.Text.ToString(), out Quantity))
                         {
                             command.Parameters.AddWithValue("@p_OrderQuantity", Quantity);

@@ -130,7 +130,9 @@
                             <li><a href="#">Manage Purchase Orders</a>
                                                     
                                  <ul>
-                                    <li><a href="#">PO Request to WareHouse</a>
+                                  
+                                    <li><a href="#">Assign Vendors to Store</a></li>
+                                    <li><a href="#">Assign Products to Store</a></li>
 									<li class="hasChild"><a href="#">Generate PO</a>
 
                                         <ul>
@@ -176,9 +178,227 @@
                             <li><a href="#">Reports</a>
                             	<ul>
                                 	<li><a href="#">Print PO</a></li>
-                                	<li><a href="PackingListGeneration.aspx">Packing List</a></li>
+                                	<li><a href="PackingListGeneration.html">Packing List</a></li>
                                     <li><a href="#">Stock Report</a></li>
-                                </ul>
+                                    <li><a href="#">Print Stock</a></li>
+                                    
+                                    
+                                    
+                                   
+	           <li><a href="#">All Reports</a></li>
+	           <li class="hasChild"><a href="#">Sale Reports</a>
+		            <ul>
+			<li class="hasChild"><a href="#">Summary Sales Daily Reports</a>
+				<ul>
+                	<li>
+						<a href="#"> Daily Sales by Sales Rep</a>
+                    </li>
+					<li>
+    				<a href="#"> Daily Sales by Store</a>
+                    </li>
+                   	<li>
+                   <a href="#"> Daily Sales by Cashier</a>
+                   </li>
+                   <li>
+                   <a href="#"> Daily Sales by Supplier</a>
+                   </li>
+                   <li>
+                    <a href="#"> Daily Sales by Register</a>
+                   </li>
+                   <li>
+                    <a href="#"> Daily Sales by Category</a>
+                   </li>
+                   <li>
+                    <a href="#"> Daily Sales by Department</a>
+                    </li>
+				</ul>
+			</li>
+            <li class="hasChild"><a href="#">Sales Tax Reports</a>
+				<ul>
+					<li><a href="#">Summary Tax Collected Daily </a></li>
+					<li><a href="#">Detailed Tax Collected</a></li>
+				</ul>
+			</li>
+            <li class="hasChild"><a href="#">Sales History Reports</a>
+				<ul>
+					<li><a href="#"> Sales History</a></li>
+					<li><a href="#"> Consolidated Sales</a></li>
+                    <li><a href="#"> History-Slow Moving Items</a></li>
+                    <li><a href="#"> Yearly Sales History - None Moving Items</a></li>
+                    <li><a href="#"> Period Sales History - Open to buy</a></li>
+                    <li><a href="#"> Sales by Till</a></li>
+				</ul>
+			</li>
+             <li class="hasChild"><a href="#">Cost/Sales Analysis Reports</a>
+				<ul>
+					<li><a href="#">Regional Cost/Sales</a></li>
+					<li><a href="#">Store Cost/Sales</a></li>
+                    <li><a href="#">Department Cost/Sales</a></li>
+				</ul>
+			</li>
+            <li class="hasChild"><a href="#">Other Sales Reports</a>
+				<ul>
+					<li><a href="#">Detailed Sales</a></li>
+					<li><a href="#">Sales Summary - Network Status and Error Logs</a></li>
+					<li><a href="#">Sales by Volume - Standard Margins</a></li>
+					<li><a href="#">Returns report - Promotional Margins</a></li>
+					<li><a href="#">Sales by Value - Fast Moving Items</a></li>
+					<li><a href="#">Sales by assistant - Daily Customer listing</a></li>
+				</ul>
+			</li>
+		</ul>
+	            </li>
+                <li class="hasChild"><a href="#">Inventory Reports</a>
+		            <ul>
+			            <li class="hasChild"><a href="#">Inventory Analysis Reports</a>
+				            <ul>
+					            <li><a href="#">Inventory Product Alert Report</a></li>
+					            <li><a href="#">Inventory Department wise</a></li>
+					            <li><a href="#">Inventory Category Wise</a></li>
+					            <li><a href="#">Inventory Sub Category Wise</a></li>
+					            <li><a href="#">Inventory Vendor wise</a></li>
+					            <li><a href="#">Near to expire Inventory</a></li>
+					            <li><a href="#">inventory consumption by store</a></li>
+				            </ul>
+			            </li>
+                        <li class="hasChild"><a href="#">Trending &amp; Profit  Analysis Reports</a>
+				            <ul>
+					            <li><a href="#">Inventory with highest trend </a></li>
+					            <li><a href="#">inventory with lowest trend</a></li>
+					            <li><a href="#">inventory giving greater Profit</a></li>
+					            <li><a href="#">inventory which cost most</a></li>
+				            </ul>
+			            </li>
+                        <li class="hasChild"><a href="#">Head Office Reports</a>
+				            <ul>
+					            <li><a href="#">Inventory Count - Head Office</a></li>
+					            <li><a href="#">Inventory Count Variance - Head Office</a></li>
+				            </ul>
+			            </li>
+                         <li class="hasChild"><a href="#">Other Inventory Reports</a>
+				            <ul>
+					            <li><a href="#">Inventory adjustments - Account Balances </a></li>
+					            <li><a href="#">Random Inventory Count Check list - Account Transactions</a></li>
+					            <li><a href="#">Inventory Movements History - Daily Transaction Log / Summary</a></li> 
+					            <li><a href="#">Inventory Ledger - Quantity Audit </a></li>
+					            <li><a href="#">Product Inventory - Inventory Valuation </a></li>
+					            <li><a href="#">Inventory Allocation</a></li>
+				            </ul>
+			            </li>
+                        <li class="hasChild"><a href="#">Inventory Master Listing Reports</a>
+				            <ul>
+					            <li><a href="#">Master Price List</a></li>
+					            <li><a href="#">Master Quantity List </a></li>
+					            <li><a href="#">Master Value List</a></li>
+				            </ul>
+			            </li>
+                         <li class="hasChild"><a href="#">Inventory Store Listing Reports</a>
+				            <ul>
+					            <li><a href="#">Snapshot Store Price List</a></li>
+					            <li><a href="#">Snapshot Store Quantity List</a></li>
+					            <li><a href="#">Quantity Discrepancy List </a></li>
+				            </ul>
+			            </li>
+                         <li class="hasChild"><a href="#">Other Inventory Listing Reports</a>
+				            <ul>
+					            <li><a href="#">Supplier List</a></li>
+					            <li><a href="#">Alias List</a></li>
+					            <li><a href="#">Substitute List</a></li>
+					            <li><a href="#">Serial Number List</a></li>
+					            <li><a href="#">Item Movement</a></li>
+					            <li><a href="#">Offline Inventory List</a></li>
+					            <li><a href="#">Trending Products List</a></li>
+				            </ul>
+			            </li>
+		            </ul>
+	            </li>
+
+                <li class="hasChild"><a href="#">Order Reports</a>
+		            <ul>
+			<li class="hasChild"><a href="#">Quotes &amp; BackOrder  Reports</a>
+				<ul>
+					<li><a href="#">Backorders—Summary</a></li>
+					<li><a href="#">Backorders—Detailed</a></li>
+					<li><a href="#">Quotes—Summary</a></li>
+					<li><a href="#">Quotes—Detailed</a></li>
+				</ul>
+			</li>
+            <li class="hasChild"><a href="#">Purchase &amp; Sales Order Reports</a>
+				<ul>
+					<li><a href="#">Sales orders </a></li>
+					<li><a href="#">Purchase orders</a></li>
+                    <li><a href="#">Purchase Orders - Value Audit</a></li>
+				</ul>
+			</li>
+            <li class="hasChild"><a href="#">Sales History Reports</a>
+				<ul>
+					<li><a href="#">Sales History</a></li>
+					<li><a href="#">Consolidated Sales History-Slow Moving Items</a></li>
+                    <li><a href="#">Yearly Sales History - None Moving Items</a></li>
+					<li><a href="#">Period Sales History - Open to buy</a></li>
+                   <li><a href="#">Sales by Till</a></li>
+				</ul>
+			</li>
+             <li class="hasChild"><a href="#">Inventory Order Reprots</a>
+				<ul>
+					<li><a href="#">Inventory Transfer In</a></li>
+					<li><a href="#">Suggested Orders - Excess Inventory</a></li>
+				</ul>
+			</li>
+            <li class="hasChild"><a href="#">Dispatch Order Reports</a>
+				<ul>
+					<li><a href="#">Goods Received Note - Suggested Dispatch Orders </a></li>
+                    <li><a href="#">Goods on Order - Dispatch Orders  </a></li>
+                  	<li><a href="#">Dispatch Orders - Classification Totals E.G. Department totals  </a></li>
+				</ul>
+			</li>
+             <li class="hasChild"><a href="#">Other Order Reports</a>
+				<ul>
+					<li><a href="#">Work orders</a></li>
+					<li><a href="#">Margin Report</a></li>
+                 	<li><a href="#">Back Order Report - Best Customer report</a></li>
+                    <li><a href="#">Branch Orders - Head Office </a></li>
+				</ul>
+			</li>
+            
+		</ul>
+	            </li>
+
+                <li class="hasChild"><a href="#">Store Specific Reports</a>
+		            <ul>
+			
+                <li><a href="#">Branch Performance Report - Price Override report</a></li>
+               <li><a href="#">Picking list - Branch Goods Received / Dispatch Report</a></li>
+                <li><a href="#">Branch Product Change Report</a></li>
+                <li><a href="#">Branch Promotional Price Report</a></li>
+                <li><a href="#">Branch Inventory Change Report</a></li>
+                <li><a href="#">Branch Price Change Report</a></li>
+		</ul>
+	            </li>
+            
+                 <li class="hasChild"><a href="#">Top Performers Reports</a>
+		                <ul>
+			                <li><a href="#">Top Sales Reps</a></li>
+                          <li><a href="#">Top Customers</a></li>
+                         <li> <a href="#">Top Cashiers</a></li>
+                       <li> <a href="#">Top Suppliers</a></li>
+                         <li> <a href="#">Top Items</a></li>
+                       <li> <a href="#">Top Departments</a></li>
+                       <li>  <a href="#">Top Categories</a></li>
+		                </ul>
+	             </li>
+
+                 <li class="hasChild"><a href="#">Other Reports</a>
+		                <ul>
+			                <li><a href="#">Loyalty Scheme Report</a></li>
+                          <li> <a href="#">Overstock reports based upon weeks covered required</a></li>
+                           <li> <a href="#">Suggested Replenishment base upon sales history</a></li>
+                          <li>  <a href="#">Random Inventory Count Variance - Cash Reconciliation </a></li>
+                          <li>  <a href="#">Aged Inventory - Currency Change Report </a> </li>
+		                </ul>
+	             </li>
+
+                            	</ul>
                             </li>
 	                    </ul>
             </asp:Literal>
@@ -191,6 +411,15 @@
                                             <li><a href="ViewInventory.aspx">Current Stock</a></li>
                                        </ul>
                             </li>
+                            <li class="hasChild"><a href="#">Manage Purchase Orders</a>
+                                 <ul>
+                                            <li><a href="#">PO Request to WareHouse</a></li>
+                                            
+                                            <li><a href="SelectVendor.aspx">Direct Store Purchase</a></li>
+                                       </ul>
+
+                                </li>
+                           
                             <li><a href="StoreTransfers_StoreRequests.aspx">Store Transfers</a></li>
                             <li><a href="ReceiveStock.aspx">Store Receivings</a></li>
                             <li><a href="#">Store Requests</a>
