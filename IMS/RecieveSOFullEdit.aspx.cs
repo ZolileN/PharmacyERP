@@ -30,6 +30,7 @@ namespace IMS
             try
             {
                 connection.Open();
+                 
                 SqlCommand command = new SqlCommand("Sp_GetSODetail_RecByID", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 int OrderNumber = 0;
@@ -46,6 +47,10 @@ namespace IMS
                 dgvReceiveSOGrid.DataSource = null;
                 dgvReceiveSOGrid.DataSource = ds.Tables[0];
                 dgvReceiveSOGrid.DataBind();
+
+                ((DropDownList)dgvReceiveSOGrid.Rows[0].FindControl("ddDamagedAction")).SelectedValue = Session["ddDamagedAction"].ToString();
+                ((DropDownList)dgvReceiveSOGrid.Rows[0].FindControl("ddExpiredAction")).SelectedValue = Session["ddExpiredAction"].ToString();
+                ((DropDownList)dgvReceiveSOGrid.Rows[0].FindControl("ddNotAcceptedAction")).SelectedValue = Session["ddNotAcceptedAction"].ToString();
             }
             catch (Exception ex)
             {
@@ -123,8 +128,12 @@ namespace IMS
                         return;
                     }
                     var ddDamagedAction = ((DropDownList)dgvReceiveSOGrid.Rows[RowIndex].FindControl("ddDamagedAction")).SelectedValue;
+                    Session["ddDamagedAction"] = ddDamagedAction;
                     var ddExpiredAction = ((DropDownList)dgvReceiveSOGrid.Rows[RowIndex].FindControl("ddExpiredAction")).SelectedValue;
+                    Session["ddExpiredAction"] = ddExpiredAction;
                     var ddNotAcceptedAction = ((DropDownList)dgvReceiveSOGrid.Rows[RowIndex].FindControl("ddNotAcceptedAction")).SelectedValue;
+                    Session["ddNotAcceptedAction"] = ddNotAcceptedAction;
+
                     int addtoStockQty = 0;
                     if (ddDamagedAction == "2")
                     {
@@ -162,12 +171,12 @@ namespace IMS
                         comm.Parameters.AddWithValue("@dateUpdated", DateTime.Now);
                         comm.Parameters.AddWithValue("@storedAt", dtMajorSO.Rows[RowIndex]["StoredAt"].ToString());
                         comm.Parameters.AddWithValue("@barCode", dtMajorSO.Rows[RowIndex]["BarCode"].ToString());
-                        comm.Parameters.AddWithValue("@expiryDate", DateTime.TryParse(dtMajorSO.Rows[RowIndex]["Expiry"].ToString(), out expiryDate));
+                        comm.Parameters.AddWithValue("@expiryDate", DateTime.Parse(ExpiryDate));
                         comm.Parameters.AddWithValue("@batchNumber", dtMajorSO.Rows[RowIndex]["BatchNumber"].ToString());
                         comm.Parameters.AddWithValue("@uCostPrice", Double.TryParse(dtMajorSO.Rows[RowIndex]["UnitCost"].ToString(), out UnitCostPrice));
                         comm.Parameters.AddWithValue("@uSalePrice", Double.TryParse(dtMajorSO.Rows[RowIndex]["UnitSale"].ToString(), out uSalePrice));
                         comm.Parameters.AddWithValue("@saleOrderMasterID", int.TryParse(dtMajorSO.Rows[RowIndex]["OrdermasterID"].ToString(), out saleOrderMasterId));
-                        comm.Parameters.AddWithValue("@saleOrderDetailID", int.TryParse(dtMajorSO.Rows[RowIndex]["OrderDetailID"].ToString(), out saleOrderDetailId));
+                        comm.Parameters.AddWithValue("@saleOrderDetailID", OrderDetId);
                         comm.Parameters.AddWithValue("@discountPercentage", PercentDiscount);
                         comm.ExecuteNonQuery();
                     
@@ -184,12 +193,12 @@ namespace IMS
                         comm2.Parameters.AddWithValue("@dateUpdated", DateTime.Now);
                         comm2.Parameters.AddWithValue("@storedAt", dtMajorSO.Rows[RowIndex]["StoredAt"].ToString());
                         comm2.Parameters.AddWithValue("@barCode", dtMajorSO.Rows[RowIndex]["BarCode"].ToString());
-                        comm2.Parameters.AddWithValue("@expiryDate", DateTime.TryParse(dtMajorSO.Rows[RowIndex]["Expiry"].ToString(), out expiryDate));
+                        comm2.Parameters.AddWithValue("@expiryDate", DateTime.Parse(ExpiryDate));
                         comm2.Parameters.AddWithValue("@batchNumber", dtMajorSO.Rows[RowIndex]["BatchNumber"].ToString());
                         comm2.Parameters.AddWithValue("@uCostPrice", Double.TryParse(dtMajorSO.Rows[RowIndex]["UnitCost"].ToString(), out UnitCostPrice));
                         comm2.Parameters.AddWithValue("@uSalePrice", Double.TryParse(dtMajorSO.Rows[RowIndex]["UnitSale"].ToString(), out uSalePrice));
                         comm2.Parameters.AddWithValue("@saleOrderMasterID", int.TryParse(dtMajorSO.Rows[RowIndex]["OrdermasterID"].ToString(), out saleOrderMasterId));
-                        comm2.Parameters.AddWithValue("@saleOrderDetailID", int.TryParse(dtMajorSO.Rows[RowIndex]["OrderDetailID"].ToString(), out saleOrderDetailId));
+                        comm2.Parameters.AddWithValue("@saleOrderDetailID", OrderDetId);
                         comm2.Parameters.AddWithValue("@discountPercentage", PercentDiscount);
                         comm2.ExecuteNonQuery();
                     }
@@ -205,12 +214,12 @@ namespace IMS
                         comm3.Parameters.AddWithValue("@dateUpdated", DateTime.Now);
                         comm3.Parameters.AddWithValue("@storedAt", dtMajorSO.Rows[RowIndex]["StoredAt"].ToString());
                         comm3.Parameters.AddWithValue("@barCode", dtMajorSO.Rows[RowIndex]["BarCode"].ToString());
-                        comm3.Parameters.AddWithValue("@expiryDate", DateTime.TryParse(dtMajorSO.Rows[RowIndex]["Expiry"].ToString(), out expiryDate));
+                        comm3.Parameters.AddWithValue("@expiryDate", DateTime.Parse(ExpiryDate));
                         comm3.Parameters.AddWithValue("@batchNumber", dtMajorSO.Rows[RowIndex]["BatchNumber"].ToString());
                         comm3.Parameters.AddWithValue("@uCostPrice", Double.TryParse(dtMajorSO.Rows[RowIndex]["UnitCost"].ToString(), out UnitCostPrice));
                         comm3.Parameters.AddWithValue("@uSalePrice", Double.TryParse(dtMajorSO.Rows[RowIndex]["UnitSale"].ToString(), out uSalePrice));
                         comm3.Parameters.AddWithValue("@saleOrderMasterID", int.TryParse(dtMajorSO.Rows[RowIndex]["OrdermasterID"].ToString(), out saleOrderMasterId));
-                        comm3.Parameters.AddWithValue("@saleOrderDetailID", int.TryParse(dtMajorSO.Rows[RowIndex]["OrderDetailID"].ToString(), out saleOrderDetailId));
+                        comm3.Parameters.AddWithValue("@saleOrderDetailID", OrderDetId);
                         comm3.Parameters.AddWithValue("@discountPercentage", PercentDiscount);
                         comm3.ExecuteNonQuery();
                     }
@@ -221,12 +230,13 @@ namespace IMS
                     command2.Parameters.AddWithValue("@defectedQty", DamagedQty);
                     command2.Parameters.AddWithValue("@expiredQty", ExpiredQty);
                     command2.Parameters.AddWithValue("@returnedQty", RejectedQty);
-                    command2.Parameters.AddWithValue("@expiredDate", expiryDate);
+                    command2.Parameters.AddWithValue("@expiredDate", DateTime.Parse(ExpiryDate));
+                    command2.Parameters.AddWithValue("@OrderDetId", OrderDetId);
                     command2.ExecuteNonQuery();
                 }
                 Response.Redirect("RecieveSOFull.aspx");
             }
-            catch
+            catch(Exception ex)
             {
                 connection.Close();
             }
@@ -234,6 +244,13 @@ namespace IMS
             {
                 connection.Close();
             }
+        }
+
+
+        protected void btnGoBack_Click(object sender, EventArgs e)
+        {
+            //First clear all the sessions if created in this page
+            Response.Redirect("ReceiveSalesOrder.aspx");
         }
 
 
@@ -250,7 +267,77 @@ namespace IMS
         protected void dgvReceiveSOGrid_RowEditing(object sender, GridViewEditEventArgs e)
         {
             dgvReceiveSOGrid.EditIndex = e.NewEditIndex;
-            BindGrid();
+            //BindGrid();
+            int OrderDetId, AvailableQty, SentQty, BonusQty, DelieveredQty, DelieveredBonusQty, DamagedQty, ExpiredQty, RejectedQty = 0;
+             
+            int RowIndex = dgvReceiveSOGrid.EditIndex;
+
+            TextBox txtDelieveredQty = (TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("DelieveredQtyVal");
+            TextBox txtRejected = (TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("txtReturnedQuantity");
+            txtRejected.TextChanged += txtReturnedQuantity_TextChanged;
+
+            DelieveredQty = int.Parse(txtDelieveredQty.Text);
+
+            OrderDetId = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("OrderDetID")).Text);
+            AvailableQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("lblAvailableStock")).Text);
+            SentQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("SendQuantityVal")).Text);
+
+            BonusQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("BonusQuantityVal")).Text);
+            DelieveredQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("DelieveredQtyVal")).Text);
+            DelieveredBonusQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("delBonusQtyVal")).Text);
+            DamagedQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("DamagedQuantityVal")).Text);
+            ExpiredQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("txtExpiredQuantity")).Text);
+            RejectedQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("txtReturnedQuantity")).Text);
+            
+            DelieveredQty = SentQty + (BonusQty - DelieveredBonusQty) - (DamagedQty + ExpiredQty + RejectedQty);
+
+            txtDelieveredQty.Text = DelieveredQty.ToString();
+        }
+
+        private int CalculateDelieveredQty(int SentQty, int BonusQty, int DelieveredBonusQty, int DamagedQty, int ExpiredQty, int RejectedQty)
+        {
+            int DelieveredQty;
+            DelieveredQty = SentQty + (BonusQty - DelieveredBonusQty) - (DamagedQty + ExpiredQty + RejectedQty);
+
+            return DelieveredQty;
+        }
+         
+
+        protected void dgvReceiveSOGrid_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                TableCell statusCell = e.Row.Cells[2];
+                if (statusCell.Text == "A")
+                {
+                    statusCell.Text = "Absent";
+                }
+                if (statusCell.Text == "P")
+                {
+                    statusCell.Text = "Present";
+                }
+            }
+        }
+
+        protected void txtReturnedQuantity_TextChanged(object sender, EventArgs e)
+        {
+            int OrderDetId, AvailableQty, SentQty, BonusQty, DelieveredQty, DelieveredBonusQty, DamagedQty, ExpiredQty, RejectedQty = 0;
+            TextBox txtDelieveredQty = (TextBox)dgvReceiveSOGrid.Rows[0].FindControl("DelieveredQtyVal");
+
+            OrderDetId = int.Parse(((Label)dgvReceiveSOGrid.Rows[0].FindControl("OrderDetID")).Text);
+            AvailableQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[0].FindControl("lblAvailableStock")).Text);
+            SentQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[0].FindControl("SendQuantityVal")).Text);
+
+            BonusQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[0].FindControl("BonusQuantityVal")).Text);
+            DelieveredQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[0].FindControl("DelieveredQtyVal")).Text);
+            DelieveredBonusQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[0].FindControl("delBonusQtyVal")).Text);
+            DamagedQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[0].FindControl("DamagedQuantityVal")).Text);
+            ExpiredQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[0].FindControl("txtExpiredQuantity")).Text);
+            RejectedQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[0].FindControl("txtReturnedQuantity")).Text);
+
+            DelieveredQty = SentQty + (BonusQty - DelieveredBonusQty) - (DamagedQty + ExpiredQty + RejectedQty);
+
+            txtDelieveredQty.Text = DelieveredQty.ToString();
         }
 
     }

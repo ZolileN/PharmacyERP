@@ -76,11 +76,7 @@ namespace IMS
             #endregion
 
         }
-        protected void btnAcceptAll_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
             //First clear all the sessions if created in this page
@@ -195,6 +191,42 @@ namespace IMS
 
 
         }
+
+        protected void btnAcceptAll_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                for (int i = 0; i < StockDisplayGrid.Rows.Count; i++)
+                {
+                    Label OrderDetNo = (Label)StockDisplayGrid.Rows[i].FindControl("OrderDetailNo");
+                    GridView Details = (GridView)StockDisplayGrid.Rows[i].FindControl("StockDetailDisplayGrid");
+
+                    if (Details != null)
+                    {
+                        Label lblExpiryDate = (Label)Details.Rows[0].FindControl("lblExpiryDate");
+                        DateTime dtExpiry = DateTime.Parse(lblExpiryDate.Text.ToString());
+                        int orderDetailNo = int.Parse(OrderDetNo.Text.ToString());
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
+                        SqlCommand command2 = new SqlCommand("sp_UpdatetblSaleOrderDetail_Receive_AcceptAll", connection);
+                        command2.CommandType = CommandType.StoredProcedure;
+
+                        command2.Parameters.AddWithValue("@expiredDate", dtExpiry);
+                        command2.Parameters.AddWithValue("@OrderDetId", orderDetailNo);
+                        command2.ExecuteNonQuery();
+                    }
+                }
+                Response.Redirect("ReceiveSalesOrder.aspx");
+            }
+            catch(Exception ex)
+            {
+                connection.Close();
+            }
+           
+        }
+
 
         protected void StockDisplayGrid_RowCommand(object sender, GridViewCommandEventArgs e)
         {
