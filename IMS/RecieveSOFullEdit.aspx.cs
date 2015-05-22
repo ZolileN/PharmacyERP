@@ -125,15 +125,14 @@ namespace IMS
                     {
                         connection.Open();
                     }
-                    OrderDetId = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("OrderDetID")).Text);
-                    AvailableQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("lblAvailableStock")).Text);
-                    SentQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("SendQuantityVal")).Text);
 
                     ProductDescription = ((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("ProductDescription")).Text;
                     ExpiryDate = ((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("lblExpiryDate")).Text;
                     BatchNo = ((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("lblBatchNumber")).Text;
 
-
+                    OrderDetId = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("OrderDetID")).Text);
+                    AvailableQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("lblAvailableStock")).Text);
+                    SentQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("SendQuantityVal")).Text);
                     BonusQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("BonusQuantityVal")).Text);
                     DelieveredQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("DelieveredQtyVal")).Text);
                     DelieveredBonusQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("delBonusQtyVal")).Text);
@@ -240,7 +239,7 @@ namespace IMS
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
             //First clear all the sessions if created in this page
-            Response.Redirect("ReceiveSalesOrder.aspx");
+            Response.Redirect("RecieveSOFull.aspx");
         }
 
 
