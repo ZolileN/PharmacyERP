@@ -363,7 +363,8 @@ namespace IMS
 
                             int ProductNO = 0;
                             bool ProductPresent = false;
-                            command.Parameters.AddWithValue("@p_ProductID", txtSearch.Text.ToString());
+                            int.TryParse(lblProductId.Text.ToString(), out ProductNO);
+                            command.Parameters.AddWithValue("@p_ProductID", ProductNO);
                             //if (int.TryParse(SelectProduct.SelectedValue.ToString(), out ProductNO))
                             //{
                             //}
@@ -398,7 +399,8 @@ namespace IMS
                                         command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                                     }
 
-                                    command.Parameters.AddWithValue("@p_ProductID", txtSearch.Text.ToString());
+                                    int.TryParse(lblProductId.Text.ToString(), out ProductNumber);
+                                    command.Parameters.AddWithValue("@p_ProductID", ProductNumber);
 
                                     if (int.TryParse(SelectQuantity.Text.ToString(), out Quantity))
                                     {
