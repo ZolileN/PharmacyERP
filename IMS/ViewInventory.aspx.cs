@@ -176,7 +176,7 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_productOrderType", DBNull.Value);
 
                     command.Parameters.AddWithValue("@p_ProdType", DBNull.Value);
-
+                    command.Parameters.AddWithValue("@p_isActive", DBNull.Value);
 
 
                     command.Parameters.AddWithValue("@p_ProdID", prod_ID);
@@ -317,7 +317,14 @@ namespace IMS
                     {
                         command.Parameters.AddWithValue("@p_productOrderType", Convert.ToInt32(ddlProductOrderType.SelectedValue.ToString()));
                     }
-
+                    if (chkActive.Checked == true)
+                    {
+                        command.Parameters.AddWithValue("@p_isActive", 1);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_isActive", DBNull.Value);
+                    }
 
                     if (ProductType.SelectedIndex <= 0)
                     {

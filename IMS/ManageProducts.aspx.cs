@@ -160,6 +160,14 @@ namespace IMS
                     Session["MS_Bonus12"] = dt.Rows[0]["Bonus12Quantity"].ToString();
                     Session["MS_Bonus25"] = dt.Rows[0]["Bonus25Quantity"].ToString();
                     Session["MS_Bonus50"] = dt.Rows[0]["Bonus50Quantity"].ToString();
+                    if (dt.Rows[0]["Active"] != null)
+                    {
+                        Session["MS_Active"] = dt.Rows[0]["Active"].ToString();
+                    }
+                    else
+                    {
+                        Session["MS_Active"] = "1";
+                    }
                     Response.Redirect("Addproduct.aspx",false);
                     #endregion
 
@@ -192,7 +200,15 @@ namespace IMS
                             {
                                 command.Parameters.AddWithValue("@p_ProductID", 0);
                             }
-                            command.ExecuteNonQuery();
+                            int x = command.ExecuteNonQuery();
+                            if (x == 1)
+                            {
+                                WebMessageBoxUtil.Show("Record Removed Successfully");
+                            }
+                            else 
+                            {
+                                WebMessageBoxUtil.Show("Record cannot be removed as stock exists against this value");
+                            }
                     
                     }
                     catch (Exception ex)

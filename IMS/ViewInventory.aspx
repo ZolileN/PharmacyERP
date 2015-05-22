@@ -85,6 +85,11 @@
 
                   </td><td><asp:Label runat="server" AssociatedControlID="ProductType" Visible="true" CssClass=" control-label">Product Type</asp:Label></td>
              <td><asp:DropDownList runat="server" ID="ProductType" Visible="true" OnSelectedIndexChanged="ProductType_SelectedIndexChanged" CssClass="form-control" Width="29%"/></td>
+             <td><asp:Label runat="server" AssociatedControlID="chkActive" CssClass="control-label">Search Active</asp:Label></td>
+             <td>  <asp:CheckBox ID="chkActive" runat="server">
+                       
+                     </asp:CheckBox>
+                 </td>
              </tr>        
         </table>
 

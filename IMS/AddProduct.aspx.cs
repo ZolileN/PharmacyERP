@@ -99,7 +99,7 @@ namespace IMS
                                     Session["MS_GreenRainCode"].ToString(), Session["MS_BrandName"].ToString(), Session["MS_MaxiMumDiscount"].ToString(), Session["MS_LineID"].ToString(),
                                     Session["MS_UnitSale"].ToString(), Session["MS_UnitCost"].ToString(), Session["MS_itemAWT"].ToString(), Session["MS_itemForm"].ToString(),
                                     Session["MS_itemStrength"].ToString(), Session["MS_itemPackType"].ToString(), Session["MS_itemPackSize"].ToString(), Session["MS_Description"].ToString()
-                                    , Session["MS_Bonus12"].ToString(), Session["MS_Bonus25"].ToString(), Session["MS_Bonus50"].ToString());
+                                    , Session["MS_Bonus12"].ToString(), Session["MS_Bonus25"].ToString(), Session["MS_Bonus50"].ToString(), Session["MS_Active"].ToString());
                 }
                 #endregion
 
@@ -182,7 +182,7 @@ namespace IMS
         public void FromMaster_Load(String ItemNo, String ItemName, String ItemType, String Manufacturer, String Category, String GenericName,
                                     String Control, String BinNumber, String GreenRain, String BrandName, String MaxDiscount, String LineID, 
                                     String UnitSale, String UnitCost, String ItemAwt, String Form, String Strength, String itemPackType,
-                                    String itemPackSize, String Description="", string b12 = "", string b25 = "", string b50 = "")
+                                    String itemPackSize, String Description="", string b12 = "", string b25 = "", string b50 = "",string _active="")
         {
             BarCodeSerial.Text = ItemNo;
             GreenRainCode.Text = GreenRain;
@@ -202,6 +202,14 @@ namespace IMS
             bonus12.Text = b12;
             bonus25.Text = b25;
             bonus50.Text = b50;
+            if (_active.Equals("1"))
+            {
+                chkActive.Checked = true;
+            }
+            else
+            {
+                chkActive.Checked = false;
+            }
         }
         protected void btnAddProduct_Click(object sender, EventArgs e)
         {
@@ -341,6 +349,14 @@ namespace IMS
                                 command.Parameters.AddWithValue("@p_bonus50", 0);
                             }
 
+                            if (chkActive.Checked == true)
+                            {
+                                command.Parameters.AddWithValue("@p_Active", 1);
+                            }
+                            else 
+                            {
+                                command.Parameters.AddWithValue("@p_Active", 0);
+                            }
                             command.Parameters.AddWithValue("@p_form", ItemForm.Text.ToString());
                             command.Parameters.AddWithValue("@p_strength", ItemStrength.Text.ToString());
                             command.Parameters.AddWithValue("@p_packtype", PackType.Text.ToString());
@@ -490,7 +506,14 @@ namespace IMS
                             {
                                 command.Parameters.AddWithValue("@p_AWT", 0);
                             }
-
+                            if (chkActive.Checked == true)
+                            {
+                                command.Parameters.AddWithValue("@p_Active", 1);
+                            }
+                            else
+                            {
+                                command.Parameters.AddWithValue("@p_Active", 0);
+                            }
                             
                             command.Parameters.AddWithValue("@p_form", ItemForm.Text.ToString());
                             command.Parameters.AddWithValue("@p_strength", ItemStrength.Text.ToString());
@@ -540,7 +563,7 @@ namespace IMS
                             connection.Close();
                         }
                         
-                        Response.Redirect("ManageProducts.aspx");
+                        Response.Redirect("ManageProducts.aspx",false);
                         #endregion
                     }
                 }
@@ -558,6 +581,7 @@ namespace IMS
                 ProductName.Text=string.Empty;
                 ProdcutDesc.Text = string.Empty;
                 ProdcutBrand.Text = string.Empty;
+                chkActive.Checked = true;
                 ProductType.SelectedIndex = -1;
                 ProductDept.SelectedIndex=0;
                 ddlProductOrderType.SelectedIndex = 0;

@@ -51,7 +51,7 @@ namespace IMS
                         {
                             connection.Open();
                         }
-                        SqlCommand command = new SqlCommand("Select * From tbl_System WHERE System_RoleID =2;", connection); // needs to be completed
+                        SqlCommand command = new SqlCommand("Select * From tbl_System WHERE System_RoleID Not In (1,3);", connection); // needs to be completed
                         DataSet ds = new DataSet();
                         SqlDataAdapter sA = new SqlDataAdapter(command);
                         sA.Fill(ds);

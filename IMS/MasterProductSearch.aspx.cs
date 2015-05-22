@@ -121,6 +121,7 @@ namespace IMS
                    Session["MS_BinNumber"] = "";
                    Session["MS_GreenRainCode"] = "";
                    Session["MS_Description"] = "";
+                   Session["MS_Active"] = "1";
                    Response.Redirect("Addproduct.aspx",false);
 
 

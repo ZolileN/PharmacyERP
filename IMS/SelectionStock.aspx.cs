@@ -356,9 +356,16 @@ namespace IMS
         }
         protected void btnBack_Click(object sender, EventArgs e)
         {
-            String prodID = ((Label)StockDisplayGrid.Rows[0].FindControl("lblProdID")).Text;
-            int prod_ID = int.Parse(prodID);
-            Response.Redirect("ViewInventory.aspx?Id=" + prod_ID, false);
+            if (StockDisplayGrid.Rows.Count > 0)
+            {
+                String prodID = ((Label)StockDisplayGrid.Rows[0].FindControl("lblProdID")).Text;
+                int prod_ID = int.Parse(prodID);
+                Response.Redirect("ViewInventory.aspx?Id=" + prod_ID, false);
+            }
+            else
+            {
+                Response.Redirect("ViewInventory.aspx", false);
+            }
         }
     }
 }

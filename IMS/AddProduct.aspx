@@ -113,6 +113,11 @@
                  <td> <asp:TextBox runat="server" ID="bonus50" CssClass="form-control" /></td>
              </tr>
              <tr>
+                 <td><asp:Label runat="server" AssociatedControlID="chkActive" CssClass="control-label">Active</asp:Label> </td>
+                 <td>  <asp:CheckBox ID="chkActive" runat="server">
+                       
+                     </asp:CheckBox>
+                 </td>
                  <td></td>
                  <%--<td colspan="100%"><asp:Button ID="btnCreateProduct" runat="server" OnClick="btnCreateProduct_Click"  Text="ADD" CssClass="btn btn-primary" ValidationGroup="exSave"/>
                  <asp:Button ID="btnCancelProduct" runat="server" OnClick="btnCancelProduct_Click" Text="CANCEL" CssClass="btn btn-default" />
