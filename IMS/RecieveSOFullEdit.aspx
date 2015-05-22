@@ -85,17 +85,17 @@
                          </EditItemTemplate>
                         <ItemStyle  Width="110px" HorizontalAlign="Left"/>
                     </asp:TemplateField> 
-                      <asp:TemplateField HeaderText="Delivered<br>Qty" >
+                      <asp:TemplateField HeaderText="Accepted<br>Qty" >
                         <ItemTemplate>
-                             <asp:TextBox ID="DelieveredQtyVal"  runat="server" Text=' <%#Eval("DelieveredQty")==DBNull.Value? int.Parse(Eval("DelieveredQty").ToString()) :int.Parse(Eval("SendQuantity").ToString())  %> ' Width="47px"></asp:TextBox>
+                             <asp:TextBox ID="DelieveredQtyVal"  runat="server" Text=' <%#Eval("DelieveredQty")==DBNull.Value? int.Parse(Eval("SendQuantity").ToString()) :int.Parse(Eval("DelieveredQty").ToString())  %> ' Width="47px"></asp:TextBox>
                         </ItemTemplate>
                         <ItemStyle  Width="110px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
 
-                     <asp:TemplateField HeaderText="Delivered<br>Bonus Qty">
+                     <asp:TemplateField HeaderText="Accepted<br>Bonus Qty">
                        
                         <ItemTemplate>
-                             <asp:TextBox ID="delBonusQtyVal"  runat="server" Text=' <%#Eval("OrderedBonusQuantity")==DBNull.Value? int.Parse(Eval("DelieveredQty").ToString()) :int.Parse( Eval("OrderedBonusQuantity").ToString())  %> '   Width="47px"></asp:TextBox>
+                             <asp:TextBox ID="delBonusQtyVal"  runat="server" Text=' <%#Eval("OrderedBonusQuantity")==DBNull.Value? int.Parse(Eval("BonusQuantity").ToString()) :int.Parse( Eval("OrderedBonusQuantity").ToString())  %> '   Width="47px"></asp:TextBox>
                          </ItemTemplate>
                         <ItemStyle  Width="110px" HorizontalAlign="Left"/>
                     </asp:TemplateField>

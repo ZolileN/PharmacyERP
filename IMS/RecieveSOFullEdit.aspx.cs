@@ -48,9 +48,22 @@ namespace IMS
                 dgvReceiveSOGrid.DataSource = ds.Tables[0];
                 dgvReceiveSOGrid.DataBind();
 
-                ((DropDownList)dgvReceiveSOGrid.Rows[0].FindControl("ddDamagedAction")).SelectedValue = Session["ddDamagedAction"].ToString();
-                ((DropDownList)dgvReceiveSOGrid.Rows[0].FindControl("ddExpiredAction")).SelectedValue = Session["ddExpiredAction"].ToString();
-                ((DropDownList)dgvReceiveSOGrid.Rows[0].FindControl("ddNotAcceptedAction")).SelectedValue = Session["ddNotAcceptedAction"].ToString();
+                if (ds.Tables[0].Rows[0]["DefectedStatus"].ToString()=="2")
+                {
+                    Session["Damaged"] = ds.Tables[0].Rows[0]["DamagedQuantity"].ToString();
+                }
+                if (ds.Tables[0].Rows[0]["ExpiredStatus"].ToString() == "2")
+                {
+                    Session["Expired"] = ds.Tables[0].Rows[0]["ExpiredQuantity"].ToString();
+                }
+                if (ds.Tables[0].Rows[0]["ReturnedStatus"].ToString() == "2")
+                {
+                    Session["Returned"] = ds.Tables[0].Rows[0]["ReturnedQuantity"].ToString();
+                }
+
+                ((DropDownList)dgvReceiveSOGrid.Rows[0].FindControl("ddDamagedAction")).SelectedValue = ds.Tables[0].Rows[0]["DefectedStatus"].ToString();// Session["ddDamagedAction"].ToString();
+                ((DropDownList)dgvReceiveSOGrid.Rows[0].FindControl("ddExpiredAction")).SelectedValue = ds.Tables[0].Rows[0]["ExpiredStatus"].ToString();//Session["ddExpiredAction"].ToString();
+                ((DropDownList)dgvReceiveSOGrid.Rows[0].FindControl("ddNotAcceptedAction")).SelectedValue = ds.Tables[0].Rows[0]["ReturnedStatus"].ToString();//Session["ddNotAcceptedAction"].ToString();
             }
             catch (Exception ex)
             {
@@ -70,19 +83,33 @@ namespace IMS
                 GridViewRow gvr = (GridViewRow)(((LinkButton)e.CommandSource).NamingContainer);
                 int RowIndex = gvr.RowIndex;
 
-                int stockid, productId, saleOrderMasterId, saleOrderDetailId = 0;
+                int Damaged = 0, Expired = 0, Returned = 0;
                 string status, storedAt, barcode, batchNo = "";
                 DateTime dateCreated, dateUpdated, expiryDate = DateTime.Today;
-
                 double PercentDiscount, UnitCostPrice, uSalePrice;
+                string ProductID = "";
                 int OrderDetId, AvailableQty, SentQty, BonusQty, DelieveredQty, DelieveredBonusQty, DamagedQty, ExpiredQty, RejectedQty = 0;
                 string ProductDescription, ExpiryDate, BatchNo = "";
+                if (Session["Damaged"] != null)
+                {
+                    int.TryParse(Session["Damaged"].ToString(), out Damaged);
+                }
+                if (Session["Expired"] != null)
+                {
+                    int.TryParse(Session["Expired"].ToString(), out Expired);
+                }
+                if (Session["Returned"] != null)
+                {
+                    int.TryParse(Session["Returned"].ToString(), out Returned);
+                }
+                
+              
 
                 DataSet dsMajorSO = (DataSet)Session["dsMajorSOReceive"];
                 DataTable dtMajorSO = dsMajorSO.Tables[0];
                 if (dtMajorSO != null)
                 {
-                  
+                    ProductID = dtMajorSO.Rows[RowIndex]["ProductID"].ToString();
                     status = dtMajorSO.Rows[RowIndex]["Status"].ToString();
                     storedAt = dtMajorSO.Rows[RowIndex]["StoredAt"].ToString();
                     barcode = dtMajorSO.Rows[RowIndex]["BarCode"].ToString();
@@ -117,23 +144,40 @@ namespace IMS
 
                     DelieveredQty = SentQty + (BonusQty - DelieveredBonusQty) - (DamagedQty + ExpiredQty + RejectedQty);
 
-                    if (SentQty > (DelieveredQty + ExpiredQty + RejectedQty + DamagedQty))
+                    if (SentQty < (DelieveredQty + ExpiredQty +  RejectedQty + DamagedQty))
                     {
                         WebMessageBoxUtil.Show("Mismatch in received and accepted quantity. Kindly correctly fill expired,defected or returned quantities");
                         return;
                     }
                     if(BonusQty < DelieveredBonusQty)
                     {
-                        WebMessageBoxUtil.Show("Delivered quantity cannot be greater than Bonus quantity");
+                        WebMessageBoxUtil.Show("Delivered Bonus quantity cannot be greater than Bonus quantity");
                         return;
                     }
-                    var ddDamagedAction = ((DropDownList)dgvReceiveSOGrid.Rows[RowIndex].FindControl("ddDamagedAction")).SelectedValue;
-                    Session["ddDamagedAction"] = ddDamagedAction;
-                    var ddExpiredAction = ((DropDownList)dgvReceiveSOGrid.Rows[RowIndex].FindControl("ddExpiredAction")).SelectedValue;
-                    Session["ddExpiredAction"] = ddExpiredAction;
+                    var ddDamagedAction = ((DropDownList)dgvReceiveSOGrid.Rows[RowIndex].FindControl("ddDamagedAction")).SelectedValue; 
+                    var ddExpiredAction = ((DropDownList)dgvReceiveSOGrid.Rows[RowIndex].FindControl("ddExpiredAction")).SelectedValue; 
                     var ddNotAcceptedAction = ((DropDownList)dgvReceiveSOGrid.Rows[RowIndex].FindControl("ddNotAcceptedAction")).SelectedValue;
-                    Session["ddNotAcceptedAction"] = ddNotAcceptedAction;
 
+                    int OldStockSum = Damaged + Expired + Returned;
+
+                    //Now call the Update Stock Store Procedure and send the OldStockSum as negative value to it
+
+                    if (OldStockSum > 0)
+                    {
+                        //add value to stock for this expiry
+                        SqlCommand command = new SqlCommand("sp_updatetblStockDetails", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@quantity", -OldStockSum);
+                        command.Parameters.AddWithValue("@ProductID", int.Parse(ProductID));
+                        command.Parameters.AddWithValue("@expirydate", ExpiryDate);
+                        command.ExecuteNonQuery();
+                        WebMessageBoxUtil.Show("Stock Successfully Added");
+
+                    }
+                    Session.Remove("Damaged");
+                    Session.Remove("Expired");
+                    Session.Remove("Returned");
+                    
                     int addtoStockQty = 0;
                     if (ddDamagedAction == "2")
                     {
@@ -147,90 +191,36 @@ namespace IMS
                     {
                         addtoStockQty = addtoStockQty + RejectedQty;
                     }
+                    
                     if (addtoStockQty > 0)
                     {
                         //add value to stock for this expiry
                         SqlCommand command = new SqlCommand("sp_updatetblStockDetails", connection);
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@quantity", addtoStockQty);
-                        command.Parameters.AddWithValue("@expirydate", expiryDate);
+                        command.Parameters.AddWithValue("@ProductID", int.Parse(ProductID));
+                        command.Parameters.AddWithValue("@expirydate", ExpiryDate);
                         command.ExecuteNonQuery();
                         WebMessageBoxUtil.Show("Stock Successfully Added");
 
-                    }
-                    if (DamagedQty > 0) 
-                    {
-                        //insert values in the newly created table
-                        SqlCommand comm = new SqlCommand("sp_Insert_tblSOReceiveStockDetail_entry", connection);
-                        comm.CommandType = CommandType.StoredProcedure;
-                        comm.Parameters.AddWithValue("@stockId", int.TryParse(dtMajorSO.Rows[RowIndex]["StockID"].ToString(), out stockid));
-                        comm.Parameters.AddWithValue("@productID",  int.TryParse(dtMajorSO.Rows[RowIndex]["ProductID"].ToString(), out productId));
-                        comm.Parameters.AddWithValue("@quantity", DamagedQty);
-                        comm.Parameters.AddWithValue("@status", ((DropDownList)dgvReceiveSOGrid.Rows[RowIndex].FindControl("ddDamagedAction")).SelectedValue);
-                        comm.Parameters.AddWithValue("@dateCreated", DateTime.Today);
-                        comm.Parameters.AddWithValue("@dateUpdated", DateTime.Now);
-                        comm.Parameters.AddWithValue("@storedAt", dtMajorSO.Rows[RowIndex]["StoredAt"].ToString());
-                        comm.Parameters.AddWithValue("@barCode", dtMajorSO.Rows[RowIndex]["BarCode"].ToString());
-                        comm.Parameters.AddWithValue("@expiryDate", DateTime.Parse(ExpiryDate));
-                        comm.Parameters.AddWithValue("@batchNumber", dtMajorSO.Rows[RowIndex]["BatchNumber"].ToString());
-                        comm.Parameters.AddWithValue("@uCostPrice", Double.TryParse(dtMajorSO.Rows[RowIndex]["UnitCost"].ToString(), out UnitCostPrice));
-                        comm.Parameters.AddWithValue("@uSalePrice", Double.TryParse(dtMajorSO.Rows[RowIndex]["UnitSale"].ToString(), out uSalePrice));
-                        comm.Parameters.AddWithValue("@saleOrderMasterID", int.TryParse(dtMajorSO.Rows[RowIndex]["OrdermasterID"].ToString(), out saleOrderMasterId));
-                        comm.Parameters.AddWithValue("@saleOrderDetailID", OrderDetId);
-                        comm.Parameters.AddWithValue("@discountPercentage", PercentDiscount);
-                        comm.ExecuteNonQuery();
-                    
-                    }
-                    if(ExpiredQty > 0)
-                    {
-                        SqlCommand comm2 = new SqlCommand("sp_Insert_tblSOReceiveStockDetail_entry", connection);
-                        comm2.CommandType = CommandType.StoredProcedure;
-                        comm2.Parameters.AddWithValue("@stockId", int.TryParse(dtMajorSO.Rows[RowIndex]["StockID"].ToString(), out stockid));
-                        comm2.Parameters.AddWithValue("@productID", int.TryParse(dtMajorSO.Rows[RowIndex]["ProductID"].ToString(), out productId));
-                        comm2.Parameters.AddWithValue("@quantity", ExpiredQty);
-                        comm2.Parameters.AddWithValue("@status", ((DropDownList)dgvReceiveSOGrid.Rows[RowIndex].FindControl("ddExpiredAction")).SelectedValue);
-                        comm2.Parameters.AddWithValue("@dateCreated", DateTime.Today);
-                        comm2.Parameters.AddWithValue("@dateUpdated", DateTime.Now);
-                        comm2.Parameters.AddWithValue("@storedAt", dtMajorSO.Rows[RowIndex]["StoredAt"].ToString());
-                        comm2.Parameters.AddWithValue("@barCode", dtMajorSO.Rows[RowIndex]["BarCode"].ToString());
-                        comm2.Parameters.AddWithValue("@expiryDate", DateTime.Parse(ExpiryDate));
-                        comm2.Parameters.AddWithValue("@batchNumber", dtMajorSO.Rows[RowIndex]["BatchNumber"].ToString());
-                        comm2.Parameters.AddWithValue("@uCostPrice", Double.TryParse(dtMajorSO.Rows[RowIndex]["UnitCost"].ToString(), out UnitCostPrice));
-                        comm2.Parameters.AddWithValue("@uSalePrice", Double.TryParse(dtMajorSO.Rows[RowIndex]["UnitSale"].ToString(), out uSalePrice));
-                        comm2.Parameters.AddWithValue("@saleOrderMasterID", int.TryParse(dtMajorSO.Rows[RowIndex]["OrdermasterID"].ToString(), out saleOrderMasterId));
-                        comm2.Parameters.AddWithValue("@saleOrderDetailID", OrderDetId);
-                        comm2.Parameters.AddWithValue("@discountPercentage", PercentDiscount);
-                        comm2.ExecuteNonQuery();
-                    }
-                    if (RejectedQty > 0)
-                    {
-                        SqlCommand comm3 = new SqlCommand("sp_Insert_tblSOReceiveStockDetail_entry", connection);
-                        comm3.CommandType = CommandType.StoredProcedure;
-                        comm3.Parameters.AddWithValue("@stockId", int.TryParse(dtMajorSO.Rows[RowIndex]["StockID"].ToString(), out stockid));
-                        comm3.Parameters.AddWithValue("@productID", int.TryParse(dtMajorSO.Rows[RowIndex]["ProductID"].ToString(), out productId));
-                        comm3.Parameters.AddWithValue("@quantity", RejectedQty);
-                        comm3.Parameters.AddWithValue("@status", ((DropDownList)dgvReceiveSOGrid.Rows[RowIndex].FindControl("ddNotAcceptedAction")).SelectedValue);
-                        comm3.Parameters.AddWithValue("@dateCreated", DateTime.Today);
-                        comm3.Parameters.AddWithValue("@dateUpdated", DateTime.Now);
-                        comm3.Parameters.AddWithValue("@storedAt", dtMajorSO.Rows[RowIndex]["StoredAt"].ToString());
-                        comm3.Parameters.AddWithValue("@barCode", dtMajorSO.Rows[RowIndex]["BarCode"].ToString());
-                        comm3.Parameters.AddWithValue("@expiryDate", DateTime.Parse(ExpiryDate));
-                        comm3.Parameters.AddWithValue("@batchNumber", dtMajorSO.Rows[RowIndex]["BatchNumber"].ToString());
-                        comm3.Parameters.AddWithValue("@uCostPrice", Double.TryParse(dtMajorSO.Rows[RowIndex]["UnitCost"].ToString(), out UnitCostPrice));
-                        comm3.Parameters.AddWithValue("@uSalePrice", Double.TryParse(dtMajorSO.Rows[RowIndex]["UnitSale"].ToString(), out uSalePrice));
-                        comm3.Parameters.AddWithValue("@saleOrderMasterID", int.TryParse(dtMajorSO.Rows[RowIndex]["OrdermasterID"].ToString(), out saleOrderMasterId));
-                        comm3.Parameters.AddWithValue("@saleOrderDetailID", OrderDetId);
-                        comm3.Parameters.AddWithValue("@discountPercentage", PercentDiscount);
-                        comm3.ExecuteNonQuery();
-                    }
-                     
+                    } 
                     SqlCommand command2 = new SqlCommand("sp_UpdatetblSaleOrderDetail_Receive_entry", connection);
                     command2.CommandType = CommandType.StoredProcedure;
+                    command2.Parameters.AddWithValue("@bonusQty", BonusQty);
+                    command2.Parameters.AddWithValue("@SentQty", SentQty);
                     command2.Parameters.AddWithValue("@delieveredQty", DelieveredQty);
+                    command2.Parameters.AddWithValue("@delieveredBonusQty", DelieveredBonusQty);
                     command2.Parameters.AddWithValue("@defectedQty", DamagedQty);
+                    command2.Parameters.AddWithValue("@defectedStatus", int.Parse(((DropDownList)dgvReceiveSOGrid.Rows[RowIndex].FindControl("ddDamagedAction")).SelectedValue));
+
                     command2.Parameters.AddWithValue("@expiredQty", ExpiredQty);
+                    command2.Parameters.AddWithValue("@expiredStatus", int.Parse(((DropDownList)dgvReceiveSOGrid.Rows[RowIndex].FindControl("ddExpiredAction")).SelectedValue));
+
                     command2.Parameters.AddWithValue("@returnedQty", RejectedQty);
+                    command2.Parameters.AddWithValue("@returnedStatus", int.Parse(((DropDownList)dgvReceiveSOGrid.Rows[RowIndex].FindControl("ddNotAcceptedAction")).SelectedValue));
+
                     command2.Parameters.AddWithValue("@expiredDate", DateTime.Parse(ExpiryDate));
+
                     command2.Parameters.AddWithValue("@OrderDetId", OrderDetId);
                     command2.ExecuteNonQuery();
                 }
