@@ -36,6 +36,8 @@ namespace IMS
                 ProductType.Items.Add("Medicine(HAAD)");
                 ProductType.Items.Add("Medicine(Non HAAD)");
                 ProductType.Items.Add("Non Medicine");
+
+                ProductType.SelectedIndex = 0;
                 #endregion
 
                 #region Populating Product Department DropDown
@@ -127,7 +129,8 @@ namespace IMS
                 ddlActive.Items.Add("Select Option");
                 ddlActive.Items.Add("All Active");
                 ddlActive.Items.Add("All in-Active");
-                ddlActive.Items.Add("None");
+               // ddlActive.Items.Add("None");
+                ddlActive.SelectedIndex = 0;
                 #endregion
 
                 #region ProductOrderType dropdown population
@@ -184,10 +187,11 @@ namespace IMS
 
                     command.Parameters.AddWithValue("@p_ProdType", DBNull.Value);
                     command.Parameters.AddWithValue("@p_isActive", DBNull.Value);
-
-
+                    command.Parameters.AddWithValue("@p_prodName", DBNull.Value);
+                    command.Parameters.AddWithValue("@p_isPrint", 0);
                     command.Parameters.AddWithValue("@p_ProdID", prod_ID);
-
+                                          
+                   
                     #endregion
 
                     SqlDataAdapter SA = new SqlDataAdapter(command);
@@ -363,14 +367,18 @@ namespace IMS
                     //    command.Parameters.AddWithValue("@p_ProdID", txtSearch.Text);
                     //}
                     //org value lblProductId.Text
+                    command.Parameters.AddWithValue("@p_ProdID", DBNull.Value);
+                   
+
                     if (String.IsNullOrEmpty(txtSearch.Value))
                     {
-                        command.Parameters.AddWithValue("@p_ProdID", DBNull.Value);
+                        command.Parameters.AddWithValue("@p_prodName", DBNull.Value);
                     }
                     else
                     {
-                        command.Parameters.AddWithValue("@p_ProdID", Convert.ToInt32(txtSearch.Value.ToString()));
+                        command.Parameters.AddWithValue("@p_prodName", txtSearch.Value.ToString());
                     }
+                    command.Parameters.AddWithValue("@p_isPrint", 0);
                     #endregion
 
                     SqlDataAdapter SA = new SqlDataAdapter(command);
@@ -552,6 +560,8 @@ namespace IMS
             ProductSubCat.SelectedIndex = -1;
             ProductCat.SelectedIndex = -1;
             ProductDept.SelectedIndex = -1;
+            ddlActive.SelectedIndex = -1;
+            ProductType.SelectedIndex = -1;
             BindGridbyFilters();
         }
 
@@ -696,6 +706,16 @@ namespace IMS
         protected void dgvStockDisplayGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             
+        }
+
+        protected void ddlProductOrderType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BindGridbyFilters();
+        }
+
+        protected void ddlActive_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BindGridbyFilters();
         }
     }
 }

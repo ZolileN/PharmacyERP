@@ -47,7 +47,9 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_productOrderType", DBNull.Value);
                     command.Parameters.AddWithValue("@p_ProdType", DBNull.Value);
                     command.Parameters.AddWithValue("@p_ProdID", DBNull.Value);
-
+                    command.Parameters.AddWithValue("@p_isActive", DBNull.Value);
+                    command.Parameters.AddWithValue("@p_prodName", DBNull.Value);
+                    command.Parameters.AddWithValue("@p_isPrint", 1);
                     #region Unused Filtered Conditions
                     // string prodID;
                    // int depID,catID,subCatID,prodIDOrg,prodType = -1;
