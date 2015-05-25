@@ -66,8 +66,8 @@ namespace IMS
                 double ActualAmount = 0;
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    BonusAmount += Convert.ToInt32(ds.Tables[0].Rows[i]["AmountBonus"]);
-                    ActualAmount += Convert.ToInt32(ds.Tables[0].Rows[i]["Amount"]);
+                    BonusAmount += Convert.ToDouble(ds.Tables[0].Rows[i]["AmountBonus"]);
+                    ActualAmount += Convert.ToDouble(ds.Tables[0].Rows[i]["Amount"]);
                 }
 
                 lblTotalBonusAmount.Text = BonusAmount.ToString();

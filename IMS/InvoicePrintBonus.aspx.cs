@@ -55,6 +55,14 @@ namespace IMS
                 DataSet ds = new DataSet();
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    if (ds.Tables[0].Rows[i]["BonusQuantity"].ToString().Equals("0"))
+                    {
+                        ds.Tables[0].Rows[i].Delete();
+                        ds.AcceptChanges();
+                    }
+                }
                 InvoiceSet = ds;
                 StockDisplayGrid.DataSource = null;
                 StockDisplayGrid.DataSource = ds.Tables[0];
@@ -64,9 +72,11 @@ namespace IMS
                 double ActualAmount = 0;
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    BonusAmount += Convert.ToInt32(ds.Tables[0].Rows[i]["AmountBonus"]);
-                    ActualAmount += Convert.ToInt32(ds.Tables[0].Rows[i]["Amount"]);
+                    BonusAmount += Convert.ToDouble(ds.Tables[0].Rows[i]["AmountBonus"]);
+                    ActualAmount += Convert.ToDouble(ds.Tables[0].Rows[i]["Amount"]);
                 }
+
+                
 
                 lblTotalBonusAmount.Text = BonusAmount.ToString();
                 lblTotalSentAmount.Text = ActualAmount.ToString();

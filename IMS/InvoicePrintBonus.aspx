@@ -111,7 +111,7 @@
     <form id="form1" runat="server">
      <div class="main">
           <div class="accNum drg" id="accNum">1111111111</div>
-          <div class="billTo drg" id="billTo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <div class="billTo drg" id="billTo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                <asp:Label ID="To" runat="server" style="font-weight: bold" Width="300px"></asp:Label>&nbsp;
        	       <asp:Label ID="ToAddress" runat="server"  Width="300px"></asp:Label>         
           </div>
@@ -153,7 +153,7 @@
         <div class="grandTotal drg" id="grandTotal">
             <asp:Label ID="lblTotalSentAmount" runat="server" CssClass="control-label">Invoice No </asp:Label>
              <asp:Label runat="server" ID="lblTotalBonusAmount" CssClass="control-label">Invoice Date</asp:Label>
-            <asp:Button ID="btnPrint" runat="server" CssClass="print" Text="Print" OnClientClick="window.print();"/>
+            <asp:Button ID="btnPrint" runat="server" CssClass="genCode" Text="Print" OnClientClick="window.print();"/>
         </div>
         <br />
          
