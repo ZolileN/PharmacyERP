@@ -187,7 +187,7 @@ namespace IMS
             {
                 Session["SalesMan"] = ddlSalesMan.SelectedItem.ToString();
             }
-            Response.Redirect("InvoicePrint.aspx");
+            Response.Redirect("InvoicePrintBonus.aspx");
         }
 
         protected void btnBack_Click(object sender, EventArgs e)

@@ -13,7 +13,7 @@ using System.IO;
 
 namespace IMS
 {
-    public partial class InvoicePrint : System.Web.UI.Page
+    public partial class InvoicePrintBonus : System.Web.UI.Page
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet InvoiceSet;
@@ -43,9 +43,7 @@ namespace IMS
                 ToAddress.Text = dsTo.Tables[0].Rows[0]["SystemAddress"].ToString();
                 LoadData();
             }
-
         }
-
         public void LoadData()
         {
             try
@@ -114,6 +112,6 @@ namespace IMS
             Response.Redirect("SalesOrderInvoice.aspx");
         }
 
-        
+       
     }
 }
