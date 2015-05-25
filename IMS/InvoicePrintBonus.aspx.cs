@@ -49,20 +49,29 @@ namespace IMS
             try
             {
                 connection.Open();
-                SqlCommand command = new SqlCommand("sp_GetSaleOrderDetailList_Bonus", connection);
+                SqlCommand command = new SqlCommand("sp_BonusInvoicePrint", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_OrderID", Convert.ToInt32(Session["OrderNo_Invoice"].ToString()));
                 DataSet ds = new DataSet();
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
+                
+                /*List<int> L = new List<int>();
+
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
                     if (ds.Tables[0].Rows[i]["BonusQuantity"].ToString().Equals("0"))
                     {
-                        ds.Tables[0].Rows[i].Delete();
-                        ds.AcceptChanges();
+                        L.Add(i);
                     }
                 }
+
+                foreach (int i in L)
+                {
+                    ds.Tables[0].Rows[i].Delete();
+                    ds.AcceptChanges();
+                }*/
+
                 InvoiceSet = ds;
                 StockDisplayGrid.DataSource = null;
                 StockDisplayGrid.DataSource = ds.Tables[0];
