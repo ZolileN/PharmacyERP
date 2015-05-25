@@ -25,6 +25,7 @@ namespace IMS
             if(!IsPostBack)
             {
                 BindGrid();
+                DisplaySODetailsLabels();
             }
         }
 
@@ -47,14 +48,10 @@ namespace IMS
                 {
                     command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                 }
-
-
-
-
-
+                  
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
-                Session["dsProdcts"] = ds;
+                Session["dsSODetails"] = ds;
                 ProductSet = ds;
                 StockDisplayGrid.DataSource = null;
                 StockDisplayGrid.DataSource = ds.Tables[0];
@@ -74,6 +71,38 @@ namespace IMS
                 connection.Close();
             }
             #endregion
+
+        }
+        private void DisplaySODetailsLabels()
+        {
+            if (connection.State == ConnectionState.Open)
+            {
+                connection.Close();
+            }
+            connection.Open();
+            SqlCommand command = new SqlCommand("sp_getSalesOrderDetailsByOrderID", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            int OrderNumber = 0; 
+
+            if (int.TryParse(Session["OrderNumberSO"].ToString(), out OrderNumber))
+            {
+                command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
+            }
+
+            DataSet ds = new DataSet();
+
+            SqlDataAdapter sA = new SqlDataAdapter(command);
+            sA.Fill(ds);
+             
+            
+            lblSOID.Text = ds.Tables[0].Rows[0]["OrderID"].ToString();
+            SODate.Text = ds.Tables[0].Rows[0]["OrderDate"].ToString();
+            OrderStatus.Text = ds.Tables[0].Rows[0]["Status"].ToString();
+            OrderTo.Text = ds.Tables[0].Rows[0]["SystemName"].ToString();
+
+
+            sendQty.Text = ds.Tables[0].Rows[0]["SentQuantity"].ToString();
+            RetQty.Text = ds.Tables[0].Rows[0]["ReturnedQuantity"].ToString();
 
         }
         

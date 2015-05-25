@@ -110,8 +110,8 @@ namespace IMS
                 if (dtMajorSO != null)
                 {
                     ProductID = dtMajorSO.Rows[RowIndex]["ProductID"].ToString();
-                    status = dtMajorSO.Rows[RowIndex]["Status"].ToString();
-                    storedAt = dtMajorSO.Rows[RowIndex]["StoredAt"].ToString();
+                    //status = dtMajorSO.Rows[RowIndex]["Status"].ToString();
+                    //storedAt = dtMajorSO.Rows[RowIndex]["StoredAt"].ToString();
                     barcode = dtMajorSO.Rows[RowIndex]["BarCode"].ToString();
                     batchNo = dtMajorSO.Rows[RowIndex]["BatchNumber"].ToString();
                     dateCreated = DateTime.Today;
