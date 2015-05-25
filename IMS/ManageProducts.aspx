@@ -113,6 +113,15 @@
             onrowcommand="StockDisplayGrid_RowCommand" OnRowDataBound="StockDisplayGrid_RowDataBound" onrowdeleting="StockDisplayGrid_RowDeleting" 
             onrowediting="StockDisplayGrid_RowEditing" OnSelectedIndexChanged="StockDisplayGrid_SelectedIndexChanged" >
                  <Columns>
+                     <asp:TemplateField HeaderText="Action">
+                        <ItemTemplate>
+                            <asp:LinkButton CssClass="btn btn-default edit-btn" ID="btnEdit" Text="Edit" runat="server" CommandName="Edit" CommandArgument='<%# Container.DisplayIndex%>'/>
+                            <span onclick="return confirm('Are you sure you want to delete this record?')">
+                                <asp:LinkButton CssClass="btn btn-default del-btn" ID="btnDelete" Text="Delete" runat="server" CommandName="Delete" CommandArgument='<%# Container.DisplayIndex  %>'/>
+                            </span>
+                        </ItemTemplate>
+                         <ItemStyle  Width="180px" HorizontalAlign="Left"/>
+                    </asp:TemplateField>
                      <asp:TemplateField HeaderText="UPC">
                         <ItemTemplate>
                             <asp:Label ID="UPC" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Product_Id_Org") %>' Width="110px"></asp:Label>
@@ -155,15 +164,7 @@
                         <ItemStyle  Width="110px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
 
-                     <asp:TemplateField HeaderText="Action">
-                        <ItemTemplate>
-                            <asp:LinkButton CssClass="btn btn-default edit-btn" ID="btnEdit" Text="Edit" runat="server" CommandName="Edit" CommandArgument='<%# Container.DisplayIndex%>'/>
-                            <span onclick="return confirm('Are you sure you want to delete this record?')">
-                                <asp:LinkButton CssClass="btn btn-default del-btn" ID="btnDelete" Text="Delete" runat="server" CommandName="Delete" CommandArgument='<%# Container.DisplayIndex  %>'/>
-                            </span>
-                        </ItemTemplate>
-                         <ItemStyle  Width="180px" HorizontalAlign="Left"/>
-                    </asp:TemplateField>
+                     
                  </Columns>
             <PagerStyle CssClass = "GridPager" />
              </asp:GridView>

@@ -91,6 +91,7 @@ namespace IMS
                 SA.Fill(ds);
             
                 StockDisplayGrid.DataSource = ds;
+                StockDisplayGrid.EditIndex = 0;
                 StockDisplayGrid.DataBind();
 
             }
@@ -231,7 +232,16 @@ namespace IMS
                         DateTime dateValue = expiryDate;
 
 
-                        String mm = dateValue.Month.ToString();
+                        String mm;//= dateValue.Month.ToString();
+                        if (dateValue.Month < 10)
+                        {
+                            mm = dateValue.Month.ToString().PadLeft(2, '0');
+
+                        }
+                        else
+                        {
+                            mm = dateValue.Month.ToString();
+                        }
                         String yy = dateValue.ToString("yy", DateTimeFormatInfo.InvariantInfo);
                         string p1 = BarCodeSerial + mm + yy;
 
@@ -256,7 +266,7 @@ namespace IMS
                    
                     command.Parameters.AddWithValue("@p_ReceivedQuantity", quantity);
                     command.Parameters.AddWithValue("@p_ReceivedQuantityOrg", QuanOrg);
-                    command.Parameters.AddWithValue("@p_StoreID", Session["UserSys"]);
+                    command.Parameters.AddWithValue("@p_StoreID", int.Parse(Session["UserSys"].ToString()));
                     command.Parameters.AddWithValue("@p_ProductID", prodNo);
                     command.Parameters.AddWithValue("@p_stockID", stockID);
                     if (!_barcode.Text.Equals("0") && BarCodeNumber != 0)
@@ -285,7 +295,7 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_Expiry", expiryDate);
                     }
                     command.Parameters.AddWithValue("@p_Cost", cp);
-                    command.Parameters.AddWithValue("@p_Sales", cp);
+                    command.Parameters.AddWithValue("@p_Sales", sp);
                    
                     command.Parameters.AddWithValue("@p_isPO", "False");
                     if (!(string.IsNullOrEmpty(lblExpOrg) || string.IsNullOrWhiteSpace(lblExpOrg)))

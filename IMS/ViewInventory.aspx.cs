@@ -123,6 +123,13 @@ namespace IMS
                 }
                 #endregion
 
+                #region populate active dropdown
+                ddlActive.Items.Add("Select Option");
+                ddlActive.Items.Add("All Active");
+                ddlActive.Items.Add("All in-Active");
+                ddlActive.Items.Add("None");
+                #endregion
+
                 #region ProductOrderType dropdown population
                 ddlProductOrderType.DataSource = IMSGlobal.GetOrdersType();
                 ddlProductOrderType.DataTextField = "Name";
@@ -317,9 +324,21 @@ namespace IMS
                     {
                         command.Parameters.AddWithValue("@p_productOrderType", Convert.ToInt32(ddlProductOrderType.SelectedValue.ToString()));
                     }
-                    if (chkActive.Checked == true)
+                    if (ddlActive.SelectedIndex > 0)
                     {
-                        command.Parameters.AddWithValue("@p_isActive", 1);
+                        switch (ddlActive.SelectedItem.ToString()) 
+                        {
+                            case "All Active":
+                                command.Parameters.AddWithValue("@p_isActive", 1);
+                                break;
+                            case "All in-Active":
+                                command.Parameters.AddWithValue("@p_isActive", 0);
+                                break;
+                            case "None":
+                                command.Parameters.AddWithValue("@p_isActive", DBNull.Value);
+                                break;
+                        }
+                       
                     }
                     else
                     {
