@@ -586,6 +586,7 @@
     </Compile>
     <Compile Include="InvoicePrint.aspx.cs">
       <DependentUpon>InvoicePrint.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="InvoicePrint.aspx.designer.cs">
       <DependentUpon>InvoicePrint.aspx</DependentUpon>
@@ -805,12 +806,14 @@
     </Compile>
     <Compile Include="SalesOrderInvoice.aspx.cs">
       <DependentUpon>SalesOrderInvoice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SalesOrderInvoice.aspx.designer.cs">
       <DependentUpon>SalesOrderInvoice.aspx</DependentUpon>
     </Compile>
     <Compile Include="SalesOrderInvoicePrint.aspx.cs">
       <DependentUpon>SalesOrderInvoicePrint.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SalesOrderInvoicePrint.aspx.designer.cs">
       <DependentUpon>SalesOrderInvoicePrint.aspx</DependentUpon>

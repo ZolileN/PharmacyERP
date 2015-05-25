@@ -20,12 +20,7 @@ namespace IMS
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            /*   Session["PrintInvoiceNumber"] = txtIvnoice.Text;
-            Session["PrintInvoiceDate"] = DateTextBox.Text;
-            Session["PrintDueDate"] = DateTextBox2.Text;
-            if (ddlSalesMan.SelectedItem.ToString().Equals("Select-SalesMan"))
-            {
-                Session["SalesMan"] = "";*/
+            
             if (!IsPostBack)
             {
                 if (Session["PrintInvoiceNumber"] != null && Session["PrintInvoiceNumber"].ToString() != "")
