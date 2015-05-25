@@ -236,5 +236,11 @@ namespace IMS
             }
         }
 
+        protected void btnInvoice_Click(object sender, EventArgs e)
+        {
+            Session["OrderNo_Invoice"] = Session["RequestedNO"].ToString();
+            Response.Redirect("SalesOrderInvoice.aspx");
+        }
+
     }
 }

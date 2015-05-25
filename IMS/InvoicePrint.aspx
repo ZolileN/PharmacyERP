@@ -1,10 +1,10 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="InvoicePrint.aspx.cs" Inherits="IMS.InvoicePrint" %>
 
 <!DOCTYPE html>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>MetrixInvoice</title>
 <style>
 		body{
@@ -102,14 +102,18 @@
 	}
 	
   </style>
+
+
 </head>
+
+
 <body>
     <form id="form1" runat="server">
      <div class="main">
           <div class="accNum drg" id="accNum">1111111111</div>
           <div class="billTo drg" id="billTo">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               <asp:Label ID="To" CssClass="col-md-2 control-label" runat="server" style="font-weight: bold" Width="300px"></asp:Label><br />
-       	       <asp:Label ID="ToAddress" CssClass="col-md-2 control-label" runat="server"  Width="300px"></asp:Label><br />           
+               <asp:Label ID="To" runat="server" style="font-weight: bold" Width="300px"></asp:Label>&nbsp;
+       	       <asp:Label ID="ToAddress" runat="server"  Width="300px"></asp:Label>         
           </div>
           <div class="invoNum drg" id="invoNum"><asp:Literal ID="Invoice" runat="server"></asp:Literal></div>
           <div class="invoDate drg" id="invoDate"><asp:Literal ID="InvoiceDate" runat="server"></asp:Literal></div>
@@ -118,11 +122,13 @@
 
         <div class="tblItems drg" id="tblItems">
           <asp:GridView ID="StockDisplayGrid" CssClass="invo-tbl"  Visible="true" runat="server" AllowPaging="false" PageSize="10" 
-                AutoGenerateColumns="false" OnRowDataBound="StockDisplayGrid_RowDataBound" Width="100%" BorderWidth="0">
+                AutoGenerateColumns="false" OnRowDataBound="StockDisplayGrid_RowDataBound" Width="100%" BorderWidth="0" GridLines="None">
+
+              
                  <Columns>
                       <asp:TemplateField HeaderText="" Visible="true">
                         <ItemTemplate>
-                            <asp:Label ID="Index" CssClass="" runat="server" Text='<%# Container.DataItemIndex %>'></asp:Label>
+                            <asp:Label   ID="Index" CssClass="" runat="server" Text='<%# Container.DataItemIndex + 1 %>'></asp:Label>
                         </ItemTemplate>
                          <ItemStyle  Width="5%"  Wrap="true"/>
                     </asp:TemplateField>
@@ -130,14 +136,14 @@
 
                      <asp:TemplateField HeaderText="" Visible="true">
                         <ItemTemplate>
-                            <asp:Label ID="ProductName" CssClass="" runat="server" Text='<%# Eval("Description") %>'></asp:Label>
+                            <asp:Label  ID="ProductName" CssClass="" runat="server" Text='<%# Eval("Description") %>'></asp:Label>
                         </ItemTemplate>
                          <ItemStyle  Width="34%"  Wrap="true"/>
                     </asp:TemplateField>
                     
                       <asp:TemplateField HeaderText="" >
                         <ItemTemplate>
-                            <asp:Label ID="lblAvStock" CssClass="" runat="server" Text='<%# Eval("ExpiryDate")==DBNull.Value?"":Convert.ToDateTime( Eval("ExpiryDate")).ToString("MMM dd ,yyyy") %>' ></asp:Label>
+                            <asp:Label  ID="lblAvStock" CssClass="" runat="server" Text='<%# Eval("ExpiryDate")==DBNull.Value?"":Convert.ToDateTime( Eval("ExpiryDate")).ToString("MMM dd ,yyyy") %>' ></asp:Label>
                         </ItemTemplate>
                           <ItemStyle  Width="13%" />
                     </asp:TemplateField>
@@ -151,7 +157,7 @@
 
                      <asp:TemplateField HeaderText=""  > 
                         <ItemTemplate>
-                            <asp:Label ID="lblQuantity" CssClass="" runat="server" Text='<%# Eval("SendQuantity") %>' ></asp:Label>
+                            <asp:Label  ID="lblQuantity" CssClass="" runat="server" Text='<%# Eval("SendQuantity") %>' ></asp:Label>
                         </ItemTemplate>
                           <ItemStyle  Width="7%" />
                     </asp:TemplateField>
@@ -165,7 +171,7 @@
 
                       <asp:TemplateField HeaderText="">
                         <ItemTemplate>
-                            <asp:Label ID="lblSales" CssClass="" runat="server" Text='<%# Eval("CostPrice") %>' ></asp:Label>
+                            <asp:Label  ID="lblSales" CssClass="" runat="server" Text='<%# Eval("CostPrice") %>' ></asp:Label>
                         </ItemTemplate>
                         
                           <ItemStyle  Width="10%" />
@@ -173,7 +179,7 @@
 
                      <asp:TemplateField HeaderText="">
                         <ItemTemplate>
-                            <asp:Label ID="lblSales" CssClass="" runat="server" Text='<%# Eval("DiscountPercentage") %>' ></asp:Label>
+                            <asp:Label  ID="lblDiscount" CssClass="" runat="server" Text='<%# Eval("DiscountPercentage") %>' ></asp:Label>
                         </ItemTemplate>
                         
                           <ItemStyle  Width="9%" />
@@ -181,7 +187,7 @@
 
                       <asp:TemplateField HeaderText="">
                         <ItemTemplate>
-                            <asp:Label ID="lblSales" CssClass="" runat="server" Text='<%# Eval("Amount") %>' ></asp:Label>
+                            <asp:Label   ID="lblAmount" CssClass="" runat="server" Text='<%# Eval("Amount") %>' ></asp:Label>
                         </ItemTemplate>
                         
                           <ItemStyle  Width="12%" />
@@ -189,7 +195,7 @@
 
                     <asp:TemplateField HeaderText="">
                         <ItemTemplate>
-                            <asp:Label ID="lblSales" CssClass="" runat="server" Text='<%# Eval("AmountBonus") %>' ></asp:Label>
+                            <asp:Label   ID="lblAmountBonus" CssClass="" runat="server" Text='<%# Eval("AmountBonus") %>' ></asp:Label>
                         </ItemTemplate>
                         
                           <ItemStyle  Width="12%" />
@@ -203,7 +209,7 @@
         <div class="grandTotal drg" id="grandTotal">
             <asp:Label ID="lblTotalSentAmount" runat="server" CssClass="control-label">Invoice No </asp:Label>
              <asp:Label runat="server" ID="lblTotalBonusAmount" CssClass="control-label">Invoice Date</asp:Label>
-            <asp:Button ID="btnPrint" runat="server" CssClass="btn btn-default btn-large no-print" Text="Print" OnClientClick="window.print();"/>
+            <asp:Button ID="btnPrint" runat="server" CssClass="btn btn-default btn-large print" Text="Print" OnClientClick="window.print();"/>
         </div>
         <br />
          

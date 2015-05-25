@@ -118,13 +118,13 @@ namespace IMS
         {
             if (Session["PrintCheck"].ToString().Equals("Actual"))
             {
-                e.Row.Cells[7].Visible = false;
-                e.Row.Cells[8].Visible = false;
+                e.Row.Cells[5].Visible = false;
+                e.Row.Cells[9].Visible = false;
             }
             else if (Session["PrintCheck"].ToString().Equals("Bonus"))
             {
-                e.Row.Cells[5].Visible = false;
-                e.Row.Cells[6].Visible = false;
+                e.Row.Cells[4].Visible = false;
+                e.Row.Cells[8].Visible = false;
             }
         }
     }
