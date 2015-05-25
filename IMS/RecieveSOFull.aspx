@@ -22,6 +22,52 @@
     </tbody>
 
      </table>
+
+      <table Width="100%" class="formStriped table-striped">
+        <%--<tr>
+            <td><b>Sales Order ID</b></td>
+            <td><asp:Label runat="server" ID="lblSOID" CssClass="" /></td>
+            <td class="auto-style1"></td>
+            <td class="auto-style2"><b>Product Name</b></td>
+            <td><asp:Label ID="ProdName" runat="server" CssClass=""></asp:Label></td>
+            
+        </tr>--%>
+         <tr>
+             <td><b>Ordered Quantity</b></td>
+             <td><asp:Label runat="server" ID="OrdQuantity" CssClass="" /></td>
+             <td class="auto-style1"></td>
+             <td><b>Received Quantity</b></td>
+            <td> <asp:Label runat="server" ID="RecQuantity" CssClass="" /></td>
+            
+           
+        </tr>
+        <%--<tr>
+            <td class="auto-style2"><b>Order Bonus Quantity</b></td>
+            <td><asp:Label runat="server" ID="OrderedbonusQuan" CssClass="" /></td>
+            <td class="auto-style1"></td>
+             <td class="auto-style2"><b>Received Bonus Quantity</b></td>
+            <td><asp:Label runat="server" ID="bonusQuanOrg" CssClass="" /></td>
+            
+        </tr>--%>
+        <tr>
+           <td class="auto-style2"><b>Remaining Quantity</b></td>
+            <td><asp:Label runat="server" ID="RemQuantity" CssClass="" /></td>
+            <td class="auto-style1">&nbsp; &nbsp; &nbsp;</td>
+            <td><b>Returned Quantity</b></td>
+            <td><asp:Label runat="server" ID="retQuantity" CssClass="" /></td>
+            
+        </tr>
+        <tr>
+            <td class="auto-style2"><b>Expired Quantity</b></td>
+            <td> <asp:Label runat="server" ID="expQuantity" CssClass="" /></td>
+            <td class="auto-style1">&nbsp; &nbsp; &nbsp;</td>
+             <td><b>Defected Quantity</b></td>
+            <td> <asp:Label runat="server" ID="defQuantity" CssClass="" /></td>
+            
+        </tr>
+    </table>
+   
+
      <hr>
 
         <div class="form-horizontal">
@@ -139,6 +185,26 @@
                           <ItemStyle  Width="60px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
 
+                      <asp:TemplateField HeaderText="Accepted<br>Qty" HeaderStyle-Width="35px">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lbAcceptedQuantity" CssClass="" runat="server" Text='<%# Eval("AcceptedQuantity") %>' Width="110px"></asp:Label>
+                                        </ItemTemplate>
+                                        <ItemStyle Width="50px" HorizontalAlign="Left" />
+                                    </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Accepted<br>Bonus Qty" HeaderStyle-Width="35px">
+                                        <ItemTemplate>
+                                            <asp:Label ID="DelieveredBonusQuantity" CssClass="" runat="server" Text='<%# Eval("DelieveredBonusQuantity") %>' Width="110px"></asp:Label>
+                                        </ItemTemplate>
+                                        <ItemStyle Width="50px" HorizontalAlign="Left" />
+                                    </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Returned<br>Quantity" HeaderStyle-Width="35px">
+                                        <ItemTemplate>
+                                            <asp:Label ID="ReturnedQuantity" CssClass="" runat="server" Text='<%# Eval("ReturnedQuantity") %>' Width="110px"></asp:Label>
+                                        </ItemTemplate>
+                                        <ItemStyle Width="50px" HorizontalAlign="Left" />
+                                    </asp:TemplateField>
                       <asp:TemplateField HeaderText="Cost<br>Price"  HeaderStyle-Width ="60px">
                         <ItemTemplate>
                             <asp:Label ID="lblSales" CssClass="" runat="server" Text='<%# Eval("SalePrice") %>' ></asp:Label>
@@ -187,6 +253,8 @@
                                         </ItemTemplate>
                                         <ItemStyle Width="50px" HorizontalAlign="Left" />
                                     </asp:TemplateField>
+
+                                    
 
                                     <asp:TemplateField HeaderText="Discount %" HeaderStyle-Width="50px" Visible="false">
                                         <ItemTemplate>

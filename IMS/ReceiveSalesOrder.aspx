@@ -6,7 +6,7 @@
     <table width="100%">
 
         <tbody><tr>
-        	<td> <h4>View Sale Orders</h4></td>
+        	<td> <h4>Receive Sale Orders</h4></td>
             <td align="right">
             <asp:Button ID="btnSearch" runat="server" OnClick="btnSearch_Click" Enabled="true" Text="SEARCH" CssClass="btn btn-primary btn-default"/>
             <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Enabled="true" Text="REFRESH" CssClass="btn btn-info"/>

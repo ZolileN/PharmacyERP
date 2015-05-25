@@ -25,6 +25,7 @@ namespace IMS
             if(!IsPostBack)
             {
                 BindGrid();
+                DisplaySODetailsLabels();
             }
         }
 
@@ -47,14 +48,10 @@ namespace IMS
                 {
                     command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                 }
-
-
-
-
-
+                  
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
-                Session["dsProdcts"] = ds;
+                Session["dsSODetails"] = ds;
                 ProductSet = ds;
                 StockDisplayGrid.DataSource = null;
                 StockDisplayGrid.DataSource = ds.Tables[0];
@@ -74,6 +71,45 @@ namespace IMS
                 connection.Close();
             }
             #endregion
+
+        }
+        private void DisplaySODetailsLabels()
+        {
+            if (connection.State == ConnectionState.Open)
+            {
+                connection.Close();
+            }
+            connection.Open();
+            SqlCommand command = new SqlCommand("sp_getSalesOrderDetailsByOrderID", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            int OrderNumber = 0; 
+
+            if (int.TryParse(Session["OrderNumberSO"].ToString(), out OrderNumber))
+            {
+                command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
+            }
+
+            DataSet ds = new DataSet();
+
+            SqlDataAdapter sA = new SqlDataAdapter(command);
+            sA.Fill(ds);
+            int remainingQty = 0;
+
+            remainingQty = int.Parse(ds.Tables[0].Rows[0]["OrderedQuantity"].ToString()) -
+                (int.Parse(ds.Tables[0].Rows[0]["ReceivedQuantity"].ToString()) + int.Parse(ds.Tables[0].Rows[0]["DefectedQuantity"].ToString()) + int.Parse(ds.Tables[0].Rows[0]["ExpiredQuantity"].ToString()) + int.Parse(ds.Tables[0].Rows[0]["ReturnedQuantity"].ToString()));
+
+            //lblSOID.Text = ds.Tables[0].Rows[0]["OrderID"].ToString();
+            //ProdName.Text = ds.Tables[0].Rows[0]["Product_Name"].ToString();
+            OrdQuantity.Text = ds.Tables[0].Rows[0]["OrderedQuantity"].ToString();
+            RecQuantity.Text = ds.Tables[0].Rows[0]["ReceivedQuantity"].ToString();
+            //OrderedbonusQuan.Text = ds.Tables[0].Rows[0]["OrderedBonusQuantity"].ToString();
+            //bonusQuanOrg.Text = ds.Tables[0].Rows[0]["BonusQuantity"].ToString();
+            RemQuantity.Text = remainingQty.ToString();
+
+            defQuantity.Text = ds.Tables[0].Rows[0]["DefectedQuantity"].ToString();
+            expQuantity.Text = ds.Tables[0].Rows[0]["ExpiredQuantity"].ToString();
+            retQuantity.Text = ds.Tables[0].Rows[0]["ReturnedQuantity"].ToString();
+            //lblSOID.Text = ds.Tables[0].Rows[0]["SendQuantity"].ToString();
 
         }
         
