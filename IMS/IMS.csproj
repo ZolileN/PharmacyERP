@@ -228,6 +228,7 @@
     <Content Include="ImportingData.aspx" />
     <Content Include="IMSLogin.aspx" />
     <Content Include="Inventory_Print.aspx" />
+    <Content Include="InvoicePrint.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="ManageCategory.aspx" />
     <Content Include="ManageDepartment.aspx" />
@@ -261,6 +262,8 @@
     <Content Include="Reports.aspx" />
     <Content Include="Result.aspx" />
     <Content Include="SalemanMangment.aspx" />
+    <Content Include="SalesOrderInvoice.aspx" />
+    <Content Include="SalesOrderInvoicePrint.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\chosen.jquery.js" />
@@ -581,6 +584,12 @@
     <Compile Include="Inventory_Print.aspx.designer.cs">
       <DependentUpon>Inventory_Print.aspx</DependentUpon>
     </Compile>
+    <Compile Include="InvoicePrint.aspx.cs">
+      <DependentUpon>InvoicePrint.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InvoicePrint.aspx.designer.cs">
+      <DependentUpon>InvoicePrint.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -793,6 +802,18 @@
     </Compile>
     <Compile Include="SalemanMangment.aspx.designer.cs">
       <DependentUpon>SalemanMangment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SalesOrderInvoice.aspx.cs">
+      <DependentUpon>SalesOrderInvoice.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SalesOrderInvoice.aspx.designer.cs">
+      <DependentUpon>SalesOrderInvoice.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SalesOrderInvoicePrint.aspx.cs">
+      <DependentUpon>SalesOrderInvoicePrint.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SalesOrderInvoicePrint.aspx.designer.cs">
+      <DependentUpon>SalesOrderInvoicePrint.aspx</DependentUpon>
     </Compile>
     <Compile Include="SelectionStock.aspx.cs">
       <DependentUpon>SelectionStock.aspx</DependentUpon>
