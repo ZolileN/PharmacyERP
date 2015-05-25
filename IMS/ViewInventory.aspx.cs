@@ -362,14 +362,14 @@ namespace IMS
                     //{
                     //    command.Parameters.AddWithValue("@p_ProdID", txtSearch.Text);
                     //}
-
-                    if (String.IsNullOrEmpty(lblProductId.Text))
+                    //org value lblProductId.Text
+                    if (String.IsNullOrEmpty(txtSearch.Value))
                     {
                         command.Parameters.AddWithValue("@p_ProdID", DBNull.Value);
                     }
                     else
                     {
-                        command.Parameters.AddWithValue("@p_ProdID", Convert.ToInt32(lblProductId.Text.ToString()));
+                        command.Parameters.AddWithValue("@p_ProdID", Convert.ToInt32(txtSearch.Value.ToString()));
                     }
                     #endregion
 
@@ -546,8 +546,8 @@ namespace IMS
         }
 
         protected void btnRefresh_Click(object sender, EventArgs e)
-        {
-            txtSearch.Text = "";
+        {//txtSearch.Text=""; original value
+            txtSearch.Value = "";
             ddlProductOrderType.SelectedIndex = -1;
             ProductSubCat.SelectedIndex = -1;
             ProductCat.SelectedIndex = -1;
@@ -670,7 +670,7 @@ namespace IMS
             Session["Search_ProdIdOrg"] = ddlProductOrderType.SelectedValue.ToString();
             Session["Search_ProdType"] = ProductType.SelectedItem.ToString();
            // Session["Search_ProdId"] = ProductList.SelectedValue.ToString();
-            Session["Search_ProdId"] = txtSearch.Text.ToString();
+         //   Session["Search_ProdId"] = txtSearch.Text.ToString();
 
 
             #endregion
@@ -682,10 +682,10 @@ namespace IMS
 
         protected void btnSearchProduct_Click1(object sender, ImageClickEventArgs e)
         {
-            String Text = txtSearch.Text + '%';
-            Session["Text"] = Text;
-            ProductsPopupGrid.PopulateGrid();
-            mpeCongratsMessageDiv.Show();
+           // String Text = txtSearch.Text + '%';
+           // Session["Text"] = Text;
+           // ProductsPopupGrid.PopulateGrid();
+            //mpeCongratsMessageDiv.Show();
         }
 
         protected void dgvStockDisplayGrid_RowEditing(object sender, GridViewEditEventArgs e)

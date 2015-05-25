@@ -68,7 +68,7 @@
         <tr>
             <td><asp:Label runat="server" ID="lblProd"   CssClass="control-label">Select Product</asp:Label></td>
              
-            <td> 
+            <%--<td> 
                 <asp:TextBox ID="txtSearch" runat="server" CssClass="product"></asp:TextBox>
                 <asp:Label ID="lblProductId" runat="server" Visible="false"></asp:Label>
                <asp:ImageButton ID="btnSearchProduct" runat="server"   CssClass="search-btn getProducts" OnClick="btnSearchProduct_Click1" />
@@ -83,7 +83,12 @@
                         </div>
 
 
-                  </td><td><asp:Label runat="server" AssociatedControlID="ProductType" Visible="true" CssClass=" control-label">Product Type</asp:Label></td>
+                  </td>--%>
+            <td>
+                <input type="text" id="txtSearch" runat="server" name="txtSearch"   onkeyup="searchSuggest(event);" autocomplete="off"  /> 
+                <div id="search_suggest" style="visibility: hidden;" ></div>
+            </td>
+            <td><asp:Label runat="server" AssociatedControlID="ProductType" Visible="true" CssClass=" control-label">Product Type</asp:Label></td>
              <td><asp:DropDownList runat="server" ID="ProductType" Visible="true" OnSelectedIndexChanged="ProductType_SelectedIndexChanged" CssClass="form-control" Width="29%"/></td>
              <td><asp:Label runat="server" AssociatedControlID="ddlActive" CssClass="control-label">Search Active</asp:Label></td>
             <%-- <td> <asp:CheckBox ID="chkActive" runat="server">

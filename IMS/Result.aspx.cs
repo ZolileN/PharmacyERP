@@ -35,7 +35,7 @@ namespace IMS
             }
             if (clientName.Length >= 2)
             {
-                using (SqlCommand cmd = new SqlCommand("select DISTINCT Product_Name from tbl_ProductMaster where Description LIKE  @Client_Name+'%'", connection))
+                using (SqlCommand cmd = new SqlCommand("select DISTINCT Product_Name,ProductID from tbl_ProductMaster where Description LIKE  @Client_Name+'%'", connection))
                 {
 
                     SqlParameter parClientName = new SqlParameter("@Client_Name", SqlDbType.VarChar);
@@ -51,7 +51,7 @@ namespace IMS
                     {
                         for (int i = 0; i < dt.Rows.Count; i++)
                         {
-                            sb.Append(dt.Rows[i].ItemArray[0].ToString() + "~");   //Create Con
+                            sb.Append(dt.Rows[i].ItemArray[0].ToString() + "~" + dt.Rows[i].ItemArray[1].ToString());   //Create Con
 
                         }
                     }
@@ -60,7 +60,7 @@ namespace IMS
                 }
                 if (dt.Rows.Count <= 0)
                 {
-                    using (SqlCommand cmd = new SqlCommand("select DISTINCT Product_Name from tbl_ProductMaster where Product_Name LIKE  @Client_Name+'%'", connection))
+                    using (SqlCommand cmd = new SqlCommand("select DISTINCT Product_Name,ProductID from tbl_ProductMaster where Product_Name LIKE  @Client_Name+'%'", connection))
                     {
 
                         SqlParameter parClientName = new SqlParameter("@Client_Name", SqlDbType.VarChar);
@@ -76,7 +76,7 @@ namespace IMS
                         {
                             for (int i = 0; i < dt.Rows.Count; i++)
                             {
-                                sb.Append(dt.Rows[i].ItemArray[0].ToString() + "~");   //Create Con
+                                sb.Append(dt.Rows[i].ItemArray[0].ToString() + "~" + dt.Rows[i].ItemArray[1].ToString());   //Create Con
 
                             }
                         }
