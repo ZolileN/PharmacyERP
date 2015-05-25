@@ -31,58 +31,58 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.Button btnGoBack;
         
         /// <summary>
-        /// OrdQuantity control.
+        /// lblSOID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label OrdQuantity;
+        protected global::System.Web.UI.WebControls.Label lblSOID;
         
         /// <summary>
-        /// RecQuantity control.
+        /// SODate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label RecQuantity;
+        protected global::System.Web.UI.WebControls.Label SODate;
         
         /// <summary>
-        /// RemQuantity control.
+        /// OrderTo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label RemQuantity;
+        protected global::System.Web.UI.WebControls.Label OrderTo;
         
         /// <summary>
-        /// retQuantity control.
+        /// OrderStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label retQuantity;
+        protected global::System.Web.UI.WebControls.Label OrderStatus;
         
         /// <summary>
-        /// expQuantity control.
+        /// sendQty control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label expQuantity;
+        protected global::System.Web.UI.WebControls.Label sendQty;
         
         /// <summary>
-        /// defQuantity control.
+        /// RetQty control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label defQuantity;
+        protected global::System.Web.UI.WebControls.Label RetQty;
         
         /// <summary>
         /// StockDisplayGrid control.

@@ -93,23 +93,16 @@ namespace IMS
 
             SqlDataAdapter sA = new SqlDataAdapter(command);
             sA.Fill(ds);
-            int remainingQty = 0;
+             
+            
+            lblSOID.Text = ds.Tables[0].Rows[0]["OrderID"].ToString();
+            SODate.Text = ds.Tables[0].Rows[0]["OrderDate"].ToString();
+            OrderStatus.Text = ds.Tables[0].Rows[0]["Status"].ToString();
+            OrderTo.Text = ds.Tables[0].Rows[0]["SystemName"].ToString();
 
-            remainingQty = int.Parse(ds.Tables[0].Rows[0]["OrderedQuantity"].ToString()) -
-                (int.Parse(ds.Tables[0].Rows[0]["ReceivedQuantity"].ToString()) + int.Parse(ds.Tables[0].Rows[0]["DefectedQuantity"].ToString()) + int.Parse(ds.Tables[0].Rows[0]["ExpiredQuantity"].ToString()) + int.Parse(ds.Tables[0].Rows[0]["ReturnedQuantity"].ToString()));
 
-            //lblSOID.Text = ds.Tables[0].Rows[0]["OrderID"].ToString();
-            //ProdName.Text = ds.Tables[0].Rows[0]["Product_Name"].ToString();
-            OrdQuantity.Text = ds.Tables[0].Rows[0]["OrderedQuantity"].ToString();
-            RecQuantity.Text = ds.Tables[0].Rows[0]["ReceivedQuantity"].ToString();
-            //OrderedbonusQuan.Text = ds.Tables[0].Rows[0]["OrderedBonusQuantity"].ToString();
-            //bonusQuanOrg.Text = ds.Tables[0].Rows[0]["BonusQuantity"].ToString();
-            RemQuantity.Text = remainingQty.ToString();
-
-            defQuantity.Text = ds.Tables[0].Rows[0]["DefectedQuantity"].ToString();
-            expQuantity.Text = ds.Tables[0].Rows[0]["ExpiredQuantity"].ToString();
-            retQuantity.Text = ds.Tables[0].Rows[0]["ReturnedQuantity"].ToString();
-            //lblSOID.Text = ds.Tables[0].Rows[0]["SendQuantity"].ToString();
+            sendQty.Text = ds.Tables[0].Rows[0]["SentQuantity"].ToString();
+            RetQty.Text = ds.Tables[0].Rows[0]["ReturnedQuantity"].ToString();
 
         }
         
