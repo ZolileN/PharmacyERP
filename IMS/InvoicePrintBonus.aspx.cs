@@ -13,7 +13,7 @@ using System.IO;
 
 namespace IMS
 {
-    public partial class InvoicePrint : System.Web.UI.Page
+    public partial class InvoicePrintBonus : System.Web.UI.Page
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet InvoiceSet;
@@ -43,9 +43,7 @@ namespace IMS
                 ToAddress.Text = dsTo.Tables[0].Rows[0]["SystemAddress"].ToString();
                 LoadData();
             }
-
         }
-
         public void LoadData()
         {
             try
@@ -57,6 +55,14 @@ namespace IMS
                 DataSet ds = new DataSet();
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    if (ds.Tables[0].Rows[i]["BonusQuantity"].ToString().Equals("0"))
+                    {
+                        ds.Tables[0].Rows[i].Delete();
+                        ds.AcceptChanges();
+                    }
+                }
                 InvoiceSet = ds;
                 StockDisplayGrid.DataSource = null;
                 StockDisplayGrid.DataSource = ds.Tables[0];
@@ -69,6 +75,8 @@ namespace IMS
                     BonusAmount += Convert.ToDouble(ds.Tables[0].Rows[i]["AmountBonus"]);
                     ActualAmount += Convert.ToDouble(ds.Tables[0].Rows[i]["Amount"]);
                 }
+
+                
 
                 lblTotalBonusAmount.Text = BonusAmount.ToString();
                 lblTotalSentAmount.Text = ActualAmount.ToString();
@@ -114,6 +122,6 @@ namespace IMS
             Response.Redirect("SalesOrderInvoice.aspx");
         }
 
-        
+       
     }
 }

@@ -1,10 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="InvoicePrint.aspx.cs" Inherits="IMS.InvoicePrint" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="InvoicePrintBonus.aspx.cs" Inherits="IMS.InvoicePrintBonus" %>
 
 <!DOCTYPE html>
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
+<head id="Head1" runat="server">
 <title>MetrixInvoice</title>
 <style>
 		body{
@@ -135,10 +135,10 @@
                                             <td width="34%" align="left"><%#Eval("Description") %></td>
                                             <td width="13%" align="center"><%# Convert.ToDateTime(Eval("ExpiryDate")).ToString("dd/MM/yyyy") %></td>
                                             <td width="10%" align="center"><%#Eval("BatchNumber") %></td>
-                                            <td width="7%" align="center"><%#Eval("SendQuantity") %></td>
+                                            <td width="7%" align="center"><%#Eval("BonusQuantity") %></td>
                                             <td width="10%" align="center"><%# Convert.ToDecimal(Eval("CostPrice")).ToString("0.##") %></td>
                                             <td width="9%" align="center"><%#Eval("DiscountPercentage") %></td>
-                                            <td width="12%" align="center"><%# Convert.ToDecimal(Eval("Amount")).ToString("0.##") %></td>
+                                            <td width="12%" align="center"><%# Convert.ToDecimal(Eval("AmountBonus")).ToString("0.##") %></td>
                                         </tr>
                                     </table>
                                 </ItemTemplate>

@@ -229,6 +229,7 @@
     <Content Include="IMSLogin.aspx" />
     <Content Include="Inventory_Print.aspx" />
     <Content Include="InvoicePrint.aspx" />
+    <Content Include="InvoicePrintBonus.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="ManageCategory.aspx" />
     <Content Include="ManageDepartment.aspx" />
@@ -391,6 +392,7 @@
     <None Include="Project_Readme.html" />
     <Content Include="Site.Mobile.Master" />
     <None Include="Properties\PublishProfiles\DPS.pubxml" />
+    <None Include="Properties\PublishProfiles\Local Publish.pubxml" />
     <None Include="Properties\PublishProfiles\SA.pubxml" />
     <Content Include="Style\fonts\cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff" />
     <Content Include="Style\fonts\MTP_ySUJH_bn48VBG8sNSnhCUOGz7vYGh680lGh-uXM.woff" />
@@ -590,6 +592,13 @@
     </Compile>
     <Compile Include="InvoicePrint.aspx.designer.cs">
       <DependentUpon>InvoicePrint.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InvoicePrintBonus.aspx.cs">
+      <DependentUpon>InvoicePrintBonus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InvoicePrintBonus.aspx.designer.cs">
+      <DependentUpon>InvoicePrintBonus.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
