@@ -126,12 +126,12 @@ namespace IMS
                         connection.Open();
                     }
 
-                    ProductDescription = ((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("ProductDescription")).Text;
-                    ExpiryDate = ((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("lblExpiryDate")).Text;
-                    BatchNo = ((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("lblBatchNumber")).Text;
+                    ProductDescription = ((Literal)dgvReceiveSOGrid.Rows[RowIndex].FindControl("ProductDescription")).Text;
+                    ExpiryDate = ((Literal)dgvReceiveSOGrid.Rows[RowIndex].FindControl("lblExpiryDate")).Text;
+                    BatchNo = ((Literal)dgvReceiveSOGrid.Rows[RowIndex].FindControl("lblBatchNumber")).Text;
 
                     OrderDetId = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("OrderDetID")).Text);
-                    AvailableQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("lblAvailableStock")).Text);
+                    AvailableQty = int.Parse(((Literal)dgvReceiveSOGrid.Rows[RowIndex].FindControl("lblAvailableStock")).Text);
                     SentQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("SendQuantityVal")).Text);
                     BonusQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("BonusQuantityVal")).Text);
                     DelieveredQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("DelieveredQtyVal")).Text);
@@ -139,7 +139,7 @@ namespace IMS
                     DamagedQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("DamagedQuantityVal")).Text);
                     ExpiredQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("txtExpiredQuantity")).Text);
                     RejectedQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("txtReturnedQuantity")).Text);
-                    PercentDiscount = Double.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("txtDiscountPercentage")).Text);
+                    PercentDiscount = Double.Parse(((Literal)dgvReceiveSOGrid.Rows[RowIndex].FindControl("txtDiscountPercentage")).Text);
 
                     DelieveredQty = SentQty + (BonusQty - DelieveredBonusQty) - (DamagedQty + ExpiredQty + RejectedQty);
 
@@ -315,7 +315,7 @@ namespace IMS
             TextBox txtDelieveredQty = (TextBox)dgvReceiveSOGrid.Rows[0].FindControl("DelieveredQtyVal");
 
             OrderDetId = int.Parse(((Label)dgvReceiveSOGrid.Rows[0].FindControl("OrderDetID")).Text);
-            AvailableQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[0].FindControl("lblAvailableStock")).Text);
+            AvailableQty = int.Parse(((Literal)dgvReceiveSOGrid.Rows[0].FindControl("lblAvailableStock")).Text);
             SentQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[0].FindControl("SendQuantityVal")).Text);
 
             BonusQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[0].FindControl("BonusQuantityVal")).Text);

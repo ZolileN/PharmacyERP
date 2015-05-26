@@ -72,14 +72,14 @@
                     </asp:TemplateField>
                      <asp:TemplateField HeaderText="Sent<br>Qty" Visible="True" >
                         <ItemTemplate>
-                             <asp:Literal ID="SendQuantityVal"  runat="server" Text=' <%#Eval("SendQuantity")==DBNull.Value?0:int.Parse( Eval("SendQuantity").ToString())  %>'  ></asp:Literal>
+                             <asp:Label ID="SendQuantityVal"  runat="server" Text=' <%#Eval("SendQuantity")==DBNull.Value?0:int.Parse( Eval("SendQuantity").ToString())  %>'  ></asp:Label>
                         </ItemTemplate>
                           
                           <ItemStyle  Width="130px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
                      <asp:TemplateField HeaderText="Bonus<br>Qty" >
                         <ItemTemplate>
-                             <asp:Literal ID="BonusQuantityVal"  runat="server" Text=' <%#Eval("BonusQuantity")==DBNull.Value?0:int.Parse( Eval("BonusQuantity").ToString())  %>'  ></asp:Literal>
+                             <asp:Label ID="BonusQuantityVal"  runat="server" Text=' <%#Eval("BonusQuantity")==DBNull.Value?0:int.Parse( Eval("BonusQuantity").ToString())  %>'  ></asp:Label>
                          </ItemTemplate>
                         <EditItemTemplate>
                          </EditItemTemplate>
@@ -87,7 +87,7 @@
                     </asp:TemplateField> 
                       <asp:TemplateField HeaderText="Accepted<br>Qty" >
                         <ItemTemplate>
-                             <asp:TextBox ID="DelieveredQtyVal" CssClass="grid-input-form"  ReadOnly="true"  runat="server" Text=' <%#Eval("SendQuantity")==DBNull.Value? int.Parse(Eval("DelieveredQty").ToString()) :int.Parse(Eval("SendQuantity").ToString())  %> '  ></asp:TextBox>
+                             <asp:TextBox ID="DelieveredQtyVal" CssClass="grid-input-form"   runat="server" Text=' <%#Eval("SendQuantity")==DBNull.Value? int.Parse(Eval("DelieveredQty").ToString()) :int.Parse(Eval("SendQuantity").ToString())  %> '  ></asp:TextBox>
                         </ItemTemplate>
                         <ItemStyle   HorizontalAlign="Left"/>
                     </asp:TemplateField>
@@ -95,7 +95,7 @@
                      <asp:TemplateField HeaderText="Accepted<br>Bonus Qty">
                        
                         <ItemTemplate>
-                             <asp:TextBox ID="delBonusQtyVal" CssClass="grid-input-form"    runat="server" Text=' <%#Eval("OrderedBonusQuantity")==DBNull.Value? int.Parse(Eval("BonusQuantity").ToString()) :int.Parse( Eval("OrderedBonusQuantity").ToString())  %> ' ></asp:TextBox>
+                             <asp:TextBox ID="delBonusQtyVal" CssClass="grid-input-form" ReadOnly="true"   runat="server" Text=' <%#Eval("OrderedBonusQuantity")==DBNull.Value? int.Parse(Eval("BonusQuantity").ToString()) :int.Parse( Eval("OrderedBonusQuantity").ToString())  %> ' ></asp:TextBox>
                          </ItemTemplate>
                         <ItemStyle   HorizontalAlign="Left"/>
                     </asp:TemplateField>
@@ -158,12 +158,13 @@
 
         function SetDelieveredQty() {
             var SentQty = document.getElementById("MainContent_dgvReceiveSOGrid_SendQuantityVal_0").innerHTML;
+            
             var BonusQty = document.getElementById("MainContent_dgvReceiveSOGrid_BonusQuantityVal_0").innerHTML;
             var DelieveredBonusQty = document.getElementById("MainContent_dgvReceiveSOGrid_delBonusQtyVal_0").value;
             var DamagedQty = document.getElementById("MainContent_dgvReceiveSOGrid_DamagedQuantityVal_0").value;
             var ExpiredQty = document.getElementById("MainContent_dgvReceiveSOGrid_txtExpiredQuantity_0").value;
             var RejectedQty = document.getElementById("MainContent_dgvReceiveSOGrid_txtReturnedQuantity_0").value;
-
+            
             var DelieveredQty = Number(SentQty) + (Number(BonusQty) - Number(DelieveredBonusQty)) - (Number(DamagedQty) + Number(ExpiredQty) + Number(RejectedQty));
   
             document.getElementById("MainContent_dgvReceiveSOGrid_DelieveredQtyVal_0").value = DelieveredQty;
