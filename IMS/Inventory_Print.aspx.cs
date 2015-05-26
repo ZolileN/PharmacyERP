@@ -39,83 +39,123 @@ namespace IMS
                     connection.Open();
                     SqlCommand command = new SqlCommand("sp_ViewInventory_byFilters", connection);
                     #region with parameter approach
+                    #region Filters with null value
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_SysID", id);
-                    command.Parameters.AddWithValue("@p_DeptID", DBNull.Value);
-                    command.Parameters.AddWithValue("@p_CatID", DBNull.Value);
-                    command.Parameters.AddWithValue("@p_SubCatID", DBNull.Value);
-                    command.Parameters.AddWithValue("@p_productOrderType", DBNull.Value);
-                    command.Parameters.AddWithValue("@p_ProdType", DBNull.Value);
-                    command.Parameters.AddWithValue("@p_ProdID", DBNull.Value);
-                    command.Parameters.AddWithValue("@p_isActive", DBNull.Value);
-                    command.Parameters.AddWithValue("@p_prodName", DBNull.Value);
-                    command.Parameters.AddWithValue("@p_isPrint", 1);
-                    #region Unused Filtered Conditions
-                    // string prodID;
-                   // int depID,catID,subCatID,prodIDOrg,prodType = -1;
-                   // int.TryParse(Session["Search_DepID"].ToString(),out depID);
-                   // int.TryParse(Session["Search_CatID"].ToString(), out catID);
-                   // int.TryParse(Session["Search_SubCatID"].ToString(), out subCatID);
-                   // int.TryParse(Session["Search_ProdIdOrg"].ToString(), out prodIDOrg);
-                   // int.TryParse(Session["Search_ProdType"].ToString(), out prodType);
-                   //// int.TryParse(Session["Search_ProdId"].ToString(), out prodID);
-                   // prodID = Session["Search_ProdId"].ToString();
+                    //command.Parameters.AddWithValue("@p_SysID", id);
+                    //command.Parameters.AddWithValue("@p_DeptID", DBNull.Value);
+                    //command.Parameters.AddWithValue("@p_CatID", DBNull.Value);
+                    //command.Parameters.AddWithValue("@p_SubCatID", DBNull.Value);
+                    //command.Parameters.AddWithValue("@p_productOrderType", DBNull.Value);
+                    //command.Parameters.AddWithValue("@p_ProdType", DBNull.Value);
+                    //command.Parameters.AddWithValue("@p_ProdID", DBNull.Value);
+                    //command.Parameters.AddWithValue("@p_isActive", DBNull.Value);
+                    //command.Parameters.AddWithValue("@p_prodName", DBNull.Value);
+                    //command.Parameters.AddWithValue("@p_isPrint", 1); 
+                    #endregion
+                    #region  Filtered Conditions
                    
-                    //if (depID <= 0)
-                    //{
+                    int prodID;
+                    int depID, catID, subCatID, prodIDOrg, prodType = 0;
+                    int.TryParse(Session["Search_DepID"].ToString(), out depID);
+                    int.TryParse(Session["Search_CatID"].ToString(), out catID);
+                    int.TryParse(Session["Search_SubCatID"].ToString(), out subCatID);
+                    int.TryParse(Session["Search_ProdIdOrg"].ToString(), out prodIDOrg);
+                    int.TryParse(Session["Search_ProdType"].ToString(), out prodType);
+                    int.TryParse(Session["Search_ProdId"].ToString(), out prodID);
+
+                    command.Parameters.AddWithValue("@p_SysID", id);
+                    if (depID <= 0)
+                    {
+                        command.Parameters.AddWithValue("@p_DeptID", DBNull.Value);
+
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_DeptID", depID);
+                    }
+
+                    if (catID <= 0)
+                    {
+                        command.Parameters.AddWithValue("@p_CatID", DBNull.Value);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_CatID", catID);
+                    }
+
+                    if (subCatID <= 0)
+                    {
+                        command.Parameters.AddWithValue("@p_SubCatID", DBNull.Value);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_SubCatID", subCatID);
+                    }
+
+                    if (prodIDOrg <= 0)
+                    {
+                        command.Parameters.AddWithValue("@p_productOrderType", DBNull.Value);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_productOrderType", prodIDOrg);
+                    }
+
+
+                    if (prodType <= 0)
+                    {
+                        command.Parameters.AddWithValue("@p_ProdType", DBNull.Value);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_ProdType", prodType);
+                    }
+
+                    if (prodID <= 0)
+                    {
+                        command.Parameters.AddWithValue("@p_ProdID", DBNull.Value);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_ProdID", prodID);
+                    }
+
+                    if (Session["Search_Active"] == null || String.IsNullOrEmpty(Session["Search_Active"].ToString()))
+                    {
+                        command.Parameters.AddWithValue("@p_isActive", DBNull.Value);
                         
+                    }
+                    else 
+                    {
+                        switch (Session["Search_Active"].ToString())
+                        {
+                            case "Select Option":
 
-                    //}
-                    //else
-                    //{
-                    //    command.Parameters.AddWithValue("@p_DeptID", depID);
-                    //}
+                                command.Parameters.AddWithValue("@p_isActive", DBNull.Value);
+                                break;
+                            case "All Active":
+                                command.Parameters.AddWithValue("@p_isActive", 1);
+                                break;
+                            case "All in-Active":
+                                command.Parameters.AddWithValue("@p_isActive", 0);
+                                break;
 
-                    //if (catID <= 0)
-                    //{
-                        
-                    //}
-                    //else
-                    //{
-                    //    command.Parameters.AddWithValue("@p_CatID", catID);
-                    //}
+                            case "All Active & Non-Zero Stock":
+                                command.Parameters.AddWithValue("@p_isActive", 3);
+                                break;
+                        }
+                    }
 
-                    //if (subCatID <= 0)
-                    //{
-                       
-                    //}
-                    //else
-                    //{
-                    //    command.Parameters.AddWithValue("@p_SubCatID", subCatID);
-                    //}
-
-                    //if (prodIDOrg <= 0)
-                    //{
-                        
-                    //}
-                    //else
-                    //{
-                    //    command.Parameters.AddWithValue("@p_productOrderType", prodIDOrg);
-                    //}
-
-
-                    //if (prodType <= 0)
-                    //{
-                        
-                    //}
-                    //else
-                    //{
-                    //    command.Parameters.AddWithValue("@p_ProdType", prodType);
-                    //}
-
-                    //if (prodID == null)
-                    //{
-                        
-                    //}
-                    //else
-                    //{
-                    //    command.Parameters.AddWithValue("@p_ProdID", prodID);
-                    //}
+                   
+                    if (Session["Search_ProdName"] == null || String.IsNullOrEmpty(Session["Search_ProdName"].ToString()))
+                    {
+                        command.Parameters.AddWithValue("@p_prodName", DBNull.Value);
+                    }
+                    else 
+                    {
+                        command.Parameters.AddWithValue("@p_prodName", Session["Search_ProdName"].ToString());
+                    }
+                    command.Parameters.AddWithValue("@p_isPrint", 1); 
                     #endregion
                     
                     #endregion

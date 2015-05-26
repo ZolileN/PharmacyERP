@@ -20,20 +20,25 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
    
+      <table width="100%">
 
+        <tbody>
+        <tr>
+        <td><h4>Inventory List</h4></td>
+        <td align="right">
+                <strong>Date: </strong><%: DateTime.Now.Date %>
+                <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default btn-large no-print " Text="Go Back" OnClick="btnBack_Click"/>
+                <asp:Button ID="btnPrint" runat="server" OnClientClick="window.print();" Text="Confirm" CssClass="btn btn-success btn-large no-print" Visible="true" />
+                <asp:Button ID="btnFax" runat="server" visible="false" Text="BACK" CssClass="btn btn-info btn-large no-print" />
+                <asp:Button ID="btnEmail" runat="server"  Text="EMAIL" CssClass="btn btn-default btn-large no-print" Visible="false" />
+        </td>
+        </tr>
+		<tr><td height="5"></td></tr>
+        </tbody>
+
+        </table>
              
-            <table style="width: 100%;" align="center" border="0">
-            <tr>
-                <td class="auto-style2">
-                   <h3>Inventory List</h3>
-                </td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-               <td></td>
-                <td align="right"> <strong>Date: </strong><%: DateTime.Now.Date %></td>
-            </tr>
-                </table>
-            <hr />
+          
         <asp:GridView ID="StockDisplayGrid" runat="server" CssClass="table table-striped table-bordered table-condensed" AllowPaging="false" 
                 AutoGenerateColumns="false" OnRowDataBound="StockDisplayGrid_RowDataBound" >
                  <Columns>
@@ -44,7 +49,7 @@
                          <ItemStyle  Width="35px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
 
-                    <asp:TemplateField HeaderText="Product Description" HeaderStyle-Width="500" HeaderStyle-HorizontalAlign="Center">
+                    <asp:TemplateField HeaderText="Product Description" HeaderStyle-Width="300" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate>
                             <asp:Label ID="ProductName" padding-right="5px" runat="server" Text='<%# Eval("ProdDesc") %>'></asp:Label>
                            <!-- <asp:Label ID="Label1" padding-right="5px" runat="server" Text=" : "></asp:Label>
@@ -143,10 +148,7 @@
              </asp:GridView>
        
          
-                <asp:Button ID="btnBack" runat="server" CssClass="btn btn-primary btn-large no-print" Text="Go Back" OnClick="btnBack_Click"/>
-                <asp:Button ID="btnPrint" runat="server" OnClientClick="window.print();" Text="Confirm" CssClass="btn btn-large no-print" Visible="true" />
-                <asp:Button ID="btnFax" runat="server" visible="false" Text="BACK" CssClass="btn btn-info btn-large no-print" />
-                <asp:Button ID="btnEmail" runat="server"  Text="EMAIL" CssClass="btn btn-default btn-large no-print" Visible="false" />
+               
             
    
 </asp:Content>

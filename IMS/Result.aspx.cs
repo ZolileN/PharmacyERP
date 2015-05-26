@@ -35,7 +35,8 @@ namespace IMS
             }
             if (clientName.Length >= 2)
             {
-                using (SqlCommand cmd = new SqlCommand("select DISTINCT Product_Name,ProductID from tbl_ProductMaster where Description LIKE  @Client_Name+'%'", connection))
+                using (SqlCommand cmd = new SqlCommand("select DISTINCT (Case WHen LEN(ISNULL(tbl_ProductMaster.Description,''))=0 Then ISNULL(tbl_ProductMaster.Product_Name,'')+' '+ISNULL(tbl_ProductMaster.itemPackSize,'')"+
+							"	+' '+ISNULL(tbl_ProductMaster.itemStrength,'')+' '+ISNULL(tbl_ProductMaster.itemForm,'') Else tbl_ProductMaster.Description END) from tbl_ProductMaster where Description LIKE  @Client_Name+'%'", connection))
                 {
 
                     SqlParameter parClientName = new SqlParameter("@Client_Name", SqlDbType.VarChar);
@@ -51,7 +52,7 @@ namespace IMS
                     {
                         for (int i = 0; i < dt.Rows.Count; i++)
                         {
-                            sb.Append(dt.Rows[i].ItemArray[0].ToString() + "~" + dt.Rows[i].ItemArray[1].ToString());   //Create Con
+                            sb.Append(dt.Rows[i].ItemArray[0].ToString() + "~");   //Create Con "|" + dt.Rows[i].ItemArray[1].ToString() +
 
                         }
                     }
@@ -60,7 +61,8 @@ namespace IMS
                 }
                 if (dt.Rows.Count <= 0)
                 {
-                    using (SqlCommand cmd = new SqlCommand("select DISTINCT Product_Name,ProductID from tbl_ProductMaster where Product_Name LIKE  @Client_Name+'%'", connection))
+                    using (SqlCommand cmd = new SqlCommand("select DISTINCT (Case WHen LEN(ISNULL(tbl_ProductMaster.Description,''))=0 Then ISNULL(tbl_ProductMaster.Product_Name,'')+' '+ISNULL(tbl_ProductMaster.itemPackSize,'')" +
+                            "	+' '+ISNULL(tbl_ProductMaster.itemStrength,'')+' '+ISNULL(tbl_ProductMaster.itemForm,'') Else tbl_ProductMaster.Description END) from tbl_ProductMaster where Product_Name LIKE  @Client_Name+'%'", connection))
                     {
 
                         SqlParameter parClientName = new SqlParameter("@Client_Name", SqlDbType.VarChar);
@@ -76,7 +78,7 @@ namespace IMS
                         {
                             for (int i = 0; i < dt.Rows.Count; i++)
                             {
-                                sb.Append(dt.Rows[i].ItemArray[0].ToString() + "~" + dt.Rows[i].ItemArray[1].ToString());   //Create Con
+                                sb.Append(dt.Rows[i].ItemArray[0].ToString() + "~");   //Create Con + "|" + dt.Rows[i].ItemArray[1].ToString()
 
                             }
                         }

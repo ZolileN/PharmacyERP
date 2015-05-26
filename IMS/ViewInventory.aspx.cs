@@ -30,6 +30,18 @@ namespace IMS
                 Session.Remove("dsProdcts");
                 Session.Remove("dsProducts_MP");
 
+                #region remove print sessions
+
+                Session.Remove("Search_DepID");
+                Session.Remove("Search_CatID");
+                Session.Remove("Search_SubCatID");
+                Session.Remove("Search_ProdIdOrg");
+                Session.Remove("Search_ProdType");
+                Session.Remove("Search_ProdId");
+                Session.Remove("Search_ProdName");
+                Session.Remove("Search_Active");
+                
+                #endregion
 
                 #region Populating Product Type DropDown
                 ProductType.Items.Add("Select Product Type");
@@ -129,7 +141,7 @@ namespace IMS
                 ddlActive.Items.Add("Select Option");
                 ddlActive.Items.Add("All Active");
                 ddlActive.Items.Add("All in-Active");
-               // ddlActive.Items.Add("None");
+                ddlActive.Items.Add("All Active & Non-Zero Stock");
                 ddlActive.SelectedIndex = 0;
                 #endregion
 
@@ -330,16 +342,22 @@ namespace IMS
                     }
                     if (ddlActive.SelectedIndex > 0)
                     {
-                        switch (ddlActive.SelectedItem.ToString()) 
+                        switch (ddlActive.SelectedIndex)
                         {
-                            case "All Active":
+                            case 0:
+                                command.Parameters.AddWithValue("@p_isActive", DBNull.Value);
+
+                                break;
+                            case 1:
                                 command.Parameters.AddWithValue("@p_isActive", 1);
                                 break;
-                            case "All in-Active":
+                            case 2:
                                 command.Parameters.AddWithValue("@p_isActive", 0);
                                 break;
-                            case "None":
-                                command.Parameters.AddWithValue("@p_isActive", DBNull.Value);
+
+
+                            case 3:
+                                command.Parameters.AddWithValue("@p_isActive", 3);
                                 break;
                         }
                        
@@ -679,9 +697,9 @@ namespace IMS
             Session["Search_SubCatID"] = ProductSubCat.SelectedValue.ToString();
             Session["Search_ProdIdOrg"] = ddlProductOrderType.SelectedValue.ToString();
             Session["Search_ProdType"] = ProductType.SelectedItem.ToString();
-           // Session["Search_ProdId"] = ProductList.SelectedValue.ToString();
-         //   Session["Search_ProdId"] = txtSearch.Text.ToString();
-
+            Session["Search_ProdId"] = "";
+            Session["Search_ProdName"] = txtSearch.Value.ToString();
+            Session["Search_Active"] = ddlActive.SelectedValue.ToString();
 
             #endregion
 

@@ -154,7 +154,12 @@
                         </ItemTemplate>
                          <ItemStyle  Width="100px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
-
+                       <asp:TemplateField HeaderText="Batch">
+                        <ItemTemplate>
+                            <asp:Label ID="lblBatch" CssClass="col-md-2 control-label"  runat="server" Text='<%# Eval("batchNo")%>' Width="100px"></asp:Label>
+                        </ItemTemplate>
+                         <ItemStyle  Width="100px" HorizontalAlign="Left"/>
+                    </asp:TemplateField>
                      <asp:TemplateField HeaderText="Unit Cost">
                         <ItemTemplate>
                             <asp:Label ID="lblUnitCostPrice" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("CostPrice") %>' Width="60px"></asp:Label>
