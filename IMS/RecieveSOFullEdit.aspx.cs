@@ -296,16 +296,17 @@ namespace IMS
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                TableCell statusCell = e.Row.Cells[2];
-                if (statusCell.Text == "A")
+                foreach (TableCell cell in e.Row.Cells)
                 {
-                    statusCell.Text = "Absent";
-                }
-                if (statusCell.Text == "P")
-                {
-                    statusCell.Text = "Present";
+                     
+                    string s = cell.Text;
+                    if (cell.Text.Length > 25 )
+                        cell.Text = cell.Text.Substring(0, 25) + "<br/>";
+                    cell.ToolTip = s;
                 }
             }
+
+            
         }
 
         protected void txtReturnedQuantity_TextChanged(object sender, EventArgs e)

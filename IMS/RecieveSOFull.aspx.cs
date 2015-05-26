@@ -262,13 +262,13 @@ namespace IMS
             if (e.CommandName.Equals("Edit"))
             {
                 Label OrderDetNo = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("OrderDetailNo");
-                Label ProductID = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("lblProductID");
-                Label RequestedTo = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("RequestedTo");
-                Label OrderTo = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("OrderTo");
+                //Label ProductID = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("lblProductID");
+               // Label RequestedTo = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("RequestedTo");
+               // Label OrderTo = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("OrderTo");
                 //session is setting
                 Session["OrderDetNo"] = OrderDetNo.Text.ToString();
-                Session["ProductID"] = ProductID.Text;
-                Session["RequestedTo"] = RequestedTo.Text;
+                //Session["ProductID"] = ProductID.Text;
+                //Session["RequestedTo"] = RequestedTo.Text;
 
                 Response.Redirect("RecieveSOFullEdit.aspx");
             }

@@ -1437,3 +1437,9 @@ table.table-striped tr td {
 .dateInput{
 	width:100px !important;
 	}
+
+
+.grid-select-form{
+	width:46px !important;
+	height:28px !important;
+	}
