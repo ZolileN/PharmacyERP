@@ -189,6 +189,7 @@
     <Content Include="AddProduct.aspx" />
     <Content Include="AddStock.aspx" />
     <Content Include="AddSystem.aspx" />
+    <Content Include="AddVendorsToStore.aspx" />
     <Content Include="AutoRequest_Store.aspx" />
     <Content Include="CompanySettings.aspx" />
     <Content Include="Content\bootstrap.css" />
@@ -354,6 +355,7 @@
     <Content Include="Style\popup-theme.css" />
     <Content Include="Style\theme-old.css" />
     <Content Include="Style\theme.css" />
+    <Content Include="UserControl\MultipleVendorsSelectPopup.ascx" />
     <Content Include="UserControl\ProductSearch.ascx" />
     <Content Include="UserControl\ProductsPopupGrid.ascx" />
     <Content Include="UserControl\Product_Search_Popup.ascx" />
@@ -500,6 +502,13 @@
     </Compile>
     <Compile Include="AddSystem.aspx.designer.cs">
       <DependentUpon>AddSystem.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddVendorsToStore.aspx.cs">
+      <DependentUpon>AddVendorsToStore.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddVendorsToStore.aspx.designer.cs">
+      <DependentUpon>AddVendorsToStore.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -928,6 +937,13 @@
     </Compile>
     <Compile Include="StoreTransfers_StoreRequestsResponse.aspx.designer.cs">
       <DependentUpon>StoreTransfers_StoreRequestsResponse.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\MultipleVendorsSelectPopup.ascx.cs">
+      <DependentUpon>MultipleVendorsSelectPopup.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControl\MultipleVendorsSelectPopup.ascx.designer.cs">
+      <DependentUpon>MultipleVendorsSelectPopup.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserControl\ProductSearch.ascx.cs">
       <DependentUpon>ProductSearch.ascx</DependentUpon>

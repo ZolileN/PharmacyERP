@@ -7,7 +7,7 @@
     <input type="submit" class="close" value="" />
     </div>
      
-    
+    <div class="bodyPop">
     <asp:GridView ID="StockDisplayGrid" CssClass="table table-striped table-bordered table-condensed" runat="server" AllowPaging="True" PageSize="10" 
                 AutoGenerateColumns="false" OnPageIndexChanging="StockDisplayGrid_PageIndexChanging"   onrowcancelingedit="StockDisplayGrid_RowCancelingEdit" 
             onrowcommand="StockDisplayGrid_RowCommand" OnRowDataBound="StockDisplayGrid_RowDataBound" onrowdeleting="StockDisplayGrid_RowDeleting" 
@@ -39,6 +39,6 @@
                  </Columns>
             <PagerStyle CssClass = "GridPager" />
              </asp:GridView>
-     
      <asp:Button ID="SelectProduct" runat="server" CssClass="btn btn-primary fl-r btn-sm" Text="Select" OnClick="SelectProduct_Click"  />
+     </div>
  </div>

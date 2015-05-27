@@ -27,7 +27,7 @@ namespace IMS.UserControl
 
         public void PopulateGrid()
         {
-            if (Session["Text"] != null)
+            if (Session["Text"].ToString() != "%")
             {
                 DataTable dt = new DataTable();
                 DataSet ds = new DataSet();
@@ -37,7 +37,9 @@ namespace IMS.UserControl
                     int id;
                     if (int.TryParse(Session["UserSys"].ToString(), out id))
                     {
-                        String Query = "Select * FROM tbl_ProductMaster Where Status = 1 and Product_Name Like '" + Session["Text"].ToString() + "'";
+                        String Query = @"Select (Select ISNULL(SUM(ISNULL(Quantity,0)), 0) FROM tblStock_Detail Where ProductID = tbl_ProductMaster.ProductID) AS QtyinHand,Product_Id_Org,ProductID, (Case WHen LEN(ISNULL(tbl_ProductMaster.Description,''))=0 Then ISNULL(tbl_ProductMaster.Product_Name,'')+' '+ISNULL(tbl_ProductMaster.itemPackSize,'')
+								+' '+ISNULL(tbl_ProductMaster.itemStrength,'')+' '+ISNULL(tbl_ProductMaster.itemForm,'') Else tbl_ProductMaster.Description END) AS Product_Name,UnitCost  FROM tbl_ProductMaster Where Status = 1 and (Case WHen LEN(ISNULL(tbl_ProductMaster.Description,''))=0 Then ISNULL(tbl_ProductMaster.Product_Name,'')+' '+ISNULL(tbl_ProductMaster.itemPackSize,'')
+								+' '+ISNULL(tbl_ProductMaster.itemStrength,'')+' '+ISNULL(tbl_ProductMaster.itemForm,'') Else tbl_ProductMaster.Description END) Like '" + Session["Text"].ToString() + "'";
 
                         connection.Open();
                         SqlCommand command = new SqlCommand(Query, connection);
@@ -60,6 +62,22 @@ namespace IMS.UserControl
                 }
                 #endregion
             }
+            else
+            {
+                DataSet ds2 = new DataSet();
+                String Query = @"Select (Select ISNULL(SUM(ISNULL(Quantity,0)), 0) FROM tblStock_Detail Where ProductID = tbl_ProductMaster.ProductID) AS QtyinHand,Product_Id_Org,ProductID, (Case WHen LEN(ISNULL(tbl_ProductMaster.Description,''))=0 Then ISNULL(tbl_ProductMaster.Product_Name,'')+' '+ISNULL(tbl_ProductMaster.itemPackSize,'')
+								+' '+ISNULL(tbl_ProductMaster.itemStrength,'')+' '+ISNULL(tbl_ProductMaster.itemForm,'') Else tbl_ProductMaster.Description END) AS Product_Name,UnitCost  FROM tbl_ProductMaster Where Status = 1";
+
+                connection.Open();
+                SqlCommand command = new SqlCommand(Query, connection);
+                SqlDataAdapter SA = new SqlDataAdapter(command);
+                ProductSet = null;
+                SA.Fill(ds2);
+                Session["dsProducts_ProdPopUp"] = ds2;
+
+                StockDisplayGrid.DataSource = ds2;
+                StockDisplayGrid.DataBind();
+            }
         }
 
         public void BindGrid()
@@ -72,7 +90,8 @@ namespace IMS.UserControl
                 int id;
                 if (int.TryParse(Session["UserSys"].ToString(), out id))
                 {
-                    String Query = "Select * FROM tbl_ProductMaster Where Status = 1";
+                    String Query = @"Select (Select ISNULL(SUM(ISNULL(Quantity,0)), 0) FROM tblStock_Detail Where ProductID = tbl_ProductMaster.ProductID) AS QtyinHand,Product_Id_Org,ProductID, (Case WHen LEN(ISNULL(tbl_ProductMaster.Description,''))=0 Then ISNULL(tbl_ProductMaster.Product_Name,'')+' '+ISNULL(tbl_ProductMaster.itemPackSize,'')
+								+' '+ISNULL(tbl_ProductMaster.itemStrength,'')+' '+ISNULL(tbl_ProductMaster.itemForm,'') Else tbl_ProductMaster.Description END) AS Product_Name,UnitCost  FROM tbl_ProductMaster Where Status = 1";
 
                     connection.Open();
                     SqlCommand command = new SqlCommand(Query, connection);
@@ -274,7 +293,7 @@ namespace IMS.UserControl
                         Label lbProdId = (Label)ctl.FindControl("lblProductId");
                         if (lbProdId != null)
                         {
-                            lbProdId.Text = Server.HtmlDecode(row.Cells[7].Text);
+                            lbProdId.Text = Server.HtmlDecode(row.Cells[5].Text);
                         }
 
                         DataSet dsProducts_ProdPopUp = (DataSet)Session["dsProdcts"];

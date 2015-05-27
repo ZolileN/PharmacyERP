@@ -13,7 +13,8 @@ using System.Web.UI.WebControls;
 
 namespace IMS.UserControl
 {
-    public partial class VendorsPopupGrid : System.Web.UI.UserControl
+
+    public partial class MultipleVendorsSelectPopup : System.Web.UI.UserControl
     {
         DataSet ds;
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
@@ -51,7 +52,7 @@ namespace IMS.UserControl
                         SqlDataAdapter SA = new SqlDataAdapter(command);
                         ProductSet = null;
                         SA.Fill(ds);
-                        
+
                         gdvVendor.DataSource = ds;
                         gdvVendor.DataBind();
                     }
@@ -74,7 +75,7 @@ namespace IMS.UserControl
             gdvVendor.DataSource = null;
             gdvVendor.DataSource = ds;
             gdvVendor.DataBind();
-             
+
         }
 
         protected void gdvVendor_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -100,7 +101,7 @@ namespace IMS.UserControl
             }
             ModalPopupExtender mpe = (ModalPopupExtender)this.Parent.FindControl("mpeCongratsMessageDiv");
             mpe.Show();
-            
+
         }
 
         protected void gdvVendor_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -114,7 +115,7 @@ namespace IMS.UserControl
                 {
 
                 }
-                
+
             }
         }
 
@@ -146,11 +147,17 @@ namespace IMS.UserControl
                 }
             }
             catch (Exception exp) { }
-             
+
         }
 
-        protected void SelectVendor_Click(object sender, EventArgs e)
+        protected void SelectMultipleVendor_Click(object sender, EventArgs e)
         {
+            Control ctl = this.Parent;
+            TextBox ltMetaTags = null;
+           
+            Label lblVendorIds = (Label)ctl.FindControl("lblVendorIds");
+
+            ltMetaTags = (TextBox)ctl.FindControl("txtVendor");
 
             GridViewRow rows = gdvVendor.SelectedRow;
             foreach (GridViewRow row in gdvVendor.Rows)
@@ -160,28 +167,13 @@ namespace IMS.UserControl
                     CheckBox chkRow = (row.Cells[0].FindControl("chkCtrl") as CheckBox);
                     if (chkRow.Checked)
                     {
-                        Control ctl = this.Parent;
-                        TextBox ltMetaTags = null;
-                        Button btnContinue = (Button)ctl.FindControl("btnContinue");
-                       // Label lblVendirId = (Label)
-                        btnContinue.Visible = true;
-                        ltMetaTags = (TextBox)ctl.FindControl("txtVendor");
+                        lblVendorIds.Text = "," + row.Cells[8].Text;
                         if (ltMetaTags != null)
                         {
                             ltMetaTags.Text = Server.HtmlDecode(row.Cells[1].Text);
                         }
                     }
                 }
-            }
-
-            Session.Remove("txtVendor");
-        }
-
-        protected void chkCtrl_CheckedChanged(object sender, EventArgs e)
-        {
-            if(sender is CheckBox)
-            {
-
             }
         }
     }

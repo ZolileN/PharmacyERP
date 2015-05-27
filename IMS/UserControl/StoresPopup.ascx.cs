@@ -178,8 +178,8 @@ namespace IMS.UserControl
                         }
                         if(lblStoreID !=null)
                         {
-                            lblStoreID.Text = Server.HtmlDecode(row.Cells[0].Text);
-
+                            lblStoreID.Text = Server.HtmlDecode(row.Cells[7].Text);
+                             
                         }
                     }
                 }
