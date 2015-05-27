@@ -104,9 +104,9 @@
                           <ItemTemplate>
                              <asp:TextBox ID="DamagedQuantityVal" CssClass="grid-input-form" OnTextChanged="txtReturnedQuantity_TextChanged"  runat="server" Text=' <%#Eval("DamagedQuantity")==DBNull.Value?0:int.Parse( Eval("DamagedQuantity").ToString())  %>' ></asp:TextBox>
                               <asp:DropDownList ID="ddDamagedAction" CssClass ="grid-select-form"  runat="server"   >
-                                  <asp:ListItem Value="1" Text="Vendor"></asp:ListItem>
-                                  <asp:ListItem Value="2" Text="Add to Stock"></asp:ListItem>
-                                  <asp:ListItem Value="3" Text="Discard"></asp:ListItem>
+                                  <asp:ListItem Value="1" Text="R Return to Vendor"></asp:ListItem>
+                                  <asp:ListItem Value="2" Text="A Add to Stock"></asp:ListItem>
+                                  <asp:ListItem Value="3" Text="D Discard"></asp:ListItem>
                               </asp:DropDownList>
                          </ItemTemplate>
                         <ItemStyle HorizontalAlign="Left"/>
@@ -116,9 +116,9 @@
                           <ItemTemplate>
                              <asp:TextBox ID="txtExpiredQuantity" CssClass="grid-input-form" OnTextChanged="txtReturnedQuantity_TextChanged"  runat="server" Text=' <%#Eval("ExpiredQuantity")==DBNull.Value?0:int.Parse( Eval("ExpiredQuantity").ToString())  %>' ></asp:TextBox>
                              <asp:DropDownList ID="ddExpiredAction"  CssClass="grid-select-form"  runat="server"  >
-                                  <asp:ListItem Value="1" Text="Vendor"></asp:ListItem>
-                                  <asp:ListItem Value="2" Text="Add to Stock"></asp:ListItem>
-                                  <asp:ListItem Value="3" Text="Discard"></asp:ListItem>
+                                   <asp:ListItem Value="1" Text="R Return to Vendor"></asp:ListItem>
+                                  <asp:ListItem Value="2" Text="A Add to Stock"></asp:ListItem>
+                                  <asp:ListItem Value="3" Text="D Discard"></asp:ListItem>
                                  </asp:DropDownList>
                                </ItemTemplate>
                         <ItemStyle  HorizontalAlign="Left"/>
@@ -127,9 +127,9 @@
                          <ItemTemplate>
                              <asp:TextBox ID="txtReturnedQuantity" CssClass="grid-input-form"  runat="server" OnTextChanged="txtReturnedQuantity_TextChanged" Text=' <%#Eval("ReturnedQuantity")==DBNull.Value?0:float.Parse( Eval("ReturnedQuantity").ToString())  %>' ></asp:TextBox>
                              <asp:DropDownList ID="ddNotAcceptedAction"  CssClass="grid-select-form"  runat="server"  >
-                                  <asp:ListItem Value="1" Text="Vendor"></asp:ListItem>
-                                  <asp:ListItem Value="2" Text="Add to Stock"></asp:ListItem>
-                                  <asp:ListItem Value="3" Text="Discard"></asp:ListItem>
+                                   <asp:ListItem Value="1" Text="R Return to Vendor"></asp:ListItem>
+                                  <asp:ListItem Value="2" Text="A Add to Stock"></asp:ListItem>
+                                  <asp:ListItem Value="3" Text="D Discard"></asp:ListItem>
                                  </asp:DropDownList>
                          </ItemTemplate>
                          <ItemStyle  HorizontalAlign="Left"/>

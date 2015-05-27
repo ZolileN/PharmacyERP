@@ -330,6 +330,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="SelectionStock.aspx" />
+    <Content Include="SelectStores.aspx" />
     <Content Include="SelectVendor.aspx" />
     <Content Include="Site.Master" />
     <Content Include="SO_GENERATE.aspx" />
@@ -842,6 +843,13 @@
     </Compile>
     <Compile Include="SelectionStock.aspx.designer.cs">
       <DependentUpon>SelectionStock.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SelectStores.aspx.cs">
+      <DependentUpon>SelectStores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SelectStores.aspx.designer.cs">
+      <DependentUpon>SelectStores.aspx</DependentUpon>
     </Compile>
     <Compile Include="SelectVendor.aspx.cs">
       <DependentUpon>SelectVendor.aspx</DependentUpon>

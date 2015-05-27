@@ -131,7 +131,7 @@
                                                     
                                  <ul>
                                   
-                                    <li><a href="#">Assign Vendors to Store</a></li>
+                                    <li><a href="SelectStores.aspx">Assign Vendors to Store</a></li>
                                     <li><a href="#">Assign Products to Store</a></li>
 									<li class="hasChild"><a href="#">Generate PO</a>
 
