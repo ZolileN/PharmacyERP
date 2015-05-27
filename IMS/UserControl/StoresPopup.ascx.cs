@@ -62,7 +62,7 @@ namespace IMS.UserControl
 
         public void PopulateGrid()
         {
-            if (Session["Text"] != null)
+            if (Session["txtStore"] != null)
             {
                 DataTable dt = new DataTable();
                 DataSet ds = new DataSet();
@@ -72,7 +72,7 @@ namespace IMS.UserControl
                     int id;
                     if (int.TryParse(Session["UserSys"].ToString(), out id))
                     {
-                        String Query = "Select * FROM tbl_System Where Status = 1 and SystemName Like '" + Session["Text"].ToString() + "'";
+                        String Query = "Select * FROM tbl_System Where SystemName Like '" + Session["txtStore"].ToString() + "'";
 
                         connection.Open();
                         SqlCommand command = new SqlCommand(Query, connection);
@@ -101,7 +101,7 @@ namespace IMS.UserControl
         protected void dgvStoresPopup_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             dgvStoresPopup.PageIndex = e.NewPageIndex;
-            if (Session["Text"] != null)
+            if (Session["txtStore"] != null)
             {
                 PopulateGrid();
             }
@@ -156,6 +156,7 @@ namespace IMS.UserControl
 
         protected void SelectStore_Click(object sender, EventArgs e)
         {
+            GridViewRow rows = dgvStoresPopup.SelectedRow;
             foreach (GridViewRow row in dgvStoresPopup.Rows)
             {
                 if (row.RowType == DataControlRowType.DataRow)
@@ -165,51 +166,26 @@ namespace IMS.UserControl
                     {
                         Control ctl = this.Parent;
                         TextBox ltMetaTags = null;
-                        GridView gvStockDisplayGrid = (GridView)ctl.FindControl("dgvStockDisplayGrid");
-
-                        ltMetaTags = (TextBox)ctl.FindControl("txtSearch");
-
-                        Label lbProdId = (Label)ctl.FindControl("lblProductId");
-                        if (lbProdId != null)
-                        {
-                            lbProdId.Text = Server.HtmlDecode(row.Cells[7].Text);
-                        }
-
-                        DataSet dsProducts_ProdPopUp = (DataSet)Session["dsProdcts"];
-                        if (dsProducts_ProdPopUp != null && dsProducts_ProdPopUp.Tables.Count > 0 && dsProducts_ProdPopUp.Tables[0].Rows.Count > 0)
-                        {
-                            DataRow[] drs = dsProducts_ProdPopUp.Tables[0].Select("ProductID = '" + lbProdId.Text + "'");
-                            if (drs.Length > 0)
-                            {
-                                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Product already added to the Sales Order.')", true);
-                                return;
-                            }
-                        }
-                        DataSet dsProducts_POPopUp = (DataSet)Session["dsProducts_MP"];
-                        if (dsProducts_POPopUp != null && dsProducts_POPopUp.Tables.Count > 0 && dsProducts_POPopUp.Tables[0].Rows.Count > 0)
-                        {
-                            DataRow[] drs = dsProducts_POPopUp.Tables[0].Select("ProductID = '" + lbProdId.Text + "'");
-                            if (drs.Length > 0)
-                            {
-                                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Product already added to the Purchase Order.')", true);
-                                return;
-                            }
-                        }
+                        Label lblStoreID = null;
+                        Button btnContinue = (Button)ctl.FindControl("btnContinue");
+                        btnContinue.Visible = true;
+                        lblStoreID = (Label)ctl.FindControl("lblStoreId");
+ 
+                        ltMetaTags = (TextBox)ctl.FindControl("txtStore");
                         if (ltMetaTags != null)
                         {
-                            ltMetaTags.Text = Server.HtmlDecode(row.Cells[1].Text);
-
+                            ltMetaTags.Text = Server.HtmlDecode(row.Cells[2].Text);
                         }
-                        if (gvStockDisplayGrid != null)
+                        if(lblStoreID !=null)
                         {
-                            gvStockDisplayGrid.DataSource = null;
-                            gvStockDisplayGrid.DataBind();
-                        }
+                            lblStoreID.Text = Server.HtmlDecode(row.Cells[0].Text);
 
+                        }
                     }
                 }
-                Session.Remove("Text");
             }
+
+            Session.Remove("txtStore");
         }
     }
 }

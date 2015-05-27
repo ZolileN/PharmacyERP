@@ -20,14 +20,13 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                     <asp:BoundField DataField="StoreName" HeaderText="Store Name"   />
-
-                      <asp:TemplateField HeaderText="UPC">
+                       <asp:BoundField DataField="SystemID" HeaderText="System ID" Visible="false"  /> 
+                      <%--<asp:TemplateField HeaderText="UPC">
                         <ItemTemplate>
                             <asp:Label ID="UPC" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("SystemID") %>' Width="110px"></asp:Label>
                         </ItemTemplate>
                          <ItemStyle  Width="120px" HorizontalAlign="Left"/>
-                    </asp:TemplateField>
+                    </asp:TemplateField>--%>
                      <asp:BoundField DataField="SystemName" HeaderText="Store Name"   /> 
                      <asp:BoundField DataField="System_PharmacyID" HeaderText="Store ID"   />
                      <asp:BoundField DataField="SystemAddress" HeaderText="Store Address"   />
@@ -42,3 +41,17 @@
      
      <asp:Button ID="SelectStore" runat="server" CssClass="btn btn-primary fl-r btn-sm" Text="Select" OnClick="SelectStore_Click"  />
  </div>
+
+ <script type="text/javascript">
+     function CheckSingleCheckbox(ob) {
+         var grid = ob.parentNode.parentNode.parentNode;
+         var inputs = grid.getElementsByTagName("input");
+         for (var i = 0; i < inputs.length; i++) {
+             if (inputs[i].type == "checkbox") {
+                 if (ob.checked && inputs[i] != ob && inputs[i].checked) {
+                     inputs[i].checked = false;
+                 }
+             }
+         }
+     }
+    </script>
