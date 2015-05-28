@@ -266,7 +266,14 @@ namespace IMS
                    
                     command.Parameters.AddWithValue("@p_ReceivedQuantity", quantity);
                     command.Parameters.AddWithValue("@p_ReceivedQuantityOrg", QuanOrg);
-                    command.Parameters.AddWithValue("@p_StoreID", int.Parse(Session["UserSys"].ToString()));
+                    if (Session["Inventory_StoreID"] == null)
+                    {
+                        command.Parameters.AddWithValue("@p_StoreID", int.Parse(Session["UserSys"].ToString()));
+                    }
+                    else 
+                    {
+                        command.Parameters.AddWithValue("@p_StoreID", int.Parse(Session["Inventory_StoreID"].ToString()));
+                    }
                     command.Parameters.AddWithValue("@p_ProductID", prodNo);
                     command.Parameters.AddWithValue("@p_stockID", stockID);
                     if (!_barcode.Text.Equals("0") && BarCodeNumber != 0)

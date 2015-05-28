@@ -157,6 +157,73 @@ namespace IMS
                     ddlProductOrderType.SelectedIndex = 0;
                 }
                 #endregion
+
+                #region Populating Stores
+                try
+                {
+                    DataSet dsS = new DataSet();
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+
+                    }
+                    SqlCommand command = new SqlCommand("Sp_GetSystem_ByID", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@p_SystemID", DBNull.Value);
+                    SqlDataAdapter sA = new SqlDataAdapter(command);
+                    sA.Fill(dsS);
+                    ddlStockAt.DataSource = dsS.Tables[0];
+                    ddlStockAt.DataTextField = "SystemName";
+                    ddlStockAt.DataValueField = "SystemID";
+                    ddlStockAt.DataBind();
+                    if (ddlStockAt != null)
+                    {
+                        ddlStockAt.Items.Insert(0, "Select Store");
+                        ddlStockAt.SelectedIndex = 0;
+                    }
+                    //Set index of system role incase the system role is not warehouse
+                    if (!Session["UserRole"].ToString().Equals("WareHouse"))
+                    {
+                        foreach (System.Web.UI.WebControls.ListItem Items in ddlStockAt.Items)
+                        {
+                            if (Items.Value.Equals(Session["UserSys"].ToString()))
+                            {
+                                ddlStockAt.SelectedIndex = ddlStockAt.Items.IndexOf(Items);
+                                ddlStockAt.Enabled = false;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        
+                        if (Session["Inventory_StoreID"] != null) 
+                        {
+                            foreach (System.Web.UI.WebControls.ListItem Items in ddlStockAt.Items)
+                            {
+                                if (Items.Value.Equals(Session["Inventory_StoreID"].ToString()))
+                                {
+                                    ddlStockAt.SelectedIndex = ddlStockAt.Items.IndexOf(Items);
+                                    Session.Remove("Inventory_StoreID");
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+                finally
+                {
+                    if (connection.State == ConnectionState.Open)
+                    {
+                        connection.Close();
+                    }
+                }
+                #endregion
                 if (Request.QueryString["Id"] != null)
                 {
                     BindByProductID();
@@ -186,7 +253,15 @@ namespace IMS
                     SqlCommand command = new SqlCommand("sp_ViewInventory_byFilters", connection);
                     #region with parameter approach
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_SysID", id);
+
+                    if (ddlStockAt.SelectedIndex <= 0)
+                    {
+                        command.Parameters.AddWithValue("@p_SysID", id);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_SysID", Convert.ToInt32(ddlStockAt.SelectedValue.ToString()));
+                    }
 
 
                     command.Parameters.AddWithValue("@p_DeptID", DBNull.Value);
@@ -303,8 +378,14 @@ namespace IMS
                     SqlCommand command = new SqlCommand("sp_ViewInventory_byFilters", connection);
                     #region with parameter approach
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_SysID", id);
-
+                    if (ddlStockAt.SelectedIndex <= 0)
+                    {
+                        command.Parameters.AddWithValue("@p_SysID", id);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_SysID", Convert.ToInt32(ddlStockAt.SelectedValue.ToString()));
+                    }
                     if (ProductDept.SelectedIndex <= 0)
                     {
                         command.Parameters.AddWithValue("@p_DeptID", DBNull.Value);
@@ -431,13 +512,19 @@ namespace IMS
                 if (e.CommandName.Equals("AddVal"))
                 {
                     Label prodNum = (Label)dgvStockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("lblprodID");
-                   // Label ItemName = (Label)dgvStockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("ProductName");
+                    if (ddlStockAt.SelectedIndex > 0)
+                    {
+                        Session["Inventory_StoreID"] = Convert.ToInt32(ddlStockAt.SelectedValue.ToString());
+                    }
                     Response.Redirect("AddStock.aspx?Id=" + prodNum.Text, false);
                 }
                 if (e.CommandName.Equals("Edit"))
                 {
                     Label stockNum = (Label)dgvStockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("lblstockid");
-                    // Label ItemName = (Label)dgvStockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("ProductName");
+                    if (ddlStockAt.SelectedIndex > 0)
+                    {
+                        Session["Inventory_StoreID"] = Convert.ToInt32(ddlStockAt.SelectedValue.ToString());
+                    }
                     Response.Redirect("SelectionStock.aspx?Id=" + stockNum.Text, false);
                 }
                 if (e.CommandName.Equals("Delete"))
@@ -480,6 +567,7 @@ namespace IMS
 
         protected void btnBack_Click(object sender, EventArgs e)
         {
+            Session.Remove("Inventory_StoreID");
             if (Convert.ToInt32(Session["UserSys"]).Equals(1))
             {
                 Response.Redirect("WarehouseMain.aspx", false);

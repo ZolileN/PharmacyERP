@@ -55,15 +55,17 @@
      <table cellspacing="0" cellpadding="5" border="0" width="100%" class="formTbl">
         <tr>
             <td> <asp:Label runat="server" AssociatedControlID="ProductDept" CssClass="control-label" Visible="true">Product Department</asp:Label></td>
-            <td><asp:DropDownList runat="server" ID="ProductDept" CssClass="form-control" Width="29%" Visible="true" AppendDataBoundItems="True" AutoPostBack="True" /></td>
+            <td><asp:DropDownList runat="server" ID="ProductDept" CssClass="form-control" Width="29%" Visible="true" AppendDataBoundItems="True"  /></td>
             <td><asp:Label runat="server" AssociatedControlID="ProductCat" CssClass="control-label" Visible="true">Product Category</asp:Label></td>
-            <td><asp:DropDownList runat="server" ID="ProductCat" CssClass="form-control" Width="29%" AutoPostBack="True" Visible="true"  /></td>
+            <td><asp:DropDownList runat="server" ID="ProductCat" CssClass="form-control" Width="29%" Visible="true"  /></td>
         </tr>
         <tr>
             <td> <asp:Label runat="server" AssociatedControlID="ProductSubCat" CssClass=" control-label" Visible="true"> Product SubCategory </asp:Label></td>
             <td><asp:DropDownList runat="server" ID="ProductSubCat" CssClass="form-control" Width="29%" Visible="true" /></td>
             <td><asp:Label runat="server" AssociatedControlID="ddlProductOrderType" CssClass="control-label">Product Order Type</asp:Label></td>
             <td><asp:DropDownList runat="server" ID="ddlProductOrderType"  CssClass="form-control" Width="29%"/></td>
+            <td><asp:Label runat="server" AssociatedControlID="ddlStockAt" CssClass="control-label">Select Store </asp:Label></td>
+            <td><asp:DropDownList runat="server" ID="ddlStockAt" CssClass="form-control" Width="280" />
              </tr>
         <tr>
             <td><asp:Label runat="server" ID="lblProd"   CssClass="control-label">Select Product</asp:Label></td>
