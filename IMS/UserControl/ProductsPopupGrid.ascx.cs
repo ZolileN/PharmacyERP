@@ -37,18 +37,19 @@ namespace IMS.UserControl
                     int id;
                     if (int.TryParse(Session["UserSys"].ToString(), out id))
                     {
-                        String Query = @"Select (Select ISNULL(SUM(ISNULL(Quantity,0)), 0) FROM tblStock_Detail Where ProductID = tbl_ProductMaster.ProductID) AS QtyinHand,Product_Id_Org,ProductID, (Case WHen LEN(ISNULL(tbl_ProductMaster.Description,''))=0 Then ISNULL(tbl_ProductMaster.Product_Name,'')+' '+ISNULL(tbl_ProductMaster.itemPackSize,'')
-								+' '+ISNULL(tbl_ProductMaster.itemStrength,'')+' '+ISNULL(tbl_ProductMaster.itemForm,'') Else tbl_ProductMaster.Description END) AS Product_Name,UnitCost  FROM tbl_ProductMaster Where Status = 1 and (Case WHen LEN(ISNULL(tbl_ProductMaster.Description,''))=0 Then ISNULL(tbl_ProductMaster.Product_Name,'')+' '+ISNULL(tbl_ProductMaster.itemPackSize,'')
-								+' '+ISNULL(tbl_ProductMaster.itemStrength,'')+' '+ISNULL(tbl_ProductMaster.itemForm,'') Else tbl_ProductMaster.Description END) Like '" + Session["Text"].ToString() + "'";
-
+                        DataSet ds2 = new DataSet();
                         connection.Open();
-                        SqlCommand command = new SqlCommand(Query, connection);
+                        SqlCommand command = new SqlCommand("dbo.Sp_GetStockByName", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@p_prodName", Session["Text"].ToString());
+                        command.Parameters.AddWithValue("@p_SysID", id);
+
                         SqlDataAdapter SA = new SqlDataAdapter(command);
-                        ProductSet = null;
-                        SA.Fill(ds);
-                        Session["dsProducts_ProdPopUp"] = ds;
-                        ProductSet = ds;
-                        StockDisplayGrid.DataSource = ds;
+
+                        SA.Fill(ds2);
+                        Session["dsProducts_ProdPopUp"] = ds2;
+
+                        StockDisplayGrid.DataSource = ds2;
                         StockDisplayGrid.DataBind();
                     }
 
@@ -62,22 +63,7 @@ namespace IMS.UserControl
                 }
                 #endregion
             }
-            else
-            {
-                DataSet ds2 = new DataSet();
-                String Query = @"Select (Select ISNULL(SUM(ISNULL(Quantity,0)), 0) FROM tblStock_Detail Where ProductID = tbl_ProductMaster.ProductID) AS QtyinHand,Product_Id_Org,ProductID, (Case WHen LEN(ISNULL(tbl_ProductMaster.Description,''))=0 Then ISNULL(tbl_ProductMaster.Product_Name,'')+' '+ISNULL(tbl_ProductMaster.itemPackSize,'')
-								+' '+ISNULL(tbl_ProductMaster.itemStrength,'')+' '+ISNULL(tbl_ProductMaster.itemForm,'') Else tbl_ProductMaster.Description END) AS Product_Name,UnitCost  FROM tbl_ProductMaster Where Status = 1";
-
-                connection.Open();
-                SqlCommand command = new SqlCommand(Query, connection);
-                SqlDataAdapter SA = new SqlDataAdapter(command);
-                ProductSet = null;
-                SA.Fill(ds2);
-                Session["dsProducts_ProdPopUp"] = ds2;
-
-                StockDisplayGrid.DataSource = ds2;
-                StockDisplayGrid.DataBind();
-            }
+            
         }
 
         public void BindGrid()
@@ -90,17 +76,20 @@ namespace IMS.UserControl
                 int id;
                 if (int.TryParse(Session["UserSys"].ToString(), out id))
                 {
-                    String Query = @"Select (Select ISNULL(SUM(ISNULL(Quantity,0)), 0) FROM tblStock_Detail Where ProductID = tbl_ProductMaster.ProductID) AS QtyinHand,Product_Id_Org,ProductID, (Case WHen LEN(ISNULL(tbl_ProductMaster.Description,''))=0 Then ISNULL(tbl_ProductMaster.Product_Name,'')+' '+ISNULL(tbl_ProductMaster.itemPackSize,'')
-								+' '+ISNULL(tbl_ProductMaster.itemStrength,'')+' '+ISNULL(tbl_ProductMaster.itemForm,'') Else tbl_ProductMaster.Description END) AS Product_Name,UnitCost  FROM tbl_ProductMaster Where Status = 1";
-
+                     
+                    DataSet ds2 = new DataSet();
                     connection.Open();
-                    SqlCommand command = new SqlCommand(Query, connection);
+                    SqlCommand command = new SqlCommand("dbo.Sp_GetStockByName", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@p_prodName", DBNull.Value);
+                    command.Parameters.AddWithValue("@p_SysID", id);
+
                     SqlDataAdapter SA = new SqlDataAdapter(command);
-                    ProductSet = null;
-                    SA.Fill(ds);
-                    Session["dsProducts_ProdPopUp"] = ds;
-                    ProductSet = ds;
-                    StockDisplayGrid.DataSource = ds;
+
+                    SA.Fill(ds2);
+                    Session["dsProducts_ProdPopUp"] = ds2;
+
+                    StockDisplayGrid.DataSource = ds2;
                     StockDisplayGrid.DataBind();
                 }
 

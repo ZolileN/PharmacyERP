@@ -45,14 +45,76 @@
                        RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="lblSelectVendor" ClientIDMode="AutoID"
                        PopupControlID="_CongratsMessageDiv" BehaviorID="EditModalPopupMessage" >
                     </cc1:ModalPopupExtender>
-                    
-                       
-           </tr>
-
-    </tbody></table>
-         <div id="_CongratsMessageDiv" class="congrats-cont" style="display: none; ">
+                    <div id="_CongratsMessageDiv" class="congrats-cont" style="display: none; ">
                          <uc1:MultipleVendorsSelectPopup runat="server" id="MultipleVendorsSelectPopup" />
               
-                        </div>
+                        </div> 
+           </tr> 
 
+    </tbody></table>
+
+    <br>
+   <table class="table table-striped table-bordered table-condensed">
+                <asp:GridView ID="dgvVendors" runat="server" Width="100%" CssClass="table table-striped table-bordered table-condensed" AllowPaging="True" PageSize="10"
+                        AutoGenerateColumns="false"  ShowFooter="true" OnRowCommand="dgvVendors_RowCommand"  >
+                        <Columns>
+
+                             <asp:TemplateField HeaderText="Action"  >
+                                <ItemTemplate>
+                                    <span onclick="return confirm('Are you sure you want to delete this record?')">
+                                        <asp:Button CssClass="btn btn-default del-btn" Visible="false" ID="btnDelete" Text="Delete" runat="server" CommandName="Delete"  CommandArgument='<%# Container.DataItemIndex %>'/>
+                                    </span>
+                                </ItemTemplate> 
+                                 <ItemStyle  Width="100px" HorizontalAlign="Left"/>
+                            </asp:TemplateField>
+
+            
+                            <asp:BoundField DataField="VendorName" HeaderText="Vendor Name"   />
+                                  
+                            <asp:TemplateField HeaderText="Address">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblAdd" runat="server" Text='<%# Eval("Address") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="City">
+                                <ItemTemplate>
+                                    <asp:Label ID="Label3" runat="server" Text='<%# Eval("City") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Country">
+                                <ItemTemplate>
+                                    <asp:Label ID="Label4" runat="server" Text='<%# Eval("Country") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Phone">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblPhne" runat="server" Text='<%# Eval("Phone") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Fax">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblFax" runat="server" Text='<%# Eval("Fax") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Email">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblEmail" runat="server" Text='<%# Eval("Email") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="ID" Visible="false">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblSupID" runat="server" Text='<%# Eval("SuppID") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+           
+                        </Columns>
+                        <PagerStyle CssClass="GridPager" />
+
+
+                    </asp:GridView>
+       </table>
+    
+
+
+         
 </asp:Content>

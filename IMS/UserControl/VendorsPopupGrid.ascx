@@ -20,11 +20,7 @@
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:BoundField DataField="SupName" HeaderText="Vendor Name"   />
-            <%--<asp:TemplateField HeaderText="Vendor Name" SortExpression="SupName">
-                <ItemTemplate>
-                    <asp:Label ID="lblVendor" runat="server" Text='<%# Eval("SupName") %>'></asp:Label>
-                </ItemTemplate>
-            </asp:TemplateField>--%>
+             
             <asp:TemplateField HeaderText="Address">
                 <ItemTemplate>
                     <asp:Label ID="lblAdd" runat="server" Text='<%# Eval("Address") %>'></asp:Label>

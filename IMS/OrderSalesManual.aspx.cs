@@ -110,7 +110,7 @@ namespace IMS
                         {
                             connection.Open();
                         }
-                        SqlCommand command = new SqlCommand("Select * From tbl_System WHERE System_RoleID =2;", connection); // needs to be completed
+                        SqlCommand command = new SqlCommand("Select * From tbl_System WHERE System_RoleID Not In (1,3);", connection); // needs to be completed
                         DataSet ds = new DataSet();
                         SqlDataAdapter sA = new SqlDataAdapter(command);
                         sA.Fill(ds);
@@ -784,7 +784,7 @@ namespace IMS
                             {
                                 command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                             }
-                            command.Parameters.AddWithValue("@p_ProductID", lblProductId.Text);
+                            command.Parameters.AddWithValue("@p_ProductID", Convert.ToInt32(lblProductId.Text));
                             //if (int.TryParse(SelectProduct.SelectedValue.ToString(), out ProductNumber))
                             //{
                             //    command.Parameters.AddWithValue("@p_ProductID", ProductNumber);
@@ -835,7 +835,7 @@ namespace IMS
                         Product = SendQuantity = BonusQuantity = 0;
                         float Discount = 0;
 
-                        int.TryParse(SelectProduct.SelectedValue.ToString(), out Product);
+                        int.TryParse(lblProductId.Text, out Product);
                         int.TryParse(SelectQuantity.Text.ToString(), out SendQuantity);
                         int.TryParse(SelectBonus.Text.ToString(), out BonusQuantity);
 
@@ -968,7 +968,7 @@ namespace IMS
                             int Product, SendQuantity, BonusQuantity;
                             Product = SendQuantity = BonusQuantity = 0;
                             float Discount = 0;
-                            int.TryParse(SelectProduct.SelectedValue.ToString(), out Product);
+                            int.TryParse(lblProductId.Text, out Product);
                             int.TryParse(SelectQuantity.Text.ToString(), out SendQuantity);
                             int.TryParse(SelectBonus.Text.ToString(), out BonusQuantity);
 

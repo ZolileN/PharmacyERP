@@ -35,7 +35,7 @@ namespace IMS.UserControl
 
         public void PopulateGrid()
         {
-            if (Session["txtVendor"] != null)
+            if (Session["txtVendor"].ToString() != "%")
             {
                 DataTable dt = new DataTable();
                 DataSet ds = new DataSet();
@@ -152,29 +152,72 @@ namespace IMS.UserControl
 
         protected void SelectMultipleVendor_Click(object sender, EventArgs e)
         {
-            Control ctl = this.Parent;
-            TextBox ltMetaTags = null;
-           
-            Label lblVendorIds = (Label)ctl.FindControl("lblVendorIds");
-
-            ltMetaTags = (TextBox)ctl.FindControl("txtVendor");
-
-            GridViewRow rows = gdvVendor.SelectedRow;
-            foreach (GridViewRow row in gdvVendor.Rows)
+            try
             {
-                if (row.RowType == DataControlRowType.DataRow)
+                Control ctl = this.Parent;
+                TextBox ltMetaTags = null;
+
+                Label lblVendorIds = (Label)ctl.FindControl("lblVendorIds");
+
+                ltMetaTags = (TextBox)ctl.FindControl("txtVendor");
+                GridView gvParentVendors = (GridView)ctl.FindControl("dgvVendors");
+                GridViewRow rows = gdvVendor.SelectedRow;
+                foreach (GridViewRow row in gdvVendor.Rows)
                 {
-                    CheckBox chkRow = (row.Cells[0].FindControl("chkCtrl") as CheckBox);
-                    if (chkRow.Checked)
+                    if (row.RowType == DataControlRowType.DataRow)
                     {
-                        lblVendorIds.Text = "," + row.Cells[8].Text;
-                        if (ltMetaTags != null)
+                        CheckBox chkRow = (row.Cells[0].FindControl("chkCtrl") as CheckBox);
+                        if (chkRow.Checked)
                         {
-                            ltMetaTags.Text = Server.HtmlDecode(row.Cells[1].Text);
+                            lblVendorIds.Text = lblVendorIds.Text + row.Cells[8].Text + ",";
+
                         }
                     }
                 }
+                if (Session["SystemId"] != null)
+                {
+                    int StoreID = Convert.ToInt32(Session["SystemId"].ToString());
+                    string[] strVendorIds = lblVendorIds.Text.Split(',');
+                    foreach (string strVenId in strVendorIds)
+                    {
+                        int VendorId = strVenId != "" ? int.Parse(strVenId) : 0;
+                        if (VendorId > 0)
+                        {
+                            connection.Open();
+                            SqlCommand command = new SqlCommand("sp_AddVendorsToStore", connection);
+                            command.Parameters.AddWithValue("@VendorId", VendorId);
+                            command.Parameters.AddWithValue("@StoreId", StoreID);
+
+                            command.CommandType = CommandType.StoredProcedure;
+                            command.ExecuteNonQuery();
+                            connection.Close();
+                        }
+                    }
+                    DataSet resultSet = new DataSet();
+
+                    SqlCommand comm = new SqlCommand("sp_GetStoredVendors", connection);
+                    comm.CommandType = CommandType.StoredProcedure;
+                    comm.Parameters.AddWithValue("@StoreId", StoreID);
+                    SqlDataAdapter SA = new SqlDataAdapter(comm);
+                    SA.Fill(resultSet);
+
+                    gvParentVendors.DataSource = resultSet;
+                    gvParentVendors.DataBind();
+
+                    connection.Close();
+                    gvParentVendors.Visible = true;
+                }
             }
+            catch(Exception ex)
+            {
+
+            }
+            finally
+            {
+                connection.Close();
+
+            }
+            
         }
     }
 }
