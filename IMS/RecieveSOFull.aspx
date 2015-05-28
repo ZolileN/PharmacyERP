@@ -72,7 +72,7 @@
 
                      <asp:TemplateField HeaderText="ProductID" Visible="false" HeaderStyle-Width ="110px">
                         <ItemTemplate>
-                            <asp:Literal ID="lblProductID" runat="server" Text='<%# Eval("ProductID") %>'   ></asp:Literal>
+                            <asp:Label ID="lblProductID" runat="server" Text='<%# Eval("ProductID") %>'   ></asp:Label>
                         </ItemTemplate>
                         <ItemStyle   HorizontalAlign="Left"/>
 
@@ -80,7 +80,7 @@
                      
                      <asp:TemplateField HeaderText="To" Visible="false"  >
                         <ItemTemplate>
-                            <asp:Literal ID="RequestedTo"  runat="server" Text='<%# Eval("ToPlace") %>'   ></asp:Literal>
+                            <asp:Label ID="RequestedTo"  runat="server" Text='<%# Eval("ToPlace") %>'   ></asp:Label>
                         </ItemTemplate>
                         <ItemStyle  Width="150px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
@@ -175,21 +175,21 @@
 
                       <asp:TemplateField HeaderText="Accepted<br>Qty"  >
                                         <ItemTemplate>
-                                            <asp:Literal ID="lbAcceptedQuantity"  runat="server" Text='<%# Eval("AcceptedQuantity") %>'  ></asp:Literal>
+                                            <asp:Label ID="lbAcceptedQuantity"  runat="server" Text='<%# Eval("AcceptedQuantity") %>'  ></asp:Label>
                                         </ItemTemplate>
                                         <ItemStyle  HorizontalAlign="Left" />
                                     </asp:TemplateField>
 
                                     <asp:TemplateField HeaderText="Accepted<br>Bonus Qty" >
                                         <ItemTemplate>
-                                            <asp:Literal ID="DelieveredBonusQuantity"  runat="server" Text='<%# Eval("DelieveredBonusQuantity") %>' ></asp:Literal>
+                                            <asp:Label ID="DelieveredBonusQuantity"  runat="server" Text='<%# Eval("DelieveredBonusQuantity") %>' ></asp:Label>
                                         </ItemTemplate>
                                         <ItemStyle  HorizontalAlign="Left" />
                                     </asp:TemplateField>
 
                                     <asp:TemplateField HeaderText="Returned<br>Quantity" >
                                         <ItemTemplate>
-                                            <asp:Literal ID="ReturnedQuantity"  runat="server" Text='<%# Eval("ReturnedQuantity") %>' ></asp:Literal>
+                                            <asp:Label ID="ReturnedQuantity"  runat="server" Text='<%# Eval("ReturnedQuantity") %>' ></asp:Label>
                                         </ItemTemplate>
                                         <ItemStyle  HorizontalAlign="Left" />
                                     </asp:TemplateField>
@@ -216,21 +216,21 @@
 
                                      <asp:TemplateField HeaderText="Batch No"  >
                                         <ItemTemplate>
-                                            <asp:Literal ID="Batch"  runat="server" Text='<%# Eval("BatchNumber") %>'  ></asp:Literal>
+                                            <asp:Label ID="Batch"  runat="server" Text='<%# Eval("BatchNumber") %>'  ></asp:Label>
                                         </ItemTemplate>
                                         <ItemStyle   HorizontalAlign="Left" />
                                     </asp:TemplateField>
 
                                     <asp:TemplateField HeaderText="Expiry Date"  >
                                         <ItemTemplate>
-                                            <asp:Literal ID="lblExpiryDate"  runat="server" Text='<%# Eval("ExpiryDate")==DBNull.Value?"":Convert.ToDateTime( Eval("ExpiryDate")).ToString("MMM dd ,yyyy") %>'  ></asp:Literal>
+                                            <asp:Label ID="lblExpiryDate"  runat="server" Text='<%# Eval("ExpiryDate")==DBNull.Value?"":Convert.ToDateTime( Eval("ExpiryDate")).ToString("MMM dd ,yyyy") %>'  ></asp:Label>
                                         </ItemTemplate>
                                         <ItemStyle   HorizontalAlign="Left" />
 
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Sent Quantity"   >
                                         <ItemTemplate>
-                                            <asp:Literal ID="SendQuantity"  runat="server" Text='<%# Eval("SendQuantity") %>'  ></asp:Literal>
+                                            <asp:Label ID="SendQuantity"  runat="server" Text='<%# Eval("SendQuantity") %>'  ></asp:Label>
                                         </ItemTemplate>
                                         <ItemStyle   HorizontalAlign="Left" />
                                     </asp:TemplateField>

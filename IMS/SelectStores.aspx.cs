@@ -24,7 +24,17 @@ namespace IMS
 
         protected void btnContinue_Click(object sender, EventArgs e)
         {
+            string Storename = txtStore.Text;
+            Session["Storename"] = Storename;
+            Session["SystemId"] = lblStoreId.Text;
+            Response.Redirect("AddVendorsToStore.aspx");
+        }
 
+        protected void btnGoBack_Click(object sender, EventArgs e)
+        {
+            Session.Remove("Storename");
+            Session.Remove("SystemId");
+            Response.Redirect("ManageInventory.aspx");
         }
     }
 }

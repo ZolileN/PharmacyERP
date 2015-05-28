@@ -178,7 +178,9 @@ namespace IMS.UserControl
                         }
                         if(lblStoreID !=null)
                         {
+
                             lblStoreID.Text = Server.HtmlDecode(row.Cells[6].Text);
+
 
                         }
                     }

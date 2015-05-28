@@ -225,7 +225,7 @@
             <div class="col-md-offset-2 col-md-10">
                 <asp:Button ID="btnPrint" runat="server" CssClass="btn btn-default btn-large no-print" Text="Print" OnClientClick="window.print();"/>
                 <asp:Button ID="btnExport" runat="server" CssClass="btn btn-default btn-large no-print" Text="Export" OnClick="btnExport_Click"/>
-                <asp:Button ID="btnInvoice" runat="server" CssClass="btn btn-default btn-large no-print" Text="Generate Invoice" OnClick="btnInvoice_Click"/>
+                <%--<asp:Button ID="btnInvoice" runat="server" CssClass="btn btn-default btn-large no-print" Text="Generate Invoice" OnClick="btnInvoice_Click"/>--%>
                 <asp:Button ID="btnBack" runat="server" CssClass="btn btn-primary btn-large no-print" Text="Go Back" OnClick="btnBack_Click" />
             </div>
         </div>

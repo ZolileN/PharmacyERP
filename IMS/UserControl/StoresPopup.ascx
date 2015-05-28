@@ -3,11 +3,11 @@
 
  <div class="popupMain" id="products">
 <div class="popupHead">
-    Products List
+    Stores List
     <input type="submit" class="close" value="" />
     </div>
      
-    
+      <div class="bodyPop">
     <asp:GridView ID="dgvStoresPopup" CssClass="table table-striped table-bordered table-condensed" runat="server" AllowPaging="True" PageSize="10" 
                 AutoGenerateColumns="false" OnPageIndexChanging="dgvStoresPopup_PageIndexChanging"   onrowcancelingedit="dgvStoresPopup_RowCancelingEdit" 
             onrowcommand="dgvStoresPopup_RowCommand" OnRowDataBound="dgvStoresPopup_RowDataBound" onrowdeleting="dgvStoresPopup_RowDeleting" 
@@ -20,20 +20,27 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
+
                        
                       <%--<asp:TemplateField HeaderText="UPC">
+
+                       <%--<asp:BoundField DataField="SystemID" HeaderText="System ID" Visible="false"  />--%> 
+                      <asp:TemplateField HeaderText="UPC" Visible="false">
+
                         <ItemTemplate>
-                            <asp:Label ID="UPC" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("SystemID") %>' Width="110px"></asp:Label>
+                            <asp:Label ID="SystemID"  runat="server" Text='<%# Eval("SystemID") %>' Width="110px"></asp:Label>
                         </ItemTemplate>
-                         <ItemStyle  Width="120px" HorizontalAlign="Left"/>
-                    </asp:TemplateField>--%>
+                        
+                    </asp:TemplateField>
                      <asp:BoundField DataField="SystemName" HeaderText="Store Name"   /> 
                      <asp:BoundField DataField="System_PharmacyID" HeaderText="Store ID"   />
                      <asp:BoundField DataField="SystemAddress" HeaderText="Store Address"   />
                      
                      <asp:BoundField DataField="SystemPhone" HeaderText="Store Phone"   />
                     <asp:BoundField DataField="SystemFax" HeaderText="Store Fax" />
+
                      <asp:BoundField DataField="SystemID" HeaderText="System ID" /> 
+
                     
                  </Columns>
             <PagerStyle CssClass = "GridPager" />
@@ -41,7 +48,7 @@
      
      <asp:Button ID="SelectStore" runat="server" CssClass="btn btn-primary fl-r btn-sm" Text="Select" OnClick="SelectStore_Click"  />
  </div>
-
+     </div>
  <script type="text/javascript">
      function CheckSingleCheckbox(ob) {
          var grid = ob.parentNode.parentNode.parentNode;

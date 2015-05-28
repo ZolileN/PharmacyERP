@@ -32,6 +32,7 @@
 		<tr><td height="5"></td></tr>
     </tbody></table>
      
+    <hr />
     
    <table cellspacing="5" cellpadding="5" border="0" style="margin-left:10px;" class="formTbl" id="vendorSelect" width="">
 

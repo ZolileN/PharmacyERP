@@ -1324,8 +1324,8 @@ padding:3px;
 }
 .popupMain {
     /*display:none;*/
-    width:800px;
-    margin-left:-400px;
+    width:900px;
+    /*margin-left:-400px;*/
     left:50%;
     top:50%;
     background:#FFF;
@@ -1364,11 +1364,12 @@ padding:3px;
 }
 
 .close {
-    width:22px;
-    height:22px;
+    width:27px;
+    height:27px;
     background: url(../Images/close-ico.png) top left no-repeat;
     float:right;
     display:block;
+    border:0px;
 }
 
 .search-btn {

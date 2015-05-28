@@ -10,78 +10,78 @@
 namespace IMS {
     
     
-    public partial class ViewPackingList_SO {
+    public partial class AddVendorsToStore {
         
         /// <summary>
-        /// SaleOrder control.
+        /// spnStoreName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal SaleOrder;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spnStoreName;
         
         /// <summary>
-        /// SendDate control.
+        /// btnGoBack control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal SendDate;
+        protected global::System.Web.UI.WebControls.Button btnGoBack;
         
         /// <summary>
-        /// To control.
+        /// lblSelectVendor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label To;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblSelectVendor;
         
         /// <summary>
-        /// ToAddress control.
+        /// txtVendor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ToAddress;
+        protected global::System.Web.UI.WebControls.TextBox txtVendor;
         
         /// <summary>
-        /// StockDisplayGrid control.
+        /// btnSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView StockDisplayGrid;
+        protected global::System.Web.UI.WebControls.Button btnSearch;
         
         /// <summary>
-        /// btnPrint control.
+        /// lblVendorIds control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPrint;
+        protected global::System.Web.UI.WebControls.Label lblVendorIds;
         
         /// <summary>
-        /// btnExport control.
+        /// mpeCongratsMessageDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnExport;
+        protected global::AjaxControlToolkit.ModalPopupExtender mpeCongratsMessageDiv;
         
         /// <summary>
-        /// btnBack control.
+        /// MultipleVendorsSelectPopup control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBack;
+        protected global::IMS.UserControl.MultipleVendorsSelectPopup MultipleVendorsSelectPopup;
     }
 }

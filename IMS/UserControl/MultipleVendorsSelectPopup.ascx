@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="VendorsPopupGrid.ascx.cs" Inherits="IMS.UserControl.VendorsPopupGrid" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="MultipleVendorsSelectPopup.ascx.cs" Inherits="IMS.UserControl.MultipleVendorsSelectPopup" %>
 
  <div class="popupMain" id="vendors">
 <div class="popupHead">
@@ -15,16 +15,12 @@
              <asp:TemplateField HeaderText="Action">
                 <ItemTemplate >
                      
-                    <asp:CheckBox ID="chkCtrl" runat="server" onClick="CheckSingleCheckbox(this);"  />
+                    <asp:CheckBox ID="chkCtrl" runat="server"  />
                    
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:BoundField DataField="SupName" HeaderText="Vendor Name"   />
-            <%--<asp:TemplateField HeaderText="Vendor Name" SortExpression="SupName">
-                <ItemTemplate>
-                    <asp:Label ID="lblVendor" runat="server" Text='<%# Eval("SupName") %>'></asp:Label>
-                </ItemTemplate>
-            </asp:TemplateField>--%>
+         
             <asp:TemplateField HeaderText="Address">
                 <ItemTemplate>
                     <asp:Label ID="lblAdd" runat="server" Text='<%# Eval("Address") %>'></asp:Label>
@@ -67,20 +63,6 @@
 
     </asp:GridView>
      
-     <asp:Button ID="SelectVendor" runat="server" CssClass="btn btn-primary fl-r btn-sm" Text="Select" OnClick="SelectVendor_Click" />
+     <asp:Button ID="SelectMultipleVendor" runat="server" CssClass="btn btn-primary fl-r btn-sm" Text="Select" OnClick="SelectMultipleVendor_Click" />
  </div>
 </div>
-
- <script type="text/javascript">
-     function CheckSingleCheckbox(ob) {
-         var grid = ob.parentNode.parentNode.parentNode;
-         var inputs = grid.getElementsByTagName("input");
-         for (var i = 0; i < inputs.length; i++) {
-             if (inputs[i].type == "checkbox") {
-                 if (ob.checked && inputs[i] != ob && inputs[i].checked) {
-                     inputs[i].checked = false;
-                 }
-             }
-         }
-     }
-    </script>

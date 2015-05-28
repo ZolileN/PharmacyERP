@@ -22,17 +22,18 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-      <table width="100%"> 
-        <tbody><tr>
-        	<td> <h4 id="topHead"> Assign Vendors to Store</h4></td>
-            <td  >
-             
-                
-            </td> 
-        </tr>
-		<tr><td height="5"></td></tr>
-    </tbody></table>
+  <table width="100%">
+    <tr><td width="81%">
+    <h4>Assign Vendors to Store</h4>
+    </td>
+    <td width="19%" align="right"> 
 
+        <asp:Button ID="btnGoBack" runat="server" Text="Go Back" CssClass="btn btn-default btn-large" OnClick="btnGoBack_Click" />
+         </td>
+                </tr>
+                <tr><td height="5"></td></tr>
+                </table>
+     
     <hr />
 
     <table cellspacing="5" cellpadding="5" border="0" style="margin-left:10px;" class="formTbl" id="vendorSelect" width="">
