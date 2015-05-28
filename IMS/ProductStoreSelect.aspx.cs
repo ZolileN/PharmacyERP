@@ -22,8 +22,8 @@ namespace IMS
                 {
                     btnContinue.Visible = false;
                     Session.Remove("dsStoresPopup");
-                    Session.Remove("dsProducts_MP");
-                    BindGrid();
+                   // Session.Remove("dsProducts_MP");
+                   // BindGrid();
 
                 }
                 catch (Exception exp) { }
@@ -58,5 +58,31 @@ namespace IMS
             }
 
         }
+
+        protected void btnContinue_Click(object sender, EventArgs e)
+        {
+            string storeName = txtStore.Text;
+            Session["StoreName"] = storeName;
+            Session["StoreID"] = lblStoreId.Text;
+            Response.Redirect("Prod2Store.aspx",false);
+        }
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            String Text = txtStore.Text + '%';
+            Session["txtStore"] = Text;
+            StoresPopupGrid.PopulateGrid();
+            mpeCongratsMessageDiv.Show();
+            
+        }
+
+        protected void btnBack_Click(object sender, EventArgs e)
+        {
+            Session.Remove("StoreName");
+            Session.Remove("StoreID");
+            Response.Redirect("WarehouseMain.aspx", false);
+        }
+
+
     }
 }

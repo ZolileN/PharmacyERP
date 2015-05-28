@@ -7,13 +7,11 @@
       <table width="100%"> 
         <tbody><tr>
         	<td> <h4 id="topHead">Assign Products to Store</h4></td>
-            <td  >
-            <%--<input type="submit" class="btn btn-success" value="Generate PO" onClick="window.location.href = 'purchase-order.html'" id="genPO">
-                <input type="submit" class="btn btn-danger" value="Delete PO" id="delPO">
-		    <input type="submit" class="btn btn-default" id="backPO" value="Back" onClick="location.reload();">--%>   
+           <td align="right">
+            <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default" Text="Go Back" OnClick="btnBack_Click"/>
+              
                 
-                
-            </td> 
+            </td>
         </tr>
 		<tr><td height="5"></td></tr>
     </tbody></table>
@@ -25,6 +23,7 @@
            <td><label id="lblSelectStore" runat="server" >Select Store</label></td>
            <td>
                <asp:TextBox ID="txtStore" runat="server" CssClass="form-control product" ></asp:TextBox>
+               <asp:Label ID="lblStoreId" runat="server" Visible="false"></asp:Label>
                <asp:Button ID="btnSearch" runat="server" CssClass="search-btn getProducts" OnClick="btnSearch_Click" />
                 <%--<input type="submit" runat="server" id="btnSearchVendor" class="search-btn opPop"  />--%>
 

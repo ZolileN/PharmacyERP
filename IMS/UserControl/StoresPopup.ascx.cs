@@ -174,11 +174,11 @@ namespace IMS.UserControl
                         ltMetaTags = (TextBox)ctl.FindControl("txtStore");
                         if (ltMetaTags != null)
                         {
-                            ltMetaTags.Text = Server.HtmlDecode(row.Cells[2].Text);
+                            ltMetaTags.Text = Server.HtmlDecode(row.Cells[1].Text);
                         }
                         if(lblStoreID !=null)
                         {
-                            lblStoreID.Text = Server.HtmlDecode(row.Cells[0].Text);
+                            lblStoreID.Text = Server.HtmlDecode(row.Cells[6].Text);
 
                         }
                     }

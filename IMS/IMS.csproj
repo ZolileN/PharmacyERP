@@ -254,6 +254,7 @@
     <Content Include="PackingListGeneration.aspx" />
     <Content Include="PlaceOrder.aspx" />
     <Content Include="PO_GENERATE.aspx" />
+    <Content Include="Prod2Store.aspx" />
     <Content Include="ProductStoreSelect.aspx" />
     <Content Include="ReceiveStock.aspx" />
     <Content Include="RecieveOrder.aspx" />
@@ -751,6 +752,13 @@
     </Compile>
     <Compile Include="PO_GENERATE.aspx.designer.cs">
       <DependentUpon>PO_GENERATE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Prod2Store.aspx.cs">
+      <DependentUpon>Prod2Store.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Prod2Store.aspx.designer.cs">
+      <DependentUpon>Prod2Store.aspx</DependentUpon>
     </Compile>
     <Compile Include="ProductStoreSelect.aspx.cs">
       <DependentUpon>ProductStoreSelect.aspx</DependentUpon>

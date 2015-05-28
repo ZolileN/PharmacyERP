@@ -20,7 +20,7 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                       <asp:BoundField DataField="SystemID" HeaderText="System ID" Visible="false"  /> 
+                       
                       <%--<asp:TemplateField HeaderText="UPC">
                         <ItemTemplate>
                             <asp:Label ID="UPC" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("SystemID") %>' Width="110px"></asp:Label>
@@ -33,7 +33,7 @@
                      
                      <asp:BoundField DataField="SystemPhone" HeaderText="Store Phone"   />
                     <asp:BoundField DataField="SystemFax" HeaderText="Store Fax" />
-
+                     <asp:BoundField DataField="SystemID" HeaderText="System ID" /> 
                     
                  </Columns>
             <PagerStyle CssClass = "GridPager" />
