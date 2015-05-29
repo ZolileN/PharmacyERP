@@ -36,7 +36,7 @@ namespace IMS
                 int OrderNumber = 0;
                 DataSet ds = new DataSet();
 
-                if (int.TryParse(Session["OrderDetNo"].ToString(), out OrderNumber))
+                if (int.TryParse(Session["OrderDetailsNo"].ToString(), out OrderNumber))
                 {
                     command.Parameters.AddWithValue("@OrderDetID", OrderNumber);
                 }
@@ -168,7 +168,15 @@ namespace IMS
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@quantity", -OldStockSum);
                         command.Parameters.AddWithValue("@ProductID", int.Parse(ProductID));
-                        command.Parameters.AddWithValue("@expirydate", ExpiryDate);
+                        if (ExpiryDate != null)
+                        {
+                            command.Parameters.AddWithValue("@expiredDate", DateTime.Parse(ExpiryDate));
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@expiredDate", DBNull.Value);
+                        }
+                        command.Parameters.AddWithValue("@p_SysID", int.Parse(Session["UserSys"].ToString()));
                         command.ExecuteNonQuery();
                         WebMessageBoxUtil.Show("Stock Successfully Added");
 
@@ -198,7 +206,16 @@ namespace IMS
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@quantity", addtoStockQty);
                         command.Parameters.AddWithValue("@ProductID", int.Parse(ProductID));
-                        command.Parameters.AddWithValue("@expirydate", ExpiryDate);
+                        if (ExpiryDate != null)
+                        {
+                            command.Parameters.AddWithValue("@expiredDate", DateTime.Parse(ExpiryDate));
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@expiredDate", DBNull.Value);
+                        }
+                        command.Parameters.AddWithValue("@p_SysID", int.Parse(Session["UserSys"].ToString()));
+
                         command.ExecuteNonQuery();
                         WebMessageBoxUtil.Show("Stock Successfully Added");
 
@@ -218,12 +235,43 @@ namespace IMS
                     command2.Parameters.AddWithValue("@returnedQty", RejectedQty);
                     command2.Parameters.AddWithValue("@returnedStatus", int.Parse(((DropDownList)dgvReceiveSOGrid.Rows[RowIndex].FindControl("ddNotAcceptedAction")).SelectedValue));
 
-                    command2.Parameters.AddWithValue("@expiredDate", DateTime.Parse(ExpiryDate));
-
+                    if (ExpiryDate != null)
+                    {
+                        command2.Parameters.AddWithValue("@expiredDate", DateTime.Parse(ExpiryDate));
+                    }
+                    else 
+                    {
+                        command2.Parameters.AddWithValue("@expiredDate", DBNull.Value);
+                    }
                     command2.Parameters.AddWithValue("@OrderDetId", OrderDetId);
                     command2.ExecuteNonQuery();
+
+                    //Update Stock Receiving for particular store   
+
+                    SqlCommand command3 = new SqlCommand("Sp_UpdateStockonReceiving", connection);
+                    command3.CommandType = CommandType.StoredProcedure;
+
+                    command3.Parameters.AddWithValue("@p_ReceivedQuantity", DelieveredQty);
+                    command3.Parameters.AddWithValue("@p_StoreID", int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("StoreId")).Text));
+                    command3.Parameters.AddWithValue("@p_ProductID", int.Parse(ProductID));
+                    command3.Parameters.AddWithValue("@p_BarCode", long.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("BarCode")).Text));
+                    command3.Parameters.AddWithValue("@p_Bonus", int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("delBonusQtyVal")).Text));
+                    if (ExpiryDate != null)
+                    {
+                        command2.Parameters.AddWithValue("@expiredDate", DateTime.Parse(ExpiryDate));
+                    }
+                    else
+                    {
+                        command2.Parameters.AddWithValue("@expiredDate", DBNull.Value);
+                    }
+                    command3.Parameters.AddWithValue("@p_Cost", double.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("UnitCost")).Text));
+                    command3.Parameters.AddWithValue("@p_Sales", double.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("UnitSale")).Text));     
+                    command3.Parameters.AddWithValue("@p_isPO", "TRUE");
+                    command3.Parameters.AddWithValue("@p_BatchNumber", ((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("BatchNumber")).Text);
+
+                    command3.ExecuteNonQuery();
                 }
-                Response.Redirect("RecieveSOFull.aspx");
+                Response.Redirect("RecieveSOFull.aspx",false);
             }
             catch(Exception ex)
             {
@@ -239,7 +287,7 @@ namespace IMS
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
             //First clear all the sessions if created in this page
-            Response.Redirect("RecieveSOFull.aspx");
+            Response.Redirect("RecieveSOFull.aspx",false);
         }
 
 

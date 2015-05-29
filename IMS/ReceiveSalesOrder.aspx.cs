@@ -184,7 +184,7 @@ namespace IMS
                     Label Invoice = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("Invoice");
                     Label OrderTo = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("OrderTo");
                     //session is setting
-                    Session["OrderNumberSO"] = OrderNo.Text.ToString();
+                    Session["SalesONumber"] = OrderNo.Text.ToString();
                     Session["SelectedIndexValue"] = OrderTo.Text.ToString();
                     Session["OrderSalesDetail"] = true;
                     Session["SystemID"] = SystemID.Text;

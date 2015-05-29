@@ -35,6 +35,44 @@
                            
                     </asp:TemplateField>
 
+
+                     <asp:TemplateField Visible="false" HeaderText="BatchNumber" >
+                        <ItemTemplate>
+                            <asp:Label ID="BatchNumber"  runat="server" CssClass="ProductDescription" Text='<%# Eval("BatchNumber") %>'></asp:Label>
+                        </ItemTemplate>
+                         <ItemStyle  Width="280px" HorizontalAlign="Left"/>
+                    </asp:TemplateField>
+
+
+                     <asp:TemplateField Visible="false" HeaderText="UnitSale" >
+                        <ItemTemplate>
+                            <asp:Label ID="UnitSale"  runat="server" CssClass="ProductDescription" Text='<%# Eval("UnitSale") %>'></asp:Label>
+                        </ItemTemplate>
+                         <ItemStyle  Width="280px" HorizontalAlign="Left"/>
+                    </asp:TemplateField>
+
+
+                     <asp:TemplateField Visible="false" HeaderText="UnitCost" >
+                        <ItemTemplate>
+                            <asp:Label ID="UnitCost"  runat="server" CssClass="ProductDescription" Text='<%# Eval("UnitCost") %>'></asp:Label>
+                        </ItemTemplate>
+                         <ItemStyle  Width="280px" HorizontalAlign="Left"/>
+                    </asp:TemplateField>
+                
+                     <asp:TemplateField Visible="false" HeaderText="BarCode" >
+                        <ItemTemplate>
+                            <asp:Label ID="BarCode"  runat="server" CssClass="ProductDescription" Text='<%# Eval("BarCode") %>'></asp:Label>
+                        </ItemTemplate>
+                         <ItemStyle  Width="280px" HorizontalAlign="Left"/>
+                    </asp:TemplateField>
+
+                     <asp:TemplateField Visible="false" HeaderText="Store ID" >
+                        <ItemTemplate>
+                            <asp:Label ID="StoreId"  runat="server" CssClass="ProductDescription" Text='<%# Eval("OrderRequestedFor") %>'></asp:Label>
+                        </ItemTemplate>
+                         <ItemStyle  Width="280px" HorizontalAlign="Left"/>
+                    </asp:TemplateField>
+
                      <asp:TemplateField Visible="false" HeaderText="Order Detial Id" >
                         <ItemTemplate>
                             <asp:Label ID="OrderDetID"  runat="server" CssClass="ProductDescription" Text='<%# Eval("OrderDetailID") %>'></asp:Label>
@@ -157,6 +195,38 @@
           });
 
         function SetDelieveredQty() {
+            //MainContent_dgvReceiveSOGrid
+            //var rowCount = document.getElementById("MainContent_dgvReceiveSOGrid").rows.length;
+
+            document.getElementById('MainContent_dgvReceiveSOGrid').onclick = function (event) {
+                event = event || window.event; //for IE8 backward compatibility
+                var target = event.target || event.srcElement; //for IE8 backward compatibility
+                while (target && target.nodeName != 'TR') {
+                    target = target.parentElement;
+                }
+                var cells = target.cells;  
+                
+                if (!cells.length || target.parentNode.nodeName == 'THEAD') {  
+                    return;
+                }
+                //var f1 = document.getElementById('Sent<br>Qty');//Accepted<br>Qty
+                //var f2 = document.getElementById('Bonus<br>Qty');
+                //var f3 = document.getElementById('Accepted<br>Bonus Qty');
+                //var f4 = document.getElementById('Damaged');
+                //var f5 = document.getElementById('Expired');
+                //var f6 = document.getElementById('Not Accepted');
+                //alert(cells[0].innerHTML);
+                //alert(cells[1].innerHTML);
+                //alert(cells[2].innerHTML);
+                //alert(cells[3].innerHTML);
+                // alert(cells[5].innerHTML);
+                
+                //cells[6].value = Number(cells[4].innerHTML) + (Number(cells[5].innerHTML) - Number(cells[7].innerHTML)) - (Number(cells[8].value) + Number(Number(cells[9].value) + Number(Number(cells[10].value))));
+                //alert(cells[6].innerHTML);
+
+                
+            }
+
             var SentQty = document.getElementById("MainContent_dgvReceiveSOGrid_SendQuantityVal_0").innerHTML;
             
             var BonusQty = document.getElementById("MainContent_dgvReceiveSOGrid_BonusQuantityVal_0").innerHTML;

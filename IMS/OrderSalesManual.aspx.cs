@@ -853,6 +853,7 @@ namespace IMS
                     }
                     else
                     {
+                        Session["DetailID"] = "0";// declaring session as  0;
                         #region Product Existing in the Current Order
                         DataSet ds = new DataSet();
                         try
@@ -1068,8 +1069,11 @@ namespace IMS
                 {
                     command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                 }
-
-                
+                 
+                if (int.TryParse(Session["UserSys"].ToString(), out OrderNumber))
+                {
+                    command.Parameters.AddWithValue("@p_SysID", OrderNumber);
+                }
 
                 
 

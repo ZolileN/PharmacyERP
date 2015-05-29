@@ -26,7 +26,7 @@ namespace IMS.UserControl
             {
                 try
                 {
-                    BindGrid();
+                   // BindGrid();
 
                 }
                 catch (Exception exp) { }

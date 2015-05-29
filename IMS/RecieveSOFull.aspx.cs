@@ -44,9 +44,13 @@ namespace IMS
                 int OrderNumber = 0;
 
 
-                if (int.TryParse(Session["OrderNumberSO"].ToString(), out OrderNumber))
+                if (int.TryParse(Session["SalesONumber"].ToString(), out OrderNumber))
                 {
                     command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
+                }
+                if (int.TryParse(Session["UserSys"].ToString(), out OrderNumber))
+                {
+                    command.Parameters.AddWithValue("@p_SysID", OrderNumber);
                 }
                   
                 SqlDataAdapter sA = new SqlDataAdapter(command);
@@ -86,7 +90,7 @@ namespace IMS
                 command.CommandType = CommandType.StoredProcedure;
                 int OrderNumber = 0;
 
-                if (int.TryParse(Session["OrderNumberSO"].ToString(), out OrderNumber))
+                if (int.TryParse(Session["SalesONumber"].ToString(), out OrderNumber))
                 {
                     command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                 }
@@ -243,8 +247,17 @@ namespace IMS
 
                     if (Details != null)
                     {
+                        DateTime dtExpiry;
                         Label lblExpiryDate = (Label)Details.Rows[0].FindControl("lblExpiryDate");
-                        DateTime dtExpiry = DateTime.Parse(lblExpiryDate.Text.ToString());
+                        if (!string.IsNullOrWhiteSpace(lblExpiryDate.Text))
+                        {
+                             dtExpiry = DateTime.Parse(lblExpiryDate.Text.ToString());
+                        }
+                        else
+                        {
+                            dtExpiry = DateTime.MinValue;
+                        }
+                        
                         int orderDetailNo = int.Parse(OrderDetNo.Text.ToString());
                         if (connection.State == ConnectionState.Closed)
                         {
@@ -252,8 +265,11 @@ namespace IMS
                         }
                         SqlCommand command2 = new SqlCommand("sp_UpdatetblSaleOrderDetail_Receive_AcceptAll", connection);
                         command2.CommandType = CommandType.StoredProcedure;
+                        if (dtExpiry == DateTime.MinValue)
+                            command2.Parameters.AddWithValue("@expiredDate", DBNull.Value);
+                        else
+                            command2.Parameters.AddWithValue("@expiredDate", dtExpiry);
 
-                        command2.Parameters.AddWithValue("@expiredDate", dtExpiry);
                         command2.Parameters.AddWithValue("@OrderDetId", orderDetailNo);
                         command2.ExecuteNonQuery();
                     }
@@ -277,7 +293,7 @@ namespace IMS
                // Label RequestedTo = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("RequestedTo");
                // Label OrderTo = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("OrderTo");
                 //session is setting
-                Session["OrderDetNo"] = OrderDetNo.Text.ToString();
+                Session["OrderDetailsNo"] = OrderDetNo.Text.ToString();
                 //Session["ProductID"] = ProductID.Text;
                 //Session["RequestedTo"] = RequestedTo.Text;
 
