@@ -87,7 +87,7 @@
                     </asp:TemplateField> 
                       <asp:TemplateField HeaderText="Accepted<br>Qty" >
                         <ItemTemplate>
-                             <asp:TextBox ID="DelieveredQtyVal" CssClass="grid-input-form"  ReadOnly="true" runat="server" Text=' <%#Eval("SendQuantity")==DBNull.Value? int.Parse(Eval("DelieveredQty").ToString()) :int.Parse(Eval("SendQuantity").ToString())  %> '  ></asp:TextBox>
+                             <asp:TextBox ID="DelieveredQtyVal" CssClass="grid-input-form"  ReadOnly="true" runat="server" Text=' <%#Eval("AcceptedQuantity")==DBNull.Value? int.Parse(Eval("SendQuantity").ToString()): int.Parse(Eval("AcceptedQuantity").ToString())  %> '  ></asp:TextBox>
                         </ItemTemplate>
                         <ItemStyle   HorizontalAlign="Left"/>
                     </asp:TemplateField>

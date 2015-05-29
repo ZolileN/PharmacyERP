@@ -75,34 +75,45 @@ namespace IMS
         }
         private void DisplaySODetailsLabels()
         {
-            if (connection.State == ConnectionState.Open)
+            try
             {
-                connection.Close();
-            }
-            connection.Open();
-            SqlCommand command = new SqlCommand("sp_getSalesOrderDetailsByOrderID", connection);
-            command.CommandType = CommandType.StoredProcedure;
-            int OrderNumber = 0; 
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                
+                SqlCommand command = new SqlCommand("sp_getSalesOrderDetailsByOrderID", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                int OrderNumber = 0;
 
-            if (int.TryParse(Session["OrderNumberSO"].ToString(), out OrderNumber))
+                if (int.TryParse(Session["OrderNumberSO"].ToString(), out OrderNumber))
+                {
+                    command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
+                }
+
+                DataSet ds = new DataSet();
+
+                SqlDataAdapter sA = new SqlDataAdapter(command);
+                sA.Fill(ds);
+
+
+                lblSOID.Text = ds.Tables[0].Rows[0]["OrderID"].ToString();
+                SODate.Text = ds.Tables[0].Rows[0]["OrderDate"].ToString();
+                OrderStatus.Text = ds.Tables[0].Rows[0]["Status"].ToString();
+                OrderTo.Text = ds.Tables[0].Rows[0]["SystemName"].ToString();
+
+
+                sendQty.Text = ds.Tables[0].Rows[0]["SentQuantity"].ToString();
+                RetQty.Text = ds.Tables[0].Rows[0]["ReturnedQuantity"].ToString();
+            }
+            catch (Exception exp) { }
+            finally 
             {
-                command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
             }
-
-            DataSet ds = new DataSet();
-
-            SqlDataAdapter sA = new SqlDataAdapter(command);
-            sA.Fill(ds);
-             
-            
-            lblSOID.Text = ds.Tables[0].Rows[0]["OrderID"].ToString();
-            SODate.Text = ds.Tables[0].Rows[0]["OrderDate"].ToString();
-            OrderStatus.Text = ds.Tables[0].Rows[0]["Status"].ToString();
-            OrderTo.Text = ds.Tables[0].Rows[0]["SystemName"].ToString();
-
-
-            sendQty.Text = ds.Tables[0].Rows[0]["SentQuantity"].ToString();
-            RetQty.Text = ds.Tables[0].Rows[0]["ReturnedQuantity"].ToString();
 
         }
         

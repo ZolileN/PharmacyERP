@@ -689,6 +689,7 @@ namespace IMS
                     SqlCommand command = new SqlCommand("sp_getStock_Quantity", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_ProductID", Convert.ToInt32(lblProductId.Text));
+                    command.Parameters.AddWithValue("@p_SysID", Convert.ToInt32(Session["UserSys"].ToString()));
 
                    // command.Parameters.AddWithValue("@p_ProductID",  txtSearch.Text);
                     DataSet QuantitySet = new DataSet();
