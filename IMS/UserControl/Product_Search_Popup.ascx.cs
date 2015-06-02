@@ -1,4 +1,5 @@
 ﻿using AjaxControlToolkit;
+using IMSCommon.Util;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -188,19 +189,25 @@ namespace IMS.UserControl
                     if (StockDisplayGrid.Rows[i].RowType == DataControlRowType.DataRow)
                     {
                         CheckBox chk = (CheckBox)StockDisplayGrid.Rows[i].Cells[0].FindControl("chkCtrl");
+                        Label lblProd = (Label)StockDisplayGrid.Rows[i].FindControl("lblProductID");
+                       
                         CheckBoxIndex = StockDisplayGrid.PageSize * StockDisplayGrid.PageIndex + (i + 1);
                         if (chk.Checked)
                         {
                             if (CheckBoxArray.IndexOf(CheckBoxIndex) == -1 && !CheckAllWasChecked)
                             {
+                                string ProdID = "ID " + CheckBoxIndex + "-" + lblProd.Text;
                                 CheckBoxArray.Add(CheckBoxIndex);
+                                CheckBoxArray.Add(ProdID);
                             }
                         }
                         else
                         {
                             if (CheckBoxArray.IndexOf(CheckBoxIndex) != -1 || CheckAllWasChecked)
                             {
+                                string ProdID = "ID " + CheckBoxIndex + "-" + lblProd.Text;
                                 CheckBoxArray.Remove(CheckBoxIndex);
+                                CheckBoxArray.Remove(ProdID);
                             }
                         }
                     }
@@ -415,58 +422,135 @@ namespace IMS.UserControl
 
         protected void SelectProduct_Click(object sender, EventArgs e)
         {
-            foreach (GridViewRow row in StockDisplayGrid.Rows)
+            if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true))
             {
-                if (row.RowType == DataControlRowType.DataRow)
+                SaveCurrentState();
+                if (ViewState["CheckBoxArray"] != null)
                 {
-                    CheckBox chkRow = (row.Cells[0].FindControl("chkCtrl") as CheckBox);
-                    if (chkRow.Checked)
+                    Control ctl = this.Parent;
+                    Label lbstoreId = (Label)ctl.FindControl("lblStoreId");
+                    ArrayList CheckBoxArray = (ArrayList)ViewState["CheckBoxArray"];
+                    if (connection.State == ConnectionState.Closed)
                     {
-                        Control ctl = this.Parent;
-                        TextBox ltMetaTags = null;
-                        ltMetaTags = (TextBox)ctl.FindControl("txtSearch");
-                        if (ltMetaTags != null)
+                        connection.Open();
+                    }
+                    foreach (var item in CheckBoxArray)
+                    {
+                        if (item.ToString().Contains("ID"))
                         {
-                            ltMetaTags.Text = Server.HtmlDecode(row.Cells[1].Text);
-
-                            GridView gvParent = (GridView)ctl.FindControl("StockDisplayGrid");
-
-                            DataTable dt = new DataTable();
-                            DataSet ds = new DataSet();
-                            #region Getting Product Details
+                            string[] key = item.ToString().Split('-');
                             try
                             {
-                                int id;
-                                if (int.TryParse(Session["UserSys"].ToString(), out id))
-                                {
-                                    String Query = "Select * FROM tbl_ProductMaster Where Status = 1 and Product_Name Like '" + ltMetaTags.Text + "'";
-                                   
-                                    connection.Open();
-                                    SqlCommand command = new SqlCommand(Query, connection);
-                                    SqlDataAdapter SA = new SqlDataAdapter(command);
-                                    ProductSet = null;
-                                    gvParent.DataSource = null;
-                                    SA.Fill(ds);
-                                    Session["dsProducts_PopUp"] = ds;
-                                    ProductSet = ds;
-                                    gvParent.DataSource = ds;
-                                    gvParent.DataBind();
-                                }
+                                SqlCommand command = new SqlCommand("Sp_AddNewStoreProduct", connection);
+                                command.CommandType = CommandType.StoredProcedure;
+                                command.Parameters.AddWithValue("@p_ProductID", int.Parse(key[1]));
+                                command.Parameters.AddWithValue("@p_StoreID", int.Parse(lbstoreId.Text));
+                                command.ExecuteNonQuery();
 
                             }
                             catch (Exception ex)
                             {
-                            }
-                            finally
-                            {
-                                connection.Close();
-                            }
-                            #endregion
 
+                            }
+                            
                         }
                     }
+                    WebMessageBoxUtil.Show("Products have been successfully associated ");
+
+                    GridView gvParent = (GridView)ctl.FindControl("StockDisplayGrid");
+
+                    DataTable dt = new DataTable();
+                    DataSet ds = new DataSet();
+                    try
+                    {
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
+                        SqlCommand command = new SqlCommand("Sp_GetProductStoreMapping", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        int StoreNumber = 0;
+
+
+                        int.TryParse(lbstoreId.Text, out StoreNumber);
+
+                        command.Parameters.AddWithValue("@p_StoreID", StoreNumber);
+
+                        SqlDataAdapter sA = new SqlDataAdapter(command);
+                        sA.Fill(ds);
+                        gvParent.DataSource = ds;
+                        gvParent.DataBind();
+                        gvParent.Visible = true;
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                    finally
+                    {
+                        if (connection.State == ConnectionState.Open)
+                        {
+                            connection.Close();
+                        }
+                    }
+                    Session.Remove("Text");
                 }
-                Session.Remove("Text");
+            }
+            else
+            {
+                foreach (GridViewRow row in StockDisplayGrid.Rows)
+                {
+                    if (row.RowType == DataControlRowType.DataRow)
+                    {
+                        CheckBox chkRow = (row.Cells[0].FindControl("chkCtrl") as CheckBox);
+                        if (chkRow.Checked)
+                        {
+                            Control ctl = this.Parent;
+                            TextBox ltMetaTags = null;
+                            ltMetaTags = (TextBox)ctl.FindControl("txtSearch");
+                            if (ltMetaTags != null)
+                            {
+                                ltMetaTags.Text = Server.HtmlDecode(row.Cells[1].Text);
+
+                                GridView gvParent = (GridView)ctl.FindControl("StockDisplayGrid");
+
+                                DataTable dt = new DataTable();
+                                DataSet ds = new DataSet();
+                                #region Getting Product Details
+                                try
+                                {
+                                    int id;
+                                    if (int.TryParse(Session["UserSys"].ToString(), out id))
+                                    {
+                                        String Query = "Select * FROM tbl_ProductMaster Where Status = 1 and Product_Name Like '" + ltMetaTags.Text + "'";
+
+                                        connection.Open();
+                                        SqlCommand command = new SqlCommand(Query, connection);
+                                        SqlDataAdapter SA = new SqlDataAdapter(command);
+                                        ProductSet = null;
+                                        gvParent.DataSource = null;
+                                        SA.Fill(ds);
+                                        Session["dsProducts_PopUp"] = ds;
+                                        ProductSet = ds;
+                                        gvParent.DataSource = ds;
+                                        gvParent.DataBind();
+                                    }
+
+                                }
+                                catch (Exception ex)
+                                {
+                                }
+                                finally
+                                {
+                                    connection.Close();
+                                }
+                                #endregion
+
+                            }
+                        }
+                    }
+                    Session.Remove("Text");
+                }
             }
 
         }

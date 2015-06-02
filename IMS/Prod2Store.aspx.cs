@@ -25,6 +25,7 @@ namespace IMS
                 {
                     lblStore.Text = Session["StoreName"].ToString();
                     storeName = Session["StoreName"].ToString();
+                    lblStoreId.Text = Session["StoreID"].ToString();
                 }
               
                 BindGrid();
@@ -50,7 +51,7 @@ namespace IMS
                     connection.Open();
                 }
 
-                SqlCommand command = new SqlCommand("sp_GetOrderbyVendor", connection);
+                SqlCommand command = new SqlCommand("Sp_GetProductStoreMapping", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 int StoreNumber = 0;
 
@@ -65,7 +66,7 @@ namespace IMS
                 sA.Fill(ds);
                 StockDisplayGrid.DataSource = ds;
                 StockDisplayGrid.DataBind();
-
+                StockDisplayGrid.Visible = true;
 
             }
             catch (Exception ex)

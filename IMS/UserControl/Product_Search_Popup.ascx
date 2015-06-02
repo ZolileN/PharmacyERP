@@ -36,7 +36,12 @@
                      <asp:BoundField DataField="itemStrength" HeaderText="Item Strength"   />
                      <asp:BoundField DataField="itemForm" HeaderText="Item Form"   />
                      <asp:BoundField DataField="itemPackSize" HeaderText="Pack Size"   />
-
+                     <asp:TemplateField HeaderText="Product ID">
+                        <ItemTemplate>
+                            <asp:Label ID="lblProductID" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("ProductID") %>' Width="110px"></asp:Label>
+                        </ItemTemplate>
+                         <ItemStyle  Width="120px" HorizontalAlign="Left"/>
+                    </asp:TemplateField>
                      
                       
                  </Columns>
