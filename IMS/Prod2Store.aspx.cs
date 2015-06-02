@@ -98,7 +98,7 @@ namespace IMS
                     connection.Open();
                 }
 
-                SqlCommand command = new SqlCommand("sp_GetOrderbyVendor", connection);
+                SqlCommand command = new SqlCommand("Sp_DeleteProduct_StoreMapping", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 int StoreNumber = 0;
                 int mapID = 0;
@@ -138,7 +138,8 @@ namespace IMS
 
         protected void StockDisplayGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-
+            StockDisplayGrid.PageIndex = e.NewPageIndex;
+            BindGrid();
         }
 
         protected void btnSearchProduct_Click(object sender, ImageClickEventArgs e)
