@@ -194,50 +194,50 @@
               SetDelieveredQty();
           });
 
-        function SetDelieveredQty() {
-            //MainContent_dgvReceiveSOGrid
-            //var rowCount = document.getElementById("MainContent_dgvReceiveSOGrid").rows.length;
+        function SetDelieveredQty(id) {
+            
+            var send = "MainContent_dgvReceiveSOGrid_SendQuantityVal_" + id;
+            var bonus = "MainContent_dgvReceiveSOGrid_BonusQuantityVal_" + id;
+            var delbon = "MainContent_dgvReceiveSOGrid_delBonusQtyVal_" + id;
+            var damag = "MainContent_dgvReceiveSOGrid_DamagedQuantityVal_" + id;
+            var exp = "MainContent_dgvReceiveSOGrid_txtExpiredQuantity_" + id;
+            var ret = "MainContent_dgvReceiveSOGrid_txtReturnedQuantity_" + id;
+           
+            var SentQty = document.getElementById(send).innerHTML;
+            
+            var BonusQty = document.getElementById(bonus).innerHTML;
+            var DelieveredBonusQty = document.getElementById(delbon).value;
+            var DamagedQty = document.getElementById(damag).value;
+            var ExpiredQty = document.getElementById(exp).value;
+            var RejectedQty = document.getElementById(ret).value;
 
-            document.getElementById('MainContent_dgvReceiveSOGrid').onclick = function (event) {
-                event = event || window.event; //for IE8 backward compatibility
-                var target = event.target || event.srcElement; //for IE8 backward compatibility
-                while (target && target.nodeName != 'TR') {
-                    target = target.parentElement;
-                }
-                var cells = target.cells;  
-                
-                if (!cells.length || target.parentNode.nodeName == 'THEAD') {  
-                    return;
-                }
-                //var f1 = document.getElementById('Sent<br>Qty');//Accepted<br>Qty
-                //var f2 = document.getElementById('Bonus<br>Qty');
-                //var f3 = document.getElementById('Accepted<br>Bonus Qty');
-                //var f4 = document.getElementById('Damaged');
-                //var f5 = document.getElementById('Expired');
-                //var f6 = document.getElementById('Not Accepted');
-                //alert(cells[0].innerHTML);
-                //alert(cells[1].innerHTML);
-                //alert(cells[2].innerHTML);
-                //alert(cells[3].innerHTML);
-                // alert(cells[5].innerHTML);
-                
-                //cells[6].value = Number(cells[4].innerHTML) + (Number(cells[5].innerHTML) - Number(cells[7].innerHTML)) - (Number(cells[8].value) + Number(Number(cells[9].value) + Number(Number(cells[10].value))));
-                //alert(cells[6].innerHTML);
-
-                
+            if (DelieveredBonusQty > BonusQty) {
+                alert("Accepted Bonus Quantity should not be greate than Bonus Quantity");
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+                return;
             }
+           
+            if (Number(BonusQty) - Number(DelieveredBonusQty) > 0)
+            {
+                var DelieveredQty = Number(SentQty) + (Number(BonusQty) - Number(DelieveredBonusQty)) - (Number(DamagedQty) + Number(ExpiredQty) + Number(RejectedQty));
 
-            var SentQty = document.getElementById("MainContent_dgvReceiveSOGrid_SendQuantityVal_0").innerHTML;
+            }
+            else {
+                var DelieveredQty = Number(SentQty) + (Number(BonusQty) - Number(DelieveredBonusQty)) - (Number(DamagedQty) + Number(ExpiredQty) + Number(RejectedQty));
+
+            }
+           // var DelieveredQty = Number(SentQty) + (Number(BonusQty) - Number(DelieveredBonusQty)) - (Number(DamagedQty) + Number(ExpiredQty) + Number(RejectedQty));
             
-            var BonusQty = document.getElementById("MainContent_dgvReceiveSOGrid_BonusQuantityVal_0").innerHTML;
-            var DelieveredBonusQty = document.getElementById("MainContent_dgvReceiveSOGrid_delBonusQtyVal_0").value;
-            var DamagedQty = document.getElementById("MainContent_dgvReceiveSOGrid_DamagedQuantityVal_0").value;
-            var ExpiredQty = document.getElementById("MainContent_dgvReceiveSOGrid_txtExpiredQuantity_0").value;
-            var RejectedQty = document.getElementById("MainContent_dgvReceiveSOGrid_txtReturnedQuantity_0").value;
-            
-            var DelieveredQty = Number(SentQty) + (Number(BonusQty) - Number(DelieveredBonusQty)) - (Number(DamagedQty) + Number(ExpiredQty) + Number(RejectedQty));
-  
-            document.getElementById("MainContent_dgvReceiveSOGrid_DelieveredQtyVal_0").value = DelieveredQty;
+            var delqty = "MainContent_dgvReceiveSOGrid_DelieveredQtyVal_" + id;
+            document.getElementById(delqty).value = DelieveredQty;
+
+            // var SentQty = document.getElementById("MainContent_dgvReceiveSOGrid_SendQuantityVal_0").innerHTML;
+            //var BonusQty = document.getElementById("MainContent_dgvReceiveSOGrid_BonusQuantityVal_0").innerHTML;
+            //var DelieveredBonusQty = document.getElementById("MainContent_dgvReceiveSOGrid_delBonusQtyVal_0").value;
+            //var DamagedQty = document.getElementById("MainContent_dgvReceiveSOGrid_DamagedQuantityVal_0").value;
+            //var ExpiredQty = document.getElementById("MainContent_dgvReceiveSOGrid_txtExpiredQuantity_0").value;
+            //var RejectedQty = document.getElementById("MainContent_dgvReceiveSOGrid_txtReturnedQuantity_0").value;
+
         }
 
 </script>

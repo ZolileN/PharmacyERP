@@ -170,11 +170,11 @@ namespace IMS
                         command.Parameters.AddWithValue("@ProductID", int.Parse(ProductID));
                         if (ExpiryDate != null)
                         {
-                            command.Parameters.AddWithValue("@expiredDate", DateTime.Parse(ExpiryDate));
+                            command.Parameters.AddWithValue("@expirydate", DateTime.Parse(ExpiryDate));
                         }
                         else
                         {
-                            command.Parameters.AddWithValue("@expiredDate", DBNull.Value);
+                            command.Parameters.AddWithValue("@expirydate", DBNull.Value);
                         }
                         command.Parameters.AddWithValue("@p_SysID", int.Parse(Session["UserSys"].ToString()));
                         command.ExecuteNonQuery();
@@ -208,11 +208,11 @@ namespace IMS
                         command.Parameters.AddWithValue("@ProductID", int.Parse(ProductID));
                         if (ExpiryDate != null)
                         {
-                            command.Parameters.AddWithValue("@expiredDate", DateTime.Parse(ExpiryDate));
+                            command.Parameters.AddWithValue("@expirydate", DateTime.Parse(ExpiryDate));
                         }
                         else
                         {
-                            command.Parameters.AddWithValue("@expiredDate", DBNull.Value);
+                            command.Parameters.AddWithValue("@expirydate", DBNull.Value);
                         }
                         command.Parameters.AddWithValue("@p_SysID", int.Parse(Session["UserSys"].ToString()));
 
@@ -258,11 +258,11 @@ namespace IMS
                     command3.Parameters.AddWithValue("@p_Bonus", int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("delBonusQtyVal")).Text));
                     if (ExpiryDate != null)
                     {
-                        command2.Parameters.AddWithValue("@expiredDate", DateTime.Parse(ExpiryDate));
+                        command3.Parameters.AddWithValue("@p_Expiry", DateTime.Parse(ExpiryDate));
                     }
                     else
                     {
-                        command2.Parameters.AddWithValue("@expiredDate", DBNull.Value);
+                        command3.Parameters.AddWithValue("@p_Expiry", DBNull.Value);
                     }
                     command3.Parameters.AddWithValue("@p_Cost", double.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("UnitCost")).Text));
                     command3.Parameters.AddWithValue("@p_Sales", double.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("UnitSale")).Text));     
@@ -271,7 +271,7 @@ namespace IMS
 
                     command3.ExecuteNonQuery();
                 }
-                Response.Redirect("RecieveSOFull.aspx",false);
+                Response.Redirect("RecieveSOFull.aspx");
             }
             catch(Exception ex)
             {
@@ -344,14 +344,21 @@ namespace IMS
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                foreach (TableCell cell in e.Row.Cells)
-                {
-                     
-                    string s = cell.Text;
-                    if (cell.Text.Length > 25 )
-                        cell.Text = cell.Text.Substring(0, 25) + "<br/>";
-                    cell.ToolTip = s;
-                }
+                TextBox txtDelBonus = (TextBox)e.Row.FindControl("delBonusQtyVal");
+
+                TextBox txtDamagedQuantity = (TextBox)e.Row.FindControl("DamagedQuantityVal");
+                TextBox txtExpiredQuantity = (TextBox)e.Row.FindControl("txtExpiredQuantity");
+                TextBox txtReturnedQuantity = (TextBox)e.Row.FindControl("txtReturnedQuantity");
+
+                DataRowView drv = (DataRowView)e.Row.DataItem;
+                int id = (int)e.Row.RowIndex;
+
+
+                txtDelBonus.Attributes.Add("onchange", "SetDelieveredQty(" + id + ");return false;");
+
+                txtDamagedQuantity.Attributes.Add("onchange", "SetDelieveredQty(" + id + ");return false;");
+                txtExpiredQuantity.Attributes.Add("onchange", "SetDelieveredQty(" + id + ");return false;");
+                txtReturnedQuantity.Attributes.Add("onchange", "SetDelieveredQty(" + id + ");return false;");
             }
 
             

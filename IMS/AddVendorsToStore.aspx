@@ -1,9 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddVendorsToStore.aspx.cs" Inherits="IMS.AddVendorsToStore" %>
 
 <%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="cc1" %>
-<%@ Register TagName="MultipleVendorsSelectPopup" TagPrefix="uc1" Src="~/UserControl/MultipleVendorsSelectPopup.ascx"%>
+<%--<%@ Register Src="~/UserControl/VendorsPopupGrid.ascx" TagPrefix="ucVendorsPopup" TagName="VendorsPopupGrid" %>--%>
+<%@ Register Src="~/UserControl/MultipleVendorsSelectPopup.ascx" TagPrefix="ucVendorsPopup" TagName="VendorsPopupGrid" %>
 
+ 
+<%--<%@ Register TagName="MultipleVendorsSelectPopup" TagPrefix="uc1" Src="~/UserControl/MultipleVendorsSelectPopup.ascx"%>--%>
 
+ 
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
@@ -39,16 +43,16 @@
            </td>
            <td>
           
-           	  
+           	   <div id="_CongratsMessageDiv" class="congrats-cont" style="display: none; ">
+                         <ucVendorsPopup:VendorsPopupGrid runat="server" id="MultipleVendorsSelectPopup" />
+              
+                        </div> 
            </td>
             <cc1:ModalPopupExtender ID="mpeCongratsMessageDiv" runat="server" BackgroundCssClass="overLaypop"
                        RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="lblSelectVendor" ClientIDMode="AutoID"
                        PopupControlID="_CongratsMessageDiv" BehaviorID="EditModalPopupMessage" >
                     </cc1:ModalPopupExtender>
-                    <div id="_CongratsMessageDiv" class="congrats-cont" style="display: none; ">
-                         <uc1:MultipleVendorsSelectPopup runat="server" id="MultipleVendorsSelectPopup" />
-              
-                        </div> 
+                   
            </tr> 
 
     </tbody></table>
@@ -56,13 +60,13 @@
     <br>
    <table class="table table-striped table-bordered table-condensed">
                 <asp:GridView ID="dgvVendors" runat="server" Width="100%" CssClass="table table-striped table-bordered table-condensed" AllowPaging="True" PageSize="10"
-                        AutoGenerateColumns="false"  ShowFooter="true" OnRowCommand="dgvVendors_RowCommand"  >
+                        AutoGenerateColumns="false"  ShowFooter="true" OnRowCommand="dgvVendors_RowCommand" OnRowDeleting="dgvVendors_RowDeleting" OnPageIndexChanging="dgvVendors_PageIndexChanging"  >
                         <Columns>
 
                              <asp:TemplateField HeaderText="Action"  >
                                 <ItemTemplate>
                                     <span onclick="return confirm('Are you sure you want to delete this record?')">
-                                        <asp:Button CssClass="btn btn-default del-btn" Visible="false" ID="btnDelete" Text="Delete" runat="server" CommandName="Delete"  CommandArgument='<%# Container.DataItemIndex %>'/>
+                                        <asp:Button CssClass="btn btn-default del-btn"  ID="btnDelete" Text="Delete" runat="server" CommandName="Delete"  CommandArgument='<%# Container.DataItemIndex %>'/>
                                     </span>
                                 </ItemTemplate> 
                                  <ItemStyle  Width="100px" HorizontalAlign="Left"/>

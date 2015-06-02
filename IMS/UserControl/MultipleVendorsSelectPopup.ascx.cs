@@ -208,7 +208,7 @@ namespace IMS.UserControl
                     gvParentVendors.Visible = true;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
