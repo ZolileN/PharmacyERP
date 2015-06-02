@@ -67,15 +67,6 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.Label lblVendorIds;
         
         /// <summary>
-        /// mpeCongratsMessageDiv control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::AjaxControlToolkit.ModalPopupExtender mpeCongratsMessageDiv;
-        
-        /// <summary>
         /// MultipleVendorsSelectPopup control.
         /// </summary>
         /// <remarks>
@@ -83,6 +74,15 @@ namespace IMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::IMS.UserControl.MultipleVendorsSelectPopup MultipleVendorsSelectPopup;
+        
+        /// <summary>
+        /// mpeCongratsMessageDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ModalPopupExtender mpeCongratsMessageDiv;
         
         /// <summary>
         /// dgvVendors control.

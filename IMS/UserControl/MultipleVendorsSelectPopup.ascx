@@ -52,11 +52,11 @@
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:BoundField HeaderText="ID" DataField="SuppID" />
-            <%--<asp:TemplateField HeaderText="ID" >
+            <asp:TemplateField HeaderText="ID" >
                 <ItemTemplate>
                     <asp:Label ID="lblSupID" runat="server" Text='<%# Eval("SuppID") %>'></asp:Label>
                 </ItemTemplate>
-            </asp:TemplateField>--%>
+            </asp:TemplateField>
            
         </Columns>
         <PagerStyle CssClass="GridPager" />

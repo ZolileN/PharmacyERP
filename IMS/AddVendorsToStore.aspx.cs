@@ -21,7 +21,7 @@ namespace IMS
                 if (Session["Storename"] != null)
                 {
                     spnStoreName.InnerHtml = Session["Storename"].ToString();
-                    dgvVendors.Visible = false;
+                     
                 }
             }
             
@@ -44,13 +44,18 @@ namespace IMS
         {
             if (e.CommandName.Equals("Delete"))
             {
-                //long VendorId = long.Parse(((Label)dgvVendors.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblSupID")).Text);
-                //connection.Open();
+                int VendorId = int.Parse(((Label)dgvVendors.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblSupID")).Text);
+                connection.Open();
+                int StoreId = int.Parse(Session["SystemId"].ToString());
+                
+                SqlCommand command3 = new SqlCommand("sp_DeleteFromtblVendors_Store", connection);
+                command3.CommandType = CommandType.StoredProcedure;
+                command3.Parameters.AddWithValue("@VendorID", VendorId);
+                command3.Parameters.AddWithValue("@StoreID", StoreId);
+                command3.ExecuteNonQuery();
 
-
-                //SqlCommand command3 = new SqlCommand("sp_getOrderDetailRecieve_ID", connection);
-                //command3.CommandType = CommandType.StoredProcedure;
-                //command3.Parameters.AddWithValue("@p_OrderDetID", VendorId);
+                dgvVendors.DataBind();
+                
                 //DataSet ds = new DataSet();
                 //SqlDataAdapter sA = new SqlDataAdapter(command3);
                 //sA.Fill(ds);
@@ -80,6 +85,16 @@ namespace IMS
                 //    btnDecline.Visible = false;
                 //}
             }
+        }
+
+        protected void dgvVendors_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+
+        }
+
+        protected void dgvVendors_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+
         }
     }
 }
