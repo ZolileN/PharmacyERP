@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Prod2Store.aspx.cs" Inherits="IMS.Prod2Store" %>
 <%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="cc1" %>
-<%@ Register TagName="StorePopup" TagPrefix="UCStoresPopup"  Src="~/UserControl/StoresPopup.ascx"%>
+<%@ Register TagName="ProductsPopup"  TagPrefix="UCProductsPopup" Src="~/UserControl/Product_Search_Popup.ascx" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -20,32 +21,34 @@
      <table cellspacing="5" cellpadding="5" border="0" style="margin-left:10px;" class="formTbl" id="vendorSelect" width="">
 
        <tr>
-           <td><label id="lblSelectStore" runat="server" >Select Store</label></td>
-           <td>
-               <asp:TextBox ID="txtStore" runat="server" CssClass="form-control product" ></asp:TextBox>
-               <asp:Label ID="lblStoreId" runat="server" Visible="false"></asp:Label>
-               <asp:Button ID="btnSearch" runat="server" CssClass="search-btn getProducts" OnClick="btnSearch_Click" />
-                <%--<input type="submit" runat="server" id="btnSearchVendor" class="search-btn opPop"  />--%>
+            <td  width="100"><asp:Label runat="server" ID="lblProd" AssociatedControlID="txtSearch" CssClass="control-label">Select Product</asp:Label></td>
+            <td>
+               <asp:TextBox ID="txtSearch" runat="server" CssClass="product"></asp:TextBox>
+                
+               <asp:ImageButton ID="btnSearchProduct" runat="server"   CssClass="search-btn getProducts" OnClick="btnSearchProduct_Click" />
+                <asp:Label ID="lblProductId" runat="server" Visible="false"></asp:Label>
 
-           </td>
-           <td>
-               <asp:Button ID="btnContinue" runat="server"  Text="Continue" CssClass="btn btn-primary btn-sm continue" OnClick="btnContinue_Click" Visible="false"/>
-           	  
-           </td>
-            <cc1:ModalPopupExtender ID="mpeCongratsMessageDiv" runat="server" BackgroundCssClass="overLaypop"
-                       RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="lblSelectStore" ClientIDMode="AutoID"
-                       PopupControlID="_CongratsMessageDiv" BehaviorID="EditModalPopupMessage" >
+               <cc1:ModalPopupExtender ID="mpeCongratsMessageDiv" runat="server" BackgroundCssClass="overLaypop"
+                       RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="lblProd" ClientIDMode="AutoID"
+                       PopupControlID="_CongratsMessageDiv2" BehaviorID="EditModalPopupMessage" >
                     </cc1:ModalPopupExtender>
-                    
-                       
+
+               <div id="_CongratsMessageDiv2" class="congrats-cont" style="display: none; ">
+                            <UCProductsPopup:ProductsPopup  id="ProductsPopupGrid" runat="server"/>
+                        </div>
+
+                 <asp:TextBox runat="server" ID="TextBox2" CssClass="form-control product" Visible="false"/>
+                
+                 
+             
+           </td>
+                 
            </tr>
 
         
     </table>
                
-                <div id="_CongratsMessageDiv" class="congrats-cont" style="display: none; ">
-                            <UCStoresPopup:StorePopup  id="StoresPopupGrid" runat="server"/>
-                        </div>
+             
              
      <div class="form-horizontal">
     <div class="form-group">

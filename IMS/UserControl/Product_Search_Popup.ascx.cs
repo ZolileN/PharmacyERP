@@ -1,5 +1,6 @@
 ﻿using AjaxControlToolkit;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -16,9 +17,16 @@ namespace IMS.UserControl
         string text = "";
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
+        bool selectAll=false;
 
+        public bool SelectAll
+        {
+           // get { return selectAll; }
+            set { selectAll = value; }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
+           
             if (!IsPostBack)
             {
                 Control ctl = this.Parent;
@@ -28,14 +36,31 @@ namespace IMS.UserControl
                 {
                     text = txtsearch.Text;
                 }
-                BindGrid();
-            }
-        }
 
+               
+                BindGrid();
+
+                if (selectAll)
+                {
+                    ((CheckBox)StockDisplayGrid.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                    ViewState["checkAllState"] = true;
+                }
+            }
+            if (IsPostBack) 
+            {
+                if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll==true)
+                {
+                    ((CheckBox)StockDisplayGrid.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                }
+            }
+            
+        }
+        
         public void PopulateGrid()
         {
             if (Session["Text"] != null)
             {
+               
                 DataTable dt = new DataTable();
                 DataSet ds = new DataSet();
                 #region Getting Product Details
@@ -55,6 +80,15 @@ namespace IMS.UserControl
                         ProductSet = ds;
                         StockDisplayGrid.DataSource = ds;
                         StockDisplayGrid.DataBind();
+                        PopulatePreviousState();
+                       
+                        if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
+                        {
+                            ((CheckBox)StockDisplayGrid.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                            ViewState["checkAllState"] = true;
+                        }
+                        
+                       
                     }
 
                 }
@@ -68,9 +102,9 @@ namespace IMS.UserControl
                 #endregion
             }
         }
-
         public void BindGrid()
         {
+            //SaveCurrentState();
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
             #region Getting Product Details
@@ -90,6 +124,14 @@ namespace IMS.UserControl
                     ProductSet = ds;
                     StockDisplayGrid.DataSource = ds;
                     StockDisplayGrid.DataBind();
+                    PopulatePreviousState();
+                  
+                    if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
+                    {
+                        ((CheckBox)StockDisplayGrid.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                        ViewState["checkAllState"] = true;
+                    }
+                   
                 }
 
             }
@@ -102,10 +144,118 @@ namespace IMS.UserControl
             }
             #endregion
         }
+
+        private void SaveCurrentState() 
+        {
+
+            ArrayList CheckBoxArray;
+            if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
+            {
+                ((CheckBox)StockDisplayGrid.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                ViewState["checkAllState"] = true;
+
+                if (ViewState["CheckBoxArray"] != null)
+                {
+                    CheckBoxArray = (ArrayList)ViewState["CheckBoxArray"];
+                }
+                else
+                {
+                    CheckBoxArray = new ArrayList();
+                }
+
+                
+                int CheckBoxIndex;
+                bool CheckAllWasChecked = false;
+                CheckBox chkAll = (CheckBox)StockDisplayGrid.HeaderRow.Cells[0].FindControl("chkboxSelectAll");
+                string checkAllIndex = "chkAll-" + StockDisplayGrid.PageIndex;
+                if (chkAll.Checked)
+                {
+                    if (CheckBoxArray.IndexOf(checkAllIndex) == -1)
+                    {
+                        CheckBoxArray.Add(checkAllIndex);
+                    }
+                }
+                else
+                {
+                    if (CheckBoxArray.IndexOf(checkAllIndex) != -1)
+                    {
+                        CheckBoxArray.Remove(checkAllIndex);
+                        CheckAllWasChecked = true;
+                    }
+                }
+                for (int i = 0; i < StockDisplayGrid.Rows.Count; i++)
+                {
+                    if (StockDisplayGrid.Rows[i].RowType == DataControlRowType.DataRow)
+                    {
+                        CheckBox chk = (CheckBox)StockDisplayGrid.Rows[i].Cells[0].FindControl("chkCtrl");
+                        CheckBoxIndex = StockDisplayGrid.PageSize * StockDisplayGrid.PageIndex + (i + 1);
+                        if (chk.Checked)
+                        {
+                            if (CheckBoxArray.IndexOf(CheckBoxIndex) == -1 && !CheckAllWasChecked)
+                            {
+                                CheckBoxArray.Add(CheckBoxIndex);
+                            }
+                        }
+                        else
+                        {
+                            if (CheckBoxArray.IndexOf(CheckBoxIndex) != -1 || CheckAllWasChecked)
+                            {
+                                CheckBoxArray.Remove(CheckBoxIndex);
+                            }
+                        }
+                    }
+                }
+                ViewState["CheckBoxArray"] = CheckBoxArray;
+            }
+        }
+
+        private void PopulatePreviousState() 
+        {
+            if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true))
+            {
+                if (ViewState["CheckBoxArray"] != null)
+                {
+                    ArrayList CheckBoxArray = (ArrayList)ViewState["CheckBoxArray"];
+                    string checkAllIndex = "chkAll-" + StockDisplayGrid.PageIndex;
+
+                    if (CheckBoxArray.IndexOf(checkAllIndex) != -1)
+                    {
+                        CheckBox chkAll = (CheckBox)StockDisplayGrid.HeaderRow.Cells[0].FindControl("chkboxSelectAll");
+                        chkAll.Checked = true;
+                    }
+                    for (int i = 0; i < StockDisplayGrid.Rows.Count; i++)
+                    {
+
+                        if (StockDisplayGrid.Rows[i].RowType == DataControlRowType.DataRow)
+                        {
+                            if (CheckBoxArray.IndexOf(checkAllIndex) != -1)
+                            {
+                                CheckBox chk = (CheckBox)StockDisplayGrid.Rows[i].Cells[0].FindControl("chkCtrl");
+                                chk.Checked = true;
+                                
+                            }
+                            else
+                            {
+                                int CheckBoxIndex = StockDisplayGrid.PageSize * (StockDisplayGrid.PageIndex) + (i + 1);
+                                if (CheckBoxArray.IndexOf(CheckBoxIndex) != -1)
+                                {
+                                    CheckBox chk = (CheckBox)StockDisplayGrid.Rows[i].Cells[0].FindControl("chkCtrl");
+                                    chk.Checked = true;
+                                   
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
         #region GridView Functions & Events
         protected void StockDisplayGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
+            SaveCurrentState();
             StockDisplayGrid.PageIndex = e.NewPageIndex;
+            
             if (Session["Text"] != null)
             {
                 PopulateGrid();
@@ -320,5 +470,7 @@ namespace IMS.UserControl
             }
 
         }
+
+       
     }
 }

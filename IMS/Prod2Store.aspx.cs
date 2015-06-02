@@ -26,6 +26,7 @@ namespace IMS
                     lblStore.Text = Session["StoreName"].ToString();
                     storeName = Session["StoreName"].ToString();
                 }
+              
                 BindGrid();
             }
         }
@@ -139,9 +140,13 @@ namespace IMS
 
         }
 
-        protected void btnSearch_Click(object sender, EventArgs e)
+        protected void btnSearchProduct_Click(object sender, ImageClickEventArgs e)
         {
-
+            String Text = txtSearch.Text + '%';
+            Session["Text"] = Text;
+            ProductsPopupGrid.SelectAll = true;
+            ProductsPopupGrid.PopulateGrid();
+            mpeCongratsMessageDiv.Show();
         }
 
         protected void btnContinue_Click(object sender, EventArgs e)

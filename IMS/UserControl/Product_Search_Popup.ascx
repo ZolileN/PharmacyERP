@@ -8,13 +8,16 @@
     </div>
      
     <div class="bodyPop">
+       
     <asp:GridView ID="StockDisplayGrid" CssClass="table table-striped table-bordered table-condensed" runat="server" AllowPaging="True" PageSize="10" 
                 AutoGenerateColumns="false" OnPageIndexChanging="StockDisplayGrid_PageIndexChanging"   onrowcancelingedit="StockDisplayGrid_RowCancelingEdit" 
             onrowcommand="StockDisplayGrid_RowCommand" OnRowDataBound="StockDisplayGrid_RowDataBound" onrowdeleting="StockDisplayGrid_RowDeleting" 
             onrowediting="StockDisplayGrid_RowEditing" OnSelectedIndexChanged="StockDisplayGrid_SelectedIndexChanged" >
                  <Columns>
-
-                     <asp:TemplateField HeaderText="Action">
+                    <asp:TemplateField HeaderText="Action">
+                         <HeaderTemplate>
+                            <asp:CheckBox ID="chkboxSelectAll" enabled="false" runat="server" onclick="CheckAllEmp(this);" />
+                        </HeaderTemplate>
                         <ItemTemplate>
                             <asp:CheckBox ID="chkCtrl" runat="server" />
                         </ItemTemplate>
@@ -39,6 +42,14 @@
                  </Columns>
             <PagerStyle CssClass = "GridPager" />
              </asp:GridView>
-     <asp:Button ID="SelectProduct" runat="server" CssClass="btn btn-primary fl-r btn-sm" Text="Select" OnClick="SelectProduct_Click"  />
+     <asp:Button ID="SelectProduct" runat="server" CssClass="btn btn-primary fl-r btn-sm" Text="Select" OnClick="SelectProduct_Click" Visible="true" />
      </div>
+    <script type="text/javascript" language="javascript">
+        function CheckAllEmp(Checkbox) {
+            var GridVwHeaderChckbox = document.getElementById("<%=StockDisplayGrid.ClientID %>");
+            for (i = 1; i < GridVwHeaderChckbox.rows.length; i++) {
+                GridVwHeaderChckbox.rows[i].cells[0].getElementsByTagName("INPUT")[0].checked = Checkbox.checked;
+            }
+        }
+    </script>
  </div>
