@@ -188,7 +188,7 @@ namespace IMS
                         return;
                     }
 
-                    if (txtCP < 0 || txtSP < 0)
+                    if (txtCP <= 0 || txtSP <= 0)
                     {
                         WebMessageBoxUtil.Show("Entered value cannot be negative");
                         StockDisplayGrid.EditIndex = -1;
@@ -418,7 +418,7 @@ namespace IMS
                         return;
                     }
 
-                    if (txtCP < 0 || txtSP < 0)
+                    if (txtCP <= 0 || txtSP <= 0)
                     {
                         WebMessageBoxUtil.Show("Entered value cannot be negative");
                         StockDisplayGrid.EditIndex = -1;

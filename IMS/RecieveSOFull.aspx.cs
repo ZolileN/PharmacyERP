@@ -26,6 +26,11 @@ namespace IMS
             {
                 BindGrid();
                 DisplaySODetailsLabels();
+                for (int id = 0; id < StockDisplayGrid.Rows.Count; id++)
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "setExpiryDates(" + id + ");return false", "", true);
+
+                }
             }
         }
 
@@ -135,6 +140,15 @@ namespace IMS
                 Button btnEdit = (Button)e.Row.FindControl("btnEdit");
                 Button btnDetail = (Button)e.Row.FindControl("btnDetails");
                 Button btnDelete = (Button)e.Row.FindControl("btnDelete");
+
+                Label txtexpiry = (Label)e.Row.FindControl("dosage2");
+
+                DataRowView drv = (DataRowView)e.Row.DataItem;
+                int id = (int)e.Row.RowIndex;
+                
+                txtexpiry.Attributes.Add("OnLoad", "setExpiryDates(" + id + ");return false;");
+               // ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "script", "setExpiryDates(" + id + ");return false", true);
+                
 
                 if (Status.Text.Equals("Complete") || Status.Text.Equals("Partial"))
                 {

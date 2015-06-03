@@ -40,6 +40,7 @@ namespace IMS
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_orderDetailID", Convert.ToInt32(Session["OderDetailID"].ToString()));
                 command.Parameters.AddWithValue("@p_ProductID", Convert.ToInt32(Session["ProductID"].ToString()));
+                command.Parameters.AddWithValue("@p_StoredAt", int.Parse(Session["UserSys"].ToString()));
                 DataSet ds = new DataSet();
                 SqlDataAdapter dA = new SqlDataAdapter(command);
                 dA.Fill(ds);

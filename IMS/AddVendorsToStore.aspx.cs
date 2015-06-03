@@ -36,7 +36,9 @@ namespace IMS
         {
             String Text = txtVendor.Text + '%';
             Session["txtVendor"] = Text;
+            MultipleVendorsSelectPopup.SelectAll = true;
             MultipleVendorsSelectPopup.PopulateGrid();
+             
             mpeCongratsMessageDiv.Show();
         }
 
@@ -45,8 +47,8 @@ namespace IMS
             if (e.CommandName.Equals("Delete"))
             {
                 int VendorId = int.Parse(((Label)dgvVendors.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblSupID")).Text);
+                int StoreId = int.Parse(((Label)dgvVendors.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblStoreID")).Text);
                 connection.Open();
-                int StoreId = int.Parse(Session["SystemId"].ToString());
                 
                 SqlCommand command3 = new SqlCommand("sp_DeleteFromtblVendors_Store", connection);
                 command3.CommandType = CommandType.StoredProcedure;
@@ -54,8 +56,19 @@ namespace IMS
                 command3.Parameters.AddWithValue("@StoreID", StoreId);
                 command3.ExecuteNonQuery();
 
+                DataSet resultSet = new DataSet();
+
+                SqlCommand comm = new SqlCommand("sp_GetStoredVendors", connection);
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@StoreId", StoreId);
+                SqlDataAdapter SA = new SqlDataAdapter(comm);
+                SA.Fill(resultSet);
+
+                dgvVendors.DataSource = resultSet;
                 dgvVendors.DataBind();
+
                 connection.Close();
+                dgvVendors.Visible = true;
                  
             }
         }

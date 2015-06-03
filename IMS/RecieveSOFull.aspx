@@ -65,7 +65,7 @@
                  <Columns>
                      <asp:TemplateField Visible="false">
                         <ItemTemplate>
-                            <asp:Label ID="OrderDetailNo" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("OrderDetailID") %>' ></asp:Label>
+                            <asp:Label ID="OrderDetailNo"  CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("OrderDetailID") %>' ></asp:Label>
                         </ItemTemplate>
                         <ItemStyle  Width="1px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
@@ -263,4 +263,27 @@
     </div>
    
     </div>
+
+    <script type="text/javascript">
+        
+        function setExpiryDates(id)
+        {
+            alert(id);
+            var ex = document.getElementById("MainContent_StockDisplayGrid_StockDetailDisplayGrid_0_lblExpiryDate_0");
+            var expiry = document.getElementById("MainContent_StockDisplayGrid_StockDetailDisplayGrid_0_lblExpiryDate_0").innerHTML;
+            var abc = expiry.replace(',', ' ');
+            var date1 = new Date(abc);
+            var date2 = new Date();
+
+            var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+            var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+            if (diffDays <= 90) {
+                ex.style.color = "red";
+            }
+
+        }
+       
+
+    </script>
 </asp:Content>

@@ -26,7 +26,7 @@ namespace IMS
         {
             string Storename = txtStore.Text;
             Session["Storename"] = Storename;
-            Session["SystemId"] = lblStoreId.Text;
+            Session["SystemId"] = lblStoreId.Text;             
             Response.Redirect("AddVendorsToStore.aspx");
         }
 

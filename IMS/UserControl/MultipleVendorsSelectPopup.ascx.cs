@@ -1,7 +1,9 @@
 ﻿using AjaxControlToolkit;
 using IMSBusinessLogic;
 using IMSCommon;
+using IMSCommon.Util;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -19,7 +21,13 @@ namespace IMS.UserControl
         DataSet ds;
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
+        bool selectAll = false;
 
+        public bool SelectAll
+        {
+            // get { return selectAll; }
+            set { selectAll = value; }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -27,9 +35,20 @@ namespace IMS.UserControl
                 try
                 {
                    // BindGrid();
-
+                    if (selectAll)
+                    {
+                        ((CheckBox)gdvVendor.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                        ViewState["checkAllState"] = true;
+                    }
                 }
                 catch (Exception exp) { }
+            }
+            if (IsPostBack)
+            {
+                if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
+                {
+                    ((CheckBox)gdvVendor.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                }
             }
         }
 
@@ -52,6 +71,13 @@ namespace IMS.UserControl
                         SqlDataAdapter SA = new SqlDataAdapter(command);
                         ProductSet = null;
                         SA.Fill(ds);
+                        PopulatePreviousState();
+
+                        if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
+                        {
+                           // ((CheckBox)gdvVendor.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                            ViewState["checkAllState"] = true;
+                        }
 
                         gdvVendor.DataSource = ds;
                         gdvVendor.DataBind();
@@ -76,6 +102,12 @@ namespace IMS.UserControl
             gdvVendor.DataSource = ds;
             gdvVendor.DataBind();
 
+
+            if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
+            {
+                ((CheckBox)gdvVendor.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                ViewState["checkAllState"] = true;
+            }
         }
 
         protected void gdvVendor_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -90,6 +122,7 @@ namespace IMS.UserControl
 
         protected void gdvVendor_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
+            SaveCurrentState();
             gdvVendor.PageIndex = e.NewPageIndex;
             if (Session["txtVendor"] != null)
             {
@@ -150,62 +183,227 @@ namespace IMS.UserControl
 
         }
 
+        private void SaveCurrentState()
+        {
+
+            ArrayList CheckBoxArray;
+            if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
+            {
+               // ((CheckBox)gdvVendor.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                ViewState["checkAllState"] = true;
+
+                if (ViewState["CheckBoxArray"] != null)
+                {
+                    CheckBoxArray = (ArrayList)ViewState["CheckBoxArray"];
+                }
+                else
+                {
+                    CheckBoxArray = new ArrayList();
+                }
+
+
+                int CheckBoxIndex;
+                bool CheckAllWasChecked = false;
+                CheckBox chkAll = (CheckBox)gdvVendor.HeaderRow.Cells[0].FindControl("chkboxSelectAll");
+                string checkAllIndex = "chkAll-" + gdvVendor.PageIndex;
+                if (chkAll.Checked)
+                {
+                    if (CheckBoxArray.IndexOf(checkAllIndex) == -1)
+                    {
+                        CheckBoxArray.Add(checkAllIndex);
+                    }
+                }
+                else
+                {
+                    if (CheckBoxArray.IndexOf(checkAllIndex) != -1)
+                    {
+                        CheckBoxArray.Remove(checkAllIndex);
+                        CheckAllWasChecked = true;
+                    }
+                }
+                for (int i = 0; i < gdvVendor.Rows.Count; i++)
+                {
+                    if (gdvVendor.Rows[i].RowType == DataControlRowType.DataRow)
+                    {
+                        CheckBox chk = (CheckBox)gdvVendor.Rows[i].Cells[0].FindControl("chkCtrl");
+                        Label lblSupID = (Label)gdvVendor.Rows[i].FindControl("lblSupID");
+
+                        CheckBoxIndex = gdvVendor.PageSize * gdvVendor.PageIndex + (i + 1);
+                        if (chk.Checked)
+                        {
+                            if (CheckBoxArray.IndexOf(CheckBoxIndex) == -1 && !CheckAllWasChecked)
+                            {
+                                string ProdID = "ID " + CheckBoxIndex + "-" + lblSupID.Text;
+                                CheckBoxArray.Add(CheckBoxIndex);
+                                CheckBoxArray.Add(ProdID);
+                            }
+                        }
+                        else
+                        {
+                            if (CheckBoxArray.IndexOf(CheckBoxIndex) != -1 || CheckAllWasChecked)
+                            {
+                                string ProdID = "ID " + CheckBoxIndex + "-" + lblSupID.Text;
+                                CheckBoxArray.Remove(CheckBoxIndex);
+                                CheckBoxArray.Remove(ProdID);
+                            }
+                        }
+                    }
+                }
+                ViewState["CheckBoxArray"] = CheckBoxArray;
+            }
+        }
+
+        private void PopulatePreviousState()
+        {
+            if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true))
+            {
+                if (ViewState["CheckBoxArray"] != null)
+                {
+                    ArrayList CheckBoxArray = (ArrayList)ViewState["CheckBoxArray"];
+                    string checkAllIndex = "chkAll-" + gdvVendor.PageIndex;
+
+                    if (CheckBoxArray.IndexOf(checkAllIndex) != -1)
+                    {
+                        CheckBox chkAll = (CheckBox)gdvVendor.HeaderRow.Cells[0].FindControl("chkboxSelectAll");
+                        chkAll.Checked = true;
+                    }
+                    for (int i = 0; i < gdvVendor.Rows.Count; i++)
+                    {
+
+                        if (gdvVendor.Rows[i].RowType == DataControlRowType.DataRow)
+                        {
+                            if (CheckBoxArray.IndexOf(checkAllIndex) != -1)
+                            {
+                                CheckBox chk = (CheckBox)gdvVendor.Rows[i].Cells[0].FindControl("chkCtrl");
+                                chk.Checked = true;
+
+                            }
+                            else
+                            {
+                                int CheckBoxIndex = gdvVendor.PageSize * (gdvVendor.PageIndex) + (i + 1);
+                                if (CheckBoxArray.IndexOf(CheckBoxIndex) != -1)
+                                {
+                                    CheckBox chk = (CheckBox)gdvVendor.Rows[i].Cells[0].FindControl("chkCtrl");
+                                    chk.Checked = true;
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         protected void SelectMultipleVendor_Click(object sender, EventArgs e)
         {
             try
             {
-                Control ctl = this.Parent;
-                TextBox ltMetaTags = null;
-
-                Label lblVendorIds = (Label)ctl.FindControl("lblVendorIds");
-
-                ltMetaTags = (TextBox)ctl.FindControl("txtVendor");
-                GridView gvParentVendors = (GridView)ctl.FindControl("dgvVendors");
-                GridViewRow rows = gdvVendor.SelectedRow;
-                foreach (GridViewRow row in gdvVendor.Rows)
+                if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true))
                 {
-                    if (row.RowType == DataControlRowType.DataRow)
+                    SaveCurrentState();
+                    if (ViewState["CheckBoxArray"] != null)
                     {
-                        CheckBox chkRow = (row.Cells[0].FindControl("chkCtrl") as CheckBox);
-                        if (chkRow.Checked)
+                        int StoreId = Convert.ToInt32(Session["SystemId"].ToString());
+                        Control ctl = this.Parent;
+                        Label lbstoreId = (Label)ctl.FindControl("lblStoreId");
+                        ArrayList CheckBoxArray = (ArrayList)ViewState["CheckBoxArray"];
+
+                        foreach (var item in CheckBoxArray)
                         {
-                            lblVendorIds.Text = lblVendorIds.Text + row.Cells[8].Text + ",";
+                            if (item.ToString().Contains("ID"))
+                            {
+                                string[] key = item.ToString().Split('-');
+                                try
+                                {
+                                    if (connection.State == ConnectionState.Closed)
+                                    {
+                                        connection.Open();
+                                    }
+                                    SqlCommand command = new SqlCommand("sp_AddVendorsToStore", connection);
+                                    command.CommandType = CommandType.StoredProcedure;
 
+                                    command.Parameters.AddWithValue("@VendorId", int.Parse(key[1]));
+                                    command.Parameters.AddWithValue("@StoreId", StoreId );
+
+                                    command.ExecuteNonQuery();
+                                    connection.Close();
+                                    
+                                }
+                                catch (Exception ex)
+                                {
+                                      connection.Close();
+                                }
+
+                            }
                         }
+                       WebMessageBoxUtil.Show("Vendors have been successfully associated ");
+                        GridView gvParentVendors = (GridView)ctl.FindControl("dgvVendors");
+                        DataSet resultSet = new DataSet();
+
+                        SqlCommand comm = new SqlCommand("sp_GetStoredVendors", connection);
+                        comm.CommandType = CommandType.StoredProcedure;
+                        comm.Parameters.AddWithValue("@StoreId", StoreId);
+                        SqlDataAdapter SA = new SqlDataAdapter(comm);
+                        SA.Fill(resultSet);
+
+                        gvParentVendors.DataSource = resultSet;
+                        gvParentVendors.DataBind();
+
+                        connection.Close();
+                        gvParentVendors.Visible = true;
                     }
-                }
-                if (Session["SystemId"] != null)
-                {
-                    int StoreID = Convert.ToInt32(Session["SystemId"].ToString());
-                    string[] strVendorIds = lblVendorIds.Text.Split(',');
-                    foreach (string strVenId in strVendorIds)
-                    {
-                        int VendorId = strVenId != "" ? int.Parse(strVenId) : 0;
-                        if (VendorId > 0)
-                        {
-                            connection.Open();
-                            SqlCommand command = new SqlCommand("sp_AddVendorsToStore", connection);
-                            command.Parameters.AddWithValue("@VendorId", VendorId);
-                            command.Parameters.AddWithValue("@StoreId", StoreID);
 
-                            command.CommandType = CommandType.StoredProcedure;
-                            command.ExecuteNonQuery();
-                            connection.Close();
-                        }
-                    }
-                    DataSet resultSet = new DataSet();
+                    //    Control ctl2 = this.Parent;
+                    //    TextBox ltMetaTags = null;
 
-                    SqlCommand comm = new SqlCommand("sp_GetStoredVendors", connection);
-                    comm.CommandType = CommandType.StoredProcedure;
-                    comm.Parameters.AddWithValue("@StoreId", StoreID);
-                    SqlDataAdapter SA = new SqlDataAdapter(comm);
-                    SA.Fill(resultSet);
+                    //    Label lblVendorIds = (Label)ctl2.FindControl("lblVendorIds");
 
-                    gvParentVendors.DataSource = resultSet;
-                    gvParentVendors.DataBind();
+                    //    ltMetaTags = (TextBox)ctl2.FindControl("txtVendor");
 
-                    connection.Close();
-                    gvParentVendors.Visible = true;
+                    //    GridViewRow rows = gdvVendor.SelectedRow;
+                    //    foreach (GridViewRow row in gdvVendor.Rows)
+                    //    {
+                    //        if (row.RowType == DataControlRowType.DataRow)
+                    //        {
+                    //            CheckBox chkRow = (row.Cells[0].FindControl("chkCtrl") as CheckBox);
+                    //            if (chkRow.Checked)
+                    //            {
+                    //                lblVendorIds.Text = lblVendorIds.Text + row.Cells[8].Text + ",";
+
+                    //            }
+                    //        }
+                    //    }
+                    //    if (Session["SystemId"] != null)
+                    //    {
+                    //        int StoreID = Convert.ToInt32(Session["SystemId"].ToString());
+                    //        string[] strVendorIds = lblVendorIds.Text.Split(',');
+                    //        foreach (string strVenId in strVendorIds)
+                    //        {
+                    //            int VendorId = strVenId != "" ? int.Parse(strVenId) : 0;
+                    //            if (VendorId > 0)
+                    //            {
+                    //                connection.Open();
+                    //                SqlCommand command = new SqlCommand("sp_AddVendorsToStore", connection);
+                    //                command.Parameters.AddWithValue("@VendorId", VendorId);
+                    //                command.Parameters.AddWithValue("@StoreId", StoreID);
+
+                    //                command.CommandType = CommandType.StoredProcedure;
+                    //                command.ExecuteNonQuery();
+                    //                connection.Close();
+                    //            }
+                    //        }
+
+                    //    }
+                    //}
+                    //catch (Exception ex)
+                    //{
+
+                    //}
+                    //finally
+                    //{
+                    //    connection.Close();
+
+                    //}
                 }
             }
             catch (Exception ex)
@@ -217,7 +415,6 @@ namespace IMS.UserControl
                 connection.Close();
 
             }
-            
         }
     }
 }

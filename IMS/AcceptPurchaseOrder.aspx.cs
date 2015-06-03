@@ -325,7 +325,7 @@ namespace IMS
                         remQuan = remQuan - (recQuan + expQuan + defQuan+retQuan);
                     }
 
-                    if (txtCP < 0 || txtSP < 0) 
+                    if (txtCP <= 0 || txtSP <= 0) 
                     {
                         WebMessageBoxUtil.Show("Entered value cannot be negative");
                         StockDisplayGrid.EditIndex = -1;

@@ -12,13 +12,15 @@
         OnRowCommand="gdvVendor_RowCommand" OnRowDeleting="gdvVendor_RowDeleting" OnRowEditing="gdvVendor_RowEditing">
         <Columns>
            
-             <asp:TemplateField HeaderText="Action">
-                <ItemTemplate >
-                     
-                    <asp:CheckBox ID="chkCtrl" runat="server"  />
-                   
-                </ItemTemplate>
-            </asp:TemplateField>
+              <asp:TemplateField HeaderText="Action">
+                         <HeaderTemplate>
+                            <asp:CheckBox ID="chkboxSelectAll"  runat="server" onclick="CheckAllEmp(this);" />
+                        </HeaderTemplate>
+                        <ItemTemplate>
+                            <asp:CheckBox ID="chkCtrl" runat="server" />
+                        </ItemTemplate>
+             </asp:TemplateField>
+
             <asp:BoundField DataField="SupName" HeaderText="Vendor Name"   />
          
             <asp:TemplateField HeaderText="Address">
@@ -67,3 +69,11 @@
      <asp:Button ID="SelectMultipleVendor" runat="server" CssClass="btn btn-primary fl-r btn-sm" Text="Select" OnClick="SelectMultipleVendor_Click" />
  </div>
 </div>
+   <script type="text/javascript"  >
+       function CheckAllEmp(Checkbox) {
+           var GridVwHeaderChckbox = document.getElementById("<%=gdvVendor.ClientID %>");
+            for (i = 1; i < GridVwHeaderChckbox.rows.length; i++) {
+                GridVwHeaderChckbox.rows[i].cells[0].getElementsByTagName("INPUT")[0].checked = Checkbox.checked;
+            }
+        }
+    </script>

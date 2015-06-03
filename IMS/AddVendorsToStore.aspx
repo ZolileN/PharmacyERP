@@ -110,6 +110,11 @@
                                     <asp:Label ID="lblSupID" runat="server" Text='<%# Eval("SuppID") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
+                            <asp:TemplateField HeaderText="ID" Visible="false">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblStoreID" runat="server" Text='<%# Eval("StoreID") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
            
                         </Columns>
                         <PagerStyle CssClass="GridPager" />
