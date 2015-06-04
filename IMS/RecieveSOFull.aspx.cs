@@ -20,17 +20,18 @@ namespace IMS
         public DataSet ProductSet;
         public DataSet systemSet;
         public static bool FirstOrder;
+        public GridView innerGrid;
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
             {
                 BindGrid();
                 DisplaySODetailsLabels();
-                for (int id = 0; id < StockDisplayGrid.Rows.Count; id++)
-                {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "setExpiryDates(" + id + ");return false", "", true);
+                //for (int id = 0; id < innerGrid.Rows.Count; id++)
+                //{
 
-                }
+                //    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "script", "$(function () { setExpiryDates(" + id + ");return false });", true);
+                //}
             }
         }
 
@@ -141,14 +142,7 @@ namespace IMS
                 Button btnDetail = (Button)e.Row.FindControl("btnDetails");
                 Button btnDelete = (Button)e.Row.FindControl("btnDelete");
 
-                Label txtexpiry = (Label)e.Row.FindControl("dosage2");
-
-                DataRowView drv = (DataRowView)e.Row.DataItem;
-                int id = (int)e.Row.RowIndex;
-                
-                txtexpiry.Attributes.Add("OnLoad", "setExpiryDates(" + id + ");return false;");
-               // ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "script", "setExpiryDates(" + id + ");return false", true);
-                
+           
 
                 if (Status.Text.Equals("Complete") || Status.Text.Equals("Partial"))
                 {
@@ -212,7 +206,8 @@ namespace IMS
 
                 Label OrderDetailID = (Label)e.Row.FindControl("OrderDetailNo");
                 GridView Details = (GridView)e.Row.FindControl("StockDetailDisplayGrid");
-
+                innerGrid = Details;
+                innerGrid.RowDataBound += innerGrid_RowDataBound;
                 #region Display Requests
                 try
                 {
@@ -233,6 +228,11 @@ namespace IMS
                     Details.DataSource = null;
                     Details.DataSource = ds.Tables[0];
                     Details.DataBind();
+
+                    for (int i = 0; i < Details.Rows.Count; i++)
+                    {
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "script", "$(function () { setExpiryDates(" + i + ");return false });", true);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -248,6 +248,21 @@ namespace IMS
             }
 
 
+        }
+
+        void innerGrid_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowIndex >= 0)
+            {
+                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "script", "$(function () { setExpiryDates(" + e.Row.RowIndex + ");return false });", true);
+
+
+                Label lblExpiry = (Label)e.Row.FindControl("lblExpiryDate");
+
+                lblExpiry.Attributes.Add("OnDataBinding", "setExpiryDates(" + e.Row.RowIndex + ");return false;");
+
+                 
+            }
         }
 
         protected void btnAcceptAll_Click(object sender, EventArgs e)

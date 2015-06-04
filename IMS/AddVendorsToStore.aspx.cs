@@ -44,50 +44,47 @@ namespace IMS
 
         protected void dgvVendors_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName.Equals("Delete"))
-            {
-                int VendorId = int.Parse(((Label)dgvVendors.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblSupID")).Text);
-                int StoreId = int.Parse(((Label)dgvVendors.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblStoreID")).Text);
-                connection.Open();
-                
-                SqlCommand command3 = new SqlCommand("sp_DeleteFromtblVendors_Store", connection);
-                command3.CommandType = CommandType.StoredProcedure;
-                command3.Parameters.AddWithValue("@VendorID", VendorId);
-                command3.Parameters.AddWithValue("@StoreID", StoreId);
-                command3.ExecuteNonQuery();
-
-                DataSet resultSet = new DataSet();
-
-                SqlCommand comm = new SqlCommand("sp_GetStoredVendors", connection);
-                comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@StoreId", StoreId);
-                SqlDataAdapter SA = new SqlDataAdapter(comm);
-                SA.Fill(resultSet);
-
-                dgvVendors.DataSource = resultSet;
-                dgvVendors.DataBind();
-
-                connection.Close();
-                dgvVendors.Visible = true;
-                 
-            }
+           
         }
 
+        private void BidGrid()
+        {
+            DataSet resultSet = new DataSet();
+            int StoreId = int.Parse(Session["SystemId"].ToString());
+            SqlCommand comm = new SqlCommand("sp_GetStoredVendors", connection);
+            comm.CommandType = CommandType.StoredProcedure;
+            comm.Parameters.AddWithValue("@StoreId", StoreId);
+            SqlDataAdapter SA = new SqlDataAdapter(comm);
+            SA.Fill(resultSet);
+
+            dgvVendors.DataSource = resultSet;
+            dgvVendors.DataBind();
+        }
         protected void dgvVendors_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
+            int VendorId = int.Parse(((Label)dgvVendors.Rows[e.RowIndex].FindControl("lblSupID")).Text);
+            int StoreId = int.Parse(((Label)dgvVendors.Rows[e.RowIndex].FindControl("lblStoreID")).Text);
+            connection.Open();
 
+            SqlCommand command3 = new SqlCommand("sp_DeleteFromtblVendors_Store", connection);
+            command3.CommandType = CommandType.StoredProcedure;
+            command3.Parameters.AddWithValue("@VendorID", VendorId);
+            command3.Parameters.AddWithValue("@StoreID", StoreId);
+            command3.ExecuteNonQuery();
+
+            BidGrid();
+
+            connection.Close();
+            dgvVendors.Visible = true;
         }
 
         protected void dgvVendors_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             dgvVendors.PageIndex = e.NewPageIndex;
 
-        }
-        
-        private void BindData()
-        {
+            BidGrid();
 
         }
-
+         
     }
 }

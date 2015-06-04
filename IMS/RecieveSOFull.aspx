@@ -223,7 +223,7 @@
 
                                     <asp:TemplateField HeaderText="Expiry Date"  >
                                         <ItemTemplate>
-                                            <asp:Label ID="lblExpiryDate"  runat="server" Text='<%# Eval("ExpiryDate")==DBNull.Value?"":Convert.ToDateTime( Eval("ExpiryDate")).ToString("MMM dd ,yyyy") %>'  ></asp:Label>
+                                            <asp:Label ID="lblExpiryDate"   runat="server" Text='<%# Eval("ExpiryDate")==DBNull.Value?"":Convert.ToDateTime( Eval("ExpiryDate")).ToString("MMM dd ,yyyy") %>'  ></asp:Label>
                                         </ItemTemplate>
                                         <ItemStyle   HorizontalAlign="Left" />
 
@@ -266,21 +266,36 @@
 
     <script type="text/javascript">
         
-        function setExpiryDates(id)
-        {
-            alert(id);
-            var ex = document.getElementById("MainContent_StockDisplayGrid_StockDetailDisplayGrid_0_lblExpiryDate_0");
-            var expiry = document.getElementById("MainContent_StockDisplayGrid_StockDetailDisplayGrid_0_lblExpiryDate_0").innerHTML;
-            var abc = expiry.replace(',', ' ');
-            var date1 = new Date(abc);
-            var date2 = new Date();
+        function setExpiryDates(inner) {
+            inner = inner + 1;
+             var count = document.getElementById("MainContent_StockDisplayGrid").getElementsByTagName("tr").length;
+             
+            
+            for (var i = 0; i <= count-1 ; i++) {
 
-            var timeDiff = Math.abs(date2.getTime() - date1.getTime());
-            var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                var innerid = "MainContent_StockDisplayGrid_StockDetailDisplayGrid_" + i;
+                var tblDetailsGrid = document.getElementById(innerid).getElementsByTagName("tr").length;
+                for (var j = 0; j < tblDetailsGrid-1 ; j++) {
 
-            if (diffDays <= 90) {
-                ex.style.color = "red";
+
+                    var id = "MainContent_StockDisplayGrid_StockDetailDisplayGrid_" + i + "_lblExpiryDate_" + j;
+                    var ex = document.getElementById(id);
+                    
+                    var expiry = document.getElementById(id).innerHTML;
+                    var abc = expiry.replace(',', ' ');
+                    var date1 = new Date(abc);
+                    var date2 = new Date();
+
+                    var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+                    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+                    if (diffDays <= 90) {
+                        ex.style.color = "red";
+                    }
+                }
+                
             }
+
 
         }
        
