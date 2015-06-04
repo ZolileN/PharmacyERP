@@ -22,6 +22,7 @@ namespace IMS
             {
                 BindLabels(true);
                 BindGrid();
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "script", "$(function () { CheckExpiry(" + 0 + ");return false });", true);
             }
         }
 
@@ -659,7 +660,15 @@ namespace IMS
 
         protected void StockDisplayGrid_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                TextBox txtReturnedQuantity = (TextBox)e.Row.FindControl("txtAddExpDate");
+                if (txtReturnedQuantity!= null)
+                {
+                    txtReturnedQuantity.Attributes.Add("onselect", "CheckExpiry(" + e.Row.RowIndex + ");return false;");
 
+                }
+            }
         }
 
         protected void StockDisplayGrid_RowEditing(object sender, GridViewEditEventArgs e)

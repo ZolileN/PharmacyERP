@@ -111,7 +111,7 @@
                             <asp:LinkButton  ID="btnCancel" CssClass="btn btn-default btn-sm" Text="Cancel" runat="server" CommandName="Cancel" />
                         </EditItemTemplate>
                           <FooterTemplate>
-                            <asp:Button ID="btnAddRecord" CssClass="btn btn-primary btn-sm"  runat="server" Text="Save" CommandName="AddRec"></asp:Button>
+                            <asp:Button ID="btnAddRecord" CssClass="btn btn-primary btn-sm"  runat="server" Text="Save" OnClientClick="return CheckExpiry();" CommandName="AddRec"></asp:Button>
                         </FooterTemplate>
                     </asp:TemplateField>
 
@@ -318,7 +318,7 @@
 
     <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-               
+                
             </div>
         </div>
     </div>
@@ -331,6 +331,23 @@
                   $(".clDate").datepicker();
               });
               $(function () { $("[id$=MainContent_StockDisplayGrid_txtAddExpDate]").datepicker(); });
+
+              function CheckExpiry( ) {
+                   
+
+                  var index = "MainContent_StockDisplayGrid_txtAddExpDate";
+                  var expirydate = document.getElementById(index).value;
+                  var date1 = new Date(expirydate);
+                  var date2 = new Date();
+                  var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+                  var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+                  if (diffDays <= 90) {
+                      alert("Expiry for this stock is less than 90 days");
+                     
+                  }
+              }
+              
           </script>
 </asp:Content>
 
