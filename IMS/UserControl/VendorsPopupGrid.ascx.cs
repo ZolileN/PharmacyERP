@@ -44,11 +44,31 @@ namespace IMS.UserControl
                     int id;
                     if (int.TryParse(Session["UserSys"].ToString(), out id))
                     {
-                        String Query = "Select * FROM tblVendor Where  SupName Like '" + Session["txtVendor"].ToString() + "'";
-
-                        connection.Open();
-                        SqlCommand command = new SqlCommand(Query, connection);
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
+                        SqlCommand command = new SqlCommand("dbo.Sp_GetVendorByName", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        if (Session["Text"] != null)
+                        {
+                            command.Parameters.AddWithValue("@p_Supp_Name", Session["Text"].ToString());
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@p_Supp_Name", DBNull.Value);
+                        }
+                        command.Parameters.AddWithValue("@p_SysID", id);
+                        if (!Session["UserRole"].ToString().Equals("Store"))
+                        {
+                            command.Parameters.AddWithValue("@p_isStore", false);
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@p_isStore", true);
+                        }
                         SqlDataAdapter SA = new SqlDataAdapter(command);
+
                         ProductSet = null;
                         SA.Fill(ds);
                         
@@ -69,12 +89,42 @@ namespace IMS.UserControl
         }
         private void BindGrid()
         {
-            ds = VendorBLL.GetAllVendors(connection);
-            ProductSet = ds;
-            gdvVendor.DataSource = null;
-            gdvVendor.DataSource = ds;
-            gdvVendor.DataBind();
-             
+            int id;
+            if (int.TryParse(Session["UserSys"].ToString(), out id))
+            {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("dbo.Sp_GetVendorByName", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                if (Session["Text"] != null)
+                {
+                    command.Parameters.AddWithValue("@p_Supp_Name", Session["Text"].ToString());
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@p_Supp_Name", DBNull.Value);
+                }
+                command.Parameters.AddWithValue("@p_SysID", id);
+                if (!Session["UserRole"].ToString().Equals("Store"))
+                {
+                    command.Parameters.AddWithValue("@p_isStore", false);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@p_isStore", true);
+                }
+                SqlDataAdapter SA = new SqlDataAdapter(command);
+
+                ProductSet = null;
+                SA.Fill(ds);
+
+                ProductSet = ds;
+                gdvVendor.DataSource = null;
+                gdvVendor.DataSource = ds;
+                gdvVendor.DataBind();
+            } 
         }
 
         protected void gdvVendor_RowDataBound(object sender, GridViewRowEventArgs e)

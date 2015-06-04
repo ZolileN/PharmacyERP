@@ -43,7 +43,14 @@ namespace IMS.UserControl
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@p_prodName", Session["Text"].ToString());
                         command.Parameters.AddWithValue("@p_SysID", id);
-
+                        if (!Session["UserRole"].ToString().Equals("Store"))
+                        {
+                            command.Parameters.AddWithValue("@p_isStore", false);
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@p_isStore", true);
+                        }
                         SqlDataAdapter SA = new SqlDataAdapter(command);
 
                         SA.Fill(ds2);
@@ -83,7 +90,14 @@ namespace IMS.UserControl
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_prodName", DBNull.Value);
                     command.Parameters.AddWithValue("@p_SysID", id);
-
+                    if (!Session["UserRole"].ToString().Equals("Store"))
+                    {
+                        command.Parameters.AddWithValue("@p_isStore", false);
+                    }
+                    else 
+                    {
+                        command.Parameters.AddWithValue("@p_isStore", true);
+                    }
                     SqlDataAdapter SA = new SqlDataAdapter(command);
 
                     SA.Fill(ds2);

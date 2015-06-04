@@ -70,26 +70,40 @@ namespace IMS.UserControl
                     int id;
                     if (int.TryParse(Session["UserSys"].ToString(), out id))
                     {
-                        String Query = "Select * FROM tbl_ProductMaster Where Status = 1 and Product_Name Like '" + Session["Text"].ToString() + "'";
+                       
+                            // String Query = "Select * FROM tbl_ProductMaster Where Status = 1 and Product_Name Like '" + Session["Text"].ToString() + "'";
+                            if (connection.State == ConnectionState.Closed)
+                            {
+                                connection.Open();
+                            }
+                            SqlCommand command = new SqlCommand("dbo.Sp_GetProductByName", connection);
+                            command.CommandType = CommandType.StoredProcedure;
+                            if (Session["Text"] != null)
+                            {
+                                command.Parameters.AddWithValue("@p_prodName", Session["Text"].ToString());
+                            }
+                            else
+                            {
+                                command.Parameters.AddWithValue("@p_prodName", DBNull.Value);
+                            }
+                            SqlDataAdapter SA = new SqlDataAdapter(command);
 
-                        connection.Open();
-                        SqlCommand command = new SqlCommand(Query, connection);
-                        SqlDataAdapter SA = new SqlDataAdapter(command);
-                        ProductSet = null;
-                        SA.Fill(ds);
-                        Session["dsProducts_PopUp"] = ds;
-                        ProductSet = ds;
-                        StockDisplayGrid.DataSource = ds;
-                        StockDisplayGrid.DataBind();
-                        PopulatePreviousState();
-                       
-                        if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
-                        {
-                            ((CheckBox)StockDisplayGrid.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
-                            ViewState["checkAllState"] = true;
-                        }
+
+                            SA.Fill(ds);
+                            Session["dsProducts_PopUp"] = ds;
+                            ProductSet = ds;
+                            StockDisplayGrid.DataSource = ds;
+                            StockDisplayGrid.DataBind();
+                            PopulatePreviousState();
+
+                            if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
+                            {
+                                ((CheckBox)StockDisplayGrid.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                                ViewState["checkAllState"] = true;
+                            }
+
+
                         
-                       
                     }
 
                 }
@@ -114,12 +128,23 @@ namespace IMS.UserControl
                 int id;
                 if (int.TryParse(Session["UserSys"].ToString(), out id))
                 {
-                    String Query = "Select * FROM tbl_ProductMaster Where Status = 1";
-
-                    connection.Open();
-                    SqlCommand command = new SqlCommand(Query, connection);
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
+                    SqlCommand command = new SqlCommand("dbo.Sp_GetProductByName", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    if (Session["Text"] != null)
+                    {
+                        command.Parameters.AddWithValue("@p_prodName", Session["Text"].ToString());
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_prodName", DBNull.Value);
+                    }
                     SqlDataAdapter SA = new SqlDataAdapter(command);
-                    ProductSet = null;
+
+
                     SA.Fill(ds);
                     Session["dsProducts_PopUp"] = ds;
                     ProductSet = ds;
