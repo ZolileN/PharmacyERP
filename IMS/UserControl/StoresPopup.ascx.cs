@@ -36,12 +36,16 @@ namespace IMS.UserControl
                 int id;
                 if (int.TryParse(Session["UserSys"].ToString(), out id))
                 {
-                    String Query = "Select * FROM tbl_System Where Status = 1";
-
-                    connection.Open();
-                    SqlCommand command = new SqlCommand(Query, connection);
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
+                    SqlCommand command = new SqlCommand("dbo.Sp_GetSystems_ByRoles", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@p_systemName", DBNull.Value);
+                    command.Parameters.AddWithValue("@p_RoleName", "Store");
                     SqlDataAdapter SA = new SqlDataAdapter(command);
-                    ProductSet = null;
+
                     SA.Fill(ds);
                     Session["dsStoresPopup"] = ds;
                     ProductSet = ds;
@@ -72,10 +76,23 @@ namespace IMS.UserControl
                     int id;
                     if (int.TryParse(Session["UserSys"].ToString(), out id))
                     {
-                        String Query = "Select * FROM tbl_System Where SystemName Like '" + Session["txtStore"].ToString() + "'";
+                       // String Query = "Select * FROM tbl_System Where SystemName Like '" + Session["txtStore"].ToString() + "'";
 
-                        connection.Open();
-                        SqlCommand command = new SqlCommand(Query, connection);
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
+                        SqlCommand command = new SqlCommand("dbo.Sp_GetSystems_ByRoles", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        if (Session["txtStore"] == null)
+                        {
+                            command.Parameters.AddWithValue("@p_systemName", DBNull.Value);
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@p_systemName", Session["txtStore"].ToString()); 
+                        }
+                        command.Parameters.AddWithValue("@p_RoleName", "Store");
                         SqlDataAdapter SA = new SqlDataAdapter(command);
                         ProductSet = null;
                         SA.Fill(ds);
