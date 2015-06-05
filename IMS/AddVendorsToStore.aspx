@@ -1,11 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddVendorsToStore.aspx.cs" Inherits="IMS.AddVendorsToStore" %>
 
 <%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="cc1" %>
-<%--<%@ Register Src="~/UserControl/VendorsPopupGrid.ascx" TagPrefix="ucVendorsPopup" TagName="VendorsPopupGrid" %>--%>
+ 
 <%@ Register Src="~/UserControl/MultipleVendorsSelectPopup.ascx" TagPrefix="ucVendorsPopup" TagName="VendorsPopupGrid" %>
 
- 
-<%--<%@ Register TagName="MultipleVendorsSelectPopup" TagPrefix="uc1" Src="~/UserControl/MultipleVendorsSelectPopup.ascx"%>--%>
+
+<%--<%@ Register Src="~/UserControl/AssociatedVendorsPopup.ascx" TagPrefix="ucVendorsPopups" TagName="AssociatedVendorsPopup" %>--%>
+
+
+
 
  
 
@@ -39,15 +42,34 @@
                <asp:Button ID="btnSearch" runat="server" CssClass="search-btn getProducts" OnClick="btnSearch_Click" />
 
                <asp:Label ID="lblVendorIds" runat="server" Visible="false"></asp:Label>
-
-           </td>
-           <td>
-          
-           	   <div id="_CongratsMessageDiv" class="congrats-cont" style="display: none; ">
+                <div id="_CongratsMessageDiv" class="congrats-cont" style="display: none; ">
                          <ucVendorsPopup:VendorsPopupGrid runat="server" id="MultipleVendorsSelectPopup" />
               
                         </div> 
            </td>
+           <td>
+                <label id="lblSelectVendorAsStore" runat="server" >Select Vendor as Store</label>
+           	  
+           </td>
+               <td>
+                   
+                   <asp:DropDownList ID="ddlStoreVendors" runat="server"  OnSelectedIndexChanged="ddlStoreVendors_SelectedIndexChanged" >
+                   </asp:DropDownList>
+                   
+                      <asp:Button ID="btnShow" runat="server" Text="Show Vendors" CssClass="btn btn-default btn-large" OnClick="btnShow_Click"/>
+                   
+               </td>
+               <%--<div id="AssociatedVendorsGrid" style="display:none;">
+                       <ucVendorsPopups:AssociatedVendorsPopup runat="server" id="AssociatedVendorsPopup" />
+
+                       <cc1:ModalPopupExtender ID="mpeAssociatedVendorsGrid" runat="server" BackgroundCssClass="overLaypop"
+                       RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="lblSelectVendorAsStore" ClientIDMode="AutoID"
+                       PopupControlID="AssociatedVendorsGrid" BehaviorID="EditModalPopupMessage" >
+                    </cc1:ModalPopupExtender>
+
+ 
+                   </div>--%>
+
             <cc1:ModalPopupExtender ID="mpeCongratsMessageDiv" runat="server" BackgroundCssClass="overLaypop"
                        RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="lblSelectVendor" ClientIDMode="AutoID"
                        PopupControlID="_CongratsMessageDiv" BehaviorID="EditModalPopupMessage" >

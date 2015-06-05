@@ -22,6 +22,7 @@ namespace IMS.UserControl
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
         bool selectAll = false;
+        public int Storeid;
 
         public bool SelectAll
         {
@@ -323,20 +324,20 @@ namespace IMS.UserControl
                                     command.CommandType = CommandType.StoredProcedure;
 
                                     command.Parameters.AddWithValue("@VendorId", int.Parse(key[1]));
-                                    command.Parameters.AddWithValue("@StoreId", StoreId );
+                                    command.Parameters.AddWithValue("@StoreId", StoreId);
 
                                     command.ExecuteNonQuery();
                                     connection.Close();
-                                    
+
                                 }
                                 catch (Exception ex)
                                 {
-                                      connection.Close();
+                                    connection.Close();
                                 }
 
                             }
                         }
-                       WebMessageBoxUtil.Show("Vendors have been successfully associated ");
+                        WebMessageBoxUtil.Show("Vendors have been successfully associated ");
                         GridView gvParentVendors = (GridView)ctl.FindControl("dgvVendors");
                         DataSet resultSet = new DataSet();
 
@@ -352,6 +353,8 @@ namespace IMS.UserControl
                         connection.Close();
                         gvParentVendors.Visible = true;
                     }
+                }
+                
 
                     //    Control ctl2 = this.Parent;
                     //    TextBox ltMetaTags = null;
@@ -405,7 +408,7 @@ namespace IMS.UserControl
 
                     //}
                 }
-            }
+          
             catch (Exception ex)
             {
 
@@ -415,6 +418,39 @@ namespace IMS.UserControl
                 connection.Close();
 
             }
+        }
+
+        public void BindAssociatedVendorGrid(int StoreId)
+        {
+            try
+            {
+                connection.Open();
+                DataSet resultSet = new DataSet();
+
+                SqlCommand comm = new SqlCommand("sp_GetStoredVendors", connection);
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@StoreId", StoreId);
+                SqlDataAdapter SA = new SqlDataAdapter(comm);
+                SA.Fill(resultSet);
+
+                gdvVendor.DataSource = resultSet;
+                gdvVendor.DataBind();
+
+                if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
+                {
+                    ((CheckBox)gdvVendor.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                    ViewState["checkAllState"] = true;
+                }
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                connection.Close();
+            }
+             
         }
     }
 }

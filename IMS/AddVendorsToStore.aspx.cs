@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IMSCommon.Util;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -21,15 +22,68 @@ namespace IMS
                 if (Session["Storename"] != null)
                 {
                     spnStoreName.InnerHtml = Session["Storename"].ToString();
-                     
+                    BindGrid();
+                    PopulateStoreDropDown();
                 }
             }
             
         }
 
+        
+
+        private void PopulateStoreDropDown()
+        {
+            #region Populating Product Name Dropdown
+
+            try
+            {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+
+                SqlCommand command = new SqlCommand("sp_getOutsideStoresHavingVendors", connection); 
+                DataSet ds = new DataSet();
+                SqlDataAdapter sA = new SqlDataAdapter(command);
+                sA.Fill(ds);
+                if (ds.Tables[0].Rows.Count.Equals(0))
+                {
+                    
+                }
+                if (ddlStoreVendors.DataSource != null)
+                {
+                    ddlStoreVendors.DataSource = null;
+                }
+
+                ProductSet = null;
+                ProductSet = ds;
+
+                ddlStoreVendors.DataSource = ds.Tables[0];
+                ddlStoreVendors.DataTextField = "SystemName";
+                ddlStoreVendors.DataValueField = "SystemID";
+                ddlStoreVendors.DataBind();
+                if (ddlStoreVendors != null)
+                {
+                    ddlStoreVendors.Items.Insert(0, "Select Vendor");
+                    ddlStoreVendors.SelectedIndex = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                connection.Close();
+            }
+            #endregion
+        }
+
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("SelectStore.aspx");
+            Session.Remove("SystemId");
+            Session.Remove("Storename");
+            Response.Redirect("SelectStores.aspx");
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
@@ -47,7 +101,7 @@ namespace IMS
            
         }
 
-        private void BidGrid()
+        private void BindGrid()
         {
             DataSet resultSet = new DataSet();
             int StoreId = int.Parse(Session["SystemId"].ToString());
@@ -72,7 +126,7 @@ namespace IMS
             command3.Parameters.AddWithValue("@StoreID", StoreId);
             command3.ExecuteNonQuery();
 
-            BidGrid();
+            BindGrid();
 
             connection.Close();
             dgvVendors.Visible = true;
@@ -82,8 +136,27 @@ namespace IMS
         {
             dgvVendors.PageIndex = e.NewPageIndex;
 
-            BidGrid();
+            BindGrid();
 
+        }
+
+        protected void ddlStoreVendors_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        protected void btnShow_Click(object sender, EventArgs e)
+        {
+            int StoreId = int.Parse(ddlStoreVendors.SelectedValue.ToString());
+            if (StoreId > 0)
+            {
+                MultipleVendorsSelectPopup.SelectAll = true;
+                MultipleVendorsSelectPopup.Storeid = StoreId;
+                MultipleVendorsSelectPopup.BindAssociatedVendorGrid(StoreId);
+
+                mpeCongratsMessageDiv.Show();
+            }
+             
         }
          
     }
