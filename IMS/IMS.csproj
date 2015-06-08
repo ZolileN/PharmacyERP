@@ -266,6 +266,7 @@
     <Content Include="Reports.aspx" />
     <Content Include="Result.aspx" />
     <Content Include="SalemanMangment.aspx" />
+    <Content Include="SalesmanManagement.aspx" />
     <Content Include="SalesOrderInvoice.aspx" />
     <Content Include="SalesOrderInvoicePrint.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -365,6 +366,7 @@
     <Content Include="UserControl\uc_printBarcode.ascx" />
     <Content Include="UserControl\uc_Select_System.ascx" />
     <Content Include="UserControl\VendorsPopupGrid.ascx" />
+    <Content Include="UserStoreManagment.aspx" />
     <Content Include="VendorsPopup.aspx" />
     <Content Include="ViewInventory.aspx" />
     <Content Include="ViewPackingList.aspx" />
@@ -840,6 +842,13 @@
     <Compile Include="SalemanMangment.aspx.designer.cs">
       <DependentUpon>SalemanMangment.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SalesmanManagement.aspx.cs">
+      <DependentUpon>SalesmanManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SalesmanManagement.aspx.designer.cs">
+      <DependentUpon>SalesmanManagement.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SalesOrderInvoice.aspx.cs">
       <DependentUpon>SalesOrderInvoice.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1008,6 +1017,13 @@
     </Compile>
     <Compile Include="UserControl\VendorsPopupGrid.ascx.designer.cs">
       <DependentUpon>VendorsPopupGrid.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserStoreManagment.aspx.cs">
+      <DependentUpon>UserStoreManagment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserStoreManagment.aspx.designer.cs">
+      <DependentUpon>UserStoreManagment.aspx</DependentUpon>
     </Compile>
     <Compile Include="VendorsPopup.aspx.cs">
       <DependentUpon>VendorsPopup.aspx</DependentUpon>

@@ -3,10 +3,21 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="form-horizontal">
-
-        <div><h3>Salesman</h3></div>
-        <table cellspacing="0" cellpadding="5" border="0" width="100%" class="formTbl">
+    
+        <table width="100%">
+            <tr><td>
+            <h4>Salesman Management</h4>
+            </td>
+            <td align="right"> 
+                <asp:Button ID="btnAddSalesman" runat="server" Text="+ Add Salesman" CssClass="btn btn-success btn-large" OnClick="btnAddSalesman_Click" />
+                <asp:Button ID="btnGoBack" runat="server" Text="Go Back" CssClass="btn btn-default btn-large" OnClick="btnGoBack_Click" />   
+				         
+                 </td>
+                        </tr>
+                        <tr><td height="5"></td></tr>
+                        </table>
+            <hr>
+        <%--<table cellspacing="0" cellpadding="5" border="0" width="100%" class="formTbl">
             <tr>
                 <td>
                     <asp:Label runat="server" AssociatedControlID="UserName" CssClass=" control-label">Name</asp:Label>
@@ -62,17 +73,10 @@
                 <td><asp:Button ID="btnAddNew" runat="server" Text="Add New Salesman" CssClass="btn btn-primary" OnClick="btnAddNew_Click" /></td>
             </tr>
 
-        </table>
+        </table>--%>
 
 
-
-
-
-
-
-
-
-    </div>
+     
 
     <asp:GridView ID="SalemanDisplayGrid" CssClass="table table-striped table-bordered table-condensed" runat="server" AllowPaging="True" PageSize="10"
         AutoGenerateColumns="false"  OnRowEditing=" SalemanDisplayGrid_RowEditing" OnRowUpdating="SalemanDisplayGrid_RowUpdating" OnRowDeleting="SalemanDisplayGrid_RowDeleting" OnPageIndexChanging="SalemanDisplayGrid_PageIndexChanging" OnRowCancelingEdit="SalemanDisplayGrid_RowCancelingEdit">

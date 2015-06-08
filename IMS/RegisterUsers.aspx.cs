@@ -180,6 +180,7 @@ namespace IMS
                 //lstName.Text = "";
                 //Address.Text = "";
                 //ContactNo.Text = "";
+                Response.Redirect("SalemanMangment.aspx");
                 btnAssociatedStore.Visible = true;
                 btnAddEmployee.Visible = false;
                 btnSave.Visible = true;
@@ -253,6 +254,7 @@ namespace IMS
             {
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert(''" + Errormessage + "'')", true);
             }
+            Response.Redirect("SalemanMangment.aspx");
         }
 
         protected void btnAssociatedStore_Click(object sender, EventArgs e)

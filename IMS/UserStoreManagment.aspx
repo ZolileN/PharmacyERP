@@ -9,7 +9,7 @@
         <tr>
             <td>
                 <asp:GridView ID="gvAllAvailableStore" CssClass="table table-striped table-bordered table-condensed" ShowHeaderWhenEmpty="true" runat="server" AllowPaging="True" PageSize="10"
-                    AutoGenerateColumns="false" OnRowCommand="gvAllAvailableStore_RowCommand">
+                    AutoGenerateColumns="false" OnRowCommand="gvAllAvailableStore_RowCommand" OnPageIndexChanging="gvAllAvailableStore_PageIndexChanging">
                     <Columns>
                         <asp:TemplateField HeaderText="System ID" Visible="false">
                             <ItemTemplate>

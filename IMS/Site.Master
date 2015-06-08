@@ -400,6 +400,16 @@
 
                             	</ul>
                             </li>
+                        <li><a href="#">Miscellaneous</a>
+                                                    
+                                 <ul>
+                                  
+                                    <li><a href="#">Manage Warehouse</a></li>
+                                    <li><a href="#">Manage Store</a></li>									 
+                                    <li><a href="SalemanMangment.aspx">Manage Salesman</a></li>
+                                     
+                               </ul>
+                            </li>
 	                    </ul>
             </asp:Literal>
             <asp:Literal runat="server" ID="storeNav">

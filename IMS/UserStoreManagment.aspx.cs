@@ -295,5 +295,11 @@ namespace IMS
             string ID = Request.QueryString["ID"];
             Response.Redirect("RegisterUsers.aspx?ID=" + ID);
         }
+
+        protected void gvAllAvailableStore_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvAllAvailableStore.PageIndex = e.NewPageIndex;
+            BindGrid();
+        }
     }
 }
