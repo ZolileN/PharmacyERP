@@ -139,7 +139,7 @@
                                             
                                             <li class="hasChild"><a href="#">Auto PO</a>
                                             <ul>
-                                                <li><a href="#">Replenish (Movement)</a></li>
+                                                <li><a href="ReplenishMain.aspx">Replenish (Movement)</a></li>
                                                 <li><a href="#">Replenish (Calculation)</a></li>
                                             </ul>
                                             </li>

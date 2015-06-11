@@ -262,6 +262,8 @@
     <Content Include="RecieveSOFull.aspx" />
     <Content Include="RecieveSOFullEdit.aspx" />
     <Content Include="RegisterUsers.aspx" />
+    <Content Include="ReplenishMain.aspx" />
+    <Content Include="ReplenishMovement.aspx" />
     <Content Include="ReportFormat_simple.aspx" />
     <Content Include="Reports.aspx" />
     <Content Include="Result.aspx" />
@@ -813,6 +815,20 @@
     </Compile>
     <Compile Include="RegisterUsers.aspx.designer.cs">
       <DependentUpon>RegisterUsers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReplenishMain.aspx.cs">
+      <DependentUpon>ReplenishMain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReplenishMain.aspx.designer.cs">
+      <DependentUpon>ReplenishMain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReplenishMovement.aspx.cs">
+      <DependentUpon>ReplenishMovement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReplenishMovement.aspx.designer.cs">
+      <DependentUpon>ReplenishMovement.aspx</DependentUpon>
     </Compile>
     <Compile Include="ReportFormat_simple.aspx.cs">
       <DependentUpon>ReportFormat_simple.aspx</DependentUpon>
