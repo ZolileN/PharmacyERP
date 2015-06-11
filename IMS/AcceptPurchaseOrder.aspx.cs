@@ -166,20 +166,32 @@ namespace IMS
         }
         private void SetSessionValues(int RowIndex) 
         {
-            int ordetID = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblOrdDet_id")).Text);
+            int ordetID = 0;
+            int.TryParse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblOrdDet_id")).Text, out ordetID);
 
-            int remQuan = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblRemainQuan")).Text);
-            int orderedQuantity = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblQuantity")).Text);
-            int bonusOrg = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblBonusOrg")).Text);
-            int recQuan = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblRecQuan")).Text);
-            int expQuan = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblExpQuan")).Text);
-            int defQuan = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblDefQuan")).Text);
-            int retQuan = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblRetQuan")).Text);
-            int barSerial = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblBrSerial")).Text);
-            int OrderedMasterID = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblOrdMs_id")).Text);
-            int ProdID = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblProd_id")).Text);
+            int remQuan = 0;
+            int.TryParse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblRemainQuan")).Text, out remQuan);
+            int orderedQuantity = 0;
+            int.TryParse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblQuantity")).Text,out orderedQuantity);
+            int bonusOrg = 0;
+            int.TryParse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblBonusOrg")).Text,out bonusOrg);
+            int recQuan = 0;
+            int.TryParse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblRecQuan")).Text,out recQuan);
+            int expQuan = 0;
+            int.TryParse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblExpQuan")).Text,out expQuan);
+            int defQuan = 0;
+            int.TryParse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblDefQuan")).Text,out defQuan);
+            int retQuan = 0;
+            int.TryParse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblRetQuan")).Text,out retQuan);
+            int barSerial = 0;
+            int.TryParse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblBrSerial")).Text,out barSerial);
+            int OrderedMasterID = 0;
+            int.TryParse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblOrdMs_id")).Text,out OrderedMasterID);
+            int ProdID = 0;
+            int.TryParse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblProd_id")).Text,out ProdID);
             String prodDescription = ((Label)StockDisplayGrid.Rows[RowIndex].FindControl("ProductName2")).Text;
-            int orderedBonusQuan = int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblOrderedBonus")).Text);
+            int orderedBonusQuan = 0;
+            int.TryParse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblOrderedBonus")).Text,out orderedBonusQuan);
             Decimal orgCp=Decimal.Round(Decimal.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblCP")).Text),2);
             Decimal orgSp=Decimal.Round(Decimal.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblSP")).Text),2);
             Session["ordetailID"] = ordetID;
@@ -343,7 +355,7 @@ namespace IMS
                     if (orderedQuantity >= (recQuan + expQuan + defQuan + retQuan))
                     {
                         #region query execution
-                        int requesteeID = int.Parse(Session["RequestDesID"].ToString());
+                      //  int requesteeID = int.Parse(Session["RequestDesID"].ToString());
                         connection.Open();
                         SqlCommand command = new SqlCommand("Sp_StockReceiving", connection);
                         command.CommandType = CommandType.StoredProcedure;
