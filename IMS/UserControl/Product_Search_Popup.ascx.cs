@@ -547,13 +547,26 @@ namespace IMS.UserControl
                                     int id;
                                     if (int.TryParse(Session["UserSys"].ToString(), out id))
                                     {
-                                        String Query = "Select * FROM tbl_ProductMaster Where Status = 1 and Product_Name Like '" + ltMetaTags.Text + "'";
+                                        //String Query = "Select * FROM tbl_ProductMaster Where Status = 1 and Product_Name Like '" + ltMetaTags.Text + "'";
 
-                                        connection.Open();
-                                        SqlCommand command = new SqlCommand(Query, connection);
+                                        
+                                        if (connection.State == ConnectionState.Closed)
+                                        {
+                                            connection.Open();
+                                        }
+                                        SqlCommand command = new SqlCommand("dbo.Sp_GetProductByName", connection);
+                                        command.CommandType = CommandType.StoredProcedure;
+                                        if (Session["Text"] != null)
+                                        {
+                                            command.Parameters.AddWithValue("@p_prodName", ltMetaTags.Text);
+                                        }
+                                        else
+                                        {
+                                            command.Parameters.AddWithValue("@p_prodName", DBNull.Value);
+                                        }
                                         SqlDataAdapter SA = new SqlDataAdapter(command);
-                                        ProductSet = null;
-                                        gvParent.DataSource = null;
+
+
                                         SA.Fill(ds);
                                         Session["dsProducts_PopUp"] = ds;
                                         ProductSet = ds;
