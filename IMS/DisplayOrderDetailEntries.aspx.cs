@@ -525,7 +525,7 @@ namespace IMS
 
                     #region barcode generation
                     long newBarcode = 0;
-                    if (lblBarcode.Equals("0")|| (!expiryDate.Equals(expiryOrg)))
+                    if ((lblBarcode.Equals("0")|| (!expiryDate.Equals(expiryOrg))))//||(String.IsNullOrEmpty(lblBarcode) && (expiryDate !=null || expiryOrg!=null) ))
                     {
                         if (!string.IsNullOrEmpty(lblexpiry))
                         {
@@ -553,6 +553,10 @@ namespace IMS
                                 //post error message 
                             }
                         }
+                        //else
+                        //{
+
+                        //}
                     } 
                     #endregion
 
@@ -572,7 +576,11 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_ReturnedQuantity", retQuan);
                         command.Parameters.AddWithValue("@p_ReturnedQuantityOrg", retQuanOrg);
                         command.Parameters.AddWithValue("@p_ProductID", int.Parse(lblProdID.Text));
-                        if (!lblBarcode.Equals("0") && newBarcode != 0)
+                        if (string.IsNullOrEmpty(lblBarcode)) 
+                        {
+                            command.Parameters.AddWithValue("@p_BarCode", DBNull.Value);
+                        }
+                        else if (!lblBarcode.Equals("0") && newBarcode != 0)
                         {
                             command.Parameters.AddWithValue("@p_BarCode", newBarcode);
                         }
