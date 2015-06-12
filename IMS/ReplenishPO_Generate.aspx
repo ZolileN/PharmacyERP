@@ -110,26 +110,6 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container ">
      
-
-
-        <div class="top-head">
-                
-                <div class="logo">
-                </div>
-                <div class="user-menu no-print">
-                   
-                       <a href="IMSLogin.html" onclick="Unnamed_Click">Logout</a>
-                    
-                </div>
-            </div>
-
-   
-
-
-          <div class="navs-cont" id="loadNav">
-                <div style="clear: left;"></div>
-
-          </div>
           <div style="clear: left;"></div>
 
         <div class="body-cont">
@@ -140,11 +120,9 @@
             <td align="right">
             
            <!-- onClick="window.location.href='purchase-order.html'" -->
-
-		   <input type="submit" value="Print" onclick="window.print();" class="btn btn-primary btn-large no-print">
-                <input type="submit" value="Export" class="btn btn-info btn-large no-print">
-                <input type="submit" value="Go Back" class="btn btn-default btn-large no-print" onClick='window.history.back();'>
-                
+            <asp:Button ID="btnPrint" runat="server" onclick="window.print();" CssClass="btn btn-primary btn-large no-print" />
+            <asp:Button ID="btnExport" runat="server" CssClass="btn btn-info btn-large no-print" />
+            <asp:Button ID ="btnGoBack" runat="server" CssClass="btn btn-default btn-large no-print" OnClick="btnGoBack_Click" />
                 
             </td>
         </tr>
@@ -162,21 +140,14 @@
                <td valign="top" class="invoLeftHighlighted">
  					              
                <h4>ORDER FROM:</h4>
-           	   CARDINAL PHARMACEUTICALS STORE LLC<br>
-       	       WAREHOUSE NO 3,AL QUSAIS DOHA ROAD P.O.BOX 235212<br>           
-               Phone:042568722<br>
-               Email:cpsdxb@cardinal-pharma.ae
-               
+           	    <asp:Label ID="lblOrderFrom" runat="server" Text="---"></asp:Label>
                </td>
                <td width="2%"></td>
                
                <td valign="top" class="invoLeftHighlighted">
  					              
                <h4>ORDER TO:</h4>
-           	   CARDINAL PHARMACEUTICALS STORE LLC<br>
-       	       WAREHOUSE NO 3,AL QUSAIS DOHA ROAD P.O.BOX 235212<br>           
-               Phone:042568722<br>
-               Email:cpsdxb@cardinal-pharma.ae
+           	   <asp:Label ID="lblOrderTo" runat="server" Text="---"></asp:Label>
                
                </td>
                
@@ -192,36 +163,27 @@
 
         <br>
 
-	<table class="table table-striped table-bordered table-condensed" cellspacing="0">
-		<tbody><tr>
-			<th>Requested Product</th>
-            <th>Requested Quantity</th>
-            </tr><tr>
-			<td>
-                        TROPEX
-            </td><td>
-                      80
-                    </td>
-                    </tr><tr>
-			<td>
-               MANGESIUM SULPHATE
-            </td><td>
-                      14
-                    </td>
-		</tr><tr>
-			<td>
-               DISOPHROL S.A
-            </td><td>
-				5
-                    </td>
-                    </tr><tr>
-			<td>
-               PANADOL ADVANCE 500MG
-            </td><td>
-                      6
-                    </td>
-		</tr>
-	</tbody></table>
+    <asp:GridView ID="gvReplenismentPO" runat="server" AutoGenerateColumns="false" OnRowDataBound="gvReplenismentPO_RowDataBound" Width="100%">
+        <Columns>
+            <asp:TemplateField>
+                <ItemTemplate>
+                    <table class="table table-striped table-bordered table-condensed" cellspacing="0">
+		            <tbody>
+                        <tr>
+			            <th>Requested Product</th>
+                        <th>Requested Quantity</th>
+                        </tr>
+                        <tr>
+			            <td><%#Eval("descp") %></td>
+                        <td><%#Eval("OrderedQuantity") %></td>
+                        </tr>
+	                </tbody>
+	                </table>
+                </ItemTemplate>
+            </asp:TemplateField>
+        </Columns>
+    </asp:GridView>
+	
 
         
 
@@ -255,12 +217,6 @@
         <br>
          
     </div>
-    
-
-               
-
-            
-            
             
         </div>
 
@@ -268,18 +224,4 @@
 
   
    </div>
-
-      <div class="footer no-print">
-
-              <div class="fcont">
-
-            
-                <p>&copy; 2015 - Software Alliance LLC.</p>
-
-                       
-            
-
-              </div>
-
-          </div>
 </asp:Content>
