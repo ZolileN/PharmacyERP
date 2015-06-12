@@ -18,7 +18,13 @@ namespace IMS.UserControl
         DataSet ds;
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
+        bool selectSearch = false;
 
+        public bool SelectSearch
+        {
+           // get { return selectSearch; }
+            set { selectSearch = value; }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -26,12 +32,18 @@ namespace IMS.UserControl
                 try
                 {
                     BindGrid();
-
+                     if ((ViewState["displaySearch"] != null && ((bool)ViewState["displaySearch"]) == true)) 
+                     {
+                         lblSelectVendor.Visible = true;
+                         txtVendor.Visible = true;
+                         btnSearch.Visible = true;
+                     }
                 }
                 catch (Exception exp) { }
             }
         }
 
+       
         public void PopulateGrid()
         {
             if (Session["txtVendor"] != null)
@@ -87,9 +99,18 @@ namespace IMS.UserControl
                 #endregion
             }
         }
+        public void PopulateWithSearch() 
+        {
+            ViewState["displaySearch"] = true;
+            lblSelectVendor.Visible = true;
+            txtVendor.Visible = true;
+            btnSearch.Visible = true;
+            BindGrid();
+        }
         private void BindGrid()
         {
             int id;
+            DataSet ds1 = new DataSet();
             if (int.TryParse(Session["UserSys"].ToString(), out id))
             {
                 if (connection.State == ConnectionState.Closed)
@@ -118,11 +139,11 @@ namespace IMS.UserControl
                 SqlDataAdapter SA = new SqlDataAdapter(command);
 
                 ProductSet = null;
-                SA.Fill(ds);
+                SA.Fill(ds1);
 
-                ProductSet = ds;
+                ProductSet = ds1;
                 gdvVendor.DataSource = null;
-                gdvVendor.DataSource = ds;
+                gdvVendor.DataSource = ds1;
                 gdvVendor.DataBind();
             } 
         }
@@ -211,14 +232,25 @@ namespace IMS.UserControl
                     if (chkRow.Checked)
                     {
                         Control ctl = this.Parent;
-                        TextBox ltMetaTags = null;
-                        Button btnContinue = (Button)ctl.FindControl("btnContinue");
-                       // Label lblVendirId = (Label)
-                        btnContinue.Visible = true;
-                        ltMetaTags = (TextBox)ctl.FindControl("txtVendor");
-                        if (ltMetaTags != null)
+                        if ((ViewState["displaySearch"] != null && ((bool)ViewState["displaySearch"]) == true))
                         {
-                            ltMetaTags.Text = Server.HtmlDecode(row.Cells[1].Text);
+
+                            string val=  row.Cells[1].Text;
+                            Label id = row.Cells[8].FindControl("lblSupID") as Label;
+                            string val2= id.Text;
+                            Session["Rep_Params"] = val+"~"+val2;
+                        }
+                        else
+                        {
+                            TextBox ltMetaTags = null;
+                            Button btnContinue = (Button)ctl.FindControl("btnContinue");
+                            // Label lblVendirId = (Label)
+                            btnContinue.Visible = true;
+                            ltMetaTags = (TextBox)ctl.FindControl("txtVendor");
+                            if (ltMetaTags != null)
+                            {
+                                ltMetaTags.Text = Server.HtmlDecode(row.Cells[1].Text);
+                            }
                         }
                     }
                 }
@@ -233,6 +265,50 @@ namespace IMS.UserControl
             {
 
             }
+        }
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            DataSet ds = new DataSet();
+            int id;
+            if (int.TryParse(Session["UserSys"].ToString(), out id))
+            {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("dbo.Sp_GetVendorByName", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                if (txtVendor.Text != null)
+                {
+                    command.Parameters.AddWithValue("@p_Supp_Name", txtVendor.Text);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@p_Supp_Name", DBNull.Value);
+                }
+                command.Parameters.AddWithValue("@p_SysID", id);
+                if (!Session["UserRole"].ToString().Equals("Store"))
+                {
+                    command.Parameters.AddWithValue("@p_isStore", false);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@p_isStore", true);
+                }
+                SqlDataAdapter SA = new SqlDataAdapter(command);
+
+                ProductSet = null;
+                SA.Fill(ds);
+
+                ProductSet = ds;
+                gdvVendor.DataSource = null;
+                gdvVendor.DataSource = ds;
+                gdvVendor.DataBind();
+
+                ModalPopupExtender mpe = (ModalPopupExtender)this.Parent.FindControl("mpeCongratsMessageDiv");
+                mpe.Show();
+            } 
         }
     }
 }

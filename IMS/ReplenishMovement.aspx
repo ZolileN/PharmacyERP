@@ -1,4 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ReplenishMovement.aspx.cs" Inherits="IMS.ReplenishMovement" %>
+<%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="cc1" %>
+<%@ Register TagName="VendorsPopup" TagPrefix="UCVendorsPopup"  Src="~/UserControl/VendorsPopupGrid.ascx"%>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -100,12 +102,17 @@
                                             <asp:DropDownList ID="ddlPreviousVendors" runat="server" CssClass="atds" 
                                                 CommandName="DropDown"  CommandArgument='<%# Container.DataItemIndex %>' AutoPostBack="true" OnSelectedIndexChanged="ddlPreviousVendors_SelectedIndexChanged"></asp:DropDownList>
 
-                                             <asp:Button ID="btnAddNewVendor" runat="server" CommandName="NewVendor"  CommandArgument='<%# Container.DataItemIndex %>' 
-                                                 CssClass="btn btn-info btn-sm opPop" Text="ADD"/>
-
+                                             <asp:Button ID="btnAddNewVendor" runat="server" CssClass="btn btn-default" CommandName="NewVendor"
+                                                  CommandArgument='<%# Container.DataItemIndex %>' Text="ADD"   /> 
                                         </ItemTemplate>
                                         <ItemStyle  Width="19%" HorizontalAlign="Left"/>
+                                    
                                     </asp:TemplateField>
+                                    <%-- <asp:TemplateField> btn btn-info btn-sm opPop
+                                          CommandArgument='<%# Container.DataItemIndex %>' AutoPostBack="true"
+                                           OnClick="btnAddNewVendor_Click"
+                                         <ItemStyle  Width="19%" HorizontalAlign="Left"/>
+                                     </asp:TemplateField>--%>
 
                                 </Columns>
                         </asp:GridView>
@@ -116,9 +123,24 @@
 
             </Columns>
         </asp:GridView>
+         <label id="lblSelectVendor" Text="" runat="server"> </label>
+     <cc1:ModalPopupExtender ID="mpeCongratsMessageDiv" runat="server" BackgroundCssClass="overLaypop"
+                       RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="lblSelectVendor" ClientIDMode="AutoID"
+                       PopupControlID="_CongratsMessageDiv" BehaviorID="EditModalPopupMessage" >
+                    </cc1:ModalPopupExtender>
+      <div id="_CongratsMessageDiv" class="congrats-cont" style="display: none; ">
+                            <UCVendorsPopup:VendorsPopup  id="VendorsPopupGrid" runat="server"/>
+                        </div>
       </div>
-
-	<script src="Scripts/jquery-ui.js"></script>
-    <script src="Scripts/general.js"></script>
-
+   
+    
+	<%--<script src="Scripts/jquery-ui.js"></script>
+    <script src="Scripts/general.js"></script>--%>
+    
+    
+    
+   
+    
+    
+    
 </asp:Content>
