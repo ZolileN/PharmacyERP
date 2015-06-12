@@ -210,8 +210,11 @@ namespace IMS
             {
                // String Text = txtVendor.Text + '%';
                 VendorsPopupGrid.SelectSearch = true;
+                VendorsPopupGrid.RepProdID = e.CommandArgument.ToString().Split(',')[0];
+                VendorsPopupGrid.RepVenID = e.CommandArgument.ToString().Split(',')[1];
                 VendorsPopupGrid.PopulateWithSearch();
                 mpeCongratsMessageDiv.Show();
+               
             }
          
             else if (e.CommandName == "UpdateStock")

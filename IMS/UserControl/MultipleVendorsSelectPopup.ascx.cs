@@ -76,7 +76,7 @@ namespace IMS.UserControl
 
                         if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
                         {
-                           // ((CheckBox)gdvVendor.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                            // ((CheckBox)gdvVendor.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
                             ViewState["checkAllState"] = true;
                         }
 
@@ -93,6 +93,10 @@ namespace IMS.UserControl
                     connection.Close();
                 }
                 #endregion
+            }
+            else
+            {
+                BindGrid();
             }
         }
         private void BindGrid()

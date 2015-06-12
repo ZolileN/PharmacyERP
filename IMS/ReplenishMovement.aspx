@@ -103,7 +103,7 @@
                                                 CommandName="DropDown"  CommandArgument='<%# Container.DataItemIndex %>' AutoPostBack="true" OnSelectedIndexChanged="ddlPreviousVendors_SelectedIndexChanged"></asp:DropDownList>
 
                                              <asp:Button ID="btnAddNewVendor" runat="server" CssClass="btn btn-default" CommandName="NewVendor"
-                                                  CommandArgument='<%# Container.DataItemIndex %>' Text="ADD"   /> 
+                                                  CommandArgument='<%# Eval("ProductID").ToString() + "," + Eval("VendorID").ToString() %>' Text="ADD"   /> 
                                         </ItemTemplate>
                                         <ItemStyle  Width="19%" HorizontalAlign="Left"/>
                                     

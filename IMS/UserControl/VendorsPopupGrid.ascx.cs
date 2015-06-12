@@ -19,7 +19,20 @@ namespace IMS.UserControl
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
         bool selectSearch = false;
+        string repVenID = string.Empty;
 
+        public string RepVenID
+        {
+           // get { return repVenID; }
+            set { repVenID = value; }
+        }
+        string repProdID = string.Empty;
+
+        public string RepProdID
+        {
+           // get { return repProdID; }
+            set { repProdID = value; }
+        }
         public bool SelectSearch
         {
            // get { return selectSearch; }
@@ -102,6 +115,8 @@ namespace IMS.UserControl
         public void PopulateWithSearch() 
         {
             ViewState["displaySearch"] = true;
+            ViewState["repVenID"]=repVenID;
+            ViewState["repProdID"] = repProdID;
             lblSelectVendor.Visible = true;
             txtVendor.Visible = true;
             btnSearch.Visible = true;
@@ -235,10 +250,53 @@ namespace IMS.UserControl
                         if ((ViewState["displaySearch"] != null && ((bool)ViewState["displaySearch"]) == true))
                         {
 
-                            string val=  row.Cells[1].Text;
+                           // string val=  ;
                             Label id = row.Cells[8].FindControl("lblSupID") as Label;
-                            string val2= id.Text;
-                            Session["Rep_Params"] = val+"~"+val2;
+                            //string val2= id.Text;
+                        //    Session["Rep_Params"] = val+"~"+val2;
+                            #region change logic
+
+                            String NewVendorName = row.Cells[1].Text;
+                            String NewVendorID = id.Text;
+
+                            int NewVendor = 0;
+                            int.TryParse(NewVendorID, out NewVendor);
+
+                            String lblProductID = ViewState["repProdID"].ToString(); //
+                            String lblVendorID =  ViewState["repVenID"].ToString();// e.CommandArgument.ToString().Split(',')[1];
+                            int ProductID = 0;
+                            int MainVendorID = 0;
+
+                            int.TryParse(lblProductID, out ProductID);
+                            int.TryParse(lblVendorID, out MainVendorID);
+
+
+                            DataTable dtChanged = (DataTable)Session["DataTableView"];
+                            for (int i = 0; i < dtChanged.Rows.Count; i++)
+                            {
+                                int Product = 0;
+                                int.TryParse(dtChanged.Rows[i]["ProductID"].ToString(), out Product);
+
+                                int Vendor = 0;
+                                int.TryParse(dtChanged.Rows[i]["VendorID"].ToString(), out Vendor);
+
+                                if (Product.Equals(ProductID) && Vendor.Equals(MainVendorID))
+                                {
+                                    dtChanged.Rows[i]["VendorID"] = NewVendorID;
+                                    dtChanged.Rows[i]["VendorName"] = NewVendorName;
+                                    dtChanged.AcceptChanges();
+                                }
+                            }
+                            Session["DataTableView"] = dtChanged;
+                            //calling method
+                            ReplenishMovement p = Page as ReplenishMovement;
+                            if (p != null)
+                                p.DisplayMainGrid((DataTable)Session["DataTableView"]);
+
+                            ViewState.Remove("repProdID");
+                            ViewState.Remove("repVenID");
+                            ViewState.Remove("displaySearch");
+                            #endregion
                         }
                         else
                         {
