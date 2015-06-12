@@ -205,10 +205,13 @@ namespace IMS
 
         protected void gvVendorProducts_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            
-            if(e.CommandName=="NewVendor")
-            {
 
+            if (e.CommandName == "NewVendor")
+            {
+               // String Text = txtVendor.Text + '%';
+                VendorsPopupGrid.SelectSearch = true;
+                VendorsPopupGrid.PopulateWithSearch();
+                mpeCongratsMessageDiv.Show();
             }
          
             else if (e.CommandName == "UpdateStock")
@@ -354,6 +357,7 @@ namespace IMS
             Session["DataTableView"] = dtChanged;
             DisplayMainGrid((DataTable)Session["DataTableView"]);
         }
+
 
         protected void gvVendorNames_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -511,6 +515,13 @@ namespace IMS
                     }
                 }
             }
+        }
+
+        protected void btnAddNewVendor_Click(object sender, EventArgs e)
+        {
+            //Session["txtVendor"] = "";
+            //VendorsPopupGrid.PopulateGrid();
+            //mpeCongratsMessageDiv.Show();
         }
 
         

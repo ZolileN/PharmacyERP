@@ -7,6 +7,18 @@
     </div>
      
       <div class="bodyPop">
+          <table cellspacing="5" cellpadding="5" border="0" style="margin-left:10px;" class="formTbl"  id="vendorSelect" width="">
+
+       <tr>
+           <td><label id="lblSelectVendor" visible="false" runat="server" >Select Vendor</label></td>
+           <td>
+               <asp:TextBox ID="txtVendor" visible="false" runat="server" CssClass="form-control product" ></asp:TextBox>
+               <asp:Button ID="btnSearch" visible="false" runat="server" CssClass="search-btn getProducts" OnClick="btnSearch_Click" />
+                <%--<input type="submit" runat="server" id="btnSearchVendor" class="search-btn opPop"  />--%>
+
+           </td>
+           </tr>
+      </table>
     <asp:GridView ID="gdvVendor" runat="server" Width="100%" CssClass="table table-striped table-bordered table-condensed" AllowPaging="True" PageSize="10"
         AutoGenerateColumns="false" OnRowDataBound="gdvVendor_RowDataBound" OnPageIndexChanging="gdvVendor_PageIndexChanging" ShowFooter="true"
         OnRowCommand="gdvVendor_RowCommand" OnRowDeleting="gdvVendor_RowDeleting" OnRowEditing="gdvVendor_RowEditing">
@@ -51,7 +63,7 @@
                     <asp:Label ID="lblEmail" runat="server" Text='<%# Eval("Email") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
-            <asp:TemplateField HeaderText="ID" Visible="false">
+            <asp:TemplateField HeaderText="ID" >
                 <ItemTemplate>
                     <asp:Label ID="lblSupID" runat="server" Text='<%# Eval("SuppID") %>'></asp:Label>
                 </ItemTemplate>
