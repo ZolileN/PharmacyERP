@@ -47,7 +47,13 @@ namespace IMS
                 gvReplenismentPO.DataBind();
 
                 lblOrderFrom.Text = ds.Tables[0].Rows[0]["FromPlace"].ToString();
+                lblOrderFromAddress.Text = ds.Tables[0].Rows[0]["FromPlaceAddress"].ToString();
+                lblOrderFromPhone.Text = ds.Tables[0].Rows[0]["FromPlacePhone"].ToString();
+
                 lblOrderTo.Text = ds.Tables[0].Rows[0]["ToPlace"].ToString();
+                lblOrderToAddress.Text = ds.Tables[0].Rows[0]["ToPlaceAddress"].ToString();
+                lblOrderToPhone.Text = ds.Tables[0].Rows[0]["ToPlacePhone"].ToString();
+                lblOrderToEmail.Text = ds.Tables[0].Rows[0]["ToPlaceEmail"].ToString();
             }
             catch(Exception ex)
             {

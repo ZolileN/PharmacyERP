@@ -49,6 +49,33 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.Label lblOrderFrom;
         
         /// <summary>
+        /// lblOrderFromAddress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOrderFromAddress;
+        
+        /// <summary>
+        /// lblOrderFromPhone control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOrderFromPhone;
+        
+        /// <summary>
+        /// lblOrderFromEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOrderFromEmail;
+        
+        /// <summary>
         /// lblOrderTo control.
         /// </summary>
         /// <remarks>
@@ -56,6 +83,33 @@ namespace IMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblOrderTo;
+        
+        /// <summary>
+        /// lblOrderToAddress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOrderToAddress;
+        
+        /// <summary>
+        /// lblOrderToPhone control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOrderToPhone;
+        
+        /// <summary>
+        /// lblOrderToEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOrderToEmail;
         
         /// <summary>
         /// gvReplenismentPO control.

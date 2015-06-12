@@ -104,8 +104,8 @@
             </div>
         </div>--%>
 
-          <div class="navs-cont">
-                <div class="navigation ">
+          <div class="navs-cont no-print">
+                <div class="navigation no-print ">
                     
                     <asp:Literal runat="server" ID="warehouseNav">
                     <ul class="main-menu no-print">
@@ -137,11 +137,7 @@
 
                                         <ul>
                                             
-                                            <li class="hasChild"><a href="#">Auto PO</a>
-                                            <ul>
-                                                <li><a href="ReplenishMain.aspx">Replenish (Movement)</a></li>
-                                                <li><a href="#">Replenish (Calculation)</a></li>
-                                            </ul>
+                                            <li><a href="#">Auto PO</a>
                                             </li>
                                             <li><a href="SelectVendor.aspx">Manual PO</a></li>
                                        </ul>
@@ -418,11 +414,11 @@
 	                    </ul>
             </asp:Literal>
             <asp:Literal runat="server" ID="storeNav">
-                 <ul class="main-menu">
+                 <ul class="main-menu no-print">
                             <li class="hasChild"><a href="#">Manage Stocks</a>
                                         <ul>
-                                            <li><a href="AddStock.aspx">Add Stock</a></li>
-                                            <li><a href="SelectionStock.aspx">Edit Stock</a></li>
+                                           <%-- <li><a href="AddStock.aspx">Add Stock</a></li>
+                                            <li><a href="SelectionStock.aspx">Edit Stock</a></li>--%>
                                             <li><a href="ViewInventory.aspx">Current Stock</a></li>
                                        </ul>
                             </li>

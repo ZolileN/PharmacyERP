@@ -46,6 +46,9 @@ namespace IMS
                 ddlVendorNames.DataBind();
 
                 ddlVendorNames.Items.Add("All Vendors");
+
+                ddlVendorNames.SelectedIndex = ddlVendorNames.Items.IndexOf(ddlVendorNames.Items.FindByValue("All Vendors"));
+
             }
             catch(Exception ex)
             {
