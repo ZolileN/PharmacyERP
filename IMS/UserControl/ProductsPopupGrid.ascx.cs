@@ -73,6 +73,48 @@ namespace IMS.UserControl
             
         }
 
+
+        public void PopulateStoreUserGrid()
+        {
+            if (Session["Text"].ToString() != "%")
+            {
+                DataTable dt = new DataTable();
+                DataSet ds = new DataSet();
+                #region Getting Product Details
+                try
+                {
+                    int id;
+                    if (int.TryParse(Session["UserSys"].ToString(), out id))
+                    {
+                        DataSet ds2 = new DataSet();
+                        connection.Open();
+                        SqlCommand command = new SqlCommand("dbo.Sp_GetStockByName_OtherStoreStock", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@p_prodName", Session["Text"].ToString());
+                        command.Parameters.AddWithValue("@p_SysID", id);
+                        command.Parameters.AddWithValue("@p_isStore", false);
+
+                        SqlDataAdapter SA = new SqlDataAdapter(command);
+
+                        SA.Fill(ds2);
+                        Session["dsProducts_ProdPopUp"] = ds2;
+
+                        StockDisplayGrid.DataSource = ds2;
+                        StockDisplayGrid.DataBind();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                }
+                finally
+                {
+                    connection.Close();
+                }
+                #endregion
+            }
+
+        }
         public void BindGrid()
         {
             DataTable dt = new DataTable();
@@ -129,8 +171,10 @@ namespace IMS.UserControl
             {
                 BindGrid();
             }
-            ModalPopupExtender mpe = (ModalPopupExtender)this.Parent.FindControl("mpeCongratsMessageDiv");
-            mpe.Show();
+            PopulateStoreUserGrid();
+
+            //ModalPopupExtender mpe = (ModalPopupExtender)this.Parent.FindControl("mpeCongratsMessageDiv");
+            //mpe.Show();
         }
 
         protected void StockDisplayGrid_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)

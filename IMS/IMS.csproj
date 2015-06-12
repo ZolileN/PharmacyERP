@@ -200,6 +200,7 @@
     <Content Include="Edit_DeleteStock.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="generateBarCode.aspx" />
+    <Content Include="GenerateTransferRequest.aspx" />
     <Content Include="HAADPopulation.aspx" />
     <Content Include="HeadOfficeMain.aspx" />
     <Content Include="Images\add-icon.png" />
@@ -341,6 +342,7 @@
     <Content Include="Site.Master" />
     <Content Include="SO_GENERATE.aspx" />
     <Content Include="StoreMain.aspx" />
+    <Content Include="CreateTransferRequest.aspx" />
     <Content Include="StoreRequests.aspx" />
     <Content Include="StoreRequestsMain.aspx" />
     <Content Include="StoreRequestsView.aspx" />
@@ -565,6 +567,13 @@
     </Compile>
     <Compile Include="generateBarCode.aspx.designer.cs">
       <DependentUpon>generateBarCode.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GenerateTransferRequest.aspx.cs">
+      <DependentUpon>GenerateTransferRequest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GenerateTransferRequest.aspx.designer.cs">
+      <DependentUpon>GenerateTransferRequest.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -937,6 +946,13 @@
     <Compile Include="StoreMain.aspx.designer.cs">
       <DependentUpon>StoreMain.aspx</DependentUpon>
     </Compile>
+    <Compile Include="CreateTransferRequest.aspx.cs">
+      <DependentUpon>CreateTransferRequest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CreateTransferRequest.aspx.designer.cs">
+      <DependentUpon>CreateTransferRequest.aspx</DependentUpon>
+    </Compile>
     <Compile Include="StoreRequests.aspx.cs">
       <DependentUpon>StoreRequests.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1150,6 +1166,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="StoreManagement\StoreRequests\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IMSBusinessLogic\IMSBusinessLogic.csproj">

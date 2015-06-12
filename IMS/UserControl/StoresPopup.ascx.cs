@@ -185,7 +185,11 @@ namespace IMS.UserControl
                         TextBox ltMetaTags = null;
                         Label lblStoreID = null;
                         Button btnContinue = (Button)ctl.FindControl("btnContinue");
-                        btnContinue.Visible = true;
+                        if (btnContinue != null)
+                        {
+                            btnContinue.Visible = true;
+
+                        }
                         lblStoreID = (Label)ctl.FindControl("lblStoreId");
  
                         ltMetaTags = (TextBox)ctl.FindControl("txtStore");
@@ -205,6 +209,25 @@ namespace IMS.UserControl
             }
 
             Session.Remove("txtStore");
+        }
+
+        public void PopulateStoreWithStock()
+        {
+            DataSet dsResults = new DataSet();
+            int ProductID = int.Parse(Session["ProductId"].ToString());
+            if(connection.State == ConnectionState.Closed)
+            {
+                connection.Open();
+            }
+            SqlCommand command = new SqlCommand("sp_GetStoreByProductID", connection); 
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.AddWithValue("@ProductID", ProductID);
+            SqlDataAdapter da = new SqlDataAdapter(command);
+            da.Fill(dsResults);
+
+            dgvStoresPopup.DataSource = dsResults;
+            dgvStoresPopup.DataBind();
         }
     }
 }

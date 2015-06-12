@@ -450,6 +450,8 @@
                                 <ul>
                                     <%--<li><a href="AutoRequest_Store.aspx">Auto Generate Request(s)</a></li>--%>
                                     <li><a href="StoreRequests.aspx">Manual Generate Requests</a></li>
+                                    <li><a href="CreateTransferRequest.aspx">Create Transfer Request</a></li> 
+                                    <li><a href="StoreRequests.aspx">Manage Transfers</a></li>
                                 </ul>
                             </li>
                             

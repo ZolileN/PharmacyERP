@@ -40,7 +40,7 @@
                     <asp:BoundField DataField="SystemFax" HeaderText="Store Fax" />
 
                      <asp:BoundField DataField="SystemID" HeaderText="System ID" /> 
-
+                     <asp:BoundField DataField="Quantity" HeaderText="Quantity" /> 
                     
                  </Columns>
             <PagerStyle CssClass = "GridPager" />
