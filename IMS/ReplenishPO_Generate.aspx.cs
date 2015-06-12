@@ -25,7 +25,7 @@ namespace IMS
         {
             if(!IsPostBack)
             {
-
+                LoadData();
             }
         }
 

@@ -59,7 +59,7 @@ namespace IMS
         }
         protected void btnBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("ReplenishMan.asps");
+            Response.Redirect("StoreMain.aspx");
         }
 
         protected void ddlVendorNames_SelectedIndexChanged(object sender, EventArgs e)

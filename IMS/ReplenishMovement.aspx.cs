@@ -319,7 +319,7 @@ namespace IMS
 
         protected void btnBack_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("ReplenishMain.aspx");
         }
 
         protected void ddlPreviousVendors_SelectedIndexChanged(object sender, EventArgs e)
@@ -366,6 +366,7 @@ namespace IMS
         {
             bool NextPage = false;
 
+            int OrderNumber = 0;
             if (e.CommandName == "CreatePO")
             {
                 try
@@ -396,7 +397,6 @@ namespace IMS
 
                         int pRequestTo = 0;
                         int pRequestFrom = 0;
-                        int OrderNumber = 0;
                         String VendorCheck = "True";
                         if (int.TryParse(dtChanged.Rows[0]["VendorID"].ToString(), out pRequestTo))
                         {
@@ -491,6 +491,8 @@ namespace IMS
                         #endregion
 
                         NextPage = true;
+
+                       
                         WebMessageBoxUtil.Show("Replenishment Order has been generated");
                     }
                     else
@@ -510,7 +512,8 @@ namespace IMS
                     DisplayMainGrid((DataTable)Session["DataTableView"]);
                     if (NextPage.Equals(true))
                     {
-                        //send to next page if successfull
+                        Session["RelenishOrderNo"] = OrderNumber;
+                        Response.Redirect("ReplenishPO_Generate.aspx");
                     }
                     else
                     {

@@ -108,10 +108,7 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="container ">
-     
-          <div style="clear: left;"></div>
-
+ 
         <div class="body-cont">
             <table width="100%">
 
@@ -119,10 +116,9 @@
         	<td> <h4 id="topHead"> Replenish ( Movement ) Transfer Request</h4></td>
             <td align="right">
             
-           <!-- onClick="window.location.href='purchase-order.html'" -->
-            <asp:Button ID="btnPrint" runat="server" onclick="window.print();" CssClass="btn btn-primary btn-large no-print" />
-            <asp:Button ID="btnExport" runat="server" CssClass="btn btn-info btn-large no-print" />
-            <asp:Button ID ="btnGoBack" runat="server" CssClass="btn btn-default btn-large no-print" OnClick="btnGoBack_Click" />
+            <asp:Button ID="btnPrint" Text="Print" runat="server" OnClientClick="window.print();" CssClass="btn btn-primary btn-large no-print" />
+            <asp:Button ID="btnExport" Text="Export" runat="server" CssClass="btn btn-info btn-large no-print" />
+            <asp:Button ID ="btnGoBack" Text="Back" runat="server" CssClass="btn btn-default btn-large no-print" OnClick="btnGoBack_Click" />
                 
             </td>
         </tr>
@@ -163,16 +159,17 @@
 
         <br>
 
-    <asp:GridView ID="gvReplenismentPO" runat="server" AutoGenerateColumns="false" OnRowDataBound="gvReplenismentPO_RowDataBound" Width="100%">
+    <asp:GridView ID="gvReplenismentPO" runat="server" AutoGenerateColumns="false" OnRowDataBound="gvReplenismentPO_RowDataBound" Width="100%" BorderWidth="0px">
         <Columns>
             <asp:TemplateField>
                 <ItemTemplate>
                     <table class="table table-striped table-bordered table-condensed" cellspacing="0">
-		            <tbody>
-                        <tr>
+                    <tr>
 			            <th>Requested Product</th>
                         <th>Requested Quantity</th>
                         </tr>
+		            <tbody>
+                        
                         <tr>
 			            <td><%#Eval("descp") %></td>
                         <td><%#Eval("OrderedQuantity") %></td>
@@ -220,8 +217,4 @@
             
         </div>
 
-        
-
-  
-   </div>
 </asp:Content>
