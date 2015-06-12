@@ -264,6 +264,7 @@
     <Content Include="RegisterUsers.aspx" />
     <Content Include="ReplenishMain.aspx" />
     <Content Include="ReplenishMovement.aspx" />
+    <Content Include="ReplenishPO_Generate.aspx" />
     <Content Include="ReportFormat_simple.aspx" />
     <Content Include="Reports.aspx" />
     <Content Include="Result.aspx" />
@@ -829,6 +830,13 @@
     </Compile>
     <Compile Include="ReplenishMovement.aspx.designer.cs">
       <DependentUpon>ReplenishMovement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReplenishPO_Generate.aspx.cs">
+      <DependentUpon>ReplenishPO_Generate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReplenishPO_Generate.aspx.designer.cs">
+      <DependentUpon>ReplenishPO_Generate.aspx</DependentUpon>
     </Compile>
     <Compile Include="ReportFormat_simple.aspx.cs">
       <DependentUpon>ReportFormat_simple.aspx</DependentUpon>

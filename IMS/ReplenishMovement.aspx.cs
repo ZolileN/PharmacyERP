@@ -54,7 +54,7 @@ namespace IMS
             DataView dv = displayTable.DefaultView;
             displayTable = null;
             displayTable = dv.ToTable(true, "VendorID", "VendorName");
-
+            gvVendorNames.DataSource = null;
             gvVendorNames.DataSource = displayTable;
             gvVendorNames.DataBind();
         }
@@ -206,12 +206,11 @@ namespace IMS
         protected void gvVendorProducts_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             
-
             if(e.CommandName=="NewVendor")
             {
 
             }
-
+         
             else if (e.CommandName == "UpdateStock")
             {
                 Label lblProductID = (Label)((GridView)sender).Rows[((GridView)sender).EditIndex].FindControl("lblProductID");
@@ -354,6 +353,164 @@ namespace IMS
 
             Session["DataTableView"] = dtChanged;
             DisplayMainGrid((DataTable)Session["DataTableView"]);
+        }
+
+        protected void gvVendorNames_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            bool NextPage = false;
+
+            if (e.CommandName == "CreatePO")
+            {
+                try
+                {
+                    String Vendor = e.CommandArgument.ToString();
+                    int VendorID = 0;
+                    int.TryParse(Vendor, out VendorID);
+                    if (VendorID > 0)
+                    {
+                        int SystemID = 0;
+                        int.TryParse(Session["UserSys"].ToString(), out SystemID);
+
+                        DataView dv = ((DataTable)Session["DataTableView"]).DefaultView;
+                        dv.RowFilter = "VendorID = '" + VendorID + "'";
+                        DataTable dtChanged = dv.ToTable();
+                        dtChanged.Columns.Add("StoreID", typeof(int));
+
+                        for (int i = 0; i < dtChanged.Rows.Count; i++)
+                        {
+                            dtChanged.Rows[i]["StoreID"] = SystemID;
+                        }
+
+                        #region Create Order
+
+                        if (connection.State == ConnectionState.Closed) { connection.Open(); }
+                        SqlCommand command = new SqlCommand("sp_CreateOrder", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        int pRequestTo = 0;
+                        int pRequestFrom = 0;
+                        int OrderNumber = 0;
+                        String VendorCheck = "True";
+                        if (int.TryParse(dtChanged.Rows[0]["VendorID"].ToString(), out pRequestTo))
+                        {
+                            command.Parameters.AddWithValue("@p_RequestTO", pRequestTo);
+                        }
+
+                        if (int.TryParse(dtChanged.Rows[0]["StoreID"].ToString(), out pRequestFrom))
+                        {
+                            command.Parameters.AddWithValue("@p_RequestFrom", pRequestFrom);
+                        }
+
+                        command.Parameters.AddWithValue("@p_OrderType", 3);
+                        command.Parameters.AddWithValue("@p_Invoice", "");
+                        command.Parameters.AddWithValue("@p_OrderMode", "Vendor");
+                        command.Parameters.AddWithValue("@p_Vendor", VendorCheck);
+                        command.Parameters.AddWithValue("@p_orderStatus", "Pending");
+                        DataTable dt = new DataTable();
+                        SqlDataAdapter dA = new SqlDataAdapter(command);
+                        dA.Fill(dt);
+                        if (dt.Rows.Count != 0)
+                        {
+                            int.TryParse(dt.Rows[0][0].ToString(), out OrderNumber);
+                        }
+                        #endregion
+
+                        for (int i = 0; i < dtChanged.Rows.Count; i++)
+                        {
+                            #region Linking to Order Detail Table
+                            command = new SqlCommand("sp_InserOrderDetail_ByStore", connection);
+                            command.CommandType = CommandType.StoredProcedure;
+                            int ProductNumber = 0;
+                            int BonusOrdered, Quantity;
+                            BonusOrdered = Quantity = 0;
+
+                            command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
+
+                            int.TryParse(dtChanged.Rows[i]["ProductID"].ToString(), out ProductNumber);
+                            command.Parameters.AddWithValue("@p_ProductID", ProductNumber);
+
+                            if (int.TryParse(dtChanged.Rows[i]["QtySold"].ToString(), out Quantity))
+                            {
+                                command.Parameters.AddWithValue("@p_OrderQuantity", Quantity);
+                            }
+                            else
+                            {
+                                command.Parameters.AddWithValue("@p_OrderQuantity", DBNull.Value);
+                            }
+
+                            command.Parameters.AddWithValue("@p_OrderBonusQuantity", DBNull.Value);
+                            command.Parameters.AddWithValue("@p_status", "Pending");
+                            command.Parameters.AddWithValue("@p_comments", "Replenishment - Generated to Vendor");
+
+                            command.ExecuteNonQuery();
+                            #endregion
+                        }
+
+                        #region Updating Replenishment Columns in tablSales
+                        DataTable dtUpdateSales = (DataTable)Session["DataTableUpdate"];
+
+                        command = new SqlCommand("Sp_GetPODetails_ByID", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
+                        DataSet ds = new DataSet();
+                        SqlDataAdapter sA = new SqlDataAdapter(command);
+                        sA.Fill(ds);
+                        DataTable dtOrdDetails = ds.Tables[0];
+
+                        for (int i = 0; i < dtOrdDetails.Rows.Count;i++ )
+                        {
+                            int ProductID =0;
+                            int.TryParse(dtOrdDetails.Rows[i]["ProductID"].ToString(), out ProductID);
+                            DataView dvSales = dtUpdateSales.DefaultView;
+                            dvSales.RowFilter = "ProductID = '" + ProductID + "'";
+                            DataTable dtUpdated = dvSales.ToTable();
+
+                            if(dtUpdated!=null && dtUpdated.Rows.Count>0)
+                            {
+                                for(int j=0;j<dtUpdated.Rows.Count;j++)
+                                {
+                                    command = new SqlCommand("sp_ReplenishUpdateSales", connection);
+                                    command.CommandType = CommandType.StoredProcedure;
+
+                                    command.Parameters.AddWithValue("@SaleID", Convert.ToInt32(dtUpdated.Rows[j]["SaleID"].ToString()));
+                                    command.Parameters.AddWithValue("@ProductID", ProductID);
+                                    command.Parameters.AddWithValue("@OrderID", OrderNumber);
+                                    command.Parameters.AddWithValue("@OrderDetailID", Convert.ToInt32(dtOrdDetails.Rows[i]["OrderDetailID"].ToString()));
+                                    command.Parameters.AddWithValue("@Vendor", VendorID);
+                                    command.ExecuteNonQuery();
+                                }
+                            }
+                        }
+                        #endregion
+
+                        NextPage = true;
+                        WebMessageBoxUtil.Show("Replenishment Order has been generated");
+                    }
+                    else
+                    {
+                        WebMessageBoxUtil.Show("Please Specify a Vendor First");
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    WebMessageBoxUtil.Show(ex.Message);
+                }
+                finally
+                {
+                    if (connection.State == ConnectionState.Open) { connection.Close(); }
+                    LoadData();
+                    DisplayMainGrid((DataTable)Session["DataTableView"]);
+                    if (NextPage.Equals(true))
+                    {
+                        //send to next page if successfull
+                    }
+                    else
+                    {
+                        WebMessageBoxUtil.Show("Cannot Create PO at this moment, please check all values are correct; if problem persists, contanct your System Admin");
+                    }
+                }
+            }
         }
 
         

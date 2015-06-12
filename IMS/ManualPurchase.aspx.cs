@@ -242,22 +242,6 @@ namespace IMS
                             command.Parameters.AddWithValue("@p_RequestTO", pRequestTo);
                         }
 
-                        //if (!string.IsNullOrEmpty(Session["VendorName"].ToString()))
-                        //{
-                        //    if (int.TryParse(Session["VendorId"].ToString(), out pRequestTo))
-                        //    {
-                        //        command.Parameters.AddWithValue("@p_RequestTO", pRequestTo);
-                        //    }
-                        //}
-                        //else
-                        //{
-                        //    if (int.TryParse(CmbVendors.SelectedValue.ToString(), out pRequestTo))
-                        //    {
-                        //        command.Parameters.AddWithValue("@p_RequestTO", pRequestTo);
-                        //    }
-                        //}
-
-                        //sets warehouse/store
                         if (int.TryParse(Session["UserSys"].ToString(), out pRequestFrom))
                         {
                             command.Parameters.AddWithValue("@p_RequestFrom", pRequestFrom);
@@ -452,8 +436,6 @@ namespace IMS
 
 
                     #endregion
-
-
                 }
                 #region Populate Product Info
                 try

@@ -25,7 +25,7 @@
       <hr>
         <asp:GridView ID="gvVendorNames" runat="server" OnRowDataBound="gvVendorNames_RowDataBound" 
                       OnSelectedIndexChanged ="gvVendorNames_SelectedIndexChanged" OnPageIndexChanging="gvVendorNames_PageIndexChanging"
-                     AutoGenerateColumns="false" BorderWidth="0px" Width="100%">
+                     AutoGenerateColumns="false" OnRowCommand="gvVendorNames_RowCommand" BorderWidth="0px" Width="100%">
             <Columns>                
                 <asp:TemplateField>
                     <ItemTemplate>
@@ -35,7 +35,7 @@
         	                <td colspan="6">
                                     <asp:Label ID="hdnVendorID" runat="server" Visible="false" Text='<%# Eval("VendorID") %>' CommandArgument='<%# Container.DataItemIndex %>'/>
     		                        <h4 class="fl-l"><%#Eval("VendorName") %></h4>
-                                    <asp:Button ID="btnCreatePO" runat="server" CommandName="CreatePO"  CommandArgument='<%# Container.DataItemIndex %>' CssClass="btn btn-success fl-r" Text="Create PO"/>
+                                    <asp:Button ID="btnCreatePO" runat="server" CommandName="CreatePO"  CommandArgument='<%# Eval("VendorID").ToString() %>' CssClass="btn btn-success fl-r" Text="Create PO"/>
                             </td>
                         </tr>                            <tr><td>
                                  <asp:GridView ID="gvVendorProducts" runat="server" OnRowDataBound="gvVendorProducts_RowDataBound" 
