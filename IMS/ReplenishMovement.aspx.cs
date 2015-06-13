@@ -25,7 +25,27 @@ namespace IMS
             {
                 try
                 {
-                    LoadData();
+                    if ((Session["FromSalesDate"] != null && Session["FromSalesDate"].ToString() != "") &&
+                        (Session["ToSalesDate"] != null && Session["ToSalesDate"].ToString() != "") &&
+                        (Session["ReplenishDays"] != null && Session["ReplenishDays"].ToString() != ""))
+                    {
+                        DateTime FromDate = Convert.ToDateTime(Session["FromSalesDate"].ToString());
+                        DateTime ToDate = Convert.ToDateTime(Session["ToSalesDate"].ToString());
+
+                        TimeSpan diff = ToDate - FromDate;
+                        double TotalDays = diff.TotalDays;
+                        int Days = Convert.ToInt32(TotalDays);
+                        
+                        int ReplenishDays = 0;
+                        int.TryParse((Session[ReplenishDays].ToString()), out ReplenishDays);
+
+                        LoadData_SalesDate(Days,ReplenishDays);
+                    }
+                    else
+                    {
+                        LoadData();
+                    }
+
                     ViewState["VendorID"] = 0;
                     DisplayMainGrid((DataTable)Session["DataTableView"]);
                   
@@ -83,6 +103,53 @@ namespace IMS
                 {
                     dv = ds.Tables[0].DefaultView;
                     dv.RowFilter = "VendorID = '"+VendorID+"'";
+                    dt = dv.ToTable();
+                }
+                else
+                {
+                    dt = ds.Tables[0];
+                }
+                Session["DataTableView"] = dt;
+                Session["DataTableUpdate"] = ds.Tables[1];
+
+            }
+            catch (Exception ex)
+            {
+                //ex Message should be displayed
+                WebMessageBoxUtil.Show(ex.Message);
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open) { connection.Close(); }
+            }
+        }
+
+        public void LoadData_SalesDate(int DateDifference, int ReplenishDays)
+        {
+            int SystemID = 0;
+            int.TryParse(Session["UserSys"].ToString(), out SystemID);
+
+            int VendorID = 0;
+            int.TryParse(Session["ReplenishVendorID"].ToString(), out VendorID);
+
+            try
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("sp_ReplenishProducts_Calculation", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_SystemID", SystemID);
+                cmd.Parameters.AddWithValue("@p_DaysDifference", DateDifference);
+                cmd.Parameters.AddWithValue("@p_ReplenishDays", ReplenishDays);
+                DataSet ds = new DataSet();
+                SqlDataAdapter dA = new SqlDataAdapter(cmd);
+                dA.Fill(ds);
+
+                DataTable dt = new DataTable();
+                DataView dv = new DataView();
+                if (VendorID > 0)
+                {
+                    dv = ds.Tables[0].DefaultView;
+                    dv.RowFilter = "VendorID = '" + VendorID + "'";
                     dt = dv.ToTable();
                 }
                 else
@@ -508,7 +575,26 @@ namespace IMS
                 finally
                 {
                     if (connection.State == ConnectionState.Open) { connection.Close(); }
-                    LoadData();
+                    if ((Session["FromSalesDate"] != null && Session["FromSalesDate"].ToString() != "") &&
+                        (Session["ToSalesDate"] != null && Session["ToSalesDate"].ToString() != "") &&
+                        (Session["ReplenishDays"] != null && Session["ReplenishDays"].ToString() != ""))
+                    {
+                        DateTime FromDate = Convert.ToDateTime(Session["FromSalesDate"].ToString());
+                        DateTime ToDate = Convert.ToDateTime(Session["ToSalesDate"].ToString());
+
+                        TimeSpan diff = ToDate - FromDate;
+                        double TotalDays = diff.TotalDays;
+                        int Days = Convert.ToInt32(TotalDays);
+
+                        int ReplenishDays = 0;
+                        int.TryParse((Session[ReplenishDays].ToString()), out ReplenishDays);
+
+                        LoadData_SalesDate(Days, ReplenishDays);
+                    }
+                    else
+                    {
+                        LoadData();
+                    }
                     DisplayMainGrid((DataTable)Session["DataTableView"]);
                     if (NextPage.Equals(true))
                     {

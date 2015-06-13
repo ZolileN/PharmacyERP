@@ -23,7 +23,25 @@ namespace IMS
         {
             if(!IsPostBack)
             {
-                LoadVendors();
+                String Parameter = Request.QueryString["Param"].ToString();
+                if (Parameter.Equals("Calculation"))
+                {
+                    lblSaleDates.Visible = true;
+                    lblFromDate.Visible = true;
+                    lblToDate.Visible = true;
+                    lblReplenishDays.Visible = true;
+
+                    txtFromDate.Visible = true;
+                    txtReplenishDays.Visible = true;
+                    txtToDate.Visible = true;
+
+                    Session["FromSalesDate"] = txtFromDate.Text;
+                    Session["ToSalesDate"] = txtToDate.Text;
+                    Session["ReplenishDays"]= txtReplenishDays.Text;
+
+                }
+                    LoadVendors();
+                
             }
         }
 
