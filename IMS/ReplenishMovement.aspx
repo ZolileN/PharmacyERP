@@ -14,7 +14,7 @@
       <table width="100%">
 
         <tbody><tr>
-        	<td> <h4 id="topHead">Replenish ( Movement )</h4></td>
+        	<td> <h4 id="topHead"><asp:Label ID="lblReplenishHeader" runat="server" Text="Replenish ( Movement )"></asp:Label></h4></td>
             <td align="right">
             
            <!-- onClick="window.location.href='purchase-order.html'" -->
@@ -24,7 +24,8 @@
         </tr>
 		<tr><td height="5"></td></tr>
     </tbody></table>
-      <hr>
+      <hr>
+
         <asp:GridView ID="gvVendorNames" runat="server" OnRowDataBound="gvVendorNames_RowDataBound" 
                       OnSelectedIndexChanged ="gvVendorNames_SelectedIndexChanged" OnPageIndexChanging="gvVendorNames_PageIndexChanging"
                      AutoGenerateColumns="false" OnRowCommand="gvVendorNames_RowCommand" BorderWidth="0px" Width="100%">
@@ -39,7 +40,8 @@
     		                        <h4 class="fl-l"><%#Eval("VendorName") %></h4>
                                     <asp:Button ID="btnCreatePO" runat="server" CommandName="CreatePO"  CommandArgument='<%# Eval("VendorID").ToString() %>' CssClass="btn btn-success fl-r" Text="Create PO"/>
                             </td>
-                        </tr>                            <tr><td>
+                        </tr>
+                            <tr><td>
                                  <asp:GridView ID="gvVendorProducts" runat="server" OnRowDataBound="gvVendorProducts_RowDataBound" 
                                       OnSelectedIndexChanged="gvVendorProducts_SelectedIndexChanged" OnRowCommand="gvVendorProducts_RowCommand"
                                       OnPageIndexChanging="gvVendorProducts_PageIndexChanging" OnRowEditing="gvVendorProducts_RowEditing"
@@ -116,7 +118,8 @@
 
                                 </Columns>
                         </asp:GridView>
-                            </td></tr>                        </tbody>
+                            </td></tr>
+                        </tbody>
                         </table>
                     </ItemTemplate>
                 </asp:TemplateField>

@@ -37,17 +37,27 @@ namespace IMS
                         int Days = Convert.ToInt32(TotalDays);
                         
                         int ReplenishDays = 0;
-                        int.TryParse((Session[ReplenishDays].ToString()), out ReplenishDays);
+                        int.TryParse((Session["ReplenishDays"].ToString()), out ReplenishDays);
 
                         LoadData_SalesDate(Days,ReplenishDays);
+                        ViewState["VendorID"] = 0;
+                        DisplayMainGrid((DataTable)Session["DataTableView"]);
                     }
                     else
                     {
                         LoadData();
+                        ViewState["VendorID"] = 0;
+                        DisplayMainGrid((DataTable)Session["DataTableView"]);
                     }
 
-                    ViewState["VendorID"] = 0;
-                    DisplayMainGrid((DataTable)Session["DataTableView"]);
+                  if(Session["parameter"]!=null && Session["parameter"].ToString().Equals("Calculation"))
+                  {
+                      lblReplenishHeader.Text = "Replenish ( Calculation )";
+                  }
+                  else
+                  {
+                      lblReplenishHeader.Text = "Replenish ( Movement )";
+                  }
                   
                 }
                 catch(Exception ex)

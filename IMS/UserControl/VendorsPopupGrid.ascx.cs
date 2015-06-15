@@ -75,9 +75,9 @@ namespace IMS.UserControl
                         }
                         SqlCommand command = new SqlCommand("dbo.Sp_GetVendorByName", connection);
                         command.CommandType = CommandType.StoredProcedure;
-                        if (Session["Text"] != null)
+                        if (Session["txtVendor"] != null)
                         {
-                            command.Parameters.AddWithValue("@p_Supp_Name", Session["Text"].ToString());
+                            command.Parameters.AddWithValue("@p_Supp_Name", Session["txtVendor"].ToString());
                         }
                         else
                         {
@@ -134,9 +134,9 @@ namespace IMS.UserControl
                 }
                 SqlCommand command = new SqlCommand("dbo.Sp_GetVendorByName", connection);
                 command.CommandType = CommandType.StoredProcedure;
-                if (Session["Text"] != null)
+                if (Session["txtVendor"] != null)
                 {
-                    command.Parameters.AddWithValue("@p_Supp_Name", Session["Text"].ToString());
+                    command.Parameters.AddWithValue("@p_Supp_Name", Session["txtVendor"].ToString());
                 }
                 else
                 {
@@ -256,7 +256,7 @@ namespace IMS.UserControl
                         //    Session["Rep_Params"] = val+"~"+val2;
                             #region change logic
 
-                            String NewVendorName = row.Cells[1].Text;
+                            String NewVendorName = Server.HtmlDecode(row.Cells[1].Text);
                             String NewVendorID = id.Text;
 
                             int NewVendor = 0;

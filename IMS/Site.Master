@@ -415,48 +415,56 @@
             </asp:Literal>
             <asp:Literal runat="server" ID="storeNav">
                  <ul class="main-menu no-print">
-                            <li><a href="#">Manage Inventory</a>
+                            <li><a href="#">Inventory</a>
                                         <ul>
-                                            <li><a href="ManageProducts.aspx">Manage Products</a></li>
-                                    <li><a href="ManageSubCategory.aspx">Manage SubCategories</a></li>
-                                    <li><a href="ManageCategory.aspx">Manage Categories</a></li>
-                                    <li><a href="ManageDepartment.aspx">Manage Departments</a></li>
+                                            <li><a href="ManageDepartment.aspx">View Departments</a></li>
+                                            <li><a href="ManageCategory.aspx">View Categories</a></li>
+                                            <li><a href="ManageSubCategory.aspx">View SubCategories</a></li>
+                                            <li><a href="ManageProducts.aspx">View Products</a></li>
+                                            <li><a href="ViewInventory.aspx">View Stock</a></li>
                                            <%-- <li><a href="AddStock.aspx">Add Stock</a></li>
                                             <li><a href="SelectionStock.aspx">Edit Stock</a></li>--%>
-                                            <li><a href="ViewInventory.aspx">Current Stock</a></li>
                                        </ul>
                             </li>
-                            <li><a href="#">Manage Purchase Orders</a>
+                            <li><a href="#">Purchase Order</a>
                                  <ul>
                                      <li class="hasChild"><a href="#">Generate PO</a>
-
-                                        <ul>
-                                            
+                                            <ul>
                                             <li class="hasChild"><a href="#">Auto PO</a>
                                             <ul>
-                                                <li><a href="ReplenishMain.aspx">Replenish (Movement)</a></li>
+                                                <li><a href="ReplenishMain.aspx?Param=Movement">Replenish (Movement)</a></li>
                                                 <li><a href="ReplenishMain.aspx?Param=Calculation">Replenish (Calculation)</a></li>
                                             </ul>
                                             </li>
-                                           <li><a href="#">PO Request to WareHouse</a></li>
-                                       </ul>
 
-                                    </li>                                           
-                                            
-                                            <li><a href="SelectVendor.aspx">Direct Store Purchase</a></li>
-                                     <li><a href="ViewPlacedOrders.aspx">View Store Purchase</a></li>
-                                       </ul>
-
+                                           <li><a href="ItemRequestWarehouse.aspx">Item Request to WareHouse</a></li>
+                                           <li><a href="SelectVendor.aspx">Direct Store Purchase</a></li>
+                                           </ul>
+                                    </li> 
+                                    <li><a href="ViewPlacedOrders.aspx">View PO</a></li>
+                                    </ul>
                                 </li>
                            
-                            <li><a href="StoreTransfers_StoreRequests.aspx">Store Transfers</a></li>
-                            <li><a href="ReceiveStock.aspx">Store Receivings</a></li>
-                            <li><a href="#">Store Requests</a>
+                            <%--<li><a href="StoreTransfers_StoreRequests.aspx">Store Transfers</a></li>--%>
+                            <%--<li><a href="ReceiveStock.aspx">Store Receivings</a></li>--%>
+
+                            <li><a href="#">Store Transfers</a>
                                 <ul>
                                     <%--<li><a href="AutoRequest_Store.aspx">Auto Generate Request(s)</a></li>--%>
-                                    <li><a href="StoreRequests.aspx">Manual Generate Requests</a></li>
+                                    <%--<li><a href="StoreRequests.aspx">Manual Generate Requests</a></li>--%>
                                     <li><a href="CreateTransferRequest.aspx">Create Transfer Request</a></li> 
-                                    <li><a href="StoreRequests.aspx">Manage Transfers</a></li>
+                                    <li class="hasChild"><a href="#">Manage Transfers</a>
+                                        <ul>
+                                                <li><a href="SendPrototype.aspx">Send</a></li>
+                                                <li><a href="RecieveTransferPrototype.aspx">Recieve</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li><a href="#">Miscellaneous</a>
+                                <ul>
+                                    <li><a href="#">Send Returned Items</a></li>
                                 </ul>
                             </li>
                             

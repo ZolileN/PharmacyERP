@@ -133,7 +133,7 @@ namespace IMS.UserControl
         protected void dgvStoresPopup_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             dgvStoresPopup.EditIndex = -1;
-            if (Session["Text"] != null)
+            if (Session["txtStore"] != null)
             {
                 PopulateGrid();
             }

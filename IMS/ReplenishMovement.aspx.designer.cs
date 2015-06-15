@@ -13,6 +13,15 @@ namespace IMS {
     public partial class ReplenishMovement {
         
         /// <summary>
+        /// lblReplenishHeader control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblReplenishHeader;
+        
+        /// <summary>
         /// btnBack control.
         /// </summary>
         /// <remarks>

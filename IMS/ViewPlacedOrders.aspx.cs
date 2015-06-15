@@ -85,73 +85,78 @@ namespace IMS
             #region Display Orders
             try
             {
-                connection.Open();
-                SqlCommand command = new SqlCommand("sp_GetPendingOrders_ByVendorID", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                switch (id)
-                {
-                    case 1:
-                        if (String.IsNullOrWhiteSpace(par))
-                        {
-                            command.Parameters.AddWithValue("@p_VendID", DBNull.Value);
-                        }
-                        else
-                        {
-                            command.Parameters.AddWithValue("@p_VendID", par);
-                        }
-                        command.Parameters.AddWithValue("@p_OrderDate", DBNull.Value);
-                        command.Parameters.AddWithValue("@p_OrderID", DBNull.Value);
-                        command.Parameters.AddWithValue("@p_OrderStatus", DBNull.Value);
-                        break;
-                    case 2:
-                        if (OrderStatus.SelectedIndex <= 0)
-                        {
-                            command.Parameters.AddWithValue("@p_OrderStatus", DBNull.Value);
-                        }
-                        else
-                        {
-                            command.Parameters.AddWithValue("@p_OrderStatus", OrderStatus.SelectedValue.ToString());
-                        }
-                        command.Parameters.AddWithValue("@p_OrderDate", DBNull.Value);
-                        command.Parameters.AddWithValue("@p_OrderID", DBNull.Value);
-                        command.Parameters.AddWithValue("@p_VendID", DBNull.Value);
-                        break;
-                    case 3:
-                        if (String.IsNullOrWhiteSpace(par))
-                        {
-                            command.Parameters.AddWithValue("@p_OrderDate", DBNull.Value);
-                        }
-                        else
-                        {
-                            command.Parameters.AddWithValue("@p_OrderDate", Convert.ToDateTime(par));
-                        }
-                        command.Parameters.AddWithValue("@p_OrderID", DBNull.Value);
-                        command.Parameters.AddWithValue("@p_VendID", DBNull.Value);
-                        command.Parameters.AddWithValue("@p_OrderStatus", DBNull.Value);
-                        break;
-                    case 4:
-                        if (String.IsNullOrWhiteSpace(par))
-                        {
-                            command.Parameters.AddWithValue("@p_OrderID", DBNull.Value);
-                        }
-                        else
-                        {
-                            command.Parameters.AddWithValue("@p_OrderID", Convert.ToInt32(par));
-                        }
-                        command.Parameters.AddWithValue("@p_OrderDate", DBNull.Value);
-                        command.Parameters.AddWithValue("@p_VendID", DBNull.Value);
-                        command.Parameters.AddWithValue("@p_OrderStatus", DBNull.Value);
-                        break;
-                }
-              
-                DataSet ds = new DataSet();
+                  int idSys;
+                  if (int.TryParse(Session["UserSys"].ToString(), out idSys))
+                  {
+                      connection.Open();
+                      SqlCommand command = new SqlCommand("sp_GetPendingOrders_ByVendorID", connection);
+                      command.CommandType = CommandType.StoredProcedure;
+                      command.Parameters.AddWithValue("@p_storedAt", idSys);
+                      switch (id)
+                      {
+                          case 1:
+                              if (String.IsNullOrWhiteSpace(par))
+                              {
+                                  command.Parameters.AddWithValue("@p_VendID", DBNull.Value);
+                              }
+                              else
+                              {
+                                  command.Parameters.AddWithValue("@p_VendID", par);
+                              }
+                              command.Parameters.AddWithValue("@p_OrderDate", DBNull.Value);
+                              command.Parameters.AddWithValue("@p_OrderID", DBNull.Value);
+                              command.Parameters.AddWithValue("@p_OrderStatus", DBNull.Value);
+                              break;
+                          case 2:
+                              if (OrderStatus.SelectedIndex <= 0)
+                              {
+                                  command.Parameters.AddWithValue("@p_OrderStatus", DBNull.Value);
+                              }
+                              else
+                              {
+                                  command.Parameters.AddWithValue("@p_OrderStatus", OrderStatus.SelectedValue.ToString());
+                              }
+                              command.Parameters.AddWithValue("@p_OrderDate", DBNull.Value);
+                              command.Parameters.AddWithValue("@p_OrderID", DBNull.Value);
+                              command.Parameters.AddWithValue("@p_VendID", DBNull.Value);
+                              break;
+                          case 3:
+                              if (String.IsNullOrWhiteSpace(par))
+                              {
+                                  command.Parameters.AddWithValue("@p_OrderDate", DBNull.Value);
+                              }
+                              else
+                              {
+                                  command.Parameters.AddWithValue("@p_OrderDate", Convert.ToDateTime(par));
+                              }
+                              command.Parameters.AddWithValue("@p_OrderID", DBNull.Value);
+                              command.Parameters.AddWithValue("@p_VendID", DBNull.Value);
+                              command.Parameters.AddWithValue("@p_OrderStatus", DBNull.Value);
+                              break;
+                          case 4:
+                              if (String.IsNullOrWhiteSpace(par))
+                              {
+                                  command.Parameters.AddWithValue("@p_OrderID", DBNull.Value);
+                              }
+                              else
+                              {
+                                  command.Parameters.AddWithValue("@p_OrderID", Convert.ToInt32(par));
+                              }
+                              command.Parameters.AddWithValue("@p_OrderDate", DBNull.Value);
+                              command.Parameters.AddWithValue("@p_VendID", DBNull.Value);
+                              command.Parameters.AddWithValue("@p_OrderStatus", DBNull.Value);
+                              break;
+                      }
 
-                SqlDataAdapter sA = new SqlDataAdapter(command);
-                sA.Fill(ds);
-                //ProductSet = ds;
-                //StockDisplayGrid.DataSource = null;
-                StockDisplayGrid.DataSource = ds;
-                StockDisplayGrid.DataBind();
+                      DataSet ds = new DataSet();
+
+                      SqlDataAdapter sA = new SqlDataAdapter(command);
+                      sA.Fill(ds);
+                      //ProductSet = ds;
+                      //StockDisplayGrid.DataSource = null;
+                      StockDisplayGrid.DataSource = ds;
+                      StockDisplayGrid.DataBind();
+                  }
             }
             catch (Exception ex)
             {
@@ -169,54 +174,60 @@ namespace IMS
             #region Display Orders
             try
             {
-                connection.Open();
-                SqlCommand command = new SqlCommand("sp_GetPendingOrders_ByVendorID", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                if (String.IsNullOrWhiteSpace(VendorID) || StockAt.SelectedIndex <= 0)
+                int idSys;
+                if (int.TryParse(Session["UserSys"].ToString(), out idSys))
                 {
-                    command.Parameters.AddWithValue("@p_VendID", DBNull.Value);
-                }
-                else
-                {
-                    command.Parameters.AddWithValue("@p_VendID", VendorID);
-                }
+                    connection.Open();
+                    SqlCommand command = new SqlCommand("sp_GetPendingOrders_ByVendorID", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@p_storedAt", idSys);
+                                        
+                    if (String.IsNullOrWhiteSpace(VendorID) || StockAt.SelectedIndex <= 0)
+                    {
+                        command.Parameters.AddWithValue("@p_VendID", DBNull.Value);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_VendID", VendorID);
+                    }
 
-                if (OrderStatus.SelectedIndex <= 0)
-                {
-                    command.Parameters.AddWithValue("@p_OrderStatus", DBNull.Value);
-                }
-                else
-                {
-                    command.Parameters.AddWithValue("@p_OrderStatus", OrderStatus.SelectedValue.ToString());
-                }
+                    if (OrderStatus.SelectedIndex <= 0)
+                    {
+                        command.Parameters.AddWithValue("@p_OrderStatus", DBNull.Value);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_OrderStatus", OrderStatus.SelectedValue.ToString());
+                    }
 
-                if (String.IsNullOrWhiteSpace(DateTextBox.Text.ToString()))
-                {
-                    command.Parameters.AddWithValue("@p_OrderDate", DBNull.Value);
-                }
-                else
-                {
-                    command.Parameters.AddWithValue("@p_OrderDate", Convert.ToDateTime(DateTextBox.Text.ToString()));
-                }
+                    if (String.IsNullOrWhiteSpace(DateTextBox.Text.ToString()))
+                    {
+                        command.Parameters.AddWithValue("@p_OrderDate", DBNull.Value);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_OrderDate", Convert.ToDateTime(DateTextBox.Text.ToString()));
+                    }
 
 
-                if (String.IsNullOrWhiteSpace(txtOrderNO.Text.ToString()))
-                {
-                    command.Parameters.AddWithValue("@p_OrderID", DBNull.Value);
-                }
-                else
-                {
-                    command.Parameters.AddWithValue("@p_OrderID", Convert.ToInt32(txtOrderNO.Text.ToString()));
-                }
+                    if (String.IsNullOrWhiteSpace(txtOrderNO.Text.ToString()))
+                    {
+                        command.Parameters.AddWithValue("@p_OrderID", DBNull.Value);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_OrderID", Convert.ToInt32(txtOrderNO.Text.ToString()));
+                    }
 
-                DataSet ds = new DataSet();
+                    DataSet ds = new DataSet();
 
-                SqlDataAdapter sA = new SqlDataAdapter(command);
-                sA.Fill(ds);
-                ProductSet = ds;
-                StockDisplayGrid.DataSource = null;
-                StockDisplayGrid.DataSource = ds.Tables[0];
-                StockDisplayGrid.DataBind();
+                    SqlDataAdapter sA = new SqlDataAdapter(command);
+                    sA.Fill(ds);
+                    ProductSet = ds;
+                    StockDisplayGrid.DataSource = null;
+                    StockDisplayGrid.DataSource = ds.Tables[0];
+                    StockDisplayGrid.DataBind();
+                }
             }
             catch (Exception ex)
             {
@@ -392,7 +403,14 @@ namespace IMS
         {
             Session["OrderNumber"] = null;
             Session["FromViewPlacedOrders"] = "false";
-            Response.Redirect("WarehouseMain.aspx");
+            if (Convert.ToInt32(Session["UserSys"]).Equals(1))
+            {
+                Response.Redirect("WarehouseMain.aspx", false);
+            }
+            else
+            {
+                Response.Redirect("StoreMain.aspx", false);
+            }
         }
 
         protected void StockDisplayGrid_RowDataBound(object sender, GridViewRowEventArgs e)
