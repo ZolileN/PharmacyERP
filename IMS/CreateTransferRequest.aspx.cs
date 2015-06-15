@@ -35,48 +35,51 @@ namespace IMS.StoreManagement.StoreRequests
 
         private void BindGrid()
         {
-            DataSet ds = new DataSet();
+            dgvCreateTransfer.DataSource = dtStatic;
+            dgvCreateTransfer.DataBind();
+
+
             #region Display Products
-            try
-            {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
-                SqlCommand command = new SqlCommand("sp_GetTransferDetails_TranferID", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                int TransferNo = 0;
+            //try
+            //{
+            //    if (connection.State == ConnectionState.Closed)
+            //    {
+            //        connection.Open();
+            //    }
+            //    SqlCommand command = new SqlCommand("sp_GetTransferDetails_TranferID", connection);
+            //    command.CommandType = CommandType.StoredProcedure;
+            //    int TransferNo = 0;
 
 
-                if (int.TryParse(Session["TransferNo"].ToString(), out TransferNo))
-                {
-                    command.Parameters.AddWithValue("@TranferID", TransferNo);
-                }
+            //    if (int.TryParse(Session["TransferNo"].ToString(), out TransferNo))
+            //    {
+            //        command.Parameters.AddWithValue("@TranferID", TransferNo);
+            //    }
 
                 
-                SqlDataAdapter sA = new SqlDataAdapter(command);
-                sA.Fill(ds);
-                Session["dsTransfer"] = ds;
+            //    SqlDataAdapter sA = new SqlDataAdapter(command);
+            //    sA.Fill(ds);
+            //    Session["dsTransfer"] = ds;
 
-                dgvCreateTransfer.DataSource = null;
-                dgvCreateTransfer.DataSource = ds.Tables[0];
-                dgvCreateTransfer.DataBind();
+            //    dgvCreateTransfer.DataSource = null;
+            //    dgvCreateTransfer.DataSource = ds.Tables[0];
+            //    dgvCreateTransfer.DataBind();
 
-                if (dgvCreateTransfer.DataSource == null)
-                {
-                    Session["FirstOrderTransfer"] = false;
-                }
+            //    if (dgvCreateTransfer.DataSource == null)
+            //    {
+            //        Session["FirstOrderTransfer"] = false;
+            //    }
 
  
-            }
-            catch (Exception ex)
-            {
+            //}
+            //catch (Exception ex)
+            //{
 
-            }
-            finally
-            {
-                connection.Close();
-            }
+            //}
+            //finally
+            //{
+            //    connection.Close();
+            //}
             #endregion
 
         }
@@ -431,64 +434,10 @@ namespace IMS.StoreManagement.StoreRequests
         {
             try
             {
-                DataSet stockDet;
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
-
                 int rowindex = e.RowIndex;
-                Label lblTransferDetailID = (Label)dgvCreateTransfer.Rows[rowindex].FindControl("TransferDetailID");
-                int TansferDetailID = 0;
-                int.TryParse(lblTransferDetailID.Text.ToString(), out TansferDetailID);
-
-                Label lblSystemID = (Label)dgvCreateTransfer.Rows[rowindex].FindControl("lblSystemID");
-                int StoredAt = 0;
-                int.TryParse(lblSystemID.Text.ToString(), out StoredAt);
-
-                Label lblProductID = (Label)dgvCreateTransfer.Rows[rowindex].FindControl("lblProductID");
-                int ProductID = 0;
-                int.TryParse(lblProductID.Text.ToString(), out ProductID);
-
-                Label lblTransferedQty = (Label)dgvCreateTransfer.Rows[rowindex].FindControl("TransferedQty");
-                int TransferedQty = 0;
-                int.TryParse(lblTransferedQty.Text.ToString(), out TransferedQty);
-
-
-                #region Query stock
-                SqlCommand command = new SqlCommand("sp_GetStockBy_TransferDetail", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@p_TransferDetail", TansferDetailID);
-                command.Parameters.AddWithValue("@p_StoredAt", int.Parse(Session["UserSys"].ToString()));
-
-                DataSet ds = new DataSet();
-                SqlDataAdapter dA = new SqlDataAdapter(command);
-                dA.Fill(ds);
-                stockDet = ds;
-                #endregion
-
-                #region Update Stock (Add Stock back to store)
-
-                //command = new SqlCommand("Sp_UpdateStockBy_StockID", connection);
-                //command.CommandType = CommandType.StoredProcedure;
-                //command.Parameters.AddWithValue("@p_StockID", int.Parse(stockDet.Tables[0].Rows[0]["StockID"].ToString()));
-                //command.Parameters.AddWithValue("@p_quantity", TransferedQty);
-                //command.Parameters.AddWithValue("@p_Action", "Add");
-                //command.ExecuteNonQuery();
-
-                #endregion
-
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
-                SqlCommand sqCommmand = new SqlCommand("sp_DeleteFromtblTransferDetails_TransferReceive", connection);
-                sqCommmand.CommandType = CommandType.StoredProcedure;
-                sqCommmand.Parameters.AddWithValue("@P_TransferDetailsId", TansferDetailID);
-                sqCommmand.ExecuteNonQuery();
-
+                dtStatic.Rows[rowindex].Delete();
+                dtStatic.AcceptChanges();
                 BindGrid();
-
             }
             catch
             {
@@ -499,9 +448,67 @@ namespace IMS.StoreManagement.StoreRequests
                 connection.Close();
                 BindGrid();
             }
-
-
         }
+            //    DataSet stockDet;
+            //    if (connection.State == ConnectionState.Closed)
+            //    {
+            //        connection.Open();
+            //    }
+
+
+                
+            //    Label lblTransferDetailID = (Label)dgvCreateTransfer.Rows[rowindex].FindControl("TransferDetailID");
+            //    int TansferDetailID = 0;
+            //    int.TryParse(lblTransferDetailID.Text.ToString(), out TansferDetailID);
+
+            //    Label lblSystemID = (Label)dgvCreateTransfer.Rows[rowindex].FindControl("lblSystemID");
+            //    int StoredAt = 0;
+            //    int.TryParse(lblSystemID.Text.ToString(), out StoredAt);
+
+            //    Label lblProductID = (Label)dgvCreateTransfer.Rows[rowindex].FindControl("lblProductID");
+            //    int ProductID = 0;
+            //    int.TryParse(lblProductID.Text.ToString(), out ProductID);
+
+            //    Label lblTransferedQty = (Label)dgvCreateTransfer.Rows[rowindex].FindControl("TransferedQty");
+            //    int TransferedQty = 0;
+            //    int.TryParse(lblTransferedQty.Text.ToString(), out TransferedQty);
+
+
+            //    #region Query stock
+            //    SqlCommand command = new SqlCommand("sp_GetStockBy_TransferDetail", connection);
+            //    command.CommandType = CommandType.StoredProcedure;
+            //    command.Parameters.AddWithValue("@p_TransferDetail", TansferDetailID);
+            //    command.Parameters.AddWithValue("@p_StoredAt", int.Parse(Session["UserSys"].ToString()));
+
+            //    DataSet ds = new DataSet();
+            //    SqlDataAdapter dA = new SqlDataAdapter(command);
+            //    dA.Fill(ds);
+            //    stockDet = ds;
+            //    #endregion
+
+            //    #region Update Stock (Add Stock back to store)
+
+            //    //command = new SqlCommand("Sp_UpdateStockBy_StockID", connection);
+            //    //command.CommandType = CommandType.StoredProcedure;
+            //    //command.Parameters.AddWithValue("@p_StockID", int.Parse(stockDet.Tables[0].Rows[0]["StockID"].ToString()));
+            //    //command.Parameters.AddWithValue("@p_quantity", TransferedQty);
+            //    //command.Parameters.AddWithValue("@p_Action", "Add");
+            //    //command.ExecuteNonQuery();
+
+            //    #endregion
+
+            //    if (connection.State == ConnectionState.Closed)
+            //    {
+            //        connection.Open();
+            //    }
+            //    SqlCommand sqCommmand = new SqlCommand("sp_DeleteFromtblTransferDetails_TransferReceive", connection);
+            //    sqCommmand.CommandType = CommandType.StoredProcedure;
+            //    sqCommmand.Parameters.AddWithValue("@P_TransferDetailsId", TansferDetailID);
+            //    sqCommmand.ExecuteNonQuery();
+
+            //    BindGrid();
+
+      
 
         protected void dgvCreateTransfer_RowEditing(object sender, GridViewEditEventArgs e)
         {
@@ -516,49 +523,51 @@ namespace IMS.StoreManagement.StoreRequests
             {
                 if (e.CommandName == "Edit")
                 {
-                    int rowindex = Convert.ToInt32(e.CommandArgument.ToString());
-                    int PrevtransferdQty = 0;
-                    int.TryParse(((Label)dgvCreateTransfer.Rows[rowindex].FindControl("TransferedQty")).Text, out PrevtransferdQty);
-                    Session["PrevtransferdQty"] = PrevtransferdQty;
+                    //int rowindex = Convert.ToInt32(e.CommandArgument.ToString());
+                    //int PrevtransferdQty = 0;
+                    //int.TryParse(((Label)dgvCreateTransfer.Rows[rowindex].FindControl("TransferedQty")).Text, out PrevtransferdQty);
+                    //Session["PrevtransferdQty"] = PrevtransferdQty;
                 }
                 else if (e.CommandName == "UpdateStock")
                 {
                     int rowindex = dgvCreateTransfer.EditIndex;
 
-                    Label lblTransferDetailID = (Label)dgvCreateTransfer.Rows[rowindex].FindControl("TransferDetailID");
-                    int TansferDetailID = 0;
-                    int.TryParse(lblTransferDetailID.Text.ToString(), out TansferDetailID);
+                    //Label lblTransferDetailID = (Label)dgvCreateTransfer.Rows[rowindex].FindControl("TransferDetailID");
+                    //int TansferDetailID = 0;
+                    //int.TryParse(lblTransferDetailID.Text.ToString(), out TansferDetailID);
 
-                    Label lblProductID = (Label)dgvCreateTransfer.Rows[rowindex].FindControl("lblProductID");
-                    int ProductID = 0;
-                    int.TryParse(lblProductID.Text.ToString(), out ProductID);
+                    //Label lblProductID = (Label)dgvCreateTransfer.Rows[rowindex].FindControl("lblProductID");
+                    //int ProductID = 0;
+                    //int.TryParse(lblProductID.Text.ToString(), out ProductID);
 
                     TextBox tbTransferedQty = (TextBox)dgvCreateTransfer.Rows[rowindex].FindControl("txtTransferQty");
                     int TransferedQty = 0;
                     int.TryParse(tbTransferedQty.Text.ToString(), out TransferedQty);
 
-                    connection.Open();
+                    dtStatic.Rows[0]["TransferedQty"] = TransferedQty;
+                    dtStatic.AcceptChanges();
+                     
 
                     #region remove entry from sales order receiving
+                    //connection.Open();
+                    //SqlCommand command = new SqlCommand();
+                    //command = new SqlCommand("sp_DeleteTransferDetails", connection);
+                    //command.CommandType = CommandType.StoredProcedure;
+                    //command.Parameters.AddWithValue("@p_TransferDetailID", TansferDetailID);
+                    //command.Parameters.AddWithValue("@p_ProductID", ProductID);
+                    //command.ExecuteNonQuery();
+                    //#endregion
 
-                    SqlCommand command = new SqlCommand();
-                    command = new SqlCommand("sp_DeleteTransferDetails", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_TransferDetailID", TansferDetailID);
-                    command.Parameters.AddWithValue("@p_ProductID", ProductID);
-                    command.ExecuteNonQuery();
-                    #endregion
+                    //#region Update entry in sales order detail
+                    //command = new SqlCommand();
+                    //command = new SqlCommand("sp_UpdateTransferDetails", connection);
+                    //command.CommandType = CommandType.StoredProcedure;
+                    //command.Parameters.AddWithValue("@p_TransferDetailID", TansferDetailID);
+                    //command.Parameters.AddWithValue("@p_TransferedQuantity", TransferedQty);
 
-                    #region Update entry in sales order detail
-                    command = new SqlCommand();
-                    command = new SqlCommand("sp_UpdateTransferDetails", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_TransferDetailID", TansferDetailID);
-                    command.Parameters.AddWithValue("@p_TransferedQuantity", TransferedQty);
+                    //command.ExecuteNonQuery();
 
-                    command.ExecuteNonQuery();
 
-                    
 
                     #endregion
                 }
@@ -569,7 +578,7 @@ namespace IMS.StoreManagement.StoreRequests
             }
             finally
             {
-                connection.Close();
+                //connection.Close();
                 dgvCreateTransfer.EditIndex = -1;
                 BindGrid();
             }
