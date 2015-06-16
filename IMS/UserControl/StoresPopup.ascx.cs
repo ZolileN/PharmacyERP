@@ -215,6 +215,9 @@ namespace IMS.UserControl
         {
             DataSet dsResults = new DataSet();
             int ProductID = int.Parse(Session["ProductId"].ToString());
+            int LogedInStoreID;
+            int.TryParse(Session["UserSys"].ToString(), out LogedInStoreID);
+
             if(connection.State == ConnectionState.Closed)
             {
                 connection.Open();
@@ -222,6 +225,7 @@ namespace IMS.UserControl
             SqlCommand command = new SqlCommand("sp_GetStoreByProductID", connection); 
             command.CommandType = CommandType.StoredProcedure;
 
+            command.Parameters.AddWithValue("@p_LogedInStoreID", LogedInStoreID);
             command.Parameters.AddWithValue("@ProductID", ProductID);
             SqlDataAdapter da = new SqlDataAdapter(command);
             da.Fill(dsResults);

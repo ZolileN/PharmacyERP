@@ -198,7 +198,7 @@ namespace IMS.StoreManagement.StoreRequests
                                         command.Parameters.AddWithValue("@p_TransferBy", p_TransferBy);
                                     }
 
-                                    command.Parameters.AddWithValue("@p_TransferStatus", "Initiate");
+                                    command.Parameters.AddWithValue("@p_TransferStatus", "Initiated");
                                     DataTable dt = new DataTable();
                                     SqlDataAdapter dA = new SqlDataAdapter(command);
                                     dA.Fill(dt);
@@ -249,7 +249,7 @@ namespace IMS.StoreManagement.StoreRequests
                                     }
 
 
-                                    command.Parameters.AddWithValue("@p_TransferStatus", "Initiate");
+                                    command.Parameters.AddWithValue("@p_TransferStatus", "Initiated");
 
                                     DataSet LinkResult = new DataSet();
                                     SqlDataAdapter sA = new SqlDataAdapter(command);
@@ -354,7 +354,7 @@ namespace IMS.StoreManagement.StoreRequests
                                         }
 
 
-                                        command.Parameters.AddWithValue("@p_TransferStatus", "Initiate");
+                                        command.Parameters.AddWithValue("@p_TransferStatus", "Initiated");
 
                                         DataSet LinkResult = new DataSet();
                                         SqlDataAdapter sA = new SqlDataAdapter(command);
@@ -523,23 +523,13 @@ namespace IMS.StoreManagement.StoreRequests
             {
                 if (e.CommandName == "Edit")
                 {
-                    //int rowindex = Convert.ToInt32(e.CommandArgument.ToString());
-                    //int PrevtransferdQty = 0;
-                    //int.TryParse(((Label)dgvCreateTransfer.Rows[rowindex].FindControl("TransferedQty")).Text, out PrevtransferdQty);
-                    //Session["PrevtransferdQty"] = PrevtransferdQty;
+                     
                 }
                 else if (e.CommandName == "UpdateStock")
                 {
                     int rowindex = dgvCreateTransfer.EditIndex;
-
-                    //Label lblTransferDetailID = (Label)dgvCreateTransfer.Rows[rowindex].FindControl("TransferDetailID");
-                    //int TansferDetailID = 0;
-                    //int.TryParse(lblTransferDetailID.Text.ToString(), out TansferDetailID);
-
-                    //Label lblProductID = (Label)dgvCreateTransfer.Rows[rowindex].FindControl("lblProductID");
-                    //int ProductID = 0;
-                    //int.TryParse(lblProductID.Text.ToString(), out ProductID);
-
+                     
+                    
                     TextBox tbTransferedQty = (TextBox)dgvCreateTransfer.Rows[rowindex].FindControl("txtTransferQty");
                     int TransferedQty = 0;
                     int.TryParse(tbTransferedQty.Text.ToString(), out TransferedQty);
@@ -578,7 +568,7 @@ namespace IMS.StoreManagement.StoreRequests
             }
             finally
             {
-                //connection.Close();
+                
                 dgvCreateTransfer.EditIndex = -1;
                 BindGrid();
             }
