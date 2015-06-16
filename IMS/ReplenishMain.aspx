@@ -12,7 +12,7 @@
 
         <tbody>
             <tr>
-        	<td> <h4 id="topHead">Replenish ( Movement )</h4></td>
+        	<td> <h4 id="topHead"><asp:Label ID="lblReplenishHeader" runat="server" Text="Replenish ( Movement )"></asp:Label></h4></td>
             <td align="right">
             <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default" Text="Back" OnClick="btnBack_Click" />
 		    </td>
@@ -71,5 +71,11 @@
          
          <img src="images/po-img.png" width="344" height="344" class="poImg">
          <br />
-
+          <script src="Scripts/jquery.js"  type="text/javascript"></script>
+          <script src="Scripts/jquery-ui.js" type="text/javascript"></script>
+          <link rel="stylesheet" href="Style/jquery-ui.css" />
+           <script>
+               $(function () { $("#<%= txtFromDate.ClientID %>").datepicker(); });
+               $(function () { $("#<%= txtToDate.ClientID %>").datepicker(); });
+          </script>
 </asp:Content>

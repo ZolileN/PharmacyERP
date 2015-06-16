@@ -23,22 +23,48 @@ namespace IMS
         {
             if(!IsPostBack)
             {
-                String Parameter = Request.QueryString["Param"].ToString();
-                if (Parameter.Equals("Calculation"))
+                String Parameter = "";
+                if (Request.QueryString["Param"] != null)
                 {
+                    Parameter = Request.QueryString["Param"].ToString();
+                    if(Parameter.Equals("Movement"))
+                    {
+                        Session["parameter"] = "Movement";
+                    }
+                    else if (Parameter.Equals("Calculation"))
+                    {
+                        Session["parameter"] = "Calculation";
+                    }
+                }
+
+                if (Parameter.Equals("Calculation") || (Session["parameter"]!=null && Session["parameter"].ToString().Equals("Calculation")))
+                {
+                    Session["parameter"] = "Calculation";
+
                     lblSaleDates.Visible = true;
                     lblFromDate.Visible = true;
                     lblToDate.Visible = true;
                     lblReplenishDays.Visible = true;
-
+                    lblReplenishHeader.Text = "Replenish ( Calculation )";
                     txtFromDate.Visible = true;
                     txtReplenishDays.Visible = true;
                     txtToDate.Visible = true;
 
-                    Session["FromSalesDate"] = txtFromDate.Text;
-                    Session["ToSalesDate"] = txtToDate.Text;
-                    Session["ReplenishDays"]= txtReplenishDays.Text;
+                   
 
+                }
+                else
+                {
+                    Session["parameter"] = "Movement";
+                    lblReplenishHeader.Text = "Replenish ( Movement )";
+                    lblSaleDates.Visible = false;
+                    lblFromDate.Visible = false;
+                    lblToDate.Visible = false;
+                    lblReplenishDays.Visible = false;
+
+                    txtFromDate.Visible = false;
+                    txtReplenishDays.Visible = false;
+                    txtToDate.Visible = false;
                 }
                     LoadVendors();
                 
@@ -80,6 +106,7 @@ namespace IMS
         }
         protected void btnBack_Click(object sender, EventArgs e)
         {
+
             Response.Redirect("StoreMain.aspx");
         }
 
@@ -90,6 +117,10 @@ namespace IMS
 
         protected void btnGenerate_Click(object sender, EventArgs e)
         {
+            Session["FromSalesDate"] = txtFromDate.Text;
+            Session["ToSalesDate"] = txtToDate.Text;
+            Session["ReplenishDays"] = txtReplenishDays.Text;
+
             if (ddlVendorNames.SelectedItem.ToString().Equals("All Vendors"))
             {
                 Session["ReplenishVendorID"] = -1;

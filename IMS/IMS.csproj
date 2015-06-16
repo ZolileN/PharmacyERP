@@ -232,6 +232,7 @@
     <Content Include="Inventory_Print.aspx" />
     <Content Include="InvoicePrint.aspx" />
     <Content Include="InvoicePrintBonus.aspx" />
+    <Content Include="ItemRequestWarehouse.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="ManageCategory.aspx" />
     <Content Include="ManageDepartment.aspx" />
@@ -258,11 +259,164 @@
     <Content Include="PO_GENERATE.aspx" />
     <Content Include="Prod2Store.aspx" />
     <Content Include="ProductStoreSelect.aspx" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\AcceptPurchaseOrder.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\AcceptStoreRequest.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\AcceptStoreRequestEdit.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\add-category.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\add-department.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\add-product.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\add-salesman.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\add-store.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\add-sub-category.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\add-warehouse.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\AddEditVendor.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\AddStock.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\AddStockEx.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\AddStockFull.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Content\bootstrap.css" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Content\Site.css" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\CreateTransferRequest.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\DirectStorePurchase.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\DisplayOrderDetailEntries.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\DisplayOrderDetailEntriesEdit.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\edit-category.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\edit-department.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\edit-product.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\edit-salesman.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\edit-store.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\edit-sub-category.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\edit-warehouse.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\EditStockEx.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\EditVendor.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ExpiringItemsReport.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\add-icon.png" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\alert-icon-h.png" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\apt-logo.gif" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\arrow.gif" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\body-bg-login.jpg" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\body-bg-w.jpg" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\body-bg.jpg" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\btm-bg.gif" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\cancel.png" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\close-ico.png" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\close-icon.png" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\del-icon.png" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\delete-icon.png" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\edit-icon.png" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\Gakuseisean-Ivista-2-Start-Menu-Search %281%29.ico" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\Gakuseisean-Ivista-2-Start-Menu-Search.ico" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\ims-main.png" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\login-bg.png" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\logo1.png" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\Mail.png" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\po-img.png" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\search-ico.png" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\search-icon-512.png" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\update.png" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\images\view.png" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\IMSLogin.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\imsMain.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\invoice.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ItemRequest2Warehouse.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ManageCategory.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ManageDepartment.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\manageProducts.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\manageProductsFiltered.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\manageSalesman.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\manageStore.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ManageSubCategory.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ManageTransfers.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ManageTransfersN.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ManageVendor.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\manageWarehouse.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\nav.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\OrderPurchaseManual.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\OrderSalesManual.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\OrderSalesManualGrid.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\OrderSalesManualGridEdit.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\OrderSalesManual_Details.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\OrderSalesManual_DetailsEdit.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\PackingListGeneration.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\PackingListGenerationFull.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Product2Store.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Product2StoreAdd.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Product2StoreAddFull.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Product2StoreEd.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\purchase-manual.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\purchase-order.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ReceiveSalesmanRequest.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ReceiveSalesmanRequestDet.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ReceiveSalesmanRequestDetail.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ReceiveSalesmanRequestDetailsEdit.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ReceiveSalesmanRequestDetEdit.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ReceiveSalesOrder.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ReceiveSOFull.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ReceiveSOFullEdit.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ReceiveSRFull.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ReceiveSRFullEdit.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ReceiveStoreRequest.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ReceiveStoreRequestDet.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ReceiveStoreRequestDetail.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ReceiveStoreRequestDetailsEdit.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ReceiveStoreRequestDetEdit.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ReceiveTR.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ReceiveTransfersEdit.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ReceiveTRDetails.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ReceiveTREdit.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ReplanishMovement-1.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ReplanishMovement-2.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ReplanishMovement-3.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ReplanishMovement.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\replenishPO.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\replenishTR.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Scripts\bootstrap.js" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Scripts\general.js" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Scripts\jquery-ui.js" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Scripts\jquery.min.js" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Scripts\modernizr-2.6.2.js" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Scripts\respond.js" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\SelectionStock.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\SelectionStockAdd.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\SelectionStockEdit.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Send.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\SendSalesmanRequest.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\chosen.css" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\demo.css" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\css\font-awesome-ie7.css" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\css\font-awesome-ie7.min.css" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\css\font-awesome.css" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\font\fontawesome-webfont.svg" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\fonts.css" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\jquery-ui.css" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\jquery-ui.min.css" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\jquery.navgoco.css" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\popup-theme.css" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\theme.css" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\TRGrid.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\TRlGridEdit.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\TR_Accept.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\TR_AcceptAll.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\TR_Details.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\TR_DetailsEdit.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Vendor2Store.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Vendor2StoreAdd.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Vendor2StoreAddFull.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Vendor2StoreEd.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\view-product.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ViewInventory.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ViewPackingList.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ViewPlacedOrders.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ViewPlacedOrdersAccept.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ViewPlacedOrdersEdit.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ViewPurchaseOrders.html" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\ViewSalesOrders.html" />
     <Content Include="ReceiveStock.aspx" />
     <Content Include="ReceiveTransferOrder.aspx" />
     <Content Include="RecieveOrder.aspx" />
     <Content Include="RecieveSOFull.aspx" />
     <Content Include="RecieveSOFullEdit.aspx" />
+    <Content Include="RecieveTransferPrototype.aspx" />
     <Content Include="RegisterUsers.aspx" />
     <Content Include="ReplenishMain.aspx" />
     <Content Include="ReplenishMovement.aspx" />
@@ -340,6 +494,7 @@
     <Content Include="SelectionStock.aspx" />
     <Content Include="SelectStores.aspx" />
     <Content Include="SelectVendor.aspx" />
+    <Content Include="SendPrototype.aspx" />
     <Content Include="Site.Master" />
     <Content Include="SO_GENERATE.aspx" />
     <Content Include="StoreMain.aspx" />
@@ -434,6 +589,31 @@
     <Content Include="Style\font-awesome\scss\_mixins.scss" />
     <Content Include="Style\font-awesome\scss\_path.scss" />
     <Content Include="Style\font-awesome\scss\_variables.scss" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\font\fontawesome-webfont.eot" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\font\fontawesome-webfont.ttf" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\font\fontawesome-webfont.woff" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\font\FontAwesome.otf" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\less\bootstrap.less" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\less\core.less" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\less\extras.less" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\less\font-awesome-ie7.less" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\less\font-awesome.less" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\less\icons.less" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\less\mixins.less" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\less\path.less" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\less\variables.less" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\scss\font-awesome-ie7.scss" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\scss\_bootstrap.scss" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\scss\_core.scss" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\scss\_extras.scss" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\scss\_icons.scss" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\scss\_mixins.scss" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\scss\_path.scss" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\font-awesome\scss\_variables.scss" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\fonts\cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\fonts\MTP_ySUJH_bn48VBG8sNSnhCUOGz7vYGh680lGh-uXM.woff" />
+    <Content Include="Prototype Material %286-13-2015%29\STORE\Style\fonts\s-BiyweUPV0v-yRb-cjciBsxEYwM7FgeyaSgU71cLG0.woff" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -627,6 +807,13 @@
     </Compile>
     <Compile Include="InvoicePrintBonus.aspx.designer.cs">
       <DependentUpon>InvoicePrintBonus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ItemRequestWarehouse.aspx.cs">
+      <DependentUpon>ItemRequestWarehouse.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ItemRequestWarehouse.aspx.designer.cs">
+      <DependentUpon>ItemRequestWarehouse.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -827,6 +1014,13 @@
     <Compile Include="RecieveSOFullEdit.aspx.designer.cs">
       <DependentUpon>RecieveSOFullEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="RecieveTransferPrototype.aspx.cs">
+      <DependentUpon>RecieveTransferPrototype.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RecieveTransferPrototype.aspx.designer.cs">
+      <DependentUpon>RecieveTransferPrototype.aspx</DependentUpon>
+    </Compile>
     <Compile Include="RegisterUsers.aspx.cs">
       <DependentUpon>RegisterUsers.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -924,6 +1118,13 @@
     </Compile>
     <Compile Include="SelectVendor.aspx.designer.cs">
       <DependentUpon>SelectVendor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SendPrototype.aspx.cs">
+      <DependentUpon>SendPrototype.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SendPrototype.aspx.designer.cs">
+      <DependentUpon>SendPrototype.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>

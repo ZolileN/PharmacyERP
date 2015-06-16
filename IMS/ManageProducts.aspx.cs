@@ -40,11 +40,22 @@ namespace IMS
                 int id;
                 if (int.TryParse(Session["UserSys"].ToString(), out id))
                 {
-                    String Query = "Select * FROM tbl_ProductMaster Where Status = 1";
-
                     connection.Open();
-                    SqlCommand command = new SqlCommand(Query, connection);
-                    SqlDataAdapter SA = new SqlDataAdapter(command);
+                    String Query;
+                    SqlCommand command;
+                    if (Convert.ToInt32(Session["UserSys"]).Equals(1))
+                    {
+                        Query = "Select * FROM tbl_ProductMaster Where Status = 1";
+                        command = new SqlCommand(Query, connection);                        
+                    }
+                    else
+                    {
+                        command = new SqlCommand("Sp_GetProductStoreMapping", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@p_StoreID", id);
+                    }
+                    SqlDataAdapter SA = new SqlDataAdapter(command);                    
+                   
                     ProductSet = null;
                     SA.Fill(ds);
                     Session["dsProducts_MP"] = ds;
@@ -62,6 +73,21 @@ namespace IMS
                 connection.Close();
             }
             #endregion
+        }
+        protected Boolean IsWarehouse()
+        {
+            int id;
+            int.TryParse(Session["UserSys"].ToString(), out id);
+            
+                if (Convert.ToInt32(Session["UserSys"]).Equals(1))
+                {
+                    return true;
+                }
+                else 
+                {
+                    return false;
+                }
+            
         }
         protected void btnManageProducts_Click(object sender, EventArgs e)
         {
@@ -88,7 +114,15 @@ namespace IMS
 
         protected void btnBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("ManageInventory.aspx", false);
+            if (Convert.ToInt32(Session["UserSys"]).Equals(1))
+            {
+                Response.Redirect("WarehouseMain.aspx", false);
+            }
+            else
+            {
+                Response.Redirect("StoreMain.aspx", false);
+            }
+            //Response.Redirect("ManageInventory.aspx", false);
         }
 
         protected void btnStocks_Click(object sender, EventArgs e)
@@ -363,7 +397,14 @@ namespace IMS
 
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("WarehouseMain.aspx", false);
+            if (Convert.ToInt32(Session["UserSys"]).Equals(1))
+            {
+                Response.Redirect("WarehouseMain.aspx", false);
+            }
+            else
+            {
+                Response.Redirect("StoreMain.aspx", false);
+            }
         }
 
         

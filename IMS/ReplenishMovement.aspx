@@ -14,7 +14,7 @@
       <table width="100%">
 
         <tbody><tr>
-        	<td> <h4 id="topHead">Replenish ( Movement )</h4></td>
+        	<td> <h4 id="topHead"><asp:Label ID="lblReplenishHeader" runat="server" Text="Replenish ( Movement )"></asp:Label></h4></td>
             <td align="right">
             
            <!-- onClick="window.location.href='purchase-order.html'" -->
