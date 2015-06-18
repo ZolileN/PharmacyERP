@@ -187,9 +187,13 @@
                                     
                                    
 	           <li><a href="#">All Reports</a></li>
+               <li><a href="rpt_SalesSummary_Selection.aspx">Sales Summary Report</a>
 	           <li class="hasChild"><a href="#">Sale Reports</a>
 		            <ul>
-			<li class="hasChild"><a href="#">Summary Sales Daily Reports</a>
+                        
+                
+
+			    <li class="hasChild"><a href="#">Summary Sales Daily Reports</a>
 				<ul>
                 	<li>
 						<a href="#"> Daily Sales by Sales Rep</a>

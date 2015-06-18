@@ -233,6 +233,10 @@
     <Content Include="Inventory_Print.aspx" />
     <Content Include="InvoicePrint.aspx" />
     <Content Include="InvoicePrintBonus.aspx" />
+
+    <Content Include="ItemRequestWarehouse.aspx" />
+    <Content Include="ItemRequestWH.aspx" />
+
     <Content Include="Login.aspx" />
     <Content Include="ManageCategory.aspx" />
     <Content Include="ManageDepartment.aspx" />
@@ -272,6 +276,10 @@
     <Content Include="ReportFormat_simple.aspx" />
     <Content Include="Reports.aspx" />
     <Content Include="Result.aspx" />
+    <Content Include="rpt_SalesSummaryDisplay.aspx" />
+    <Content Include="rpt_SalesSummary_Selection.aspx" />
+    <Content Include="UserControl\rpt_ucCategory.ascx" />
+    <Content Include="UserControl\rpt_ucDepartment.ascx" />
     <Content Include="SalemanMangment.aspx" />
     <Content Include="SalesmanManagement.aspx" />
     <Content Include="SalesOrderInvoice.aspx" />
@@ -342,6 +350,10 @@
     <Content Include="SelectionStock.aspx" />
     <Content Include="SelectStores.aspx" />
     <Content Include="SelectVendor.aspx" />
+
+    <Content Include="SelectWarehouse.aspx" />
+    <Content Include="SendPrototype.aspx" />
+
     <Content Include="Site.Master" />
     <Content Include="SO_GENERATE.aspx" />
     <Content Include="StoreMain.aspx" />
@@ -369,6 +381,9 @@
     <Content Include="UserControl\ProductSearch.ascx" />
     <Content Include="UserControl\ProductsPopupGrid.ascx" />
     <Content Include="UserControl\Product_Search_Popup.ascx" />
+    <Content Include="UserControl\rpt_ucCustomers.ascx" />
+    <Content Include="UserControl\rpt_ucSalesProduct.ascx" />
+    <Content Include="UserControl\rpt_ucSubCategory.ascx" />
     <Content Include="UserControl\StoresPopup.ascx" />
     <Content Include="UserControl\SuperMasterProducts.ascx" />
     <Content Include="UserControl\uc_printBarcode.ascx" />
@@ -637,6 +652,22 @@
     <Compile Include="InvoicePrintBonus.aspx.designer.cs">
       <DependentUpon>InvoicePrintBonus.aspx</DependentUpon>
     </Compile>
+
+    <Compile Include="ItemRequestWarehouse.aspx.cs">
+      <DependentUpon>ItemRequestWarehouse.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ItemRequestWarehouse.aspx.designer.cs">
+      <DependentUpon>ItemRequestWarehouse.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ItemRequestWH.aspx.cs">
+      <DependentUpon>ItemRequestWH.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ItemRequestWH.aspx.designer.cs">
+      <DependentUpon>ItemRequestWH.aspx</DependentUpon>
+    </Compile>
+
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -892,6 +923,34 @@
     <Compile Include="Result.aspx.designer.cs">
       <DependentUpon>Result.aspx</DependentUpon>
     </Compile>
+    <Compile Include="rpt_SalesSummaryDisplay.aspx.cs">
+      <DependentUpon>rpt_SalesSummaryDisplay.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rpt_SalesSummaryDisplay.aspx.designer.cs">
+      <DependentUpon>rpt_SalesSummaryDisplay.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="rpt_SalesSummary_Selection.aspx.cs">
+      <DependentUpon>rpt_SalesSummary_Selection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rpt_SalesSummary_Selection.aspx.designer.cs">
+      <DependentUpon>rpt_SalesSummary_Selection.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\rpt_ucCategory.ascx.cs">
+      <DependentUpon>rpt_ucCategory.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControl\rpt_ucCategory.ascx.designer.cs">
+      <DependentUpon>rpt_ucCategory.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\rpt_ucDepartment.ascx.cs">
+      <DependentUpon>rpt_ucDepartment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControl\rpt_ucDepartment.ascx.designer.cs">
+      <DependentUpon>rpt_ucDepartment.ascx</DependentUpon>
+    </Compile>
     <Compile Include="SalemanMangment.aspx.cs">
       <DependentUpon>SalemanMangment.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -941,6 +1000,22 @@
     <Compile Include="SelectVendor.aspx.designer.cs">
       <DependentUpon>SelectVendor.aspx</DependentUpon>
     </Compile>
+
+    <Compile Include="SelectWarehouse.aspx.cs">
+      <DependentUpon>SelectWarehouse.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SelectWarehouse.aspx.designer.cs">
+      <DependentUpon>SelectWarehouse.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SendPrototype.aspx.cs">
+      <DependentUpon>SendPrototype.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SendPrototype.aspx.designer.cs">
+      <DependentUpon>SendPrototype.aspx</DependentUpon>
+    </Compile>
+
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1046,6 +1121,27 @@
     </Compile>
     <Compile Include="UserControl\Product_Search_Popup.ascx.designer.cs">
       <DependentUpon>Product_Search_Popup.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\rpt_ucCustomers.ascx.cs">
+      <DependentUpon>rpt_ucCustomers.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControl\rpt_ucCustomers.ascx.designer.cs">
+      <DependentUpon>rpt_ucCustomers.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\rpt_ucSalesProduct.ascx.cs">
+      <DependentUpon>rpt_ucSalesProduct.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControl\rpt_ucSalesProduct.ascx.designer.cs">
+      <DependentUpon>rpt_ucSalesProduct.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\rpt_ucSubCategory.ascx.cs">
+      <DependentUpon>rpt_ucSubCategory.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControl\rpt_ucSubCategory.ascx.designer.cs">
+      <DependentUpon>rpt_ucSubCategory.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserControl\StoresPopup.ascx.cs">
       <DependentUpon>StoresPopup.ascx</DependentUpon>
