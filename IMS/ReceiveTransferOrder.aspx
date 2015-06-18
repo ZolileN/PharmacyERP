@@ -20,7 +20,7 @@
      
      <br>
 
-    <asp:Repeater ID="repReceiveTransfer" runat="server" OnItemDataBound="repReceiveTransfer_ItemDataBound">
+    <asp:Repeater ID="repReceiveTransfer" runat="server" OnItemDataBound="repReceiveTransfer_ItemDataBound" OnItemCommand="repReceiveTransfer_ItemCommand">
 
         <ItemTemplate>
             <table class="table table-striped table-bordered table-condensed" rules="all" id="MainContent_StockDisplayGrid" style="border-collapse: collapse;" border="1" cellspacing="0">
@@ -29,10 +29,10 @@
                         <td colspan="10">
                             <h4 class="fl-l">
 
-                                <asp:Literal ID="litStoreName" runat="server" Text='<%# Eval("RequestedBy") %>'></asp:Literal>
+                                <asp:Literal ID="litStoreName" runat="server" ></asp:Literal>
                             </h4>
-                            <asp:Button ID="btnGenTransfer" runat="server" CssClass="btn btn-info fl-r" Text="Generate Transfer" />
-                            <asp:Button ID="btnAcceptTransferOrder" runat="server" CssClass="btn btn-success fl-r acceptAll" Text="Accept All" />
+                            <asp:Button ID="btnGenTransfer" runat="server" CssClass="btn btn-info fl-r" Text="Generate Transfer" CommandName="GenTransferOrder" />
+                            <asp:Button ID="btnAcceptTransferOrder" runat="server" CssClass="btn btn-success fl-r acceptAll" Text="Accept All" OnClick="btnAcceptTransferOrder_Click" CommandName="AcceptTransferOrder"/>
 
                         </td>
                     </tr>
@@ -40,7 +40,7 @@
 
                     <tr>
                         <asp:GridView ID="dgvReceiveTransfer" CssClass="table table-striped table-bordered table-condensed" Visible="true" runat="server" AllowPaging="false" PageSize="10"
-                            AutoGenerateColumns="false" OnRowCommand="dgvReceiveTransfer_RowCommand">
+                            AutoGenerateColumns="false" OnRowCommand="dgvReceiveTransfer_RowCommand" OnRowDataBound="dgvReceiveTransfer_RowDataBound">
                             <Columns>
 
                                 <asp:TemplateField HeaderText="Action">

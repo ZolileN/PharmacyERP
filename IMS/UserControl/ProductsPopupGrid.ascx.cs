@@ -16,11 +16,23 @@ namespace IMS.UserControl
         string text = "";
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
+
+        public  bool isOpenedFromCreateTransferReq ;
+
+        public bool IsOpenedFromCreateTransferReq
+        {
+            set { isOpenedFromCreateTransferReq = value; }
+            get { return isOpenedFromCreateTransferReq; }
+        }
         
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                if (isOpenedFromCreateTransferReq)
+                {
+
+                }
                 BindGrid();
             }
         }
@@ -76,44 +88,40 @@ namespace IMS.UserControl
 
         public void PopulateStoreUserGrid()
         {
-            if (Session["Text"].ToString() != "%")
+            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
+            #region Getting Product Details
+            try
             {
-                DataTable dt = new DataTable();
-                DataSet ds = new DataSet();
-                #region Getting Product Details
-                try
+                int id;
+                if (int.TryParse(Session["UserSys"].ToString(), out id))
                 {
-                    int id;
-                    if (int.TryParse(Session["UserSys"].ToString(), out id))
-                    {
-                        DataSet ds2 = new DataSet();
-                        connection.Open();
-                        SqlCommand command = new SqlCommand("dbo.Sp_GetStockByName_OtherStoreStock", connection);
-                        command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@p_prodName", Session["Text"].ToString());
-                        command.Parameters.AddWithValue("@p_SysID", id);
-                        command.Parameters.AddWithValue("@p_isStore", false);
+                    DataSet ds2 = new DataSet();
+                    connection.Open();
+                    SqlCommand command = new SqlCommand("dbo.Sp_GetStockByName_OtherStoreStock", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@p_prodName", Session["Text"].ToString());
+                    command.Parameters.AddWithValue("@p_SysID", id);
+                    command.Parameters.AddWithValue("@p_isStore", false);
 
-                        SqlDataAdapter SA = new SqlDataAdapter(command);
+                    SqlDataAdapter SA = new SqlDataAdapter(command);
 
-                        SA.Fill(ds2);
-                        Session["dsProducts_ProdPopUp"] = ds2;
+                    SA.Fill(ds2);
+                    Session["dsProducts_ProdPopUp"] = ds2;
 
-                        StockDisplayGrid.DataSource = ds2;
-                        StockDisplayGrid.DataBind();
-                    }
-
+                    StockDisplayGrid.DataSource = ds2;
+                    StockDisplayGrid.DataBind();
                 }
-                catch (Exception ex)
-                {
-                }
-                finally
-                {
-                    connection.Close();
-                }
-                #endregion
+
             }
-
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                connection.Close();
+            }
+            #endregion
         }
         public void BindGrid()
         {
@@ -163,18 +171,28 @@ namespace IMS.UserControl
         protected void StockDisplayGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             StockDisplayGrid.PageIndex = e.NewPageIndex;
-            if (Session["Text"] != null)
+
+            if (Session["IsOpenedFromCreateTransferReq"] != null && (bool)Session["IsOpenedFromCreateTransferReq"])
             {
-                PopulateGrid();
+                PopulateStoreUserGrid();
+
             }
             else
             {
-                BindGrid();
+                if (Session["Text"] != null)
+                {
+                    PopulateGrid();
+                }
+                else
+                {
+                    BindGrid();
+                }
             }
-            PopulateStoreUserGrid();
+           
+            
 
-            //ModalPopupExtender mpe = (ModalPopupExtender)this.Parent.FindControl("mpeCongratsMessageDiv");
-            //mpe.Show();
+            ModalPopupExtender mpe = (ModalPopupExtender)this.Parent.FindControl("mpeCongratsMessageDiv");
+            mpe.Show();
         }
 
         protected void StockDisplayGrid_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)

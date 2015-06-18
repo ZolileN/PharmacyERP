@@ -191,7 +191,7 @@ namespace IMS
 
                     if (txtCP <= 0 || txtSP <= 0)
                     {
-                        WebMessageBoxUtil.Show("Entered value cannot be negative");
+                        WebMessageBoxUtil.Show("Invalid Cost/Sale price.");
                         StockDisplayGrid.EditIndex = -1;
                         BindGrid();
                         return;
@@ -199,7 +199,7 @@ namespace IMS
 
                     if (recQuan < 0 || expQuan < 0 || defQuan < 0 || retQuan < 0)
                     {
-                        WebMessageBoxUtil.Show("Entered value cannot be negative");
+                        WebMessageBoxUtil.Show("All values(Received/Expired/Defected/Returned Quantities) cannot be zero/negative");
                         StockDisplayGrid.EditIndex = -1;
                         BindGrid();
                         return;

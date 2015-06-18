@@ -151,7 +151,7 @@
  
                       <asp:TemplateField HeaderText="Quantity"  HeaderStyle-Width ="150px">
                         <ItemTemplate>
-                            <asp:Label ID="TransferedQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("TransferedQty") %>'  Width="140px"></asp:Label>
+                            <asp:Label ID="TransferedQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("RequestedQty") %>'  Width="140px"></asp:Label>
                         </ItemTemplate>
 
                           <EditItemTemplate>

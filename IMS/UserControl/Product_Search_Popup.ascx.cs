@@ -587,8 +587,9 @@ namespace IMS.UserControl
                             }
                         }
                     }
-                    Session.Remove("Text");
+                    
                 }
+                Session.Remove("Text");
             }
 
         }
