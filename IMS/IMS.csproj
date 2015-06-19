@@ -233,10 +233,7 @@
     <Content Include="Inventory_Print.aspx" />
     <Content Include="InvoicePrint.aspx" />
     <Content Include="InvoicePrintBonus.aspx" />
-
-    <Content Include="ItemRequestWarehouse.aspx" />
     <Content Include="ItemRequestWH.aspx" />
-
     <Content Include="Login.aspx" />
     <Content Include="ManageCategory.aspx" />
     <Content Include="ManageDepartment.aspx" />
@@ -350,10 +347,8 @@
     <Content Include="SelectionStock.aspx" />
     <Content Include="SelectStores.aspx" />
     <Content Include="SelectVendor.aspx" />
-
     <Content Include="SelectWarehouse.aspx" />
     <Content Include="SendPrototype.aspx" />
-
     <Content Include="Site.Master" />
     <Content Include="SO_GENERATE.aspx" />
     <Content Include="StoreMain.aspx" />
@@ -652,14 +647,6 @@
     <Compile Include="InvoicePrintBonus.aspx.designer.cs">
       <DependentUpon>InvoicePrintBonus.aspx</DependentUpon>
     </Compile>
-
-    <Compile Include="ItemRequestWarehouse.aspx.cs">
-      <DependentUpon>ItemRequestWarehouse.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ItemRequestWarehouse.aspx.designer.cs">
-      <DependentUpon>ItemRequestWarehouse.aspx</DependentUpon>
-    </Compile>
     <Compile Include="ItemRequestWH.aspx.cs">
       <DependentUpon>ItemRequestWH.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -667,7 +654,6 @@
     <Compile Include="ItemRequestWH.aspx.designer.cs">
       <DependentUpon>ItemRequestWH.aspx</DependentUpon>
     </Compile>
-
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1000,7 +986,6 @@
     <Compile Include="SelectVendor.aspx.designer.cs">
       <DependentUpon>SelectVendor.aspx</DependentUpon>
     </Compile>
-
     <Compile Include="SelectWarehouse.aspx.cs">
       <DependentUpon>SelectWarehouse.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1015,7 +1000,6 @@
     <Compile Include="SendPrototype.aspx.designer.cs">
       <DependentUpon>SendPrototype.aspx</DependentUpon>
     </Compile>
-
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

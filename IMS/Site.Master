@@ -442,7 +442,7 @@
                                                 <li><a href="ReplenishMain.aspx?Param=Calculation">Replenish (Calculation)</a></li>
                                             </ul>
                                             </li>
-                                           <li><a href="#">PO Request to WareHouse</a></li>
+                                           <li><a href="SelectWarehouse.aspx">PO Request to WareHouse</a></li>
                                        </ul>
 
                                     </li>                                           
