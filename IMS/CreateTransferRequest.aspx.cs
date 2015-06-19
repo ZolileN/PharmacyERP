@@ -270,7 +270,8 @@ namespace IMS.StoreManagement.StoreRequests
                                     connection.Close();
                                 }
                                 #endregion
-
+                                int TransferDetailID = Convert.ToInt32(Session["TransferDetailID"].ToString());
+                                UpdateStockMinus(TransferDetailID, Convert.ToInt32(drDetails["ProductID"].ToString()), 0, Convert.ToInt32(drDetails["RequestedQty"].ToString()), Convert.ToInt32(dr["SystemID"].ToString()));
 
                                 Session["FirstOrderTransfer"] = true;
                             }
@@ -375,8 +376,8 @@ namespace IMS.StoreManagement.StoreRequests
                                         connection.Close();
                                     }
                                     #endregion
-
-
+                                    int TransferDetailID = Convert.ToInt32(Session["TransferDetailID"].ToString());
+                                    UpdateStockMinus(TransferDetailID, Convert.ToInt32(drDetails["ProductID"].ToString()), 0, Convert.ToInt32(drDetails["RequestedQty"].ToString()), Convert.ToInt32(dr["SystemID"].ToString()));
 
                                 }
                                 else
@@ -413,7 +414,98 @@ namespace IMS.StoreManagement.StoreRequests
              
             Response.Redirect("GenerateTransferRequest.aspx", false);
         }
-         
+
+        private void UpdateStockMinus(int TransferDetailID, int ProductID, int quantity, int Sent, int StoredAt)
+        {
+            try
+            {
+                DataSet stockDet;
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+
+                #region Query stock
+                SqlCommand command = new SqlCommand("sp_GetStockBy_TransferDetail", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_TransferDetail", TransferDetailID);
+                command.Parameters.AddWithValue("@p_StoredAt", StoredAt);
+
+                DataSet ds = new DataSet();
+                SqlDataAdapter dA = new SqlDataAdapter(command);
+                dA.Fill(ds);
+                stockDet = ds;
+                #endregion
+
+                #region Set value for ordered quantity
+                Dictionary<int, int> stockSet = new Dictionary<int, int>();
+                foreach (DataRow row in stockDet.Tables[0].Rows)
+                {
+                    int exQuan = int.Parse(row["Quantity"].ToString());
+                    if (Sent > 0 && exQuan > 0)
+                    {
+                        if (exQuan >= Sent)
+                        {
+                            stockSet.Add(int.Parse(row["StockID"].ToString()), Sent);
+                            break;
+                        }
+                        else if (exQuan < Sent)
+                        {
+                            stockSet.Add(int.Parse(row["StockID"].ToString()), exQuan);
+                            Sent = Sent - exQuan;
+                        }
+                    }
+                }
+
+
+                #endregion
+
+                #region update stock
+
+                foreach (int id in stockSet.Keys)
+                {
+                    DataView dv = stockDet.Tables[0].DefaultView;
+                    dv.RowFilter = "StockID = " + id;
+                    DataTable dt = dv.ToTable();
+
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        command = new SqlCommand("sp_EntryTransferDetails_Receive", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@p_TransferDetailID", TransferDetailID);
+                        command.Parameters.AddWithValue("@p_ProductID", dt.Rows[0]["ProductID"]);
+                        command.Parameters.AddWithValue("@p_StockID", id);
+                        command.Parameters.AddWithValue("@p_CostPrice", dt.Rows[0]["UCostPrice"]);
+                        command.Parameters.AddWithValue("@p_SalePrice", dt.Rows[0]["USalePrice"]);
+                        command.Parameters.AddWithValue("@p_Expiry", dt.Rows[0]["ExpiryDate"]);
+                        command.Parameters.AddWithValue("@p_Batch", dt.Rows[0]["BatchNumber"]);
+                        command.Parameters.AddWithValue("@p_TransferredQty", stockSet[id]);
+
+                        command.Parameters.AddWithValue("@p_RequestedQty", dt.Rows[0]["RequestedQty"]);
+
+                        command.Parameters.AddWithValue("@p_BarCode", dt.Rows[0]["BarCode"]);
+
+                        command.ExecuteNonQuery();
+
+                        //command = new SqlCommand("Sp_UpdateStockBy_StockID", connection);
+                        //command.CommandType = CommandType.StoredProcedure;
+                        //command.Parameters.AddWithValue("@p_StockID", id);
+                        //command.Parameters.AddWithValue("@p_quantity", stockSet[id]);
+                        //command.Parameters.AddWithValue("@p_Action", "Minus");
+                        //command.ExecuteNonQuery();
+                    }
+
+                }
+                #endregion
+
+
+            }
+            catch (Exception exp) { }
+            finally
+            {
+                connection.Close();
+            }
+        }
 
         protected void dgvCreateTransfer_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {

@@ -9,7 +9,7 @@
         	<td> <h4>Request Transfer</h4></td>
             
           <td align="right"> 
-              <asp:Button ID="btnUpdate" runat="server" CssClass="btn btn-success btn-large" Text="Update" />
+              <asp:Button ID="btnUpdate" runat="server" CssClass="btn btn-success btn-large" Text="Update" OnClick="btnUpdate_Click" />
               <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" />
   
             </td>
@@ -25,6 +25,13 @@
                             AutoGenerateColumns="false"  >
                             <Columns>
 
+                                <asp:TemplateField Visible="false" >
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblentryID" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("entryID") %>' Width="140px"></asp:Label>
+                                    </ItemTemplate>
+
+                                    <ItemStyle Width="150px" HorizontalAlign="Left" />
+                                </asp:TemplateField>
                                  
                                 <asp:TemplateField Visible="false" >
                                     <ItemTemplate>

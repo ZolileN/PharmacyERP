@@ -153,7 +153,17 @@ namespace IMS
                     btnEdit.Visible = false;
                     Button btnStaticAccepted = (Button)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("btnStaticAccepted");
                     btnStaticAccepted.Visible = true;
-                    UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty);
+                    if (RequestedQty != TransferedQty)
+                    {
+                        if (TransferedQty == 0)
+                        {
+                            UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty);
+                        }
+                        else
+                        {
+                            UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty);
+                        }
+                    }
                 }
                 if (e.CommandName == "DenyProductTransfer")
                 {
@@ -213,10 +223,12 @@ namespace IMS
                     GridView gvReceiveTransfer = (GridView)repReceiveTransfer.Items[0].FindControl("dgvReceiveTransfer");
                     for (int i = 0; i < gvReceiveTransfer.Rows.Count; i++)
                     {
-                        int TransferNo, TransferDetailNo, TransferedQty, ReceivedQty, AvailableQty, ProductId;
+                        int TransferNo, TransferDetailNo, RequestedQty, TransferedQty,  AvailableQty, ProductId;
                         int LogedInStoreID;
 
+
                         int.TryParse(Session["UserSys"].ToString(), out LogedInStoreID);
+
                         Label lblTransferNo = (Label)gvReceiveTransfer.Rows[i].FindControl("lblRequestNo");
                         Label lblTransferDetailsID = (Label)gvReceiveTransfer.Rows[i].FindControl("lblTransferDetailsID");
                         Label lblRequestedQty = (Label)gvReceiveTransfer.Rows[i].FindControl("lblRequestedQty");
@@ -226,11 +238,12 @@ namespace IMS
 
                         int.TryParse(lblTransferNo.Text.ToString(), out TransferNo);
                         int.TryParse(lblTransferDetailsID.Text.ToString(), out TransferDetailNo);
-                        int.TryParse(lblRequestedQty.Text.ToString(), out TransferedQty);
-                        int.TryParse(lblAvailableQty.Text.ToString(), out AvailableQty);
-                        int.TryParse(lblSentQty.Text.ToString(), out ReceivedQty);
-                        int.TryParse(lblProductID.Text.ToString(), out ProductId);
+                        int.TryParse(lblRequestedQty.Text.ToString(), out RequestedQty);
 
+                        int.TryParse(lblAvailableQty.Text.ToString(), out AvailableQty);
+                        int.TryParse(lblSentQty.Text.ToString(), out TransferedQty);
+                        int.TryParse(lblProductID.Text.ToString(), out ProductId);
+                         
                         if (connection.State == ConnectionState.Closed)
                         {
                             connection.Open();
@@ -239,13 +252,13 @@ namespace IMS
                         SqlCommand command = new SqlCommand("sp_UpdateTransferOrderDetials_AcceptAll", connection);
                         command.Parameters.AddWithValue("@p_TransferID", TransferNo);
                         command.Parameters.AddWithValue("@p_TransferDetID", TransferDetailNo);
-                        command.Parameters.AddWithValue("@p_RequestedTransferedQty", TransferedQty);
-                        command.Parameters.AddWithValue("@p_ReceivedQty", ReceivedQty);
+                        command.Parameters.AddWithValue("@p_RequestedQty", RequestedQty);
+                        command.Parameters.AddWithValue("@p_TransferedQty", TransferedQty);
                         command.Parameters.AddWithValue("@p_AvailableQty", AvailableQty);
                         command.Parameters.AddWithValue("@p_Status", "Accepted");
                         command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
                         command.Parameters.AddWithValue("@p_ProductID", ProductId);
-
+                         
                         command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
@@ -257,9 +270,17 @@ namespace IMS
                         btnEdit.Visible = false;
                         Button btnStaticAccepted = (Button)gvReceiveTransfer.Rows[i].FindControl("btnStaticAccepted");
                         btnStaticAccepted.Visible = true;
-                        //Update Stock in Stock Table
-                        UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty);
-
+                        if (RequestedQty != TransferedQty)
+                        {
+                            if (TransferedQty == 0)
+                            {
+                                UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty);
+                            }
+                            else
+                            {
+                                UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty);
+                            }
+                        }
                     }
                 }
                 if (e.CommandName == "GenTransferOrder")
@@ -267,10 +288,12 @@ namespace IMS
                     GridView gvReceiveTransfer = (GridView)repReceiveTransfer.Items[0].FindControl("dgvReceiveTransfer");
                     for (int i = 0; i < gvReceiveTransfer.Rows.Count; i++)
                     {
-                        int TransferNo, TransferDetailNo, TransferedQty, ReceivedQty, AvailableQty, ProductId;
+                        int TransferNo, TransferDetailNo, RequestedQty, TransferedQty, AvailableQty, ProductId;
                         int LogedInStoreID;
 
+
                         int.TryParse(Session["UserSys"].ToString(), out LogedInStoreID);
+
                         Label lblTransferNo = (Label)gvReceiveTransfer.Rows[i].FindControl("lblRequestNo");
                         Label lblTransferDetailsID = (Label)gvReceiveTransfer.Rows[i].FindControl("lblTransferDetailsID");
                         Label lblRequestedQty = (Label)gvReceiveTransfer.Rows[i].FindControl("lblRequestedQty");
@@ -280,9 +303,10 @@ namespace IMS
 
                         int.TryParse(lblTransferNo.Text.ToString(), out TransferNo);
                         int.TryParse(lblTransferDetailsID.Text.ToString(), out TransferDetailNo);
-                        int.TryParse(lblRequestedQty.Text.ToString(), out TransferedQty);
+                        int.TryParse(lblRequestedQty.Text.ToString(), out RequestedQty);
+
                         int.TryParse(lblAvailableQty.Text.ToString(), out AvailableQty);
-                        int.TryParse(lblSentQty.Text.ToString(), out ReceivedQty);
+                        int.TryParse(lblSentQty.Text.ToString(), out TransferedQty);
                         int.TryParse(lblProductID.Text.ToString(), out ProductId);
 
                         if (connection.State == ConnectionState.Closed)
@@ -293,8 +317,8 @@ namespace IMS
                         SqlCommand command = new SqlCommand("sp_UpdateTransferOrderDetials_AcceptAll", connection);
                         command.Parameters.AddWithValue("@p_TransferID", TransferNo);
                         command.Parameters.AddWithValue("@p_TransferDetID", TransferDetailNo);
-                        command.Parameters.AddWithValue("@p_RequestedTransferedQty", TransferedQty);
-                        command.Parameters.AddWithValue("@p_ReceivedQty", ReceivedQty);
+                        command.Parameters.AddWithValue("@p_RequestedQty", RequestedQty);
+                        command.Parameters.AddWithValue("@p_TransferedQty", TransferedQty);
                         command.Parameters.AddWithValue("@p_AvailableQty", AvailableQty);
                         command.Parameters.AddWithValue("@p_Status", "Accepted");
                         command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
@@ -302,14 +326,22 @@ namespace IMS
 
                         command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
-
+                        if (RequestedQty != TransferedQty)
+                        {
+                            if (TransferedQty == 0)
+                            {
+                                UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty);
+                            }
+                            else
+                            {
+                                UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty);
+                            }
+                        }
                         DataSet dsResults = new DataSet();
                         SqlDataAdapter da = new SqlDataAdapter(command);
                         da.Fill(dsResults);
 
-                        //update Stock
-                        UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty);
-
+                        
                         Session["TransferRequestGrid"] = dsResults.Tables[0];
 
                         Response.Redirect("GenerateAcceptedTransferOrder.aspx", false);
@@ -391,6 +423,9 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_Expiry", dt.Rows[0]["ExpiryDate"]);
                         command.Parameters.AddWithValue("@p_Batch", dt.Rows[0]["BatchNumber"]);
                         command.Parameters.AddWithValue("@p_TransferredQty", stockSet[id]);
+
+                        command.Parameters.AddWithValue("@p_RequestedQty", dt.Rows[0]["RequestedQty"]);
+
                         command.Parameters.AddWithValue("@p_BarCode", dt.Rows[0]["BarCode"]);
                         
                         command.ExecuteNonQuery();
@@ -417,20 +452,171 @@ namespace IMS
 
         protected void dgvReceiveTransfer_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            GridView dgvReceiveTransfer = (GridView)e.Row.FindControl("dgvReceiveTransfer");
-            if (dsStatic.Tables[0].Rows[0]["TransferStatus"].ToString() == "Accepted")
+            if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                //Button btnAccept = (Button)dgvReceiveTransfer.Rows[0].FindControl("btnAccept");
-                //btnAccept.Visible = false;
-                //Button btnDeny = (Button)dgvReceiveTransfer.Rows[0].FindControl("btnDeny");
-                //btnDeny.Visible = false;
-                //Button btnEdit = (Button)dgvReceiveTransfer.Rows[0].FindControl("btnEdit");
-                //btnEdit.Visible = false;
-                //Button btnStaticAccepted = (Button)dgvReceiveTransfer.Rows[0].FindControl("btnStaticAccepted");
-                //btnStaticAccepted.Visible = true;
+                Button abc = (Button)e.Row.FindControl("btnAccept");
+                if (dsStatic.Tables[0].Rows[e.Row.RowIndex]["TransferStatus"].ToString() == "Accepted")
+                {
+                    GridView gv = (GridView)sender;
+                    Button btnAccept = (Button)e.Row.FindControl("btnAccept");
+                    btnAccept.Visible = false;
+                    Button btnDeny = (Button)e.Row.FindControl("btnDeny");
+                    btnDeny.Visible = false;
+                    Button btnEdit = (Button)e.Row.FindControl("btnEdit");
+                    btnEdit.Visible = false;
+                    Button btnStaticAccepted = (Button)e.Row.FindControl("btnStaticAccepted");
+                    btnStaticAccepted.Visible = true;
+                }
+            }
+            
+
+        }
+
+        protected void btnAcceptAll_Click(object sender, EventArgs e)
+        {
+            for (int rows = 0; rows < repReceiveTransfer.Items.Count; rows++)
+            {
+                GridView gvReceiveTransfer = (GridView)repReceiveTransfer.Items[rows].FindControl("dgvReceiveTransfer");
+                for (int i = 0; i < gvReceiveTransfer.Rows.Count; i++)
+                {
+                    int TransferNo, TransferDetailNo, RequestedQty, TransferedQty, AvailableQty, ProductId;
+                    int LogedInStoreID;
+
+
+                    int.TryParse(Session["UserSys"].ToString(), out LogedInStoreID);
+
+                    Label lblTransferNo = (Label)gvReceiveTransfer.Rows[i].FindControl("lblRequestNo");
+                    Label lblTransferDetailsID = (Label)gvReceiveTransfer.Rows[i].FindControl("lblTransferDetailsID");
+                    Label lblRequestedQty = (Label)gvReceiveTransfer.Rows[i].FindControl("lblRequestedQty");
+                    Label lblAvailableQty = (Label)gvReceiveTransfer.Rows[i].FindControl("lblAvailableQty");
+                    Label lblSentQty = (Label)gvReceiveTransfer.Rows[i].FindControl("lblSentQty");
+                    Label lblProductID = (Label)gvReceiveTransfer.Rows[i].FindControl("lblProductID");
+
+                    int.TryParse(lblTransferNo.Text.ToString(), out TransferNo);
+                    int.TryParse(lblTransferDetailsID.Text.ToString(), out TransferDetailNo);
+                    int.TryParse(lblRequestedQty.Text.ToString(), out RequestedQty);
+
+                    int.TryParse(lblAvailableQty.Text.ToString(), out AvailableQty);
+                    int.TryParse(lblSentQty.Text.ToString(), out TransferedQty);
+                    int.TryParse(lblProductID.Text.ToString(), out ProductId);
+
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
+
+                    SqlCommand command = new SqlCommand("sp_UpdateTransferOrderDetials_AcceptAll", connection);
+                    command.Parameters.AddWithValue("@p_TransferID", TransferNo);
+                    command.Parameters.AddWithValue("@p_TransferDetID", TransferDetailNo);
+                    command.Parameters.AddWithValue("@p_RequestedQty", RequestedQty);
+                    command.Parameters.AddWithValue("@p_TransferedQty", TransferedQty);
+                    command.Parameters.AddWithValue("@p_AvailableQty", AvailableQty);
+                    command.Parameters.AddWithValue("@p_Status", "Accepted");
+                    command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
+                    command.Parameters.AddWithValue("@p_ProductID", ProductId);
+
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.ExecuteNonQuery();
+
+                    Button btnAccept = (Button)gvReceiveTransfer.Rows[i].FindControl("btnAccept");
+                    btnAccept.Visible = false;
+                    Button btnDeny = (Button)gvReceiveTransfer.Rows[i].FindControl("btnDeny");
+                    btnDeny.Visible = false;
+                    Button btnEdit = (Button)gvReceiveTransfer.Rows[i].FindControl("btnEdit");
+                    btnEdit.Visible = false;
+                    Button btnStaticAccepted = (Button)gvReceiveTransfer.Rows[i].FindControl("btnStaticAccepted");
+                    btnStaticAccepted.Visible = true;
+                    if (RequestedQty != TransferedQty)
+                    {
+                        if (TransferedQty == 0)
+                        {
+                            UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty);
+                        }
+                        else
+                        {
+                            UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty);
+                        }
+                    }
+                }
             }
 
         }
+
+
+        protected void btnGenTransferAll_Click(object sender, EventArgs e)
+        {
+            for (int rows = 0; rows < repReceiveTransfer.Items.Count; rows++)
+            {
+                GridView gvReceiveTransfer = (GridView)repReceiveTransfer.Items[rows].FindControl("dgvReceiveTransfer");
+                for (int i = 0; i < gvReceiveTransfer.Rows.Count; i++)
+                {
+                    int TransferNo, TransferDetailNo, RequestedQty, TransferedQty, AvailableQty, ProductId;
+                    int LogedInStoreID;
+
+
+                    int.TryParse(Session["UserSys"].ToString(), out LogedInStoreID);
+
+                    Label lblTransferNo = (Label)gvReceiveTransfer.Rows[i].FindControl("lblRequestNo");
+                    Label lblTransferDetailsID = (Label)gvReceiveTransfer.Rows[i].FindControl("lblTransferDetailsID");
+                    Label lblRequestedQty = (Label)gvReceiveTransfer.Rows[i].FindControl("lblRequestedQty");
+                    Label lblAvailableQty = (Label)gvReceiveTransfer.Rows[i].FindControl("lblAvailableQty");
+                    Label lblSentQty = (Label)gvReceiveTransfer.Rows[i].FindControl("lblSentQty");
+                    Label lblProductID = (Label)gvReceiveTransfer.Rows[i].FindControl("lblProductID");
+
+                    int.TryParse(lblTransferNo.Text.ToString(), out TransferNo);
+                    int.TryParse(lblTransferDetailsID.Text.ToString(), out TransferDetailNo);
+                    int.TryParse(lblRequestedQty.Text.ToString(), out RequestedQty);
+
+                    int.TryParse(lblAvailableQty.Text.ToString(), out AvailableQty);
+                    int.TryParse(lblSentQty.Text.ToString(), out TransferedQty);
+                    int.TryParse(lblProductID.Text.ToString(), out ProductId);
+
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
+
+                    SqlCommand command = new SqlCommand("sp_UpdateTransferOrderDetials_AcceptAll", connection);
+                    command.Parameters.AddWithValue("@p_TransferID", TransferNo);
+                    command.Parameters.AddWithValue("@p_TransferDetID", TransferDetailNo);
+                    command.Parameters.AddWithValue("@p_RequestedQty", RequestedQty);
+                    command.Parameters.AddWithValue("@p_TransferedQty", TransferedQty);
+                    command.Parameters.AddWithValue("@p_AvailableQty", AvailableQty);
+                    command.Parameters.AddWithValue("@p_Status", "Accepted");
+                    command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
+                    command.Parameters.AddWithValue("@p_ProductID", ProductId);
+
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.ExecuteNonQuery();
+                    if (RequestedQty != TransferedQty)
+                    {
+                        if (TransferedQty == 0)
+                        {
+                            UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty);
+                        }
+                        else
+                        {
+                            UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty);
+                        }
+                    }
+                    DataSet dsResults = new DataSet();
+                    SqlDataAdapter da = new SqlDataAdapter(command);
+                    da.Fill(dsResults);
+
+
+                    Session["TransferRequestGrid"] = dsResults.Tables[0];
+
+                    Response.Redirect("GenerateAcceptedTransferOrder.aspx", false);
+                }
+            }
+
+        }
+
+        protected void repReceiveTransfer_ItemCreated(object sender, RepeaterItemEventArgs e)
+        {
+
+        }
+  
  
     }
 }

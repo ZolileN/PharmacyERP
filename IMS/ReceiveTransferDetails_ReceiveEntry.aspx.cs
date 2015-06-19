@@ -39,9 +39,37 @@ namespace IMS
             command.ExecuteNonQuery();
             SqlDataAdapter da = new SqlDataAdapter(command);
             da.Fill(ds);
+
             dgvReceiveTransferDetailsReceive.DataSource = ds;
             dgvReceiveTransferDetailsReceive.DataBind();
 
+        }
+
+        protected void btnUpdate_Click(object sender, EventArgs e)
+        {
+            //Update the values in tblTransferDetails_Receive 
+            for(int i=0;i<dgvReceiveTransferDetailsReceive.Rows.Count; i++)
+            {
+                int entryID,TransferedQty = 0;
+                Label lblentryID = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblentryID");
+                TextBox txtTransferedQty = (TextBox)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("txtSendQty");
+                int.TryParse(lblentryID.Text.ToString(),out entryID);
+                int.TryParse(txtTransferedQty.Text.ToString(), out TransferedQty);
+
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("sp_UpdateTransferReceiveEntry", connection);
+                command.Parameters.AddWithValue("@p_entryID", entryID);
+                command.Parameters.AddWithValue("@p_TransferQty", TransferedQty);
+
+                command.CommandType = CommandType.StoredProcedure;
+                command.ExecuteNonQuery();
+
+                Response.Redirect("ReceiveTransferOrder.aspx");
+            }
+             
         }
     }
 }
