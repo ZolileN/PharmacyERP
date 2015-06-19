@@ -532,11 +532,12 @@ namespace IMS.UserControl
                         {
                             Control ctl = this.Parent;
                             TextBox ltMetaTags = null;
+
                             ltMetaTags = (TextBox)ctl.FindControl("txtSearch");
                             if (ltMetaTags != null)
                             {
                                 ltMetaTags.Text = Server.HtmlDecode(row.Cells[1].Text);
-
+                                string description = Server.HtmlDecode(row.Cells[3].Text);
                                 GridView gvParent = (GridView)ctl.FindControl("StockDisplayGrid");
 
                                 DataTable dt = new DataTable();
@@ -558,7 +559,14 @@ namespace IMS.UserControl
                                         command.CommandType = CommandType.StoredProcedure;
                                         if (Session["Text"] != null)
                                         {
-                                            command.Parameters.AddWithValue("@p_prodName", ltMetaTags.Text);
+                                            //if (!string.IsNullOrEmpty(description))
+                                            //{
+                                            //    command.Parameters.AddWithValue("@p_prodName", description);
+                                            //}
+                                            //else
+                                            //{
+                                                command.Parameters.AddWithValue("@p_prodName", ltMetaTags.Text);
+                                           // }
                                         }
                                         else
                                         {
