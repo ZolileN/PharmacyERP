@@ -8,8 +8,8 @@
         <tbody><tr>
         	<td> <h4 id="topHead">Manage Transfers</h4></td>
             <td align="right">
-                <asp:Button ID="btnAcceptAll" runat="server" CssClass="btn btn-success acptAllTransfers" Text="Accept All Transfers" />
-                <asp:Button ID="btnGenTransferAll" runat="server" CssClass="btn btn-info" Text="Generate All Transfers" />
+                <asp:Button ID="btnAcceptAll" runat="server" CssClass="btn btn-success acptAllTransfers" Text="Accept All Transfers" OnClick="btnAcceptAll_Click" />
+                <asp:Button ID="btnGenTransferAll" runat="server" CssClass="btn btn-info" Text="Generate All Transfers" OnClick="btnGenTransferAll_Click" />
                 <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default" Text="Back" />
 
             </td>
@@ -40,7 +40,7 @@
 
                     <tr>
                         <asp:GridView ID="dgvReceiveTransfer" CssClass="table table-striped table-bordered table-condensed" Visible="true" runat="server" AllowPaging="false" PageSize="10"
-                            AutoGenerateColumns="false" OnRowCommand="dgvReceiveTransfer_RowCommand" OnRowDataBound="dgvReceiveTransfer_RowDataBound">
+                            AutoGenerateColumns="false"  OnRowCommand="dgvReceiveTransfer_RowCommand" OnRowDataBound="dgvReceiveTransfer_RowDataBound"  >
                             <Columns>
 
                                 <asp:TemplateField HeaderText="Action">
