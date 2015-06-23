@@ -11,9 +11,9 @@
                 <asp:Label ID="lblWH" runat="server" style="color:#2c81da"></asp:Label>
         	</td>
             <td align="right">
-                <asp:Button ID="btnAccept" runat="server" OnClick="btnAccept_Click" Text="Generate PO" CssClass="btn btn-success"  />
+                <asp:Button ID="btnAccept" runat="server" OnClick="btnAccept_Click" Text="Save & Send to Warehouse" CssClass="btn btn-success"  />
              <span onclick="return confirm('Are you sure you want to delete this order?')">
-                 <asp:Button ID="btnDecline" runat="server" OnClick="btnDecline_Click" Text="Delete PO" CssClass="btn btn-danger"  />
+                 <asp:Button ID="btnDecline" runat="server" OnClick="btnDecline_Click" Text="Delete" CssClass="btn btn-danger"  />
            </span>
 
             <asp:Button ID="btnCancelOrder" runat="server" OnClick="btnCancelOrder_Click" Text="GO BACK" CssClass="btn btn-default btn-large" />

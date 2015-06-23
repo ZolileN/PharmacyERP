@@ -86,11 +86,11 @@ namespace IMS
                         {
                             connection.Open();
                         }
-                        SqlCommand command = new SqlCommand("sp_UpdateTransferDetails", connection);
+                        SqlCommand command = new SqlCommand("Sp_UpdateTransferDetails_Creation", connection);
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@p_TransferDetailID", orderDetID);
-                        command.Parameters.AddWithValue("@p_TransferedQuantity", quan);
-                       // command.Parameters.AddWithValue("@p_bonusQauntity", bonusquantity);
+                        command.Parameters.AddWithValue("@p_ReqQuantity", quan);
+                        command.Parameters.AddWithValue("@p_ReqBonusQty", bonusquantity);
 
                         command.ExecuteNonQuery();
 
@@ -254,17 +254,27 @@ namespace IMS
                         {
                             command.Parameters.AddWithValue("@p_RequestedQty", DBNull.Value);
                         }
-
+                        if (int.TryParse(SelectPrice.Text.ToString(), out BonusOrdered))
+                        {
+                            command.Parameters.AddWithValue("@p_ReqBonusQty", BonusOrdered);
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@p_ReqBonusQty", DBNull.Value);
+                        }
 
                         command.Parameters.AddWithValue("@p_TransferStatus", "Initiated");
 
                         DataSet LinkResult = new DataSet();
                         SqlDataAdapter sA = new SqlDataAdapter(command);
                         sA.Fill(LinkResult);
-                        if (LinkResult != null && LinkResult.Tables[0] != null)
-                        {
-                            ViewState["WH_TransferDetailID"] = LinkResult.Tables[0].Rows[0][0];
-                        }
+                        
+                        // we dont need to save transfer detail ID in this case. will check in future.
+
+                        //if (LinkResult != null && LinkResult.Tables[0] != null)
+                        //{
+                        //    ViewState["WH_TransferDetailID"] = LinkResult.Tables[0].Rows[0][0];
+                        //}
                     }
                     catch (Exception ex)
                     {
@@ -281,7 +291,7 @@ namespace IMS
                 }
                 else
                 {
-                    ViewState["WH_TransferDetailID"] = "0";
+                    //ViewState["WH_TransferDetailID"] = "0";
 
                     #region Check wether Product Existing in the Current Transfer
                     DataSet ds = new DataSet();
@@ -345,7 +355,7 @@ namespace IMS
                             int TransferNo, BonusOrdered, ProductNumber, Quantity;
                             TransferNo = BonusOrdered = ProductNumber = Quantity = 0;
 
-                            if (int.TryParse(Session["WH_TransferNo"].ToString(), out TransferNo))
+                            if (int.TryParse(ViewState["WH_TransferNo"].ToString(), out TransferNo))
                             {
                                 command.Parameters.AddWithValue("@p_TransferID", TransferNo);
                             }
@@ -360,17 +370,24 @@ namespace IMS
                             {
                                 command.Parameters.AddWithValue("@p_RequestedQty", DBNull.Value);
                             }
-
+                            if (int.TryParse(SelectPrice.Text.ToString(), out BonusOrdered))
+                            {
+                                command.Parameters.AddWithValue("@p_ReqBonusQty", BonusOrdered);
+                            }
+                            else
+                            {
+                                command.Parameters.AddWithValue("@p_ReqBonusQty", DBNull.Value);
+                            }
 
                             command.Parameters.AddWithValue("@p_TransferStatus", "Initiated");
 
                             DataSet LinkResult = new DataSet();
                             SqlDataAdapter sA = new SqlDataAdapter(command);
                             sA.Fill(LinkResult);
-                            if (LinkResult != null && LinkResult.Tables[0] != null)
-                            {
-                                ViewState["WH_TransferDetailID"] = LinkResult.Tables[0].Rows[0][0];
-                            }
+                            //if (LinkResult != null && LinkResult.Tables[0] != null)
+                            //{
+                            //    ViewState["WH_TransferDetailID"] = LinkResult.Tables[0].Rows[0][0];
+                            //}
                         }
                         catch (Exception ex)
                         {
@@ -417,14 +434,14 @@ namespace IMS
                 {
                     connection.Open();
                 }
-                SqlCommand command = new SqlCommand("Sp_FetchTransferReceiveEntry_byTransferID", connection);
+                SqlCommand command = new SqlCommand("sp_FetchTransferDetails_TranferID", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 int OrderNumber = 0;
                 DataSet ds = new DataSet();
 
                 if (int.TryParse(ViewState["WH_TransferNo"].ToString(), out OrderNumber))
                 {
-                    command.Parameters.AddWithValue("@TranferID", OrderNumber);
+                    command.Parameters.AddWithValue("@p_TransferID", OrderNumber);
                 }
 
 
@@ -464,6 +481,8 @@ namespace IMS
             StockDisplayGrid.DataSource = null;
             StockDisplayGrid.DataBind();
             SelectQuantity.Text = "";
+            ViewState.Remove("WH_TransferNo");
+            Session["WH_FirstTransfer"]=false;
             //SelectProduct.SelectedIndex = -1;
             //RequestTo.SelectedIndex = -1;
             //btnAccept.Visible = false;
@@ -475,6 +494,7 @@ namespace IMS
         protected void btnCancelOrder_Click(object sender, EventArgs e)
         {
             lblttlcst.Visible = false;
+            Session["WH_FirstTransfer"] = false;
             Response.Redirect("StoreMain.aspx", false);
            
         }
@@ -503,8 +523,14 @@ namespace IMS
 
         protected void btnAccept_Click(object sender, EventArgs e)
         {
-            Response.Redirect("PO_GENERATE.aspx", false);
+            ViewState["WH_TransferNo"] = null;
+            Session["WH_FirstTransfer"] = false;
+            Session.Remove("WH_Name");
+            Session.Remove("WH_ID");
+            lblttlcst.Visible = false;
+            Response.Redirect("SelectWarehouse.aspx", false);
         }
+
 
         protected void btnDecline_Click(object sender, EventArgs e)
         {
@@ -549,23 +575,14 @@ namespace IMS
                 }
                 ViewState["WH_TransferNo"] = null;
                 Session["FromViewPlacedOrders"] = null;
-                //txtVendor.Text = "";
-                //txtProduct.Text = "";
-                //txtVendor.Enabled = true;
-                //SelectProduct.Visible = false;
-                //CmbVendors.Enabled = true;
-
-                //RequestTo.Visible = false;
-                //RequestTo.Enabled = true;
+                Session["WH_FirstTransfer"] = false;
+                lblttlcst.Visible = false;
+                
                 StockDisplayGrid.DataSource = null;
                 StockDisplayGrid.DataBind();
                 SelectQuantity.Text = "";
-                //SelectProduct.SelectedIndex = -1;
-                //RequestTo.SelectedIndex = -1;
-                //btnAccept.Visible = false;
                 btnDecline.Visible = false;
-                Session["WH_FirstTransfer"] = false;
-                // Session["isGenOption"] = null;
+                              
                 lblttlcst.Visible = false;
                 lblTotalCostALL.Visible = false;
                 WebMessageBoxUtil.Show("Order and stock has been successfully removed");

@@ -262,6 +262,7 @@
     <Content Include="ProductStoreSelect.aspx" />
     <Content Include="ReceiveRequestTransfers.aspx" />
     <Content Include="ReceiveStock.aspx" />
+    <Content Include="ReceiveStoreRequest.aspx" />
     <Content Include="ReceiveTransferDetails_ReceiveEntry.aspx" />
     <Content Include="ReceiveTransferOrder.aspx" />
     <Content Include="RecieveOrder.aspx" />
@@ -833,6 +834,13 @@
     </Compile>
     <Compile Include="ReceiveStock.aspx.designer.cs">
       <DependentUpon>ReceiveStock.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReceiveStoreRequest.aspx.cs">
+      <DependentUpon>ReceiveStoreRequest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReceiveStoreRequest.aspx.designer.cs">
+      <DependentUpon>ReceiveStoreRequest.aspx</DependentUpon>
     </Compile>
     <Compile Include="ReceiveTransferDetails_ReceiveEntry.aspx.cs">
       <DependentUpon>ReceiveTransferDetails_ReceiveEntry.aspx</DependentUpon>
