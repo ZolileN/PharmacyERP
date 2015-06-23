@@ -153,7 +153,7 @@ namespace IMS
                 }
                 else
                 {
-                    int id;
+                    int id; int x = 0;
                     int.TryParse(Session["UserSys"].ToString(), out id);
 
                     SqlCommand commnd = new SqlCommand("sp_AddStock", connection);
@@ -175,7 +175,7 @@ namespace IMS
                     commnd.Parameters.AddWithValue("@p_Cost", CP);
                     commnd.Parameters.AddWithValue("@p_Sales", SP);
                     commnd.Parameters.AddWithValue("@p_BatchNumber", BatchNo);
-                    command.ExecuteNonQuery();
+                    x = commnd.ExecuteNonQuery();
                 }
 
 
