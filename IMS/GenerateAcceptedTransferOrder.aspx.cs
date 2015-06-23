@@ -10,32 +10,30 @@ using System.Web.UI.WebControls;
 
 namespace IMS
 {
-    public partial class GenerateTransferRequest : System.Web.UI.Page
+    public partial class GenerateAcceptedTransferOrder : System.Web.UI.Page
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
         public static DataTable distinctStores = new DataTable();
         public static DataTable dsDistinct = new DataTable();
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (!IsPostBack)
             {
-                dsDistinct = (DataTable)Session["TransferRequestGrid"];   
+                dsDistinct = (DataTable)Session["TransferRequestGrid"];
                 distinctStores = dsDistinct.DefaultView.ToTable(true, "SystemID");
                 drpTransferDetailsReport.DataSource = distinctStores;
                 drpTransferDetailsReport.DataBind();
-               
-            }
 
+            }
         }
- 
+
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
             Session.Remove("TransferRequestGrid");
-            Response.Redirect("CreateTransferRequest.aspx", false);
+            Response.Redirect("ReceiveTransferOrder.aspx", false);
         }
-
         protected void drpTransferDetailsReport_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             try
@@ -46,7 +44,8 @@ namespace IMS
                 dtGridSource.Columns.Add("Product_Name");
                 dtGridSource.Columns.Add("RequestedFrom");
                 dtGridSource.Columns.Add("RequestedTo");
-                dtGridSource.Columns.Add("RequestedQty");
+                dtGridSource.Columns.Add("TransferedQty");
+                dtGridSource.Columns.Add("SentQty");
 
                 int StoreId = Convert.ToInt32(((DataRowView)e.Item.DataItem).Row[0].ToString());
                 DataSet ds = new DataSet();
@@ -70,7 +69,7 @@ namespace IMS
                 Label lblToSystemAddress = (Label)e.Item.FindControl("lblToSystemAddress");
                 Label lblToSystemPhone = (Label)e.Item.FindControl("lblToSystemPhone");
                 Label lblToSystemEmail = (Label)e.Item.FindControl("lblToSystemEmail");
-                
+
                 lblFROMSystemName.Text = ds.Tables[0].Rows[0]["FROMName"].ToString();
                 lblFROMSystemAddress.Text = ds.Tables[0].Rows[0]["FROMAdress"].ToString();
                 lblFROMSystemPhone.Text = ds.Tables[0].Rows[0]["FROMPhone"].ToString();

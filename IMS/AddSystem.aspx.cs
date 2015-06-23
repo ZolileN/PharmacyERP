@@ -73,6 +73,7 @@ namespace IMS
                 SqlCommand command = new SqlCommand("Sp_GetSystems_ByRoles", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_RoleName", Session["SysToAdd"].ToString());
+                command.Parameters.AddWithValue("@p_systemName", DBNull.Value);
                 DataSet ds = new DataSet();
 
                 SqlDataAdapter sA = new SqlDataAdapter(command);

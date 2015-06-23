@@ -271,7 +271,8 @@ namespace IMS
                     }
                     if (bonusQuan == 0 && defQuan == 0 && recQuan == 0 && expQuan == 0 && retQuan == 0) 
                     {
-                        WebMessageBoxUtil.Show("All values cannot be 0");
+                        WebMessageBoxUtil.Show("All values(Received/Expired/Defected/Returned Quantities) cannot be zero.");
+
                         StockDisplayGrid.EditIndex = -1;
                         LoadData();
                         return;
@@ -339,7 +340,7 @@ namespace IMS
 
                     if (txtCP <= 0 || txtSP <= 0) 
                     {
-                        WebMessageBoxUtil.Show("Entered value cannot be negative");
+                        WebMessageBoxUtil.Show("Invalid Cost/Sale price.");
                         StockDisplayGrid.EditIndex = -1;
                         LoadData();
                         return;
@@ -347,7 +348,8 @@ namespace IMS
 
                     if (recQuan < 0 || expQuan < 0 || defQuan < 0)
                     {
-                        WebMessageBoxUtil.Show("Entered value cannot be negative");
+                        WebMessageBoxUtil.Show("All values(Received/Expired/Defected/Returned Quantities) cannot be zero/negative");
+
                         StockDisplayGrid.EditIndex = -1;
                         LoadData();
                         return;

@@ -199,6 +199,7 @@
     <Content Include="Edit_DeleteProduct.aspx" />
     <Content Include="Edit_DeleteStock.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="GenerateAcceptedTransferOrder.aspx" />
     <Content Include="generateBarCode.aspx" />
     <Content Include="GenerateTransferRequest.aspx" />
     <Content Include="HAADPopulation.aspx" />
@@ -232,7 +233,6 @@
     <Content Include="Inventory_Print.aspx" />
     <Content Include="InvoicePrint.aspx" />
     <Content Include="InvoicePrintBonus.aspx" />
-    <Content Include="ItemRequestWarehouse.aspx" />
     <Content Include="ItemRequestWH.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="ManageCategory.aspx" />
@@ -260,12 +260,14 @@
     <Content Include="PO_GENERATE.aspx" />
     <Content Include="Prod2Store.aspx" />
     <Content Include="ProductStoreSelect.aspx" />
+    <Content Include="ReceiveRequestTransfers.aspx" />
     <Content Include="ReceiveStock.aspx" />
+    <Content Include="ReceiveStoreRequest.aspx" />
+    <Content Include="ReceiveTransferDetails_ReceiveEntry.aspx" />
     <Content Include="ReceiveTransferOrder.aspx" />
     <Content Include="RecieveOrder.aspx" />
     <Content Include="RecieveSOFull.aspx" />
     <Content Include="RecieveSOFullEdit.aspx" />
-    <Content Include="RecieveTransferPrototype.aspx" />
     <Content Include="RegisterUsers.aspx" />
     <Content Include="ReplenishMain.aspx" />
     <Content Include="ReplenishMovement.aspx" />
@@ -275,6 +277,7 @@
     <Content Include="Result.aspx" />
     <Content Include="rpt_SalesSummaryDisplay.aspx" />
     <Content Include="rpt_SalesSummary_Selection.aspx" />
+    <Content Include="SentTransferRequests.aspx" />
     <Content Include="UserControl\rpt_ucCategory.ascx" />
     <Content Include="UserControl\rpt_ucDepartment.ascx" />
     <Content Include="SalemanMangment.aspx" />
@@ -574,6 +577,13 @@
     <Compile Include="Edit_DeleteStock.aspx.designer.cs">
       <DependentUpon>Edit_DeleteStock.aspx</DependentUpon>
     </Compile>
+    <Compile Include="GenerateAcceptedTransferOrder.aspx.cs">
+      <DependentUpon>GenerateAcceptedTransferOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GenerateAcceptedTransferOrder.aspx.designer.cs">
+      <DependentUpon>GenerateAcceptedTransferOrder.aspx</DependentUpon>
+    </Compile>
     <Compile Include="generateBarCode.aspx.cs">
       <DependentUpon>generateBarCode.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -639,13 +649,6 @@
     </Compile>
     <Compile Include="InvoicePrintBonus.aspx.designer.cs">
       <DependentUpon>InvoicePrintBonus.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ItemRequestWarehouse.aspx.cs">
-      <DependentUpon>ItemRequestWarehouse.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ItemRequestWarehouse.aspx.designer.cs">
-      <DependentUpon>ItemRequestWarehouse.aspx</DependentUpon>
     </Compile>
     <Compile Include="ItemRequestWH.aspx.cs">
       <DependentUpon>ItemRequestWH.aspx</DependentUpon>
@@ -818,12 +821,33 @@
       <DependentUpon>ProductStoreSelect.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReceiveRequestTransfers.aspx.cs">
+      <DependentUpon>ReceiveRequestTransfers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReceiveRequestTransfers.aspx.designer.cs">
+      <DependentUpon>ReceiveRequestTransfers.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ReceiveStock.aspx.cs">
       <DependentUpon>ReceiveStock.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ReceiveStock.aspx.designer.cs">
       <DependentUpon>ReceiveStock.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReceiveStoreRequest.aspx.cs">
+      <DependentUpon>ReceiveStoreRequest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReceiveStoreRequest.aspx.designer.cs">
+      <DependentUpon>ReceiveStoreRequest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReceiveTransferDetails_ReceiveEntry.aspx.cs">
+      <DependentUpon>ReceiveTransferDetails_ReceiveEntry.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReceiveTransferDetails_ReceiveEntry.aspx.designer.cs">
+      <DependentUpon>ReceiveTransferDetails_ReceiveEntry.aspx</DependentUpon>
     </Compile>
     <Compile Include="ReceiveTransferOrder.aspx.cs">
       <DependentUpon>ReceiveTransferOrder.aspx</DependentUpon>
@@ -852,13 +876,6 @@
     </Compile>
     <Compile Include="RecieveSOFullEdit.aspx.designer.cs">
       <DependentUpon>RecieveSOFullEdit.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="RecieveTransferPrototype.aspx.cs">
-      <DependentUpon>RecieveTransferPrototype.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="RecieveTransferPrototype.aspx.designer.cs">
-      <DependentUpon>RecieveTransferPrototype.aspx</DependentUpon>
     </Compile>
     <Compile Include="RegisterUsers.aspx.cs">
       <DependentUpon>RegisterUsers.aspx</DependentUpon>
@@ -922,6 +939,13 @@
     </Compile>
     <Compile Include="rpt_SalesSummary_Selection.aspx.designer.cs">
       <DependentUpon>rpt_SalesSummary_Selection.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SentTransferRequests.aspx.cs">
+      <DependentUpon>SentTransferRequests.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SentTransferRequests.aspx.designer.cs">
+      <DependentUpon>SentTransferRequests.aspx</DependentUpon>
     </Compile>
     <Compile Include="UserControl\rpt_ucCategory.ascx.cs">
       <DependentUpon>rpt_ucCategory.ascx</DependentUpon>

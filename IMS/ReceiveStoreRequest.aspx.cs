@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace IMS
 {
-    public partial class ItemRequestWarehouse : System.Web.UI.Page
+    public partial class ReceiveStoreRequest : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

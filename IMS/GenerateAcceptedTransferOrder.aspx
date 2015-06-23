@@ -1,7 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="GenerateTransferRequest.aspx.cs" Inherits="IMS.GenerateTransferRequest" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="GenerateAcceptedTransferOrder.aspx.cs" Inherits="IMS.GenerateAcceptedTransferOrder" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 
-    <style>
+     <style>
         @media print {
             .no-print, .no-print * {
                 display: none !important;
@@ -107,19 +107,18 @@
 	
 		
     </style>
-
+    
+    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-
-    <table width="100%">
+      <table width="100%">
 
         <tbody><tr>
-        	<td> <h4 id="topHead"> Transfer Request</h4></td>
+        	<td> <h4 id="topHead">Fullfilled Transfer Request</h4></td>
             <td align="right">
              
                 <asp:Button ID="btnPrint" runat="server" Text="Print" CssClass="btn btn-primary btn-large no-print" OnClientClick="window.print();"/>
-                <asp:Button ID="btnExport" runat="server" Text="Export" CssClass="btn btn-info btn-large no-print"  Visible="false" />
                 <asp:Button ID="btnGoBack" runat="server" Text="Go Back" CssClass="btn btn-default btn-large no-print" OnClick="btnGoBack_Click" />
  
             </td>
@@ -128,13 +127,11 @@
     </tbody></table>
 
 
-    <hr>
-    
-    <asp:Repeater ID="drpTransferDetailsReport" runat="server" OnItemDataBound="drpTransferDetailsReport_ItemDataBound">
+     <asp:Repeater ID="drpTransferDetailsReport" runat="server" OnItemDataBound="drpTransferDetailsReport_ItemDataBound">
 
         <ItemTemplate>
             <div id="MainContent_MAINDIV" class="main">
-                <h1 class="main-h">TRANSFER REQUEST</h1>
+                <h1 class="main-h">Fullfilled TRANSFER REQUEST</h1>
 
 
                 <hr>
@@ -179,14 +176,7 @@
                 <asp:GridView ID="dgvTransferDisplay" CssClass="table table-striped table-bordered table-condensed" Visible="true" runat="server" AllowPaging="false" PageSize="10"
                     AutoGenerateColumns="false">
                     <Columns>
-
-                        <%--<asp:TemplateField HeaderText="" Visible="false" HeaderStyle-Width="0px">
-                            <ItemTemplate>
-                                <asp:Label ID="lblTransferDetailID" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("TransferDetailID") %>' Width="0px" Visible="false"></asp:Label>
-                            </ItemTemplate>
-                            <ItemStyle Width="0px" HorizontalAlign="Left" />
-
-                        </asp:TemplateField>--%>
+                         
 
                         <asp:TemplateField HeaderText="Requested Product" HeaderStyle-Width="190px">
                             <ItemTemplate>
@@ -198,11 +188,17 @@
 
                         <asp:TemplateField HeaderText="Requested Quantity" HeaderStyle-Width="150px">
                             <ItemTemplate>
-                                <asp:Label ID="TransferedQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("RequestedQty") %>' Width="140px"></asp:Label>
+                                <asp:Label ID="TransferedQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("TransferedQty") %>' Width="140px"></asp:Label>
                             </ItemTemplate>
                             <ItemStyle Width="150px" HorizontalAlign="Left" />
                         </asp:TemplateField>
 
+                         <asp:TemplateField HeaderText="Sent Quantity" HeaderStyle-Width="150px">
+                            <ItemTemplate>
+                                <asp:Label ID="lblSentQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("TransferedQty") %>' Width="140px"></asp:Label>
+                            </ItemTemplate>
+                            <ItemStyle Width="150px" HorizontalAlign="Left" />
+                        </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
 
@@ -245,6 +241,5 @@
         </ItemTemplate>
         
 
-    </asp:Repeater> 
-    
+    </asp:Repeater>
 </asp:Content>

@@ -23,7 +23,7 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                     <asp:BoundField DataField="Product_Name" HeaderText="Product Name"   />
+                     <asp:BoundField DataField="Desc_Name" HeaderText="ProductName"   />
 
                      <asp:TemplateField HeaderText="UPC">
                         <ItemTemplate>
@@ -32,7 +32,7 @@
                          <ItemStyle  Width="120px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
                     
-                     <asp:BoundField DataField="Description" HeaderText="Description"   /> 
+                     <asp:BoundField DataField="Desc_Name" HeaderText="Description"   /> 
                      <asp:BoundField DataField="itemStrength" HeaderText="Item Strength"   />
                      <asp:BoundField DataField="itemForm" HeaderText="Item Form"   />
                      <asp:BoundField DataField="itemPackSize" HeaderText="Pack Size"   />
