@@ -39,7 +39,7 @@
                <asp:TextBox ID="txtSearch" runat="server" CssClass="product"></asp:TextBox>
                <asp:Label ID="lblProductId" runat="server" Visible="false"></asp:Label>
                 
-               <asp:ImageButton ID="btnSearchProduct" runat="server"   CssClass="search-btn getProducts" OnClick="btnSearchProduct_Click" />
+               <asp:ImageButton ID="btnSearchProduct" runat="server"   CssClass="search-btn getProducts" OnClick="btnSearchProduct_Click1" />
  
 
                <cc1:ModalPopupExtender ID="mpeCongratsMessageDiv" runat="server" BackgroundCssClass="overLaypop"

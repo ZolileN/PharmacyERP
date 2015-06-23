@@ -233,7 +233,6 @@
     <Content Include="Inventory_Print.aspx" />
     <Content Include="InvoicePrint.aspx" />
     <Content Include="InvoicePrintBonus.aspx" />
-    <Content Include="ItemRequestWarehouse.aspx" />
     <Content Include="ItemRequestWH.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="ManageCategory.aspx" />
@@ -649,13 +648,6 @@
     </Compile>
     <Compile Include="InvoicePrintBonus.aspx.designer.cs">
       <DependentUpon>InvoicePrintBonus.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ItemRequestWarehouse.aspx.cs">
-      <DependentUpon>ItemRequestWarehouse.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ItemRequestWarehouse.aspx.designer.cs">
-      <DependentUpon>ItemRequestWarehouse.aspx</DependentUpon>
     </Compile>
     <Compile Include="ItemRequestWH.aspx.cs">
       <DependentUpon>ItemRequestWH.aspx</DependentUpon>
