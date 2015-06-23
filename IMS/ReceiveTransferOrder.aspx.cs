@@ -282,70 +282,56 @@ namespace IMS
                             }
                         }
                     }
-                }
+                } 
                 if (e.CommandName == "GenTransferOrder")
                 {
+                    DataSet dsResults = new DataSet();
+
                     GridView gvReceiveTransfer = (GridView)repReceiveTransfer.Items[0].FindControl("dgvReceiveTransfer");
-                    for (int i = 0; i < gvReceiveTransfer.Rows.Count; i++)
+                    int TransferNo, TransferDetailNo, RequestedQty, TransferedQty, AvailableQty, ProductId;
+                    int LogedInStoreID;
+
+
+                    int.TryParse(Session["UserSys"].ToString(), out LogedInStoreID);
+
+                    Label lblTransferNo = (Label)gvReceiveTransfer.Rows[0].FindControl("lblRequestNo");
+                    Label lblTransferDetailsID = (Label)gvReceiveTransfer.Rows[0].FindControl("lblTransferDetailsID");
+                    Label lblRequestedQty = (Label)gvReceiveTransfer.Rows[0].FindControl("lblRequestedQty");
+                    Label lblAvailableQty = (Label)gvReceiveTransfer.Rows[0].FindControl("lblAvailableQty");
+                    Label lblSentQty = (Label)gvReceiveTransfer.Rows[0].FindControl("lblSentQty");
+                    Label lblProductID = (Label)gvReceiveTransfer.Rows[0].FindControl("lblProductID");
+
+                    int.TryParse(lblTransferNo.Text.ToString(), out TransferNo);
+                    int.TryParse(lblTransferDetailsID.Text.ToString(), out TransferDetailNo);
+                    int.TryParse(lblRequestedQty.Text.ToString(), out RequestedQty);
+
+                    int.TryParse(lblAvailableQty.Text.ToString(), out AvailableQty);
+                    int.TryParse(lblSentQty.Text.ToString(), out TransferedQty);
+                    int.TryParse(lblProductID.Text.ToString(), out ProductId);
+
+                    if (connection.State == ConnectionState.Closed)
                     {
-                        int TransferNo, TransferDetailNo, RequestedQty, TransferedQty, AvailableQty, ProductId;
-                        int LogedInStoreID;
-
-
-                        int.TryParse(Session["UserSys"].ToString(), out LogedInStoreID);
-
-                        Label lblTransferNo = (Label)gvReceiveTransfer.Rows[i].FindControl("lblRequestNo");
-                        Label lblTransferDetailsID = (Label)gvReceiveTransfer.Rows[i].FindControl("lblTransferDetailsID");
-                        Label lblRequestedQty = (Label)gvReceiveTransfer.Rows[i].FindControl("lblRequestedQty");
-                        Label lblAvailableQty = (Label)gvReceiveTransfer.Rows[i].FindControl("lblAvailableQty");
-                        Label lblSentQty = (Label)gvReceiveTransfer.Rows[i].FindControl("lblSentQty");
-                        Label lblProductID = (Label)gvReceiveTransfer.Rows[i].FindControl("lblProductID");
-
-                        int.TryParse(lblTransferNo.Text.ToString(), out TransferNo);
-                        int.TryParse(lblTransferDetailsID.Text.ToString(), out TransferDetailNo);
-                        int.TryParse(lblRequestedQty.Text.ToString(), out RequestedQty);
-
-                        int.TryParse(lblAvailableQty.Text.ToString(), out AvailableQty);
-                        int.TryParse(lblSentQty.Text.ToString(), out TransferedQty);
-                        int.TryParse(lblProductID.Text.ToString(), out ProductId);
-
-                        if (connection.State == ConnectionState.Closed)
-                        {
-                            connection.Open();
-                        }
-
-                        SqlCommand command = new SqlCommand("sp_UpdateTransferOrderDetials_AcceptAll", connection);
-                        command.Parameters.AddWithValue("@p_TransferID", TransferNo);
-                        command.Parameters.AddWithValue("@p_TransferDetID", TransferDetailNo);
-                        command.Parameters.AddWithValue("@p_RequestedQty", RequestedQty);
-                        command.Parameters.AddWithValue("@p_TransferedQty", TransferedQty);
-                        command.Parameters.AddWithValue("@p_AvailableQty", AvailableQty);
-                        command.Parameters.AddWithValue("@p_Status", "Accepted");
-                        command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
-                        command.Parameters.AddWithValue("@p_ProductID", ProductId);
-
-                        command.CommandType = CommandType.StoredProcedure;
-                        command.ExecuteNonQuery();
-                        if (RequestedQty != TransferedQty)
-                        {
-                            if (TransferedQty == 0)
-                            {
-                                UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty);
-                            }
-                            else
-                            {
-                                UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty);
-                            }
-                        }
-                        DataSet dsResults = new DataSet();
-                        SqlDataAdapter da = new SqlDataAdapter(command);
-                        da.Fill(dsResults);
-
-                        
-                        Session["TransferRequestGrid"] = dsResults.Tables[0];
-
-                        Response.Redirect("GenerateAcceptedTransferOrder.aspx", false);
+                        connection.Open();
                     }
+                    SqlCommand command = new SqlCommand("sp_UpdateTransferOrderDetials_AcceptAll", connection);
+                    command.Parameters.AddWithValue("@p_TransferID", TransferNo);
+                    command.Parameters.AddWithValue("@p_TransferDetID", TransferDetailNo);
+                    command.Parameters.AddWithValue("@p_RequestedQty", RequestedQty);
+                    command.Parameters.AddWithValue("@p_TransferedQty", TransferedQty);
+                    command.Parameters.AddWithValue("@p_AvailableQty", AvailableQty);
+                    command.Parameters.AddWithValue("@p_Status", "Accepted");
+                    command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
+                    command.Parameters.AddWithValue("@p_ProductID", ProductId);
+
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.ExecuteNonQuery();
+
+                    SqlDataAdapter da = new SqlDataAdapter(command);
+                    da.Fill(dsResults);
+
+                    Session["TransferRequestGrid"] = dsResults.Tables[0];
+                   
+                    Response.Redirect("GenerateAcceptedTransferOrder.aspx", false);
                 }
             }
             catch (Exception ex)
@@ -548,66 +534,52 @@ namespace IMS
             for (int rows = 0; rows < repReceiveTransfer.Items.Count; rows++)
             {
                 GridView gvReceiveTransfer = (GridView)repReceiveTransfer.Items[rows].FindControl("dgvReceiveTransfer");
-                for (int i = 0; i < gvReceiveTransfer.Rows.Count; i++)
+                DataSet dsResults = new DataSet();
+
+                int TransferNo, TransferDetailNo, RequestedQty, TransferedQty, AvailableQty, ProductId;
+                int LogedInStoreID;
+
+
+                int.TryParse(Session["UserSys"].ToString(), out LogedInStoreID);
+
+                Label lblTransferNo = (Label)gvReceiveTransfer.Rows[0].FindControl("lblRequestNo");
+                Label lblTransferDetailsID = (Label)gvReceiveTransfer.Rows[0].FindControl("lblTransferDetailsID");
+                Label lblRequestedQty = (Label)gvReceiveTransfer.Rows[0].FindControl("lblRequestedQty");
+                Label lblAvailableQty = (Label)gvReceiveTransfer.Rows[0].FindControl("lblAvailableQty");
+                Label lblSentQty = (Label)gvReceiveTransfer.Rows[0].FindControl("lblSentQty");
+                Label lblProductID = (Label)gvReceiveTransfer.Rows[0].FindControl("lblProductID");
+
+                int.TryParse(lblTransferNo.Text.ToString(), out TransferNo);
+                int.TryParse(lblTransferDetailsID.Text.ToString(), out TransferDetailNo);
+                int.TryParse(lblRequestedQty.Text.ToString(), out RequestedQty);
+
+                int.TryParse(lblAvailableQty.Text.ToString(), out AvailableQty);
+                int.TryParse(lblSentQty.Text.ToString(), out TransferedQty);
+                int.TryParse(lblProductID.Text.ToString(), out ProductId);
+
+                if (connection.State == ConnectionState.Closed)
                 {
-                    int TransferNo, TransferDetailNo, RequestedQty, TransferedQty, AvailableQty, ProductId;
-                    int LogedInStoreID;
-
-
-                    int.TryParse(Session["UserSys"].ToString(), out LogedInStoreID);
-
-                    Label lblTransferNo = (Label)gvReceiveTransfer.Rows[i].FindControl("lblRequestNo");
-                    Label lblTransferDetailsID = (Label)gvReceiveTransfer.Rows[i].FindControl("lblTransferDetailsID");
-                    Label lblRequestedQty = (Label)gvReceiveTransfer.Rows[i].FindControl("lblRequestedQty");
-                    Label lblAvailableQty = (Label)gvReceiveTransfer.Rows[i].FindControl("lblAvailableQty");
-                    Label lblSentQty = (Label)gvReceiveTransfer.Rows[i].FindControl("lblSentQty");
-                    Label lblProductID = (Label)gvReceiveTransfer.Rows[i].FindControl("lblProductID");
-
-                    int.TryParse(lblTransferNo.Text.ToString(), out TransferNo);
-                    int.TryParse(lblTransferDetailsID.Text.ToString(), out TransferDetailNo);
-                    int.TryParse(lblRequestedQty.Text.ToString(), out RequestedQty);
-
-                    int.TryParse(lblAvailableQty.Text.ToString(), out AvailableQty);
-                    int.TryParse(lblSentQty.Text.ToString(), out TransferedQty);
-                    int.TryParse(lblProductID.Text.ToString(), out ProductId);
-
-                    if (connection.State == ConnectionState.Closed)
-                    {
-                        connection.Open();
-                    }
-
-                    SqlCommand command = new SqlCommand("sp_UpdateTransferOrderDetials_AcceptAll", connection);
-                    command.Parameters.AddWithValue("@p_TransferID", TransferNo);
-                    command.Parameters.AddWithValue("@p_TransferDetID", TransferDetailNo);
-                    command.Parameters.AddWithValue("@p_RequestedQty", RequestedQty);
-                    command.Parameters.AddWithValue("@p_TransferedQty", TransferedQty);
-                    command.Parameters.AddWithValue("@p_AvailableQty", AvailableQty);
-                    command.Parameters.AddWithValue("@p_Status", "Accepted");
-                    command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
-                    command.Parameters.AddWithValue("@p_ProductID", ProductId);
-
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.ExecuteNonQuery();
-                    if (RequestedQty != TransferedQty)
-                    {
-                        if (TransferedQty == 0)
-                        {
-                            UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty);
-                        }
-                        else
-                        {
-                            UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty);
-                        }
-                    }
-                    DataSet dsResults = new DataSet();
-                    SqlDataAdapter da = new SqlDataAdapter(command);
-                    da.Fill(dsResults);
-
-
-                    Session["TransferRequestGrid"] = dsResults.Tables[0];
-
-                    Response.Redirect("GenerateAcceptedTransferOrder.aspx", false);
+                    connection.Open();
                 }
+                SqlCommand command = new SqlCommand("sp_UpdateTransferOrderDetials_AcceptAll", connection);
+                command.Parameters.AddWithValue("@p_TransferID", TransferNo);
+                command.Parameters.AddWithValue("@p_TransferDetID", TransferDetailNo);
+                command.Parameters.AddWithValue("@p_RequestedQty", RequestedQty);
+                command.Parameters.AddWithValue("@p_TransferedQty", TransferedQty);
+                command.Parameters.AddWithValue("@p_AvailableQty", AvailableQty);
+                command.Parameters.AddWithValue("@p_Status", "Accepted");
+                command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
+                command.Parameters.AddWithValue("@p_ProductID", ProductId);
+
+                command.CommandType = CommandType.StoredProcedure;
+                command.ExecuteNonQuery();
+
+                SqlDataAdapter da = new SqlDataAdapter(command);
+                da.Fill(dsResults);
+
+                Session["TransferRequestGrid"] = dsResults.Tables[0];
+
+                Response.Redirect("GenerateAcceptedTransferOrder.aspx", false);
             }
 
         }
