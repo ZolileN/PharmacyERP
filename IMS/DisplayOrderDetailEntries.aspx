@@ -248,7 +248,7 @@
                      
                      <asp:TemplateField HeaderText="BarCode" Visible="false" HeaderStyle-Width ="110px">
                         <ItemTemplate>
-                            <asp:Label ID="lblbarCode" runat="server" Text='<%# Eval("Barcode") %>'></asp:Label>
+                            <asp:Label ID="lblbarCode" runat="server" Text='<%# Eval("Barcode")==DBNull.Value?0:long.Parse( Eval("Barcode").ToString())  %>'></asp:Label>
                         </ItemTemplate>
                          <ItemStyle  Width="110px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
