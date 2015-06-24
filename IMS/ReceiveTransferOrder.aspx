@@ -127,8 +127,8 @@
                                           <asp:Button CssClass="btn btn-danger btn-sm denyReq" ID="btnDeny" Text="Deny" runat="server" CommandName="DenyProductTransfer"  CommandArgument='<%# Container.DataItemIndex %>' />
 
                                         </span>
-                                        <asp:Button ID="btnStaticAccepted" runat="server" CssClass="btn btn-success btn-sm accepted" Text="Accepted" Visible="false" />
-                                        <asp:Label ID="lblStaticDeny" runat="server" CssClass="btn btn-success btn-sm denyReq" Text="Denied" Visible="false" />
+                                        <span class="accepted"  ID="btnStaticAccepted" runat="server" Visible="false"  >Accepted</span>
+                                       <span class="denied"  ID="lblStaticDeny" runat="server" Visible="false"  >Denied</span>  
                                        
                                     </ItemTemplate>
                                 </asp:TemplateField>
