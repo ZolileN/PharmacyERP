@@ -25,13 +25,13 @@
                             AutoGenerateColumns="false"  >
                             <Columns>
 
-                                <asp:TemplateField Visible="false" >
+                                <%--<asp:TemplateField Visible="false" >
                                     <ItemTemplate>
                                         <asp:Label ID="lblentryID" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("entryID") %>' Width="140px"></asp:Label>
                                     </ItemTemplate>
 
                                     <ItemStyle Width="150px" HorizontalAlign="Left" />
-                                </asp:TemplateField>
+                                </asp:TemplateField>--%>
                                  
                                 <asp:TemplateField Visible="false" >
                                     <ItemTemplate>
@@ -43,7 +43,47 @@
                               
                                 <asp:TemplateField Visible="false" >
                                     <ItemTemplate>
+                                        <asp:Label ID="lblBarCode" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("BarCode") %>' Width="140px"></asp:Label>
+                                    </ItemTemplate>
+
+                                    <ItemStyle Width="150px" HorizontalAlign="Left" />
+                                </asp:TemplateField>
+
+                                <asp:TemplateField Visible="false" >
+                                    <ItemTemplate>
                                         <asp:Label ID="lblProductID" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("ProductID") %>' Width="140px"></asp:Label>
+                                    </ItemTemplate>
+
+                                    <ItemStyle Width="150px" HorizontalAlign="Left" />
+                                </asp:TemplateField>
+
+                                <asp:TemplateField Visible="false" >
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblRequestedDate" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("RequestedDate") %>' Width="140px"></asp:Label>
+                                    </ItemTemplate>
+
+                                    <ItemStyle Width="150px" HorizontalAlign="Left" />
+                                </asp:TemplateField>
+                                
+                                <asp:TemplateField Visible="false" >
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblSP" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("SP") %>' Width="140px"></asp:Label>
+                                    </ItemTemplate>
+
+                                    <ItemStyle Width="150px" HorizontalAlign="Left" />
+                                </asp:TemplateField>
+
+                                <asp:TemplateField Visible="false" >
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblCP" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("CP") %>' Width="140px"></asp:Label>
+                                    </ItemTemplate>
+
+                                    <ItemStyle Width="150px" HorizontalAlign="Left" />
+                                </asp:TemplateField>
+
+                                <asp:TemplateField Visible="false" >
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblStockID" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("StockID") %>' Width="140px"></asp:Label>
                                     </ItemTemplate>
 
                                     <ItemStyle Width="150px" HorizontalAlign="Left" />
