@@ -166,8 +166,7 @@
                                        </ul>
 
                                     </li>
-                                    <li><a href="#">Receive Store Request</a></li>
-                                    <li><a href="#">Receive Salesman Request</a></li>
+                                    <li><a href="ReceiveStoreRequest.aspx">Receive Store/Salesman Request</a></li>
                                     <li><a href="#">Receive Returned Items</a>
                                 </ul>
                             </li>

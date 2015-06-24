@@ -10,7 +10,7 @@
 namespace IMS {
     
     
-    public partial class Warehouse_StoreRequests {
+    public partial class RespondStoreRequest {
         
         /// <summary>
         /// btnBack control.
@@ -22,30 +22,12 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.Button btnBack;
         
         /// <summary>
-        /// StockAt control.
+        /// repReceiveTransfer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList StockAt;
-        
-        /// <summary>
-        /// StockDisplayGrid control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView StockDisplayGrid;
-        
-        /// <summary>
-        /// btnPackingList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPackingList;
+        protected global::System.Web.UI.WebControls.Repeater repReceiveTransfer;
     }
 }
