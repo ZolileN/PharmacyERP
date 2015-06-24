@@ -41,6 +41,14 @@
                                     <ItemStyle Width="150px" HorizontalAlign="Left" />
                                 </asp:TemplateField>
                               
+                                <asp:TemplateField Visible="false" >
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblProductID" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("ProductID") %>' Width="140px"></asp:Label>
+                                    </ItemTemplate>
+
+                                    <ItemStyle Width="150px" HorizontalAlign="Left" />
+                                </asp:TemplateField>
+
                                 <asp:TemplateField HeaderText="Product Description">
                                     <ItemTemplate>
                                         <asp:Label ID="lblProductDescription" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("ProductDescription") %>' Width="140px"></asp:Label>

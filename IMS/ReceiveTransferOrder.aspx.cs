@@ -19,6 +19,8 @@ namespace IMS
             if(!IsPostBack)
             {
                 LoadRepeater();
+                //Add Previously subtracted Stock
+
             }
         }
 
@@ -281,6 +283,11 @@ namespace IMS
                                 UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty);
                             }
                         }
+                        //Button btnAcceptTransferOrder = (Button)repReceiveTransfer.FindControl("btnAcceptTransferOrder");
+
+                        Button btnAcceptTransferOrder = (Button)repReceiveTransfer.Items[0].FindControl("btnAcceptTransferOrder");
+
+                        btnAcceptTransferOrder.Visible = false;
                     }
                 } 
                 if (e.CommandName == "GenTransferOrder")
@@ -441,7 +448,7 @@ namespace IMS
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 Button abc = (Button)e.Row.FindControl("btnAccept");
-                if (dsStatic.Tables[0].Rows[e.Row.RowIndex]["TransferStatus"].ToString() == "Accepted")
+                if (dsStatic.Tables[0].Rows[e.Row.RowIndex]["TransferStatus"].ToString() == "Accepted" || dsStatic.Tables[0].Rows[e.Row.RowIndex]["TransferStatus"].ToString() == "Received")
                 {
                     GridView gv = (GridView)sender;
                     Button btnAccept = (Button)e.Row.FindControl("btnAccept");
@@ -523,6 +530,9 @@ namespace IMS
                             UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty);
                         }
                     }
+                    Button btnAcceptTransferOrder = (Button)repReceiveTransfer.Items[0].FindControl("btnAcceptTransferOrder");
+
+                    btnAcceptTransferOrder.Visible = false;
                 }
             }
 
