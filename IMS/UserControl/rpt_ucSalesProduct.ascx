@@ -1,8 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="rpt_ucSalesProduct.ascx.cs" Inherits="IMS.UserControl.rpt_ucSalesProduct" %>
 <div style="margin-top: -144px; display: block;" class="popupMain" id="department">
 
-        <div class="popupHead">SubCategory List
-            <a href="rpt_SalesSummary_Selection.aspx" class="close"></a>
+        <div class="popupHead">Product List
+            <a href="#" class="close"></a>
         </div>
         <div class="bodyPop">
         	<asp:GridView ID="gdvDepartment" runat="server" Width="100%" CssClass="table table-striped table-bordered table-condensed" AllowPaging="True" PageSize="10"

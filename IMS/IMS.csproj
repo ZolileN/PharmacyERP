@@ -276,11 +276,17 @@
     <Content Include="Reports.aspx" />
     <Content Include="RespondStoreRequest.aspx" />
     <Content Include="Result.aspx" />
+    <Content Include="rpt_ItemPurchaseDisplay_byDate.aspx" />
+    <Content Include="rpt_ItemPurchaseDisplay_byExpiry.aspx" />
+    <Content Include="rpt_ItemPurchaseDisplay_byPharmacy.aspx" />
+    <Content Include="rpt_ItemPurchaseDisplay_byPrice.aspx" />
+    <Content Include="rpt_ItemPurchase_Selection.aspx" />
     <Content Include="rpt_ItemSoldDisplay.aspx" />
     <Content Include="rpt_ItemSoldDisplay_byDate.aspx" />
     <Content Include="rpt_ItemSoldDisplay_byPharmacy.aspx" />
     <Content Include="rpt_ItemSoldDisplay_bySalesMan.aspx" />
     <Content Include="rpt_ItemSold_Selection.aspx" />
+    <Content Include="rpt_PurchaseItem_Selection.aspx" />
     <Content Include="rpt_SalesSummaryDisplay.aspx" />
     <Content Include="rpt_SalesSummary_Selection.aspx" />
     <Content Include="SentTransferRequests.aspx" />
@@ -934,6 +940,41 @@
     <Compile Include="Result.aspx.designer.cs">
       <DependentUpon>Result.aspx</DependentUpon>
     </Compile>
+    <Compile Include="rpt_ItemPurchaseDisplay_byDate.aspx.cs">
+      <DependentUpon>rpt_ItemPurchaseDisplay_byDate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rpt_ItemPurchaseDisplay_byDate.aspx.designer.cs">
+      <DependentUpon>rpt_ItemPurchaseDisplay_byDate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="rpt_ItemPurchaseDisplay_byExpiry.aspx.cs">
+      <DependentUpon>rpt_ItemPurchaseDisplay_byExpiry.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rpt_ItemPurchaseDisplay_byExpiry.aspx.designer.cs">
+      <DependentUpon>rpt_ItemPurchaseDisplay_byExpiry.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="rpt_ItemPurchaseDisplay_byPharmacy.aspx.cs">
+      <DependentUpon>rpt_ItemPurchaseDisplay_byPharmacy.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rpt_ItemPurchaseDisplay_byPharmacy.aspx.designer.cs">
+      <DependentUpon>rpt_ItemPurchaseDisplay_byPharmacy.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="rpt_ItemPurchaseDisplay_byPrice.aspx.cs">
+      <DependentUpon>rpt_ItemPurchaseDisplay_byPrice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rpt_ItemPurchaseDisplay_byPrice.aspx.designer.cs">
+      <DependentUpon>rpt_ItemPurchaseDisplay_byPrice.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="rpt_ItemPurchase_Selection.aspx.cs">
+      <DependentUpon>rpt_ItemPurchase_Selection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rpt_ItemPurchase_Selection.aspx.designer.cs">
+      <DependentUpon>rpt_ItemPurchase_Selection.aspx</DependentUpon>
+    </Compile>
     <Compile Include="rpt_ItemSoldDisplay.aspx.cs">
       <DependentUpon>rpt_ItemSoldDisplay.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -968,6 +1009,13 @@
     </Compile>
     <Compile Include="rpt_ItemSold_Selection.aspx.designer.cs">
       <DependentUpon>rpt_ItemSold_Selection.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="rpt_PurchaseItem_Selection.aspx.cs">
+      <DependentUpon>rpt_PurchaseItem_Selection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rpt_PurchaseItem_Selection.aspx.designer.cs">
+      <DependentUpon>rpt_PurchaseItem_Selection.aspx</DependentUpon>
     </Compile>
     <Compile Include="rpt_SalesSummaryDisplay.aspx.cs">
       <DependentUpon>rpt_SalesSummaryDisplay.aspx</DependentUpon>

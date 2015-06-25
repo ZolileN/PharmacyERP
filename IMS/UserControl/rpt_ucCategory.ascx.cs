@@ -32,7 +32,15 @@ namespace IMS.UserControl
             {
 
                 if (connection.State == ConnectionState.Closed) { connection.Open(); }
-                SqlCommand command = new SqlCommand("sp_rptSalesCategory", connection);
+                SqlCommand command = new SqlCommand();
+                if (Session["SP_Purchase"] != null && Session["SP_Purchase"].ToString().Equals("YES"))
+                {
+                    command = new SqlCommand("sp_rptPI_Category", connection);
+                }
+                else
+                {
+                     command = new SqlCommand("sp_rptSalesCategory", connection);
+                }
                 command.CommandType = CommandType.StoredProcedure;
                 if (Session["SearchItemCat_RPT"] != null && Session["SearchItemCat_RPT"].ToString() != "")
                 {

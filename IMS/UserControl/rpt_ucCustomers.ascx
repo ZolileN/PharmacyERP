@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="rpt_ucCustomers.ascx.cs" Inherits="IMS.UserControl.rpt_ucCustomers" %>
 <div style="margin-top: -144px; display: block;" class="popupMain" id="customers">
 
-        <div class="popupHead">Customers List
+        <div class="popupHead">Customer(s)/Vendor(s) List
             <a href="rpt_SalesSummary_Selection.aspx" class="close"></a>
         </div>
 
@@ -17,13 +17,13 @@
                 </ItemTemplate>
             </asp:TemplateField>
              
-            <asp:TemplateField HeaderText="Customer Name">
+            <asp:TemplateField HeaderText="Name">
                 <ItemTemplate>
                     <asp:Label ID="lblCustomer" runat="server" Text='<%# Eval("SystemName") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             
-            <asp:TemplateField HeaderText="Description">
+            <asp:TemplateField HeaderText="Details">
                 <ItemTemplate>
                     <asp:Label ID="lblDescription" runat="server" Text='<%# Eval("Description") %>'></asp:Label>
                 </ItemTemplate>

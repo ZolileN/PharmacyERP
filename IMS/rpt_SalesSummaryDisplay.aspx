@@ -103,17 +103,7 @@
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
-                                        <asp:TemplateField HeaderText="Profit">
-                                            <ItemTemplate>
-                                                <asp:Label ID="lblSO" runat="server" Text='<%# Eval("Profit") %>'></asp:Label>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-
-                                        <asp:TemplateField HeaderText="% Profit">
-                                            <ItemTemplate>
-                                                <asp:Label ID="lblSO" runat="server" Text='<%# Eval("ProfitPercentage") %>'></asp:Label>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
+                                      
                                            
                                     </Columns>
                                 </asp:GridView>
@@ -167,17 +157,7 @@
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
-                                        <asp:TemplateField HeaderText="Total Profit">
-                                            <ItemTemplate>
-                                                <asp:Label ID="lblSO" runat="server" Text='<%# Eval("Profit") %>'></asp:Label>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-
-                                        <asp:TemplateField HeaderText="Total % Profit">
-                                            <ItemTemplate>
-                                                <asp:Label ID="lblSO" runat="server" Text='<%# Eval("ProfitPercentage") %>'></asp:Label>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
+                                       
                                            
                                     </Columns>
                                 </asp:GridView>
