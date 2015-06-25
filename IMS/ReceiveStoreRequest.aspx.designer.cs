@@ -40,40 +40,130 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.Button btnBack;
         
         /// <summary>
-        /// StockAt control.
+        /// ddlReqFrom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList StockAt;
+        protected global::System.Web.UI.WebControls.DropDownList ddlReqFrom;
         
         /// <summary>
-        /// SelectProduct control.
+        /// ddlReqStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox SelectProduct;
+        protected global::System.Web.UI.WebControls.DropDownList ddlReqStatus;
         
         /// <summary>
-        /// btnSearchProduct control.
+        /// lblSelectStore control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton btnSearchProduct;
+        protected global::System.Web.UI.WebControls.Label lblSelectStore;
         
         /// <summary>
-        /// OrderStatus control.
+        /// lblStoreId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList OrderStatus;
+        protected global::System.Web.UI.WebControls.Label lblStoreId;
+        
+        /// <summary>
+        /// txtStore control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtStore;
+        
+        /// <summary>
+        /// btnSelectStore control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSelectStore;
+        
+        /// <summary>
+        /// mpeCongratsMessageDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ModalPopupExtender mpeCongratsMessageDiv;
+        
+        /// <summary>
+        /// StoresPopupGrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::IMS.UserControl.StoresPopup StoresPopupGrid;
+        
+        /// <summary>
+        /// LblSelectSalesman control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblSelectSalesman;
+        
+        /// <summary>
+        /// lblSlmanID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSlmanID;
+        
+        /// <summary>
+        /// txtSlman control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSlman;
+        
+        /// <summary>
+        /// btnSelectSaleman control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSelectSaleman;
+        
+        /// <summary>
+        /// mpecMessageDic control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ModalPopupExtender mpecMessageDic;
+        
+        /// <summary>
+        /// salesPopupGrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::IMS.UserControl.uc_Select_Salesman salesPopupGrid;
         
         /// <summary>
         /// txtOrderNO control.
@@ -85,12 +175,21 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.TextBox txtOrderNO;
         
         /// <summary>
-        /// DropDownList1 control.
+        /// DateTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
+        protected global::System.Web.UI.WebControls.TextBox DateTextBox;
+        
+        /// <summary>
+        /// StockDisplayGrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView StockDisplayGrid;
     }
 }

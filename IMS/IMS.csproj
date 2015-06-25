@@ -274,6 +274,7 @@
     <Content Include="ReplenishPO_Generate.aspx" />
     <Content Include="ReportFormat_simple.aspx" />
     <Content Include="Reports.aspx" />
+    <Content Include="RespondStoreRequest.aspx" />
     <Content Include="Result.aspx" />
     <Content Include="rpt_ItemSoldDisplay.aspx" />
     <Content Include="rpt_ItemSoldDisplay_byDate.aspx" />
@@ -364,9 +365,6 @@
     <Content Include="StoreRequests.aspx" />
     <Content Include="StoreRequestsMain.aspx" />
     <Content Include="StoreRequestsView.aspx" />
-    <Content Include="StoreTransfers_StoreRequests.aspx" />
-    <Content Include="StoreTransfers_StoreRequestsDetails.aspx" />
-    <Content Include="StoreTransfers_StoreRequestsResponse.aspx" />
     <Content Include="Style\chosen.css" />
     <Content Include="Style\demo.css" />
     <Content Include="Style\font-awesome\css\font-awesome-ie7.css" />
@@ -390,6 +388,7 @@
     <Content Include="UserControl\StoresPopup.ascx" />
     <Content Include="UserControl\SuperMasterProducts.ascx" />
     <Content Include="UserControl\uc_printBarcode.ascx" />
+    <Content Include="UserControl\uc_Select_Salesman.ascx" />
     <Content Include="UserControl\uc_Select_System.ascx" />
     <Content Include="UserControl\VendorsPopupGrid.ascx" />
     <Content Include="UserStoreManagment.aspx" />
@@ -404,9 +403,6 @@
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="WarehouseMain.aspx" />
     <Content Include="WarehouseSalesOrder.aspx" />
-    <Content Include="Warehouse_StoreRequestDetails.aspx" />
-    <Content Include="Warehouse_StoreRequests.aspx" />
-    <Content Include="Warehouse_StoreRequest_Response.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -924,6 +920,13 @@
     <Compile Include="Reports.aspx.designer.cs">
       <DependentUpon>Reports.aspx</DependentUpon>
     </Compile>
+    <Compile Include="RespondStoreRequest.aspx.cs">
+      <DependentUpon>RespondStoreRequest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RespondStoreRequest.aspx.designer.cs">
+      <DependentUpon>RespondStoreRequest.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Result.aspx.cs">
       <DependentUpon>Result.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1121,27 +1124,6 @@
     <Compile Include="StoreRequestsView.aspx.designer.cs">
       <DependentUpon>StoreRequestsView.aspx</DependentUpon>
     </Compile>
-    <Compile Include="StoreTransfers_StoreRequests.aspx.cs">
-      <DependentUpon>StoreTransfers_StoreRequests.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="StoreTransfers_StoreRequests.aspx.designer.cs">
-      <DependentUpon>StoreTransfers_StoreRequests.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="StoreTransfers_StoreRequestsDetails.aspx.cs">
-      <DependentUpon>StoreTransfers_StoreRequestsDetails.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="StoreTransfers_StoreRequestsDetails.aspx.designer.cs">
-      <DependentUpon>StoreTransfers_StoreRequestsDetails.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="StoreTransfers_StoreRequestsResponse.aspx.cs">
-      <DependentUpon>StoreTransfers_StoreRequestsResponse.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="StoreTransfers_StoreRequestsResponse.aspx.designer.cs">
-      <DependentUpon>StoreTransfers_StoreRequestsResponse.aspx</DependentUpon>
-    </Compile>
     <Compile Include="UserControl\MultipleVendorsSelectPopup.ascx.cs">
       <DependentUpon>MultipleVendorsSelectPopup.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1211,6 +1193,13 @@
     </Compile>
     <Compile Include="UserControl\uc_printBarcode.ascx.designer.cs">
       <DependentUpon>uc_printBarcode.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\uc_Select_Salesman.ascx.cs">
+      <DependentUpon>uc_Select_Salesman.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControl\uc_Select_Salesman.ascx.designer.cs">
+      <DependentUpon>uc_Select_Salesman.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserControl\uc_Select_System.ascx.cs">
       <DependentUpon>uc_Select_System.ascx</DependentUpon>
@@ -1309,27 +1298,6 @@
     </Compile>
     <Compile Include="WarehouseSalesOrder.aspx.designer.cs">
       <DependentUpon>WarehouseSalesOrder.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Warehouse_StoreRequestDetails.aspx.cs">
-      <DependentUpon>Warehouse_StoreRequestDetails.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Warehouse_StoreRequestDetails.aspx.designer.cs">
-      <DependentUpon>Warehouse_StoreRequestDetails.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Warehouse_StoreRequests.aspx.cs">
-      <DependentUpon>Warehouse_StoreRequests.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Warehouse_StoreRequests.aspx.designer.cs">
-      <DependentUpon>Warehouse_StoreRequests.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Warehouse_StoreRequest_Response.aspx.cs">
-      <DependentUpon>Warehouse_StoreRequest_Response.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Warehouse_StoreRequest_Response.aspx.designer.cs">
-      <DependentUpon>Warehouse_StoreRequest_Response.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

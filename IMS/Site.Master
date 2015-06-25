@@ -166,8 +166,7 @@
                                        </ul>
 
                                     </li>
-                                    <li><a href="#">Receive Store Request</a></li>
-                                    <li><a href="#">Receive Salesman Request</a></li>
+                                    <li><a href="ReceiveStoreRequest.aspx">Receive Store/Salesman Request</a></li>
                                     <li><a href="#">Receive Returned Items</a>
                                 </ul>
                             </li>
@@ -468,7 +467,7 @@
                                     <li><a href="StoreRequests.aspx">Manual Generate Requests</a></li>
                                     <li><a href="CreateTransferRequest.aspx">Create Transfer Request</a></li> 
 
-                                    <li><a href="StoreRequests.aspx">Manage Transfers</a>
+                                    <li class="hasChild"><a href="StoreRequests.aspx">Manage Transfers</a>
                                      <ul>
                                                 <li><a href="SentTransferRequests.aspx">Send</a></li>
                                                 <li><a href="ReceiveTransferOrder.aspx"> Receive</a></li>

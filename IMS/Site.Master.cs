@@ -89,6 +89,8 @@ namespace IMS
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
+            //Session.Abandon();
+            Session.Clear();
             Context.GetOwinContext().Authentication.SignOut();
         }
 

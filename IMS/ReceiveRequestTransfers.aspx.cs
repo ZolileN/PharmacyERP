@@ -161,15 +161,8 @@ namespace IMS
                     commnd.Parameters.AddWithValue("@p_ProductID", ProductID);
                     commnd.Parameters.AddWithValue("@p_Quantity", quantity);
                     commnd.Parameters.AddWithValue("@p_Status", "1");
-                    if (Session["Inventory_StoreID"] == null)
-                    {
-                        commnd.Parameters.AddWithValue("@p_UserRoleID", id);
-                    }
-                    else
-                    {
-                        commnd.Parameters.AddWithValue("@p_UserRoleID", int.Parse(Session["Inventory_StoreID"].ToString()));
-                    }
-
+                     commnd.Parameters.AddWithValue("@p_UserRoleID", id);
+                     
                     commnd.Parameters.AddWithValue("@p_BarCode", BarCode);
                     commnd.Parameters.AddWithValue("@p_Expiry", Expiry); // Calender Date or DateTime Picker Date
                     commnd.Parameters.AddWithValue("@p_Cost", CP);

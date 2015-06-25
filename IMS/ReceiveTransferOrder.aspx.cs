@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace IMS
@@ -153,8 +154,10 @@ namespace IMS
                     btnDeny.Visible = false;
                     Button btnEdit = (Button)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("btnEdit");
                     btnEdit.Visible = false;
-                    Button btnStaticAccepted = (Button)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("btnStaticAccepted");
-                    btnStaticAccepted.Visible = true;
+                    //Button btnStaticAccepted = (Button)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("btnStaticAccepted");
+                    //btnStaticAccepted.Visible = true;
+                    HtmlGenericControl btnStaticAccepted = (HtmlGenericControl)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("btnStaticAccepted");
+                    btnStaticAccepted.Visible = true;  
                     if (RequestedQty != TransferedQty)
                     {
                         if (TransferedQty == 0)
@@ -166,6 +169,7 @@ namespace IMS
                             UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty);
                         }
                     }
+                    LoadRepeater();
                 }
                 if (e.CommandName == "DenyProductTransfer")
                 {
@@ -194,8 +198,11 @@ namespace IMS
                     Button btnEdit = (Button)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("btnEdit");
                     btnEdit.Visible = false;
 
-                    Label lblStaticDeny = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblStaticDeny");
-                    lblStaticDeny.Visible = true;
+                    HtmlGenericControl lblStaticDeny = (HtmlGenericControl)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblStaticDeny");
+                    lblStaticDeny.Visible = true;  
+                    //Label lblStaticDeny = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblStaticDeny");
+                    //lblStaticDeny.Visible = true;
+                    LoadRepeater();
                      
                 }
 
@@ -270,8 +277,12 @@ namespace IMS
                         btnDeny.Visible = false;
                         Button btnEdit = (Button)gvReceiveTransfer.Rows[i].FindControl("btnEdit");
                         btnEdit.Visible = false;
-                        Button btnStaticAccepted = (Button)gvReceiveTransfer.Rows[i].FindControl("btnStaticAccepted");
-                        btnStaticAccepted.Visible = true;
+                        //Button btnStaticAccepted = (Button)gvReceiveTransfer.Rows[i].FindControl("btnStaticAccepted");
+                        //btnStaticAccepted.Visible = true;
+
+                        HtmlGenericControl btnStaticAccepted = (HtmlGenericControl)gvReceiveTransfer.Rows[i].FindControl("btnStaticAccepted");
+                        btnStaticAccepted.Visible = true;  
+
                         if (RequestedQty != TransferedQty)
                         {
                             if (TransferedQty == 0)
@@ -288,6 +299,7 @@ namespace IMS
                         Button btnAcceptTransferOrder = (Button)repReceiveTransfer.Items[0].FindControl("btnAcceptTransferOrder");
 
                         btnAcceptTransferOrder.Visible = false;
+                        LoadRepeater();
                     }
                 } 
                 if (e.CommandName == "GenTransferOrder")
@@ -457,8 +469,21 @@ namespace IMS
                     btnDeny.Visible = false;
                     Button btnEdit = (Button)e.Row.FindControl("btnEdit");
                     btnEdit.Visible = false;
-                    Button btnStaticAccepted = (Button)e.Row.FindControl("btnStaticAccepted");
-                    btnStaticAccepted.Visible = true;
+                    
+                    HtmlGenericControl btnStaticAccepted = (HtmlGenericControl)e.Row.FindControl("btnStaticAccepted");
+                    btnStaticAccepted.Visible = true;  
+                }
+                if (dsStatic.Tables[0].Rows[e.Row.RowIndex]["TransferStatus"].ToString() == "Denied" )
+                {
+                    GridView gv = (GridView)sender;
+                    Button btnAccept = (Button)e.Row.FindControl("btnAccept");
+                    btnAccept.Visible = false;
+                    Button btnDeny = (Button)e.Row.FindControl("btnDeny");
+                    btnDeny.Visible = false;
+                    Button btnEdit = (Button)e.Row.FindControl("btnEdit");
+                    btnEdit.Visible = false;
+                    HtmlGenericControl lblStaticDeny = (HtmlGenericControl)e.Row.FindControl("lblStaticDeny");
+                    lblStaticDeny.Visible = true;  
                 }
             }
             
@@ -517,8 +542,10 @@ namespace IMS
                     btnDeny.Visible = false;
                     Button btnEdit = (Button)gvReceiveTransfer.Rows[i].FindControl("btnEdit");
                     btnEdit.Visible = false;
-                    Button btnStaticAccepted = (Button)gvReceiveTransfer.Rows[i].FindControl("btnStaticAccepted");
-                    btnStaticAccepted.Visible = true;
+                    
+                    HtmlGenericControl btnStaticAccepted = (HtmlGenericControl)gvReceiveTransfer.Rows[i].FindControl("btnStaticAccepted");
+                    btnStaticAccepted.Visible = true;  
+
                     if (RequestedQty != TransferedQty)
                     {
                         if (TransferedQty == 0)
@@ -533,6 +560,7 @@ namespace IMS
                     Button btnAcceptTransferOrder = (Button)repReceiveTransfer.Items[0].FindControl("btnAcceptTransferOrder");
 
                     btnAcceptTransferOrder.Visible = false;
+                    LoadRepeater();
                 }
             }
 

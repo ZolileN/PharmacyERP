@@ -1444,3 +1444,15 @@ table.table-striped tr td {
 	width:46px !important;
 	height:28px !important;
 	}
+
+
+.accepted {
+    color: #65C705 !important;
+    font-weight: bold;
+    width: 168px;
+}
+
+.denied {
+    color: #F00 !important;
+    font-weight: bold;
+}

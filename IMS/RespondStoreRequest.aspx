@@ -1,16 +1,15 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ReceiveTransferOrder.aspx.cs" Inherits="IMS.ReceiveTransferOrder" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="RespondStoreRequest.aspx.cs" Inherits="IMS.RespondStoreRequest" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
       <table width="100%">
 
         <tbody><tr>
-        	<td> <h4 id="topHead">Manage Transfers</h4></td>
+        	<td> <h4 id="topHead">Manage Requests</h4>
+             
+        	</td>
             <td align="right">
-                <asp:Button ID="btnAcceptAll" runat="server" CssClass="btn btn-success acptAllTransfers" Text="Accept All Transfers" OnClick="btnAcceptAll_Click" />
-                <asp:Button ID="btnGenTransferAll" runat="server" CssClass="btn btn-info" Text="Generate All Transfers" OnClick="btnGenTransferAll_Click" />
-                <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default" Text="Back" />
+               <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default" Text="Back" OnClick="btnBack_Click" />
 
             </td>
         </tr>
@@ -19,7 +18,6 @@
     <hr>
      
      <br>
-
     <asp:Repeater ID="repReceiveTransfer" runat="server" OnItemDataBound="repReceiveTransfer_ItemDataBound" OnItemCommand="repReceiveTransfer_ItemCommand">
 
         <ItemTemplate>
@@ -31,8 +29,8 @@
 
                                 <asp:Literal ID="litStoreName" runat="server" ></asp:Literal>
                             </h4>
-                            <asp:Button ID="btnGenTransfer" runat="server" CssClass="btn btn-info fl-r" Text="Generate Transfer" CommandName="GenTransferOrder" />
-                            <asp:Button ID="btnAcceptTransferOrder" runat="server" CssClass="btn btn-success fl-r acceptAll" Text="Accept All" OnClick="btnAcceptTransferOrder_Click" CommandName="AcceptTransferOrder"/>
+                            <asp:Button ID="btnGenTransfer" runat="server" CssClass="btn btn-info fl-r" Text="Generate SO" CommandName="GenTransferOrder" />
+                            <asp:Button ID="btnAcceptTransferOrder" runat="server" CssClass="btn btn-success fl-r acceptAll" Text="Accept All" CommandName="AcceptTransferOrder"/>
 
                         </td>
                     </tr>
@@ -45,7 +43,7 @@
 
                                 <asp:TemplateField HeaderText="Action">
                                     <ItemTemplate>
-                                        <asp:Button CssClass="btn btn-default edit-btn" ID="btnEdit" Text="Edit" runat="server" CommandName="Edit" CommandArgument='<%# Container.DataItemIndex %>' />
+                                        <asp:Button CssClass="btn btn-default edit-btn" ID="btnEdit" Text="Edit" runat="server" Visible= '<%# !IsStatusComplete((String) Eval("Status")) %>' CommandName="Edit" CommandArgument='<%# Container.DataItemIndex %>' />
                                     </ItemTemplate>
 
                                      
@@ -77,7 +75,7 @@
                                     <ItemStyle Width="150px" HorizontalAlign="Left" />
                                 </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="Request No.">
+                                <asp:TemplateField HeaderText="Request No." Visible="false">
                                     <ItemTemplate>
                                         <asp:Label ID="lblRequestNo" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("TransferID") %>' Width="140px"></asp:Label>
                                     </ItemTemplate>
@@ -121,14 +119,14 @@
 
                                 <asp:TemplateField HeaderText="">
                                     <ItemTemplate>
-                                        <asp:Button CssClass="btn btn-success btn-sm acceptReq" ID="btnAccept" Text="Accept" runat="server" CommandName="AcceptProductTransfer"  CommandArgument='<%# Container.DataItemIndex %>' />
+                                        <asp:Button CssClass="btn btn-success btn-sm acceptReq" ID="btnAccept" Text="Accept" runat="server" Visible= '<%# !IsStatusComplete((String) Eval("Status")) %>' CommandName="AcceptProductTransfer"  CommandArgument='<%# Container.DataItemIndex %>' />
                                        
                                         <span onclick="return confirm('Are you sure you want to deny?')">
-                                          <asp:Button CssClass="btn btn-danger btn-sm denyReq" ID="btnDeny" Text="Deny" runat="server" CommandName="DenyProductTransfer"  CommandArgument='<%# Container.DataItemIndex %>' />
+                                          <asp:Button CssClass="btn btn-danger btn-sm denyReq" ID="btnDeny" Text="Deny"  Visible= '<%# !IsStatusComplete((String) Eval("Status")) %>' runat="server" CommandName="DenyProductTransfer"  CommandArgument='<%# Container.DataItemIndex %>' />
 
                                         </span>
-                                        <span class="accepted"  ID="btnStaticAccepted" runat="server" Visible="false"  >Accepted</span>
-                                       <span class="denied"  ID="lblStaticDeny" runat="server" Visible="false"  >Denied</span>  
+                                        <asp:Button ID="btnStaticAccepted" runat="server" CssClass="btn btn-success btn-sm accepted" Text="Accepted" Visible='<%# IsStatusAccepted((String) Eval("Status")) %>' />
+                                        <asp:Label ID="lblStaticDeny" runat="server" CssClass="btn btn-success btn-sm denyReq" Text="Denied" Visible='<%# IsStatusDenied((String) Eval("Status")) %>' />
                                        
                                     </ItemTemplate>
                                 </asp:TemplateField>
@@ -143,6 +141,10 @@
 
 
     </asp:Repeater>
-
-     
+    
+  
+  
+  
+  
+  
 </asp:Content>
