@@ -116,7 +116,7 @@
         </tr>
 		<tr>
             <td><asp:label ID="lblInternalCustomer" runat="server"><b>Internal Customer:</b></asp:label></td>
-            <td><asp:DropDownList ID="ddlInternalCustomer" runat="server" OnSelectedIndexChanged="ddlInternalCustomer_SelectedIndexChanged" Enabled="false"></asp:DropDownList></td>
+            <td><asp:DropDownList ID="ddlInternalCustomer" runat="server" OnSelectedIndexChanged="ddlInternalCustomer_SelectedIndexChanged" Enabled="true"></asp:DropDownList></td>
 		
              <td><asp:label ID="lblSalesman" runat="server"><b>Salesman:</b></asp:label></td>
             <td>

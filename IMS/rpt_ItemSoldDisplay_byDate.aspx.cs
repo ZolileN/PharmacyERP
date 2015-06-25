@@ -58,7 +58,7 @@ namespace IMS
 
                 SqlCommand command = new SqlCommand("sp_rpt_ItemSold", connection);
                 command.CommandType = CommandType.StoredProcedure;
-
+                command.Parameters.AddWithValue("@InternalCustomer", Session["rptInternalCustomers"].ToString());
                 #region Applying Filters
                 if (Session["rptCustomerID"] != null && Session["rptCustomerID"].ToString() != "")
                 {
