@@ -271,7 +271,7 @@ namespace IMS.StoreManagement.StoreRequests
                                 }
                                 #endregion
                                 int TransferDetailID = Convert.ToInt32(Session["TransferDetailID"].ToString());
-                                UpdateStockMinus(TransferDetailID, Convert.ToInt32(drDetails["ProductID"].ToString()), 0, Convert.ToInt32(drDetails["RequestedQty"].ToString()), Convert.ToInt32(dr["SystemID"].ToString()));
+                                //UpdateStockMinus(TransferDetailID, Convert.ToInt32(drDetails["ProductID"].ToString()), 0, Convert.ToInt32(drDetails["RequestedQty"].ToString()), Convert.ToInt32(dr["SystemID"].ToString()));
 
                                 Session["FirstOrderTransfer"] = true;
                             }
@@ -377,7 +377,7 @@ namespace IMS.StoreManagement.StoreRequests
                                     }
                                     #endregion
                                     int TransferDetailID = Convert.ToInt32(Session["TransferDetailID"].ToString());
-                                    UpdateStockMinus(TransferDetailID, Convert.ToInt32(drDetails["ProductID"].ToString()), 0, Convert.ToInt32(drDetails["RequestedQty"].ToString()), Convert.ToInt32(dr["SystemID"].ToString()));
+                                    //UpdateStockMinus(TransferDetailID, Convert.ToInt32(drDetails["ProductID"].ToString()), 0, Convert.ToInt32(drDetails["RequestedQty"].ToString()), Convert.ToInt32(dr["SystemID"].ToString()));
 
                                 }
                                 else
