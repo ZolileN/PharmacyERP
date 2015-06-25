@@ -275,6 +275,11 @@
     <Content Include="ReportFormat_simple.aspx" />
     <Content Include="Reports.aspx" />
     <Content Include="Result.aspx" />
+    <Content Include="rpt_ItemSoldDisplay.aspx" />
+    <Content Include="rpt_ItemSoldDisplay_byDate.aspx" />
+    <Content Include="rpt_ItemSoldDisplay_byPharmacy.aspx" />
+    <Content Include="rpt_ItemSoldDisplay_bySalesMan.aspx" />
+    <Content Include="rpt_ItemSold_Selection.aspx" />
     <Content Include="rpt_SalesSummaryDisplay.aspx" />
     <Content Include="rpt_SalesSummary_Selection.aspx" />
     <Content Include="SentTransferRequests.aspx" />
@@ -925,6 +930,41 @@
     </Compile>
     <Compile Include="Result.aspx.designer.cs">
       <DependentUpon>Result.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="rpt_ItemSoldDisplay.aspx.cs">
+      <DependentUpon>rpt_ItemSoldDisplay.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rpt_ItemSoldDisplay.aspx.designer.cs">
+      <DependentUpon>rpt_ItemSoldDisplay.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="rpt_ItemSoldDisplay_byDate.aspx.cs">
+      <DependentUpon>rpt_ItemSoldDisplay_byDate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rpt_ItemSoldDisplay_byDate.aspx.designer.cs">
+      <DependentUpon>rpt_ItemSoldDisplay_byDate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="rpt_ItemSoldDisplay_byPharmacy.aspx.cs">
+      <DependentUpon>rpt_ItemSoldDisplay_byPharmacy.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rpt_ItemSoldDisplay_byPharmacy.aspx.designer.cs">
+      <DependentUpon>rpt_ItemSoldDisplay_byPharmacy.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="rpt_ItemSoldDisplay_bySalesMan.aspx.cs">
+      <DependentUpon>rpt_ItemSoldDisplay_bySalesMan.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rpt_ItemSoldDisplay_bySalesMan.aspx.designer.cs">
+      <DependentUpon>rpt_ItemSoldDisplay_bySalesMan.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="rpt_ItemSold_Selection.aspx.cs">
+      <DependentUpon>rpt_ItemSold_Selection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rpt_ItemSold_Selection.aspx.designer.cs">
+      <DependentUpon>rpt_ItemSold_Selection.aspx</DependentUpon>
     </Compile>
     <Compile Include="rpt_SalesSummaryDisplay.aspx.cs">
       <DependentUpon>rpt_SalesSummaryDisplay.aspx</DependentUpon>

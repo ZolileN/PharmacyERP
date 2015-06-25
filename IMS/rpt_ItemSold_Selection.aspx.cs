@@ -8,19 +8,37 @@ using System.Web.UI.WebControls;
 
 namespace IMS
 {
-    public partial class rpt_SalesSummary_Selection : System.Web.UI.Page
+    public partial class rpt_ItemSold_Selection : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack)
+            if (!IsPostBack)
             {
-                if (Session["rptSalesDateFrom"] != null && Session["rptSalesDateFrom"].ToString() != "")
+                String Parameter = "";
+                if (Request.QueryString["Param"] != null)
                 {
-                    txtDateFrom.Text = Session["rptSalesDateFrom"].ToString();
+                    Parameter = Request.QueryString["Param"].ToString();
+                    if (Parameter.Equals("Date"))
+                    {
+                        Session["Display"] = "rpt_ItemSoldDisplay_byDate.aspx";
+                    }
+                    else if (Parameter.Equals("Pharmacy"))
+                    {
+                        Session["Display"] = "rpt_ItemSoldDisplay_byPharmacy.aspx";
+                    }
+                    else if (Parameter.Equals("SalesMan"))
+                    {
+                        Session["Display"] = "rpt_ItemSoldDisplay_bySalesMan.aspx";
+                    }
                 }
-                if (Session["rptSalesDateTo"] != null && Session["rptSalesDateTo"].ToString() != "")
+
+                if (Session["rptItemSoldDateFrom"] != null && Session["rptItemSoldDateFrom"].ToString() != "")
                 {
-                    txtDateTO.Text = Session["rptSalesDateTo"].ToString();
+                    txtDateFrom.Text = Session["rptItemSoldDateFrom"].ToString();
+                }
+                if (Session["rptItemSoldDateTo"] != null && Session["rptItemSoldDateTo"].ToString() != "")
+                {
+                    txtDateTO.Text = Session["rptItemSoldDateTo"].ToString();
                 }
 
                 Session["rptProductID"] = null;
@@ -42,17 +60,16 @@ namespace IMS
                 ddlInternalCustomer.Items.Add("Include");
                 ddlInternalCustomer.Items.Add("Exclude");
 
-                
             }
         }
 
         protected void btnCreateReport_Click(object sender, EventArgs e)
         {
-            if (txtProduct.Text != "All" || txtProduct.Text != "")
+            if (txtProduct.Text != "")
             {
                 Session["rptProductID"] = Session["rptProductID"];
                 Session["selectionProduct"] = txtProduct.Text;
-                
+
             }
             else
             {
@@ -60,7 +77,7 @@ namespace IMS
                 Session["selectionProduct"] = "All";
             }
 
-            if (txtSubcategory.Text != "All" || txtSubcategory.Text != "")
+            if (txtSubcategory.Text != "")
             {
                 Session["rptSubCategoryID"] = Session["rptSubCategoryID"];
                 Session["selectionSubCategory"] = txtSubcategory.Text;
@@ -71,7 +88,7 @@ namespace IMS
                 Session["selectionSubCategory"] = "All";
             }
 
-            if (txtCategory.Text != "All" || txtCategory.Text != "")
+            if (txtCategory.Text != "")
             {
                 Session["rptCategoryID"] = Session["rptCategoryID"];
                 Session["selectionCategory"] = txtCategory.Text;
@@ -82,7 +99,7 @@ namespace IMS
                 Session["selectionCategory"] = "All";
             }
 
-            if (txtDepartment.Text != "All" || txtDepartment.Text != "")
+            if (txtDepartment.Text != "")
             {
                 Session["rptDepartmentID"] = Session["rptDepartmentID"];
                 Session["selectionDepartment"] = txtDepartment.Text;
@@ -93,7 +110,7 @@ namespace IMS
                 Session["selectionDepartment"] = "All";
             }
 
-            if (txtCustomers.Text != "All" || txtCustomers.Text != "")
+            if (txtCustomers.Text != "")
             {
                 Session["rptCustomerID"] = Session["rptCustomerID"];
                 Session["selectionCustomers"] = txtCustomers.Text;
@@ -106,20 +123,20 @@ namespace IMS
 
             if (txtDateFrom.Text != "")
             {
-                Session["rptSalesDateFrom"] = txtDateFrom.Text.ToString();
+                Session["rptItemSoldDateFrom"] = txtDateFrom.Text.ToString();
             }
             else
             {
-                Session["rptSalesDateFrom"] = "";
+                Session["rptItemSoldDateFrom"] = "";
             }
 
             if (txtDateTO.Text != "")
             {
-                Session["rptSalesDateTo"] = txtDateTO.Text.ToString();
+                Session["rptItemSoldDateTo"] = txtDateTO.Text.ToString();
             }
             else
             {
-                Session["rptSalesDateTo"] = "";
+                Session["rptItemSoldDateTo"] = "";
             }
 
             if (ddlInternalCustomer.SelectedItem.ToString().Equals("Exclude"))
@@ -131,29 +148,28 @@ namespace IMS
                 Session["rptInternalCustomers"] = "Include";
             }
 
-
-            Response.Redirect("rpt_SalesSummaryDisplay.aspx");
+            Response.Redirect(Session["Display"].ToString());
         }
 
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
-            
-                Session["rptProductID"] = "";
 
-                Session["rptSubCategoryID"] = "";
-            
-                Session["rptCategoryID"] = "";
-            
-                Session["rptDepartmentID"] = "";
-            
-                Session["rptCustomerID"] = "";
-            
-                Session["rptSalesDateFrom"] = "";
-            
-                Session["rptSalesDateTo"] = "";
-            
+            Session["rptProductID"] = "";
 
-                Response.Redirect("WarehouseMain.aspx");
+            Session["rptSubCategoryID"] = "";
+
+            Session["rptCategoryID"] = "";
+
+            Session["rptDepartmentID"] = "";
+
+            Session["rptCustomerID"] = "";
+
+            Session["rptItemSoldDateFrom"] = "";
+
+            Session["rptItemSoldDateTo"] = "";
+
+
+            Response.Redirect("WarehouseMain.aspx");
         }
 
         protected void btnSearchCustomers_Click(object sender, EventArgs e)
@@ -164,7 +180,7 @@ namespace IMS
                 CustomerPopupGrid.LoadData();
                 mpeCustomersDiv.Show();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //show message
             }
@@ -252,6 +268,11 @@ namespace IMS
         }
 
         protected void ddlInternalCustomer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnSearchSalesMan_Click(object sender, EventArgs e)
         {
 
         }

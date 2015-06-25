@@ -27,6 +27,15 @@ namespace IMS
                 LoadData();
                 ViewState["CustomerID"] = 0;
                 DisplayMainGrid((DataTable)Session["dtSalesSummary"]);
+                lblDateFrom.Text = Session["rptSalesDateFrom"].ToString();
+                lblDateTo.Text =  Session["rptSalesDateTo"].ToString();
+                lblCustomers.Text = Session["selectionCustomers"].ToString();
+                lblDepartment.Text = Session["selectionDepartment"].ToString();
+                lblCategory.Text = Session["selectionCategory"].ToString();
+                lblSubCategory.Text = Session["selectionSubCategory"].ToString();
+                lblProduct.Text = Session["selectionProduct"].ToString();
+                lblInternalCustomer.Text = Session["rptInternalCustomers"].ToString();
+
                 
             }
         }
@@ -134,6 +143,12 @@ namespace IMS
                 }
                 #endregion
 
+                #region Internal Customer Parameters
+
+                command.Parameters.AddWithValue("@InternalCustomer", Session["rptInternalCustomers"].ToString());
+                
+                #endregion
+
                 DataSet ds = new DataSet();
                 SqlDataAdapter dA = new SqlDataAdapter(command);
                 dA.Fill(ds);
@@ -152,7 +167,23 @@ namespace IMS
                 }
                 else
                 {
-                    Session["dtSalesSummary"] = ds.Tables[0];
+                    DataTable dtFiltered = ds.Tables[0];
+                    /*if (Session["rptInternalCustomers"].ToString().Equals("Exclude"))
+                    {
+                        command = new SqlCommand("sp_getInteralCustomers", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        DataSet dsInternal = new DataSet();
+                        SqlDataAdapter sAinternal = new SqlDataAdapter(command);
+                        sAinternal.Fill(dsInternal);
+
+                        DataView dvInternal = dtFiltered.DefaultView;
+                        for (int i = 0; i < dsInternal.Tables[0].Rows.Count; i++)
+                        {
+                            dvInternal.RowFilter = "OrderRequestedFor != '" + dsInternal.Tables[0].Rows[i][0] + "'";
+                        }
+                        dtFiltered = dvInternal.ToTable();
+                    }*/
+                    Session["dtSalesSummary"] = dtFiltered;
                 }
 
             }
@@ -177,9 +208,9 @@ namespace IMS
 
             Session["rptCustomerID"] = null;
 
-            Session["rptSalesDateFrom"] = null;
+           // Session["rptSalesDateFrom"] = null;
 
-            Session["rptSalesDateTo"] = null;
+           // Session["rptSalesDateTo"] = null;
 
             Response.Redirect("rpt_SalesSummary_Selection.aspx");
         }

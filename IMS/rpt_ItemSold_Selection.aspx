@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="rpt_SalesSummary_Selection.aspx.cs" Inherits="IMS.rpt_SalesSummary_Selection" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="rpt_ItemSold_Selection.aspx.cs" Inherits="IMS.rpt_ItemSold_Selection" %>
 
 <%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="cc1" %>
 <%@ Register TagName="CustomerPopup" TagPrefix="ucCustomersPopup"  Src="~/UserControl/rpt_ucCustomers.ascx"%>
@@ -8,7 +8,7 @@
 <%@ Register TagName="ProductPopup" TagPrefix="ucProductPopup"  Src="~/UserControl/rpt_ucSalesProduct.ascx"%>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-      <script src="Scripts/jquery.js"  type="text/javascript"></script>
+     <script src="Scripts/jquery.js"  type="text/javascript"></script>
           <script src="Scripts/jquery-ui.js" type="text/javascript"></script>
           <link rel="stylesheet" href="Style/jquery-ui.css" />
       <script>
@@ -17,11 +17,11 @@
           </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    
-    <table width="100%">
+
+     <table width="100%">
 
         <tbody><tr>
-        	<td> <h4>Gross Profit Summary</h4></td>
+        	<td> <h4>Item Sold Report</h4></td>
             <td align="right">
             <asp:Button ID="btnCreateReport" runat="server" CssClass="btn btn-success btn-default" Text="CREATE REPORT" OnClick="btnCreateReport_Click" />
             <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnGoBack_Click" />
@@ -47,7 +47,7 @@
             </td>
         </tr>
         <tr>
-            <td><asp:label ID="lblCustomers" runat="server"><b>Customers:</b></asp:label></td>
+            <td><asp:label ID="lblCustomers" runat="server"><b>Pharmacy:</b></asp:label></td>
             <td>
 			
 					<asp:TextBox ID="txtCustomers" Text="" runat="server"></asp:TextBox>
@@ -67,7 +67,7 @@
 
         
 		<tr>
-            <td><asp:label ID="lblDepartment" runat="server"><b>Department:</b></asp:label></td>
+            <td><asp:label ID="lblDepartment"  runat="server"><b>Department:</b></asp:label></td>
             <td>
 					<asp:TextBox ID="txtDepartment" Text="" runat="server"></asp:TextBox>
                     <asp:Button ID="btnSeachDepartment" runat="server" CssClass="search-btn getDepartment" OnClick="btnSeachDepartment_Click" />
@@ -94,7 +94,7 @@
             <td><asp:label ID="lblSubCategory" runat="server"><b>Sub Category:</b></asp:label></td>
             <td>
 			
-                    <asp:TextBox ID="txtSubcategory"  Text=""  runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtSubcategory" Text="" runat="server"></asp:TextBox>
                     <asp:Button ID="btnSearchSubcat" runat="server" CssClass="search-btn getSubCategory" OnClick="btnSearchSubcat_Click" />
                     <cc1:ModalPopupExtender ID="mpeSubCategoryDiv" runat="server" BackgroundCssClass="overLaypop"
                        RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="lblSubCategory" ClientIDMode="AutoID"
@@ -106,7 +106,7 @@
 				 <td><asp:label ID="lblproduct" runat="server"><b>Product:</b></asp:label></td>
             <td>
 			
-                    <asp:TextBox ID="txtProduct" Text=""  runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtProduct" Text="" runat="server"></asp:TextBox>
                     <asp:Button ID="btnSearchProduct" runat="server" CssClass="search-btn getProducts" OnClick="btnSearchProduct_Click" />
 			        <cc1:ModalPopupExtender ID="mpeProductDiv" runat="server" BackgroundCssClass="overLaypop"
                        RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="lblproduct" ClientIDMode="AutoID"
@@ -116,7 +116,14 @@
         </tr>
 		<tr>
             <td><asp:label ID="lblInternalCustomer" runat="server"><b>Internal Customer:</b></asp:label></td>
-            <td><asp:DropDownList ID="ddlInternalCustomer" runat="server" OnSelectedIndexChanged="ddlInternalCustomer_SelectedIndexChanged" Enabled="true"></asp:DropDownList></td>      
+            <td><asp:DropDownList ID="ddlInternalCustomer" runat="server" OnSelectedIndexChanged="ddlInternalCustomer_SelectedIndexChanged" Enabled="false"></asp:DropDownList></td>
+		
+             <td><asp:label ID="lblSalesman" runat="server"><b>Salesman:</b></asp:label></td>
+            <td>
+			
+                    <asp:TextBox ID="txtSalesMan" runat="server"></asp:TextBox>
+                    <asp:Button ID="btnSearchSalesMan" runat="server" CssClass="search-btn getProducts" OnClick="btnSearchSalesMan_Click" />
+			</td>
         </tr>
 
     </tbody></table>

@@ -10,7 +10,7 @@
 namespace IMS {
     
     
-    public partial class rpt_SalesSummary_Selection {
+    public partial class rpt_ItemSold_Selection {
         
         /// <summary>
         /// btnCreateReport control.
@@ -254,6 +254,33 @@ namespace IMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlInternalCustomer;
+        
+        /// <summary>
+        /// lblSalesman control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSalesman;
+        
+        /// <summary>
+        /// txtSalesMan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSalesMan;
+        
+        /// <summary>
+        /// btnSearchSalesMan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSearchSalesMan;
         
         /// <summary>
         /// CustomerPopupGrid control.
