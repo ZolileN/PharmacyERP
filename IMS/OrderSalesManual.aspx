@@ -93,16 +93,7 @@
                  
              
            </td>
-            <%--<td>
-                <input type="text" id="txtSearch" runat="server" name="txtSearch"   onkeyup="searchSuggest(event);" autocomplete="off"  /> 
-                <div id="search_suggest" style="visibility: hidden;" ></div>
-
-                <asp:TextBox runat="server" ID="txtProduct" CssClass="form-control product" Visible="false"/>
-                <asp:ImageButton ID="btnSearchProduct" runat="server" Visible="false" OnClick="btnSearchProduct_Click"  Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
-                
-                <asp:DropDownList runat="server" ID="SelectProduct" Visible="false" CssClass="form-control" Width="280" AutoPostBack="True" OnSelectedIndexChanged="SelectProduct_SelectedIndexChanged"/>
-                 
-                </td>--%>
+            
             <td><asp:Label runat="server" AssociatedControlID="SelectQuantity" CssClass="control-label">Enter Send Quantity</asp:Label></td>
             <td> <asp:TextBox runat="server" ID="SelectQuantity" CssClass="form-control" /></td>
         </tr>
@@ -114,7 +105,10 @@
             <td><asp:Label runat="server" AssociatedControlID="SelectDiscount" CssClass="control-label">Enter Discount %</asp:Label></td>
             <td> <asp:TextBox runat="server" ID="SelectDiscount" CssClass="form-control" /></td>
         </tr>
-       
+       <tr>
+            <td><asp:Label runat="server"  CssClass="control-label">Select Salesman</asp:Label></td>
+           <td><asp:DropDownList ID="ddlSalesman" runat="server"  CssClass="form-control" Width="280" ></asp:DropDownList> </td>
+       </tr>
        
     </table>
 

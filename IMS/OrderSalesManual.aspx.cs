@@ -153,35 +153,49 @@ namespace IMS
         }
         private void LoadData()
         {
+           
 
-            #region Populating Product List
+             #region Populate salesman dropdown
 
-            //try
-            //{
-            //    connection.Open();
-            //    SqlCommand command = new SqlCommand("Select  Top 200 Product_Name,ProductID From tbl_ProductMaster Where tbl_ProductMaster.Product_Id_Org LIKE '444%' AND Status = 1", connection);
-            //    DataSet ds = new DataSet();
-            //    SqlDataAdapter sA = new SqlDataAdapter(command);
-            //    sA.Fill(ds);
-            //    ProductSet = ds;
-            //    SelectProduct.DataSource = ds.Tables[0];
-            //    SelectProduct.DataTextField = "Product_Name";
-            //    SelectProduct.DataValueField = "ProductID";
-            //    SelectProduct.DataBind();
-            //    if (SelectProduct != null)
-            //    {
-            //        SelectProduct.Items.Insert(0, "Select Product");
-            //        SelectProduct.SelectedIndex = 0;
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
+            try
+            {
+               
 
-            //}
-            //finally
-            //{
-            //    connection.Close();
-            //}
+                DataSet dsSalesman = new DataSet();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("sp_getSalesman_CurrentSystem", connection);
+                command.Parameters.AddWithValue("@p_SystemID", int.Parse(Session["UserSys"].ToString()));
+
+                command.CommandType = CommandType.StoredProcedure;
+                command.ExecuteNonQuery();
+
+                SqlDataAdapter dA = new SqlDataAdapter(command);
+                dA.Fill(dsSalesman);
+
+                ddlSalesman.DataSource = dsSalesman.Tables[0];
+                ddlSalesman.DataTextField = "Name";
+                ddlSalesman.DataValueField = "UserID";
+                ddlSalesman.DataBind();
+
+                if (ddlSalesman != null)
+                {
+                    ddlSalesman.Items.Insert(0, "Select Salesman");
+                    ddlSalesman.SelectedIndex = 0;
+                }
+
+                
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                connection.Close();
+            }
             #endregion
         }
 
@@ -722,7 +736,7 @@ namespace IMS
 
                         String Invoice = txtIvnoice.Text;
                         String Vendor = "True";
-
+                        int Salesman = 0;
 
                         try
                         {
@@ -747,6 +761,10 @@ namespace IMS
                             command.Parameters.AddWithValue("@p_Invoice", Invoice);
                             command.Parameters.AddWithValue("@p_OrderMode", OrderMode);
                             command.Parameters.AddWithValue("@p_Vendor", Vendor);
+                            if(int.TryParse(ddlSalesman.SelectedValue.ToString(), out Salesman))
+                            {
+                                command.Parameters.AddWithValue("@p_Salesman", Salesman);
+                            }
                             command.Parameters.AddWithValue("@p_orderStatus", "Pending");
                             DataTable dt = new DataTable();
                             SqlDataAdapter dA = new SqlDataAdapter(command);
@@ -1084,6 +1102,10 @@ namespace IMS
                 StockDisplayGrid.DataSource = null;
                 StockDisplayGrid.DataSource = ds.Tables[0];
                 StockDisplayGrid.DataBind();
+
+                ddlSalesman.DataValueField = ds.Tables[0].Rows[0]["SalesManID"].ToString();
+
+                 
 
                 if(StockDisplayGrid.DataSource == null)
                 {

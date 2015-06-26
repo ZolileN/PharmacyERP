@@ -68,12 +68,21 @@
                 <td><asp:Label runat="server" AssociatedControlID="txtPincode" CssClass=" control-label">Pincode</asp:Label></td>
                 <td><asp:TextBox runat="server" ID="txtPincode" CssClass="form-control" /></td>
             </tr>
+
+            <tr>
+                <td> <asp:Label runat="server" AssociatedControlID="txtBarderExchangeID"  CssClass=" control-label">Barter Exchange ID</asp:Label></td>
+                <td><asp:TextBox runat="server" ID="txtBarderExchangeID"  CssClass="form-control" /></td>
+                <td></td>
+                <td></td>
+            </tr>
+
             <tr>
                 <td> <asp:Label runat="server" AssociatedControlID="txtID" Visible="false" CssClass=" control-label">id</asp:Label></td>
                 <td><asp:TextBox runat="server" ID="txtID" Visible="false" CssClass="form-control" /></td>
                 <td></td>
                 <td></td>
             </tr>
+
            
             </table>
     </div>

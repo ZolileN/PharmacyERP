@@ -9,8 +9,8 @@
         	<td> <h4>Request Transfer</h4></td>
             
           <td align="right"> 
-              <asp:Button ID="btnUpdate" runat="server" CssClass="btn btn-success btn-large" Text="Update" OnClick="btnUpdate_Click" />
-              <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnGoBack_Click"/>
+              <asp:Button ID="btnUpdate" runat="server" CssClass="btn btn-success btn-large" Text="Update" OnClick="btnUpdate_Click"  OnClientClick="return VerifyValidate()"  />
+              <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnGoBack_Click" />
   
             </td>
         </tr>
@@ -22,17 +22,9 @@
      
 
     <asp:GridView ID="dgvReceiveTransferDetailsReceive" CssClass="table table-striped table-bordered table-condensed" Visible="true" runat="server" AllowPaging="false" PageSize="10"
-                            AutoGenerateColumns="false"  >
+                            AutoGenerateColumns="false" OnRowDataBound="dgvReceiveTransferDetailsReceive_RowDataBound"  >
                             <Columns>
 
-                                <%--<asp:TemplateField Visible="false" >
-                                    <ItemTemplate>
-                                        <asp:Label ID="lblentryID" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("entryID") %>' Width="140px"></asp:Label>
-                                    </ItemTemplate>
-
-                                    <ItemStyle Width="150px" HorizontalAlign="Left" />
-                                </asp:TemplateField>--%>
-                                 
                                 <asp:TemplateField Visible="false" >
                                     <ItemTemplate>
                                         <asp:Label ID="lblTransferDetailsID" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("TransferDetailID") %>' Width="140px"></asp:Label>
@@ -144,4 +136,62 @@
                                  
                             </Columns>
                         </asp:GridView>
+
+    <script type="text/javascript">
+ 
+        function VerifyValidate() {
+            var rows = document.getElementById('MainContent_dgvReceiveTransferDetailsReceive').getElementsByTagName('TR');
+            
+            var TotalSentQty = 0;
+            for (var j = 0; j < rows.length ; j++) {
+
+                var availableStockID = "MainContent_dgvReceiveTransferDetailsReceive_lblAvailableStock_" + j;
+                var SentQtyIDs = "MainContent_dgvReceiveTransferDetailsReceive_txtSendQty_" + j;
+                var availableQty = document.getElementById(availableStockID).innerHTML;
+                var SentQts = document.getElementById(SentQtyIDs).value;
+                var sendQty = Number(SentQts);
+                var availQty = Number(availableQty);
+ 
+                if (availQty < sendQty) {
+                    alert("Available Stock  " + availQty + " is less than Transfered Stock  " + sendQty);
+                    return false;
+                }
+
+                var SentQtyID = "MainContent_dgvReceiveTransferDetailsReceive_txtSendQty_" + j;
+                var SentQty = document.getElementById(SentQtyID).value;
+
+                var sent = Number(SentQty)
+                TotalSentQty = Number(TotalSentQty) + sent;
+                var TotalSent = document.getElementById("MainContent_lblTotalTransferQty").innerHTML;
+
+                if (TotalSent < TotalSentQty) {
+                    alert("Total Sent Quantity  " + TotalSent + " is less than sum of Sent " + TotalSentQty);
+                    return false;
+                }
+                
+            }
+
+        }
+         
+        function Validate(id)
+        {
+             
+            var availableStockID = "MainContent_dgvReceiveTransferDetailsReceive_lblAvailableStock_" + id;
+            var SentQtyID = "MainContent_dgvReceiveTransferDetailsReceive_txtSendQty_" + id;
+            var availableQty = document.getElementById(availableStockID).innerHTML;
+            var SentQty = document.getElementById(SentQtyID).value;
+            
+            var sendQty = Number(SentQty);
+            var availQty = Number(availableQty);
+
+
+            if (availQty < sendQty)
+            {
+                alert("Available Stock  " + availQty + " is less than Transfered Stock  " + sendQty);
+                return false;
+            }
+        }
+    </script>
+
+
 </asp:Content>
