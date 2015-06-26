@@ -2,7 +2,7 @@
 <div style="margin-top: -144px; display: block;" class="popupMain" id="customers">
 
         <div class="popupHead">Customer(s)/Vendor(s) List
-            <a href="rpt_SalesSummary_Selection.aspx" class="close"></a>
+            <a href="#" class="close"></a>
         </div>
 
         <div class="bodyPop">

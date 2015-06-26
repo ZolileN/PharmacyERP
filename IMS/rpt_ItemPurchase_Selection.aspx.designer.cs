@@ -238,6 +238,24 @@ namespace IMS {
         protected global::AjaxControlToolkit.ModalPopupExtender mpeProductDiv;
         
         /// <summary>
+        /// lblExpiry control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblExpiry;
+        
+        /// <summary>
+        /// txtExpiry control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtExpiry;
+        
+        /// <summary>
         /// CustomerPopupGrid control.
         /// </summary>
         /// <remarks>

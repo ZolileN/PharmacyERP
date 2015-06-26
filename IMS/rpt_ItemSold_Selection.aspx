@@ -21,7 +21,7 @@
      <table width="100%">
 
         <tbody><tr>
-        	<td> <h4>Item Sold Report</h4></td>
+        	<td> <h4>Item Sold Detail Report</h4></td>
             <td align="right">
             <asp:Button ID="btnCreateReport" runat="server" CssClass="btn btn-success btn-default" Text="CREATE REPORT" OnClick="btnCreateReport_Click" />
             <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnGoBack_Click" />
@@ -121,8 +121,7 @@
              <td><asp:label ID="lblSalesman" runat="server"><b>Salesman:</b></asp:label></td>
             <td>
 			
-                    <asp:TextBox ID="txtSalesMan" runat="server"></asp:TextBox>
-                    <asp:Button ID="btnSearchSalesMan" runat="server" CssClass="search-btn getProducts" OnClick="btnSearchSalesMan_Click" />
+                    <asp:DropDownList ID="ddlSalesMan" runat="server" ></asp:DropDownList>
 			</td>
         </tr>
 

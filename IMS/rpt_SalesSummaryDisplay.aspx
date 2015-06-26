@@ -6,7 +6,7 @@
     <table width="100%">
 
         <tbody><tr>
-        	<td> <h4>Gross Profit Summary Report</h4></td>
+        	<td> <h4>Item Sold Summary Report</h4></td>
             <td align="right">
                 <asp:Button ID="btnPrint" runat="server" OnClientClick="window.print();" CssClass="btn btn-primary btn-large no-print" Text="Print" />
                 <asp:Button ID="btnExport" runat="server" CssClass="btn btn-info btn-large no-print" Text="Export" />
@@ -75,7 +75,7 @@
 
                                         <asp:TemplateField HeaderText="SO Date">
                                             <ItemTemplate>
-                                                <asp:Label ID="lblSO" runat="server" Text='<%# Eval("OrderDate") %>'></asp:Label>
+                                                <asp:Label ID="lblSO" runat="server" Text='<%# Convert.ToDateTime(Eval("OrderDate")).ToString("dd/MM/yyyy") %>'></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
@@ -127,7 +127,7 @@
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
-                                        <asp:TemplateField HeaderText=""  HeaderStyle-Width="33%">
+                                        <asp:TemplateField HeaderText=""  HeaderStyle-Width="20%">
                                             <ItemTemplate>
                                                 <asp:Label ID="lblSO" runat="server" Text="                              "></asp:Label>
                                             </ItemTemplate>

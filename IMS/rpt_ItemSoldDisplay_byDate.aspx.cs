@@ -42,11 +42,26 @@ namespace IMS
         {
             DataTable displayTable = new DataTable();
             displayTable.Clear();
-            displayTable = dt;
+            displayTable.Columns.Add("OrderID", typeof(int));
+            displayTable.Columns.Add("SystemName", typeof(String));
+            displayTable.Columns.Add("OrderDate", typeof(String));
 
-            gvMAinGrid.DataSource = null;
-            gvMAinGrid.DataSource = displayTable;
-            gvMAinGrid.DataBind();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                int ID = Convert.ToInt32(dt.Rows[i]["OrderID"].ToString());
+                String Name = dt.Rows[i]["SystemName"].ToString();
+                String OrderDate = dt.Rows[i]["OrderDate"].ToString();
+                displayTable.Rows.Add(ID, Name,OrderDate);
+                displayTable.AcceptChanges();
+            }
+
+            DataView dv = displayTable.DefaultView;
+            displayTable = null;
+            displayTable = dv.ToTable(true, "OrderID", "SystemName", "OrderDate");
+
+            gdvSalesSummary.DataSource = null;
+            gdvSalesSummary.DataSource = displayTable;
+            gdvSalesSummary.DataBind();
         }
         public void LoadData()
         {
@@ -60,6 +75,15 @@ namespace IMS
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@InternalCustomer", Session["rptInternalCustomers"].ToString());
                 #region Applying Filters
+
+                if (Session["rptSalesManID"] != null && Session["rptSalesManID"].ToString() != "")
+                {
+                    if (int.TryParse(Session["rptSalesManID"].ToString(), out SalesID))
+                    {
+
+                    }
+                }
+
                 if (Session["rptCustomerID"] != null && Session["rptCustomerID"].ToString() != "")
                 {
                     if (int.TryParse(Session["rptCustomerID"].ToString(), out CustID))
@@ -100,20 +124,27 @@ namespace IMS
 
                     }
                 }
+
+                
                 #endregion
 
                 DataSet ds = new DataSet();
                 SqlDataAdapter dA = new SqlDataAdapter(command);
                 dA.Fill(ds);
 
-                if (Session["rptItemSoldFrom"] != null && Session["rptItemSoldFrom"].ToString() != "" &&
-                    Session["rptItemSoldTo"] != null && Session["rptItemSoldTo"].ToString() != "")
+                if (Session["rptItemSoldDateFrom"] != null && Session["rptItemSoldDateFrom"].ToString() != "" &&
+                    Session["rptItemSoldDateTo"] != null && Session["rptItemSoldDateTo"].ToString() != "")
                 {
-                    DateTime dtFROM = Convert.ToDateTime(Session["rptItemSoldFrom"]);
-                    DateTime dtTo = Convert.ToDateTime(Session["rptItemSoldTo"]);
+                    DateTime dtFROM = Convert.ToDateTime(Session["rptItemSoldDateFrom"]);
+                    DateTime dtTo = Convert.ToDateTime(Session["rptItemSoldDateTo"]);
 
                     DataView dv = ds.Tables[0].DefaultView;
                     dv.RowFilter = "OrderDate >= '" + dtFROM + "' AND OrderDate <= '" + dtTo + "'";
+                    if (SalesID != 0)
+                    {
+                        dv.RowFilter = "SalesMan = '" + SalesID + "'";
+                    }
+
                     if (CustID != 0)
                     {
                         dv.RowFilter = "OrderRequestedFor = '" + CustID + "'";
@@ -171,6 +202,63 @@ namespace IMS
           //  Session["rptSalesDateTo"] = null;
 
             Response.Redirect("rpt_ItemSold_Selection.aspx");
+        }
+
+        protected void gdvSalesSummary_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            try
+            {
+                if (e.Row.RowType == DataControlRowType.DataRow)
+                {
+                    GridView gvMAinDisplay = (GridView)e.Row.FindControl("gvMAinGrid");
+                    GridView gdvTotal = (GridView)e.Row.FindControl("gdvTotal");
+
+                    DataTable dt = (DataTable)Session["dtItemSoldDate"];
+                    DataView dv = dt.DefaultView;
+                    int OrderID = 0;
+                    Label lblOrderID = (Label)e.Row.FindControl("lblSO");
+                    int.TryParse(lblOrderID.Text.ToString(), out OrderID);
+                    dv.RowFilter = "OrderID = '"+ OrderID +"'";
+
+                    dt = null;
+                    dt = dv.ToTable();
+
+                    DataTable displayTable = new DataTable();
+                    displayTable.Clear();
+                    displayTable.Columns.Add("TotalSendQaun", typeof(Decimal));
+                    displayTable.Columns.Add("TotalBonusQuan", typeof(Decimal));
+                    displayTable.Columns.Add("TotalSoldQuan", typeof(Decimal));
+                    displayTable.Columns.Add("TotalSoldBonus", typeof(Decimal));
+                    displayTable.Columns.Add("TotalCostPrice", typeof(Decimal));
+
+                    Decimal Accepted, Bonus, Sold, SoldBonus, Price;
+                    Accepted = Bonus = Sold = SoldBonus = Price = 0;
+
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        Accepted += Decimal.Parse(dt.Rows[i]["SendQuantity"].ToString());
+                        Bonus += Decimal.Parse(dt.Rows[i]["BonusQuantity"].ToString());
+                        Sold += Decimal.Parse(dt.Rows[i]["RecievedQuantity"].ToString());
+                        SoldBonus += Decimal.Parse(dt.Rows[i]["RecievedBonusQuantity"].ToString());
+                        Price += Decimal.Parse(dt.Rows[i]["TotalCostPrice"].ToString());
+
+                    }
+
+                    displayTable.Rows.Add(Accepted, Bonus, Sold, SoldBonus, Price);
+                    displayTable.AcceptChanges();
+
+
+                    gdvTotal.DataSource = displayTable;
+                    gdvTotal.DataBind();
+
+                    gvMAinDisplay.DataSource = dt;
+                    gvMAinDisplay.DataBind();
+                }
+            }
+            catch(Exception ex)
+            {
+                WebMessageBoxUtil.Show(ex.Message);
+            }
         }
     }
 }

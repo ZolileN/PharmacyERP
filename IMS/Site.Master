@@ -186,23 +186,24 @@
                                     
                                    
 	           <li><a href="#">All Reports</a></li>
-               <li><a href="rpt_SalesSummary_Selection.aspx">Gross Profit Report</a>
-               <li class="hasChild"><a href="#">Item Sold Reports</a>
-               <ul>
-                   <li><a href="rpt_ItemSold_Selection.aspx?Param=Date">Item Sold Report by Date </a></li>
-                   <li><a href="rpt_ItemSold_Selection.aspx?Param=Pharmacy">Item Sold Report by Pharmacy </a></li>
+               <li><a href="rpt_SalesSummary_Selection.aspx">Item Sold Summary</a>
+               <!--<li class="hasChild"><a href="#">Item Sold Reports</a>
+               <ul>-->
+                   <li><a href="rpt_ItemSold_Selection.aspx?Param=Date">Item Sold Details </a></li>
+                   <!--<li><a href="rpt_ItemSold_Selection.aspx?Param=Pharmacy">Item Sold Report by Pharmacy </a></li>
                    <li><a href="rpt_ItemSold_Selection.aspx?Param=SalesMan">Item Sold Report by SalesMan</a></li>
                    <li><a href="rpt_ItemSold_Selection.aspx?Param=Price">Item Sold Report by Price</a></li>
                </ul>
-               </li>
-               <li class="hasChild"><a href="#">Item Purchase Reports</a>
-               <ul>
-                   <li><a href="rpt_ItemPurchase_Selection.aspx?Param=Date">Item Purchase Report by Date </a></li>
-                   <li><a href="rpt_ItemPurchase_Selection.aspx?Param=Pharmacy">Item Purchase Report by Pharmacy </a></li>
+               </li>-->
+
+               <!--<li class="hasChild"><a href="#">Item Purchase Reports</a>
+               <ul>-->
+                   <li><a href="rpt_ItemPurchase_Selection.aspx?Param=Date">Item Purchase Detail Report </a></li>
+                   <!--<li><a href="rpt_ItemPurchase_Selection.aspx?Param=Pharmacy">Item Purchase Report by Pharmacy </a></li>
                    <li><a href="rpt_ItemPurchase_Selection.aspx?Param=Price">Item Purchase Report by Price</a></li>
-                   <li><a href="rpt_ItemPurchase_Selection.aspx?Param=Expiry">Item Purchase Report by Near Expiry</a></li>
-               </ul>
-               </li>
+                   <li><a href="rpt_ItemPurchase_Selection.aspx?Param=Expiry">Item Purchase Report by Near Expiry</a></li>-->
+               <!--</ul>
+               </li>-->
 
 	           <li class="hasChild"><a href="#">Sale Reports</a>
 		            <ul>

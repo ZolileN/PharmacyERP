@@ -12,8 +12,9 @@
           <script src="Scripts/jquery-ui.js" type="text/javascript"></script>
           <link rel="stylesheet" href="Style/jquery-ui.css" />
         <script>
-          $(function () { $("#<%= txtDateFrom.ClientID %>").datepicker(); });
-          $(function () { $("#<%= txtDateTO.ClientID %>").datepicker(); });
+            $(function () { $("#<%= txtDateFrom.ClientID %>").datepicker(); });
+            $(function () { $("#<%= txtDateTO.ClientID %>").datepicker(); });
+            $(function () { $("#<%= txtExpiry.ClientID %>").datepicker(); });
         </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -114,6 +115,14 @@
                     </cc1:ModalPopupExtender>
 			</td>
         </tr>
+            <tr>
+                <td>
+                    <asp:label ID="lblExpiry" runat="server"><b>Nearest Expiry:</b></asp:label>
+                </td>
+                <td>
+                    <asp:TextBox ID="txtExpiry" Text="" runat="server"></asp:TextBox>
+                </td>
+            </tr>
 
     </tbody></table>
 

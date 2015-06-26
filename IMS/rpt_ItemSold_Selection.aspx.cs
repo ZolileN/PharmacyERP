@@ -1,6 +1,13 @@
 ﻿using IMS.UserControl;
+using AjaxControlToolkit;
+using IMSBusinessLogic;
+using IMSCommon;
+using IMSCommon.Util;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -10,6 +17,8 @@ namespace IMS
 {
     public partial class rpt_ItemSold_Selection : System.Web.UI.Page
     {
+        public DataSet ds;
+        public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -55,11 +64,45 @@ namespace IMS
 
                 Session["rptSalesDateTo"] = null;
 
+                Session["SP_Purchase"] = "NO";
+
                 ddlInternalCustomer.Items.Clear();
                 ddlInternalCustomer.Items.Add("Select Option");
                 ddlInternalCustomer.Items.Add("Include");
                 ddlInternalCustomer.Items.Add("Exclude");
 
+            }
+        }
+
+        public void LoadSalesMan ()
+        {
+            try
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("sp_rptItemSold_getSalesMan", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter sdA = new SqlDataAdapter(command);
+                sdA.Fill(ds);
+
+                ddlSalesMan.DataValueField = "SalesManID";
+                ddlSalesMan.DataTextField = "SalesMan";
+                ddlSalesMan.DataSource = ds.Tables[0];
+                ddlSalesMan.DataBind();
+                if (ddlSalesMan != null)
+                {
+                    ddlSalesMan.Items.Insert(0, "Select SalesMan");
+                    ddlSalesMan.SelectedIndex = 0;
+                }
+               // sp_rptItemSold_getSalesMan
+            }
+            catch(Exception ex)
+            {
+                WebMessageBoxUtil.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
             }
         }
 
@@ -146,6 +189,17 @@ namespace IMS
             else
             {
                 Session["rptInternalCustomers"] = "Include";
+            }
+
+            if (ddlSalesMan.SelectedIndex>0)
+            {
+                Session["rptSalesManID"] = ddlSalesMan.SelectedValue.ToString();
+                Session["rptSalesMan"] = ddlSalesMan.SelectedItem.ToString();
+            }
+            else
+            {
+                Session["rptSalesManID"] = 0;
+                Session["rptSalesMan"] = "All";            
             }
 
             Response.Redirect(Session["Display"].ToString());

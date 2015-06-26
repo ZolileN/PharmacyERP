@@ -55,9 +55,9 @@ namespace IMS
 
                 Session["rptCustomerID"] = null;
 
-                Session["rptItemPurhcaseDateFrom"] = null;
+                Session["rptItemPurhcaseDateF"] = null;
 
-                Session["rptItemPurchaseDateTo"] = null;
+                Session["rptItemPurchaseDateT"] = null;
 
                 Session["SP_Purchase"] = "YES";
 
@@ -126,20 +126,29 @@ namespace IMS
 
             if (txtDateFrom.Text != "")
             {
-                Session["rptItemPurchaseDateFrom"] = txtDateFrom.Text.ToString();
+                Session["rptItemPurchaseDateF"] = txtDateFrom.Text.ToString();
             }
             else
             {
-                Session["rptItemPurchaseDateFrom"] = "";
+                Session["rptItemPurchaseDateF"] = "";
             }
 
             if (txtDateTO.Text != "")
             {
-                Session["rptItemPurchaseDateTo"] = txtDateTO.Text.ToString();
+                Session["rptItemPurchaseDateT"] = txtDateTO.Text.ToString();
             }
             else
             {
-                Session["rptItemPurchaseDateTo"] = "";
+                Session["rptItemPurchaseDateT"] = "";
+            }
+
+            if (txtExpiry.Text != "")
+            {
+                Session["rptItemPurchaseExpiry"] = txtExpiry.Text.ToString();
+            }
+            else
+            {
+                Session["rptItemPurchaseExpiry"] = "";
             }
 
             /*if (ddlInternalCustomer.SelectedItem.ToString().Equals("Exclude"))
@@ -167,9 +176,9 @@ namespace IMS
 
             Session["rptCustomerID"] = "";
 
-            Session["rptItemPurchaseDateFrom"] = "";
+            Session["rptItemPurchaseDateF"] = "";
 
-            Session["rptItemPurchaseDateTo"] = "";
+            Session["rptItemPurchaseDateT"] = "";
 
 
             Response.Redirect("WarehouseMain.aspx");
