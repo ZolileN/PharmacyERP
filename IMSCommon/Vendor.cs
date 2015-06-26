@@ -23,7 +23,8 @@ namespace IMSCommon
   email,
   conPerson,
   discount,
-  credit;
+  credit,
+      barterexchangeid;
 
         public string SupName
         {
@@ -42,6 +43,11 @@ namespace IMSCommon
             set { credit = value; }
         }
 
+        public string  BarterExchangeID
+        {
+            get { return barterexchangeid; }
+            set { barterexchangeid = value; }
+        }
 
         public string Discount
         {

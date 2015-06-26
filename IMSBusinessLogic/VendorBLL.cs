@@ -145,6 +145,7 @@ namespace IMSBusinessLogic
                 command.Parameters.AddWithValue("@p_ConPerson",vendor.ConPerson);
                 command.Parameters.AddWithValue("@p_Discount",vendor.Discount);
                 command.Parameters.AddWithValue("@p_Credit",vendor.Credit);
+                command.Parameters.AddWithValue("@p_BarterExchangeID", vendor.BarterExchangeID);
                 command.Parameters.AddWithValue("@p_LineID",1);
 
                 command.ExecuteNonQuery();

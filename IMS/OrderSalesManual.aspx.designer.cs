@@ -175,6 +175,15 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.TextBox SelectDiscount;
         
         /// <summary>
+        /// ddlSalesman control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlSalesman;
+        
+        /// <summary>
         /// StockDisplayGrid control.
         /// </summary>
         /// <remarks>

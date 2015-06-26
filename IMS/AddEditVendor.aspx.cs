@@ -98,6 +98,8 @@ namespace IMS
                 obj.Mobile = txtmobile.Text;
                 obj.Pager = txtpager.Text;
                 obj.Pincode = txtPincode.Text;
+                obj.BarterExchangeID = txtBarderExchangeID.Text;
+
                 obj.DateCreated = DateTime.Now;
                 VendorBLL objAdd = new VendorBLL();
                 objAdd.Add(obj, connection);
