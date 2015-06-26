@@ -14,11 +14,17 @@ namespace IMS
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
 
+        public static DataTable dtReceiveEnty;
+
+        public int Sent;
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
             {
+
+                dtReceiveEnty = new DataTable();
                 lblTotalTransferQty.Text = Session["TransferedQty"].ToString();
+                Sent = Convert.ToInt32(lblTotalTransferQty.Text.ToString());
                 BindGrid();
             }
         }
@@ -35,7 +41,6 @@ namespace IMS
                 connection.Open();
             }
 
-            //SqlCommand command = new SqlCommand("sp_getTransferDetailsReceiveEntry_TransferDetailID", connection);  
             SqlCommand command = new SqlCommand("sp_getRequestedTransferProductStockDetails_TransferDetailID", connection);
             command.Parameters.AddWithValue("@p_TransferDetailID", TransferDetID);
 
@@ -44,18 +49,26 @@ namespace IMS
             command.ExecuteNonQuery();
             SqlDataAdapter da = new SqlDataAdapter(command);
             da.Fill(ds);
+            
+            dtReceiveEnty = ds.Tables[0];
 
-            dgvReceiveTransferDetailsReceive.DataSource = ds;
+            SetdtReceiveEnty();
+
+            dgvReceiveTransferDetailsReceive.DataSource = dtReceiveEnty;
             dgvReceiveTransferDetailsReceive.DataBind();
-             Label lblProductID = (Label)dgvReceiveTransferDetailsReceive.Rows[0].FindControl("lblProductID");
-             TextBox txtSendQty = (TextBox)dgvReceiveTransferDetailsReceive.Rows[0].FindControl("txtSendQty");
 
-            // UpdateStockPlus(TransferDetID, Convert.ToInt32(lblProductID.Text.ToString()), Convert.ToInt32(txtSendQty.Text.ToString()));
-
+            //dgvReceiveTransferDetailsReceive.DataSource = ds;
+            //dgvReceiveTransferDetailsReceive.DataBind();
+             
         }
 
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
+            for (int i = 0; i < dgvReceiveTransferDetailsReceive.Rows.Count; i++)
+            {
+                TextBox txtSentQuantity = (TextBox)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("txtSendQty");
+                txtSentQuantity.Attributes.Add("onchange", "Validate(" + i + ");return false;");
+            }
             for (int i = 0; i < dgvReceiveTransferDetailsReceive.Rows.Count; i++)
             {
                 DateTime RequestDate, Expiry;
@@ -225,6 +238,51 @@ namespace IMS
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
             Response.Redirect("StoreMain.aspx", false);
+        }
+
+        protected void dgvReceiveTransferDetailsReceive_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                TextBox txtSentQuantity = (TextBox)e.Row.FindControl("txtSendQty");
+
+                DataRowView drv = (DataRowView)e.Row.DataItem;
+                int id = (int)e.Row.RowIndex;
+
+
+                txtSentQuantity.Attributes.Add("onchange", "Validate(" + id + ");return false;");
+
+            }
+        }
+
+        private void SetdtReceiveEnty()
+        {
+            DataTable dtTemp = dtReceiveEnty.Copy();
+            for (int i = 0; i < dtReceiveEnty.Rows.Count; i++)
+            {
+                if (Sent > 0)
+                {
+                     
+                    int TransferDetId = Convert.ToInt32(dtReceiveEnty.Rows[i]["TransferDetailID"].ToString());
+                    int Quantity = Convert.ToInt32(dtReceiveEnty.Rows[i]["AvailableQty"].ToString());
+                    int ProductId = Convert.ToInt32(dtReceiveEnty.Rows[i]["ProductID"].ToString());
+
+                    if (Quantity < Convert.ToInt32(dtTemp.Rows[i]["RequestedQty"]))
+                    {
+                        dtReceiveEnty.Rows[i]["SentQty"] = Quantity;
+                        dtTemp.Rows[i + 1]["RequestedQty"] = Convert.ToInt32(dtTemp.Rows[i]["RequestedQty"]) - Quantity;
+                        dtReceiveEnty.AcceptChanges();
+                        Sent = Sent - Quantity;
+                    }
+                    else
+                    {
+                        dtReceiveEnty.Rows[i]["SentQty"] = Sent;
+                        dtReceiveEnty.AcceptChanges();
+                        Sent = Sent - Convert.ToInt32(dtReceiveEnty.Rows[i]["RequestedQty"].ToString());
+                    }
+
+                }
+            }
         }
     }
 }
