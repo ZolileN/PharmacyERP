@@ -10,7 +10,7 @@
             <td align="right">
                 <asp:Button ID="btnAcceptAll" runat="server" CssClass="btn btn-success acptAllTransfers" Text="Accept All Transfers" OnClick="btnAcceptAll_Click" />
                 <asp:Button ID="btnGenTransferAll" runat="server" CssClass="btn btn-info" Text="Generate All Transfers" OnClick="btnGenTransferAll_Click" />
-                <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default" Text="Back" />
+                <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default" Text="Back" OnClick="btnBack_Click" />
 
             </td>
         </tr>

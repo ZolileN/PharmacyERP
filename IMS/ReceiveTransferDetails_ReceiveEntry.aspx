@@ -10,7 +10,7 @@
             
           <td align="right"> 
               <asp:Button ID="btnUpdate" runat="server" CssClass="btn btn-success btn-large" Text="Update" OnClick="btnUpdate_Click" />
-              <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" />
+              <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnGoBack_Click"/>
   
             </td>
         </tr>

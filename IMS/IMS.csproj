@@ -258,6 +258,7 @@
     <Content Include="PackingListGeneration.aspx" />
     <Content Include="PlaceOrder.aspx" />
     <Content Include="PO_GENERATE.aspx" />
+    <Content Include="Print_Request_WH.aspx" />
     <Content Include="Prod2Store.aspx" />
     <Content Include="ProductStoreSelect.aspx" />
     <Content Include="ReceiveRequestTransfers.aspx" />
@@ -812,6 +813,13 @@
     </Compile>
     <Compile Include="PO_GENERATE.aspx.designer.cs">
       <DependentUpon>PO_GENERATE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Print_Request_WH.aspx.cs">
+      <DependentUpon>Print_Request_WH.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Print_Request_WH.aspx.designer.cs">
+      <DependentUpon>Print_Request_WH.aspx</DependentUpon>
     </Compile>
     <Compile Include="Prod2Store.aspx.cs">
       <DependentUpon>Prod2Store.aspx</DependentUpon>

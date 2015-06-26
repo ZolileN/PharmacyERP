@@ -29,7 +29,8 @@
 
                                 <asp:Literal ID="litStoreName" runat="server" ></asp:Literal>
                             </h4>
-                            <asp:Button ID="btnGenTransfer" runat="server" CssClass="btn btn-info fl-r" Text="Generate SO" CommandName="GenTransferOrder" />
+                            <%-- This option is temporarily hidden --%>
+                            <asp:Button ID="btnGenTransfer" runat="server" Visible="false" CssClass="btn btn-info fl-r" Text="Generate SO" CommandName="GenTransferOrder" />
                             <asp:Button ID="btnAcceptTransferOrder" runat="server" CssClass="btn btn-success fl-r acceptAll" Text="Accept All" CommandName="AcceptTransferOrder"/>
 
                         </td>
@@ -125,9 +126,8 @@
                                           <asp:Button CssClass="btn btn-danger btn-sm denyReq" ID="btnDeny" Text="Deny"  Visible= '<%# !IsStatusComplete((String) Eval("Status")) %>' runat="server" CommandName="DenyProductTransfer"  CommandArgument='<%# Container.DataItemIndex %>' />
 
                                         </span>
-                                        <asp:Button ID="btnStaticAccepted" runat="server" CssClass="btn btn-success btn-sm accepted" Text="Accepted" Visible='<%# IsStatusAccepted((String) Eval("Status")) %>' />
-                                        <asp:Label ID="lblStaticDeny" runat="server" CssClass="btn btn-success btn-sm denyReq" Text="Denied" Visible='<%# IsStatusDenied((String) Eval("Status")) %>' />
-                                       
+                                       <span class="accepted"  ID="Span1" runat="server" Visible='<%# IsStatusAccepted((String) Eval("Status")) %>'  >Accepted</span>
+                                       <span class="denied"  ID="Span2" runat="server" Visible='<%# IsStatusDenied((String) Eval("Status")) %>'  >Denied</span>  
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

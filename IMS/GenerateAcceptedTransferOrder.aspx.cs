@@ -32,7 +32,14 @@ namespace IMS
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
             Session.Remove("TransferRequestGrid");
-            Response.Redirect("ReceiveTransferOrder.aspx", false);
+            if (!Session["UserRole"].ToString().Equals("WareHouse"))
+            {
+                Response.Redirect("ReceiveTransferOrder.aspx", false);
+            }
+            else
+            {
+                Response.Redirect("RespondStoreRequest.aspx", false);
+            }
         }
         protected void drpTransferDetailsReport_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {

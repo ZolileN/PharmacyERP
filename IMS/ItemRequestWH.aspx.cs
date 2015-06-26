@@ -22,6 +22,7 @@ namespace IMS
                 {
                     lblWH.Text = Session["WH_Name"].ToString();
                     Session["WH_FirstTransfer"] = false;
+                    Session["WH_TransferRequestGrid"] = null;
                    // Vendorname = Session["Vendorname"].ToString();
                 }
 
@@ -449,6 +450,7 @@ namespace IMS
                 sA.Fill(ds);
                 StockDisplayGrid.DataSource = null;
               //  Session["dsProducts_MP"] = ds;
+                Session["WH_TransferRequestGrid"] = ds.Tables[0];
                 StockDisplayGrid.DataSource = ds.Tables[0];
                 StockDisplayGrid.DataBind();
 
@@ -495,6 +497,7 @@ namespace IMS
         {
             lblttlcst.Visible = false;
             Session["WH_FirstTransfer"] = false;
+            Session.Remove("WH_TransferRequestGrid");
             Response.Redirect("StoreMain.aspx", false);
            
         }
@@ -523,12 +526,17 @@ namespace IMS
 
         protected void btnAccept_Click(object sender, EventArgs e)
         {
+            int p_TransferNo;
+            int.TryParse(ViewState["WH_TransferNo"].ToString(), out p_TransferNo);
             ViewState["WH_TransferNo"] = null;
             Session["WH_FirstTransfer"] = false;
             Session.Remove("WH_Name");
             Session.Remove("WH_ID");
+
             lblttlcst.Visible = false;
-            Response.Redirect("SelectWarehouse.aspx", false);
+
+
+            Response.Redirect("Print_Request_WH.aspx?Id=" + p_TransferNo, false);
         }
 
 
@@ -538,6 +546,7 @@ namespace IMS
             {
                 Session.Remove("dsProdcts");
                 Session.Remove("dsProducts_MP");
+                Session.Remove("WH_TransferRequestGrid");
                 DataSet delDs = new DataSet();
                 if (ViewState["WH_TransferNo"] != null)
                 {
