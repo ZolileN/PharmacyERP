@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace IMS
@@ -221,8 +222,9 @@ namespace IMS
                     da.Fill(dsResults);
 
                     Session["TransferRequestGrid"] = dsResults.Tables[0];
-
-                    Response.Redirect("GenerateAcceptedTransferOrder.aspx", false);
+                    int transID;
+                    int.TryParse(Session["WH_RequestedNO"].ToString(), out transID);
+                    Response.Redirect("WHResquestInvoice.aspx?Id=" + transID, false);
                 }
             }
             catch (Exception ex)
@@ -410,8 +412,8 @@ namespace IMS
                         btnDeny.Visible = false;
                         Button btnEdit = (Button)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("btnEdit");
                         btnEdit.Visible = false;
-                        Button btnStaticAccepted = (Button)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("btnStaticAccepted");
-                        btnStaticAccepted.Visible = true;
+                        HtmlGenericControl btnStaticAccepted = (HtmlGenericControl)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("btnStaticAccepted");
+                        btnStaticAccepted.Visible = true;  
                         if (RequestedQty != TransferedQty)
                         {
                             if (TransferedQty == 0)
@@ -456,8 +458,8 @@ namespace IMS
                     Button btnEdit = (Button)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("btnEdit");
                     btnEdit.Visible = false;
 
-                    Label lblStaticDeny = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblStaticDeny");
-                    lblStaticDeny.Visible = true;
+                    HtmlGenericControl lblStaticDeny = (HtmlGenericControl)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblStaticDeny");
+                    lblStaticDeny.Visible = true;  
 
                 }
 

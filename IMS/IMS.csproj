@@ -421,6 +421,7 @@
     <Content Include="App_Code\Barcode.xsc">
       <DependentUpon>Barcode.xsd</DependentUpon>
     </Content>
+    <Content Include="WHResquestInvoice.aspx" />
     <None Include="App_Code\Barcode.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -1378,6 +1379,13 @@
     </Compile>
     <Compile Include="WarehouseSalesOrder.aspx.designer.cs">
       <DependentUpon>WarehouseSalesOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WHResquestInvoice.aspx.cs">
+      <DependentUpon>WHResquestInvoice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WHResquestInvoice.aspx.designer.cs">
+      <DependentUpon>WHResquestInvoice.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
