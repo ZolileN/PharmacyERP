@@ -59,6 +59,8 @@ namespace IMS
                 {
                     lblPhar.Visible = true;
                     pharmacyID.Visible = true;
+                    lblBarterID.Visible = true;
+                    txtBarterValue.Visible = true;
                     
                 }
             }
@@ -116,6 +118,7 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_SystemPhone", sysPhone.Text.ToString());
                     command.Parameters.AddWithValue("@p_SystemFax", sysFax.Text.ToString());
                     command.Parameters.AddWithValue("@p_PharmacyID", pharmacyID.Text.ToString());
+                    command.Parameters.AddWithValue("@p_BarterID", txtBarterValue.Text.ToString());
                     command.ExecuteNonQuery();
                     WebMessageBoxUtil.Show("System successfully added");
             }
@@ -166,6 +169,7 @@ namespace IMS
             pharmacyID.Text = string.Empty;
             btnDeleteSystem.Enabled = false;
             btnEditSystem.Enabled = false;
+            txtBarterValue.Text = String.Empty;
             
         }
 
@@ -189,6 +193,7 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_SystemPhone", sysPhone.Text.ToString());
                     command.Parameters.AddWithValue("@p_SystemFax", sysFax.Text.ToString());
                     command.Parameters.AddWithValue("@p_PharmacyID", pharmacyID.Text.ToString());
+                    command.Parameters.AddWithValue("@p_BarterID", txtBarterValue.Text.ToString());
                     command.ExecuteNonQuery();
                     WebMessageBoxUtil.Show("System successfully updated");
                 }
@@ -258,6 +263,10 @@ namespace IMS
                     if (ds.Tables[0].Rows[0]["System_PharmacyID"] != DBNull.Value || !ds.Tables[0].Rows[0]["System_PharmacyID"].Equals(""))
                     {
                         pharmacyID.Text = ds.Tables[0].Rows[0]["System_PharmacyID"].ToString();
+                    }
+                    if (ds.Tables[0].Rows[0]["BarterExchangeID"] != DBNull.Value || !ds.Tables[0].Rows[0]["BarterExchangeID"].Equals(""))
+                    {
+                        txtBarterValue.Text = ds.Tables[0].Rows[0]["BarterExchangeID"].ToString();
                     }
 
                     if (ds.Tables[0].Rows[0]["SystemID"] != DBNull.Value || !ds.Tables[0].Rows[0]["SystemID"].Equals(""))

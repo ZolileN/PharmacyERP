@@ -130,6 +130,24 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.TextBox pharmacyID;
         
         /// <summary>
+        /// lblBarterID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBarterID;
+        
+        /// <summary>
+        /// txtBarterValue control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBarterValue;
+        
+        /// <summary>
         /// sysID control.
         /// </summary>
         /// <remarks>
