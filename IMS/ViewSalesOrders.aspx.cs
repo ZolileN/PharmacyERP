@@ -184,6 +184,7 @@ namespace IMS
                     Label SystemID = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("SystemID");
                     Label Invoice = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("Invoice");
                      Label OrderTo = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("OrderTo");
+                     Label SalesManID = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("SalesManID");
                     //session is setting
                     Session["OrderNumberSO"] = OrderNo.Text.ToString();
                     Session["SelectedIndexValue"] = OrderTo.Text.ToString();
@@ -191,7 +192,7 @@ namespace IMS
                     Session["SystemID"] = SystemID.Text;
                     Session["ExistingOrder"] = true;
                     Session["Invoice"] = Invoice.Text;
-
+                    Session["SalesManID"] = SalesManID.Text.ToString();
                     Response.Redirect("OrderSalesManual.aspx", false);
                 }
                 else if (e.CommandName.Equals("Delete"))

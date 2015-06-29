@@ -77,14 +77,18 @@
             </tr>
             <tr>
                
+                <td> <asp:Label runat="server" ID="lblBarterID" Visible="false" AssociatedControlID="txtBarterValue" CssClass="control-label">Barter Exchange ID</asp:Label>
+                </td>
+                <td>
+                    <asp:TextBox runat="server" Visible="false" ID="txtBarterValue" CssClass="form-control" />
+                </td>
                 <td>
                     <asp:Label runat="server" Visible="false" AssociatedControlID="sysID" CssClass="control-label">SystemID</asp:Label>
                 </td>
                 <td>
                     <asp:TextBox runat="server" Visible="false" ID="sysID" CssClass="form-control" />
                 </td>
-                <td></td>
-                <td></td>
+                
             </tr>
             <tr>
                 <td colspan="100%">&nbsp;</td>
