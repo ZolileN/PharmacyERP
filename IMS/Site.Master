@@ -427,7 +427,8 @@
                                  <ul>
                                   
                                     <li><a href="#">Manage Warehouse</a></li>
-                                    <li><a href="#">Manage Store</a></li>									 
+                                    <li><a href="#">Manage Store</a></li>
+                                      <li><a href="UserManagment.aspx">Manage Users</a></li>									 
                                     <li><a href="SalemanMangment.aspx">Manage Salesman</a></li>
                                      
                                </ul>

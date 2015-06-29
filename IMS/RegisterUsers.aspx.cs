@@ -9,6 +9,7 @@ using System.Data.Sql;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Configuration;
+using IMSCommon.Util;
 
 
 namespace IMS
@@ -21,6 +22,17 @@ namespace IMS
         {
             if (!IsPostBack)
             {
+
+                if (Session["ur_RoleName"].ToString().Equals("Salesman"))
+                {
+                    TitleSlman.Visible = true;
+                    Titleuser.Visible = false;
+                }
+                else 
+                {
+                    TitleSlman.Visible = false;
+                    Titleuser.Visible = true;
+                }
                 #region Populating User Role Drop Down DropDown
                 try
                 {
@@ -39,8 +51,16 @@ namespace IMS
                     if (ddlURole != null)
                     {
                         ddlURole.Items.Insert(0, "Select User Role");
-                        ddlURole.SelectedIndex = 3;
-                        ddlURole.Enabled = false;
+                        if (Session["ur_RoleName"].ToString().Equals("Salesman"))
+                        {
+                            ddlURole.SelectedIndex = 3;
+                            ddlURole.Enabled = false;
+                        }
+                        else
+                        {
+                            ddlURole.SelectedIndex = 0;
+                        }
+                        
                     }
 
 
@@ -59,7 +79,7 @@ namespace IMS
                 try
                 {
                     connection.Open();
-                    SqlCommand command = new SqlCommand("SELECT *  FROM [dbo].[tbl_System] where System_RoleID=1 or System_RoleID=3", connection);
+                    SqlCommand command = new SqlCommand("SELECT *  FROM [dbo].[tbl_System] where System_RoleID IN (1,2,3)", connection);
                     DataSet ds1 = new DataSet();
                     SqlDataAdapter sA1 = new SqlDataAdapter(command);
                     sA1.Fill(ds1);
@@ -86,7 +106,13 @@ namespace IMS
                 USERID = Request.QueryString["ID"];
                 // Start here
                 if (!string.IsNullOrEmpty(USERID))
-                { UpdateSaleman(USERID); }
+                {
+                    UpdateSaleman(USERID);
+                    if (!Session["ur_RoleName"].ToString().Equals("Salesman")) 
+                    {
+                        btnAssociatedStore.Visible = false;
+                    }
+                }
                 else
                 {
                     btnSave.Visible = false;
@@ -132,11 +158,33 @@ namespace IMS
 
         protected void btnBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("salemanMangment.aspx", false);
+           
+            if (Session["ur_RoleName"].ToString().Equals("Salesman"))
+            {
+                Session.Remove("ur_RoleName");
+                Response.Redirect("SalemanMangment.aspx", false);
+            }
+            else
+            {
+                Session.Remove("ur_RoleName");
+                Response.Redirect("UserManagment.aspx", false);
+            }
         }
 
         protected void btnAddEmployee_Click(object sender, EventArgs e)
         {
+            if (ddlSysID.SelectedIndex == 0) 
+            {
+
+                WebMessageBoxUtil.Show("Select System");
+                return;
+            }
+            if (ddlURole.SelectedIndex == 0)
+            {
+
+                WebMessageBoxUtil.Show("Select User Role");
+                return;
+            }
             int x = 0;
             String Errormessage = "";
             try
@@ -147,7 +195,9 @@ namespace IMS
                 command.Parameters.AddWithValue("@p_EmpID", EmpID.Text);
                 command.Parameters.AddWithValue("@p_password", uPwd.Text);
                 command.Parameters.AddWithValue("@p_UserRoleID", ddlURole.SelectedValue.ToString());
+                
                 command.Parameters.AddWithValue("@p_SystemID", ddlSysID.SelectedValue.ToString());
+                   
                 command.Parameters.AddWithValue("@p_FirstName", fName.Text);
                 command.Parameters.AddWithValue("@p_LastName", lstName.Text);
                 command.Parameters.AddWithValue("@p_Contact", ContactNo.Text);
@@ -254,7 +304,14 @@ namespace IMS
             {
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert(''" + Errormessage + "'')", true);
             }
-            Response.Redirect("SalemanMangment.aspx");
+            if (Session["ur_RoleName"].ToString().Equals("Salesman"))
+            {
+                Response.Redirect("SalemanMangment.aspx",false);
+            }
+            else 
+            {
+                Response.Redirect("UserManagment.aspx", false);
+            }
         }
 
         protected void btnAssociatedStore_Click(object sender, EventArgs e)
