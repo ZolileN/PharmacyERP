@@ -3,7 +3,8 @@
 
     <table width="100%">
          <tr><td>
-        <h4>Add Salesman</h4>
+        <h4><h4 id="TitleSlman" runat="server">Add Salesman</h4>
+        <h4 id="Titleuser" visible="false" runat="server">Add User</h4></h4>
         </td>
         <td align="right">
         

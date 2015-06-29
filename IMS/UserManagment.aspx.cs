@@ -13,7 +13,7 @@ using IMSCommon.Util;
 
 namespace IMS
 {
-    public partial class SalemanMangment : System.Web.UI.Page
+    public partial class UserManagment : System.Web.UI.Page
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet UserSet;
@@ -54,74 +54,15 @@ namespace IMS
 
         }
 
-         
-        //protected void btnSearch_Click(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        connection.Open();
 
-        //        string Text = UserName.Text;
-        //        Text = Text + "%";
-
-        //        string TextAddress = UserAddress.Text;
-        //        TextAddress = TextAddress + "%";
-
-        //        string TextContact = UserContact.Text;
-        //        TextContact = TextContact + "%";
-        //        string UserRole = ddlUserRole.SelectedItem.ToString();
-        //        UserRole = UserRole + "%";
-        //        SqlCommand command;
-        //        if (Text.Length > 2 && !string.IsNullOrWhiteSpace(Text))
-        //        {
-        //            command = new SqlCommand("SELECT * From tbl_Users Where [tbl_Users].U_EmpID LIKE '" + Text + "'", connection);
-        //        }
-        //        else if (TextAddress.Length > 2 && !string.IsNullOrWhiteSpace(TextAddress))
-        //        {
-        //            command = new SqlCommand("SELECT * From tbl_Users Where [tbl_Users].Address LIKE '" + TextAddress + "'", connection);
-        //        }
-        //        else if (UserRole.Length > 2 && !string.IsNullOrWhiteSpace(UserRole))
-        //        {
-        //            command = new SqlCommand("SELECT UserID,U_RolesID, U_EmpID,Address,Contact,U_RolesID user_RoleName From [tbl_UserRoles] inner join tbl_Users on tbl_Users.U_RolesID=[tbl_UserRoles].user_RoleID where [tbl_UserRoles].user_RoleName like'" + UserRole + "'", connection);
-        //        }
-        //        else
-        //        {
-        //            command = new SqlCommand("SELECT * From tbl_Users Where [tbl_Users].Contact LIKE '" + TextContact + "'", connection);
-        //        }
-        //        DataSet ds = new DataSet();
-        //        SqlDataAdapter sA = new SqlDataAdapter(command);
-        //        sA.Fill(ds);
-        //        //if (SelectProduct.DataSource != null)
-        //        //{
-        //        //    SelectProduct.DataSource = null;
-        //        //}
-
-        //        UserSet = null;
-        //        UserSet = ds;
-
-        //        SalemanDisplayGrid.DataSource = ds;
-        //        SalemanDisplayGrid.DataBind();
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //    }
-        //    finally
-        //    {
-        //        connection.Close();
-
-        //    }
-        //}
-
-        
         protected void SalemanDisplayGrid_RowEditing(object sender, GridViewEditEventArgs e)
         {
-            string ID= "";
+            string ID = "";
             SalemanDisplayGrid.EditIndex = e.NewEditIndex;
             Label UserID = (Label)SalemanDisplayGrid.Rows[e.NewEditIndex].FindControl("lblUserID");
-            Session["ur_RoleName"] = "Salesman";
+            Label roleName = (Label)SalemanDisplayGrid.Rows[e.NewEditIndex].FindControl("lblroleName");
             ID = UserID.Text;
-
+            Session["ur_RoleName"] = roleName.Text;
             Response.Redirect("RegisterUsers.aspx?ID=" + ID);
         }
         private void BindGrid()
@@ -134,7 +75,7 @@ namespace IMS
                 string Text = "sale";
 
                 Text = Text + "%";
-                String Query = "SELECT UserID,U_RolesID, U_EmpID,Address,Contact,U_RolesID user_RoleName From [tbl_UserRoles] inner join tbl_Users on tbl_Users.U_RolesID=[tbl_UserRoles].user_RoleID where [tbl_UserRoles].user_RoleName like'" + Text + "'";
+                String Query = "SELECT UserID,U_RolesID, U_EmpID,Address,Contact,U_RolesID,user_RoleName From [tbl_UserRoles] inner join tbl_Users on tbl_Users.U_RolesID=[tbl_UserRoles].user_RoleID";
                 // String Query = "SELECT * From tbl_Users";
                 connection.Open();
                 SqlCommand command = new SqlCommand(Query, connection);
@@ -156,7 +97,7 @@ namespace IMS
             }
             #endregion
         }
-         
+
 
         protected void SalemanDisplayGrid_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
@@ -218,7 +159,7 @@ namespace IMS
 
         protected void btnAddSalesman_Click(object sender, EventArgs e)
         {
-            Session["ur_RoleName"] = "Salesman";
+            Session["ur_RoleName"] = "Admin";
             Response.Redirect("RegisterUsers.aspx");
         }
 
@@ -226,7 +167,5 @@ namespace IMS
         {
             Response.Redirect("WarehouseMain.aspx");
         }
-
-
     }
 }
