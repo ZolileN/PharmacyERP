@@ -33,6 +33,8 @@ namespace IMS
 
                 Session["rptCustomerID"] = null;
 
+                Session["rptBarterCustomers"] = null;
+
                 Session["rptSalesDateFrom"] = null;
 
                 Session["rptSalesDateTo"] = null;
@@ -41,6 +43,11 @@ namespace IMS
                 ddlInternalCustomer.Items.Add("Select Option");
                 ddlInternalCustomer.Items.Add("Include");
                 ddlInternalCustomer.Items.Add("Exclude");
+
+                ddlBarterCustomer.Items.Clear();
+                ddlBarterCustomer.Items.Add("Select Option");
+                ddlBarterCustomer.Items.Add("Include");
+                ddlBarterCustomer.Items.Add("Exclude");
 
                 
             }
@@ -131,6 +138,15 @@ namespace IMS
                 Session["rptInternalCustomers"] = "Include";
             }
 
+            if (ddlBarterCustomer.SelectedItem.ToString().Equals("Exclude"))
+            {
+                Session["rptBarterCustomers"] = "Exclude";
+            }
+            else
+            {
+                Session["rptBarterCustomers"] = "Include";
+            }
+
 
             Response.Redirect("rpt_SalesSummaryDisplay.aspx");
         }
@@ -151,7 +167,8 @@ namespace IMS
                 Session["rptSalesDateFrom"] = "";
             
                 Session["rptSalesDateTo"] = "";
-            
+
+                Session["rptBarterCustomers"] = "";
 
                 Response.Redirect("WarehouseMain.aspx");
         }

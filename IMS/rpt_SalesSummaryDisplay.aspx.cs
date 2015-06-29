@@ -35,6 +35,7 @@ namespace IMS
                 lblSubCategory.Text = Session["selectionSubCategory"].ToString();
                 lblProduct.Text = Session["selectionProduct"].ToString();
                 lblInternalCustomer.Text = Session["rptInternalCustomers"].ToString();
+                lblBarterCustomer.Text = Session["rptBarterCustomers"].ToString();
 
                 
             }
@@ -66,6 +67,7 @@ namespace IMS
         public void LoadData()
         {
             int ProdID, DeptID, CatID, SubCatID, CustID;
+            String BarterValue = "";
             ProdID = DeptID = CatID = SubCatID = CustID = 0;
             try
             {
@@ -160,14 +162,23 @@ namespace IMS
                     DateTime dtTo = Convert.ToDateTime(Session["rptSalesDateTo"]);
 
                     DataView dv = ds.Tables[0].DefaultView;
-                    dv.RowFilter = "OrderDate >= '" + dtFROM + "' AND OrderDate <= '" + dtTo + "'";
+                    dv.RowFilter = "OrderDate >= '" + dtFROM.ToString("yyyy-MM-dd") + "' AND OrderDate <= '" + dtTo.ToString("yyyy-MM-dd") + "'";
 
+                    if (BarterValue.Equals("Exclude"))
+                    {
+                        dv.RowFilter = "BarterExchangeID IS NULL OR BarterExchangeID <> ''";
+                    }
                     DataTable dtFiltered = dv.ToTable();
                     Session["dtSalesSummary"] = dtFiltered;
                 }
                 else
                 {
-                    DataTable dtFiltered = ds.Tables[0];
+                    DataView dv = ds.Tables[0].DefaultView;
+                    if (BarterValue.Equals("Exclude"))
+                    {
+                        dv.RowFilter = "BarterExchangeID IS NULL OR BarterExchangeID <> ''";
+                    }
+                    DataTable dtFiltered = dv.ToTable();
                     /*if (Session["rptInternalCustomers"].ToString().Equals("Exclude"))
                     {
                         command = new SqlCommand("sp_getInteralCustomers", connection);
@@ -207,6 +218,8 @@ namespace IMS
             Session["rptDepartmentID"] = null;
 
             Session["rptCustomerID"] = null;
+
+            Session["rptBarterCustomers"] = null;
 
            // Session["rptSalesDateFrom"] = null;
 

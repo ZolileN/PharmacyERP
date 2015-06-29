@@ -36,13 +36,13 @@ namespace IMS
                     }
                 }
 
-                if (Session["rptItemPurhcaseDateFrom"] != null && Session["rptItemPurhcaseDateFrom"].ToString() != "")
+                if (Session["rptItemPurchaseDateF"] != null && Session["rptItemPurchaseDateF"].ToString() != "")
                 {
-                    txtDateFrom.Text = Session["rptItemPurhcaseDateFrom"].ToString();
+                    txtDateFrom.Text = Session["rptItemPurchaseDateF"].ToString();
                 }
-                if (Session["rptItemPurchaseDateTo"] != null && Session["rptItemPurchaseDateTo"].ToString() != "")
+                if (Session["rptItemPurchaseDateT"] != null && Session["rptItemPurchaseDateT"].ToString() != "")
                 {
-                    txtDateTO.Text = Session["rptItemPurchaseDateTo"].ToString();
+                    txtDateTO.Text = Session["rptItemPurchaseDateT"].ToString();
                 }
 
                 Session["rptProductID"] = null;
@@ -55,12 +55,19 @@ namespace IMS
 
                 Session["rptCustomerID"] = null;
 
+                Session["rptBarterCustomers"] = null;
+
                 Session["rptItemPurhcaseDateF"] = null;
 
                 Session["rptItemPurchaseDateT"] = null;
 
                 Session["SP_Purchase"] = "YES";
 
+
+                ddlBarterCustomer.Items.Clear();
+                ddlBarterCustomer.Items.Add("Select Option");
+                ddlBarterCustomer.Items.Add("Include");
+                ddlBarterCustomer.Items.Add("Exclude");
               
 
             }
@@ -151,6 +158,15 @@ namespace IMS
                 Session["rptItemPurchaseExpiry"] = "";
             }
 
+            if (ddlBarterCustomer.SelectedItem.ToString().Equals("Exclude"))
+            {
+                Session["rptBarterCustomers"] = "Exclude";
+            }
+            else
+            {
+                Session["rptBarterCustomers"] = "Include";
+            }
+
             /*if (ddlInternalCustomer.SelectedItem.ToString().Equals("Exclude"))
             {
                 Session["rptInternalCustomers"] = "Exclude";
@@ -175,6 +191,8 @@ namespace IMS
             Session["rptDepartmentID"] = "";
 
             Session["rptCustomerID"] = "";
+
+            Session["rptBarterCustomers"] = "";
 
             Session["rptItemPurchaseDateF"] = "";
 
