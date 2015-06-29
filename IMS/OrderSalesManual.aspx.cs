@@ -182,8 +182,21 @@ namespace IMS
 
                 if (ddlSalesman != null)
                 {
-                    ddlSalesman.Items.Insert(0, "Select Salesman");
-                    ddlSalesman.SelectedIndex = 0;
+                    ddlSalesman.Items.Insert(0, "Select System");
+                    if (Session["SalesManID"] != null)
+                    {
+                        // set index based on value
+                        foreach (ListItem Items in ddlSalesman.Items)
+                        {
+                            if (Items.Text.Equals(Session["SalesManID"].ToString()))
+                            {
+                                ddlSalesman.SelectedIndex = ddlSalesman.Items.IndexOf(Items);
+                                break;
+                            }
+                        }
+                        ddlSalesman.Enabled = false;
+                    }
+
                 }
 
                 

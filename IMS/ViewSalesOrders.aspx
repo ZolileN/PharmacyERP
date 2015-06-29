@@ -87,6 +87,15 @@
                               </ItemTemplate>
                          <ItemStyle  Width="150px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
+
+                      <asp:TemplateField Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="SalesManID" CssClass="control-label" runat="server" Text='<%# Eval("SalesManID") %>'></asp:Label>
+                        </ItemTemplate>
+                        <ItemStyle  Width="110px" HorizontalAlign="Left"/>
+
+                    </asp:TemplateField>
+
                     <asp:TemplateField HeaderText="Order No." HeaderStyle-Width ="110px">
                         <ItemTemplate>
                             <asp:Label ID="OrderNO" CssClass="control-label" runat="server" Text='<%# Eval("OrderID") %>'></asp:Label>
