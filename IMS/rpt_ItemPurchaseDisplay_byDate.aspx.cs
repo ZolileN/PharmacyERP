@@ -163,7 +163,7 @@ namespace IMS
                     {
                         dv.RowFilter = "ProductID = '" + ProdID + "'";
                     }
-                    if(Expiry!=null)
+                    if (Expiry != null && (Session["rptItemPurchaseExpiry"] != null && Session["rptItemPurchaseExpiry"].ToString() != ""))
                     {
                         dv.RowFilter = "ExpiryDate = '" + Expiry + "'";
                     }
@@ -259,7 +259,7 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                WebMessageBoxUtil.Show(ex.Message);
+               //WebMessageBoxUtil.Show(ex.Message);
             }
         }
     }
