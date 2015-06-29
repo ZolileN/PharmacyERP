@@ -256,6 +256,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="PackingListGeneration.aspx" />
+    <Content Include="PharmacyManagement.aspx" />
     <Content Include="PlaceOrder.aspx" />
     <Content Include="PO_GENERATE.aspx" />
     <Content Include="Print_Request_WH.aspx" />
@@ -409,6 +410,7 @@
     <Content Include="ViewSalesOrders.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="WarehouseMain.aspx" />
+    <Content Include="WarehouseManagement.aspx" />
     <Content Include="WarehouseSalesOrder.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -799,6 +801,13 @@
     </Compile>
     <Compile Include="PackingListGeneration.aspx.designer.cs">
       <DependentUpon>PackingListGeneration.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PharmacyManagement.aspx.cs">
+      <DependentUpon>PharmacyManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PharmacyManagement.aspx.designer.cs">
+      <DependentUpon>PharmacyManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="PlaceOrder.aspx.cs">
       <DependentUpon>PlaceOrder.aspx</DependentUpon>
@@ -1347,6 +1356,13 @@
     </Compile>
     <Compile Include="WarehouseMain.aspx.designer.cs">
       <DependentUpon>WarehouseMain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WarehouseManagement.aspx.cs">
+      <DependentUpon>WarehouseManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WarehouseManagement.aspx.designer.cs">
+      <DependentUpon>WarehouseManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="WarehouseSalesOrder.aspx.cs">
       <DependentUpon>WarehouseSalesOrder.aspx</DependentUpon>

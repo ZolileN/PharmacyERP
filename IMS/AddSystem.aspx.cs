@@ -28,6 +28,15 @@ namespace IMS
                     selSys.Visible = true;
                     SysDDL.Visible = true;
 
+                    if (Session["SystemId"] != null)
+                    {
+                        regTitleSt.Visible = false;
+                        regTitleWH.Visible = false;
+                        EditTitleWH.Visible = true;
+                        EditTitleSt.Visible = false;
+                        LoadData();
+                    }
+
                     if (Session["SysToAdd"].Equals(RoleNames.store))
                     {
                         regTitleSt.Visible = false;
@@ -46,6 +55,7 @@ namespace IMS
                 }
                 else 
                 {
+                    btnAddSystem.Visible = true;
                     if (Session["SysToAdd"].Equals(RoleNames.store))
                     {
                         regTitleSt.Visible = true;
@@ -55,6 +65,7 @@ namespace IMS
                     }
                     
                 }
+                
                 if(Session["SysToAdd"].Equals(RoleNames.store))
                 {
                     lblPhar.Visible = true;
@@ -64,6 +75,44 @@ namespace IMS
             }
         }
 
+        private void LoadData()
+        {
+            try
+            {
+                sysID.Text = Session["SystemId"].ToString();
+                DataSet dsResults = new DataSet();
+                int SystemID = int.Parse(Session["SystemId"].ToString());
+                if(connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("Sp_GetSystem_ByID", connection);
+                command.Parameters.AddWithValue("@p_SystemID", SystemID);
+                command.CommandType = CommandType.StoredProcedure;
+                command.ExecuteNonQuery();
+                SqlDataAdapter dA = new SqlDataAdapter(command);
+                dA.Fill(dsResults);
+
+                sysName.Text = dsResults.Tables[0].Rows[0]["SystemName"].ToString();
+                sysDesc.Text = dsResults.Tables[0].Rows[0]["Description"].ToString();
+                sysAddress.Text = dsResults.Tables[0].Rows[0]["SystemAddress"].ToString();
+                sysPhone.Text = dsResults.Tables[0].Rows[0]["SystemPhone"].ToString();
+                sysFax.Text = dsResults.Tables[0].Rows[0]["SystemFax"].ToString();
+               // pharmacyID.Text = dsResults.Tables[0].Rows[0]["System_PharmacyID"].ToString();
+                selSys.Visible = false;
+                SysDDL.Visible = false;
+                btnAddSystem.Visible = false;
+                btnDeleteSystem.Visible = false;
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+        }
         private void bindValues()
         {
             try
@@ -104,20 +153,30 @@ namespace IMS
         protected void btnAddSystem_Click(object sender, EventArgs e)
         {
             try
-            {  
-                    connection.Open();
-                    SqlCommand command = new SqlCommand("Sp_AddNewSystem", connection);
-                    command.CommandType = CommandType.StoredProcedure;
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("Sp_AddNewSystem", connection);
+                command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@p_Name", sysName.Text.ToString());
-                    command.Parameters.AddWithValue("@p_Description", sysDesc.Text.ToString());
-                    command.Parameters.AddWithValue("@p_SystemRoleName", Session["SysToAdd"].ToString());
-                    command.Parameters.AddWithValue("@p_SystemAddress", sysAddress.Text.ToString());
-                    command.Parameters.AddWithValue("@p_SystemPhone", sysPhone.Text.ToString());
-                    command.Parameters.AddWithValue("@p_SystemFax", sysFax.Text.ToString());
-                    command.Parameters.AddWithValue("@p_PharmacyID", pharmacyID.Text.ToString());
-                    command.ExecuteNonQuery();
-                    WebMessageBoxUtil.Show("System successfully added");
+                command.Parameters.AddWithValue("@p_Name", sysName.Text.ToString());
+                command.Parameters.AddWithValue("@p_Description", sysDesc.Text.ToString());
+                command.Parameters.AddWithValue("@p_SystemRoleName", Session["SysToAdd"].ToString());
+                command.Parameters.AddWithValue("@p_SystemAddress", sysAddress.Text.ToString());
+                command.Parameters.AddWithValue("@p_SystemPhone", sysPhone.Text.ToString());
+                command.Parameters.AddWithValue("@p_SystemFax", sysFax.Text.ToString());
+                command.Parameters.AddWithValue("@p_PharmacyID", pharmacyID.Text.ToString());
+                command.Parameters.AddWithValue("@p_BarterID", "");
+                command.ExecuteNonQuery();
+                WebMessageBoxUtil.Show("System successfully added");
+                if (Session["SysToAdd"] == RoleNames.store)
+                {
+                    Response.Redirect("PharmacyManagement.aspx");
+                }
+                else
+                {
+                    Response.Redirect("WarehouseManagement.aspx");
+                }
+
             }
             catch (Exception exp) { }
             finally
@@ -178,7 +237,11 @@ namespace IMS
             {
                 try
                 {
-                    connection.Open();
+                    if (connection.State == ConnectionState.Closed) 
+                    {
+                        connection.Open();
+                    }
+                    
                     SqlCommand command = new SqlCommand("Sp_UpdateSystems", connection);
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -189,8 +252,17 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_SystemPhone", sysPhone.Text.ToString());
                     command.Parameters.AddWithValue("@p_SystemFax", sysFax.Text.ToString());
                     command.Parameters.AddWithValue("@p_PharmacyID", pharmacyID.Text.ToString());
+                    command.Parameters.AddWithValue("@p_BarterID", "");
                     command.ExecuteNonQuery();
                     WebMessageBoxUtil.Show("System successfully updated");
+                    if(Session["SysToAdd"]  == RoleNames.store)
+                    {
+                        Response.Redirect("PharmacyManagement.aspx");
+                    }
+                    else
+                    {
+                        Response.Redirect("WarehouseManagement.aspx");
+                    }
                 }
                 catch (Exception exp) { }
                 finally

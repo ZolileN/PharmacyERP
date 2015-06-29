@@ -3,25 +3,32 @@
     <link rel="stylesheet" href="Style/chosen.css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="form-horizontal">
-        <h4 id="regTitleWH" runat="server">Register Warehouse</h4>
+
+
+    <table width="100%">
+    <tr><td>
+
+     <h4 id="regTitleWH" runat="server">Add Warehouse</h4>
         <h4 id="EditTitleWH" visible="false" runat="server">Edit Warehouse</h4>
-        <h4 id="regTitleSt" runat="server" visible="false">Register Store</h4>
+        <h4 id="regTitleSt" runat="server" visible="false">Add Store</h4>
         <h4 id="EditTitleSt" visible="false" runat="server">Edit Store</h4>
-        <hr />
-        <br />
 
+    </td>
+    <td align="right"> 
+                <asp:Button ID="btnAddSystem" runat="server" OnClick="btnAddSystem_Click" Text="ADD"  CssClass="btn btn-primary" ValidationGroup="exSave" />
+                <asp:Button ID="btnEditSystem" runat="server" OnClick="btnEditSystem_Click" Text="EDIT" CssClass="btn btn-default" visible="false"/>
+                <asp:Button ID="btnDeleteSystem" runat="server" OnClick="btnDeleteSystem_Click" Text="DELETE" CssClass="btn btn-default" visible="false"/>
+                <asp:Button ID="btnCancelSystem" runat="server" OnClick="btnCancelSystem_Click" Text="CANCEL" CssClass="btn btn-default"/>
+                <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnBack_Click"/>
+        </td>
+                </tr>
+                <tr><td height="5"></td></tr>
+                </table>
+    <hr>
 
+     <br />
 
-     
-        <div class="form-group">
-            
-            <div class="col-md-10">
-                
-                <br />               
-            </div>
-        </div>
-            
+ 
         
         <table cellpadding="3" cellspacing="3" width="100%" class="form-fields">
             <tr>
@@ -93,11 +100,7 @@
                 <td></td>
                 <td colspan="100%">
 
-                <asp:Button ID="btnAddSystem" runat="server" OnClick="btnAddSystem_Click" Text="ADD"  CssClass="btn btn-primary" ValidationGroup="exSave" />
-                <asp:Button ID="btnEditSystem" runat="server" OnClick="btnEditSystem_Click" Text="EDIT" CssClass="btn btn-default" visible="false"/>
-                <asp:Button ID="btnDeleteSystem" runat="server" OnClick="btnDeleteSystem_Click" Text="DELETE" CssClass="btn btn-default" visible="false"/>
-                <asp:Button ID="btnCancelSystem" runat="server" OnClick="btnCancelSystem_Click" Text="CANCEL" CssClass="btn btn-default"/>
-                <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnBack_Click"/>
+               
 
                 </td>
             </tr>
@@ -106,12 +109,6 @@
 
     
 
-       
-
-
-         
-
         
-
-    </div>
+        
 </asp:Content>
