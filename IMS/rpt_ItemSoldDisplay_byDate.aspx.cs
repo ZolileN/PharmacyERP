@@ -34,6 +34,7 @@ namespace IMS
                 lblSubCategory.Text = Session["selectionSubCategory"].ToString();
                 lblProduct.Text = Session["selectionProduct"].ToString();
                 lblInternalCustomer.Text = Session["rptInternalCustomers"].ToString();
+                lblBarterCustomer.Text = Session["rptBarterCustomers"].ToString();
 
             }
         }
@@ -67,6 +68,7 @@ namespace IMS
         {
             int ProdID, DeptID, CatID, SubCatID, CustID, SalesID;
             ProdID = DeptID = CatID = SubCatID = CustID = SalesID = 0;
+            String BarterValue = "";
             try
             {
                 connection.Open();
@@ -74,6 +76,7 @@ namespace IMS
                 SqlCommand command = new SqlCommand("sp_rpt_ItemSold", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@InternalCustomer", Session["rptInternalCustomers"].ToString());
+                
                 #region Applying Filters
 
                 if (Session["rptSalesManID"] != null && Session["rptSalesManID"].ToString() != "")
@@ -125,7 +128,7 @@ namespace IMS
                     }
                 }
 
-                
+                BarterValue = Session["rptBarterCustomers"].ToString();
                 #endregion
 
                 DataSet ds = new DataSet();
@@ -139,31 +142,66 @@ namespace IMS
                     DateTime dtTo = Convert.ToDateTime(Session["rptItemSoldDateTo"]);
 
                     DataView dv = ds.Tables[0].DefaultView;
-                    dv.RowFilter = "OrderDate >= '" + dtFROM + "' AND OrderDate <= '" + dtTo + "'";
+                    dv.RowFilter = "OrderDate >= '" + dtFROM.ToString("yyyy-MM-dd") + "' AND OrderDate <= '" + dtTo.ToString("yyyy-MM-dd") + "'";
+                    DataTable dtfilterSet = dv.ToTable();
+                    dv = dtfilterSet.DefaultView;
+
                     if (SalesID != 0)
                     {
+                        dv = dtfilterSet.DefaultView;
                         dv.RowFilter = "SalesMan = '" + SalesID + "'";
+                        dtfilterSet = dv.ToTable();
                     }
 
                     if (CustID != 0)
                     {
+                        dv = dtfilterSet.DefaultView;
                         dv.RowFilter = "OrderRequestedFor = '" + CustID + "'";
+                        dtfilterSet = dv.ToTable();
+                        
                     }
+
+                    if (BarterValue.Equals("Exclude"))
+                    {
+                        dv = dtfilterSet.DefaultView;
+                        dv.RowFilter = "BarterExchangeID IS NULL";
+                        dtfilterSet = dv.ToTable();
+                    }
+
+
                     if (DeptID != 0)
                     {
+                        dv = dtfilterSet.DefaultView;
                         dv.RowFilter = "DeptID = '" + DeptID + "'";
+                        dtfilterSet = dv.ToTable();
+                        
                     }
+
+
                     if (CatID != 0)
                     {
+                        dv = dtfilterSet.DefaultView;
                         dv.RowFilter = "CatID = '" + CatID + "'";
+                        dtfilterSet = dv.ToTable();
+                        
                     }
+
+
                     if (SubCatID != 0)
                     {
+                        dv = dtfilterSet.DefaultView;
                         dv.RowFilter = "SubCategoryID = '" + SubCatID + "'";
+                        dtfilterSet = dv.ToTable();
+                        
                     }
+
+
                     if (ProdID != 0)
                     {
+                        dv = dtfilterSet.DefaultView;
                         dv.RowFilter = "ProductID = '" + ProdID + "'";
+                        dtfilterSet = dv.ToTable();
+                        
                     }
 
 
@@ -196,6 +234,8 @@ namespace IMS
             Session["rptDepartmentID"] = null;
 
             Session["rptCustomerID"] = null;
+
+            Session["rptBarterCustomers"] = null;
 
            // Session["rptSalesDateFrom"] = null;
 

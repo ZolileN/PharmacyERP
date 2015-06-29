@@ -426,8 +426,14 @@
                                                     
                                  <ul>
                                   
+<<<<<<< HEAD
                                     <li><a href="WarehouseManagement.aspx">Manage Stores</a></li>
                                     <li><a href="PharmacyManagement.aspx">Manage Pharmacy</a></li>									 
+=======
+                                    <li><a href="#">Manage Warehouse</a></li>
+                                    <li><a href="#">Manage Store</a></li>
+                                      <li><a href="UserManagment.aspx">Manage Users</a></li>									 
+>>>>>>> origin/master
                                     <li><a href="SalemanMangment.aspx">Manage Salesman</a></li>
                                      
                                </ul>

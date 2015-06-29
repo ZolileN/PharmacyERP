@@ -399,6 +399,7 @@
     <Content Include="UserControl\uc_Select_Salesman.ascx" />
     <Content Include="UserControl\uc_Select_System.ascx" />
     <Content Include="UserControl\VendorsPopupGrid.ascx" />
+    <Content Include="UserManagment.aspx" />
     <Content Include="UserStoreManagment.aspx" />
     <Content Include="VendorsPopup.aspx" />
     <Content Include="ViewInventory.aspx" />
@@ -1279,6 +1280,13 @@
     </Compile>
     <Compile Include="UserControl\VendorsPopupGrid.ascx.designer.cs">
       <DependentUpon>VendorsPopupGrid.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserManagment.aspx.cs">
+      <DependentUpon>UserManagment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserManagment.aspx.designer.cs">
+      <DependentUpon>UserManagment.aspx</DependentUpon>
     </Compile>
     <Compile Include="UserStoreManagment.aspx.cs">
       <DependentUpon>UserStoreManagment.aspx</DependentUpon>

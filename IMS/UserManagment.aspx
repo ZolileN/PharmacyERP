@@ -1,15 +1,14 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SalemanMangment.aspx.cs" Inherits="IMS.SalemanMangment" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UserManagment.aspx.cs" Inherits="IMS.UserManagment" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     
         <table width="100%">
             <tr><td>
-            <h4>Salesman Management</h4>
+            <h4>User Management</h4>
             </td>
             <td align="right"> 
-                <asp:Button ID="btnAddSalesman" runat="server" Text="+ Add Salesman" CssClass="btn btn-success btn-large" OnClick="btnAddSalesman_Click" />
+                <asp:Button ID="btnAddSalesman" runat="server" Text="+ Add User" CssClass="btn btn-success btn-large" OnClick="btnAddSalesman_Click" />
                 <asp:Button ID="btnGoBack" runat="server" Text="Go Back" CssClass="btn btn-default btn-large" OnClick="btnGoBack_Click" />   
 				         
                  </td>
@@ -63,11 +62,13 @@
                 <ItemTemplate>
                     <asp:Label ID="lblddlUserRole" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("[U_RolesID]") %>' Width="100px"></asp:Label>
                 </ItemTemplate>
-                <EditItemTemplate>
+                <ItemStyle Width="150px" HorizontalAlign="Left" />
+            </asp:TemplateField>
 
-
-                   <%-- <asp:DropDownList ID="ddlUserRole" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("[U_RolesID]") %>' Width="220px" EnableViewState="true"></asp:DropDownList>--%>
-                </EditItemTemplate>
+            <asp:TemplateField HeaderText="Role Name" Visible="false">
+                <ItemTemplate>
+                    <asp:Label ID="lblroleName" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("[user_RoleName]") %>' Width="100px"></asp:Label>
+                </ItemTemplate>
                 <ItemStyle Width="150px" HorizontalAlign="Left" />
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Action">
