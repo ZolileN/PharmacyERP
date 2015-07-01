@@ -131,8 +131,8 @@
                                                     
                                  <ul>
                                   
-                                    <li><a href="SelectStores.aspx">Assign Vendors to Store</a></li>
-                                    <li><a href="ProductStoreSelect.aspx">Assign Products to Store</a></li>
+                                    <li><a href="SelectStores.aspx">Assign Vendors to Pharmacy</a></li>
+                                    <li><a href="ProductStoreSelect.aspx">Assign Products to Pharmacy</a></li>
 									<li class="hasChild"><a href="#">Generate PO</a>
 
                                         <ul>
@@ -152,6 +152,9 @@
                                        </ul>
 									<li><a href="#">Send Returned Items</a>
                                     </li>
+                                      <li><a href="ManageVendor.aspx">Manage Vendors</a>
+                                
+                            </li>
                                </ul>
                             </li>
                             <li><a href="#">Manage Sale Orders</a>
@@ -166,15 +169,16 @@
                                        </ul>
 
                                     </li>
-                                    <li><a href="ReceiveStoreRequest.aspx">Receive Store/Salesman Request</a></li>
+                                    <li><a href="ReceiveStoreRequest.aspx">Receive Pharmacy/Salesman Request</a></li>
                                     <li><a href="#">Receive Returned Items</a>
                                 </ul>
                             </li>
+ 
                             <li><a href="ManageVendor.aspx">Manage Vendors</a>
                                 <%--<ul><li><a href="SalemanMangment.aspx">Saleman Manage</a></li></ul>--%>
                             </li>
                              
-                            <li><a href="#">Reports</a>
+         <li><a href="#">Reports</a>
                             	<ul>
                                 	<li><a href="#">Print PO</a></li>
                                 	<li><a href="PackingListGeneration.html">Packing List</a></li>
@@ -424,11 +428,14 @@
                         <li><a href="#">Miscellaneous</a>
                                                     
                                  <ul>
- 
-                                    <li><a href="WarehouseManagement.aspx">Manage Stores</a></li>
+                              
+                                    <li><a href="WarehouseManagement.aspx">Manage Warehouse</a></li>
                                     <li><a href="PharmacyManagement.aspx">Manage Pharmacy</a></li>									 
-                                       <li><a href="UserManagment.aspx">Manage Users</a></li>									 
+                                    <li><a href="UserManagment.aspx">Manage Users</a></li>									 
+
+ 
                                     <li><a href="SalemanMangment.aspx">Manage Salesman</a></li>
+                                      <li><a href="#">Manage returned Items</a></li>
                                      
                                </ul>
                             </li>
@@ -459,11 +466,11 @@
                                                 <li><a href="ReplenishMain.aspx?Param=Calculation">Replenish (Calculation)</a></li>
                                             </ul>
                                             </li>
-                                           <li><a href="SelectWarehouse.aspx">PO Request to WareHouse</a></li>
+                                           
                                        </ul>
 
                                     </li>                                           
-                                            
+                                         <li><a href="SelectWarehouse.aspx">Item Request to WareHouse</a></li>   
                                             <li><a href="SelectVendor.aspx">Direct Store Purchase</a></li>
                                      <li><a href="ViewPlacedOrders.aspx">View Store Purchase</a></li>
                                        </ul>

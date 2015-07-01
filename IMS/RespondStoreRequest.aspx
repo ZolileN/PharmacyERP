@@ -30,7 +30,7 @@
                                 <asp:Literal ID="litStoreName" runat="server" ></asp:Literal>
                             </h4>
                             <%-- This option is temporarily hidden --%>
-                            <asp:Button ID="btnGenTransfer" runat="server" Visible="false" CssClass="btn btn-info fl-r" Text="Generate SO" CommandName="GenTransferOrder" />
+                            <asp:Button ID="btnGenTransfer" runat="server" Visible="true" CssClass="btn btn-info fl-r" Text="Generate SO" CommandName="GenTransferOrder" />
                             <asp:Button ID="btnAcceptTransferOrder" runat="server" CssClass="btn btn-success fl-r acceptAll" Text="Accept All" CommandName="AcceptTransferOrder"/>
 
                         </td>
@@ -126,8 +126,8 @@
                                           <asp:Button CssClass="btn btn-danger btn-sm denyReq" ID="btnDeny" Text="Deny"  Visible= '<%# !IsStatusComplete((String) Eval("Status")) %>' runat="server" CommandName="DenyProductTransfer"  CommandArgument='<%# Container.DataItemIndex %>' />
 
                                         </span>
-                                       <span class="accepted"  ID="Span1" runat="server" Visible='<%# IsStatusAccepted((String) Eval("Status")) %>'  >Accepted</span>
-                                       <span class="denied"  ID="Span2" runat="server" Visible='<%# IsStatusDenied((String) Eval("Status")) %>'  >Denied</span>  
+                                       <span class="accepted"  ID="btnStaticAccepted" runat="server" Visible='<%# IsStatusAccepted((String) Eval("Status")) %>'  >Accepted</span>
+                                       <span class="denied"  ID="lblStaticDeny" runat="server" Visible='<%# IsStatusDenied((String) Eval("Status")) %>'  >Denied</span>  
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

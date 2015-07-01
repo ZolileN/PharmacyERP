@@ -129,7 +129,15 @@ namespace IMS
                     //Update Stock
                     UpdateStockMinus(TransferDetID, ProdctID, AvailableQty, TransferedQty, Expiry, StockId, CP, SP, BatchNo, ReqQty, Barcode);
 
-                    Response.Redirect("ReceiveTransferOrder.aspx");
+                    if (!Session["UserRole"].ToString().Equals("WareHouse"))
+                    {
+                        Response.Redirect("ReceiveTransferOrder.aspx");
+                    }
+                    else
+                    {
+                        Response.Redirect("RespondStoreRequest.aspx", false);
+                    }
+                   
                 }
             }
              
@@ -237,7 +245,14 @@ namespace IMS
 
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("StoreMain.aspx", false);
+            if (!Session["UserRole"].ToString().Equals("WareHouse"))
+            {
+                Response.Redirect("StoreMain.aspx", false);
+            }
+            else 
+            {
+                Response.Redirect("WarehouseMain.aspx", false);
+            }
         }
 
         protected void dgvReceiveTransferDetailsReceive_RowDataBound(object sender, GridViewRowEventArgs e)
