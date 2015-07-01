@@ -41,6 +41,11 @@ namespace IMS
 
         public void DisplayMainGrid(DataTable dt)
         {
+            
+            ItemPurchaseDetailReport rpt = new ItemPurchaseDetailReport();
+            rpt.SetDataSource(dt);
+            rpt.Load();
+
             DataTable displayTable = new DataTable();
             displayTable.Clear();
             displayTable.Columns.Add("OrderID", typeof(int));
