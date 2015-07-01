@@ -8,7 +8,7 @@
         </td>
         <td align="right">
         
-        	  <asp:Button ID="btnAddEmployee" runat="server" OnClick="btnAddEmployee_Click" Text="ADD" CssClass="btn btn-primary" ValidationGroup="exSave" />
+        	  <asp:Button ID="btnAddEmployee" runat="server" OnClick="btnAddEmployee_Click" Text="SAVE" CssClass="btn btn-primary" ValidationGroup="exSave" />
               <asp:Button ID="btnSave" runat="server"  Text="Update" CssClass="btn btn-default" ValidationGroup="exSave" OnClick="btnUpdate_Click" />
                <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnBack_Click"/>
 

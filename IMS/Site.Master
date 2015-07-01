@@ -429,11 +429,9 @@
                                                     
                                  <ul>
                               
-                                    <li><a href="WarehouseManagement.aspx">Manage Warehouse</a></li>
+                                    <li><a href="WarehouseManagement.aspx">Manage Store</a></li>
                                     <li><a href="PharmacyManagement.aspx">Manage Pharmacy</a></li>									 
                                     <li><a href="UserManagment.aspx">Manage Users</a></li>									 
-
- 
                                     <li><a href="SalemanMangment.aspx">Manage Salesman</a></li>
                                       <li><a href="#">Manage returned Items</a></li>
                                      

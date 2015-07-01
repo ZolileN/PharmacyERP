@@ -64,7 +64,7 @@ namespace IMS
 
         protected void dgvWarehouse_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            e.NewPageIndex = dgvWarehouse.PageIndex;
+            dgvWarehouse.PageIndex = e.NewPageIndex;
             BindGrid();
 
         }

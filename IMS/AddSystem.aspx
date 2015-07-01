@@ -15,7 +15,7 @@
 
     </td>
     <td align="right"> 
-                <asp:Button ID="btnAddSystem" runat="server" OnClick="btnAddSystem_Click" Text="ADD"  CssClass="btn btn-primary" ValidationGroup="exSave" />
+                <asp:Button ID="btnAddSystem" runat="server" OnClick="btnAddSystem_Click" Text="SAVE"  CssClass="btn btn-primary" ValidationGroup="exSave" />
                 <asp:Button ID="btnEditSystem" runat="server" OnClick="btnEditSystem_Click" Text="SAVE" CssClass="btn btn-default" visible="false"/>
                 <asp:Button ID="btnDeleteSystem" runat="server" OnClick="btnDeleteSystem_Click" Text="DELETE" CssClass="btn btn-default" visible="false"/>
                 <asp:Button ID="btnCancelSystem" runat="server" OnClick="btnCancelSystem_Click" Text="CANCEL" CssClass="btn btn-default"/>
