@@ -100,10 +100,14 @@ namespace IMS
         {
             if (e.CommandName == "Edit")
             {
-                int SystemId;
+                int SystemId ;
+                
                 Label lblSystemID = (Label)dgvWarehouse.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblSystemID");
+                Label lblSystemRoleID = (Label)dgvWarehouse.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblSystemRoleID");
                 int.TryParse(lblSystemID.Text.ToString(), out SystemId);
+                
                 Session["SystemId"] = SystemId;
+                Session["SystemRoleID"] = lblSystemRoleID.Text;
                 Session["Action"] = "Edit";
                 Session["SysToAdd"] = RoleNames.store;
                 Response.Redirect("AddSystem.aspx", false);
@@ -114,6 +118,11 @@ namespace IMS
         {
             dgvWarehouse.EditIndex = e.NewEditIndex;
             BindGrid();
+        }
+
+        protected void btnGoBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("StoreMain.aspx");
         }
     }
 }
