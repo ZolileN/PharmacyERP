@@ -23,6 +23,7 @@ namespace IMS
         {
             if (!IsPostBack)
             {
+                
                 Session.Remove("dsProdcts");
                 Session.Remove("dsProducts_MP");
                 btnCreateOrder.Attributes.Add("OnClientClick", "if(ValidateForm()) {return false; }");
@@ -97,6 +98,7 @@ namespace IMS
                 }
                 else
                 {
+                    Session.Remove("SalesManID");
                     Session["OrderNumberSO"] = "";
                     Session["FirstOrderSO"] = false;
                     Session["OrderSalesDetail"] = false;
@@ -778,6 +780,10 @@ namespace IMS
                             {
                                 command.Parameters.AddWithValue("@p_Salesman", Salesman);
                             }
+                            else
+                            {
+                                command.Parameters.AddWithValue("@p_Salesman", DBNull.Value);
+                            }
                             command.Parameters.AddWithValue("@p_orderStatus", "Pending");
                             DataTable dt = new DataTable();
                             SqlDataAdapter dA = new SqlDataAdapter(command);
@@ -1071,6 +1077,7 @@ namespace IMS
                 SelectBonus.Text = "";
                 SelectDiscount.Text = "";
                 StockAt.Enabled = false;
+                ddlSalesman.Enabled = false;
                 SelectQuantity.Text = "";
 
                 SelectProduct.SelectedIndex = -1;
@@ -1146,6 +1153,7 @@ namespace IMS
             //must be checked for sessions
             if (Session["OrderSalesDetail"] != null && Session["OrderSalesDetail"].Equals(true)  && Session["OrderSalesDetail"].ToString() != null)
             {
+                Session.Remove("SalesManID");
                 Session["OrderNumberSO"] = "";
                 Session["OrderSalesDetail"] = false;
                 Session["SelectedIndexValue"] = null;
@@ -1196,6 +1204,7 @@ namespace IMS
                     txtProduct.Text = "";
                     SelectProduct.Visible = false;
                     StockAt.Enabled = true;
+                    ddlSalesman.Enabled = true;
                     StockDisplayGrid.DataSource = null;
                     StockDisplayGrid.DataBind();
                     SelectQuantity.Text = "";
@@ -1423,6 +1432,59 @@ namespace IMS
             Session["Text"] = Text;
             ProductsPopupGrid.PopulateGrid();
             mpeCongratsMessageDiv.Show();
+        }
+
+        protected void ddlSalesman_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            #region Re-Populating System Types
+            try
+            {
+                int SalesmanId = 0;
+                int.TryParse(ddlSalesman.SelectedValue.ToString(), out SalesmanId);
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("sp_getSalesmanPharmacies", connection);
+                command.Parameters.AddWithValue("@p_SalesmanId", SalesmanId);
+                command.CommandType = CommandType.StoredProcedure;
+                
+
+                DataSet ds = new DataSet();
+                SqlDataAdapter sA = new SqlDataAdapter(command);
+                sA.Fill(ds);
+                StockAt.DataSource = ds.Tables[0];
+                StockAt.DataTextField = "SystemName";
+                StockAt.DataValueField = "SystemID";
+                StockAt.DataBind();
+                if (StockAt != null)
+                {
+                    StockAt.Items.Insert(0, "Select System");
+                    if (Session["SelectedIndexValue"] != null)
+                    {
+                        // set index based on value
+                        foreach (ListItem Items in StockAt.Items)
+                        {
+                            if (Items.Text.Equals(Session["SelectedIndexValue"].ToString()))
+                            {
+                                StockAt.SelectedIndex = StockAt.Items.IndexOf(Items);
+                                break;
+                            }
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                connection.Close();
+            }
+            #endregion
         }
 
         

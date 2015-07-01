@@ -116,5 +116,10 @@ namespace IMS
             dgvWarehouse.EditIndex = e.NewEditIndex;
             BindGrid();
         }
+
+        protected void btnGoBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("StoreMain.aspx");
+        }
     }
 }

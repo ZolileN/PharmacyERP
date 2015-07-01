@@ -207,6 +207,10 @@
     <Content Include="Images\add-icon.png" />
     <Content Include="Images\apt-logo.gif" />
     <Content Include="Images\arrow.gif" />
+    <Content Include="Images\arrowDLeft.png" />
+    <Content Include="Images\arrowDRight.png" />
+    <Content Include="Images\arrowLeft.png" />
+    <Content Include="Images\arrowRight.png" />
     <Content Include="Images\body-bg-login.jpg" />
     <Content Include="Images\body-bg-w.jpg" />
     <Content Include="Images\body-bg.jpg" />

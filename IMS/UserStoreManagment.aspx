@@ -1,14 +1,51 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UserStoreManagment.aspx.cs" Inherits="IMS.UserStoreManagment" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <%-- <asp:Label ID="lblAvailableStore" runat="server" Text="Available Store"></asp:Label>--%>
-    <table>
+
+    <table width="100%">
+
+        <tbody><tr>
+        	<td> <h4 id="topHead">Associate - DeAssociate Systems</h4></td>
+            <td align="right">
+                 <asp:Button ID="btnSave" runat="server" Text="SAVE" CssClass="btn btn-success" OnClick="btnSave_Click" />
+                <asp:Button ID="btnBack" runat="server" Text="Go Back" CssClass="btn btn-default" OnClick="btnBack_Click"/>
+
+            </td>
+        </tr>
+		<tr><td height="5"></td></tr>
+    </tbody></table>
+     <hr>
+    
+    <br />
+
+    
+    	<style>
+				.arrImg{
+					width:10%;
+                    text-align:center;
+					}
+					
+				.arrImg img{
+					margin-bottom:7px;
+					}
+
+    	    .associatetbl {
+    	        border:0px !important;
+            }
+    	        .associatetbl tr td {
+    	        
+                }
+	 </style>
+    <table class="table table-striped table-bordered table-condensed tblBtm associatetbl" style="border:0px !important;">
         <tr>
-            <td>
-                <asp:GridView ID="gvAllAvailableStore" CssClass="table table-striped table-bordered table-condensed" ShowHeaderWhenEmpty="true" runat="server" AllowPaging="True" PageSize="10"
+            <td style="vertical-align:top;background:none !important; border:0px !important;" >
+                <asp:GridView ID="gvAllAvailableStore" CssClass="table table-striped table-bordered table-condensed tblBtm" ShowHeaderWhenEmpty="true" runat="server" AllowPaging="True" PageSize="10"
                     AutoGenerateColumns="false" OnRowCommand="gvAllAvailableStore_RowCommand" OnPageIndexChanging="gvAllAvailableStore_PageIndexChanging">
                     <Columns>
                         <asp:TemplateField HeaderText="System ID" Visible="false">
@@ -19,12 +56,12 @@
                             <ItemStyle Width="220px" HorizontalAlign="Left" />
                         </asp:TemplateField>
 
-                        <asp:TemplateField HeaderText="Select-to-Associate">
+                        <asp:TemplateField HeaderText="Select-to-Associate" ItemStyle-Width="24%" >
                             <ItemTemplate>
                                 <asp:CheckBox ID="CCheckbox" CssClass="col-md-2 control-label" runat="server" AutoPostBack="true" OnCheckedChanged="SelectCheckBox_OnCheckedChanged" />
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Available System">
+                        <asp:TemplateField HeaderText="Available System"  ItemStyle-Width="76%">
                             <ItemTemplate>
                                 <asp:Label ID="lblNameAvailable" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("SystemName") %>' Width="160px"></asp:Label>
                             </ItemTemplate>
@@ -36,13 +73,15 @@
                     </Columns>
                 </asp:GridView>
             </td>
-            <td>
-                <asp:Button ID="btnSwapeAll" runat="server" Text="-->>" OnClick="btnSwapeAll_Click" /><br />
-                <asp:Button ID="btnSwapeOne" runat="server" Text="--->" OnClick="btnSwapeOne_Click" /><br />
-                <asp:Button ID="btnBackSwape" runat="server" Text="<---" OnClick="btnBackSwape_Click" /><br />
-                <asp:Button ID="btnBackSwapeAll" runat="server" Text="<<--" OnClick="btnBackSwapeAll_Click" /></td>
+            <td style="vertical-align:central; background:none !important; border:0px !important;" class="arrImg" >
 
-            <td>
+                <asp:ImageButton ID="ImgbtnSwapeAll" runat="server" ImageUrl="~/Images/arrowDRight.png"  OnClick="btnSwapeAll_Click"  /><br />
+                <asp:ImageButton ID="ImgbtnSwapeOne" runat="server" ImageUrl="~/Images/arrowRight.png"  OnClick="btnSwapeOne_Click"  /><br />
+                <asp:ImageButton ID="ImgbtnBackSwape" runat="server" ImageUrl="~/Images/arrowLeft.png"  OnClick="btnBackSwape_Click" /><br />
+                <asp:ImageButton ID="ImgbtnBackSwapeAll" runat="server" ImageUrl="~/Images/arrowDLeft.png"  OnClick="btnBackSwapeAll_Click" /></td>
+
+                
+            <td  style="vertical-align:top;background:none !important; border:0px !important;" >
                 <asp:GridView ID="gvAssociatesStore" runat="server" ShowHeaderWhenEmpty="true" CssClass="table table-striped table-bordered table-condensed" AllowPaging="True" PageSize="10"
                     AutoGenerateColumns="false">
                     <Columns>
@@ -53,12 +92,12 @@
 
                             <ItemStyle Width="220px" HorizontalAlign="Left" />
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Select-to-DeAssociate">
+                        <asp:TemplateField HeaderText="Select-to-DeAssociate"  ItemStyle-Width="24%">
                             <ItemTemplate>
                                 <asp:CheckBox ID="CCheckboxAssocaited"  CssClass="col-md-2 control-label" runat="server" AutoPostBack="true" OnCheckedChanged="SelectAssociatedCheckBox_OnCheckedChanged" />
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Associated System">
+                        <asp:TemplateField HeaderText="Associated System"  ItemStyle-Width="76%">
                             <ItemTemplate>
                                 <asp:Label ID="lblNameAssociated" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("SystemName") %>' Width="160px"></asp:Label>
                             </ItemTemplate>
@@ -74,9 +113,6 @@
         </tr>
 
     </table>
-    <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="btn btn-default" OnClick="btnSave_Click" />
-
-<asp:Button ID="btnBack" runat="server" Text="Go Back" CssClass="btn btn-primary btn-large" OnClick="btnBack_Click"/>
-
+   
 
 </asp:Content>

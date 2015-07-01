@@ -173,8 +173,7 @@
                             <li><a href="ManageVendor.aspx">Manage Vendors</a>
                                 <%--<ul><li><a href="SalemanMangment.aspx">Saleman Manage</a></li></ul>--%>
                             </li>
-                            <li><a href="Warehouse_StoreRequests.aspx">Store Requests</a></li>
-                            
+                             
                             <li><a href="#">Reports</a>
                             	<ul>
                                 	<li><a href="#">Print PO</a></li>
@@ -425,15 +424,10 @@
                         <li><a href="#">Miscellaneous</a>
                                                     
                                  <ul>
-                                  
-<<<<<<< HEAD
+ 
                                     <li><a href="WarehouseManagement.aspx">Manage Stores</a></li>
                                     <li><a href="PharmacyManagement.aspx">Manage Pharmacy</a></li>									 
-=======
-                                    <li><a href="#">Manage Warehouse</a></li>
-                                    <li><a href="#">Manage Store</a></li>
-                                      <li><a href="UserManagment.aspx">Manage Users</a></li>									 
->>>>>>> origin/master
+                                       <li><a href="UserManagment.aspx">Manage Users</a></li>									 
                                     <li><a href="SalemanMangment.aspx">Manage Salesman</a></li>
                                      
                                </ul>

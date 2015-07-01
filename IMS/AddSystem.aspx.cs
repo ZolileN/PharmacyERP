@@ -20,13 +20,13 @@ namespace IMS
             {
                 if (Session["Action"].Equals("Edit"))
                 {
-                    bindValues();
+                    
                     btnAddSystem.Visible = false;
                     btnCancelSystem.Visible = true;
                     btnEditSystem.Visible = true;
                     btnDeleteSystem.Visible = true;
-                    selSys.Visible = true;
-                    SysDDL.Visible = true;
+                    lblStoreType.Visible = true;
+                    ddlPharmacyType.Visible = true;
 
                     if (Session["SystemId"] != null)
                     {
@@ -43,6 +43,9 @@ namespace IMS
                         regTitleWH.Visible = false;
                         EditTitleWH.Visible = false;
                         EditTitleSt.Visible = true;
+                        lblStoreType.Visible = true;
+                        ddlPharmacyType.Visible = true;
+                        FillPharmacyTypes();
                     }
                     else
                     {
@@ -50,6 +53,8 @@ namespace IMS
                         regTitleWH.Visible = false;
                         EditTitleWH.Visible = true;
                         EditTitleSt.Visible = false;
+                        lblStoreType.Visible = false;
+                        ddlPharmacyType.Visible = false;
                     }
 
                 }
@@ -62,6 +67,9 @@ namespace IMS
                         regTitleWH.Visible = false;
                         EditTitleWH.Visible = false;
                         EditTitleSt.Visible = false;
+                        lblStoreType.Visible = true;
+                        ddlPharmacyType.Visible = true;
+                        FillPharmacyTypes();
                     }
                     
                 }
@@ -115,12 +123,64 @@ namespace IMS
 
             }
         }
+
+        private void FillPharmacyTypes()
+        {
+            try
+            {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("sp_GetSystemRoles", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                 
+                DataSet ds = new DataSet();
+
+                SqlDataAdapter sA = new SqlDataAdapter(command);
+                sA.Fill(ds);
+                ddlPharmacyType.DataSource = null;
+                ddlPharmacyType.DataSource = ds.Tables[0];
+                ddlPharmacyType.DataBind(); 
+                ddlPharmacyType.DataValueField = "RoleID";
+                ddlPharmacyType.DataTextField = "RoleName";
+                ddlPharmacyType.DataBind(); 
+
+                if (ddlPharmacyType != null)
+                {
+                    ddlPharmacyType.Items.Insert(0, "Select Pharmacy Type");
+                    //ddlPharmacyType.SelectedIndex = 0;
+                    if (Session["SystemRoleID"] != null)
+                    {
+                        foreach (ListItem Items in ddlPharmacyType.Items)
+                        {
+                            if (Items.Text.Equals(Session["SystemRoleID"].ToString()))
+                            {
+                                ddlPharmacyType.SelectedIndex = ddlPharmacyType.Items.IndexOf(Items);
+                                break;
+                            }
+                        }
+                        
+                    }
+                }
+            }
+            catch (Exception exp)
+            {
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
         private void bindValues()
         {
             try
             {
                 //sys ddl action is set true;
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("Sp_GetSystems_ByRoles", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_RoleName", Session["SysToAdd"].ToString());
@@ -156,7 +216,13 @@ namespace IMS
         {
             try
             {
-                connection.Open();
+                int SystemRoles = 0;
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                int.TryParse(ddlPharmacyType.SelectedValue, out SystemRoles);
+                 
                 SqlCommand command = new SqlCommand("Sp_AddNewSystem", connection);
                 command.CommandType = CommandType.StoredProcedure;
 
@@ -168,6 +234,7 @@ namespace IMS
                 command.Parameters.AddWithValue("@p_SystemFax", sysFax.Text.ToString());
                 command.Parameters.AddWithValue("@p_PharmacyID", pharmacyID.Text.ToString());
                 command.Parameters.AddWithValue("@p_BarterID", txtBarterValue.Text.ToString());
+                command.Parameters.AddWithValue("@p_SystemRolesID", SystemRoles);
                 command.ExecuteNonQuery();
                 WebMessageBoxUtil.Show("System successfully added");
                 if (Session["SysToAdd"].Equals(RoleNames.store))
@@ -277,16 +344,16 @@ namespace IMS
                 
             }
         }
-
+         
         protected void btnBack_Click(object sender, EventArgs e)
         {
             if (Session["SysToAdd"].Equals(RoleNames.warehouse))
             {
-                Response.Redirect("ManageWarehouse.aspx", false);
+                Response.Redirect("WarehouseManagement.aspx", false);
             }
             else 
             {
-                Response.Redirect("ManageStore.aspx", false);
+                Response.Redirect("PharmacyManagement.aspx", false);
             }
         }
 
