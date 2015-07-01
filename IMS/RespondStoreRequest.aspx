@@ -30,7 +30,7 @@
                                 <asp:Literal ID="litStoreName" runat="server" ></asp:Literal>
                             </h4>
                             <%-- This option is temporarily hidden --%>
-                            <asp:Button ID="btnGenTransfer" runat="server" Visible="false" CssClass="btn btn-info fl-r" Text="Generate SO" CommandName="GenTransferOrder" />
+                            <asp:Button ID="btnGenTransfer" runat="server" Visible="true" CssClass="btn btn-info fl-r" Text="Generate SO" CommandName="GenTransferOrder" />
                             <asp:Button ID="btnAcceptTransferOrder" runat="server" CssClass="btn btn-success fl-r acceptAll" Text="Accept All" CommandName="AcceptTransferOrder"/>
 
                         </td>

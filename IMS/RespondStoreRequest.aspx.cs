@@ -93,6 +93,7 @@ namespace IMS
                 dgvReceiveTransfer.DataBind();
 
                 litStoreName.Text = ds.Tables[0].Rows[0]["RequestedBy"].ToString();
+                Session["WH_RequestedFromID"] = ds.Tables[0].Rows[0]["RequestedByID"].ToString();
             }
             catch (Exception ex)
             {
@@ -224,6 +225,7 @@ namespace IMS
                     Session["TransferRequestGrid"] = dsResults.Tables[0];
                     int transID;
                     int.TryParse(Session["WH_RequestedNO"].ToString(), out transID);
+                   
                     Response.Redirect("WHResquestInvoice.aspx?Id=" + transID, false);
                 }
             }

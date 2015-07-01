@@ -13,112 +13,40 @@ namespace IMS {
     public partial class WHResquestInvoice {
         
         /// <summary>
-        /// MAINDIV control.
+        /// SaleOrder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl MAINDIV;
+        protected global::System.Web.UI.WebControls.Literal SaleOrder;
         
         /// <summary>
-        /// PO_Numberlbl control.
+        /// SendDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PO_Numberlbl;
+        protected global::System.Web.UI.WebControls.Literal SendDate;
         
         /// <summary>
-        /// PO_Number control.
+        /// To control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PO_Number;
+        protected global::System.Web.UI.WebControls.Label To;
         
         /// <summary>
-        /// PO_Datelbl control.
+        /// ToAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PO_Datelbl;
-        
-        /// <summary>
-        /// PO_Date control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PO_Date;
-        
-        /// <summary>
-        /// PO_FromName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PO_FromName;
-        
-        /// <summary>
-        /// PO_ToName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PO_ToName;
-        
-        /// <summary>
-        /// PO_FromAddress control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PO_FromAddress;
-        
-        /// <summary>
-        /// PO_ToAddress control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PO_ToAddress;
-        
-        /// <summary>
-        /// PO_FromPhone control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PO_FromPhone;
-        
-        /// <summary>
-        /// PO_ToPhone control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PO_ToPhone;
-        
-        /// <summary>
-        /// PO_ToEmail control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PO_ToEmail;
+        protected global::System.Web.UI.WebControls.Label ToAddress;
         
         /// <summary>
         /// StockDisplayGrid control.
@@ -130,24 +58,6 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.GridView StockDisplayGrid;
         
         /// <summary>
-        /// TotalCostDiv control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTable TotalCostDiv;
-        
-        /// <summary>
-        /// lblTotalCostALL control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalCostALL;
-        
-        /// <summary>
         /// btnPrint control.
         /// </summary>
         /// <remarks>
@@ -157,21 +67,21 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.Button btnPrint;
         
         /// <summary>
-        /// btnFax control.
+        /// btnExport control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnFax;
+        protected global::System.Web.UI.WebControls.Button btnExport;
         
         /// <summary>
-        /// btnEmail control.
+        /// btnBack control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEmail;
+        protected global::System.Web.UI.WebControls.Button btnBack;
     }
 }
