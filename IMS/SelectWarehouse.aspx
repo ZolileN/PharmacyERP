@@ -5,7 +5,7 @@
             
       <table width="100%"> 
         <tbody><tr>
-        	<td> <h4 id="topHead">Item Request to Warehouse</h4></td>
+        	<td> <h4 id="topHead">Item Request to Store</h4></td>
             <td>
             
             </td> 
@@ -16,7 +16,7 @@
     <hr />
 
      <tr>
-          <td> <asp:Label runat="server" AssociatedControlID="ddlWH" CssClass="control-label" Visible="true">Select Warehouse</asp:Label></td>
+          <td> <asp:Label runat="server" AssociatedControlID="ddlWH" CssClass="control-label" Visible="true">Select Store</asp:Label></td>
            <td>
                <asp:DropDownList ID="ddlWH" runat="server"  CssClass="form-control" Width="29%" Visible="true"> </asp:DropDownList>
             

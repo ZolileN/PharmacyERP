@@ -103,12 +103,16 @@ namespace IMS
                 SqlDataAdapter dA = new SqlDataAdapter(command);
                 dA.Fill(dsResults);
 
+               
+
                 sysName.Text = dsResults.Tables[0].Rows[0]["SystemName"].ToString();
                 sysDesc.Text = dsResults.Tables[0].Rows[0]["Description"].ToString();
                 sysAddress.Text = dsResults.Tables[0].Rows[0]["SystemAddress"].ToString();
                 sysPhone.Text = dsResults.Tables[0].Rows[0]["SystemPhone"].ToString();
                 sysFax.Text = dsResults.Tables[0].Rows[0]["SystemFax"].ToString();
-               // pharmacyID.Text = dsResults.Tables[0].Rows[0]["System_PharmacyID"].ToString();
+                txtBarterValue.Text = Session["BarterExchangeID"].ToString();
+                pharmacyID.Text = Session["PharmacyID"].ToString();
+
                 selSys.Visible = false;
                 SysDDL.Visible = false;
                 btnAddSystem.Visible = false;

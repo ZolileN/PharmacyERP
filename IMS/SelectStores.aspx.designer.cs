@@ -13,14 +13,6 @@ namespace IMS {
     public partial class SelectStores {
         
         /// <summary>
-        /// AssociatedVendorsPopup control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        
-        /// <summary>
         /// btnGoBack control.
         /// </summary>
         /// <remarks>

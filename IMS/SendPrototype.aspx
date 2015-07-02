@@ -28,7 +28,7 @@
         	<table class="table table-striped table-bordered table-condensed">
                 <tr>
                     <th></th>
-                    <th>Store Name</th>
+                    <th>Pharmacy Name</th>
                     <th>Address</th>
                     <th>City</th>
                     <th>State</th>

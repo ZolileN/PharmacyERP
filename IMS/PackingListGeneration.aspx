@@ -22,7 +22,7 @@
      <table cellspacing="5" cellpadding="5" border="0" width="50%" class="formTbl">
 
         <tbody><tr>
-            <td>  <asp:Label runat="server" AssociatedControlID="StockAt" CssClass="col-md-2 control-label">Select Store </asp:Label></td>
+            <td>  <asp:Label runat="server" AssociatedControlID="StockAt" CssClass="col-md-2 control-label">Select Pharmacy </asp:Label></td>
             <td>
             	<asp:DropDownList runat="server" ID="StockAt" CssClass="form-control" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="StockAt_SelectedIndexChanged1"/>
             </td>

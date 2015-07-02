@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="StoreRequestsView.aspx.cs" Inherits="IMS.StoreRequestsView" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-     <h3>Store Request(s)</h3>
+     <h3>Pharmacy Request(s)</h3>
     <br />
     <br />
     <div class="row">

@@ -97,7 +97,7 @@ namespace IMS
         protected void Unnamed_Click(object sender, EventArgs e)
         {
             Session.Abandon();
-            //Response.Redirect("~/Login.aspx", false);
+            Response.Redirect("~/IMSLogin.aspx", false);
         }
     }
 

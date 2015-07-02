@@ -104,10 +104,14 @@ namespace IMS
                 
                 Label lblSystemID = (Label)dgvWarehouse.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblSystemID");
                 Label lblSystemRoleID = (Label)dgvWarehouse.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblSystemRoleID");
+                Label lblPharmacyID = (Label)dgvWarehouse.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblPharmacyID");
+                Label lblBarterExchangeID = (Label)dgvWarehouse.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblBarterExchangeID");
                 int.TryParse(lblSystemID.Text.ToString(), out SystemId);
                 
                 Session["SystemId"] = SystemId;
                 Session["SystemRoleID"] = lblSystemRoleID.Text;
+                Session["BarterExchangeID"] = lblBarterExchangeID.Text;
+                Session["PharmacyID"] = lblPharmacyID.Text;
                 Session["Action"] = "Edit";
                 Session["SysToAdd"] = RoleNames.store;
                 Response.Redirect("AddSystem.aspx", false);

@@ -24,6 +24,23 @@
            OnRowCommand ="dgvWarehouse_RowCommand" OnRowEditing="dgvWarehouse_RowEditing" >
                  <Columns>
                       
+                     <asp:TemplateField HeaderText="PharmacyID" Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="lblPharmacyID" CssClass="control-label" runat="server" Text='<%# Eval("System_PharmacyID") %>'></asp:Label>
+                        </ItemTemplate>
+                        <ItemStyle  Width="110px" HorizontalAlign="Left"/>
+
+                    </asp:TemplateField>
+
+                     <asp:TemplateField HeaderText="BarterExchangeID" Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="lblBarterExchangeID" CssClass="control-label" runat="server" Text='<%# Eval("BarterExchangeID") %>'></asp:Label>
+                        </ItemTemplate>
+                        <ItemStyle  Width="110px" HorizontalAlign="Left"/>
+
+                    </asp:TemplateField>
+
+
                      <asp:TemplateField HeaderText="System RoleID" Visible="false">
                         <ItemTemplate>
                             <asp:Label ID="lblSystemRoleID" CssClass="control-label" runat="server" Text='<%# Eval("System_RoleID") %>'></asp:Label>

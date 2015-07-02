@@ -45,7 +45,8 @@
                 </div>
                 <div class="user-menu no-print">
                    
-                       <a runat="server" href="~/IMSLogin.aspx" onclick="Unnamed_Click">Logout</a>
+                    <asp:Button ID="imgLogout" runat="server" Text="Logout"  OnClick="Unnamed_Click" />
+                       <%--<a runat="server" href="~/IMSLogin.aspx" onclick="Unnamed_Click">Logout</a>--%>
                     
                 </div>
             </div>
@@ -468,7 +469,7 @@
                                        </ul>
 
                                     </li>                                           
-                                         <li><a href="SelectWarehouse.aspx">Item Request to WareHouse</a></li>   
+                                         <li><a href="SelectWarehouse.aspx">Item Request to Store</a></li>   
                                             <li><a href="SelectVendor.aspx">Direct Store Purchase</a></li>
                                      <li><a href="ViewPlacedOrders.aspx">View Store Purchase</a></li>
                                        </ul>
@@ -498,8 +499,8 @@
             <asp:Literal runat="server" ID="headofficeNav">
                     
                 <ul class="main-menu">
-                            <li><a href="ManageStore.aspx">Manage Stores</a></li>
-                            <li><a href="ManageWarehouse.aspx">Manage WareHouse</a></li>
+                            <li><a href="ManageStore.aspx">Manage Pharmacy</a></li>
+                            <li><a href="ManageWarehouse.aspx">Manage Store</a></li>
                             <li><a href="CompanySettings.aspx">Manage Company Information</a></li>
                             <li><a href="Reports.aspx">View Reports</a></li>
                             <li><a href="RegisterUsers.aspx">Register Users</a></li>

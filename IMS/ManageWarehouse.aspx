@@ -5,12 +5,12 @@
     <link rel="stylesheet" href="Style/chosen.css" />
 </asp:Content>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>Manage WareHouse</h2>
+    <h2>Manage Store</h2>
          <br />
          <br />
-         <asp:Button ID="btnAddWH" runat="server" CssClass="btn btn-primary btn-large" Text="Add WareHouse" OnClick="btnAddWH_Click"/>
-         <asp:Button ID="btnEdit" runat="server" CssClass="btn btn-primary btn-large" Text="Edit WareHouse" OnClick="btnEdit_Click"/>
-         <asp:Button ID="btnViewWareHouse" runat="server" CssClass="btn btn-primary btn-large" Text="View Warehouse" OnClick="btnViewWareHouse_Click"/>
+         <asp:Button ID="btnAddWH" runat="server" CssClass="btn btn-primary btn-large" Text="Add Store" OnClick="btnAddWH_Click"/>
+         <asp:Button ID="btnEdit" runat="server" CssClass="btn btn-primary btn-large" Text="Edit Store" OnClick="btnEdit_Click"/>
+         <asp:Button ID="btnViewWareHouse" runat="server" CssClass="btn btn-primary btn-large" Text="View Store" OnClick="btnViewWareHouse_Click"/>
          <asp:Button ID="btnBack" runat="server" CssClass="btn btn-primary btn-large" Text="Go Back" OnClick="btnBack_Click"/>
          <br/>
         <asp:Button ID="_editPopupButton" runat="server" Style="display: none" />
