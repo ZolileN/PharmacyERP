@@ -19,6 +19,10 @@ namespace IMS
             String Text = txtStore.Text + '%';
             Session["txtStore"] = Text;
             StoresPopupGrid.PopulateGrid();
+            StoresPopupGrid.SessionIDTag = "SystemId";
+            StoresPopupGrid.SessionNameTag = "Storename";
+            StoresPopupGrid.SourcePage = "SelectStores.aspx";
+            StoresPopupGrid.DestinationPage = "AddVendorsToStore.aspx";
             mpeCongratsMessageDiv.Show();
         }
 

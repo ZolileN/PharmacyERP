@@ -4,7 +4,7 @@
 <%@ Register TagName="SalemanPopup" TagPrefix="UCSaleman" Src="~/UserControl/uc_Select_Salesman.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">\
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
       <table width="100%">
 
         <tbody><tr>

@@ -33,50 +33,50 @@ namespace IMS
 
         private void PopulateStoreDropDown()
         {
-            #region Populating Product Name Dropdown
+            //#region Populating Product Name Dropdown
 
-            try
-            {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
+            //try
+            //{
+            //    if (connection.State == ConnectionState.Closed)
+            //    {
+            //        connection.Open();
+            //    }
 
-                SqlCommand command = new SqlCommand("sp_getOutsideStoresHavingVendors", connection); 
-                DataSet ds = new DataSet();
-                SqlDataAdapter sA = new SqlDataAdapter(command);
-                sA.Fill(ds);
-                if (ds.Tables[0].Rows.Count.Equals(0))
-                {
+            //    SqlCommand command = new SqlCommand("sp_getOutsideStoresHavingVendors", connection); 
+            //    DataSet ds = new DataSet();
+            //    SqlDataAdapter sA = new SqlDataAdapter(command);
+            //    sA.Fill(ds);
+            //    if (ds.Tables[0].Rows.Count.Equals(0))
+            //    {
                     
-                }
-                if (ddlStoreVendors.DataSource != null)
-                {
-                    ddlStoreVendors.DataSource = null;
-                }
+            //    }
+            //    if (ddlStoreVendors.DataSource != null)
+            //    {
+            //        ddlStoreVendors.DataSource = null;
+            //    }
 
-                ProductSet = null;
-                ProductSet = ds;
+            //    ProductSet = null;
+            //    ProductSet = ds;
 
-                ddlStoreVendors.DataSource = ds.Tables[0];
-                ddlStoreVendors.DataTextField = "SystemName";
-                ddlStoreVendors.DataValueField = "SystemID";
-                ddlStoreVendors.DataBind();
-                if (ddlStoreVendors != null)
-                {
-                    ddlStoreVendors.Items.Insert(0, "Select Vendor");
-                    ddlStoreVendors.SelectedIndex = 0;
-                }
-            }
-            catch (Exception ex)
-            {
+            //    ddlStoreVendors.DataSource = ds.Tables[0];
+            //    ddlStoreVendors.DataTextField = "SystemName";
+            //    ddlStoreVendors.DataValueField = "SystemID";
+            //    ddlStoreVendors.DataBind();
+            //    if (ddlStoreVendors != null)
+            //    {
+            //        ddlStoreVendors.Items.Insert(0, "Select Vendor");
+            //        ddlStoreVendors.SelectedIndex = 0;
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
 
-            }
-            finally
-            {
-                connection.Close();
-            }
-            #endregion
+            //}
+            //finally
+            //{
+            //    connection.Close();
+            //}
+            //#endregion
         }
 
         protected void btnGoBack_Click(object sender, EventArgs e)
@@ -147,15 +147,15 @@ namespace IMS
 
         protected void btnShow_Click(object sender, EventArgs e)
         {
-            int StoreId = int.Parse(ddlStoreVendors.SelectedValue.ToString());
-            if (StoreId > 0)
-            {
-                MultipleVendorsSelectPopup.SelectAll = true;
-                MultipleVendorsSelectPopup.Storeid = StoreId;
-                MultipleVendorsSelectPopup.BindAssociatedVendorGrid(StoreId);
+            //int StoreId = int.Parse(ddlStoreVendors.SelectedValue.ToString());
+            //if (StoreId > 0)
+            //{
+            //    MultipleVendorsSelectPopup.SelectAll = true;
+            //    MultipleVendorsSelectPopup.Storeid = StoreId;
+            //    MultipleVendorsSelectPopup.BindAssociatedVendorGrid(StoreId);
 
-                mpeCongratsMessageDiv.Show();
-            }
+            //    mpeCongratsMessageDiv.Show();
+            //}
              
         }
          
