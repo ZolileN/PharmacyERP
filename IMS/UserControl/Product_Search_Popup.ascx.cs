@@ -480,6 +480,7 @@ namespace IMS.UserControl
                             
                         }
                     }
+                    ViewState.Remove("CheckBoxArray"); 
                     WebMessageBoxUtil.Show("Products have been successfully associated ");
 
                     GridView gvParent = (GridView)ctl.FindControl("StockDisplayGrid");

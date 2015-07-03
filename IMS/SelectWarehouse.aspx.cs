@@ -39,7 +39,7 @@ namespace IMS
                     ddlWH.DataBind();
                     if (ddlWH != null)
                     {
-                        ddlWH.Items.Insert(0, "Select Warehouse");
+                        ddlWH.Items.Insert(0, "Select Store");
                         ddlWH.SelectedIndex = 0;
                     }
                    

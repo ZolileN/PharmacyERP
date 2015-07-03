@@ -478,9 +478,10 @@
                            
                             <li><a href="StoreTransfers_StoreRequests.aspx">Store Transfers</a></li>
                             <li><a href="ReceiveStock.aspx">Store Receivings</a></li>
-                            <li><a href="#">Store Requests</a>
+
+                            <li><a href="#">Pharmacy Requests</a>
                                 <ul>
-                                    <%--<li><a href="AutoRequest_Store.aspx">Auto Generate Request(s)</a></li>--%>
+                                   
                                     <li><a href="StoreRequests.aspx">Manual Generate Requests</a></li>
                                     <li><a href="CreateTransferRequest.aspx">Create Transfer Request</a></li> 
 
