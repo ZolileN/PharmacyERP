@@ -264,6 +264,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="PackingListGeneration.aspx" />
     <Content Include="PharmacyManagement.aspx" />
+    <Content Include="PharmacyNameResult.aspx" />
     <Content Include="PlaceOrder.aspx" />
     <Content Include="PO_GENERATE.aspx" />
     <Content Include="Print_Request_WH.aspx" />
@@ -298,6 +299,7 @@
     <Content Include="rpt_PurchaseItem_Selection.aspx" />
     <Content Include="rpt_SalesSummaryDisplay.aspx" />
     <Content Include="rpt_SalesSummary_Selection.aspx" />
+    <Content Include="Scripts\SuggestPharmacyName.js" />
     <Content Include="SentTransferRequests.aspx" />
     <Content Include="UserControl\rpt_ucCategory.ascx" />
     <Content Include="UserControl\rpt_ucDepartment.ascx" />
@@ -669,12 +671,6 @@
     <Compile Include="InvoicePrintBonus.aspx.designer.cs">
       <DependentUpon>InvoicePrintBonus.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ItemPurchaseDetailReport.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ItemPurchaseDetailReport.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="ItemRequestWH.aspx.cs">
       <DependentUpon>ItemRequestWH.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -823,6 +819,13 @@
     </Compile>
     <Compile Include="PharmacyManagement.aspx.designer.cs">
       <DependentUpon>PharmacyManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PharmacyNameResult.aspx.cs">
+      <DependentUpon>PharmacyNameResult.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PharmacyNameResult.aspx.designer.cs">
+      <DependentUpon>PharmacyNameResult.aspx</DependentUpon>
     </Compile>
     <Compile Include="PlaceOrder.aspx.cs">
       <DependentUpon>PlaceOrder.aspx</DependentUpon>
@@ -1416,10 +1419,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ItemPurchaseDetailReport.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>ItemPurchaseDetailReport.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Report\barcode_Print.rdlc" />
   </ItemGroup>
   <ItemGroup>

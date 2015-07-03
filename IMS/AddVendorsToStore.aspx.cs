@@ -147,6 +147,11 @@ namespace IMS
 
         protected void btnShow_Click(object sender, EventArgs e)
         {
+
+            MultipleVendorsSelectPopup.SelectAll = true;
+            MultipleVendorsSelectPopup.StoreAssociation = true;
+            MultipleVendorsSelectPopup.PopulateforAssociation();
+            mpeCongratsMessageDiv.Show();
             //int StoreId = int.Parse(ddlStoreVendors.SelectedValue.ToString());
             //if (StoreId > 0)
             //{

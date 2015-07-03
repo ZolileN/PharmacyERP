@@ -74,7 +74,7 @@
 
 
     </asp:GridView>
-     
+    
      <asp:Button ID="SelectVendor" runat="server" CssClass="btn btn-primary fl-r btn-sm" Text="Select" OnClick="SelectVendor_Click" />
  </div>
 </div>

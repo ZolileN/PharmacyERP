@@ -38,6 +38,8 @@ namespace IMS.UserControl
            // get { return selectSearch; }
             set { selectSearch = value; }
         }
+
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -51,6 +53,7 @@ namespace IMS.UserControl
                          txtVendor.Visible = true;
                          btnSearch.Visible = true;
                      }
+                   
                 }
                 catch (Exception exp) { }
             }
@@ -122,6 +125,8 @@ namespace IMS.UserControl
             btnSearch.Visible = true;
             BindGrid();
         }
+
+       
         private void BindGrid()
         {
             int id;
@@ -368,5 +373,8 @@ namespace IMS.UserControl
                 mpe.Show();
             } 
         }
+
+      
+        
     }
 }

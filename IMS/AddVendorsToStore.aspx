@@ -3,9 +3,7 @@
 <%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="cc1" %>
  
 <%@ Register Src="~/UserControl/MultipleVendorsSelectPopup.ascx" TagPrefix="ucVendorsPopup" TagName="VendorsPopupGrid" %>
-<%@ Register TagName="StoresPopup" TagPrefix="UCVendorsPopup" Src="~/UserControl/StoresPopup.ascx" %>
 
-<%--<%@ Register Src="~/UserControl/AssociatedVendorsPopup.ascx" TagPrefix="ucVendorsPopups" TagName="AssociatedVendorsPopup" %>--%>
 
 
 
@@ -20,22 +18,13 @@
 
     <table width="100%">
     <tr><td width="81%">
-    <h4>Assign Vendors to Store -  <span id="spnStoreName" runat="server" style="color:#2c81da"> </span></h4>
+    <h4>Assign Vendors to Pharmacy -  <span id="spnStoreName" runat="server" style="color:#2c81da"> </span></h4>
     </td>
     <td width="19%" align="right"> 
                            
         <asp:Button ID="btnShow" runat="server" Text="Copy Profile" CssClass="btn btn-default btn-large" OnClick="btnShow_Click"/>
         <asp:Button ID="btnGoBack" runat="server" Text="Go Back" CssClass="btn btn-default btn-large" OnClick="btnGoBack_Click"/>
-
-        
-         <cc1:ModalPopupExtender ID="mpecMessageDic" runat="server" BackgroundCssClass="overLaypop"
-                       RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="lblSelectStore" ClientIDMode="AutoID"
-                       PopupControlID="_cMessageDiv" >
-                    </cc1:ModalPopupExtender>
-
-              <div id="_cMessageDiv" class="congrats-cont" style="display: none; ">
-                            <UCVendorsPopup:StoresPopup  id="salesPopupGrid" runat="server"/>
-                        </div>
+             
          </td>
     </tr>
     <tr><td height="5"></td></tr>
