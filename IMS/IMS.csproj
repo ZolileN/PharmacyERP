@@ -299,6 +299,7 @@
     <Content Include="rpt_PurchaseItem_Selection.aspx" />
     <Content Include="rpt_SalesSummaryDisplay.aspx" />
     <Content Include="rpt_SalesSummary_Selection.aspx" />
+    <Content Include="Scripts\FindPharmacyName.js" />
     <Content Include="Scripts\SuggestPharmacyName.js" />
     <Content Include="SentTransferRequests.aspx" />
     <Content Include="UserControl\rpt_ucCategory.ascx" />

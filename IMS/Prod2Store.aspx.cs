@@ -146,6 +146,7 @@ namespace IMS
         {
             String Text = txtSearch.Text + '%';
             Session["Text"] = Text;
+            ProductsPopupGrid.StoreAssociation = false;
             ProductsPopupGrid.SelectAll = true;
             ProductsPopupGrid.PopulateGrid();
             mpeCongratsMessageDiv.Show();
@@ -217,5 +218,25 @@ namespace IMS
             StockDisplayGrid.EditIndex = -1;
             BindGrid();
         }
+
+        protected void btnShow_Click(object sender, EventArgs e)
+        {
+
+            ProductsPopupGrid.SelectAll = true;
+            ProductsPopupGrid.StoreAssociation = true;
+            ProductsPopupGrid.PopulateforAssociation();
+            mpeCongratsMessageDiv.Show();
+            //int StoreId = int.Parse(ddlStoreVendors.SelectedValue.ToString());
+            //if (StoreId > 0)
+            //{
+            //    MultipleVendorsSelectPopup.SelectAll = true;
+            //    MultipleVendorsSelectPopup.Storeid = StoreId;
+            //    MultipleVendorsSelectPopup.BindAssociatedVendorGrid(StoreId);
+
+            //    mpeCongratsMessageDiv.Show();
+            //}
+
+        }
+         
     }
 }

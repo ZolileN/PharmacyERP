@@ -7,11 +7,12 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
      <table width="100%"> 
         <tbody><tr>
-        	<td> <h4 id="topHead">Assign Products to Store</h4>
+        	<td> <h4 id="topHead">Assign Products to Pharmacy</h4>
                 <asp:Label ID="lblStore" runat="server" style="color:#2c81da"></asp:Label>
                  <asp:Label ID="lblStoreId" runat="server" Visible="false"></asp:Label>
         	</td>
            <td align="right">
+                <asp:Button ID="btnShow" runat="server" Text="Copy Profile" CssClass="btn btn-primary" OnClick="btnShow_Click"/>
             <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default" Text="Go Back" OnClick="btnBack_Click"/>
               
                 
@@ -19,6 +20,7 @@
         </tr>
 		<tr><td height="5"></td></tr>
     </tbody></table>
+    <hr />
      <table cellspacing="5" cellpadding="5" border="0" style="margin-left:10px;" class="formTbl" id="vendorSelect" width="">
 
        <tr>

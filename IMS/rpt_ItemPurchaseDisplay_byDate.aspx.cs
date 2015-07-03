@@ -42,32 +42,32 @@ namespace IMS
         public void DisplayMainGrid(DataTable dt)
         {
             
-            ItemPurchaseDetailReport rpt = new ItemPurchaseDetailReport();
-            rpt.SetDataSource(dt);
-            rpt.Load();
+            //ItemPurchaseDetailReport rpt = new ItemPurchaseDetailReport();
+            //rpt.SetDataSource(dt);
+            //rpt.Load();
 
-            DataTable displayTable = new DataTable();
-            displayTable.Clear();
-            displayTable.Columns.Add("OrderID", typeof(int));
-            displayTable.Columns.Add("SupName", typeof(String));
-            displayTable.Columns.Add("OrderDate", typeof(String));
+            //DataTable displayTable = new DataTable();
+            //displayTable.Clear();
+            //displayTable.Columns.Add("OrderID", typeof(int));
+            //displayTable.Columns.Add("SupName", typeof(String));
+            //displayTable.Columns.Add("OrderDate", typeof(String));
 
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                int ID = Convert.ToInt32(dt.Rows[i]["OrderID"].ToString());
-                String Name = dt.Rows[i]["SupName"].ToString();
-                String OrderDate = dt.Rows[i]["OrderDate"].ToString();
-                displayTable.Rows.Add(ID, Name, OrderDate);
-                displayTable.AcceptChanges();
-            }
+            //for (int i = 0; i < dt.Rows.Count; i++)
+            //{
+            //    int ID = Convert.ToInt32(dt.Rows[i]["OrderID"].ToString());
+            //    String Name = dt.Rows[i]["SupName"].ToString();
+            //    String OrderDate = dt.Rows[i]["OrderDate"].ToString();
+            //    displayTable.Rows.Add(ID, Name, OrderDate);
+            //    displayTable.AcceptChanges();
+            //}
 
-            DataView dv = displayTable.DefaultView;
-            displayTable = null;
-            displayTable = dv.ToTable(true, "OrderID", "SupName", "OrderDate");
+            //DataView dv = displayTable.DefaultView;
+            //displayTable = null;
+            //displayTable = dv.ToTable(true, "OrderID", "SupName", "OrderDate");
 
-            gdvSalesSummary.DataSource = null;
-            gdvSalesSummary.DataSource = displayTable;
-            gdvSalesSummary.DataBind();
+            //gdvSalesSummary.DataSource = null;
+            //gdvSalesSummary.DataSource = displayTable;
+            //gdvSalesSummary.DataBind();
         }
         public void LoadData()
         {

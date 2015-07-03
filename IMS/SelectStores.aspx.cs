@@ -38,7 +38,7 @@ namespace IMS
         {
             Session.Remove("Storename");
             Session.Remove("SystemId");
-            Response.Redirect("ManageInventory.aspx");
+            Response.Redirect("WarehouseMain.aspx",false);
         }
     }
 }

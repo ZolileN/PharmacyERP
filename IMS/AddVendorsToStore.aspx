@@ -22,7 +22,7 @@
     </td>
     <td width="19%" align="right"> 
                            
-        <asp:Button ID="btnShow" runat="server" Text="Copy Profile" CssClass="btn btn-default btn-large" OnClick="btnShow_Click"/>
+        <asp:Button ID="btnShow" runat="server" Text="Copy Profile" CssClass="btn btn-primary" OnClick="btnShow_Click"/>
         <asp:Button ID="btnGoBack" runat="server" Text="Go Back" CssClass="btn btn-default btn-large" OnClick="btnGoBack_Click"/>
              
          </td>
