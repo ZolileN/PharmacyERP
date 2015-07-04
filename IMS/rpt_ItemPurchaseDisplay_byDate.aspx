@@ -1,19 +1,41 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="rpt_ItemPurchaseDisplay_byDate.aspx.cs" Inherits="IMS.rpt_ItemPurchaseDisplay_byDate" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="rpt_ItemPurchaseDisplay_byDate.aspx.cs" Inherits="IMS.rpt_ItemPurchaseDisplay_byDate" EnableEventValidation="false" %>
+
+<%@ Register Assembly="CrystalDecisions.Web, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" Namespace="CrystalDecisions.Web" TagPrefix="CR" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <!--<script type="text/javascript">
+    function Print() {
+        var dvReport = document.getElementById("dvReport");
+        var frame1 = dvReport.getElementsByTagName("iframe")[0];
+        if (navigator.appName.indexOf("Internet Explorer") != -1) {
+            frame1.name = frame1.id;
+            window.frames[frame1.id].focus();
+            window.frames[frame1.id].print();
+        }
+        else {
+            var frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+            frameDoc.print();
+        }
+    }
+</script>-->
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <table width="100%">
 
         <tbody><tr>
         	<td> <h4>Item Purchased Detail Report</h4></td>
             <td align="right">
-                <asp:Button ID="btnPrint" runat="server" OnClientClick="window.print();" CssClass="btn btn-primary btn-large no-print" Text="Print" />
-                <asp:Button ID="btnExport" runat="server" CssClass="btn btn-info btn-large no-print" Text="Export" />
-                <asp:Button ID="btnGoBack" runat="server" OnClick="btnGoBack_Click" CssClass="btn btn-default btn-large no-print" Text="Go Back" />
+                <asp:Button ID="btnPrint" runat="server" PostBackUrl="~/ReportPrinting.aspx" CssClass="btn btn-primary btn-large no-print" Text="Print" />
+                <asp:Button ID="btnExport" runat="server" CssClass="btn btn-info btn-large no-print" Text="Export" Visible="false"  OnClick="btnExport_Click"/>
+                <asp:Button ID="btnGoBack" runat="server" PostBackUrl="~/rpt_ItemPurchase_Selection.aspx" CssClass="btn btn-default btn-large no-print" Text="Go Back" />
             </td>
         </tr>
 		<tr><td height="5"></td></tr>
     </tbody></table>
+
+   
+
+    
 
     <table cellpadding="0" cellspacing="3" border="0" width="100%" class="table table-striped table-bordered table-condensed">
         <tr>
@@ -41,8 +63,11 @@
         </tr>
      </table>
 
+    <div id="dvReport">
+    <CR:CrystalReportViewer ID="CrystalReportViewer1" runat="server" AutoDataBind="True" Height="1202px" Width="1104px" PrintMode="Pdf" HasPrintButton="False" HasExportButton="False"/>
+    </div>
 
-        <asp:GridView ID="gdvSalesSummary" runat="server" Width="100%" 
+       <asp:GridView ID="gdvSalesSummary" runat="server" Visible="false" Width="100%" 
         AutoGenerateColumns="false" OnRowDataBound="gdvSalesSummary_RowDataBound" BorderWidth="0px">
 
         <Columns>

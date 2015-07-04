@@ -176,7 +176,10 @@ namespace IMS
                 Session["rptInternalCustomers"] = "Include";
             }*/
 
-            Response.Redirect(Session["DisplayPurchase"].ToString());
+
+          //Session["ItemPurchaseReportDetail"] = dt;
+            //Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenWindow", "window.open('ItemPurchase.aspx','_newtab');", true);
+           Response.Redirect(Session["DisplayPurchase"].ToString());
         }
 
         protected void btnGoBack_Click(object sender, EventArgs e)

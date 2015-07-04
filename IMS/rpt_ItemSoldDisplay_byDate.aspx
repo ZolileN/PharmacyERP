@@ -1,4 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="rpt_ItemSoldDisplay_byDate.aspx.cs" Inherits="IMS.rpt_ItemSoldDisplay_byDate" %>
+
+<%@ Register Assembly="CrystalDecisions.Web, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" Namespace="CrystalDecisions.Web" TagPrefix="CR" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -9,9 +12,9 @@
         <tbody><tr>
         	<td> <h4>Item Sold Details Report</h4></td>
             <td align="right">
-                <asp:Button ID="btnPrint" runat="server" OnClientClick="window.print();" CssClass="btn btn-primary btn-large no-print" Text="Print" />
-                <asp:Button ID="btnExport" runat="server" CssClass="btn btn-info btn-large no-print" Text="Export" />
-                <asp:Button ID="btnGoBack" runat="server" OnClick="btnGoBack_Click" CssClass="btn btn-default btn-large no-print" Text="Go Back" />
+                <asp:Button ID="btnPrint" runat="server" PostBackUrl="~/ReportPrinting.aspx" CssClass="btn btn-primary btn-large no-print" Text="Print" />
+                <asp:Button ID="btnExport" runat="server" CssClass="btn btn-info btn-large no-print" Text="Export" Visible="false" />
+                <asp:Button ID="btnGoBack" runat="server" PostBackUrl="~/rpt_ItemSold_Selection.aspx" CssClass="btn btn-default btn-large no-print" Text="Go Back" />
             </td>
         </tr>
 		<tr><td height="5"></td></tr>
@@ -47,8 +50,11 @@
         </tr>
      </table>
 
+    <div>
+    <CR:CrystalReportViewer ID="CrystalReportViewer1" runat="server" AutoDataBind="True" Height="1202px" Width="1104px" HasExportButton="False" HasPrintButton="False" />
+    </div>
 
-        <asp:GridView ID="gdvSalesSummary" runat="server" Width="100%" 
+        <asp:GridView ID="gdvSalesSummary" runat="server" Width="100%" Visible="false"
         AutoGenerateColumns="false" OnRowDataBound="gdvSalesSummary_RowDataBound" BorderWidth="0px">
 
         <Columns>

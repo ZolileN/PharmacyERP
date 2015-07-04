@@ -2,6 +2,7 @@
 using IMSBusinessLogic;
 using IMSCommon;
 using IMSCommon.Util;
+using ReportApplication;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -11,6 +12,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
+using System.Drawing.Printing;
 
 namespace IMS
 {
@@ -41,10 +45,37 @@ namespace IMS
 
         public void DisplayMainGrid(DataTable dt)
         {
-            
-            ItemPurchaseDetailReport rpt = new ItemPurchaseDetailReport();
-            rpt.SetDataSource(dt);
-            rpt.Load();
+            DataSet ds = new DataSet();
+            ds.Tables.Add(dt);
+            ds.AcceptChanges();
+            try
+            {
+                 
+
+               //ItemPurchase myReportDocument = new ItemPurchase();
+               ReportDocument myReportDocument = new ReportDocument();
+               myReportDocument.Load(Server.MapPath("~/ItemPurchaseDetailReport.rpt"));
+               myReportDocument.SetDatabaseLogon("sahmed", "dps123!@#");
+               App_Code.Barcode dsReport = new App_Code.Barcode();
+               dsReport.Tables[0].Merge(dt);
+               myReportDocument.SetDataSource(dsReport.Tables[0]);
+
+               //CrystalReportSource1.ReportDocument.SetDataSource(dt);
+
+               CrystalReportViewer1.ReportSource = myReportDocument;
+               CrystalReportViewer1.DisplayToolbar = true;
+               CrystalReportViewer1.HasToggleGroupTreeButton = false;
+               CrystalReportViewer1.ToolPanelView = CrystalDecisions.Web.ToolPanelViewType.None;
+
+               ViewState["ReportDoc"] = myReportDocument;
+               Session["ReportDoc_Printing"] = myReportDocument;
+               Session["ReportPrinting_Redirection"] = "rpt_ItemPurchase_Selection.aspx";
+
+            }
+            catch(Exception ex)
+            {
+
+            }
 
             DataTable displayTable = new DataTable();
             displayTable.Clear();
@@ -68,6 +99,10 @@ namespace IMS
             gdvSalesSummary.DataSource = null;
             gdvSalesSummary.DataSource = displayTable;
             gdvSalesSummary.DataBind();
+
+              
+
+           
         }
         public void LoadData()
         {
@@ -228,7 +263,26 @@ namespace IMS
             {
                 connection.Close();
             }
+
         }
+
+        public string GetDefaultPrinter()
+        {
+            PrinterSettings settings = new PrinterSettings();
+            foreach (string printer in PrinterSettings.InstalledPrinters)
+            {
+                settings.PrinterName = printer;
+                if (settings.IsDefaultPrinter)
+                    return printer;
+            }
+            return string.Empty;
+        }
+
+        public string GetDefaultprinterName()
+        {
+            throw new NotImplementedException();
+        }
+
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
             Session["rptProductID"] = null;
@@ -301,6 +355,14 @@ namespace IMS
             {
                //WebMessageBoxUtil.Show(ex.Message);
             }
+        }
+
+        protected void btnExport_Click(object sender, EventArgs e)
+        {
+            ReportDocument doc = new ReportDocument();
+            doc = (ReportDocument)ViewState["ReportDoc"];
+            doc.PrintOptions.PrinterName = GetDefaultPrinter();
+            doc.PrintToPrinter(1, false, 0, 0);
         }
     }
 }
