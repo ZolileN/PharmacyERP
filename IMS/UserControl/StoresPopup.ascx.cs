@@ -219,22 +219,41 @@ namespace IMS.UserControl
                         ltMetaTags = (TextBox)ctl.FindControl("txtStore");
                         if (ltMetaTags != null)
                         {
-                            Session[ViewState["sessionName"].ToString()] = Server.HtmlDecode(row.Cells[2].Text);
+                            string txt = row.Cells[2].Text;
+                            if (ViewState["sessionName"] != null)
+                            {
+                                Session[ViewState["sessionName"].ToString()] = Server.HtmlDecode(txt);
+                            }
+                            else 
+                            {
+                                ltMetaTags.Text = txt;
+                            }
                         }
                         if(lblStoreID !=null)
                         {
-
+                            string temp = row.Cells[7].Text;
                            // lblStoreID.Text = Server.HtmlDecode(row.Cells[7].Text);
-                            Session[ViewState["sessionID"].ToString()] = Server.HtmlDecode(row.Cells[7].Text);
+                            if (ViewState["sessionID"] != null)
+                            {
+                                Session[ViewState["sessionID"].ToString()] = Server.HtmlDecode(temp);
+                            }
+                            else
+                            {
+                                // this will run in case of receiveStoreRequest.aspx and createTransferRequest.aspx
+                                lblStoreID.Text = Server.HtmlDecode(temp);
+                            }
 
                         }
-                        string desPage = ViewState["destinationPage"].ToString();
-                        ViewState.Remove("sourcePage");
-                        ViewState.Remove("destinationPage");
-                        ViewState.Remove("sessionName");
-                        ViewState.Remove("sessionID");
-                        Session.Remove("txtStore");
-                        Response.Redirect(desPage,false);
+                        if (ViewState["destinationPage"] != null)
+                        {
+                            string desPage = ViewState["destinationPage"].ToString();
+                            ViewState.Remove("sourcePage");
+                            ViewState.Remove("destinationPage");
+                            ViewState.Remove("sessionName");
+                            ViewState.Remove("sessionID");
+                            Session.Remove("txtStore");
+                            Response.Redirect(desPage, false);
+                        }
                     }
                 }
             }

@@ -93,7 +93,7 @@
 
                      <asp:TemplateField HeaderText="Product Name">
                         <ItemTemplate>
-                            <asp:Label ID="ProductName" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("ProductName") %>' Width="330px"></asp:Label>
+                            <asp:Label ID="ProductName" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Product_Name") %>' Width="330px"></asp:Label>
                         </ItemTemplate>
                          <ItemStyle  Width="330px" HorizontalAlign="Left"/>
                     </asp:TemplateField>

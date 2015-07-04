@@ -18,6 +18,8 @@ namespace IMS
         {
             if (!IsPostBack)
             {
+                Session.Remove("dsProdcts");
+                Session.Remove("dsProducts_MP");
                 if (Session["WH_Name"] != null)
                 {
                     lblWH.Text = Session["WH_Name"].ToString();
@@ -25,35 +27,7 @@ namespace IMS
                     Session["WH_TransferRequestGrid"] = null;
                    // Vendorname = Session["Vendorname"].ToString();
                 }
-
-                //if ((Session["OrderNumber"] != null && Session["FromViewPlacedOrders"] != null))
-                //{
-                //    Session["FirstOrder"] = true;
-
-                //    systemSet = new DataSet();
-                //    ProductSet = new DataSet();
-                //    LoadData();
-                //    BindGrid();
-                //    if (StockDisplayGrid.DataSource != null)
-                //    {
-                //        //btnAccept.Visible = true;
-                //        //btnAccept.Text = "RE-GENERATE ORDER";
-                //        btnDecline.Visible = true;
-                //    }
-                //    Session["FromViewPlacedOrders"] = null;
-                //    //Session["isGenOption"] = null;
-                //}
-                //else
-                //{
-                //    Session["OrderNumber"] = "";
-                //    Session["FromViewPlacedOrders"] = null;
-                //    Session["FirstOrder"] = false;
-                //    //Session["isGenOption"] = null;
-
-                //    systemSet = new DataSet();
-                //    ProductSet = new DataSet();
-                //    LoadData();
-                //}
+                             
             }
         }
         protected void StockDisplayGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -485,9 +459,8 @@ namespace IMS
             SelectQuantity.Text = "";
             ViewState.Remove("WH_TransferNo");
             Session["WH_FirstTransfer"]=false;
-            //SelectProduct.SelectedIndex = -1;
-            //RequestTo.SelectedIndex = -1;
-            //btnAccept.Visible = false;
+            Session.Remove("dsProdcts");
+            Session.Remove("dsProducts_MP");
             btnDecline.Visible = false;
             lblttlcst.Visible = false;
             lblTotalCostALL.Visible = false;
@@ -498,6 +471,8 @@ namespace IMS
             lblttlcst.Visible = false;
             Session["WH_FirstTransfer"] = false;
             Session.Remove("WH_TransferRequestGrid");
+            Session.Remove("dsProdcts");
+            Session.Remove("dsProducts_MP");
             Response.Redirect("StoreMain.aspx", false);
            
         }
@@ -532,7 +507,8 @@ namespace IMS
             Session["WH_FirstTransfer"] = false;
             Session.Remove("WH_Name");
             Session.Remove("WH_ID");
-
+            Session.Remove("dsProdcts");
+            Session.Remove("dsProducts_MP");
             lblttlcst.Visible = false;
 
 

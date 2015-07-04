@@ -143,6 +143,13 @@ namespace IMS
                         ProductDept.Items.Insert(0, "Select Department");
                         ProductDept.SelectedIndex = 0;
                     }
+                    if (Session["MODE"].Equals("EDIT"))
+                    {
+                        int selIndex;
+                        int.TryParse(Session["MS_ProductOrderType"].ToString(), out selIndex);
+                        ddlProductOrderType.SelectedIndex = selIndex;
+                        // foreach( )
+                    }
                 }
                 catch (Exception ex)
                 {
