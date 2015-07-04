@@ -4,11 +4,11 @@
 <%@ Register TagName="SalemanPopup" TagPrefix="UCSaleman" Src="~/UserControl/uc_Select_Salesman.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">\
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
       <table width="100%">
 
         <tbody><tr>
-        	<td> <h4>View Store Request(s)</h4></td>
+        	<td> <h4>View Pharmacy Request(s)</h4></td>
             <td align="right">
                 <asp:Button ID="btnSearch" runat="server" OnClick="btnSearch_Click" Enabled="true" Text="SEARCH" CssClass="btn btn-primary"/>
                 <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Enabled="true" Text="REFRESH" CssClass="btn btn-info"/>
@@ -41,7 +41,7 @@
          </tr>   
          
             <tr>
-                <td><asp:Label id="lblSelectStore" runat="server" >Select Store</asp:Label></td>
+                <td><asp:Label id="lblSelectStore" runat="server" >Select Pharmacy</asp:Label></td>
             <td>
                 <asp:Label ID="lblStoreId" runat="server" Visible="false"></asp:Label>
 

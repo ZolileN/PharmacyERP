@@ -9,7 +9,7 @@
     </td>
     <td align="right"> 
          <asp:Button ID="btnAddWH" runat="server" CssClass="btn btn-success btn-large" Text="Add Pharmacy" OnClick="btnAddWH_Click"/>
-         <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" />
+         <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnGoBack_Click" />
         </td>
                 </tr>
                 <tr><td height="5"></td></tr>
@@ -24,6 +24,31 @@
            OnRowCommand ="dgvWarehouse_RowCommand" OnRowEditing="dgvWarehouse_RowEditing" >
                  <Columns>
                       
+                     <asp:TemplateField HeaderText="PharmacyID" Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="lblPharmacyID" CssClass="control-label" runat="server" Text='<%# Eval("System_PharmacyID") %>'></asp:Label>
+                        </ItemTemplate>
+                        <ItemStyle  Width="110px" HorizontalAlign="Left"/>
+
+                    </asp:TemplateField>
+
+                     <asp:TemplateField HeaderText="BarterExchangeID" Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="lblBarterExchangeID" CssClass="control-label" runat="server" Text='<%# Eval("BarterExchangeID") %>'></asp:Label>
+                        </ItemTemplate>
+                        <ItemStyle  Width="110px" HorizontalAlign="Left"/>
+
+                    </asp:TemplateField>
+
+
+                     <asp:TemplateField HeaderText="System RoleID" Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="lblSystemRoleID" CssClass="control-label" runat="server" Text='<%# Eval("System_RoleID") %>'></asp:Label>
+                        </ItemTemplate>
+                        <ItemStyle  Width="110px" HorizontalAlign="Left"/>
+
+                    </asp:TemplateField>
+
                       <asp:TemplateField HeaderText="ID">
                         <ItemTemplate>
                             <asp:Label ID="lblSystemID" CssClass="control-label" runat="server" Text='<%# Eval("SystemID") %>'></asp:Label>

@@ -25,6 +25,31 @@ namespace IMS.UserControl
            // get { return selectAll; }
             set { selectAll = value; }
         }
+
+        public bool StoreAssociation
+        {
+            set
+            {
+                ViewState["selectSearch"] = value;
+                if (value == false) 
+                {
+                    lblSelectVendor.Visible = false;
+                    btnSearchStore.Visible = false;
+                    txtSearch.Visible = false;
+                }
+            }
+        }
+
+        public void PopulateforAssociation()
+        {
+            ViewState["checkAllState"] = true;
+            lblSelectVendor.Visible = true;
+            btnSearchStore.Visible = true;
+            txtSearch.Visible = true;
+            StockDisplayGrid.DataSource = null;
+            StockDisplayGrid.DataBind();
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
            
@@ -46,12 +71,27 @@ namespace IMS.UserControl
                     ((CheckBox)StockDisplayGrid.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
                     ViewState["checkAllState"] = true;
                 }
+                if (ViewState["selectSearch"] != null && ((bool)ViewState["selectSearch"]) == true)
+                {
+                    lblSelectVendor.Visible = true;
+                    btnSearchStore.Visible = true;
+                    txtSearch.Visible = true;
+                }
             }
             if (IsPostBack) 
             {
                 if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll==true)
                 {
-                    ((CheckBox)StockDisplayGrid.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                    if (!(ViewState["selectSearch"] != null && ((bool)ViewState["selectSearch"]) == true))
+                    {
+                        ((CheckBox)StockDisplayGrid.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                    }
+                }
+                if (ViewState["selectSearch"] != null && ((bool)ViewState["selectSearch"]) == true)
+                {
+                    lblSelectVendor.Visible = true;
+                    btnSearchStore.Visible = true;
+                    txtSearch.Visible = true;
                 }
             }
             
@@ -292,6 +332,10 @@ namespace IMS.UserControl
             {
                 PopulateGrid();
             }
+            else if (ViewState["selectSearch"] != null && ((bool)ViewState["selectSearch"]) == true)
+            {
+                BindAssociatedVendorGrid();
+            }
             else
             {
                 BindGrid();
@@ -480,6 +524,7 @@ namespace IMS.UserControl
                             
                         }
                     }
+                    ViewState.Remove("CheckBoxArray"); 
                     WebMessageBoxUtil.Show("Products have been successfully associated ");
 
                     GridView gvParent = (GridView)ctl.FindControl("StockDisplayGrid");
@@ -602,6 +647,58 @@ namespace IMS.UserControl
 
         }
 
-       
+        protected void btnSearchStore_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                BindAssociatedVendorGrid();
+                ModalPopupExtender mpe = (ModalPopupExtender)this.Parent.FindControl("mpeCongratsMessageDiv");
+                mpe.Show();
+            }
+            catch (Exception exp) { }
+        }
+
+        public void BindAssociatedVendorGrid()
+        {
+            try
+            {
+                if (!String.IsNullOrEmpty(txtSearch.Value))
+                {
+                    connection.Open();
+                    DataSet resultSet = new DataSet();
+
+                    SqlCommand comm = new SqlCommand("Sp_GetStoreProductsByName", connection);
+                    comm.CommandType = CommandType.StoredProcedure;
+                    if (String.IsNullOrEmpty(txtSearch.Value))
+                    {
+                        comm.Parameters.AddWithValue("@p_storeName", DBNull.Value);
+                    }
+                    else
+                    {
+                        comm.Parameters.AddWithValue("@p_storeName", txtSearch.Value);
+                    }
+                    SqlDataAdapter SA = new SqlDataAdapter(comm);
+                    SA.Fill(resultSet);
+
+                    StockDisplayGrid.DataSource = resultSet;
+                    StockDisplayGrid.DataBind();
+
+                    if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
+                    {
+                        ((CheckBox)StockDisplayGrid.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                        ViewState["checkAllState"] = true;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+        }
     }
 }

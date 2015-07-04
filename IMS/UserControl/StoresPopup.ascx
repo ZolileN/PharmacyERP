@@ -3,7 +3,7 @@
 
  <div class="popupMain" id="products">
 <div class="popupHead">
-    Stores List
+    Pharmacy List
     <input type="submit" class="close" value="" />
     </div>
      
@@ -32,14 +32,14 @@
                         </ItemTemplate>
                         
                     </asp:TemplateField>
-                     <asp:BoundField DataField="SystemName" HeaderText="Store Name"   /> 
-                     <asp:BoundField DataField="System_PharmacyID" HeaderText="Store ID"   />
-                     <asp:BoundField DataField="SystemAddress" HeaderText="Store Address"   />
+                     <asp:BoundField DataField="SystemName" HeaderText="Pharmacy Name"   /> 
+                     <asp:BoundField DataField="System_PharmacyID" HeaderText="Pharmacy ID"   />
+                     <asp:BoundField DataField="SystemAddress" HeaderText="Pharmacy Address"   />
                      
-                     <asp:BoundField DataField="SystemPhone" HeaderText="Store Phone"   />
-                    <asp:BoundField DataField="SystemFax" HeaderText="Store Fax" />
+                     <asp:BoundField DataField="SystemPhone" HeaderText="Pharmacy Phone"   />
+                    <asp:BoundField DataField="SystemFax" HeaderText="Pharmacy Fax" />
 
-                     <asp:BoundField DataField="SystemID" HeaderText="System ID" /> 
+                     <asp:BoundField DataField="SystemID" HeaderText="Pharmacy ID" /> 
                      <asp:BoundField DataField="Quantity" HeaderText="Quantity" /> 
                     
                  </Columns>

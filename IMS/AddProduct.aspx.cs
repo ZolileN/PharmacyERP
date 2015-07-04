@@ -262,6 +262,9 @@ namespace IMS
                             connection.Open();
                             SqlCommand command = new SqlCommand("sp_InsertProduct", connection);
                             command.CommandType = CommandType.StoredProcedure;
+
+                            command.Parameters.AddWithValue("@p_LoggedInUserID", int.Parse(Session["UserSys"].ToString()));
+
                             command.Parameters.AddWithValue("@p_BarCodeSerial", BarCodeSerial.Text.ToString());
                             command.Parameters.AddWithValue("@p_ProductCode", GreenRainCode.Text.ToString());
                             command.Parameters.AddWithValue("@p_ProductName", ProductName.Text.ToString());

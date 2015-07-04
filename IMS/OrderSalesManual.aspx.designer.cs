@@ -67,6 +67,24 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.TextBox txtIvnoice;
         
         /// <summary>
+        /// lblSelectSalesman control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSelectSalesman;
+        
+        /// <summary>
+        /// ddlSalesman control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlSalesman;
+        
+        /// <summary>
         /// StockAt control.
         /// </summary>
         /// <remarks>
@@ -173,15 +191,6 @@ namespace IMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox SelectDiscount;
-        
-        /// <summary>
-        /// ddlSalesman control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlSalesman;
         
         /// <summary>
         /// StockDisplayGrid control.

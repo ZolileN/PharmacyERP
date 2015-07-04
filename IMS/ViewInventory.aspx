@@ -64,7 +64,7 @@
             <td><asp:DropDownList runat="server" ID="ProductSubCat" CssClass="form-control" Width="29%" Visible="true" /></td>
             <td><asp:Label runat="server" AssociatedControlID="ddlProductOrderType" CssClass="control-label">Product Order Type</asp:Label></td>
             <td><asp:DropDownList runat="server" ID="ddlProductOrderType"  CssClass="form-control" Width="29%"/></td>
-            <td><asp:Label runat="server" AssociatedControlID="ddlStockAt" CssClass="control-label">Select Store </asp:Label></td>
+            <td><asp:Label runat="server" AssociatedControlID="ddlStockAt" CssClass="control-label">Select Pharmacy </asp:Label></td>
             <td><asp:DropDownList runat="server" ID="ddlStockAt" CssClass="form-control" Width="280" />
              </tr>
         <tr>

@@ -24,7 +24,7 @@
 
   <table width="100%">
     <tr><td width="81%">
-    <h4>Assign Vendors to Store</h4>
+    <h4>Assign Vendors to Pharmacy</h4>
     </td>
     <td width="19%" align="right"> 
 
@@ -39,7 +39,7 @@
     <table cellspacing="5" cellpadding="5" border="0" style="margin-left:10px;" class="formTbl" id="vendorSelect" width="">
 
        <tr>
-           <td><label id="lblSelectStore" runat="server" >Select Store</label></td>
+           <td><label id="lblSelectStore" runat="server" >Select Pharmacy</label></td>
            <td>
                <asp:TextBox ID="txtStore" runat="server" CssClass="form-control product" ></asp:TextBox>
                <asp:Button ID="btnSearch" runat="server" CssClass="search-btn getProducts" OnClick="btnSearch_Click" />

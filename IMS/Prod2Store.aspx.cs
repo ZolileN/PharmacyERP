@@ -146,6 +146,7 @@ namespace IMS
         {
             String Text = txtSearch.Text + '%';
             Session["Text"] = Text;
+            ProductsPopupGrid.StoreAssociation = false;
             ProductsPopupGrid.SelectAll = true;
             ProductsPopupGrid.PopulateGrid();
             mpeCongratsMessageDiv.Show();
@@ -155,5 +156,87 @@ namespace IMS
         {
 
         }
+
+        protected void StockDisplayGrid_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            StockDisplayGrid.EditIndex = e.NewEditIndex;
+            BindGrid();
+        }
+
+        protected void StockDisplayGrid_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            try
+            { 
+                if (e.CommandName == "UpdateStock")
+                {
+                    int ProductID, StoreID = 0;
+                    float SP, CP;
+                    Label lblProductID = (Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("prodID");
+                    int.TryParse(lblProductID.Text.ToString(), out ProductID);
+                    int.TryParse(Session["StoreID"].ToString(), out StoreID);
+                    TextBox txtUnitCost = (TextBox)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("txtUnitCost");
+                    TextBox txtSP = (TextBox)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("txtSP");
+                    float.TryParse(txtUnitCost.Text.ToString(), out CP);
+                    float.TryParse(txtSP.Text.ToString(), out SP);
+
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
+
+                    SqlCommand command = new SqlCommand("Sp_UpdateProductStoreMappingPrices", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@p_StoreID", StoreID);
+                    command.Parameters.AddWithValue("@p_ProductID", ProductID);
+                    command.Parameters.AddWithValue("@p_SP", SP);
+                    command.Parameters.AddWithValue("@p_UnitCost", CP);
+                    command.ExecuteNonQuery();
+                    //BindGrid();
+                }
+                if (e.CommandName == "Cancel")
+                 {
+
+                 }
+               
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                connection.Close();
+                StockDisplayGrid.EditIndex = -1;
+                BindGrid();
+            }
+            
+        }
+
+        protected void StockDisplayGrid_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            StockDisplayGrid.EditIndex = -1;
+            BindGrid();
+        }
+
+        protected void btnShow_Click(object sender, EventArgs e)
+        {
+
+            ProductsPopupGrid.SelectAll = true;
+            ProductsPopupGrid.StoreAssociation = true;
+            ProductsPopupGrid.PopulateforAssociation();
+            mpeCongratsMessageDiv.Show();
+            //int StoreId = int.Parse(ddlStoreVendors.SelectedValue.ToString());
+            //if (StoreId > 0)
+            //{
+            //    MultipleVendorsSelectPopup.SelectAll = true;
+            //    MultipleVendorsSelectPopup.Storeid = StoreId;
+            //    MultipleVendorsSelectPopup.BindAssociatedVendorGrid(StoreId);
+
+            //    mpeCongratsMessageDiv.Show();
+            //}
+
+        }
+         
     }
 }

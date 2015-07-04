@@ -23,6 +23,7 @@ namespace IMS
         {
             if (!IsPostBack)
             {
+                
                 Session.Remove("dsProdcts");
                 Session.Remove("dsProducts_MP");
                 btnCreateOrder.Attributes.Add("OnClientClick", "if(ValidateForm()) {return false; }");
@@ -97,6 +98,7 @@ namespace IMS
                 }
                 else
                 {
+                    Session.Remove("SalesManID");
                     Session["OrderNumberSO"] = "";
                     Session["FirstOrderSO"] = false;
                     Session["OrderSalesDetail"] = false;
@@ -446,14 +448,80 @@ namespace IMS
             DataSet dsProducts = (DataSet)Session["dsProdcts"];
 
             Session["RequestedNO"] = Convert.ToInt32(dsProducts.Tables[0].Rows[0]["OrderID"].ToString());
-            Session["FirstOrderSO"] = false;
-            Session["OrderSalesDetail"] = false;
-            Session["SelectedIndexValue"] = StockAt.SelectedItem;
-            if (Session["ExistingOrder"].Equals(true)) { Session["RequestedFromID"] = Session["SystemID"]; }
+            bool status=checkOrderStatus(Convert.ToInt32(dsProducts.Tables[0].Rows[0]["OrderID"].ToString()));
+            if (status)
+            {
+                Session["FirstOrderSO"] = false;
+                Session["OrderSalesDetail"] = false;
+                Session["SelectedIndexValue"] = StockAt.SelectedItem;
+                if (Session["ExistingOrder"].Equals(true)) { Session["RequestedFromID"] = Session["SystemID"]; }
 
-            Response.Redirect("ViewPackingList_SO.aspx", false);
+                Response.Redirect("ViewPackingList_SO.aspx", false);
+            }
         }
 
+        /// <summary>
+        /// method checks the status of all entries against an order detail.
+        /// this is a check added against the problem in which all auto selection of products assigns different value from the one ordered.
+        /// </summary>
+        /// <param name="orderID"></param>
+        private bool checkOrderStatus(int orderID) 
+        {
+            bool status=true;
+            try
+            {
+                DataSet ds = new DataSet();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("SP_GetSO_InfoForVerification", connection);
+                command.CommandType = CommandType.StoredProcedure;
+           
+                command.Parameters.AddWithValue("@p_OrderID", orderID);
+               
+
+                SqlDataAdapter sA = new SqlDataAdapter(command);
+                sA.Fill(ds);
+                //table[0] contains order detail
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    int ordQty = int.Parse(ds.Tables[0].Rows[i]["SendQuantity"].ToString());
+                    int orgOrderDetID = int.Parse(ds.Tables[0].Rows[i]["orderDetailID"].ToString());
+                    int ordBonQty = int.Parse(ds.Tables[0].Rows[i]["BonusQuantity"].ToString());
+                    String prodName = ds.Tables[0].Rows[i]["Description"].ToString();
+                    // table[1] contains sum of order details receive
+                    for (int j = 0; j < ds.Tables[1].Rows.Count; j++) 
+                    {
+                          int detOrderDetID = int.Parse(ds.Tables[1].Rows[j]["orderDetailID"].ToString());
+                          if (orgOrderDetID == detOrderDetID) 
+                          {
+                              int totBonQty = int.Parse(ds.Tables[1].Rows[j]["totalBonusQty"].ToString());
+                              int totSendQty = int.Parse(ds.Tables[1].Rows[j]["totalSendQty"].ToString());
+                              if (totBonQty == ordBonQty && totSendQty == ordQty) { }
+                              else 
+                              {
+                                  WebMessageBoxUtil.Show("Quantity mis-match for "+prodName+". Kindly Verify!!");
+                                  status= false;
+                              }
+                          }
+                    }
+                }
+               
+
+               
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                connection.Close();
+               
+            }
+            return status;
+        }
         protected void btnDecline_Click(object sender, EventArgs e)
         {
             try
@@ -703,6 +771,7 @@ namespace IMS
             quan = bonQuan = 0;
             int.TryParse(SelectQuantity.Text, out quan);
             int.TryParse(SelectBonus.Text, out bonQuan);
+            int orderDetID = 0;
             if (bonQuan + quan > 0)
             {
                 
@@ -750,7 +819,7 @@ namespace IMS
                         String Invoice = txtIvnoice.Text;
                         String Vendor = "True";
                         int Salesman = 0;
-
+                        
                         try
                         {
                             if (connection.State == ConnectionState.Closed)
@@ -778,6 +847,10 @@ namespace IMS
                             {
                                 command.Parameters.AddWithValue("@p_Salesman", Salesman);
                             }
+                            else
+                            {
+                                command.Parameters.AddWithValue("@p_Salesman", DBNull.Value);
+                            }
                             command.Parameters.AddWithValue("@p_orderStatus", "Pending");
                             DataTable dt = new DataTable();
                             SqlDataAdapter dA = new SqlDataAdapter(command);
@@ -798,7 +871,7 @@ namespace IMS
                         #endregion
 
                         #region Linking to Order Detail table
-
+                        
                         try
                         {
                             if (connection.State == ConnectionState.Closed)
@@ -846,7 +919,8 @@ namespace IMS
                             sA.Fill(LinkResult);
                             if (LinkResult != null && LinkResult.Tables[0] != null)
                             {
-                                Session["DetailID"] = LinkResult.Tables[0].Rows[0][0];
+                                int.TryParse(LinkResult.Tables[0].Rows[0][0].ToString(), out orderDetID);
+                                //Session["DetailID"] = LinkResult.Tables[0].Rows[0][0];
                             }
                         }
                         catch (Exception ex)
@@ -874,7 +948,7 @@ namespace IMS
                         float.TryParse(SelectDiscount.Text.ToString(), out Discount);
                         int Total = SendQuantity + BonusQuantity;
 
-                        UpdateStockMinus(Convert.ToInt32(Session["DetailID"].ToString()), Total, Product, Discount, BonusQuantity, SendQuantity);
+                        UpdateStockMinus(orderDetID, Total, Product, Discount, BonusQuantity, SendQuantity);
 
                         #endregion
 
@@ -884,7 +958,7 @@ namespace IMS
                     }
                     else
                     {
-                        Session["DetailID"] = "0";// declaring session as  0;
+                       // Session["DetailID"] = "0";// declaring session as  0;
                         #region Product Existing in the Current Order
                         DataSet ds = new DataSet();
                         try
@@ -981,7 +1055,8 @@ namespace IMS
                                 sA.Fill(LinkResult);
                                 if (LinkResult != null && LinkResult.Tables[0] != null)
                                 {
-                                    Session["DetailID"] = LinkResult.Tables[0].Rows[0][0];
+                                   //org Session["DetailID"] = LinkResult.Tables[0].Rows[0][0];
+                                    int.TryParse(LinkResult.Tables[0].Rows[0][0].ToString(),out orderDetID);
                                 }
                             }
                             catch (Exception ex)
@@ -1008,7 +1083,7 @@ namespace IMS
                             float.TryParse(SelectDiscount.Text.ToString(), out Discount);
                             int Total = SendQuantity + BonusQuantity;
 
-                            UpdateStockMinus(Convert.ToInt32(Session["DetailID"].ToString()), Total, Product, Discount, BonusQuantity, SendQuantity);
+                            UpdateStockMinus(orderDetID, Total, Product, Discount, BonusQuantity, SendQuantity);
 
                             #endregion
 
@@ -1037,9 +1112,10 @@ namespace IMS
                             command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
                             //command.ExecuteNonQuery();
                         }
-                        if (int.TryParse(Session["DetailID"].ToString(), out DetailID))
+                        //Session["DetailID"] was used here
+                        if (orderDetID !=0)
                         {
-                            command.Parameters.AddWithValue("@p_OrderDetailID", DetailID);
+                            command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
 
                         }
                         command.ExecuteNonQuery();
@@ -1071,6 +1147,7 @@ namespace IMS
                 SelectBonus.Text = "";
                 SelectDiscount.Text = "";
                 StockAt.Enabled = false;
+                ddlSalesman.Enabled = false;
                 SelectQuantity.Text = "";
 
                 SelectProduct.SelectedIndex = -1;
@@ -1146,6 +1223,7 @@ namespace IMS
             //must be checked for sessions
             if (Session["OrderSalesDetail"] != null && Session["OrderSalesDetail"].Equals(true)  && Session["OrderSalesDetail"].ToString() != null)
             {
+                Session.Remove("SalesManID");
                 Session["OrderNumberSO"] = "";
                 Session["OrderSalesDetail"] = false;
                 Session["SelectedIndexValue"] = null;
@@ -1196,6 +1274,7 @@ namespace IMS
                     txtProduct.Text = "";
                     SelectProduct.Visible = false;
                     StockAt.Enabled = true;
+                    ddlSalesman.Enabled = true;
                     StockDisplayGrid.DataSource = null;
                     StockDisplayGrid.DataBind();
                     SelectQuantity.Text = "";
@@ -1423,6 +1502,59 @@ namespace IMS
             Session["Text"] = Text;
             ProductsPopupGrid.PopulateGrid();
             mpeCongratsMessageDiv.Show();
+        }
+
+        protected void ddlSalesman_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            #region Re-Populating System Types
+            try
+            {
+                int SalesmanId = 0;
+                int.TryParse(ddlSalesman.SelectedValue.ToString(), out SalesmanId);
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("sp_getSalesmanPharmacies", connection);
+                command.Parameters.AddWithValue("@p_SalesmanId", SalesmanId);
+                command.CommandType = CommandType.StoredProcedure;
+                
+
+                DataSet ds = new DataSet();
+                SqlDataAdapter sA = new SqlDataAdapter(command);
+                sA.Fill(ds);
+                StockAt.DataSource = ds.Tables[0];
+                StockAt.DataTextField = "SystemName";
+                StockAt.DataValueField = "SystemID";
+                StockAt.DataBind();
+                if (StockAt != null)
+                {
+                    StockAt.Items.Insert(0, "Select System");
+                    if (Session["SelectedIndexValue"] != null)
+                    {
+                        // set index based on value
+                        foreach (ListItem Items in StockAt.Items)
+                        {
+                            if (Items.Text.Equals(Session["SelectedIndexValue"].ToString()))
+                            {
+                                StockAt.SelectedIndex = StockAt.Items.IndexOf(Items);
+                                break;
+                            }
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                connection.Close();
+            }
+            #endregion
         }
 
         

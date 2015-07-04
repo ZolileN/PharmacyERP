@@ -19,6 +19,10 @@ namespace IMS
             String Text = txtStore.Text + '%';
             Session["txtStore"] = Text;
             StoresPopupGrid.PopulateGrid();
+            StoresPopupGrid.SessionIDTag = "SystemId";
+            StoresPopupGrid.SessionNameTag = "Storename";
+            StoresPopupGrid.SourcePage = "SelectStores.aspx";
+            StoresPopupGrid.DestinationPage = "AddVendorsToStore.aspx";
             mpeCongratsMessageDiv.Show();
         }
 
@@ -34,7 +38,7 @@ namespace IMS
         {
             Session.Remove("Storename");
             Session.Remove("SystemId");
-            Response.Redirect("ManageInventory.aspx");
+            Response.Redirect("WarehouseMain.aspx",false);
         }
     }
 }

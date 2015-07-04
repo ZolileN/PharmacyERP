@@ -8,8 +8,8 @@
     <h4>Store Management</h4>
     </td>
     <td align="right"> 
-         <asp:Button ID="btnAddWH" runat="server" CssClass="btn btn-success btn-large" Text="Add WareHouse" OnClick="btnAddWH_Click"/>
-         <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" />
+         <asp:Button ID="btnAddWH" runat="server" CssClass="btn btn-success btn-large" Text="Add Store" OnClick="btnAddWH_Click"/>
+         <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnGoBack_Click" />
         </td>
                 </tr>
                 <tr><td height="5"></td></tr>

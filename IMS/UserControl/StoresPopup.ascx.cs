@@ -16,8 +16,32 @@ namespace IMS.UserControl
         string text = "";
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
+        string sourcePage = string.Empty;
+        string destinationPage = string.Empty;
+        string sessionName = string.Empty;
+        string sessionID = string.Empty;
+        public string SourcePage
+        {
+            //get { return sourcePage; }
+            set { ViewState["sourcePage"] = value; }
+        }
         
-
+        public string DestinationPage
+        {
+           // get { return destinationPage; }
+            set { ViewState["destinationPage"] = value; }
+        }
+        
+        public string SessionNameTag
+        {
+            //get { return sessionName; }
+            set { ViewState["sessionName"] = value; }
+        }
+        public string SessionIDTag
+        {
+            //get { return sessionID; }
+            set { ViewState["sessionID"] = value; }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -195,20 +219,27 @@ namespace IMS.UserControl
                         ltMetaTags = (TextBox)ctl.FindControl("txtStore");
                         if (ltMetaTags != null)
                         {
-                            ltMetaTags.Text = Server.HtmlDecode(row.Cells[2].Text);
+                            Session[ViewState["sessionName"].ToString()] = Server.HtmlDecode(row.Cells[2].Text);
                         }
                         if(lblStoreID !=null)
                         {
 
-                            lblStoreID.Text = Server.HtmlDecode(row.Cells[7].Text);
-
+                           // lblStoreID.Text = Server.HtmlDecode(row.Cells[7].Text);
+                            Session[ViewState["sessionID"].ToString()] = Server.HtmlDecode(row.Cells[7].Text);
 
                         }
+                        string desPage = ViewState["destinationPage"].ToString();
+                        ViewState.Remove("sourcePage");
+                        ViewState.Remove("destinationPage");
+                        ViewState.Remove("sessionName");
+                        ViewState.Remove("sessionID");
+                        Session.Remove("txtStore");
+                        Response.Redirect(desPage,false);
                     }
                 }
             }
 
-            Session.Remove("txtStore");
+           
         }
 
         public void PopulateStoreWithStock()

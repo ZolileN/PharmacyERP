@@ -179,7 +179,7 @@ namespace IMS.UserControl
             }
             else
             {
-                if (Session["Text"] != null)
+                if (Session["Text"].ToString() != "%")
                 {
                     PopulateGrid();
                 }

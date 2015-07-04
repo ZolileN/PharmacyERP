@@ -22,6 +22,15 @@ namespace IMS {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl spnStoreName;
         
         /// <summary>
+        /// btnShow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnShow;
+        
+        /// <summary>
         /// btnGoBack control.
         /// </summary>
         /// <remarks>
@@ -74,33 +83,6 @@ namespace IMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::IMS.UserControl.MultipleVendorsSelectPopup MultipleVendorsSelectPopup;
-        
-        /// <summary>
-        /// lblSelectVendorAsStore control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblSelectVendorAsStore;
-        
-        /// <summary>
-        /// ddlStoreVendors control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlStoreVendors;
-        
-        /// <summary>
-        /// btnShow control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnShow;
         
         /// <summary>
         /// mpeCongratsMessageDiv control.

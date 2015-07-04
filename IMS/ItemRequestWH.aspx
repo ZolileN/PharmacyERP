@@ -7,7 +7,7 @@
      <table width="100%">
 
         <tbody><tr>
-        	<td> <h4 id="topHead">Item Request to Warehouse</h4>
+        	<td> <h4 id="topHead">Item Request to Store</h4>
                 <asp:Label ID="lblWH" runat="server" style="color:#2c81da"></asp:Label>
         	</td>
             <td align="right">

@@ -23,12 +23,24 @@ namespace IMS.UserControl
         public static DataSet ProductSet;
         bool selectAll = false;
         public int Storeid;
+        bool selectSearch = false;
 
+        public bool StoreAssociation
+        {
+           set 
+           {
+               ViewState["selectSearch"] = value;
+              
+              
+           }
+        }
         public bool SelectAll
         {
             // get { return selectAll; }
             set { selectAll = value; }
         }
+
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -38,8 +50,14 @@ namespace IMS.UserControl
                    // BindGrid();
                     if (selectAll)
                     {
-                        ((CheckBox)gdvVendor.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                       // ((CheckBox)gdvVendor.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
                         ViewState["checkAllState"] = true;
+                    }
+                    if (ViewState["selectSearch"] != null && ((bool)ViewState["selectSearch"]) == true) 
+                    {
+                        lblSelectVendor.Visible = true;
+                        btnSearchStore.Visible = true;
+                        txtSearch.Visible = true;
                     }
                 }
                 catch (Exception exp) { }
@@ -48,11 +66,26 @@ namespace IMS.UserControl
             {
                 if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
                 {
-                    ((CheckBox)gdvVendor.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                    //((CheckBox)gdvVendor.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                }
+                if (ViewState["selectSearch"] != null && ((bool)ViewState["selectSearch"]) == true)
+                {
+                    lblSelectVendor.Visible = true;
+                    btnSearchStore.Visible = true;
+                    txtSearch.Visible = true;
                 }
             }
         }
 
+        public void PopulateforAssociation() 
+        {
+            ViewState["checkAllState"] = true;
+            lblSelectVendor.Visible = true;
+            btnSearchStore.Visible = true;
+            txtSearch.Visible = true;
+            gdvVendor.DataSource = null;
+            gdvVendor.DataBind();
+        }
         public void PopulateGrid()
         {
             if (Session["txtVendor"].ToString() != "%")
@@ -132,6 +165,10 @@ namespace IMS.UserControl
             if (Session["txtVendor"] != null)
             {
                 PopulateGrid();
+            }
+            else if (ViewState["selectSearch"] != null && ((bool)ViewState["selectSearch"]) == true)
+            {
+                BindAssociatedVendorGrid();
             }
             else
             {
@@ -424,26 +461,36 @@ namespace IMS.UserControl
             }
         }
 
-        public void BindAssociatedVendorGrid(int StoreId)
+        public void BindAssociatedVendorGrid()
         {
             try
             {
-                connection.Open();
-                DataSet resultSet = new DataSet();
-
-                SqlCommand comm = new SqlCommand("sp_GetStoredVendors", connection);
-                comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@StoreId", StoreId);
-                SqlDataAdapter SA = new SqlDataAdapter(comm);
-                SA.Fill(resultSet);
-
-                gdvVendor.DataSource = resultSet;
-                gdvVendor.DataBind();
-
-                if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
+                if (!String.IsNullOrEmpty(txtSearch.Value))
                 {
-                    ((CheckBox)gdvVendor.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
-                    ViewState["checkAllState"] = true;
+                    connection.Open();
+                    DataSet resultSet = new DataSet();
+
+                    SqlCommand comm = new SqlCommand("Sp_GetStoreVendorsByName", connection);
+                    comm.CommandType = CommandType.StoredProcedure;
+                    if (String.IsNullOrEmpty(txtSearch.Value))
+                    {
+                        comm.Parameters.AddWithValue("@p_storeName", DBNull.Value);
+                    }
+                    else 
+                    {
+                        comm.Parameters.AddWithValue("@p_storeName", txtSearch.Value);
+                    }
+                    SqlDataAdapter SA = new SqlDataAdapter(comm);
+                    SA.Fill(resultSet);
+
+                    gdvVendor.DataSource = resultSet;
+                    gdvVendor.DataBind();
+
+                    if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
+                    {
+                        ((CheckBox)gdvVendor.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                        ViewState["checkAllState"] = true;
+                    }
                 }
             }
             catch
@@ -455,6 +502,17 @@ namespace IMS.UserControl
                 connection.Close();
             }
              
+        }
+
+        protected void btnSearchStore_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                BindAssociatedVendorGrid();
+                ModalPopupExtender mpe = (ModalPopupExtender)this.Parent.FindControl("mpeCongratsMessageDiv");
+                mpe.Show();
+            }
+            catch (Exception exp) { }
         }
     }
 }

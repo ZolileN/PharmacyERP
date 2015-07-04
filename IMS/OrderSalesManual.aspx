@@ -65,14 +65,24 @@
             <td><asp:Label runat="server" AssociatedControlID="txtIvnoice" CssClass="control-label">Invoice No </asp:Label></td>
             <td><asp:TextBox runat="server" ID="txtIvnoice" CssClass="form-control" /></td>
         
-            <td><asp:Label runat="server" AssociatedControlID="StockAt" CssClass="control-label">Select Store </asp:Label></td>
-            <td><asp:DropDownList runat="server" ID="StockAt" CssClass="form-control" Width="280" AutoPostBack="True" OnSelectedIndexChanged="StockAt_SelectedIndexChanged"/>
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="StockAt" CssClass="text-danger" ErrorMessage="The Store field is required." ValidationGroup="ExSave"/></td>
             
                         
         </tr>
         <tr>
-            <td><asp:Label runat="server" ID="lblProd" AssociatedControlID="txtProduct" CssClass="control-label">Select Product</asp:Label></td>
+
+          <td><asp:Label runat="server" id="lblSelectSalesman" AssociatedControlID="ddlSalesman"  CssClass="control-label">Select Salesman</asp:Label></td>
+           <td><asp:DropDownList ID="ddlSalesman" runat="server" AutoPostBack="true"  CssClass="form-control" Width="280" OnSelectedIndexChanged="ddlSalesman_SelectedIndexChanged" ></asp:DropDownList> </td>
+
+            <td><asp:Label runat="server" AssociatedControlID="StockAt" CssClass="control-label">Select Pharmacy </asp:Label></td>
+            <td><asp:DropDownList runat="server" ID="StockAt" CssClass="form-control" Width="280" AutoPostBack="True" OnSelectedIndexChanged="StockAt_SelectedIndexChanged"/>
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="StockAt" CssClass="text-danger" ErrorMessage="The Store field is required." ValidationGroup="ExSave"/></td>
+            
+
+          
+        </tr>
+        <tr>
+
+              <td><asp:Label runat="server" ID="lblProd" AssociatedControlID="txtProduct" CssClass="control-label">Select Product</asp:Label></td>
             <td>
                <asp:TextBox ID="txtSearch" runat="server" CssClass="product"></asp:TextBox>
                 <asp:Label ID="lblProductId" runat="server" Visible="false"></asp:Label>
@@ -96,6 +106,7 @@
             
             <td><asp:Label runat="server" AssociatedControlID="SelectQuantity" CssClass="control-label">Enter Send Quantity</asp:Label></td>
             <td> <asp:TextBox runat="server" ID="SelectQuantity" CssClass="form-control" /></td>
+
         </tr>
          <tr>
             
@@ -106,8 +117,7 @@
             <td> <asp:TextBox runat="server" ID="SelectDiscount" CssClass="form-control" /></td>
         </tr>
        <tr>
-            <td><asp:Label runat="server"  CssClass="control-label">Select Salesman</asp:Label></td>
-           <td><asp:DropDownList ID="ddlSalesman" runat="server"  CssClass="form-control" Width="280" ></asp:DropDownList> </td>
+          
        </tr>
        
     </table>

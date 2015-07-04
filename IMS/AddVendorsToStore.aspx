@@ -5,8 +5,6 @@
 <%@ Register Src="~/UserControl/MultipleVendorsSelectPopup.ascx" TagPrefix="ucVendorsPopup" TagName="VendorsPopupGrid" %>
 
 
-<%--<%@ Register Src="~/UserControl/AssociatedVendorsPopup.ascx" TagPrefix="ucVendorsPopups" TagName="AssociatedVendorsPopup" %>--%>
-
 
 
 
@@ -20,15 +18,17 @@
 
     <table width="100%">
     <tr><td width="81%">
-    <h4>Assign Vendors to Store -  <span id="spnStoreName" runat="server" style="color:#2c81da"> </span></h4>
+    <h4>Assign Vendors to Pharmacy -  <span id="spnStoreName" runat="server" style="color:#2c81da"> </span></h4>
     </td>
     <td width="19%" align="right"> 
+                           
+        <asp:Button ID="btnShow" runat="server" Text="Copy Profile" CssClass="btn btn-primary" OnClick="btnShow_Click"/>
         <asp:Button ID="btnGoBack" runat="server" Text="Go Back" CssClass="btn btn-default btn-large" OnClick="btnGoBack_Click"/>
-
-        </td>
-                </tr>
-                <tr><td height="5"></td></tr>
-                </table>
+             
+         </td>
+    </tr>
+    <tr><td height="5"></td></tr>
+    </table>
     <hr>
 
 
@@ -47,7 +47,7 @@
               
                         </div> 
            </td>
-           <td>
+           <%--<td>
                 <label id="lblSelectVendorAsStore" runat="server" >Select Vendor as Store</label>
            	  
            </td>
@@ -56,10 +56,8 @@
                    <asp:DropDownList ID="ddlStoreVendors" runat="server"  OnSelectedIndexChanged="ddlStoreVendors_SelectedIndexChanged" >
                    </asp:DropDownList>
                    
-                      <asp:Button ID="btnShow" runat="server" Text="Show Vendors" CssClass="btn btn-default btn-large" OnClick="btnShow_Click"/>
-                   
                </td>
-               <%--<div id="AssociatedVendorsGrid" style="display:none;">
+               <div id="AssociatedVendorsGrid" style="display:none;">
                        <ucVendorsPopups:AssociatedVendorsPopup runat="server" id="AssociatedVendorsPopup" />
 
                        <cc1:ModalPopupExtender ID="mpeAssociatedVendorsGrid" runat="server" BackgroundCssClass="overLaypop"

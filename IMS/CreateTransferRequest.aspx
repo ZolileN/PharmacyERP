@@ -54,7 +54,7 @@
          
 
 
-           <td><asp:Label id="lblSelectStore" runat="server" >Select Store</asp:Label></td>
+           <td><asp:Label id="lblSelectStore" runat="server" >Select Pharmacy</asp:Label></td>
             <td>
                 <asp:Label ID="lblStoreId" runat="server" Visible="false"></asp:Label>
 

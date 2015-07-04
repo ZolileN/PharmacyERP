@@ -64,7 +64,7 @@ namespace IMS
 
         protected void dgvWarehouse_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            e.NewPageIndex = dgvWarehouse.PageIndex;
+            dgvWarehouse.PageIndex = e.NewPageIndex;
             BindGrid();
 
         }
@@ -115,6 +115,11 @@ namespace IMS
         {
             dgvWarehouse.EditIndex = e.NewEditIndex;
             BindGrid();
+        }
+
+        protected void btnGoBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("StoreMain.aspx");
         }
     }
 }

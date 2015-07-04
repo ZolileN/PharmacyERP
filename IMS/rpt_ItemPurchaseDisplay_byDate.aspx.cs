@@ -100,9 +100,6 @@ namespace IMS
             gdvSalesSummary.DataSource = displayTable;
             gdvSalesSummary.DataBind();
 
-              
-
-           
         }
         public void LoadData()
         {

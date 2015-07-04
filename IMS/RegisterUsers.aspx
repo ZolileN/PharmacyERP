@@ -8,11 +8,11 @@
         </td>
         <td align="right">
         
-        	  <asp:Button ID="btnAddEmployee" runat="server" OnClick="btnAddEmployee_Click" Text="ADD" CssClass="btn btn-primary" ValidationGroup="exSave" />
+        	  <asp:Button ID="btnAddEmployee" runat="server" OnClick="btnAddEmployee_Click" Text="SAVE" CssClass="btn btn-primary" ValidationGroup="exSave" />
               <asp:Button ID="btnSave" runat="server"  Text="Update" CssClass="btn btn-default" ValidationGroup="exSave" OnClick="btnUpdate_Click" />
                <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnBack_Click"/>
 
-             <asp:Button ID="btnAssociatedStore" runat="server" CssClass="btn btn-primary btn-large" Text="Associated Store" OnClick="btnAssociatedStore_Click"/>
+             <asp:Button ID="btnAssociatedStore" runat="server" CssClass="btn btn-primary btn-large" Text="Associate Pharmacy" OnClick="btnAssociatedStore_Click"/>
             </td>
         </tr>
         <tr>

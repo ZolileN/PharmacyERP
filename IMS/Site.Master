@@ -45,7 +45,8 @@
                 </div>
                 <div class="user-menu no-print">
                    
-                       <a runat="server" href="~/IMSLogin.aspx" onclick="Unnamed_Click">Logout</a>
+                    <asp:Button ID="imgLogout" runat="server" Text="Logout"  OnClick="Unnamed_Click" />
+                       <%--<a runat="server" href="~/IMSLogin.aspx" onclick="Unnamed_Click">Logout</a>--%>
                     
                 </div>
             </div>
@@ -173,9 +174,12 @@
                                     <li><a href="#">Receive Returned Items</a>
                                 </ul>
                             </li>
-                           <li><a href="Warehouse_StoreRequests.aspx">Store Requests</a></li>
-                            
-                            <li><a href="#">Reports</a>
+ 
+                            <li><a href="ManageVendor.aspx">Manage Vendors</a>
+                                <%--<ul><li><a href="SalemanMangment.aspx">Saleman Manage</a></li></ul>--%>
+                            </li>
+                             
+         <li><a href="#">Reports</a>
                             	<ul>
                                 	<li><a href="#">Print PO</a></li>
                                 	<li><a href="PackingListGeneration.html">Packing List</a></li>
@@ -425,11 +429,10 @@
                         <li><a href="#">Miscellaneous</a>
                                                     
                                  <ul>
-                                  
-                                    <li><a href="WarehouseManagement.aspx">Manage Warehouse</a></li>
+                              
+                                    <li><a href="WarehouseManagement.aspx">Manage Store</a></li>
                                     <li><a href="PharmacyManagement.aspx">Manage Pharmacy</a></li>									 
                                     <li><a href="UserManagment.aspx">Manage Users</a></li>									 
-
                                     <li><a href="SalemanMangment.aspx">Manage Salesman</a></li>
                                       <li><a href="#">Manage returned Items</a></li>
                                      
@@ -466,7 +469,7 @@
                                        </ul>
 
                                     </li>                                           
-                                         <li><a href="SelectWarehouse.aspx">Item Request to WareHouse</a></li>   
+                                         <li><a href="SelectWarehouse.aspx">Item Request to Store</a></li>   
                                             <li><a href="SelectVendor.aspx">Direct Store Purchase</a></li>
                                      <li><a href="ViewPlacedOrders.aspx">View Store Purchase</a></li>
                                        </ul>
@@ -475,9 +478,10 @@
                            
                             <li><a href="StoreTransfers_StoreRequests.aspx">Store Transfers</a></li>
                             <li><a href="ReceiveStock.aspx">Store Receivings</a></li>
-                            <li><a href="#">Store Requests</a>
+
+                            <li><a href="#">Pharmacy Requests</a>
                                 <ul>
-                                    <%--<li><a href="AutoRequest_Store.aspx">Auto Generate Request(s)</a></li>--%>
+                                   
                                     <li><a href="StoreRequests.aspx">Manual Generate Requests</a></li>
                                     <li><a href="CreateTransferRequest.aspx">Create Transfer Request</a></li> 
 
@@ -496,8 +500,8 @@
             <asp:Literal runat="server" ID="headofficeNav">
                     
                 <ul class="main-menu">
-                            <li><a href="ManageStore.aspx">Manage Stores</a></li>
-                            <li><a href="ManageWarehouse.aspx">Manage WareHouse</a></li>
+                            <li><a href="ManageStore.aspx">Manage Pharmacy</a></li>
+                            <li><a href="ManageWarehouse.aspx">Manage Store</a></li>
                             <li><a href="CompanySettings.aspx">Manage Company Information</a></li>
                             <li><a href="Reports.aspx">View Reports</a></li>
                             <li><a href="RegisterUsers.aspx">Register Users</a></li>

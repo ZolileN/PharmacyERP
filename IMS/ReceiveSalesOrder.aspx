@@ -30,7 +30,7 @@
      <table width="100%" class="formTbl">
 
         <tr>
-            <td><asp:Label runat="server" AssociatedControlID="StockAt" CssClass="control-label">Store Name </asp:Label></td>
+            <td><asp:Label runat="server" AssociatedControlID="StockAt" CssClass="control-label">Pharmacy Name </asp:Label></td>
             <td>
                 <asp:DropDownList runat="server" ID="StockAt" CssClass="form-control product" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="StockAt_SelectedIndexChanged" DataSourceID="StockAtDataSource" DataTextField="SystemName" DataValueField="SystemID"  />
 

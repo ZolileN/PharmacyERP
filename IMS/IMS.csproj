@@ -968,6 +968,10 @@
     <Content Include="Images\add-icon.png" />
     <Content Include="Images\apt-logo.gif" />
     <Content Include="Images\arrow.gif" />
+    <Content Include="Images\arrowDLeft.png" />
+    <Content Include="Images\arrowDRight.png" />
+    <Content Include="Images\arrowLeft.png" />
+    <Content Include="Images\arrowRight.png" />
     <Content Include="Images\body-bg-login.jpg" />
     <Content Include="Images\body-bg-w.jpg" />
     <Content Include="Images\body-bg.jpg" />
@@ -1018,6 +1022,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="PackingListGeneration.aspx" />
     <Content Include="PharmacyManagement.aspx" />
+    <Content Include="PharmacyNameResult.aspx" />
     <Content Include="PlaceOrder.aspx" />
     <Content Include="PO_GENERATE.aspx" />
     <Content Include="Print_Request_WH.aspx" />
@@ -1053,6 +1058,8 @@
     <Content Include="rpt_PurchaseItem_Selection.aspx" />
     <Content Include="rpt_SalesSummaryDisplay.aspx" />
     <Content Include="rpt_SalesSummary_Selection.aspx" />
+    <Content Include="Scripts\FindPharmacyName.js" />
+    <Content Include="Scripts\SuggestPharmacyName.js" />
     <Content Include="SentTransferRequests.aspx" />
     <Content Include="UserControl\rpt_ucCategory.ascx" />
     <Content Include="UserControl\rpt_ucDepartment.ascx" />
@@ -1609,6 +1616,13 @@
     </Compile>
     <Compile Include="PharmacyManagement.aspx.designer.cs">
       <DependentUpon>PharmacyManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PharmacyNameResult.aspx.cs">
+      <DependentUpon>PharmacyNameResult.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PharmacyNameResult.aspx.designer.cs">
+      <DependentUpon>PharmacyNameResult.aspx</DependentUpon>
     </Compile>
     <Compile Include="PlaceOrder.aspx.cs">
       <DependentUpon>PlaceOrder.aspx</DependentUpon>
