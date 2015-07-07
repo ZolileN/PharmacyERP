@@ -94,6 +94,8 @@ namespace IMS
                 if (Session["PageMasterProduct"] != null && Session["PageMasterProduct"].ToString() != null && 
                     Session["PageMasterProduct"].ToString() != "" && Session["PageMasterProduct"].ToString()!="false")
                 {
+                    LoadData();
+
                     FromMaster_Load(Session["MS_ItemNo"].ToString(), Session["MS_ItemName"].ToString(), Session["MS_ItemType"].ToString(), Session["MS_Manufacterer"].ToString(),
                                     Session["MS_Category"].ToString(), Session["MS_GenericName"].ToString(), Session["MS_Control"].ToString(), Session["MS_BinNumber"].ToString(),
                                     Session["MS_GreenRainCode"].ToString(), Session["MS_BrandName"].ToString(), Session["MS_MaxiMumDiscount"].ToString(), Session["MS_LineID"].ToString(),
@@ -142,6 +144,13 @@ namespace IMS
                     {
                         ProductDept.Items.Insert(0, "Select Department");
                         ProductDept.SelectedIndex = 0;
+                    }
+                    
+                    if (!Session["DepartmentID"].Equals(null))
+                    {
+                        int DepartmentID = int.Parse(Session["DepartmentID"].ToString());
+                        ProductDept.SelectedIndex = DepartmentID;
+                        ProductDept.SelectedValue = DepartmentID.ToString();
                     }
                     if (Session["MODE"].Equals("EDIT"))
                     {
@@ -610,7 +619,10 @@ namespace IMS
             #region Populating Category Dropdown
             try
             {
-                connection.Open();
+                if(connection.State== ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("Select * From tblCategory Where DepartmentID = '"+ ProductDept.SelectedValue.ToString() +"'", connection);
                 DataSet ds = new DataSet();
                 SqlDataAdapter sA = new SqlDataAdapter(command);
@@ -624,6 +636,70 @@ namespace IMS
                     ProductCat.Items.Insert(0, "Select Category");
                     ProductCat.SelectedIndex = 0;
                 }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                connection.Close();
+            }
+            #endregion
+        }
+        protected void LoadData()
+        {
+            #region Populating Category Dropdown
+            try
+            {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("Select * From tblCategory", connection);
+                DataSet ds = new DataSet();
+                SqlDataAdapter sA = new SqlDataAdapter(command);
+                sA.Fill(ds);
+                ProductCat.DataSource = ds.Tables[0];
+                ProductCat.DataTextField = "Name";
+                ProductCat.DataValueField = "CategoryID";
+                ProductCat.DataBind();
+                if (ProductCat != null)
+                {
+                    ProductCat.Items.Insert(0, "Select Category");
+                    ProductCat.SelectedIndex = 0;
+                }
+                if (!Session["CategoryID"].Equals(null))
+                {
+                   // int CategoryID = int.Parse(Session["CategoryID"].ToString());
+                    ProductCat.SelectedValue = Session["CategoryID"].ToString();
+                }
+
+                #region populate Sub Category Dropdown
+
+                SqlCommand comm = new SqlCommand("Select * From tblSub_Category", connection);
+                DataSet ds1 = new DataSet();
+                SqlDataAdapter sA1 = new SqlDataAdapter(comm);
+                sA1.Fill(ds1);
+                ProductSubCat.DataSource = ds1.Tables[0];
+                ProductSubCat.DataTextField = "Name";
+                ProductSubCat.DataValueField = "Sub_CatID";
+                ProductSubCat.DataBind();
+
+                if (ProductSubCat != null)
+                {
+                    ProductSubCat.Items.Insert(0, "Select Sub Category");
+                    ProductSubCat.SelectedIndex = 0;
+                }
+
+                if (!Session["SubCategoryID"].Equals(null))
+                {
+                    //int SubCategoryID = int.Parse(Session["SubCategoryID"].ToString());
+                    ProductSubCat.SelectedValue = Session["SubCategoryID"].ToString();
+                }
+
+
+                #endregion
             }
             catch (Exception ex)
             {
