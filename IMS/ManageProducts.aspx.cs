@@ -156,8 +156,31 @@ namespace IMS
                     Label GreenRainCode = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("GreenRain");
                     Label UnitSale = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("lblUnitSalePrice");
                     Label UnitCost = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("UnitCost");
+                    Label lblSubCategoryID = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("lblSubCategoryID");
 
+                    #region Get values for Category, Sub Category and Department against Sub Category ID
 
+                    DataSet dsDropdownValues = new DataSet();
+                    int SubCategoryID = 0;
+                    int.TryParse(lblSubCategoryID.Text.ToString(), out SubCategoryID);
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
+                    SqlCommand command = new SqlCommand("sp_getSubCategoryCategoryDepartment", connection);
+                    command.Parameters.Add("@p_SubCategoryID", SubCategoryID);
+                    command.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter dA = new SqlDataAdapter(command);
+                    dA.Fill(dsDropdownValues);
+
+                    //set session values for drop downs
+                    Session["SubCategoryID"] = SubCategoryID;
+                    Session["CategoryID"] = dsDropdownValues.Tables[0].Rows[0]["CategoryID"].ToString();
+                    Session["DepartmentID"] = dsDropdownValues.Tables[0].Rows[0]["DepId"].ToString();
+
+                    #endregion
+                    
+                     
                     
 
                     Session["PageMasterProduct"] = "true";
@@ -172,6 +195,7 @@ namespace IMS
                    // DataView dv = ProductSet.Tables[0].DefaultView;
                     dv.RowFilter = "Product_Id_Org = '"+ ItemNo.Text + "'";
                     DataTable dt = dv.ToTable();
+                    Session["DrugType"] = dt.Rows[0]["DrugType"].ToString();
                     Session["MS_Manufacterer"] = "";
                     Session["MS_Category"] = "";
                     Session["MS_Description"] = dt.Rows[0]["Description"].ToString();

@@ -164,6 +164,13 @@
                         <ItemStyle  Width="110px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
 
+                      <asp:TemplateField HeaderText="SubCategoryID" Visible="false">
+                        <ItemTemplate>
+                            <asp:Label ID="lblSubCategoryID" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("SubCategoryID") %>' Width="100px"></asp:Label>
+                        </ItemTemplate>
+                        <ItemStyle  Width="110px" HorizontalAlign="Left"/>
+                    </asp:TemplateField>
+
                      
                  </Columns>
             <PagerStyle CssClass = "GridPager" />

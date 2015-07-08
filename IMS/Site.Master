@@ -470,7 +470,7 @@
 
                                     </li>                                           
                                          <li><a href="SelectWarehouse.aspx">Item Request to Store</a></li>   
-                                            <li><a href="SelectVendor.aspx">Direct Store Purchase</a></li>
+                                            <li><a href="SelectVendor.aspx">Direct Pharmacy Purchase</a></li>
                                      <li><a href="ViewPlacedOrders.aspx">View Store Purchase</a></li>
                                        </ul>
 
