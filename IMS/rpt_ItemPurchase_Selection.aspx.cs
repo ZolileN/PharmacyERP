@@ -179,7 +179,8 @@ namespace IMS
 
           //Session["ItemPurchaseReportDetail"] = dt;
             //Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenWindow", "window.open('ItemPurchase.aspx','_newtab');", true);
-           Response.Redirect(Session["DisplayPurchase"].ToString());
+           //Response.Redirect(Session["DisplayPurchase"].ToString());
+            Response.Redirect("CrystalReportViewer.aspx");
         }
 
         protected void btnGoBack_Click(object sender, EventArgs e)

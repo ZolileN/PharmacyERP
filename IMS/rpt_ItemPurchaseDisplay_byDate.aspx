@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="rpt_ItemPurchaseDisplay_byDate.aspx.cs" Inherits="IMS.rpt_ItemPurchaseDisplay_byDate" EnableEventValidation="false" %>
 
 <%@ Register Assembly="CrystalDecisions.Web, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" Namespace="CrystalDecisions.Web" TagPrefix="CR" %>
+<%@ Register assembly="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" namespace="Microsoft.Reporting.WebForms" tagprefix="rsweb" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <!--<script type="text/javascript">
     function Print() {
@@ -64,8 +65,10 @@
      </table>
 
     <div id="dvReport">
-    <CR:CrystalReportViewer ID="CrystalReportViewer1" runat="server" AutoDataBind="True" Height="1202px" Width="1104px" PrintMode="Pdf" HasPrintButton="False" HasExportButton="False"/>
+    <CR:CrystalReportViewer ID="CrystalReportViewer1" Visible="true" runat="server" AutoDataBind="True" Height="1202px" Width="1104px" PrintMode="Pdf" HasPrintButton="False" HasExportButton="False"/>
     </div>
+
+       
 
        <asp:GridView ID="gdvSalesSummary" runat="server" Visible="false" Width="100%" 
         AutoGenerateColumns="false" OnRowDataBound="gdvSalesSummary_RowDataBound" BorderWidth="0px">

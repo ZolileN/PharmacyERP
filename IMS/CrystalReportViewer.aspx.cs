@@ -17,7 +17,7 @@ using System.Drawing.Printing;
 
 namespace IMS
 {
-    public partial class rpt_ItemPurchaseDisplay_byDate : System.Web.UI.Page
+    public partial class CrystalReportViewer : System.Web.UI.Page
     {
         public DataSet ds;
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
@@ -30,15 +30,6 @@ namespace IMS
                 //ViewState["CustomerID"] = 0;
                 DisplayMainGrid((DataTable)Session["dtItemPurchased"]);
 
-                lblDateFrom.Text = Session["rptItemPurchaseDateF"].ToString();
-                lblDateTo.Text = Session["rptItemPurchaseDateT"].ToString();
-                lblCustomers.Text = Session["selectionCustomers"].ToString();
-                lblDepartment.Text = Session["selectionDepartment"].ToString();
-                lblCategory.Text = Session["selectionCategory"].ToString();
-                lblSubCategory.Text = Session["selectionSubCategory"].ToString();
-                lblProduct.Text = Session["selectionProduct"].ToString();
-                lblBarterCustomer.Text = Session["rptBarterCustomers"].ToString();
-
             }
         }
 
@@ -49,29 +40,29 @@ namespace IMS
             ds.AcceptChanges();
             try
             {
-                 
 
-               //ItemPurchase myReportDocument = new ItemPurchase();
-               ReportDocument myReportDocument = new ReportDocument();
-               myReportDocument.Load(Server.MapPath("~/ItemPurchaseDetailReport.rpt"));
-               myReportDocument.SetDatabaseLogon("sahmed", "dps123!@#");
-               App_Code.Barcode dsReport = new App_Code.Barcode();
-               dsReport.Tables[0].Merge(dt);
-               myReportDocument.SetDataSource(dsReport.Tables[0]);
 
-               //CrystalReportSource1.ReportDocument.SetDataSource(dt);
+                //ItemPurchase myReportDocument = new ItemPurchase();
+                ReportDocument myReportDocument = new ReportDocument();
+                myReportDocument.Load(Server.MapPath("~/ItemPurchaseDetailReport.rpt"));
+                myReportDocument.SetDatabaseLogon("sahmed", "dps123!@#");
+                App_Code.Barcode dsReport = new App_Code.Barcode();
+                dsReport.Tables[0].Merge(dt);
+                myReportDocument.SetDataSource(dsReport.Tables[0]);
 
-               CrystalReportViewer1.ReportSource = myReportDocument;
-               CrystalReportViewer1.DisplayToolbar = true;
-               CrystalReportViewer1.HasToggleGroupTreeButton = false;
-               CrystalReportViewer1.ToolPanelView = CrystalDecisions.Web.ToolPanelViewType.None;
+                //CrystalReportSource1.ReportDocument.SetDataSource(dt);
 
-               ViewState["ReportDoc"] = myReportDocument;
-               Session["ReportDoc_Printing"] = myReportDocument;
-               Session["ReportPrinting_Redirection"] = "rpt_ItemPurchase_Selection.aspx";
+                CrystalReportViewer1.ReportSource = myReportDocument;
+                CrystalReportViewer1.DisplayToolbar = true;
+                CrystalReportViewer1.HasToggleGroupTreeButton = false;
+                CrystalReportViewer1.ToolPanelView = CrystalDecisions.Web.ToolPanelViewType.None;
+
+                ViewState["ReportDoc"] = myReportDocument;
+                Session["ReportDoc_Printing"] = myReportDocument;
+                Session["ReportPrinting_Redirection"] = "rpt_ItemPurchase_Selection.aspx";
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -95,9 +86,9 @@ namespace IMS
             displayTable = null;
             displayTable = dv.ToTable(true, "OrderID", "SupName", "OrderDate");
 
-            gdvSalesSummary.DataSource = null;
-            gdvSalesSummary.DataSource = displayTable;
-            gdvSalesSummary.DataBind();
+            //gdvSalesSummary.DataSource = null;
+           // gdvSalesSummary.DataSource = displayTable;
+          //  gdvSalesSummary.DataBind();
 
         }
         public void LoadData()
@@ -188,7 +179,7 @@ namespace IMS
                         dv = dtfilterSet.DefaultView;
                         dv.RowFilter = "OrderRequestedFor = '" + CustID + "'";
                         dtfilterSet = dv.ToTable();
-                        
+
                     }
 
                     if (BarterValue.Equals("Exclude"))
@@ -204,7 +195,7 @@ namespace IMS
                         dv = dtfilterSet.DefaultView;
                         dv.RowFilter = "DeptID = '" + DeptID + "'";
                         dtfilterSet = dv.ToTable();
-                        
+
                     }
 
 
@@ -213,7 +204,7 @@ namespace IMS
                         dv = dtfilterSet.DefaultView;
                         dv.RowFilter = "CatID = '" + CatID + "'";
                         dtfilterSet = dv.ToTable();
-                        
+
                     }
 
 
@@ -222,7 +213,7 @@ namespace IMS
                         dv = dtfilterSet.DefaultView;
                         dv.RowFilter = "SubCategoryID = '" + SubCatID + "'";
                         dtfilterSet = dv.ToTable();
-                        
+
                     }
 
 
@@ -231,7 +222,7 @@ namespace IMS
                         dv = dtfilterSet.DefaultView;
                         dv.RowFilter = "ProductID = '" + ProdID + "'";
                         dtfilterSet = dv.ToTable();
-                        
+
                     }
 
 
@@ -277,88 +268,6 @@ namespace IMS
         public string GetDefaultprinterName()
         {
             throw new NotImplementedException();
-        }
-
-        protected void btnGoBack_Click(object sender, EventArgs e)
-        {
-            Session["rptProductID"] = null;
-
-            Session["rptSubCategoryID"] = null;
-
-            Session["rptCategoryID"] = null;
-
-            Session["rptDepartmentID"] = null;
-
-            Session["rptCustomerID"] = null;
-
-            Session["rptBarterCustomers"] = null;
-
-            Response.Redirect("rpt_ItemPurchase_Selection.aspx");
-        }
-
-        protected void gdvSalesSummary_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            try
-            {
-                if (e.Row.RowType == DataControlRowType.DataRow)
-                {
-                    GridView gvMAinDisplay = (GridView)e.Row.FindControl("gvMAinGrid");
-                    GridView gdvTotal = (GridView)e.Row.FindControl("gdvTotal");
-
-                    DataTable dt = (DataTable)Session["dtItemPurchased"];
-                    DataView dv = dt.DefaultView;
-                    int OrderID = 0;
-                    Label lblOrderID = (Label)e.Row.FindControl("lblSO");
-                    int.TryParse(lblOrderID.Text.ToString(), out OrderID);
-                    dv.RowFilter = "OrderID = '" + OrderID + "'";
-
-                    dt = null;
-                    dt = dv.ToTable();
-
-                    DataTable displayTable = new DataTable();
-                    displayTable.Clear();
-                    displayTable.Columns.Add("TotalSendQaun", typeof(Decimal));
-                    displayTable.Columns.Add("TotalBonusQuan", typeof(Decimal));
-                    displayTable.Columns.Add("TotalSoldQuan", typeof(Decimal));
-                    displayTable.Columns.Add("TotalSoldBonus", typeof(Decimal));
-                    displayTable.Columns.Add("TotalCostPrice", typeof(Decimal));
-
-                    Decimal Accepted, Bonus, Sold, SoldBonus, Price;
-                    Accepted = Bonus = Sold = SoldBonus = Price = 0;
-
-                    for (int i = 0; i < dt.Rows.Count; i++)
-                    {
-                        Accepted += Decimal.Parse(dt.Rows[i]["SendQuantity"].ToString());
-                        Bonus += Decimal.Parse(dt.Rows[i]["BonusQuantity"].ToString());
-                        Sold += Decimal.Parse(dt.Rows[i]["RecievedQuantity"].ToString());
-                        SoldBonus += Decimal.Parse(dt.Rows[i]["RecievedBonusQuantity"].ToString());
-                        Price += Decimal.Parse(dt.Rows[i]["TotalCostPrice"].ToString());
-
-                    }
-
-                    displayTable.Rows.Add(Accepted, Bonus, Sold, SoldBonus, Price);
-                    displayTable.AcceptChanges();
-
-
-                    gdvTotal.DataSource = displayTable;
-                    gdvTotal.DataBind();
-
-                    gvMAinDisplay.DataSource = dt;
-                    gvMAinDisplay.DataBind();
-                }
-            }
-            catch (Exception ex)
-            {
-               //WebMessageBoxUtil.Show(ex.Message);
-            }
-        }
-
-        protected void btnExport_Click(object sender, EventArgs e)
-        {
-            ReportDocument doc = new ReportDocument();
-            doc = (ReportDocument)ViewState["ReportDoc"];
-            doc.PrintOptions.PrinterName = GetDefaultPrinter();
-            doc.PrintToPrinter(1, false, 0, 0);
         }
     }
 }

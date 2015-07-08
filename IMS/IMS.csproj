@@ -48,12 +48,18 @@
     <Reference Include="BarcodeLib">
       <HintPath>..\..\..\..\..\work\ims\reference\bar-code\barcode_src\BarcodeLib\bin\Debug\BarcodeLib.dll</HintPath>
     </Reference>
-    <Reference Include="CrystalDecisions.CrystalReports.Design, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
-    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.CrystalReports.Design, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="CrystalDecisions.CrystalReports.TemplateEngine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="CrystalDecisions.Data.AdoDotNetInterop, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Data.AdoDotNetInterop, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="CrystalDecisions.Enterprise.Viewing.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
@@ -243,174 +249,511 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_cs.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_da.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_de.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_en.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_es.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_fi.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_fr.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_hu.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_it.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_ja.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_ko.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_nb.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_nl.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_pl.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_pt.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_ru.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_sk.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_sv.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_th.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_tr.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_zh_CN.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_zh_TW.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_cs.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_da.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_de.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_en.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_es.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_fi.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_fr.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_hu.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_it.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_ja.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_ko.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_nb.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_nl.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_pl.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_pt.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_ru.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_sk.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_sv.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_th.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_tr.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_zh_CN.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_zh_TW.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\LCIDTable.xml" />
-    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_cs.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_da.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_de.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_en.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_es.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_fi.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_fr.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_hu.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_it.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_ja.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_ko.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_nb.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_nl.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_pl.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_pt.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_ru.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_sk.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_sv.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_th.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_tr.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_zh_CN.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_zh_TW.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\pvlocale-1-0.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_cs.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_da.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_de.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_en.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_es.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_fi.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_fr.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_hu.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_it.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_ja.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_ko.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_nb.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_nl.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_pl.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_pt.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_ru.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_sk.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_sv.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_th.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_tr.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_zh_CN.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_zh_TW.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\swebrs.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_cs.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_da.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_de.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_en.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_es.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_fi.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_fr.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_hu.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_it.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_ja.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_ko.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_nb.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_nl.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_pl.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_pt.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_ru.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_sk.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_sv.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_th.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_tr.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_zh_CN.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_zh_TW.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_cs.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_da.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_de.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_en.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_es.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_fi.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_fr.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_hu.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_it.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_ja.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_ko.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_nb.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_nl.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_pl.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_pt.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_ru.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_sk.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_sv.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_th.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_tr.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_zh_CN.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_zh_TW.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_cs.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_da.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_de.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_en.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_es.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_fi.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_fr.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_hu.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_it.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_ja.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_ko.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_nb.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_nl.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_pl.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_pt.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_ru.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_sk.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_sv.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_th.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_tr.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_zh_CN.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_zh_TW.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\pvlocale-1-0.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\xerces-c_2_7.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\XERCES27_LICENSE.txt" />
-    <Content Include="crystalreportviewers13\ActiveXControls\xerces-c_2_7.dll" />
-    <Content Include="crystalreportviewers13\ActiveXControls\XERCES27_LICENSE.txt" />
+    <Content Include="CrystalReportViewer.aspx" />
+    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_cs.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_da.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_de.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_en.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_es.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_fi.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_fr.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_hu.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_it.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_ja.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_ko.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_nb.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_nl.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_pl.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_pt.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_ru.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_sk.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_sv.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_th.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_tr.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_zh_CN.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\CRViewer_res_zh_TW.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_cs.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_da.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_de.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_en.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_es.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_fi.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_fr.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_hu.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_it.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_ja.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_ko.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_nb.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_nl.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_pl.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_pt.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_ru.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_sk.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_sv.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_th.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_tr.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_zh_CN.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\csprintdlg_res_zh_TW.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\LCIDTable.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_cs.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_da.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_de.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_en.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_es.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_fi.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_fr.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_hu.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_it.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_ja.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_ko.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_nb.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_nl.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_pl.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_pt.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_ru.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_sk.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_sv.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_th.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_tr.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_zh_CN.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\PrintControl_res_zh_TW.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\pvlocale-1-0.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_cs.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_da.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_de.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_en.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_es.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_fi.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_fr.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_hu.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_it.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_ja.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_ko.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_nb.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_nl.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_pl.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_pt.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_ru.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_sk.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_sv.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_th.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_tr.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_zh_CN.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\sviewhlp_res_zh_TW.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\swebrs.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_cs.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_da.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_de.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_en.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_es.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_fi.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_fr.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_hu.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_it.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_ja.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_ko.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_nb.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_nl.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_pl.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_pt.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_ru.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_sk.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_sv.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_th.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_tr.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_zh_CN.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\swebrs_res_zh_TW.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_cs.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_da.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_de.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_en.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_es.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_fi.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_fr.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_hu.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_it.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_ja.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_ko.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_nb.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_nl.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_pl.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_pt.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_ru.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_sk.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_sv.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_th.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_tr.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_zh_CN.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\csprintdlg_res_zh_TW.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_cs.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_da.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_de.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_en.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_es.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_fi.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_fr.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_hu.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_it.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_ja.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_ko.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_nb.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_nl.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_pl.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_pt.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_ru.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_sk.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_sv.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_th.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_tr.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_zh_CN.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\PrintControl_res_zh_TW.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\pvlocale-1-0.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\xerces-c_2_7.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\win64_x64\XERCES27_LICENSE.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\xerces-c_2_7.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="crystalreportviewers13\ActiveXControls\XERCES27_LICENSE.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="crystalreportviewers13\allInOne.js" />
     <Content Include="crystalreportviewers13\allStrings_cs.js" />
     <Content Include="crystalreportviewers13\allStrings_da.js" />
@@ -1210,7 +1553,9 @@
     <Content Include="App_Code\dsItemPurchase.xss">
       <DependentUpon>dsItemPurchase.xsd</DependentUpon>
     </Content>
-    <Content Include="crystalreportviewers13\ActiveXControls\crviewer.dep" />
+    <Content Include="crystalreportviewers13\ActiveXControls\crviewer.dep">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="crystalreportviewers13\crsmarttag.jsp" />
     <Content Include="crystalreportviewers13\preview.jsp" />
     <None Include="Project_Readme.html" />
@@ -1355,6 +1700,13 @@
     </Compile>
     <Compile Include="CompanySettings.aspx.designer.cs">
       <DependentUpon>CompanySettings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalReportViewer.aspx.cs">
+      <DependentUpon>CrystalReportViewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CrystalReportViewer.aspx.designer.cs">
+      <DependentUpon>CrystalReportViewer.aspx</DependentUpon>
     </Compile>
     <Compile Include="DisplayOrderDetailEntries.aspx.cs">
       <DependentUpon>DisplayOrderDetailEntries.aspx</DependentUpon>
@@ -2221,24 +2573,20 @@
       <Project>{5e1c6171-feaf-44ce-8bb5-5e7c741c2924}</Project>
       <Name>IMSCommon</Name>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\abdul.haseeb\Documents\Visual Studio 2010\Projects\ReportApplication\ReportApplication\ReportApplication.csproj">
-      <Project>{b0ee2fcf-8c6d-4fe9-b616-f8a037f3c1a6}</Project>
-      <Name>ReportApplication</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ItemPurchase.rpt">
+    <Content Include="ItemPurchase.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ItemPurchase.cs</LastGenOutput>
-    </EmbeddedResource>
+    </Content>
     <EmbeddedResource Include="ItemSaleDetailReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ItemSaleDetailReport.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ItemPurchaseDetailReport.rpt">
+    <Content Include="ItemPurchaseDetailReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ItemPurchaseDetailReport.cs</LastGenOutput>
-    </EmbeddedResource>
+    </Content>
     <EmbeddedResource Include="Report\barcode_Print.rdlc" />
   </ItemGroup>
   <ItemGroup>
