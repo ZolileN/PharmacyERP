@@ -49,6 +49,7 @@ namespace IMS
                         switch(dt.Rows[0]["RoleName"].ToString())
                         {
                             case "WareHouse":
+                                Session["UserName"] = dt.Rows[0]["SystemName"].ToString();
                                 Session["UserSys"] = dt.Rows[0]["SystemID"].ToString();
                                 Session["UserEmail"] = dt.Rows[0]["U_Email"].ToString();
                                 Session["isHeadOffice"] = false;
@@ -56,6 +57,7 @@ namespace IMS
                                 Response.Redirect("WarehouseMain.aspx",false);
                                 break;
                             case "Store":
+                                Session["UserName"] = dt.Rows[0]["SystemName"].ToString();
                                 Session["UserSys"] = dt.Rows[0]["SystemID"].ToString();
                                 Session["UserEmail"] = dt.Rows[0]["U_Email"].ToString();
                                 Session["isHeadOffice"] = false;
@@ -63,6 +65,7 @@ namespace IMS
                                 Response.Redirect("StoreMain.aspx",false);
                                 break;
                             case "HeadOffice":
+                                Session["UserName"] = dt.Rows[0]["SystemName"].ToString();
                                 Session["isHeadOffice"] = true;
                                 Session["UserEmail"] = dt.Rows[0]["U_Email"].ToString();
                                 Session["UserRole"] = "HeadOffice";

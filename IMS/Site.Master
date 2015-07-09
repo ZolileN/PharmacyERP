@@ -44,7 +44,7 @@
                 <div class="logo">
                 </div>
                 <div class="user-menu no-print">
-                   
+                   <asp:Label ID="lbllogin" runat="server" visible="false"/>
                     <asp:Button ID="imgLogout" runat="server" Text="Logout"  OnClick="Unnamed_Click" />
                        <%--<a runat="server" href="~/IMSLogin.aspx" onclick="Unnamed_Click">Logout</a>--%>
                     
