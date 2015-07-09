@@ -23,7 +23,7 @@ namespace IMS
             if(!IsPostBack)
             {
                 ReportDocument doc = new ReportDocument();
-                doc = (ReportDocument)Session["ReportDoc_Printing"];
+                doc = (ReportDocument)Session["ReportDocument"];
                 doc.PrintOptions.PrinterName = GetDefaultPrinter();
                 doc.PrintToPrinter(1, false, 0, 0);
             }

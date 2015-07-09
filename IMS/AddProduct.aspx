@@ -9,13 +9,12 @@
      <div class="form-horizontal" style="display:none;">
      <asp:Label runat="server" AssociatedControlID="txtProduct" CssClass="col-md-2 control-label">Search Product </asp:Label>
             <div class="col-md-10">
-                <asp:TextBox runat="server" ID="txtProduct" CssClass="form-control product master-search"/>
-                <asp:Button runat="server" ID="btnMasterSearch" CssClass ="btn btn-sm btn-primary" Text="Master Search" OnClick="btnMasterSearch_Click"/>
-                <br />
+               
             </div>
      </div>
 
                 <table width="100%">
+                     
                      <tr><td>
                     <h4>Add Product</h4>
                     </td>
@@ -28,6 +27,15 @@
                     <tr>
         	            <td height="6"></td>
                     </tr>
+                    <!--<tr>
+                         <td>
+                             Search Product in Master Archive
+                         </td>
+                         <td>
+                              <asp:TextBox runat="server" ID="txtProduct" CssClass="form-control product master-search"/>
+                              <asp:Button runat="server" ID="btnMasterSearch" CssClass ="btn btn-sm btn-primary" Text="Master Search" OnClick="btnMasterSearch_Click"/>
+                         </td>
+                     </tr>-->
                     </table>
       
         <hr />

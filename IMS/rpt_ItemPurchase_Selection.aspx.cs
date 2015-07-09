@@ -1,15 +1,27 @@
-﻿using IMS.UserControl;
+﻿using AjaxControlToolkit;
+using IMSBusinessLogic;
+using IMSCommon;
+using IMSCommon.Util;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
+using System.Drawing.Printing;
+
 
 namespace IMS
 {
     public partial class rpt_ItemPurchase_Selection : System.Web.UI.Page
     {
+        public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
+        public ReportDocument myReportDocument = new ReportDocument();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -176,13 +188,192 @@ namespace IMS
                 Session["rptInternalCustomers"] = "Include";
             }*/
 
-
-          //Session["ItemPurchaseReportDetail"] = dt;
-            //Page.ClientScript.RegisterStartupScript(this.GetType(), "OpenWindow", "window.open('ItemPurchase.aspx','_newtab');", true);
-           //Response.Redirect(Session["DisplayPurchase"].ToString());
+            LoadData();
             Response.Redirect("CrystalReportViewer.aspx");
         }
 
+        public void LoadData()
+        {
+            int ProdID, DeptID, CatID, SubCatID, CustID, SalesID;
+            ProdID = DeptID = CatID = SubCatID = CustID = SalesID = 0;
+            String BarterValue = "";
+            DateTime Expiry = new DateTime();
+            try
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("sp_rpt_ItemPurchase", connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                #region Applying Filters
+
+                BarterValue = Session["rptBarterCustomers"].ToString();
+
+                if (Session["rptCustomerID"] != null && Session["rptCustomerID"].ToString() != "")
+                {
+                    if (int.TryParse(Session["rptCustomerID"].ToString(), out CustID))
+                    {
+
+                    }
+                }
+
+                if (Session["rptDepartmentID"] != null && Session["rptDepartmentID"].ToString() != "")
+                {
+                    if (int.TryParse(Session["rptDepartmentID"].ToString(), out DeptID))
+                    {
+
+                    }
+                }
+
+                if (Session["rptCategoryID"] != null && Session["rptCategoryID"].ToString() != "")
+                {
+                    if (int.TryParse(Session["rptCategoryID"].ToString(), out CatID))
+                    {
+
+                    }
+                }
+
+                if (Session["rptSubCategoryID"] != null && Session["rptSubCategoryID"].ToString() != "")
+                {
+                    if (int.TryParse(Session["rptSubCategoryID"].ToString(), out SubCatID))
+                    {
+
+                    }
+                }
+
+
+                if (Session["rptProductID"] != null && Session["rptProductID"].ToString() != "")
+                {
+                    if (int.TryParse(Session["rptProductID"].ToString(), out ProdID))
+                    {
+
+                    }
+                }
+
+                if (Session["rptItemPurchaseExpiry"] != null && Session["rptItemPurchaseExpiry"].ToString() != "")
+                {
+
+                    Expiry = Convert.ToDateTime(Session["rptItemPurchaseExpiry"].ToString());
+                }
+
+
+                #endregion
+
+                DataSet ds = new DataSet();
+                SqlDataAdapter dA = new SqlDataAdapter(command);
+                dA.Fill(ds);
+
+                if ((Session["rptItemPurchaseDateF"] != null && Session["rptItemPurchaseDateF"].ToString() != "") &&
+                    (Session["rptItemPurchaseDateT"] != null && Session["rptItemPurchaseDateT"].ToString() != ""))
+                {
+                    DateTime dtFROM = Convert.ToDateTime(Session["rptItemPurchaseDateF"].ToString());
+                    DateTime dtTo = Convert.ToDateTime(Session["rptItemPurchaseDateT"].ToString());
+
+                    DataView dv = ds.Tables[0].DefaultView;
+                    dv.RowFilter = "OrderDate >= '" + dtFROM.ToString("yyyy-MM-dd") + "' AND OrderDate <= '" + dtTo.ToString("yyyy-MM-dd") + "'";
+
+                    DataTable dtfilterSet = dv.ToTable();
+                    dv = dtfilterSet.DefaultView;
+
+                    if (CustID != 0)
+                    {
+                        dv = dtfilterSet.DefaultView;
+                        dv.RowFilter = "OrderRequestedFor = '" + CustID + "'";
+                        dtfilterSet = dv.ToTable();
+
+                    }
+
+                    if (BarterValue.Equals("Exclude"))
+                    {
+                        dv = dtfilterSet.DefaultView;
+                        dv.RowFilter = "BarterExchangeID IS NULL";
+                        dtfilterSet = dv.ToTable();
+                    }
+
+
+                    if (DeptID != 0)
+                    {
+                        dv = dtfilterSet.DefaultView;
+                        dv.RowFilter = "DeptID = '" + DeptID + "'";
+                        dtfilterSet = dv.ToTable();
+
+                    }
+
+
+                    if (CatID != 0)
+                    {
+                        dv = dtfilterSet.DefaultView;
+                        dv.RowFilter = "CatID = '" + CatID + "'";
+                        dtfilterSet = dv.ToTable();
+
+                    }
+
+
+                    if (SubCatID != 0)
+                    {
+                        dv = dtfilterSet.DefaultView;
+                        dv.RowFilter = "SubCategoryID = '" + SubCatID + "'";
+                        dtfilterSet = dv.ToTable();
+
+                    }
+
+
+                    if (ProdID != 0)
+                    {
+                        dv = dtfilterSet.DefaultView;
+                        dv.RowFilter = "ProductID = '" + ProdID + "'";
+                        dtfilterSet = dv.ToTable();
+
+                    }
+
+
+                    if (Expiry != null && (Session["rptItemPurchaseExpiry"] != null && Session["rptItemPurchaseExpiry"].ToString() != ""))
+                    {
+                        dv = dtfilterSet.DefaultView;
+                        dv.RowFilter = "ExpiryDate = '" + Expiry.ToString("yyyy-MM-dd") + "'";
+                        dtfilterSet = dv.ToTable();
+                    }
+
+
+                    DataTable dtFiltered = dtfilterSet;
+                    Session["dtItemPurchased"] = dtFiltered;
+                }
+                else
+                {
+                    Session["dtItemPurchased"] = ds.Tables[0];
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            DataSet dS = new DataSet();
+            dS.Tables.Add((DataTable)Session["dtItemPurchased"]);
+            dS.AcceptChanges();
+
+            myReportDocument.Load(Server.MapPath("~/ItemPurchaseDetailReport.rpt"));
+            App_Code.Barcode dsReport = new App_Code.Barcode();
+            dsReport.Tables[0].Merge((DataTable)Session["dtItemPurchased"]);
+            myReportDocument.SetDataSource(dsReport.Tables[0]);
+
+            myReportDocument.SetParameterValue("Product", Session["selectionProduct"].ToString());
+            myReportDocument.SetParameterValue("Subcategory", Session["selectionSubCategory"].ToString());
+            myReportDocument.SetParameterValue("Category", Session["selectionCategory"].ToString());
+            myReportDocument.SetParameterValue("Department", Session["selectionDepartment"].ToString());
+            myReportDocument.SetParameterValue("Customer", Session["selectionCustomers"].ToString());
+            myReportDocument.SetParameterValue("FromDate", Session["rptItemPurchaseDateF"].ToString());
+            myReportDocument.SetParameterValue("ToDate", Session["rptItemPurchaseDateT"].ToString());
+            myReportDocument.SetParameterValue("BarterCustomer", Session["rptBarterCustomers"].ToString());
+
+            Session["ReportDocument"] = myReportDocument;
+            Session["ReportPrinting_Redirection"] = "rpt_ItemPurchase_Selection.aspx";
+
+        }
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
 

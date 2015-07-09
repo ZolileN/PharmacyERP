@@ -1,5 +1,4 @@
-﻿using IMS.UserControl;
-using AjaxControlToolkit;
+﻿using AjaxControlToolkit;
 using IMSBusinessLogic;
 using IMSCommon;
 using IMSCommon.Util;
@@ -12,6 +11,10 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
+using System.Drawing.Printing;
+
 
 namespace IMS
 {
@@ -19,6 +22,7 @@ namespace IMS
     {
         public DataSet ds;
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
+        public ReportDocument myReportDocument = new ReportDocument();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -113,6 +117,188 @@ namespace IMS
             {
                 connection.Close();
             }
+        }
+
+        public void LoadData()
+        {
+            int ProdID, DeptID, CatID, SubCatID, CustID, SalesID;
+            ProdID = DeptID = CatID = SubCatID = CustID = SalesID = 0;
+            String BarterValue = "";
+            try
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("sp_rpt_ItemSold", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@InternalCustomer", Session["rptInternalCustomers"].ToString());
+
+                #region Applying Filters
+
+                if (Session["rptSalesManID"] != null && Session["rptSalesManID"].ToString() != "")
+                {
+                    if (int.TryParse(Session["rptSalesManID"].ToString(), out SalesID))
+                    {
+
+                    }
+                }
+
+                if (Session["rptCustomerID"] != null && Session["rptCustomerID"].ToString() != "")
+                {
+                    if (int.TryParse(Session["rptCustomerID"].ToString(), out CustID))
+                    {
+
+                    }
+                }
+
+                if (Session["rptDepartmentID"] != null && Session["rptDepartmentID"].ToString() != "")
+                {
+                    if (int.TryParse(Session["rptDepartmentID"].ToString(), out DeptID))
+                    {
+
+                    }
+                }
+
+                if (Session["rptCategoryID"] != null && Session["rptCategoryID"].ToString() != "")
+                {
+                    if (int.TryParse(Session["rptCategoryID"].ToString(), out CatID))
+                    {
+
+                    }
+                }
+
+                if (Session["rptSubCategoryID"] != null && Session["rptSubCategoryID"].ToString() != "")
+                {
+                    if (int.TryParse(Session["rptSubCategoryID"].ToString(), out SubCatID))
+                    {
+
+                    }
+                }
+
+
+                if (Session["rptProductID"] != null && Session["rptProductID"].ToString() != "")
+                {
+                    if (int.TryParse(Session["rptProductID"].ToString(), out ProdID))
+                    {
+
+                    }
+                }
+
+                BarterValue = Session["rptBarterCustomers"].ToString();
+                #endregion
+
+                DataSet ds = new DataSet();
+                SqlDataAdapter dA = new SqlDataAdapter(command);
+                dA.Fill(ds);
+
+                if (Session["rptItemSoldDateFrom"] != null && Session["rptItemSoldDateFrom"].ToString() != "" &&
+                    Session["rptItemSoldDateTo"] != null && Session["rptItemSoldDateTo"].ToString() != "")
+                {
+                    DateTime dtFROM = Convert.ToDateTime(Session["rptItemSoldDateFrom"]);
+                    DateTime dtTo = Convert.ToDateTime(Session["rptItemSoldDateTo"]);
+
+                    DataView dv = ds.Tables[0].DefaultView;
+                    dv.RowFilter = "OrderDate >= '" + dtFROM.ToString("yyyy-MM-dd") + "' AND OrderDate <= '" + dtTo.ToString("yyyy-MM-dd") + "'";
+                    DataTable dtfilterSet = dv.ToTable();
+                    dv = dtfilterSet.DefaultView;
+
+                    if (SalesID != 0)
+                    {
+                        dv = dtfilterSet.DefaultView;
+                        dv.RowFilter = "SalesMan = '" + SalesID + "'";
+                        dtfilterSet = dv.ToTable();
+                    }
+
+                    if (CustID != 0)
+                    {
+                        dv = dtfilterSet.DefaultView;
+                        dv.RowFilter = "OrderRequestedFor = '" + CustID + "'";
+                        dtfilterSet = dv.ToTable();
+
+                    }
+
+                    if (BarterValue.Equals("Exclude"))
+                    {
+                        dv = dtfilterSet.DefaultView;
+                        dv.RowFilter = "BarterExchangeID IS NULL";
+                        dtfilterSet = dv.ToTable();
+                    }
+
+
+                    if (DeptID != 0)
+                    {
+                        dv = dtfilterSet.DefaultView;
+                        dv.RowFilter = "DeptID = '" + DeptID + "'";
+                        dtfilterSet = dv.ToTable();
+
+                    }
+
+
+                    if (CatID != 0)
+                    {
+                        dv = dtfilterSet.DefaultView;
+                        dv.RowFilter = "CatID = '" + CatID + "'";
+                        dtfilterSet = dv.ToTable();
+
+                    }
+
+
+                    if (SubCatID != 0)
+                    {
+                        dv = dtfilterSet.DefaultView;
+                        dv.RowFilter = "SubCategoryID = '" + SubCatID + "'";
+                        dtfilterSet = dv.ToTable();
+
+                    }
+
+
+                    if (ProdID != 0)
+                    {
+                        dv = dtfilterSet.DefaultView;
+                        dv.RowFilter = "ProductID = '" + ProdID + "'";
+                        dtfilterSet = dv.ToTable();
+
+                    }
+
+
+
+                    DataTable dtFiltered = dv.ToTable();
+                    Session["dtItemSoldDate"] = dtFiltered;
+                }
+                else
+                {
+                    Session["dtItemSoldDate"] = ds.Tables[0];
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            DataSet dS = new DataSet();
+            dS.Tables.Add((DataTable)Session["dtItemSoldDate"]);
+            dS.AcceptChanges();
+
+            myReportDocument.Load(Server.MapPath("~/ItemSaleDetailReport.rpt"));
+            App_Code.Barcode dsReport = new App_Code.Barcode();
+            dsReport.Tables[0].Merge((DataTable)Session["dtItemSoldDate"]);
+            myReportDocument.SetDataSource(dsReport.Tables[0]);
+
+            myReportDocument.SetParameterValue("Product", Session["selectionProduct"].ToString());
+            myReportDocument.SetParameterValue("Subcategory", Session["selectionSubCategory"].ToString());
+            myReportDocument.SetParameterValue("Category", Session["selectionCategory"].ToString());
+            myReportDocument.SetParameterValue("Department", Session["selectionDepartment"].ToString());
+            myReportDocument.SetParameterValue("Customer", Session["selectionCustomers"].ToString());
+            myReportDocument.SetParameterValue("FromDate", Session["rptItemSoldDateFrom"].ToString());
+            myReportDocument.SetParameterValue("ToDate", Session["rptItemSoldDateTo"].ToString());
+            myReportDocument.SetParameterValue("BarterCustomer", Session["rptBarterCustomers"].ToString());
+            myReportDocument.SetParameterValue("SalesMan", Session["rptSalesMan"].ToString());
+
+            Session["ReportDocument"] = myReportDocument;
+            Session["ReportPrinting_Redirection"] = "rpt_ItemSold_Selection.aspx";
         }
 
         protected void btnCreateReport_Click(object sender, EventArgs e)
@@ -221,7 +407,9 @@ namespace IMS
                 Session["rptSalesMan"] = "All";            
             }
 
-            Response.Redirect(Session["Display"].ToString());
+            LoadData();
+            Response.Redirect("CrystalReportViewer.aspx");
+            //Response.Redirect(Session["Display"].ToString());
         }
 
         protected void btnGoBack_Click(object sender, EventArgs e)

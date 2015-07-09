@@ -777,6 +777,7 @@
     <Content Include="crystalreportviewers13\allStrings_tr.js" />
     <Content Include="crystalreportviewers13\allStrings_zh_CN.js" />
     <Content Include="crystalreportviewers13\allStrings_zh_TW.js" />
+    <Content Include="crystalreportviewers13\apt-logo.jpg" />
     <Content Include="crystalreportviewers13\crsmarttag.asp" />
     <Content Include="crystalreportviewers13\crystalimagehandler.asp" />
     <Content Include="crystalreportviewers13\css\cedefault.css" />
@@ -787,6 +788,7 @@
     <Content Include="crystalreportviewers13\html\calendarbottom.html" />
     <Content Include="crystalreportviewers13\html\calendartop.html" />
     <Content Include="crystalreportviewers13\imagehandlerdotnetbridge.aspx" />
+    <Content Include="crystalreportviewers13\images\apt-logo.jpg" />
     <Content Include="crystalreportviewers13\images\buttonl.gif" />
     <Content Include="crystalreportviewers13\images\buttonm.gif" />
     <Content Include="crystalreportviewers13\images\buttonr.gif" />
