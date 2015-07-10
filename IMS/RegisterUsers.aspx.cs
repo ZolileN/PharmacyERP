@@ -51,7 +51,7 @@ namespace IMS
                     if (ddlURole != null)
                     {
                         ddlURole.Items.Insert(0, "Select User Role");
-                        if (Session["ur_RoleName"].ToString().Equals("Salesman"))
+                        if (Session["ur_RoleName"]!=null && Session["ur_RoleName"].ToString().Equals("Salesman"))
                         {
                             ddlURole.SelectedIndex = 3;
                             ddlURole.Enabled = false;
@@ -78,8 +78,16 @@ namespace IMS
                 #region Populating System Drop Down DropDown
                 try
                 {
+                    SqlCommand command = new SqlCommand();
                     connection.Open();
-                    SqlCommand command = new SqlCommand("SELECT *  FROM [dbo].[tbl_System] where System_RoleID IN (1,2,3)", connection);
+                    if (Session["ur_RoleName"] != null && Session["ur_RoleName"].ToString().Equals("Salesman"))
+                    {
+                        command = new SqlCommand("SELECT *  FROM [dbo].[tbl_System] where System_RoleID IN (1,3)", connection);
+                    }
+                    else
+                    {
+                        command = new SqlCommand("SELECT *  FROM [dbo].[tbl_System] where System_RoleID IN (1,2,3,10007)", connection);
+                    }
                     DataSet ds1 = new DataSet();
                     SqlDataAdapter sA1 = new SqlDataAdapter(command);
                     sA1.Fill(ds1);

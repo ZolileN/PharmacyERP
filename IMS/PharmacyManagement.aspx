@@ -13,6 +13,12 @@
         </td>
                 </tr>
                 <tr><td height="5"></td></tr>
+                <tr><td height="5"></td></tr>
+                <tr>
+                    <td>Search Pharmacy :
+                    <asp:TextBox ID="txtSearchPharma" runat="server"></asp:TextBox>
+                    <asp:Button ID="btnSearchPharma" runat="server" CssClass="btn btn-success btn-large" Text="Search" OnClick="btnSearchPharma_Click"/></td>
+                </tr>
                 </table>
     <hr>
 

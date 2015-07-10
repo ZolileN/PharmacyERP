@@ -40,6 +40,7 @@ namespace IMS
                 command.ExecuteNonQuery();
                 SqlDataAdapter dA = new SqlDataAdapter(command);
                 dA.Fill(dsResults);
+                ViewState["PharmacyResultSet"] = dsResults;
                 dgvWarehouse.DataSource = dsResults;
                 dgvWarehouse.DataBind();
 
@@ -127,6 +128,18 @@ namespace IMS
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
             Response.Redirect("StoreMain.aspx");
+        }
+
+        protected void btnSearchPharma_Click(object sender, EventArgs e)
+        {
+            DataView dv = ((DataSet)ViewState["PharmacyResultSet"]).Tables[0].DefaultView;
+            dv.RowFilter = "SystemName LIKE '"+ txtSearchPharma.Text +"%'";
+
+            DataTable dt = new DataTable();
+            dt = dv.ToTable();
+
+            dgvWarehouse.DataSource = dt;
+            dgvWarehouse.DataBind();
         }
     }
 }

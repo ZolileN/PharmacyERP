@@ -36,6 +36,7 @@ namespace IMS
             {
                 if (Request.QueryString["Id"] != null)
                 {
+                    //Session["FirstOrderSO"] = false;
                     int req_ID = int.Parse(Request.QueryString["Id"].ToString());
                     LoadData(req_ID.ToString());
                     #region RequestTo&FROM Population
@@ -53,6 +54,7 @@ namespace IMS
             }
         }
 
+        
         public DataSet GetSystems(int ID)
         {
             DataSet ds = new DataSet();

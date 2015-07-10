@@ -44,6 +44,11 @@
 	 </style>
     <table class="table table-striped table-bordered table-condensed tblBtm associatetbl" style="border:0px !important;">
         <tr>
+               <td>Search Pharmacy :
+                    <asp:TextBox ID="txtSearchPharma" runat="server"></asp:TextBox>
+                    <asp:Button ID="btnSearchPharma" runat="server" CssClass="btn btn-success btn-large" Text="Search" OnClick="btnSearchPharma_Click"/></td>
+        </tr>
+        <tr>
             <td style="vertical-align:top;background:none !important; border:0px !important;" >
                 <asp:GridView ID="gvAllAvailableStore" CssClass="table table-striped table-bordered table-condensed tblBtm" ShowHeaderWhenEmpty="true" runat="server" AllowPaging="True" PageSize="10"
                     AutoGenerateColumns="false" OnRowCommand="gvAllAvailableStore_RowCommand" OnPageIndexChanging="gvAllAvailableStore_PageIndexChanging">

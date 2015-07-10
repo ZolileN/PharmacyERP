@@ -31,6 +31,24 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.Button btnBack;
         
         /// <summary>
+        /// txtSearchPharma control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSearchPharma;
+        
+        /// <summary>
+        /// btnSearchPharma control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSearchPharma;
+        
+        /// <summary>
         /// gvAllAvailableStore control.
         /// </summary>
         /// <remarks>

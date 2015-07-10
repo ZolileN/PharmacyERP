@@ -301,5 +301,17 @@ namespace IMS
             gvAllAvailableStore.PageIndex = e.NewPageIndex;
             BindGrid();
         }
+
+        protected void btnSearchPharma_Click(object sender, EventArgs e)
+        {
+            DataView dv = ((DataTable)Session["dtAvailable"]).DefaultView;
+            dv.RowFilter = "SystemName LIKE '" + txtSearchPharma.Text + "%'";
+
+            DataTable dt = new DataTable();
+            dt = dv.ToTable();
+
+            gvAllAvailableStore.DataSource = dt;
+            gvAllAvailableStore.DataBind();
+        }
     }
 }
