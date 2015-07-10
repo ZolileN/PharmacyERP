@@ -116,5 +116,10 @@ namespace IMS
         {
             throw new NotImplementedException();
         }
+
+        protected void btnGoBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(Session["ReportPrinting_Redirection"].ToString());
+        }
     }
 }

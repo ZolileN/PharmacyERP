@@ -1400,6 +1400,7 @@
     <Content Include="rpt_ItemSoldDisplay_byPharmacy.aspx" />
     <Content Include="rpt_ItemSoldDisplay_bySalesMan.aspx" />
     <Content Include="rpt_ItemSold_Selection.aspx" />
+    <Content Include="rpt_NearestExpiry.aspx" />
     <Content Include="rpt_PurchaseItem_Selection.aspx" />
     <Content Include="rpt_SalesSummaryDisplay.aspx" />
     <Content Include="rpt_SalesSummary_Selection.aspx" />
@@ -1936,6 +1937,12 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="MyExcel.cs" />
+    <Compile Include="NearestExpiryItems.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NearestExpiryItems.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="OrderPurchaseManual.aspx.cs">
       <DependentUpon>OrderPurchaseManual.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2202,6 +2209,13 @@
     </Compile>
     <Compile Include="rpt_ItemSold_Selection.aspx.designer.cs">
       <DependentUpon>rpt_ItemSold_Selection.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="rpt_NearestExpiry.aspx.cs">
+      <DependentUpon>rpt_NearestExpiry.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rpt_NearestExpiry.aspx.designer.cs">
+      <DependentUpon>rpt_NearestExpiry.aspx</DependentUpon>
     </Compile>
     <Compile Include="rpt_PurchaseItem_Selection.aspx.cs">
       <DependentUpon>rpt_PurchaseItem_Selection.aspx</DependentUpon>
@@ -2589,6 +2603,10 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ItemPurchaseDetailReport.cs</LastGenOutput>
     </Content>
+    <EmbeddedResource Include="NearestExpiryItems.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>NearestExpiryItems.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Report\barcode_Print.rdlc" />
   </ItemGroup>
   <ItemGroup>

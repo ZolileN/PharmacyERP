@@ -54,7 +54,7 @@
     <div id="dvReport" class="body-cont" align="center">
      <asp:Button ID="btnPrint" runat="server" PostBackUrl="~/ReportPrinting.aspx" CssClass="btn btn-primary btn-large no-print" Text="Print" />
      <asp:Button ID="btnExport" runat="server" CssClass="btn btn-info btn-large no-print" Text="Export" Visible="false" />
-     <asp:Button ID="btnGoBack" runat="server" PostBackUrl="~/rpt_ItemSold_Selection.aspx" CssClass="btn btn-default btn-large no-print" Text="Go Back" />
+     <asp:Button ID="btnGoBack" runat="server" OnClick="btnGoBack_Click" CssClass="btn btn-default btn-large no-print" Text="Go Back" />
      <br /><br />
      <CR:CrystalReportViewer ID="CrystalReportViewer1" Visible="true" runat="server" AutoDataBind="True" Height="1202px" Width="1104px" PrintMode="Pdf" HasPrintButton="False" HasExportButton="False" ReuseParameterValuesOnRefresh="True" ShowAllPageIds="True"/>
      </div>

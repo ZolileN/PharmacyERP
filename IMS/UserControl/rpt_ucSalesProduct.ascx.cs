@@ -38,19 +38,29 @@ namespace IMS.UserControl
                 {
                     command = new SqlCommand("sp_rptPI_Products", connection);
                 }
+                else if (Session["SP_Purchase"] != null && Session["SP_Purchase"].ToString().Equals("Expiry"))
+                {
+                    command = new SqlCommand("sp_rpt_StockDetails", connection);
+                }
                 else
                 {
                     command = new SqlCommand("sp_rptSalesProducts", connection);
                 }
 
                 command.CommandType = CommandType.StoredProcedure;
-                if (Session["SearchItemProduct_RPT"] != null && Session["SearchItemProduct_RPT"].ToString() != "")
+                if (Session["SP_Purchase"] != null && Session["SP_Purchase"].ToString().Equals("Expiry"))
                 {
-                    command.Parameters.AddWithValue("@p_Search", Session["SearchItemProduct_RPT"].ToString());
                 }
                 else
                 {
-                    command.Parameters.AddWithValue("@p_Search", DBNull.Value);
+                    if (Session["SearchItemProduct_RPT"] != null && Session["SearchItemProduct_RPT"].ToString() != "")
+                    {
+                        command.Parameters.AddWithValue("@p_Search", Session["SearchItemProduct_RPT"].ToString());
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_Search", DBNull.Value);
+                    }
                 }
 
                 SqlDataAdapter dA = new SqlDataAdapter(command);

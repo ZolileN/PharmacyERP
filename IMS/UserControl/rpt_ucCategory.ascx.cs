@@ -37,25 +37,35 @@ namespace IMS.UserControl
                 {
                     command = new SqlCommand("sp_rptPI_Category", connection);
                 }
+                else if (Session["SP_Purchase"] != null && Session["SP_Purchase"].ToString().Equals("Expiry"))
+                {
+                    command = new SqlCommand("sp_rpt_StockDetails", connection);
+                }
                 else
                 {
                      command = new SqlCommand("sp_rptSalesCategory", connection);
                 }
                 command.CommandType = CommandType.StoredProcedure;
-                if (Session["SearchItemCat_RPT"] != null && Session["SearchItemCat_RPT"].ToString() != "")
+                if (Session["SP_Purchase"] != null && Session["SP_Purchase"].ToString().Equals("Expiry"))
                 {
-                    command.Parameters.AddWithValue("@p_Search", Session["SearchItemCat_RPT"].ToString());
                 }
                 else
                 {
-                    command.Parameters.AddWithValue("@p_Search", DBNull.Value);
+                    if (Session["SearchItemCat_RPT"] != null && Session["SearchItemCat_RPT"].ToString() != "")
+                    {
+                        command.Parameters.AddWithValue("@p_Search", Session["SearchItemCat_RPT"].ToString());
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_Search", DBNull.Value);
+                    }
                 }
 
                 SqlDataAdapter dA = new SqlDataAdapter(command);
                 DataSet dsCustomers = new DataSet();
                 dA.Fill(dsCustomers);
 
-                gdvDepartment.DataSource = dsCustomers.Tables[0];
+                gdvDepartment.DataSource = dsCustomers.Tables[2];
                 gdvDepartment.DataBind();
 
             }
