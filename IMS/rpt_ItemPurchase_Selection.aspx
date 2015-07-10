@@ -22,7 +22,7 @@
             <table width="100%">
 
         <tbody><tr>
-        	<td> <h4>Item Pruchase Report</h4></td>
+        	<td> <h4>Item Purchase Report</h4></td>
             <td align="right">
             <asp:Button ID="btnCreateReport" runat="server" CssClass="btn btn-success btn-default" Text="CREATE REPORT" OnClick="btnCreateReport_Click" />
             <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnGoBack_Click" />

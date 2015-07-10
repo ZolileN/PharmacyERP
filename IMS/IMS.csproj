@@ -2595,18 +2595,18 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ItemPurchase.cs</LastGenOutput>
     </Content>
-    <EmbeddedResource Include="ItemSaleDetailReport.rpt">
+    <Content Include="ItemSaleDetailReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ItemSaleDetailReport.cs</LastGenOutput>
-    </EmbeddedResource>
+    </Content>
     <Content Include="ItemPurchaseDetailReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ItemPurchaseDetailReport.cs</LastGenOutput>
     </Content>
-    <EmbeddedResource Include="NearestExpiryItems.rpt">
+    <Content Include="NearestExpiryItems.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>NearestExpiryItems.cs</LastGenOutput>
-    </EmbeddedResource>
+    </Content>
     <EmbeddedResource Include="Report\barcode_Print.rdlc" />
   </ItemGroup>
   <ItemGroup>
