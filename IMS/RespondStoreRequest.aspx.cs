@@ -202,11 +202,20 @@ namespace IMS
                     int.TryParse(lblSentQty.Text.ToString(), out TransferedQty);
                     int.TryParse(lblProductID.Text.ToString(), out ProductId);
 
+                    int salesOrderNo=CreateAssociatedSalesOrder(TransferNo);
+
                     if (connection.State == ConnectionState.Closed)
                     {
                         connection.Open();
                     }
-                    SqlCommand command = new SqlCommand("sp_UpdateTransferOrderDetials_AcceptAll", connection);
+
+                    SqlCommand command = new SqlCommand("Sp_SetSOwithTO", connection);
+                    command.Parameters.AddWithValue("@p_TransferID", TransferNo);
+                    command.Parameters.AddWithValue("@p_SalesOrderID", salesOrderNo);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.ExecuteNonQuery();
+
+                    command = new SqlCommand("sp_UpdateTransferOrderDetials_AcceptAll", connection);
                     command.Parameters.AddWithValue("@p_TransferID", TransferNo);
                     command.Parameters.AddWithValue("@p_TransferDetID", TransferDetailNo);
                     command.Parameters.AddWithValue("@p_RequestedQty", RequestedQty);
@@ -223,6 +232,7 @@ namespace IMS
                     da.Fill(dsResults);
 
                     Session["TransferRequestGrid"] = dsResults.Tables[0];
+                    Session["WH_SoID"] = salesOrderNo;
                     int transID;
                     int.TryParse(Session["WH_RequestedNO"].ToString(), out transID);
                    
@@ -240,6 +250,182 @@ namespace IMS
 
         }
 
+        private int CreateAssociatedSalesOrder(int transferID)
+        {
+            int salesOrderID = 0;
+            try
+            {
+                DataSet resSet = new DataSet();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("Sp_GetCompleteTransferInfo", connection);
+                command.Parameters.AddWithValue("@p_TransferID", transferID);
+                command.CommandType = CommandType.StoredProcedure;
+                
+
+                SqlDataAdapter da = new SqlDataAdapter(command);
+                da.Fill(resSet);
+               
+                #region Creating Order
+
+                int pRequestFrom = 0;
+                int pRequestTo = 0;
+                String OrderMode = "";
+                int OrderType = 3;//incase of vendor this should be 3
+
+                OrderMode = "Sales";
+
+
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                command = new SqlCommand("sp_CreateSaleOrder", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                //sets vendor
+                if (int.TryParse(resSet.Tables[0].Rows[0]["TransferTo"].ToString(), out pRequestTo))
+                {
+                    command.Parameters.AddWithValue("@p_RequestTO", pRequestTo);
+                }
+                //sets warehouse/store
+                if (int.TryParse(resSet.Tables[0].Rows[0]["TransferBy"].ToString(), out pRequestFrom))
+                {
+                    command.Parameters.AddWithValue("@p_RequestFrom", pRequestFrom);
+                }
+
+                command.Parameters.AddWithValue("@p_OrderType", OrderType);
+                command.Parameters.AddWithValue("@p_Invoice", DBNull.Value);
+                command.Parameters.AddWithValue("@p_OrderMode", OrderMode);
+                command.Parameters.AddWithValue("@p_Vendor", DBNull.Value);
+
+                command.Parameters.AddWithValue("@p_Salesman", DBNull.Value);
+
+                command.Parameters.AddWithValue("@p_orderStatus", "Pending");
+                DataTable dt = new DataTable();
+                SqlDataAdapter dA = new SqlDataAdapter(command);
+                dA.Fill(dt);
+                if (dt.Rows.Count != 0)
+                {
+                    salesOrderID = int.Parse(dt.Rows[0][0].ToString());
+                }
+
+                #endregion
+                if (salesOrderID > 0)
+                {
+                    foreach (DataRow _row in resSet.Tables[1].Rows)
+                    {
+                        int orderDetID = 0;
+                        #region Linking to Order Detail table
+
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
+                        command = new SqlCommand("sp_InserOrderDetail_ByOutStore", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+
+
+                        int OrderNumber, BonusOrdered, ProductNumber, Quantity;
+                        OrderNumber = BonusOrdered = ProductNumber = Quantity = 0;
+                        if (salesOrderID > 0)
+                        {
+                            command.Parameters.AddWithValue("@p_OrderID", salesOrderID);
+
+                            command.Parameters.AddWithValue("@p_ProductID", Convert.ToInt32(_row["ProductID"].ToString()));
+                            //if (int.TryParse(SelectProduct.SelectedValue.ToString(), out ProductNumber))
+                            //{
+                            //    command.Parameters.AddWithValue("@p_ProductID", ProductNumber);
+                            //}
+                            if (int.TryParse(_row["RequestedQty"].ToString(), out Quantity))
+                            {
+                                command.Parameters.AddWithValue("@p_OrderQuantity", Quantity);
+                            }
+                            else
+                            {
+                                command.Parameters.AddWithValue("@p_OrderQuantity", DBNull.Value);
+                            }
+
+                            if (int.TryParse(_row["RequestedBonusQty"].ToString(), out BonusOrdered))
+                            {
+                                command.Parameters.AddWithValue("@p_BonusQuantity", BonusOrdered);
+                            }
+                            else
+                            {
+                                command.Parameters.AddWithValue("@p_BonusQuantity", DBNull.Value);
+                            }
+
+                            command.Parameters.AddWithValue("@p_status", "Pending");
+                            command.Parameters.AddWithValue("@p_comments", "Generated to Internal Pharmacy");
+                            DataSet LinkResult = new DataSet();
+                            SqlDataAdapter sA = new SqlDataAdapter(command);
+                            sA.Fill(LinkResult);
+                            if (LinkResult != null && LinkResult.Tables[0] != null)
+                            {
+                                int.TryParse(LinkResult.Tables[0].Rows[0][0].ToString(), out orderDetID);
+                                //Session["DetailID"] = LinkResult.Tables[0].Rows[0][0];
+                            }
+
+                            if (orderDetID > 0)
+                            {
+                                #region Populate Product Info
+
+                                if (connection.State == ConnectionState.Closed)
+                                {
+                                    connection.Open();
+                                }
+                                command = new SqlCommand("Sp_FillSO_Details", connection);
+                                command.CommandType = CommandType.StoredProcedure;
+
+                                command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
+                                command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
+
+                                command.ExecuteNonQuery();
+
+                                #endregion
+
+                                DataView dv = resSet.Tables[2].DefaultView;
+                                dv.RowFilter = "TransferDetailID = " + _row["TransferDetailID"].ToString();
+                                DataTable dtDetail = dv.ToTable();
+
+                                #region adding entry to salesOrder detail
+                                foreach (DataRow _entryRow in dtDetail.Rows)
+                                {
+                                    command = new SqlCommand("sp_EntrySaleOrderDetails", connection);
+                                    command.CommandType = CommandType.StoredProcedure;
+                                    command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
+                                    command.Parameters.AddWithValue("@p_ProductID", int.Parse(_entryRow["ProductID"].ToString()));
+                                    command.Parameters.AddWithValue("@p_StockID", int.Parse(_entryRow["StockID"].ToString()));
+                                    command.Parameters.AddWithValue("@p_CostPrice", _entryRow["CostPrice"]);
+                                    command.Parameters.AddWithValue("@p_SalePrice", _entryRow["SalePrice"]);
+                                    command.Parameters.AddWithValue("@p_Expiry", _entryRow["ExpiryDate"]);
+                                    command.Parameters.AddWithValue("@p_Batch", _entryRow["BatchNumber"]);
+                                    command.Parameters.AddWithValue("@p_SendQuantity", _entryRow["TransferredQty"]);
+                                    command.Parameters.AddWithValue("@p_BonusQuantity", DBNull.Value);
+                                    command.Parameters.AddWithValue("@p_BarCode", _entryRow["Barcode"]);
+                                    command.Parameters.AddWithValue("@p_Discount", _entryRow["DiscountPercentage"]);
+                                    command.ExecuteNonQuery();
+                                }
+                                #endregion
+                            }
+                        }
+                        #endregion
+                    }
+                    
+                }
+                
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return salesOrderID;
+        }
         private bool UpdateStockMinus(int TransferDetailID, int ProductID, int quantity, int Sent)
         {
             bool isSuccesFull = false;
@@ -416,17 +602,17 @@ namespace IMS
                         btnEdit.Visible = false;
                         HtmlGenericControl btnStaticAccepted = (HtmlGenericControl)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("btnStaticAccepted");
                         btnStaticAccepted.Visible = true;  
-                        if (RequestedQty != TransferedQty)
-                        {
-                            if (TransferedQty == 0)
-                            {
-                                UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty);
-                            }
-                            else
-                            {
-                                UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty);
-                            }
-                        }
+                        //if (RequestedQty != TransferedQty)
+                        //{
+                        //    if (TransferedQty == 0)
+                        //    {
+                        //        UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty);
+                        //    }
+                        //    else
+                        //    {
+                        //        UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty);
+                        //    }
+                        //}
                     }
                     else 
                     {
@@ -477,7 +663,7 @@ namespace IMS
 
         }
 
-        protected Boolean IsStatusComplete(String status)
+        public Boolean IsStatusComplete(String status)
         {
             if (status.Equals("Accepted") || status.Equals("Denied"))
             {

@@ -40,7 +40,10 @@ namespace IMS
                     int req_ID = int.Parse(Request.QueryString["Id"].ToString());
                     LoadData(req_ID.ToString());
                     #region RequestTo&FROM Population
-                    SaleOrder.Text = req_ID.ToString();
+                    if (Session["WH_SoID"] != null)
+                    {
+                        SaleOrder.Text = Session["WH_SoID"].ToString();
+                    }
                     DataSet dsTo = GetSystems(Convert.ToInt32(Session["WH_RequestedFromID"].ToString()));
                     DataSet dsFROM = GetSystems(Convert.ToInt32(Session["UserSys"].ToString()));
                     SendDate.Text = System.DateTime.Now.ToShortDateString();
