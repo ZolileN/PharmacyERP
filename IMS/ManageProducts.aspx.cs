@@ -175,9 +175,23 @@ namespace IMS
 
                     //set session values for drop downs
                     Session["SubCategoryID"] = SubCategoryID;
-                    Session["CategoryID"] = dsDropdownValues.Tables[0].Rows[0]["CategoryID"].ToString();
-                    Session["DepartmentID"] = dsDropdownValues.Tables[0].Rows[0]["DepId"].ToString();
-
+                    if (dsDropdownValues.Tables[0].Rows.Count >0)
+                    {
+                        Session["CategoryID"] = dsDropdownValues.Tables[0].Rows[0]["CategoryID"].ToString();
+                    }
+                    else
+                    {
+                        Session["CategoryID"] = string.Empty;
+                    }
+                    if (dsDropdownValues.Tables[0].Rows.Count > 0)
+                    {
+                        Session["DepartmentID"] = dsDropdownValues.Tables[0].Rows[0]["DepId"].ToString();
+                    }
+                    else
+                    {
+                       
+                        Session["DepartmentID"] = string.Empty;
+                    }
                     #endregion
                     
                      

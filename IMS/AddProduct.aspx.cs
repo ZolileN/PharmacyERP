@@ -151,6 +151,7 @@ namespace IMS
                         int DepartmentID = int.Parse(Session["DepartmentID"].ToString());
                         ProductDept.SelectedIndex = DepartmentID;
                         ProductDept.SelectedValue = DepartmentID.ToString();
+                        Session.Remove("DepartmentID");
                     }
                     if (Session["MODE"].Equals("EDIT"))
                     {
@@ -450,6 +451,14 @@ namespace IMS
                             {
                                 command.Parameters.AddWithValue("@p_productOrderType", DBNull.Value);
                             }
+                            if (ProductSubCat.SelectedIndex > 0)
+                            {
+                                command.Parameters.AddWithValue("@p_subCatID", int.Parse(ProductSubCat.SelectedValue.ToString()));
+                            }
+                            else 
+                            {
+                                command.Parameters.AddWithValue("@p_subCatID", DBNull.Value);
+                            }
                             int res1, res4,res6,res7,res8,res9;
                             float res2, res3, res5;
 
@@ -673,6 +682,7 @@ namespace IMS
                 {
                    // int CategoryID = int.Parse(Session["CategoryID"].ToString());
                     ProductCat.SelectedValue = Session["CategoryID"].ToString();
+                    Session.Remove("CategoryID");
                 }
 
                 #region populate Sub Category Dropdown
@@ -696,6 +706,7 @@ namespace IMS
                 {
                     //int SubCategoryID = int.Parse(Session["SubCategoryID"].ToString());
                     ProductSubCat.SelectedValue = Session["SubCategoryID"].ToString();
+                    Session.Remove("SubCategoryID");
                 }
 
 
