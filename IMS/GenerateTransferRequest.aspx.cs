@@ -83,7 +83,7 @@ namespace IMS
 
                 GridView dgvTransferDisplay = (GridView)e.Item.FindControl("dgvTransferDisplay");
 
-                DataRow[] drList = dsDistinct.Select("SystemID = " + StoreId);
+                DataRow[] drList = dsDistinct.Select("SystemID = '" + StoreId + "'");
 
                 //dtGridSource.DefaultView.RowFilter = "SystemID = " + StoreId;
                 //dtGridSource.DefaultView.ToTable();
