@@ -160,8 +160,9 @@ namespace IMS
                             btnDeny.Visible = false;
                             Button btnEdit = (Button)gvReceiveTransfer.Rows[i].FindControl("btnEdit");
                             btnEdit.Visible = false;
-                            Button btnStaticAccepted = (Button)gvReceiveTransfer.Rows[i].FindControl("btnStaticAccepted");
-                            btnStaticAccepted.Visible = true;
+                            HtmlGenericControl btnStaticAccepted = (HtmlGenericControl)gvReceiveTransfer.Rows[i].FindControl("btnStaticAccepted");
+                            btnStaticAccepted.Visible = true;  
+                          
                             if (RequestedQty != TransferedQty)
                             {
                                 if (TransferedQty == 0)
@@ -246,6 +247,7 @@ namespace IMS
             finally
             {
                 connection.Close();
+                LoadRepeater();
             }
 
         }
@@ -659,6 +661,7 @@ namespace IMS
             finally
             {
                 connection.Close();
+                LoadRepeater();
             }
 
         }
