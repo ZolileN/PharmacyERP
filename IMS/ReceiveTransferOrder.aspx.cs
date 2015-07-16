@@ -15,6 +15,7 @@ namespace IMS
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet dsStatic = new DataSet();
+        public static DataTable dtStatic = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
@@ -44,6 +45,8 @@ namespace IMS
                 SqlDataAdapter da = new SqlDataAdapter(command);
                 da.Fill(ds);
                 DataTable dsDistinct = ds.Tables[0];
+                dtStatic = ds.Tables[0];
+
                 DataTable distinctRequests = dsDistinct.DefaultView.ToTable(true, "TransferBy");
 
                 repReceiveTransfer.DataSource = distinctRequests;
@@ -66,6 +69,7 @@ namespace IMS
             {
                 GridView dgvReceiveTransfer = (GridView)e.Item.FindControl("dgvReceiveTransfer");
                 Literal litStoreName = (Literal)e.Item.FindControl("litStoreName");
+                Label lblStoreID = (Label)e.Item.FindControl("lblStoreID");
 
                 DataSet ds = new DataSet();
                 int Userid;
@@ -87,8 +91,9 @@ namespace IMS
                 dsStatic = ds;
                 dgvReceiveTransfer.DataSource = ds;
                 dgvReceiveTransfer.DataBind();
-               
+
                 litStoreName.Text = ds.Tables[0].Rows[0]["RequestedBy"].ToString();
+                lblStoreID.Text = ds.Tables[0].Rows[0]["StoreID"].ToString();
             }
             catch(Exception ex)
             {
@@ -306,6 +311,14 @@ namespace IMS
                 {
                     DataSet dsResults = new DataSet();
 
+                    DataTable distinctOrders = dtStatic.DefaultView.ToTable(true, "TransferBy");
+
+                    Literal litStoreName = (Literal)e.Item.FindControl("litStoreName");
+                    Label lblStoreID = (Label)e.Item.FindControl("lblStoreID");
+
+                    string abc = lblStoreID.Text;
+
+                    int SystemID;
                     GridView gvReceiveTransfer = (GridView)repReceiveTransfer.Items[0].FindControl("dgvReceiveTransfer");
                     int TransferNo, TransferDetailNo, RequestedQty, TransferedQty, AvailableQty, ProductId;
                     int LogedInStoreID;
@@ -328,6 +341,8 @@ namespace IMS
                     int.TryParse(lblSentQty.Text.ToString(), out TransferedQty);
                     int.TryParse(lblProductID.Text.ToString(), out ProductId);
 
+                    int.TryParse(lblStoreID.Text.ToString(), out SystemID);
+
                     if (connection.State == ConnectionState.Closed)
                     {
                         connection.Open();
@@ -341,6 +356,7 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_Status", "Accepted");
                     command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
                     command.Parameters.AddWithValue("@p_ProductID", ProductId);
+                    command.Parameters.AddWithValue("@p_SystemID", SystemID);
 
                     command.CommandType = CommandType.StoredProcedure;
                     command.ExecuteNonQuery();

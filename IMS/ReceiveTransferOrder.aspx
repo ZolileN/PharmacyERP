@@ -30,6 +30,8 @@
                             <h4 class="fl-l">
 
                                 <asp:Literal ID="litStoreName" runat="server" ></asp:Literal>
+
+                                <asp:Label ID="lblStoreID" runat="server" Visible="false" ></asp:Label>
                             </h4>
                             <asp:Button ID="btnGenTransfer" runat="server" CssClass="btn btn-info fl-r" Text="Generate Transfer" CommandName="GenTransferOrder" />
                             <asp:Button ID="btnAcceptTransferOrder" runat="server" CssClass="btn btn-success fl-r acceptAll" Text="Accept All" OnClick="btnAcceptTransferOrder_Click" CommandName="AcceptTransferOrder"/>
