@@ -270,8 +270,15 @@ namespace IMS
 
                 command.Parameters.AddWithValue("@p_EmpID", EmpID.Text);
                 command.Parameters.AddWithValue("@p_password", uPwd.Text);
-                command.Parameters.AddWithValue("@p_UserRoleID", ddlURole.SelectedValue.ToString());
-                command.Parameters.AddWithValue("@p_SystemID", ddlSysID.SelectedValue.ToString());
+                command.Parameters.AddWithValue("@p_UserRoleID", int.Parse(ddlURole.SelectedValue.ToString()));
+                if (ddlSysID.SelectedIndex > 0)
+                {
+                    command.Parameters.AddWithValue("@p_SystemID", int.Parse(ddlSysID.SelectedValue.ToString()));
+                }
+                else 
+                {
+                    command.Parameters.AddWithValue("@p_SystemID", DBNull.Value);
+                }
                 command.Parameters.AddWithValue("@p_FirstName", fName.Text);
                 command.Parameters.AddWithValue("@p_LastName", lstName.Text);
                 command.Parameters.AddWithValue("@p_Contact", ContactNo.Text);
