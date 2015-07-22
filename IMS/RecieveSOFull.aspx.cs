@@ -276,31 +276,35 @@ namespace IMS
 
                     if (Details != null)
                     {
-                        DateTime dtExpiry;
-                        Label lblExpiryDate = (Label)Details.Rows[0].FindControl("lblExpiryDate");
-                        if (!string.IsNullOrWhiteSpace(lblExpiryDate.Text))
+                        for (int j = 0; j < Details.Rows.Count; j++)
                         {
-                             dtExpiry = DateTime.Parse(lblExpiryDate.Text.ToString());
-                        }
-                        else
-                        {
-                            dtExpiry = DateTime.MinValue;
-                        }
-                        
-                        int orderDetailNo = int.Parse(OrderDetNo.Text.ToString());
-                        if (connection.State == ConnectionState.Closed)
-                        {
-                            connection.Open();
-                        }
-                        SqlCommand command2 = new SqlCommand("sp_UpdatetblSaleOrderDetail_Receive_AcceptAll", connection);
-                        command2.CommandType = CommandType.StoredProcedure;
-                        if (dtExpiry == DateTime.MinValue)
-                            command2.Parameters.AddWithValue("@expiredDate", DBNull.Value);
-                        else
-                            command2.Parameters.AddWithValue("@expiredDate", dtExpiry);
+                            DateTime dtExpiry;
+                            Label lblExpiryDate = (Label)Details.Rows[j].FindControl("lblExpiryDate");
+                            if (!string.IsNullOrWhiteSpace(lblExpiryDate.Text))
+                            {
+                                dtExpiry = DateTime.Parse(lblExpiryDate.Text.ToString());
+                            }
+                            else
+                            {
+                                dtExpiry = DateTime.MinValue;
+                            }
 
-                        command2.Parameters.AddWithValue("@OrderDetId", orderDetailNo);
-                        command2.ExecuteNonQuery();
+                            int orderDetailNo = int.Parse(OrderDetNo.Text.ToString());
+                            if (connection.State == ConnectionState.Closed)
+                            {
+                                connection.Open();
+                            }
+                            SqlCommand command2 = new SqlCommand("sp_UpdatetblSaleOrderDetail_Receive_AcceptAll", connection);
+                            command2.CommandType = CommandType.StoredProcedure;
+                            if (dtExpiry == DateTime.MinValue)
+                                command2.Parameters.AddWithValue("@expiredDate", DBNull.Value);
+                            else
+                                command2.Parameters.AddWithValue("@expiredDate", dtExpiry);
+
+                            command2.Parameters.AddWithValue("@OrderDetId", orderDetailNo);
+                            command2.ExecuteNonQuery();
+                        }
+
                     }
                 }
                 Response.Redirect("ReceiveSalesOrder.aspx");
