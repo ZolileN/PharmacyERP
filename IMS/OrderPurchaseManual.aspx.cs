@@ -767,8 +767,10 @@ namespace IMS
                     connection.Open();
                 }
 
-                Text = Text + "%";
-                SqlCommand command = new SqlCommand("SELECT * From tbl_ProductMaster Where tbl_ProductMaster.Product_Name LIKE '" + Text + "' AND Status = 1", connection);
+                //Text = Text + "%";
+                SqlCommand command = new SqlCommand("Sp_GetProductByName", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_prodName", Text);
                 DataSet ds = new DataSet();
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
@@ -894,8 +896,10 @@ namespace IMS
                     connection.Open();
                 }
 
-                Text = Text + "%";
-                SqlCommand command = new SqlCommand("Select * From tblVendor Where tblVendor.SupName LIKE '" + Text + "'", connection);
+                //Text = Text + "%";
+                SqlCommand command = new SqlCommand("sp_GetVendor_byNameParam", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_VendName", Text);
                 DataSet ds = new DataSet();
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);

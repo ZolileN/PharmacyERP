@@ -52,7 +52,9 @@ namespace IMS
                         {
                             connection.Open();
                         }
-                        SqlCommand command = new SqlCommand("Select * From tbl_System WHERE System_RoleID Not In (1,3);", connection); // needs to be completed
+                        SqlCommand command = new SqlCommand("sp_GetAllSystem", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        
                         DataSet ds = new DataSet();
                         SqlDataAdapter sA = new SqlDataAdapter(command);
                         sA.Fill(ds);
@@ -112,7 +114,8 @@ namespace IMS
                         {
                             connection.Open();
                         }
-                        SqlCommand command = new SqlCommand("Select * From tbl_System WHERE System_RoleID Not In (1,3);", connection); // needs to be completed
+                        SqlCommand command = new SqlCommand("sp_GetAllSystem", connection);
+                        command.CommandType = CommandType.StoredProcedure;
                         DataSet ds = new DataSet();
                         SqlDataAdapter sA = new SqlDataAdapter(command);
                         sA.Fill(ds);
@@ -1321,8 +1324,12 @@ namespace IMS
                     connection.Open();
                 }
 
-                Text = Text + "%";
-                SqlCommand command = new SqlCommand("SELECT Distinct tbl_ProductMaster.* From tbl_ProductMaster INNER JOIN tblStock_Detail ON tbl_ProductMaster.ProductID = tblStock_Detail.ProductID Where tbl_ProductMaster.Product_Name LIKE '" + Text + "' AND tblStock_Detail.StoredAt = 1", connection); // Stored at must be set to UserSys in future
+                //Text = Text + "%";
+                SqlCommand command = new SqlCommand("sp_getStockProductDetails", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_SearchText", Text);
+                command.Parameters.AddWithValue("@p_SoredAt", Convert.ToInt32(Session["UserSys"].ToString()));
+                
                 DataSet ds = new DataSet();
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);

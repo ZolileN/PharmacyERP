@@ -24,7 +24,8 @@ namespace IMS
                 try
                 {
                     connection.Open();
-                    SqlCommand command = new SqlCommand("Select * From tblDepartment", connection);
+                    SqlCommand command = new SqlCommand("Sp_GetDepartmentList", connection);
+                    command.CommandType = CommandType.StoredProcedure;
                     DataSet ds = new DataSet();
                     SqlDataAdapter sA = new SqlDataAdapter(command);
                     sA.Fill(ds);

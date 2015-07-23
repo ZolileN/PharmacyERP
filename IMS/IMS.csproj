@@ -969,7 +969,7 @@
     <Content Include="crystalreportviewers13\urlreporting\activexviewer.js" />
     <Content Include="crystalreportviewers13\urlreporting\appletviewer.js" />
     <Content Include="DisplayOrderDetailEntries.aspx" />
-    <Content Include="Edit_DeleteProduct.aspx" />
+    <Content Include="Unused Pages\Edit_DeleteProduct.aspx" />
     <Content Include="Edit_DeleteStock.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="GenerateAcceptedTransferOrder.aspx" />
@@ -1380,11 +1380,11 @@
     <Compile Include="DisplayOrderDetailEntries.aspx.designer.cs">
       <DependentUpon>DisplayOrderDetailEntries.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Edit_DeleteProduct.aspx.cs">
+    <Compile Include="Unused Pages\Edit_DeleteProduct.aspx.cs">
       <DependentUpon>Edit_DeleteProduct.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Edit_DeleteProduct.aspx.designer.cs">
+    <Compile Include="Unused Pages\Edit_DeleteProduct.aspx.designer.cs">
       <DependentUpon>Edit_DeleteProduct.aspx</DependentUpon>
     </Compile>
     <Compile Include="Edit_DeleteStock.aspx.cs">

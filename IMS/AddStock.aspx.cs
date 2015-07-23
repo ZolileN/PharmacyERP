@@ -392,8 +392,10 @@ namespace IMS
             {
                 connection.Open();
 
-                Text = Text + "%";
-                SqlCommand command = new SqlCommand("SELECT * From tbl_ProductMaster Where tbl_ProductMaster.Product_Name LIKE '" + Text + "' AND Status = 1", connection);
+                //Text = Text + "%";
+                SqlCommand command = new SqlCommand("Sp_GetProductByName", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_prodName", Text);
                 DataSet ds = new DataSet();
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
@@ -408,7 +410,7 @@ namespace IMS
                 ProductSet = ds;
                 //ds.Tables[0].Columns.Add("ProductInfo", typeof(string), "Product_Name+ ' '+itemStrength+' '+itemPackSize+' '+itemForm");
                 ProductList.DataSource = ds.Tables[0];
-                ProductList.DataTextField = "Description";
+                ProductList.DataTextField = "Desc_Name";
                 ProductList.DataValueField = "ProductID";
                 ProductList.DataBind();
                 if (ProductList != null)

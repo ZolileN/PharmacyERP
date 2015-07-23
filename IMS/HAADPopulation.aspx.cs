@@ -100,7 +100,9 @@ namespace IMS
                                 connection.Close();
                             }
                             connection.Open();
-                            SqlCommand command2 = new SqlCommand("Select Count(*) From tbl_ProductMasterHaadList Where DrugType = 'MEDICINE(HAAD)' AND ItemCode IS NOT NULL", connection);
+                            SqlCommand command2 = new SqlCommand("sp_getProductListHAAD", connection);
+                            command2.CommandType = CommandType.StoredProcedure;
+
                             DataSet ds = new DataSet();
                             SqlDataAdapter sA = new SqlDataAdapter(command2);
                             sA.Fill(ds);

@@ -150,8 +150,10 @@ namespace IMS
             {
                 connection.Open();
 
-                Text = Text + "%";
-                SqlCommand command = new SqlCommand("Select * From tblVendor Where tblVendor.SupName LIKE '" + Text + "'", connection);
+                //Text = Text + "%";
+                SqlCommand command = new SqlCommand("sp_GetVendor_byNameParam", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_VendName", Text);
                 DataSet ds = new DataSet();
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);

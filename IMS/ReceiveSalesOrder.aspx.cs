@@ -298,8 +298,11 @@ namespace IMS
             {
                 connection.Open();
 
-                Text = Text + "%";
-                SqlCommand command = new SqlCommand("Select * From tbl_System Where tbl_System.SystemName LIKE '" + Text + "'", connection);
+                //Text = Text + "%";
+                SqlCommand command = new SqlCommand("Sp_GetSystem_byName", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_storeName", Text);
+
                 DataSet ds = new DataSet();
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
