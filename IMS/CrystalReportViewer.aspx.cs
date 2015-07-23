@@ -34,25 +34,7 @@ namespace IMS
                 CrystalReportViewer1.HasToggleGroupTreeButton = false;
                 CrystalReportViewer1.ToolPanelView = CrystalDecisions.Web.ToolPanelViewType.None;
 
-                try
-                {
-                    ReportDocument doc = new ReportDocument();
-                    doc = (ReportDocument)Session["ReportDocument"];
-                    doc.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, Server.MapPath(@"~\CrystalReports\Report.pdf"));
-
-
-                    string pdfPath = Server.MapPath(@"~\CrystalReports\Report.pdf");
-                    WebClient client = new WebClient();
-                    Byte[] buffer = client.DownloadData(pdfPath);
-                    Response.ContentType = "application/pdf";
-                    Response.AddHeader("content-length", buffer.Length.ToString());
-                    Response.BinaryWrite(buffer);
-                }
-                catch (Exception ex)
-                {
-                    
-                    //throw ex;
-                }
+                
 
                 //Response.Redirect(Server.MapPath(@"~\CrystalReports\Report.pdf"));
             }
@@ -146,6 +128,28 @@ namespace IMS
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
             Response.Redirect(Session["ReportPrinting_Redirection"].ToString());
+        }
+
+        protected void btnPrint_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ReportDocument doc = new ReportDocument();
+                doc = (ReportDocument)Session["ReportDocument"];
+                doc.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, Server.MapPath(@"~\CrystalReports\Report.pdf"));
+
+
+                string pdfPath = Server.MapPath(@"~\CrystalReports\Report.pdf");
+                WebClient client = new WebClient();
+                Byte[] buffer = client.DownloadData(pdfPath);
+                Response.ContentType = "application/pdf";
+                Response.AddHeader("content-length", buffer.Length.ToString());
+                Response.BinaryWrite(buffer);
+            }
+            catch (Exception ex)
+            {
+                WebMessageBoxUtil.Show("Preview caused some issues,Please click on the preview button again");
+            }
         }
     }
 }
