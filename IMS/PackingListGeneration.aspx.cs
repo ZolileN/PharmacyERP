@@ -25,8 +25,12 @@ namespace IMS
                 #region Populating System Types
                 try
                 {
+                    int Role_ID = 2;
                     connection.Open();
-                    SqlCommand command = new SqlCommand("Select * From tbl_System WHERE System_RoleID =2;", connection); // needs to be completed
+                    SqlCommand command = new SqlCommand("sp_GetSystem_byRoleID", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@p_RoleID", Role_ID);
+
                     DataSet ds = new DataSet();
                     SqlDataAdapter sA = new SqlDataAdapter(command);
                     sA.Fill(ds);

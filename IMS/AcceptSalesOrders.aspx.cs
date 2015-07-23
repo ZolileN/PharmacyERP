@@ -150,15 +150,6 @@ namespace IMS
                 Label packSize = (Label)e.Row.FindControl("packSize2");
                 Label Label3 = (Label)e.Row.FindControl("Label3");
 
-                // TextBox tbDatePicker = (TextBox)e.Row.FindControl("txtExpDate");
-
-                //// ScriptManager.RegisterStartupScript(this, GetType(), "myFunction", "myFunction();", true);
-
-                // String DatePickerContent = "MainContent_StockDisplayGrid_" + tbDatePicker;
-
-                // String JavaScriptFunction = "$(function () { $(" + "[id$="+ DatePickerContent +"] + ).datepicker(); });";
-                // Response.Write("<script>" + JavaScriptFunction + "</script>");
-
                 if (String.IsNullOrWhiteSpace(ProductStrength.Text))
                 {
                     ProductStrength.Visible = false;
@@ -316,13 +307,7 @@ namespace IMS
                     }
 
 
-                    //if (!)
-                    //{
-                    //    //WebMessageBoxUtil.Show("Expiry Date is in incorrect Format");
-                    //    //StockDisplayGrid.EditIndex = -1;
-                    //    //LoadData();
-                    //    //return;
-                    //}
+                
                     if (!int.TryParse(bonusTxt, out bonusQuan))
                     {
                         WebMessageBoxUtil.Show("Invalid Format for Bonus");
@@ -372,7 +357,7 @@ namespace IMS
                             }
                             else
                             {
-                                //post error message 
+                                WebMessageBoxUtil.Show("BarCode not generated");
                             }
                         }
                     }

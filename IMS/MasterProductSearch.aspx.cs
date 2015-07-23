@@ -36,8 +36,10 @@ namespace IMS
             {
                 connection.Open();
 
-                Text = Text + "%";
-                SqlCommand command = new SqlCommand("SELECT * From tbl_ProductSuperMaster Where tbl_ProductSuperMaster.DrugName LIKE '" + Text + "'", connection);
+                //Text = Text + "%";
+                SqlCommand command = new SqlCommand("sp_GetProductSuperMaster", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_Text", Text);
                 DataSet ds = new DataSet();
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);

@@ -32,7 +32,9 @@ namespace IMS
                     try
                     {
                         connection.Open();
-                        SqlCommand command = new SqlCommand("Select Count(*) From tbl_ProductMaster Where Product_Id_Org LIKE '2%';", connection);
+                        SqlCommand command = new SqlCommand("sp_ProductsCount", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+
                         DataSet ds = new DataSet();
                         SqlDataAdapter sA = new SqlDataAdapter(command);
                         sA.Fill(ds);
@@ -132,7 +134,8 @@ namespace IMS
                 try
                 {
                     connection.Open();
-                    SqlCommand command = new SqlCommand("Select * From tblDepartment", connection);
+                    SqlCommand command = new SqlCommand("Sp_GetDepartmentList", connection);
+                    command.CommandType = CommandType.StoredProcedure;
                     DataSet ds = new DataSet();
                     SqlDataAdapter sA = new SqlDataAdapter(command);
                     sA.Fill(ds);
@@ -632,13 +635,15 @@ namespace IMS
                 {
                     connection.Open();
                 }
-                SqlCommand command = new SqlCommand("Select * From tblCategory Where DepartmentID = '"+ ProductDept.SelectedValue.ToString() +"'", connection);
+                SqlCommand command = new SqlCommand("Sp_GetCategoryList", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_deptID", Convert.ToInt32(ProductDept.SelectedValue.ToString()));
                 DataSet ds = new DataSet();
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
                 ProductCat.DataSource = ds.Tables[0];
-                ProductCat.DataTextField = "Name";
-                ProductCat.DataValueField = "CategoryID";
+                ProductCat.DataTextField = "categoryName";
+                ProductCat.DataValueField = "categoryID";
                 ProductCat.DataBind();
                 if (ProductCat != null) 
                 {
@@ -665,13 +670,15 @@ namespace IMS
                 {
                     connection.Open();
                 }
-                SqlCommand command = new SqlCommand("Select * From tblCategory", connection);
+                SqlCommand command = new SqlCommand("Sp_GetCategoryList", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_deptID", Convert.ToInt32(ProductDept.SelectedValue.ToString()));
                 DataSet ds = new DataSet();
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
                 ProductCat.DataSource = ds.Tables[0];
-                ProductCat.DataTextField = "Name";
-                ProductCat.DataValueField = "CategoryID";
+                ProductCat.DataTextField = "categoryName";
+                ProductCat.DataValueField = "categoryID";
                 ProductCat.DataBind();
                 if (ProductCat != null)
                 {
@@ -729,13 +736,17 @@ namespace IMS
             try
             {
                 connection.Open();
-                SqlCommand command = new SqlCommand("Select * From tblSub_Category WHERE CategoryID ='" + ProductCat.SelectedValue.ToString() + "'", connection);
+
+                SqlCommand command = new SqlCommand("Sp_GetCategoryList", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_CatID", Convert.ToInt32(ProductCat.SelectedValue.ToString()));
+
                 DataSet ds = new DataSet();
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
                 ProductSubCat.DataSource = ds.Tables[0];
-                ProductSubCat.DataTextField = "Name";
-                ProductSubCat.DataValueField = "Sub_CatID";
+                ProductSubCat.DataTextField = "subCatName";
+                ProductSubCat.DataValueField = "subCatID";
                 ProductSubCat.DataBind();
 
                 if (ProductSubCat != null)

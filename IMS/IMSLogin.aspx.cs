@@ -25,8 +25,8 @@ namespace IMS
             {
                 DropDownList userList = new DropDownList();
                 connection.Open();
-                SqlCommand command = new SqlCommand("Select * From tbl_Users INNER JOIN tbl_System ON tbl_Users.SystemID = tbl_System.SystemID " +
-                    "INNER JOIN tbl_SystemRoles ON tbl_System.System_RoleID = tbl_SystemRoles.RoleID", connection);
+                SqlCommand command = new SqlCommand("sp_GetAllUsers", connection);
+                command.CommandType = CommandType.StoredProcedure;
                 DataSet ds = new DataSet();
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);

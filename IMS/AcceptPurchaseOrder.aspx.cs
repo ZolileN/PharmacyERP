@@ -255,13 +255,6 @@ namespace IMS
                     }
                    
 
-                    //if (!)
-                    //{
-                    //    //WebMessageBoxUtil.Show("Expiry Date is in incorrect Format");
-                    //    //StockDisplayGrid.EditIndex = -1;
-                    //    //LoadData();
-                    //    //return;
-                    //}
                     if (!int.TryParse(bonusTxt, out bonusQuan))
                     {
                         WebMessageBoxUtil.Show("Invalid Format for Bonus");

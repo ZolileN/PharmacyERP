@@ -46,7 +46,8 @@ namespace IMS
             try
             {
                 connection.Open();
-                SqlCommand command = new SqlCommand("Select * From tblDepartment", connection);
+                SqlCommand command = new SqlCommand("Sp_GetDepartmentList", connection);
+                command.CommandType = CommandType.StoredProcedure;
                 DataSet ds = new DataSet();
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
@@ -77,13 +78,15 @@ namespace IMS
             try
             {
                 connection.Open();
-                SqlCommand command = new SqlCommand("Select * From tblCategory", connection);
+                SqlCommand command = new SqlCommand("Sp_GetCategoryList", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_deptID", Convert.ToInt32(ddDepartment.SelectedValue.ToString()));
                 DataSet ds = new DataSet();
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
                 ddCategory.DataSource = ds.Tables[0];
-                ddCategory.DataTextField = "Name";
-                ddCategory.DataValueField = "CategoryID";
+                ddCategory.DataTextField = "categoryName";
+                ddCategory.DataValueField = "categoryID";
                 ddCategory.DataBind();
                 if (ddCategory != null)
                 {
