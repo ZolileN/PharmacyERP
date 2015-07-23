@@ -27,10 +27,20 @@ namespace IMS
                 try
                 {
                     string ID = Request.QueryString["ID"];
-                    connection.Open();
-                    SqlCommand command = new SqlCommand("select [System_RoleID],[SystemID],[SystemName] from tbl_System where [System_RoleID] = (select [RoleID] from [dbo].[tbl_SystemRoles] where [RoleName] = 'Store') AND [SystemID] NOT IN (select [SystemID] from [dbo].[SalesmanSystems] where UserID= '" + ID + "')", connection);
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
+
+                    SqlCommand command = new SqlCommand("Sp_GetUnAssociatedStores", connection);
+                    command.CommandType = CommandType.StoredProcedure;
                     SqlDataAdapter sA = new SqlDataAdapter(command);
+                   
+
+                    command.Parameters.AddWithValue("@p_UserID", long.Parse(ID));
+
                     sA.Fill(dtAllAvailableStore);
+
                     DataTable dtTest = new DataTable();
                     dtAllAvailableStore.Columns.Add("Checked", typeof(bool));
                     Session["dtAvailable"] = dtAllAvailableStore;
@@ -47,6 +57,7 @@ namespace IMS
                 }
                 finally
                 {
+                    if(connection.State== ConnectionState.Open)
                     connection.Close();
                 }
 
@@ -56,10 +67,17 @@ namespace IMS
                 try
                 {
                     string ID = Request.QueryString["ID"];
-                    connection.Open();
-                    SqlCommand command = new SqlCommand("select [System_RoleID],[SystemID],[SystemName] from tbl_System where [System_RoleID] = (select [RoleID] from [dbo].[tbl_SystemRoles] where [RoleName] = 'Store') AND [SystemID] IN (select [SystemID] from [dbo].[SalesmanSystems] where UserID= '" + ID + "')", connection);
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
 
+                    SqlCommand command = new SqlCommand("Sp_GetAssociatedStores", connection);
+                    command.CommandType = CommandType.StoredProcedure;
                     SqlDataAdapter sA = new SqlDataAdapter(command);
+
+
+                    command.Parameters.AddWithValue("@p_UserID", long.Parse(ID));
                     sA.Fill(dtAllAssociatedStore);
                     dtAllAssociatedStore.Columns.Add("Checked", typeof(bool));
                     Session["dtAssociated"] = dtAllAssociatedStore;
@@ -271,22 +289,48 @@ namespace IMS
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            string ID = Request.QueryString["ID"];
-            DataTable dtAvailable = (DataTable)Session["dtAvailable"];
-            DataTable dtAssociated = (DataTable)Session["dtAssociated"];
-            long SystemID = 0;
-            connection.Open();
-            SqlCommand command = new SqlCommand("delete from [dbo].[SalesmanSystems] where UserID=" + ID + "", connection);
-            command.ExecuteNonQuery();
-            foreach(DataRow dr in dtAssociated.Rows)
+            try
             {
-               
-                SystemID =Convert.ToInt64(dr["SystemID"]);
-                SqlCommand commandNew = new SqlCommand("insert into  [dbo].[SalesmanSystems]([UserID],SystemID) values(" + ID + "," +SystemID + ")", connection);
-                commandNew.ExecuteNonQuery();
+                string ID = Request.QueryString["ID"];
+                DataTable dtAvailable = (DataTable)Session["dtAvailable"];
+                DataTable dtAssociated = (DataTable)Session["dtAssociated"];
+                long SystemID = 0;
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+
+                SqlCommand command = new SqlCommand("Sp_DeleteSalesmanSystem", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_UserID", long.Parse(ID));
+                command.ExecuteNonQuery();
+                
+                foreach (DataRow dr in dtAssociated.Rows)
+                {
+
+                    SystemID = Convert.ToInt64(dr["SystemID"]);
+                    command = new SqlCommand("Sp_AddSalesmanSystems", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@p_UserID", long.Parse(ID));
+                    command.Parameters.AddWithValue("@p_systemID", SystemID);
+                    //SqlCommand commandNew = new SqlCommand("insert into  [dbo].[SalesmanSystems]([UserID],SystemID) values(" + ID + "," +SystemID + ")", connection);
+                    command.ExecuteNonQuery();
+                }
+                connection.Close();
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Record Saved Successfully')", true);
             }
-            connection.Close();
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Record Saved Successfully')", true);
+            catch (Exception ex)
+            {
+                
+                //throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open) 
+                {
+                    connection.Close();
+                }
+            }
 
         }
 

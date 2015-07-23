@@ -25,11 +25,17 @@ namespace IMS
                 if (!IsPostBack)
                 {
                     BindGrid();
-                    connection.Open();
-                    SqlCommand command = new SqlCommand("Select * From tbl_UserRoles", connection);
+                   
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
+                    SqlCommand command = new SqlCommand("Sp_GetUserRoles", connection);
+                    command.CommandType = CommandType.StoredProcedure;
                     DataSet ds = new DataSet();
-                    SqlDataAdapter sA = new SqlDataAdapter(command);
-                    sA.Fill(ds);
+                    SqlDataAdapter SA = new SqlDataAdapter(command);
+
+                    SA.Fill(ds);
                     //ddlUserRole.DataSource = ds.Tables[0];
                     //ddlUserRole.DataTextField = "user_RoleName";
                     //ddlUserRole.DataValueField = "user_RoleID";
@@ -50,8 +56,9 @@ namespace IMS
             {
                 connection.Close();
             }
-            #endregion
 
+            #endregion
+            
         }
 
          
@@ -131,14 +138,20 @@ namespace IMS
             #region Getting User Details
             try
             {
-                string Text = "sale";
-
-                Text = Text + "%";
-                String Query = "SELECT UserID,U_RolesID, U_EmpID,Address,Contact,U_RolesID user_RoleName From [tbl_UserRoles] inner join tbl_Users on tbl_Users.U_RolesID=[tbl_UserRoles].user_RoleID where [tbl_UserRoles].user_RoleName like'" + Text + "'";
-                // String Query = "SELECT * From tbl_Users";
-                connection.Open();
-                SqlCommand command = new SqlCommand(Query, connection);
+                
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("Sp_GetUsers", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_userID", "Salesman");
                 SqlDataAdapter SA = new SqlDataAdapter(command);
+                // string Text = "sale";
+                //Text = Text + "%";
+                //String Query = "SELECT UserID,U_RolesID, U_EmpID,Address,Contact,U_RolesID user_RoleName From [tbl_UserRoles] inner join tbl_Users on tbl_Users.U_RolesID=[tbl_UserRoles].user_RoleID where [tbl_UserRoles].user_RoleName like'" + Text + "'";
+                // String Query = "SELECT * From tbl_Users";
+               
                 UserSet = null;
                 SA.Fill(ds);
                 UserSet = ds;
@@ -160,27 +173,27 @@ namespace IMS
 
         protected void SalemanDisplayGrid_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            int i;
-            GridViewRow row = (GridViewRow)SalemanDisplayGrid.Rows[e.RowIndex];
-            bool id = int.TryParse(SalemanDisplayGrid.Rows[e.RowIndex].ToString(), out i);
-            //int userid = int.Parse(SalemanDisplayGrid.SelectedRow.Cells[0].Text);
-            Label label = (Label)SalemanDisplayGrid.Rows[e.RowIndex].FindControl("lblUserID");
-            TextBox ItemName = (TextBox)SalemanDisplayGrid.Rows[e.RowIndex].FindControl("Name");
-            TextBox ItemAddress = (TextBox)SalemanDisplayGrid.Rows[e.RowIndex].FindControl("Address");
-            TextBox ItemContact = (TextBox)SalemanDisplayGrid.Rows[e.RowIndex].FindControl("Phone");
-            // TextBox ItemUserRole = (TextBox)SalemanDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("ddlUserRole");
-            DropDownList ddluserRole = (DropDownList)SalemanDisplayGrid.Rows[e.RowIndex].FindControl("ddlUserRole");
+            //int i;
+            //GridViewRow row = (GridViewRow)SalemanDisplayGrid.Rows[e.RowIndex];
+            //bool id = int.TryParse(SalemanDisplayGrid.Rows[e.RowIndex].ToString(), out i);
+            ////int userid = int.Parse(SalemanDisplayGrid.SelectedRow.Cells[0].Text);
+            //Label label = (Label)SalemanDisplayGrid.Rows[e.RowIndex].FindControl("lblUserID");
+            //TextBox ItemName = (TextBox)SalemanDisplayGrid.Rows[e.RowIndex].FindControl("Name");
+            //TextBox ItemAddress = (TextBox)SalemanDisplayGrid.Rows[e.RowIndex].FindControl("Address");
+            //TextBox ItemContact = (TextBox)SalemanDisplayGrid.Rows[e.RowIndex].FindControl("Phone");
+            //// TextBox ItemUserRole = (TextBox)SalemanDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("ddlUserRole");
+            //DropDownList ddluserRole = (DropDownList)SalemanDisplayGrid.Rows[e.RowIndex].FindControl("ddlUserRole");
 
-            SalemanDisplayGrid.EditIndex = -1;
+            //SalemanDisplayGrid.EditIndex = -1;
 
-            connection.Open();
+            //connection.Open();
 
-            SqlCommand cmd = new SqlCommand("update tbl_Users set [U_EmpID]='" + ItemName.Text + "',address='" + ItemAddress.Text + "',[Contact]='" + ItemContact.Text + "'where [UserID]='" + label.Text + "'", connection);
-            cmd.ExecuteNonQuery();
+            //SqlCommand cmd = new SqlCommand("update tbl_Users set [U_EmpID]='" + ItemName.Text + "',address='" + ItemAddress.Text + "',[Contact]='" + ItemContact.Text + "'where [UserID]='" + label.Text + "'", connection);
+            //cmd.ExecuteNonQuery();
 
-            connection.Close();
+            //connection.Close();
 
-            BindGrid();
+            //BindGrid();
 
 
 
@@ -188,19 +201,33 @@ namespace IMS
 
         protected void SalemanDisplayGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            GridViewRow row = (GridViewRow)SalemanDisplayGrid.Rows[e.RowIndex];
-            Label label = (Label)SalemanDisplayGrid.Rows[e.RowIndex].FindControl("lblUserID");
+           try
+            {
+                GridViewRow row = (GridViewRow)SalemanDisplayGrid.Rows[e.RowIndex];
+                Label label = (Label)SalemanDisplayGrid.Rows[e.RowIndex].FindControl("lblUserID");
 
-            SalemanDisplayGrid.EditIndex = -1;
+                SalemanDisplayGrid.EditIndex = -1;
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
 
-            connection.Open();
-            SqlCommand cmd = new SqlCommand("delete from tbl_Users where [UserID]='" + label.Text + "'", connection);
-            cmd.ExecuteNonQuery();
+                SqlCommand command = new SqlCommand("Sp_DeleteUsers", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_userID", long.Parse(label.Text));
+                command.ExecuteNonQuery();
 
-            connection.Close();
+                BindGrid();
 
-            BindGrid();
-
+            }
+            catch (Exception exp) { }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
 
         }
 

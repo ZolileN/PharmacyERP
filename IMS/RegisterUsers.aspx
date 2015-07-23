@@ -27,12 +27,12 @@
 
     <table width="100%" border="0" cellspacing="5" cellpadding="10" class="formTbl">
           <tr>
-                <td> <asp:Label runat="server" AssociatedControlID="EmpID" CssClass="col-md-2 control-label">User ID</asp:Label></td>
-                <td><asp:TextBox runat="server" ID="EmpID" CssClass="form-control" Text="" autocomplete="off" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="EmpID" CssClass="text-danger" ErrorMessage="The Employee ID field is required." ValidationGroup="exSave" />
+                <td> <asp:Label runat="server" AssociatedControlID="EmployeeID" CssClass="col-md-2 control-label">User ID</asp:Label></td>
+                <td><asp:TextBox runat="server" ID="EmployeeID" CssClass="form-control" Text="" autocomplete="off" />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="EmployeeID" CssClass="text-danger" ErrorMessage="The Employee ID field is required." ValidationGroup="exSave" />
                </td>
-                <td> <asp:Label runat="server" AssociatedControlID="uPwd" CssClass="col-md-2 control-label">User Password</asp:Label></td>
-                <td><asp:TextBox runat="server" ID="uPwd" CssClass="form-control" TextMode="Password" Text="" autocomplete="off"  /></td>
+                <td> <asp:Label runat="server" AssociatedControlID="userPwd" CssClass="col-md-2 control-label">User Password</asp:Label></td>
+                <td><asp:TextBox runat="server" ID="userPwd" CssClass="form-control" TextMode="Password" Text="" autocomplete="off"  /></td>
             </tr>
              <tr>
                 <td>

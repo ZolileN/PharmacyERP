@@ -67,22 +67,22 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.Button btnAssociatedStore;
         
         /// <summary>
-        /// EmpID control.
+        /// EmployeeID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox EmpID;
+        protected global::System.Web.UI.WebControls.TextBox EmployeeID;
         
         /// <summary>
-        /// uPwd control.
+        /// userPwd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox uPwd;
+        protected global::System.Web.UI.WebControls.TextBox userPwd;
         
         /// <summary>
         /// ddlURole control.

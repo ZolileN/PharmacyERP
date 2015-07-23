@@ -125,6 +125,8 @@ namespace IMS
                 {
                     btnSave.Visible = false;
                     btnAssociatedStore.Visible = false;
+                    EmployeeID.Text = String.Empty;
+                    userPwd.Text = String.Empty;
                 }
 
                 // End Here
@@ -148,11 +150,11 @@ namespace IMS
 
             SqlDataAdapter sA = new SqlDataAdapter(command);
             sA.Fill(ds2);
-            EmpID.Text = ds2.Tables[0].Rows[0]["U_EmpID"].ToString();
+            EmployeeID.Text = ds2.Tables[0].Rows[0]["U_EmpID"].ToString();
             //uPwd.Text = ds2.Tables[0].Rows[0]["U_Password"].ToString();
             string PwdValue = ds2.Tables[0].Rows[0]["U_Password"].ToString();
-            uPwd.TextMode = TextBoxMode.SingleLine;
-            uPwd.Text = PwdValue;
+            userPwd.TextMode = TextBoxMode.SingleLine;
+            userPwd.Text = PwdValue;
             //uPwd.TextMode = TextBoxMode.Password;
             ddlURole.SelectedValue = ds2.Tables[0].Rows[0]["U_RolesID"].ToString();
             ddlURole.Enabled = false;
@@ -200,8 +202,8 @@ namespace IMS
                 connection.Open();
                 SqlCommand command = new SqlCommand("sp_AddNewUser", connection);
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@p_EmpID", EmpID.Text);
-                command.Parameters.AddWithValue("@p_password", uPwd.Text);
+                command.Parameters.AddWithValue("@p_EmpID", EmployeeID.Text);
+                command.Parameters.AddWithValue("@p_password", userPwd.Text);
                 command.Parameters.AddWithValue("@p_UserRoleID", ddlURole.SelectedValue.ToString());
                 
                 command.Parameters.AddWithValue("@p_SystemID", ddlSysID.SelectedValue.ToString());
@@ -229,7 +231,7 @@ namespace IMS
 
             if (x == 2)
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Salesman with ID =  " + EmpID.Text + " saved Successfully')", true);
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Salesman with ID =  " + EmployeeID.Text + " saved Successfully')", true);
                 //EmpID.Text = "";
                 //uPwd.Text = "";
                 //ddlURole.SelectedIndex = 3;
@@ -245,7 +247,7 @@ namespace IMS
             }
             else if (x == -2)
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Salesman with ID = " + EmpID.Text + " already eist.')", true);
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Salesman with ID = " + EmployeeID.Text + " already eist.')", true);
             }
             else
             {
@@ -268,8 +270,8 @@ namespace IMS
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_UserID", var);
 
-                command.Parameters.AddWithValue("@p_EmpID", EmpID.Text);
-                command.Parameters.AddWithValue("@p_password", uPwd.Text);
+                command.Parameters.AddWithValue("@p_EmpID", EmployeeID.Text);
+                command.Parameters.AddWithValue("@p_password", userPwd.Text);
                 command.Parameters.AddWithValue("@p_UserRoleID", int.Parse(ddlURole.SelectedValue.ToString()));
                 if (ddlSysID.SelectedIndex > 0)
                 {
@@ -305,7 +307,7 @@ namespace IMS
 
             if (x == 1)
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Salesman with ID " + EmpID.Text + " updated successfully.')", true);
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Salesman with ID " + EmployeeID.Text + " updated successfully.')", true);
                 //string NewID = EmpID.Text;
                 //uPwd.Text = "";
                 //ddlURole.SelectedIndex = -1;
