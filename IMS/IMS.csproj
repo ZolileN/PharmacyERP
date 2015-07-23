@@ -1661,6 +1661,7 @@
     <Compile Include="PO_GENERATE.aspx.designer.cs">
       <DependentUpon>PO_GENERATE.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PrintHelper_WebControl.cs" />
     <Compile Include="Print_Request_WH.aspx.cs">
       <DependentUpon>Print_Request_WH.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2240,6 +2241,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="CrystalReports\" />
     <Folder Include="StoreManagement\StoreRequests\" />
   </ItemGroup>
   <ItemGroup>

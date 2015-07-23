@@ -9,6 +9,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing.Printing;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -24,11 +25,43 @@ namespace IMS
             {
                 ReportDocument doc = new ReportDocument();
                 doc = (ReportDocument)Session["ReportDocument"];
-                doc.PrintOptions.PrinterName = GetDefaultPrinter();
-                doc.PrintToPrinter(1, false, 0, 0);
+                doc.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, Server.MapPath(@"~\CrystalReports\Report.pdf"));
+
+                hdnResultValue.Value = Server.MapPath(@"~\CrystalReports\Report.pdf");
+                //PrintingReport();
+                //doc.PrintOptions.PrinterName = hdnResultValue.Value;//GetDefaultPrinter();
+                //doc.PrintToPrinter(1, false, 0, 0);
+                //CrystalReportViewer ctrl = (CrystalReportViewer)Session["ReportDoc_PrintingControl"];
+                //PrintHelper_WebControl.PrintWebControl(ctrl);
+
+                //Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "printPDF('" + hdnResultValue.Value + "')", true);
             }
         }
 
+        public void PrintingReport()
+        {
+            printDiv.InnerText = string.Empty;
+
+            try
+            {
+                using (StreamReader streamReader = new StreamReader(Server.MapPath(@"~\CrystalReports\Report.pdf")))
+                {
+                    string lineIn = string.Empty;
+
+                    while ((lineIn = streamReader.ReadLine()) != null)
+                    {
+                        if (printDiv.InnerText.Length > 0)
+                            printDiv.InnerText += "<br>";
+
+                        printDiv.InnerText += lineIn;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
         public string GetDefaultPrinter()
         {
             PrinterSettings settings = new PrinterSettings();

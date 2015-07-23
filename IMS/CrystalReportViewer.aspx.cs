@@ -15,6 +15,7 @@ using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
 using System.Drawing.Printing;
 
+
 namespace IMS
 {
     public partial class CrystalReportViewer : System.Web.UI.Page
@@ -66,6 +67,7 @@ namespace IMS
 
                 ViewState["ReportDoc"] = myReportDocument;
                 Session["ReportDoc_Printing"] = myReportDocument;
+                Session["ReportDoc_PrintingControl"] = CrystalReportViewer1;
                 Session["ReportPrinting_Redirection"] = "rpt_ItemPurchase_Selection.aspx";
 
             }
