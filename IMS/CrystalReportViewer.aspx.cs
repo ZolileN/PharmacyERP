@@ -14,6 +14,7 @@ using System.Web.UI.WebControls;
 using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
 using System.Drawing.Printing;
+using System.Net;
 
 
 namespace IMS
@@ -32,6 +33,28 @@ namespace IMS
                 CrystalReportViewer1.DisplayToolbar = true;
                 CrystalReportViewer1.HasToggleGroupTreeButton = false;
                 CrystalReportViewer1.ToolPanelView = CrystalDecisions.Web.ToolPanelViewType.None;
+
+                try
+                {
+                    ReportDocument doc = new ReportDocument();
+                    doc = (ReportDocument)Session["ReportDocument"];
+                    doc.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, Server.MapPath(@"~\CrystalReports\Report.pdf"));
+
+
+                    string pdfPath = Server.MapPath(@"~\CrystalReports\Report.pdf");
+                    WebClient client = new WebClient();
+                    Byte[] buffer = client.DownloadData(pdfPath);
+                    Response.ContentType = "application/pdf";
+                    Response.AddHeader("content-length", buffer.Length.ToString());
+                    Response.BinaryWrite(buffer);
+                }
+                catch (Exception ex)
+                {
+                    
+                    //throw ex;
+                }
+
+                //Response.Redirect(Server.MapPath(@"~\CrystalReports\Report.pdf"));
             }
         }
         protected void Page_Load(object sender, EventArgs e)
@@ -42,6 +65,7 @@ namespace IMS
                 CrystalReportViewer1.DisplayToolbar = true;
                 CrystalReportViewer1.HasToggleGroupTreeButton = false;
                 CrystalReportViewer1.ToolPanelView = CrystalDecisions.Web.ToolPanelViewType.None;
+               
             }
 
             //CrystalReportViewer1.ReportSource = myReportDocument;

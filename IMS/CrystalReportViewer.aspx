@@ -21,16 +21,24 @@
                 frameDoc.print();
             }
         }
+
+        function printTrigger(elementId) {
+            var getMyFrame = document.getElementById(elementId);
+            getMyFrame.focus();
+            getMyFrame.contentWindow.print();
+        }
     </script>
 </head>
 <body>
     <form id="form2" runat="server">
-    <asp:Button ID="btnPrint" runat="server" OnClientClick="Print()" Text="Print" />
+    <iframe id="iFramePdf" src="" runat="server" style="display:none;"></iframe>
+
+    <asp:Button ID="btnPrint" runat="server" OnClientClick="printTrigger('iFramePdf')" Text="Print" />
         &nbsp;
     <asp:Button ID="btnGoBack" runat="server" OnClick="btnGoBack_Click" Text="Back" />
 
     <div id="dvReport">
-    <CR:CrystalReportViewer ID="CrystalReportViewer1" SeparatePages="False" Visible="true" runat="server" AutoDataBind="True" PrintMode="Pdf" HasPrintButton="True" HasExportButton="False"/>
+    <CR:CrystalReportViewer ID="CrystalReportViewer1" SeparatePages="False" Visible="true" runat="server" AutoDataBind="True" PrintMode="ActiveX" HasPrintButton="True" HasExportButton="False"/>
     </div>
     </form>
 </body>
