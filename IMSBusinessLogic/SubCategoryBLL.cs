@@ -20,12 +20,16 @@ namespace IMSBusinessLogic
             DataSet resultSet = new DataSet();
             try
             {
-                String Query = "SELECT tblSub_Category.Sub_CatID as subCatID, tblSub_Category.Name as subCatName,tblCategory.Name as categoryName,tblDepartment.Name as DepartmentName "+
-                                "FROM tblSub_Category INNER JOIN tblCategory on tblCategory.CategoryID=tblSub_Category.CategoryID "+
-                                " INNER JOIN tblDepartment On tblCategory.DepartmentID=tblDepartment.DepId ORDER BY subCatID ASC";
+                //String Query = "SELECT tblSub_Category.Sub_CatID as subCatID, tblSub_Category.Name as subCatName,tblCategory.Name as categoryName,tblDepartment.Name as DepartmentName "+
+                //                "FROM tblSub_Category INNER JOIN tblCategory on tblCategory.CategoryID=tblSub_Category.CategoryID "+
+                //                " INNER JOIN tblDepartment On tblCategory.DepartmentID=tblDepartment.DepId ORDER BY subCatID ASC";
 
-                connection.Open();
-                SqlCommand command = new SqlCommand(Query, connection);
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("Sp_GetAllSubCategory", connection);
+                command.CommandType = CommandType.StoredProcedure;
                 SqlDataAdapter SA = new SqlDataAdapter(command);
                 SA.Fill(resultSet);
 
@@ -36,24 +40,29 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
 
             }
             return resultSet;
         }
 
-        public DataSet GetById(SubCategory val, SqlConnection connection)
+        public static DataSet GetSubCategoriesBasic(SqlConnection connection)
         {
+
             DataSet resultSet = new DataSet();
             try
             {
-                String Query = "SELECT tblSub_Category.Sub_CatID as subCatID, tblSub_Category.Name as subCatName,tblCategory.Name as categoryName,tblDepartment.Name as DepartmentName" +
-                                " FROM tblSub_Category INNER JOIN tblCategory on tblCategory.CategoryID=tblSub_Category.CategoryID INNER JOIN tblDepartment On tblCategory.DepartmentID=tblDepartment.DepId "
-                                + "Where tblSub_Category.Sub_CatID = '" + val.SubCategoryID + "' ORDER BY subCatID ASC";
+                //String Query = "SELECT tblSub_Category.Sub_CatID as subCatID, tblSub_Category.Name as subCatName,tblCategory.Name as categoryName,tblDepartment.Name as DepartmentName "+
+                //                "FROM tblSub_Category INNER JOIN tblCategory on tblCategory.CategoryID=tblSub_Category.CategoryID "+
+                //                " INNER JOIN tblDepartment On tblCategory.DepartmentID=tblDepartment.DepId ORDER BY subCatID ASC";
 
-
-                connection.Open();
-                SqlCommand command = new SqlCommand(Query, connection);
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("Sp_GetSubCatBasic", connection);
+                command.CommandType = CommandType.StoredProcedure;
                 SqlDataAdapter SA = new SqlDataAdapter(command);
                 SA.Fill(resultSet);
 
@@ -64,11 +73,39 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
 
             }
             return resultSet;
         }
+        //public DataSet GetById(SubCategory val, SqlConnection connection)
+        //{
+        //    DataSet resultSet = new DataSet();
+        //    try
+        //    {
+        //        String Query = "SELECT tblSub_Category.Sub_CatID as subCatID, tblSub_Category.Name as subCatName,tblCategory.Name as categoryName,tblDepartment.Name as DepartmentName" +
+        //                        " FROM tblSub_Category INNER JOIN tblCategory on tblCategory.CategoryID=tblSub_Category.CategoryID INNER JOIN tblDepartment On tblCategory.DepartmentID=tblDepartment.DepId "
+        //                        + "Where tblSub_Category.Sub_CatID = '" + val.SubCategoryID + "' ORDER BY subCatID ASC";
+
+
+        //        connection.Open();
+        //        SqlCommand command = new SqlCommand(Query, connection);
+        //        SqlDataAdapter SA = new SqlDataAdapter(command);
+        //        SA.Fill(resultSet);
+
+        //    }
+        //    catch (Exception exp)
+        //    {
+
+        //    }
+        //    finally
+        //    {
+        //        connection.Close();
+
+        //    }
+        //    return resultSet;
+        //}
 
         public void Update(SubCategory subCategory, SqlConnection connection)
         {

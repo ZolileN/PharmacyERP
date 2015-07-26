@@ -14,6 +14,7 @@ using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.html.simpleparser;
 using iTextSharp.text.pdf;
+using IMSBusinessLogic;
 
 namespace IMS
 {
@@ -55,12 +56,12 @@ namespace IMS
                 #region Populating Product Department DropDown
                 try
                 {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand("Select * From tblDepartment", connection);
-                    DataSet ds = new DataSet();
-                    SqlDataAdapter sA = new SqlDataAdapter(command);
-                    sA.Fill(ds);
-                    ProductDept.DataSource = ds.Tables[0];
+                    //connection.Open();
+                    //SqlCommand command = new SqlCommand("Select * From tblDepartment", connection);
+                    //DataSet ds = new DataSet();
+                    //SqlDataAdapter sA = new SqlDataAdapter(command);
+                    //sA.Fill(ds);
+                    ProductDept.DataSource = DepartmentBLL.GetAllDepartment(connection); ;
                     ProductDept.DataTextField = "Name";
                     ProductDept.DataValueField = "DepId";
                     ProductDept.DataBind();
@@ -83,12 +84,12 @@ namespace IMS
                 #region Populating Category Dropdown
                 try
                 {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand("Select * From tblCategory", connection);
-                    DataSet ds = new DataSet();
-                    SqlDataAdapter sA = new SqlDataAdapter(command);
-                    sA.Fill(ds);
-                    ProductCat.DataSource = ds.Tables[0];
+                    //connection.Open();
+                    //SqlCommand command = new SqlCommand("Select * From tblCategory", connection);
+                    //DataSet ds = new DataSet();
+                    //SqlDataAdapter sA = new SqlDataAdapter(command);
+                    //sA.Fill(ds);
+                    ProductCat.DataSource = CategoryBLL.GetCategoryBasic(connection);
                     ProductCat.DataTextField = "Name";
                     ProductCat.DataValueField = "CategoryID";
                     ProductCat.DataBind();
@@ -111,12 +112,12 @@ namespace IMS
                 #region Populating SubCategory Dropdown
                 try
                 {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand("Select * From tblSub_Category", connection);
-                    DataSet ds = new DataSet();
-                    SqlDataAdapter sA = new SqlDataAdapter(command);
-                    sA.Fill(ds);
-                    ProductSubCat.DataSource = ds.Tables[0];
+                    //connection.Open();
+                    //SqlCommand command = new SqlCommand("Select * From tblSub_Category", connection);
+                    //DataSet ds = new DataSet();
+                    //SqlDataAdapter sA = new SqlDataAdapter(command);
+                    //sA.Fill(ds);
+                    ProductSubCat.DataSource = SubCategoryBLL.GetSubCategoriesBasic(connection);
                     ProductSubCat.DataTextField = "Name";
                     ProductSubCat.DataValueField = "Sub_CatID";
                     ProductSubCat.DataBind();

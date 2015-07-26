@@ -114,7 +114,7 @@ namespace IMS
                     GridView gvReceiveTransfer = (GridView)repReceiveTransfer.Items[0].FindControl("dgvReceiveTransfer");
                     for (int i = 0; i < gvReceiveTransfer.Rows.Count; i++)
                     {
-                        int TransferNo, TransferDetailNo, RequestedQty, TransferedQty, AvailableQty, ProductId;
+                        int TransferNo, TransferDetailNo, RequestedQty,requestedBonusQty, TransferedQty,transferedBonusQty, AvailableQty, ProductId;
                         int LogedInStoreID;
 
 
@@ -123,16 +123,23 @@ namespace IMS
                         Label lblTransferNo = (Label)gvReceiveTransfer.Rows[i].FindControl("lblRequestNo");
                         Label lblTransferDetailsID = (Label)gvReceiveTransfer.Rows[i].FindControl("lblTransferDetailsID");
                         Label lblRequestedQty = (Label)gvReceiveTransfer.Rows[i].FindControl("lblRequestedQty");
+                        Label lblRequestedBonQty = (Label)gvReceiveTransfer.Rows[i].FindControl("lblReqBonQty");
                         Label lblAvailableQty = (Label)gvReceiveTransfer.Rows[i].FindControl("lblAvailableQty");
                         Label lblSentQty = (Label)gvReceiveTransfer.Rows[i].FindControl("lblSentQty");
+                        Label lblSentBonQty = (Label)gvReceiveTransfer.Rows[i].FindControl("lblSentBonQty");
                         Label lblProductID = (Label)gvReceiveTransfer.Rows[i].FindControl("lblProductID");
 
                         int.TryParse(lblTransferNo.Text.ToString(), out TransferNo);
                         int.TryParse(lblTransferDetailsID.Text.ToString(), out TransferDetailNo);
+                        
                         int.TryParse(lblRequestedQty.Text.ToString(), out RequestedQty);
+                        int.TryParse(lblRequestedBonQty.Text.ToString(), out requestedBonusQty);
 
                         int.TryParse(lblAvailableQty.Text.ToString(), out AvailableQty);
+                        
                         int.TryParse(lblSentQty.Text.ToString(), out TransferedQty);
+                        int.TryParse(lblSentBonQty.Text.ToString(), out transferedBonusQty);
+
                         int.TryParse(lblProductID.Text.ToString(), out ProductId);
                         if (AvailableQty > 0)
                         {
@@ -150,7 +157,7 @@ namespace IMS
                             command.Parameters.AddWithValue("@p_Status", "Accepted");
                             command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
                             command.Parameters.AddWithValue("@p_ProductID", ProductId);
-
+                            command.Parameters.AddWithValue("@p_SystemID", int.Parse(Session["WH_RequestedFromID"].ToString()));
                             command.CommandType = CommandType.StoredProcedure;
                             command.ExecuteNonQuery();
 
@@ -163,15 +170,29 @@ namespace IMS
                             HtmlGenericControl btnStaticAccepted = (HtmlGenericControl)gvReceiveTransfer.Rows[i].FindControl("btnStaticAccepted");
                             btnStaticAccepted.Visible = true;  
                           
-                            if (RequestedQty != TransferedQty)
+                            if (RequestedQty != TransferedQty || requestedBonusQty != transferedBonusQty)
                             {
                                 if (TransferedQty == 0)
                                 {
-                                    UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty);
+                                    if (requestedBonusQty == 0)
+                                    {
+                                        UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty, requestedBonusQty);
+                                    }
+                                    else 
+                                    {
+                                        UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty, transferedBonusQty);
+                                    }
                                 }
                                 else
                                 {
-                                    UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty);
+                                    if (requestedBonusQty == 0)
+                                    {
+                                        UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty, requestedBonusQty);
+                                    }
+                                    else
+                                    {
+                                        UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty, transferedBonusQty);
+                                    }
                                 }
                             }
                         }
@@ -225,7 +246,7 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_Status", "Accepted");
                     command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
                     command.Parameters.AddWithValue("@p_ProductID", ProductId);
-
+                    command.Parameters.AddWithValue("@p_SystemID", int.Parse(Session["WH_RequestedFromID"].ToString()));
                     command.CommandType = CommandType.StoredProcedure;
                     command.ExecuteNonQuery();
 
@@ -428,7 +449,7 @@ namespace IMS
             }
             return salesOrderID;
         }
-        private bool UpdateStockMinus(int TransferDetailID, int ProductID, int quantity, int Sent)
+        private bool UpdateStockMinus(int TransferDetailID, int ProductID, int quantity, int Sent,int Bonus)
         {
             bool isSuccesFull = false;
             try
@@ -495,7 +516,7 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_Expiry", dt.Rows[0]["ExpiryDate"]);
                         command.Parameters.AddWithValue("@p_Batch", dt.Rows[0]["BatchNumber"]);
                         command.Parameters.AddWithValue("@p_TransferredQty", stockSet[id]);
-
+                        command.Parameters.AddWithValue("@p_DeliveredBonQty", DBNull.Value);
                         command.Parameters.AddWithValue("@p_RequestedQty", dt.Rows[0]["RequestedQty"]);
 
                         command.Parameters.AddWithValue("@p_BarCode", dt.Rows[0]["BarCode"]);
@@ -513,7 +534,86 @@ namespace IMS
                 }
                 #endregion
 
-                if (x == 1) 
+                #region re-query stock
+                command = new SqlCommand("sp_GetStockBy_TransferDetail", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_TransferDetail", TransferDetailID);
+                command.Parameters.AddWithValue("@p_StoredAt", int.Parse(Session["UserSys"].ToString()));
+
+                ds = new DataSet();
+                dA = new SqlDataAdapter(command);
+                dA.Fill(ds);
+                stockDet = ds;
+                #endregion
+
+                #region set bonus values
+                Dictionary<int, int> stockSetBonus = new Dictionary<int, int>();
+
+                foreach (DataRow row in stockDet.Tables[0].Rows)
+                {
+                    int exQuan = int.Parse(row["Quantity"].ToString());
+                    if (Bonus > 0 && exQuan > 0)
+                    {
+                        if (exQuan >= Bonus)
+                        {
+                            stockSetBonus.Add(int.Parse(row["StockID"].ToString()), Bonus);
+                            break;
+                        }
+                        else if (exQuan < Bonus)
+                        {
+                            stockSetBonus.Add(int.Parse(row["StockID"].ToString()), exQuan);
+                            Bonus = Bonus - exQuan;
+                        }
+                    }
+                }
+                #endregion
+
+                #region Update stock for bonus values
+                foreach (int id in stockSetBonus.Keys)
+                {
+                    DataView dv = stockDet.Tables[0].DefaultView;
+                    dv.RowFilter = "StockID = " + id;
+                    DataTable dt = dv.ToTable();
+
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        command = new SqlCommand("sp_EntryTransferDetails_Receive", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@p_TransferDetailID", TransferDetailID);
+                        command.Parameters.AddWithValue("@p_ProductID", dt.Rows[0]["ProductID"]);
+                        command.Parameters.AddWithValue("@p_StockID", id);
+                        command.Parameters.AddWithValue("@p_CostPrice", dt.Rows[0]["UCostPrice"]);
+                        command.Parameters.AddWithValue("@p_SalePrice", dt.Rows[0]["USalePrice"]);
+                        command.Parameters.AddWithValue("@p_Expiry", dt.Rows[0]["ExpiryDate"]);
+                        command.Parameters.AddWithValue("@p_Batch", dt.Rows[0]["BatchNumber"]);
+
+                        if (stockSet.ContainsKey(id))
+                        {
+                            command.Parameters.AddWithValue("@p_TransferredQty", stockSet[id]);
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@p_TransferredQty", 0);
+                        }
+
+                        command.Parameters.AddWithValue("@p_DeliveredBonQty", stockSetBonus[id]);
+                       
+                        command.Parameters.AddWithValue("@p_RequestedQty", dt.Rows[0]["RequestedQty"]);
+
+                        command.Parameters.AddWithValue("@p_BarCode", dt.Rows[0]["BarCode"]);
+                        command.ExecuteNonQuery();
+
+                        command = new SqlCommand("Sp_UpdateStockBy_StockID", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@p_StockID", id);
+                        command.Parameters.AddWithValue("@p_quantity", stockSetBonus[id]);
+                        command.Parameters.AddWithValue("@p_Action", "Minus");
+                        command.ExecuteNonQuery();
+                    }
+                }
+                #endregion
+
+                if (x == 1)
                 {
                     isSuccesFull = true;
                 }
@@ -531,7 +631,7 @@ namespace IMS
         {
             try
             {
-                int TransferNo, TransferDetailNo, RequestedQty, TransferedQty, ReceivedQty, AvailableQty, ProductId;
+                int TransferNo, TransferDetailNo, RequestedQty, requestedBonusQty, TransferedQty, transferedBonusQty, ReceivedQty, AvailableQty, ProductId;
                 int LogedInStoreID;
 
                 int.TryParse(Session["UserSys"].ToString(), out LogedInStoreID);
@@ -542,13 +642,18 @@ namespace IMS
                 Label lblAvailableQty = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblAvailableQty");
                 Label lblSentQty = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblSentQty");
                 Label lblProductID = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblProductID");
+                Label lblRequestedBonQty = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblReqBonQty");
+                Label lblSentBonQty = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblSentBonQty");
+
 
                 int.TryParse(lblTransferNo.Text.ToString(), out TransferNo);
                 int.TryParse(lblTransferDetailsID.Text.ToString(), out TransferDetailNo);
                 int.TryParse(lblRequestedQty.Text.ToString(), out RequestedQty);
+                int.TryParse(lblRequestedBonQty.Text.ToString(), out requestedBonusQty);
 
                 int.TryParse(lblAvailableQty.Text.ToString(), out AvailableQty);
                 int.TryParse(lblSentQty.Text.ToString(), out TransferedQty);
+                int.TryParse(lblSentBonQty.Text.ToString(), out transferedBonusQty);
                 int.TryParse(lblProductID.Text.ToString(), out ProductId);
                 if (e.CommandName == "Edit")
                 {
@@ -562,15 +667,29 @@ namespace IMS
                     {
                         bool isSuccessful = false;
                         //update transfer entry first
-                        if (RequestedQty != TransferedQty)
+                        if (RequestedQty != TransferedQty || requestedBonusQty != transferedBonusQty)
                         {
                             if (TransferedQty == 0)
                             {
-                                isSuccessful = UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty);
+                                if (transferedBonusQty == 0)
+                                {
+                                    UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty, requestedBonusQty);
+                                }
+                                else
+                                {
+                                    UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty, transferedBonusQty);
+                                }
                             }
                             else
                             {
-                                isSuccessful = UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty);
+                                if (transferedBonusQty == 0)
+                                {
+                                    UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty, requestedBonusQty);
+                                }
+                                else
+                                {
+                                    UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty, transferedBonusQty);
+                                }
                             }
                         }
 
@@ -585,9 +704,14 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_TransferDetID", TransferDetailNo);
                         command.Parameters.AddWithValue("@p_RequestedQty", RequestedQty);
                         if (isSuccessful)
+                        {
                             command.Parameters.AddWithValue("@p_TransferedQty", RequestedQty);
+                        }
                         else
+                        {
                             command.Parameters.AddWithValue("@p_TransferedQty", TransferedQty);
+                        }
+                        command.Parameters.AddWithValue("@p_DeliveredBonQty", requestedBonusQty);
                         command.Parameters.AddWithValue("@p_AvailableQty", AvailableQty);
                         command.Parameters.AddWithValue("@p_Status", "Accepted");
                         command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);

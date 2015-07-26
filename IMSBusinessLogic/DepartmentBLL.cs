@@ -17,14 +17,18 @@ namespace IMSBusinessLogic
         // public static List<Department> GetAllDepartment()
         public static DataSet GetAllDepartment(SqlConnection connection)
         {
-            
+
             DataSet resultSet = new DataSet();
             try
             {
-                String Query = "SELECT * FROM tblDepartment";
+                //String Query = "SELECT * FROM tblDepartment";
 
-                connection.Open();
-                SqlCommand command = new SqlCommand(Query, connection);
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("Sp_GetDepartmentList", connection);
+                command.CommandType = CommandType.StoredProcedure;
                 SqlDataAdapter SA = new SqlDataAdapter(command);
                 SA.Fill(resultSet);
 
@@ -35,8 +39,9 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                connection.Close();
-                
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
             }
             return resultSet;
         }
@@ -46,12 +51,17 @@ namespace IMSBusinessLogic
             DataSet resultSet = new DataSet();
             try
             {
-                String Query = "SELECT * FROM tblDepartment";
+                //String Query = "SELECT * FROM tblDepartment";
 
-                connection.Open();
-                SqlCommand command = new SqlCommand(Query, connection);
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("Sp_GetDepartmentList", connection);
+                command.CommandType = CommandType.StoredProcedure;
                 SqlDataAdapter SA = new SqlDataAdapter(command);
                 SA.Fill(resultSet);
+
             }
             catch (Exception exp)
             {
@@ -59,7 +69,8 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
 
             }
             return resultSet;
@@ -69,7 +80,10 @@ namespace IMSBusinessLogic
         {
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("Sp_UpdateSelectedDepartment", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_Id", dep.DepartmentID);
@@ -86,7 +100,8 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             
         }
@@ -95,7 +110,10 @@ namespace IMSBusinessLogic
         {
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("Sp_DeleteDepartment", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_Id", dep.DepartmentID);
@@ -109,7 +127,8 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 
@@ -117,7 +136,10 @@ namespace IMSBusinessLogic
         {
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("Sp_AddNewDepartment", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@Name", dep.Name);
@@ -133,7 +155,8 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
     }

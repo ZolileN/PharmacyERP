@@ -52,12 +52,13 @@ namespace IMS
                     {
                         for (int i = 0; i < dt.Rows.Count; i++)
                         {
-                            sb.Append(dt.Rows[i].ItemArray[0].ToString() + "~");   //Create Con "|" + dt.Rows[i].ItemArray[1].ToString() +
+                            string val=Server.HtmlDecode(dt.Rows[i].ItemArray[0].ToString());
+                            sb.Append(val + "~");   //Create Con "|" + dt.Rows[i].ItemArray[1].ToString() +
 
                         }
                     }
 
-                    Response.Write(sb.ToString());
+                    Response.Write(Server.HtmlDecode(sb.ToString()));
                 }
                 if (dt.Rows.Count <= 0)
                 {
@@ -78,12 +79,13 @@ namespace IMS
                         {
                             for (int i = 0; i < dt.Rows.Count; i++)
                             {
-                                sb.Append(dt.Rows[i].ItemArray[0].ToString() + "~");   //Create Con + "|" + dt.Rows[i].ItemArray[1].ToString()
+                                string val = Server.HtmlDecode(dt.Rows[i].ItemArray[0].ToString());
+                                sb.Append(val + "~");   //Create Con "|" + dt.Rows[i].ItemArray[1].ToString() +
 
                             }
                         }
 
-                        Response.Write(sb.ToString());
+                        Response.Write(Server.HtmlDecode(sb.ToString()));
                     }
                 }
                 

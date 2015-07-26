@@ -337,11 +337,24 @@ namespace IMS
 
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
 
-                Text = Text + "%";
-                SqlCommand command = new SqlCommand("Select * From tbl_System Where tbl_System.SystemName LIKE '" + Text + "'", connection);
+                //Text = Text + "%";
+                //SqlCommand command = new SqlCommand("Select * From tbl_System Where tbl_System.SystemName LIKE '" + Text + "'", connection);
                 DataSet ds = new DataSet();
+                SqlCommand command = new SqlCommand("Sp_GetAllCategories", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                if (Text != null)
+                {
+                    command.Parameters.AddWithValue("@p_storeName ", Text);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@p_storeName ", DBNull.Value);
+                }
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
                 if (StockAt.DataSource != null)
