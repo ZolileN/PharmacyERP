@@ -35,13 +35,11 @@ namespace IMS
             }
             if (clientName.Length >= 2)
             {
-                using (SqlCommand cmd = new SqlCommand("select DISTINCT (Case WHen LEN(ISNULL(tbl_ProductMaster.Description,''))=0 Then ISNULL(tbl_ProductMaster.Product_Name,'')+' '+ISNULL(tbl_ProductMaster.itemPackSize,'')"+
-							"	+' '+ISNULL(tbl_ProductMaster.itemStrength,'')+' '+ISNULL(tbl_ProductMaster.itemForm,'') Else tbl_ProductMaster.Description END) from tbl_ProductMaster where Description LIKE  @Client_Name+'%'", connection))
+                using (SqlCommand cmd = new SqlCommand("Sp_GetProductByName", connection))
                 {
 
-                    SqlParameter parClientName = new SqlParameter("@Client_Name", SqlDbType.VarChar);
-                    parClientName.Value = clientName;
-                    cmd.Parameters.Add(parClientName);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@p_prodName", clientName);
                     //SqlDataReader dr = cmd.ExecuteReader();
 
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -62,13 +60,11 @@ namespace IMS
                 }
                 if (dt.Rows.Count <= 0)
                 {
-                    using (SqlCommand cmd = new SqlCommand("select DISTINCT (Case WHen LEN(ISNULL(tbl_ProductMaster.Description,''))=0 Then ISNULL(tbl_ProductMaster.Product_Name,'')+' '+ISNULL(tbl_ProductMaster.itemPackSize,'')" +
-                            "	+' '+ISNULL(tbl_ProductMaster.itemStrength,'')+' '+ISNULL(tbl_ProductMaster.itemForm,'') Else tbl_ProductMaster.Description END) from tbl_ProductMaster where Product_Name LIKE  @Client_Name+'%'", connection))
+                    using (SqlCommand cmd = new SqlCommand("Sp_GetProductByName", connection))
                     {
-
-                        SqlParameter parClientName = new SqlParameter("@Client_Name", SqlDbType.VarChar);
-                        parClientName.Value = clientName;
-                        cmd.Parameters.Add(parClientName);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@p_prodName", clientName);
+                       
                         //SqlDataReader dr = cmd.ExecuteReader();
 
                         SqlDataAdapter da = new SqlDataAdapter(cmd);

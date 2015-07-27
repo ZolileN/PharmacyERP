@@ -461,8 +461,9 @@ namespace IMS
                 SqlCommand command = new SqlCommand();
                 if (int.TryParse(Session["UserSys"].ToString(), out UserSys))
                 {
-                    command = new SqlCommand("Select SystemName from tbl_System Where SystemID = '" + UserSys + "'", connection);
-           
+                    command = new SqlCommand("sp_GetSystemName_byID", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@p_UserSysID", UserSys);
                 }
 
                 DataTable dt = new DataTable();
@@ -517,8 +518,10 @@ namespace IMS
             {
                 connection.Open();
 
-                Text = Text + "%";
-                SqlCommand command = new SqlCommand("SELECT * From tbl_ProductMaster Where tbl_ProductMaster.Product_Name LIKE '" + Text + "' AND Status = 1", connection);
+                //Text = Text + "%";
+                SqlCommand command = new SqlCommand("Sp_GetProductByName", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_prodName", Text);
                 DataSet ds = new DataSet();
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
