@@ -43,6 +43,7 @@ namespace IMS.UserControl
         public void PopulateforAssociation()
         {
             ViewState["checkAllState"] = true;
+            ViewState["first"] = true;
             lblSelectVendor.Visible = true;
             btnSearchStore.Visible = true;
             txtSearch.Visible = true;
@@ -157,6 +158,7 @@ namespace IMS.UserControl
                 #endregion
             }
         }
+
         public void BindGrid()
         {
             //SaveCurrentState();
@@ -191,13 +193,13 @@ namespace IMS.UserControl
                     StockDisplayGrid.DataSource = ds;
                     StockDisplayGrid.DataBind();
                     PopulatePreviousState();
-                  
+
                     if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
                     {
                         ((CheckBox)StockDisplayGrid.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
                         ViewState["checkAllState"] = true;
                     }
-                   
+
                 }
 
             }
@@ -210,6 +212,69 @@ namespace IMS.UserControl
             }
             #endregion
         }
+
+        public void selectAllProducts()
+        {
+            DataSet productSet = (DataSet)Session["dsProducts_PopUp"];
+            ArrayList CheckBoxArray;
+            if (ViewState["CheckBoxArray"] != null)
+            {
+                CheckBoxArray = (ArrayList)ViewState["CheckBoxArray"];
+            }
+            else
+            {
+                CheckBoxArray = new ArrayList();
+            }
+            
+            int checkBoxIndex = -1;
+            int pageIndex = 0;
+            int paginationCount = productSet.Tables[0].Rows.Count/10; // 1 page  contains 10 rows, hence divided by 10
+          
+            // adding page index for the first time.
+            string checkAllIndex;//= "chkAll-" + pageIndex;
+            //if (CheckBoxArray.IndexOf(checkAllIndex) == -1)
+            //{
+            //    CheckBoxArray.Add(checkAllIndex);
+            //}
+            
+            for (int i = 0; i < productSet.Tables[0].Rows.Count; i++)
+            {
+                if (i % 10 == 0)
+                {
+                    
+                    checkAllIndex = "chkAll-" + pageIndex;
+                    if (CheckBoxArray.IndexOf(checkAllIndex) == -1)
+                    {
+                        CheckBoxArray.Add(checkAllIndex);
+                    }
+                    pageIndex++;
+                }
+                             
+
+                // the checkbox index must range between 0-9
+                if (i > 9)
+                {
+                    checkBoxIndex = ((i % 10));
+                }
+                else 
+                {
+                    checkBoxIndex++;
+                }
+
+                string ProdID = "ID " + checkBoxIndex + "-" + productSet.Tables[0].Rows[i]["ProductID"].ToString();
+                
+                if (!CheckBoxArray.Contains(ProdID))
+                {
+                    CheckBoxArray.Add(checkBoxIndex);
+                    CheckBoxArray.Add(ProdID);
+                }
+               
+            }
+
+            ViewState["CheckBoxArray"] = CheckBoxArray;
+
+        }
+       
 
         private void SaveCurrentState() 
         {
@@ -325,6 +390,15 @@ namespace IMS.UserControl
         #region GridView Functions & Events
         protected void StockDisplayGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
+            if ((bool)ViewState["first"] == true)
+            {
+                selectAllProducts();
+                ViewState["first"] = false;
+            }
+            //else
+            //{
+            //    SaveCurrentState();
+            //}
             SaveCurrentState();
             StockDisplayGrid.PageIndex = e.NewPageIndex;
             
@@ -493,6 +567,16 @@ namespace IMS.UserControl
         {
             if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true))
             {
+               // SaveCurrentState();
+                if ((bool)ViewState["first"] == true)
+                {
+                    selectAllProducts();
+                    ViewState["first"] = false;
+                }
+                //else
+                //{
+                //    SaveCurrentState();
+                //}
                 SaveCurrentState();
                 if (ViewState["CheckBoxArray"] != null)
                 {
@@ -682,6 +766,7 @@ namespace IMS.UserControl
 
                     StockDisplayGrid.DataSource = resultSet;
                     StockDisplayGrid.DataBind();
+                    PopulatePreviousState();
 
                     if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
                     {

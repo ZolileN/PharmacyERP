@@ -52,7 +52,7 @@
            
               <asp:TemplateField HeaderText="Action">
                          <HeaderTemplate>
-                            <asp:CheckBox ID="chkboxSelectAll"  runat="server" onclick="CheckAllEmp(this);" />
+                            <asp:CheckBox ID="chkboxSelectAll" enabled="false"  runat="server" onclick="CheckAllEmp(this);" />
                         </HeaderTemplate>
                         <ItemTemplate>
                             <asp:CheckBox ID="chkCtrl" runat="server" />
