@@ -98,11 +98,13 @@ namespace IMS.UserControl
                     int id;
                     if (int.TryParse(Session["UserSys"].ToString(), out id))
                     {
-                        String Query = "Select * FROM tblVendor Where  SupName Like '" + Session["txtVendor"].ToString() + "'";
+                        //String Query = "Select * FROM tblVendor Where  SupName Like '" + Session["txtVendor"].ToString() + "'";
 
                         connection.Open();
-                        SqlCommand command = new SqlCommand(Query, connection);
+                        SqlCommand command = new SqlCommand("sp_GetVendor_byNameParam", connection);
+                        command.Parameters.AddWithValue("@p_VendName", Session["txtVendor"].ToString());
                         SqlDataAdapter SA = new SqlDataAdapter(command);
+                        command.CommandType = CommandType.StoredProcedure;
                         ProductSet = null;
                         SA.Fill(ds);
                         PopulatePreviousState();

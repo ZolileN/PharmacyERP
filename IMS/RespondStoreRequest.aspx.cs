@@ -298,7 +298,7 @@ namespace IMS
                 String OrderMode = "";
                 int OrderType = 3;//incase of vendor this should be 3
 
-                OrderMode = "Sales";
+                OrderMode = "Transfer";
 
 
                 if (connection.State == ConnectionState.Closed)
@@ -425,7 +425,7 @@ namespace IMS
                                     command.Parameters.AddWithValue("@p_Expiry", _entryRow["ExpiryDate"]);
                                     command.Parameters.AddWithValue("@p_Batch", _entryRow["BatchNumber"]);
                                     command.Parameters.AddWithValue("@p_SendQuantity", _entryRow["TransferredQty"]);
-                                    command.Parameters.AddWithValue("@p_BonusQuantity", DBNull.Value);
+                                    command.Parameters.AddWithValue("@p_BonusQuantity", _entryRow["DelieveredBonusQty"]);
                                     command.Parameters.AddWithValue("@p_BarCode", _entryRow["Barcode"]);
                                     command.Parameters.AddWithValue("@p_Discount", _entryRow["DiscountPercentage"]);
                                     command.ExecuteNonQuery();
