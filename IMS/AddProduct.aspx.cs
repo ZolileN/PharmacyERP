@@ -737,7 +737,7 @@ namespace IMS
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand("Sp_GetCategoryList", connection);
+                SqlCommand command = new SqlCommand("Sp_GetSubCategoryList", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_CatID", Convert.ToInt32(ProductCat.SelectedValue.ToString()));
 
