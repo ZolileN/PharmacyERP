@@ -66,7 +66,7 @@ namespace IMS.UserControl
             {
                 if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
                 {
-                    //((CheckBox)gdvVendor.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                     //((CheckBox)gdvVendor.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
                 }
                 if (ViewState["selectSearch"] != null && ((bool)ViewState["selectSearch"]) == true)
                 {
@@ -79,7 +79,7 @@ namespace IMS.UserControl
 
         public void PopulateforAssociation() 
         {
-            ViewState["checkAllState"] = true;
+            ViewState["checkAllState"] = true; 
             lblSelectVendor.Visible = true;
             btnSearchStore.Visible = true;
             txtSearch.Visible = true;
@@ -140,6 +140,7 @@ namespace IMS.UserControl
             gdvVendor.DataSource = ds;
             gdvVendor.DataBind();
 
+            PopulatePreviousState();
 
             if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
             {
@@ -150,7 +151,23 @@ namespace IMS.UserControl
 
         protected void gdvVendor_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            ArrayList CheckBoxArray = (ArrayList)ViewState["CheckBoxArray"];
+            if (e.Row.RowType == DataControlRowType.DataRow && CheckBoxArray != null)
+            {
+                if (((bool)ViewState["SelectAllChecked"]) == true)
+                {
+                    //CheckBox chkAll = (CheckBox)gdvVendor.HeaderRow.Cells[0].FindControl("chkboxSelectAll");
+                    //chkAll.Checked = true;
 
+                    CheckBox chk = (CheckBox)e.Row.FindControl("chkCtrl");
+                    chk.Checked = true;
+                }
+                else
+                {
+                    CheckBox chk = (CheckBox)e.Row.FindControl("chkCtrl");
+                    chk.Checked = false;
+                }
+            } 
         }
 
         protected void gdvVendor_SelectedIndexChanged(object sender, EventArgs e)
@@ -231,7 +248,7 @@ namespace IMS.UserControl
             ArrayList CheckBoxArray;
             if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
             {
-               // ((CheckBox)gdvVendor.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                 ((CheckBox)gdvVendor.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
                 ViewState["checkAllState"] = true;
 
                 if (ViewState["CheckBoxArray"] != null)
@@ -254,6 +271,7 @@ namespace IMS.UserControl
                     {
                         CheckBoxArray.Add(checkAllIndex);
                     }
+                    ViewState["SelectAllChecked"] = true;
                 }
                 else
                 {
@@ -262,6 +280,7 @@ namespace IMS.UserControl
                         CheckBoxArray.Remove(checkAllIndex);
                         CheckAllWasChecked = true;
                     }
+                    ViewState["SelectAllChecked"] = false;
                 }
                 for (int i = 0; i < gdvVendor.Rows.Count; i++)
                 {
@@ -485,6 +504,8 @@ namespace IMS.UserControl
 
                     gdvVendor.DataSource = resultSet;
                     gdvVendor.DataBind();
+
+                    PopulatePreviousState();
 
                     if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
                     {

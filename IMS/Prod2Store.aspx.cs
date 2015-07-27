@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -220,8 +221,7 @@ namespace IMS
         }
 
         protected void btnShow_Click(object sender, EventArgs e)
-        {
-
+        {  
             ProductsPopupGrid.SelectAll = true;
             ProductsPopupGrid.StoreAssociation = true;
             ProductsPopupGrid.PopulateforAssociation();
@@ -237,6 +237,9 @@ namespace IMS
             //}
 
         }
+
+        
+
          
     }
 }
