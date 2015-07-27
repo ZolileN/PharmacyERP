@@ -133,7 +133,7 @@
                                 </asp:TemplateField>
                                  <asp:TemplateField HeaderText="Discount %" HeaderStyle-Width="50px">
                                         <ItemTemplate>
-                                            <asp:Label ID="RequestedFrom" CssClass="" runat="server" Text='<%# Eval("Discount") %>' Width="110px"></asp:Label>
+                                            <asp:TextBox ID="RequestedFrom" CssClass="" runat="server" Text='<%# Eval("Discount") %>' Enabled='<%# !IsStatusComplete((String) Eval("Status")) %>' Width="50px"></asp:TextBox>
                                         </ItemTemplate>
                                         
                                         <ItemStyle Width="50px" HorizontalAlign="Left" />

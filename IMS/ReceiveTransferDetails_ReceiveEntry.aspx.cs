@@ -72,7 +72,7 @@ namespace IMS
             for (int i = 0; i < dgvReceiveTransferDetailsReceive.Rows.Count; i++)
             {
                 DateTime RequestDate, Expiry;
-                int TransferedQty, TransferDetID, StockId, ProdctID, Barcode, ReqQty = 0, AvailableQty;
+                int TransferedQty, TransferedBonusQty, TransferDetID, StockId, ProdctID, Barcode, ReqQty = 0, AvailableQty;
                 decimal CP, SP;
 
 
@@ -90,11 +90,15 @@ namespace IMS
                 Label lblStockID = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblStockID");
                 Label lblAvailableStock = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblAvailableStock");
                 TextBox txtTransferedQty = (TextBox)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("txtSendQty");
+                TextBox txtTransferedBonusQty = (TextBox)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("txtBonusQty");
 
                 int.TryParse(lblBarCode.Text.ToString(), out Barcode);
                 int.TryParse(lblAvailableStock.Text.ToString(), out AvailableQty);
                 int.TryParse(lblRequestedQty.Text.ToString(), out ReqQty);
+                
                 int.TryParse(txtTransferedQty.Text.ToString(), out TransferedQty);
+                int.TryParse(txtTransferedBonusQty.Text.ToString(), out TransferedBonusQty);
+
                 int.TryParse(lblTransferDetailsID.Text.ToString(), out TransferDetID);
                 int.TryParse(lblProductID.Text.ToString(), out ProdctID);
                 int.TryParse(lblStockID.Text.ToString(), out StockId);
@@ -115,6 +119,7 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_RequestDate", RequestDate);
                     command.Parameters.AddWithValue("@p_ReqQty", ReqQty);
                     command.Parameters.AddWithValue("@p_TransferQty", TransferedQty);
+                    command.Parameters.AddWithValue("@p_TransferBonusQty", TransferedBonusQty);
                     command.Parameters.AddWithValue("@p_Barcode", Barcode);
                     command.Parameters.AddWithValue("@p_ProdctID", ProdctID);
                     command.Parameters.AddWithValue("@p_StockId", StockId);
@@ -298,6 +303,34 @@ namespace IMS
 
                 }
             }
+
+            #region Bonus
+            for (int i = 0; i < dtReceiveEnty.Rows.Count; i++)
+            {
+                if (Sent > 0)
+                {
+
+                    int TransferDetId = Convert.ToInt32(dtReceiveEnty.Rows[i]["TransferDetailID"].ToString());
+                    int Quantity = Convert.ToInt32(dtReceiveEnty.Rows[i]["AvailableQty"].ToString());
+                    int ProductId = Convert.ToInt32(dtReceiveEnty.Rows[i]["ProductID"].ToString());
+
+                    if (Quantity < Convert.ToInt32(dtTemp.Rows[i]["RequestedQty"]))
+                    {
+                        dtReceiveEnty.Rows[i]["BonusQty"] = Quantity;
+                        dtTemp.Rows[i + 1]["RequestedQty"] = Convert.ToInt32(dtTemp.Rows[i]["RequestedQty"]) - Quantity;
+                        dtReceiveEnty.AcceptChanges();
+                        Sent = Sent - Quantity;
+                    }
+                    else
+                    {
+                        dtReceiveEnty.Rows[i]["BonusQty"] = Sent;
+                        dtReceiveEnty.AcceptChanges();
+                        Sent = Sent - Convert.ToInt32(dtReceiveEnty.Rows[i]["RequestedQty"].ToString());
+                    }
+
+                }
+            }
+            #endregion
         }
     }
 }

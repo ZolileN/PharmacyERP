@@ -133,6 +133,15 @@
                                     
                                     <ItemStyle Width="150px" HorizontalAlign="Left" />
                                 </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Bonus Qty">
+                                    <ItemTemplate>
+                                         <asp:TextBox ID="txtBonusQty" runat="server" CssClass="grid-input-form" Text='<%# Eval("BonusQty") %>' Width="140px"></asp:TextBox>
+
+                                    </ItemTemplate>
+                                    
+                                    <ItemStyle Width="150px" HorizontalAlign="Left" />
+                                </asp:TemplateField>
                                  
                             </Columns>
                         </asp:GridView>

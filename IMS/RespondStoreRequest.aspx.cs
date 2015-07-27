@@ -631,7 +631,7 @@ namespace IMS
         {
             try
             {
-                int TransferNo, TransferDetailNo, RequestedQty, requestedBonusQty, TransferedQty, transferedBonusQty, ReceivedQty, AvailableQty, ProductId;
+                int TransferNo, TransferDetailNo, RequestedQty, requestedBonusQty, TransferedQty, transferedBonusQty, ReceivedQty, AvailableQty, ProductId, Discount;
                 int LogedInStoreID;
 
                 int.TryParse(Session["UserSys"].ToString(), out LogedInStoreID);
@@ -644,8 +644,9 @@ namespace IMS
                 Label lblProductID = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblProductID");
                 Label lblRequestedBonQty = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblReqBonQty");
                 Label lblSentBonQty = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblSentBonQty");
+                TextBox txtRequestedFrom = (TextBox)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("RequestedFrom");
 
-
+                int.TryParse(txtRequestedFrom.Text.ToString(), out Discount);
                 int.TryParse(lblTransferNo.Text.ToString(), out TransferNo);
                 int.TryParse(lblTransferDetailsID.Text.ToString(), out TransferDetailNo);
                 int.TryParse(lblRequestedQty.Text.ToString(), out RequestedQty);
@@ -716,6 +717,7 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_Status", "Accepted");
                         command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
                         command.Parameters.AddWithValue("@p_ProductID", ProductId);
+                        command.Parameters.AddWithValue("@p_Discount", Discount);
 
                         command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
