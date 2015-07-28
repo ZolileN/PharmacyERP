@@ -24,7 +24,7 @@ namespace IMSBusinessLogic
                 {
                     connection.Open();
                 }
-                SqlCommand command = new SqlCommand("Sp_GetAllCategories", connection);
+                SqlCommand command = new SqlCommand("Sp_GetCategories", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 //  String Query = "SELECT  tblCategory.CategoryID as categoryID,tblCategory.Name as categoryName, tblDepartment.Name as DepartmentName "+
                 //                "FROM tblCategory INNER JOIN tblDepartment On tblCategory.DepartmentID=tblDepartment.DepId ORDER BY categoryID ASC ";
@@ -58,7 +58,7 @@ namespace IMSBusinessLogic
                 {
                     connection.Open();
                 }
-                SqlCommand command = new SqlCommand("Sp_GetAllCategories", connection);
+                SqlCommand command = new SqlCommand("Sp_GetCategories", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_catID ", val.CategoryID);
                 SqlDataAdapter SA = new SqlDataAdapter(command);
