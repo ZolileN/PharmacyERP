@@ -79,7 +79,8 @@ namespace IMS.UserControl
 
         public void PopulateforAssociation() 
         {
-            ViewState["checkAllState"] = true; 
+            ViewState["checkAllState"] = true;
+            ViewState["first"] = true;
             lblSelectVendor.Visible = true;
             btnSearchStore.Visible = true;
             txtSearch.Visible = true;
@@ -142,6 +143,7 @@ namespace IMS.UserControl
             gdvVendor.DataSource = ds;
             gdvVendor.DataBind();
 
+            
             PopulatePreviousState();
 
             if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
@@ -179,6 +181,12 @@ namespace IMS.UserControl
 
         protected void gdvVendor_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
+            if ((bool)ViewState["first"] == true)
+            {
+                selectAllProducts();
+                ViewState["first"] = false;
+            }
+
             SaveCurrentState();
             gdvVendor.PageIndex = e.NewPageIndex;
             if (Session["txtVendor"] != null)
@@ -316,6 +324,68 @@ namespace IMS.UserControl
             }
         }
 
+        public void selectAllProducts()
+        {
+            DataSet productSet = (DataSet)Session["dsVendors"];
+            ArrayList CheckBoxArray;
+            if (ViewState["CheckBoxArray"] != null)
+            {
+                CheckBoxArray = (ArrayList)ViewState["CheckBoxArray"];
+            }
+            else
+            {
+                CheckBoxArray = new ArrayList();
+            }
+
+            int checkBoxIndex = -1;
+            int pageIndex = 0;
+            int paginationCount = productSet.Tables[0].Rows.Count / 10; // 1 page  contains 10 rows, hence divided by 10
+
+            // adding page index for the first time.
+            string checkAllIndex;//= "chkAll-" + pageIndex;
+            //if (CheckBoxArray.IndexOf(checkAllIndex) == -1)
+            //{
+            //    CheckBoxArray.Add(checkAllIndex);
+            //}
+
+            for (int i = 0; i < productSet.Tables[0].Rows.Count; i++)
+            {
+                if (i % 10 == 0)
+                {
+
+                    checkAllIndex = "chkAll-" + pageIndex;
+                    if (CheckBoxArray.IndexOf(checkAllIndex) == -1)
+                    {
+                        CheckBoxArray.Add(checkAllIndex);
+                    }
+                    pageIndex++;
+                }
+
+
+                // the checkbox index must range between 0-9
+                if (i > 9)
+                {
+                    checkBoxIndex = ((i % 10));
+                }
+                else
+                {
+                    checkBoxIndex++;
+                }
+
+                string ProdID = "ID " + checkBoxIndex + "-" + productSet.Tables[0].Rows[i]["SuppID"].ToString();
+
+                if (!CheckBoxArray.Contains(ProdID))
+                {
+                    CheckBoxArray.Add(checkBoxIndex);
+                    CheckBoxArray.Add(ProdID);
+                }
+
+            }
+
+            ViewState["CheckBoxArray"] = CheckBoxArray;
+
+        }
+
         private void PopulatePreviousState()
         {
             if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true))
@@ -363,6 +433,11 @@ namespace IMS.UserControl
             {
                 if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true))
                 {
+                    if ((bool)ViewState["first"] == true)
+                    {
+                        selectAllProducts();
+                        ViewState["first"] = false;
+                    }
                     SaveCurrentState();
                     if (ViewState["CheckBoxArray"] != null)
                     {
@@ -506,7 +581,7 @@ namespace IMS.UserControl
 
                     gdvVendor.DataSource = resultSet;
                     gdvVendor.DataBind();
-
+                    Session["dsVendors"] = resultSet;
                     PopulatePreviousState();
 
                     if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
