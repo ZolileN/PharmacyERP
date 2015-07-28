@@ -235,7 +235,7 @@ namespace IMS
                     command2.Parameters.AddWithValue("@returnedQty", RejectedQty);
                     command2.Parameters.AddWithValue("@returnedStatus", int.Parse(((DropDownList)dgvReceiveSOGrid.Rows[RowIndex].FindControl("ddNotAcceptedAction")).SelectedValue));
 
-                    if (ExpiryDate != null)
+                    if (ExpiryDate != null && !String.IsNullOrEmpty(ExpiryDate.ToString()))
                     {
                         command2.Parameters.AddWithValue("@expiredDate", DateTime.Parse(ExpiryDate));
                     }
@@ -256,7 +256,7 @@ namespace IMS
                     command3.Parameters.AddWithValue("@p_ProductID", int.Parse(ProductID));
                     command3.Parameters.AddWithValue("@p_BarCode", long.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("BarCode")).Text));
                     command3.Parameters.AddWithValue("@p_Bonus", int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("delBonusQtyVal")).Text));
-                    if (ExpiryDate != null)
+                    if (ExpiryDate != null && !String.IsNullOrEmpty(ExpiryDate.ToString()))
                     {
                         command3.Parameters.AddWithValue("@p_Expiry", DateTime.Parse(ExpiryDate));
                     }
