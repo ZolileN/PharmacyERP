@@ -19,7 +19,7 @@ namespace IMS
         {
             if (!IsPostBack)
             {
-                PopulateddCategory();
+                
                 PopulateddDepartment();
                 if (Convert.ToInt32(Session["subcatid"].ToString()) > 0)
                 {
@@ -143,6 +143,11 @@ namespace IMS
             }
             Response.Redirect("ManageSubCategory.aspx");
             
+        }
+
+        protected void ddDepartment_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            PopulateddCategory();
         }
 
     }

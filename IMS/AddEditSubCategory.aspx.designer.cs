@@ -49,15 +49,6 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.TextBox txtSubCategoryName;
         
         /// <summary>
-        /// ddCategory control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddCategory;
-        
-        /// <summary>
         /// ddDepartment control.
         /// </summary>
         /// <remarks>
@@ -65,5 +56,14 @@ namespace IMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddDepartment;
+        
+        /// <summary>
+        /// ddCategory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddCategory;
     }
 }

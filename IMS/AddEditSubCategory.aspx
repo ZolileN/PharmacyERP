@@ -30,6 +30,15 @@
                
             </tr>
 
+         <tr>
+            
+                 <td><asp:Label runat="server" AssociatedControlID="ddDepartment" CssClass="control-label">Department Name</asp:Label></td>
+                 <td><asp:DropDownList runat="server" ID="ddDepartment" CssClass="form-control" Width="29%" AppendDataBoundItems="True" AutoPostBack="True" OnSelectedIndexChanged="ddDepartment_SelectedIndexChanged"  />
+
+                 </td>
+             
+          </tr>
+
         <tr>
             
                  <td><asp:Label runat="server" AssociatedControlID="ddCategory" CssClass="control-label">Category Name</asp:Label></td>
@@ -40,15 +49,7 @@
 
           </tr>
 
-            <tr>
-            
-                 <td><asp:Label runat="server" AssociatedControlID="ddDepartment" CssClass="control-label">Department Name</asp:Label></td>
-                 <td><asp:DropDownList runat="server" ID="ddDepartment" CssClass="form-control" Width="29%" AppendDataBoundItems="True" AutoPostBack="True"  />
-
-                 </td>
-             
-          </tr>
-
+           
          
           <tr><td height="6"></td></tr>
           <tr>
