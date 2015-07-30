@@ -27,6 +27,11 @@ namespace IMS
                     //do here
                 }
                 BindGrid();
+
+                if(IsWarehouse().Equals(false))
+                {
+                    btnAddProduct.Enabled = false;
+                }
             }
         }
 

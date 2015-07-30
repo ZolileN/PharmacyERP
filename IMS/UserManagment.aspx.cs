@@ -94,7 +94,7 @@ namespace IMS
                 }
                 SqlCommand command = new SqlCommand("Sp_GetUsers", connection);
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@p_userID", DBNull.Value);
+                command.Parameters.AddWithValue("@p_roleName", DBNull.Value);
                 SqlDataAdapter SA = new SqlDataAdapter(command);
                 UserSet = null;
                 SA.Fill(ds);

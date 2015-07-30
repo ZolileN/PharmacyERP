@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="rpt_ItemSold_Selection.aspx.cs" Inherits="IMS.rpt_ItemSold_Selection" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="rpt_POSSALES_Selection.aspx.cs" Inherits="IMS.rpt_POSSALES_Selection" %>
 
 <%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="cc1" %>
 <%@ Register TagName="CustomerPopup" TagPrefix="ucCustomersPopup"  Src="~/UserControl/rpt_ucCustomers.ascx"%>
@@ -8,13 +8,15 @@
 <%@ Register TagName="ProductPopup" TagPrefix="ucProductPopup"  Src="~/UserControl/rpt_ucSalesProduct.ascx"%>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-     <script src="Scripts/jquery.js"  type="text/javascript"></script>
-          <script src="Scripts/jquery-ui.js" type="text/javascript"></script>
-          <link rel="stylesheet" href="Style/jquery-ui.css" />
-      <script>
+
+    <script src="Scripts/jquery.js"  type="text/javascript"></script>
+    <script src="Scripts/jquery-ui.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="Style/jquery-ui.css" />
+    <script>
           $(function () { $("#<%= txtDateFrom.ClientID %>").datepicker(); });
           $(function () { $("#<%= txtDateTO.ClientID %>").datepicker(); });
-          </script>
+    </script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -59,9 +61,9 @@
 			
 			</td>
             	
-				 <td><label>Barter Customer:</label></td>
+				 <td><label>Product Type: </label></td>
             <td>
-			     <asp:DropDownList ID="ddlBarterCustomer" runat="server" OnSelectedIndexChanged="ddlBarterCustomer_SelectedIndexChanged" Enabled="true"></asp:DropDownList>
+			     <asp:DropDownList ID="ddlProductType" runat="server" OnSelectedIndexChanged="ddlProductType_SelectedIndexChanged" Enabled="true"></asp:DropDownList>
 			</td>
         </tr>
 
@@ -112,16 +114,6 @@
                        RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="lblproduct" ClientIDMode="AutoID"
                        PopupControlID="_ProductDiv">
                     </cc1:ModalPopupExtender>
-			</td>
-        </tr>
-		<tr>
-            <td><asp:label ID="lblInternalCustomer" runat="server"><b>Internal Customer:</b></asp:label></td>
-            <td><asp:DropDownList ID="ddlInternalCustomer" runat="server" OnSelectedIndexChanged="ddlInternalCustomer_SelectedIndexChanged" Enabled="true"></asp:DropDownList></td>
-		
-             <td><asp:label ID="lblSalesman" runat="server"><b>Salesman:</b></asp:label></td>
-            <td>
-			
-                    <asp:DropDownList ID="ddlSalesMan" runat="server" ></asp:DropDownList>
 			</td>
         </tr>
 

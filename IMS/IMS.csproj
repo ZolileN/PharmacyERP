@@ -969,6 +969,7 @@
     <Content Include="crystalreportviewers13\urlreporting\activexviewer.js" />
     <Content Include="crystalreportviewers13\urlreporting\appletviewer.js" />
     <Content Include="DisplayOrderDetailEntries.aspx" />
+    <Content Include="rpt_POSSALES_Selection.aspx" />
     <Content Include="Unused Pages\Edit_DeleteProduct.aspx" />
     <Content Include="Edit_DeleteStock.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -1379,6 +1380,19 @@
     </Compile>
     <Compile Include="DisplayOrderDetailEntries.aspx.designer.cs">
       <DependentUpon>DisplayOrderDetailEntries.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="rpt_POSSALES.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rpt_POSSALES.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="rpt_POSSALES_Selection.aspx.cs">
+      <DependentUpon>rpt_POSSALES_Selection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rpt_POSSALES_Selection.aspx.designer.cs">
+      <DependentUpon>rpt_POSSALES_Selection.aspx</DependentUpon>
     </Compile>
     <Compile Include="Unused Pages\Edit_DeleteProduct.aspx.cs">
       <DependentUpon>Edit_DeleteProduct.aspx</DependentUpon>
@@ -2272,6 +2286,10 @@
       <LastGenOutput>NearestExpiryItems.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Report\barcode_Print.rdlc" />
+    <EmbeddedResource Include="rpt_POSSALES.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rpt_POSSALES.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />

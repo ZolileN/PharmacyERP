@@ -417,7 +417,7 @@ namespace IMS
                     if (ddlProductOrderType.SelectedIndex <= 0)
                     {
                         command.Parameters.AddWithValue("@p_productOrderType", DBNull.Value);
-                    }
+                    } 
                     else
                     {
                         command.Parameters.AddWithValue("@p_productOrderType", Convert.ToInt32(ddlProductOrderType.SelectedValue.ToString()));

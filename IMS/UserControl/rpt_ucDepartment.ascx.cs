@@ -41,6 +41,10 @@ namespace IMS
                 {
                     command = new SqlCommand("sp_rpt_StockDetails", connection);
                 }
+                else if (Session["SP_Purchase"] != null && Session["SP_Purchase"].ToString().Equals("POS"))
+                {
+                    command = new SqlCommand("sp_GetPOSSALES_PopUpDetails", connection);
+                }
                 else
                 {
                     command = new SqlCommand("sp_rptDepartments", connection);

@@ -240,10 +240,18 @@ namespace IMS
                 //lstName.Text = "";
                 //Address.Text = "";
                 //ContactNo.Text = "";
-                Response.Redirect("SalemanMangment.aspx");
                 btnAssociatedStore.Visible = true;
                 btnAddEmployee.Visible = false;
                 btnSave.Visible = true;
+
+                if (Session["ur_RoleName"].ToString().Equals("Salesman"))
+                {
+                    Response.Redirect("SalemanMangment.aspx", false);
+                }
+                else
+                {
+                    Response.Redirect("UserManagment.aspx", false);
+                }
             }
             else if (x == -2)
             {
