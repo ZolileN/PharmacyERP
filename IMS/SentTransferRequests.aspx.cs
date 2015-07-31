@@ -1,4 +1,6 @@
-﻿using System;
+﻿using IMS.Util;
+using log4net;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -14,14 +16,36 @@ namespace IMS
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet dsStatic = new DataSet();
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if(!IsPostBack)
             {
                 BindGrid();
             }
+            expHandler.CheckForErrorMessage(Session);
         }
-
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
         private void BindGrid()
         {
              try
@@ -45,9 +69,11 @@ namespace IMS
                  dgvReceiveOurTransfers.DataSource = ds;
                  dgvReceiveOurTransfers.DataBind();
              }
-             catch
+             catch(Exception ex)
              {
-
+                 if (connection.State == ConnectionState.Open)
+                     connection.Close();
+                 throw ex;
              }
             finally
              {
@@ -57,12 +83,12 @@ namespace IMS
 
         protected void btnGenTransferAll_Click(object sender, EventArgs e)
         {
-            Response.Redirect("CreateTransferRequest.aspx");
+            Response.Redirect("CreateTransferRequest.aspx",false);
         }
 
         protected void btnBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("StoreMain.aspx");
+            Response.Redirect("StoreMain.aspx",false);
         }
 
         
@@ -90,9 +116,11 @@ namespace IMS
                      Response.Redirect("ReceiveRequestTransfers.aspx");
                  }
             }
-            catch
+            catch(Exception ex)
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
