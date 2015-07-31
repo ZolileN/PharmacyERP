@@ -1,5 +1,7 @@
-﻿using IMSBusinessLogic;
+﻿using IMS.Util;
+using IMSBusinessLogic;
 using IMSCommon;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,8 +18,16 @@ namespace IMS
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         private DataSet ds;
+
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
             if (!IsPostBack)
             {
                 try
@@ -25,10 +35,31 @@ namespace IMS
                     BindGrid(false);
                     BindDropSearch();
                 }
-                catch (Exception exp) { }
+                catch (Exception ex)
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
+                }
             }
+            expHandler.CheckForErrorMessage(Session);
         }
-
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
         protected void btnBack_Click(object sender, EventArgs e)
         {
             Response.Redirect("ManageInventory.aspx", false);
@@ -50,42 +81,14 @@ namespace IMS
         {
             try
             {
-                //if (e.CommandName.Equals("Add"))
-                //{
-                //    SubCategoryBLL subCategoryManager = new SubCategoryBLL();
-                //    TextBox txtname = (TextBox)SubCategoryDisplayGrid.FooterRow.FindControl("txtAddname");
-                //    string catName = ((DropDownList)(SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddCategoryName"))).SelectedItem.Text;
-                //    string depName = ((DropDownList)(SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddDepName"))).SelectedItem.Text;
-                //    SubCategory subCategoryToAdd = new SubCategory();
-                //    subCategoryToAdd.Name = txtname.Text;
-                //    subCategoryToAdd.CategoryName = catName;
-                //    subCategoryToAdd.DepartmentName = depName;
-                //    subCategoryManager.Add(subCategoryToAdd, connection);
-
-                //}
-                //else if (e.CommandName.Equals("UpdateSubCategory"))
-                //{
-                //    SubCategoryBLL subCategoryManager = new SubCategoryBLL();
-                //    Label id = (Label)SubCategoryDisplayGrid.Rows[SubCategoryDisplayGrid.EditIndex].FindControl("lblSubCat_ID");
-                //    TextBox name = (TextBox)SubCategoryDisplayGrid.Rows[SubCategoryDisplayGrid.EditIndex].FindControl("txtname");
-                //    DropDownList ddlCat = (DropDownList)(SubCategoryDisplayGrid.Rows[SubCategoryDisplayGrid.EditIndex].FindControl("ddlCategoryName"));
-                //    string catName = ddlCat.SelectedItem.Text;
-
-                //    DropDownList ddlDep = (DropDownList)(SubCategoryDisplayGrid.Rows[SubCategoryDisplayGrid.EditIndex].FindControl("ddlDepName"));
-                //    string depName = ddlDep.SelectedItem.Text;
-
-                //    int selectedId = int.Parse(id.Text);
-                //    SubCategory subCategoryToUpdate = new SubCategory();//= empid.Text;
-                //    subCategoryToUpdate.SubCategoryID = selectedId;
-                //    subCategoryToUpdate.Name = name.Text;
-                //    subCategoryToUpdate.CategoryName = catName;
-                //    subCategoryToUpdate.DepartmentName = depName;
-
-                //    subCategoryManager.Update(subCategoryToUpdate, connection);
-
-                //}
+                
             }
-            catch (Exception exp) { }
+            catch (Exception ex) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
             finally
             {
                 SubCategoryDisplayGrid.EditIndex = -1;
@@ -106,7 +109,12 @@ namespace IMS
 
 
             }
-            catch (Exception exp) { }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
             finally
             {
                 SubCategoryDisplayGrid.EditIndex = -1;
@@ -116,18 +124,26 @@ namespace IMS
 
         protected void SubCategoryDisplayGrid_RowEditing(object sender, GridViewEditEventArgs e)
         {
-            SubCategoryDisplayGrid.EditIndex = e.NewEditIndex;
+            try
+            {
+                SubCategoryDisplayGrid.EditIndex = e.NewEditIndex;
 
-            GridViewRow row = SubCategoryDisplayGrid.Rows[SubCategoryDisplayGrid.EditIndex];
-            Label subcatid = (Label)row.FindControl("lblSubCat_ID");
-            Label subcatname = (Label)row.FindControl("lblSubCat_Name");
-            Label catname = (Label)row.FindControl("lblCat_Id");
+                GridViewRow row = SubCategoryDisplayGrid.Rows[SubCategoryDisplayGrid.EditIndex];
+                Label subcatid = (Label)row.FindControl("lblSubCat_ID");
+                Label subcatname = (Label)row.FindControl("lblSubCat_Name");
+                Label catname = (Label)row.FindControl("lblCat_Id");
 
-            Session["subcatname"] = subcatname.Text;
-            Session["catname"] = catname.Text;
-            Session["subcatid"] = subcatid.Text;
-            Response.Redirect("AddEditSubCategory.aspx");
-
+                Session["subcatname"] = subcatname.Text;
+                Session["catname"] = catname.Text;
+                Session["subcatid"] = subcatid.Text;
+                Response.Redirect("AddEditSubCategory.aspx");
+            }
+            catch (Exception ex) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
             
 
             //BindGrid(false);
@@ -139,40 +155,37 @@ namespace IMS
         }
         private void BindGrid(bool isSearch)
         {
-            //if (ddlSubCatName.SelectedIndex != -1 && isSearch)
-            //{
-            //    SubCategoryBLL sub = new SubCategoryBLL();
-            //    SubCategory obj = new SubCategory();
-
-            //    obj.SubCategoryID = int.Parse(ddlSubCatName.SelectedValue);
-            //    ds = sub.GetById(obj);
-
-            //}
-            //else
+            try
             {
                 ds = SubCategoryBLL.GetAllSubCategories(connection);
 
+                SubCategoryDisplayGrid.DataSource = ds;
+                SubCategoryDisplayGrid.DataBind();
+
+                DropDownList catList = (DropDownList)SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddCategoryName");
+                catList.DataSource = CategoryBLL.GetDistinct(connection);
+                catList.DataBind();
+                catList.DataTextField = "categoryName";
+                //catList.DataValueField = "categoryID";
+                catList.DataBind();
+
+                DropDownList depList = (DropDownList)SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddDepName");
+                string catId = ((DropDownList)(SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddCategoryName"))).SelectedItem.Text;
+                Category obj2 = new Category();
+                obj2.Name = catId;
+                CategoryBLL ins = new CategoryBLL();
+                depList.DataSource = ins.GetDepListByCategoryName(obj2, connection);
+                depList.DataBind();
+                depList.DataTextField = "Name";
+                depList.DataValueField = "DepId";
+                depList.DataBind();
             }
-            SubCategoryDisplayGrid.DataSource = ds;
-            SubCategoryDisplayGrid.DataBind();
-
-            DropDownList catList = (DropDownList)SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddCategoryName");
-            catList.DataSource = CategoryBLL.GetDistinct(connection);
-            catList.DataBind();
-            catList.DataTextField = "categoryName";
-            //catList.DataValueField = "categoryID";
-            catList.DataBind();
-
-            DropDownList depList = (DropDownList)SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddDepName");
-            string catId = ((DropDownList)(SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddCategoryName"))).SelectedItem.Text;
-            Category obj2 = new Category();
-            obj2.Name = catId;
-            CategoryBLL ins = new CategoryBLL();
-            depList.DataSource = ins.GetDepListByCategoryName(obj2,connection);
-            depList.DataBind();
-            depList.DataTextField = "Name";
-            depList.DataValueField = "DepId";
-            depList.DataBind();
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
 
         }
 
@@ -201,8 +214,12 @@ namespace IMS
                     depList.DataBind();
 
                 }
-                catch (Exception exo)
-                { }
+                catch (Exception ex)
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
+                }
             }
         }
 
@@ -221,31 +238,49 @@ namespace IMS
 
         protected void ddlAddCategoryName_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DropDownList depList = (DropDownList)SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddDepName");
-            string catId = ((DropDownList)(SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddCategoryName"))).SelectedItem.Text;
-            Category obj2 = new Category();
-            obj2.Name = catId;
-            CategoryBLL ins = new CategoryBLL();
-            depList.DataSource = ins.GetDepListByCategoryName(obj2, connection);
-            depList.DataBind();
-            depList.DataTextField = "Name";
-            depList.DataValueField = "DepId";
-            depList.DataBind();
+            try
+            {
+                DropDownList depList = (DropDownList)SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddDepName");
+                string catId = ((DropDownList)(SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddCategoryName"))).SelectedItem.Text;
+                Category obj2 = new Category();
+                obj2.Name = catId;
+                CategoryBLL ins = new CategoryBLL();
+                depList.DataSource = ins.GetDepListByCategoryName(obj2, connection);
+                depList.DataBind();
+                depList.DataTextField = "Name";
+                depList.DataValueField = "DepId";
+                depList.DataBind();
+            }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
         }
 
         protected void ddlCategoryName_SelectedIndexChanged(object sender, EventArgs e)
         {
+            try
+            {
 
-            DropDownList depList = (DropDownList)SubCategoryDisplayGrid.Rows[SubCategoryDisplayGrid.EditIndex].FindControl("ddlDepName");
-            string catId = ((DropDownList)(SubCategoryDisplayGrid.Rows[SubCategoryDisplayGrid.EditIndex].FindControl("ddlCategoryName"))).SelectedItem.Text;
-            Category obj2 = new Category();
-            obj2.Name = catId;
-            CategoryBLL ins = new CategoryBLL();
-            depList.DataSource = ins.GetDepListByCategoryName(obj2, connection);
-            depList.DataBind();
-            depList.DataTextField = "Name";
-            depList.DataValueField = "DepId";
-            depList.DataBind();
+                DropDownList depList = (DropDownList)SubCategoryDisplayGrid.Rows[SubCategoryDisplayGrid.EditIndex].FindControl("ddlDepName");
+                string catId = ((DropDownList)(SubCategoryDisplayGrid.Rows[SubCategoryDisplayGrid.EditIndex].FindControl("ddlCategoryName"))).SelectedItem.Text;
+                Category obj2 = new Category();
+                obj2.Name = catId;
+                CategoryBLL ins = new CategoryBLL();
+                depList.DataSource = ins.GetDepListByCategoryName(obj2, connection);
+                depList.DataBind();
+                depList.DataTextField = "Name";
+                depList.DataValueField = "DepId";
+                depList.DataBind();
+            }
+            catch (Exception ex) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
         }
 
         protected void btnGoBack_Click(object sender, EventArgs e)
@@ -256,7 +291,7 @@ namespace IMS
         protected void btnAddSubCategory_Click(object sender, EventArgs e)
         {
             Session["subcatid"] = "0";
-            Response.Redirect("AddEditSubCategory.aspx");
+            Response.Redirect("AddEditSubCategory.aspx",false);
         }
 
     }

@@ -10,68 +10,168 @@ using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Configuration;
 using IMSCommon.Util;
+using log4net;
+using IMS.Util;
 
 namespace IMS
 {
     public partial class AddProduct : System.Web.UI.Page
     {
         public static SqlConnection connection= new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
-        
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
             if (!IsPostBack)
             {
-                // need to change now for new fcked up logic 
-
-                if(Session["MODE"].Equals("ADD"))
+                try
                 {
-                    btnCreateProduct.Text = "ADD";
+                    // need to change now for new fcked up logic 
 
-                    #region Populating BarCode Serial
+                    if (Session["MODE"].Equals("ADD"))
+                    {
+                        btnCreateProduct.Text = "ADD";
+
+                        #region Populating BarCode Serial
+                        try
+                        {
+                            connection.Open();
+                            SqlCommand command = new SqlCommand("sp_ProductsCount", connection);
+                            command.CommandType = CommandType.StoredProcedure;
+
+                            DataSet ds = new DataSet();
+                            SqlDataAdapter sA = new SqlDataAdapter(command);
+                            sA.Fill(ds);
+
+                            if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(7))
+                            {
+                                BarCodeSerial.Text = "2" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
+                            }
+                            else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(6))
+                            {
+                                BarCodeSerial.Text = "20" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
+                            }
+                            else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(5))
+                            {
+                                BarCodeSerial.Text = "200" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
+                            }
+                            else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(4))
+                            {
+                                BarCodeSerial.Text = "2000" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
+                            }
+                            else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(3))
+                            {
+                                BarCodeSerial.Text = "20000" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
+                            }
+
+                            else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(2))
+                            {
+                                BarCodeSerial.Text = "200000" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
+                            }
+
+                            else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(1))
+                            {
+                                BarCodeSerial.Text = "2000000" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
+                            }
+                            else if (ds.Tables[0].Rows[0][0].ToString().Length < 1)
+                            {
+                                BarCodeSerial.Text = "2000000" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+                        finally
+                        {
+                            connection.Close();
+                        }
+                        #endregion
+
+                        BarCodeSerial.Visible = true;
+                    }
+                    else if (Session["MODE"].Equals("EDIT"))
+                    {
+                        btnCreateProduct.Text = "UPDATE";
+                        //BarCodeSerial.Visible = false;
+                    }
+
+                    #region Master Search Mechanism
+                    if (Session["PageMasterProduct"] != null && Session["PageMasterProduct"].ToString() != null &&
+                        Session["PageMasterProduct"].ToString() != "" && Session["PageMasterProduct"].ToString() != "false")
+                    {
+                        LoadData();
+
+                        FromMaster_Load(Session["MS_ItemNo"].ToString(), Session["MS_ItemName"].ToString(), Session["MS_ItemType"].ToString(), Session["MS_Manufacterer"].ToString(),
+                                        Session["MS_Category"].ToString(), Session["MS_GenericName"].ToString(), Session["MS_Control"].ToString(), Session["MS_BinNumber"].ToString(),
+                                        Session["MS_GreenRainCode"].ToString(), Session["MS_BrandName"].ToString(), Session["MS_MaxiMumDiscount"].ToString(), Session["MS_LineID"].ToString(),
+                                        Session["MS_UnitSale"].ToString(), Session["MS_UnitCost"].ToString(), Session["MS_itemAWT"].ToString(), Session["MS_itemForm"].ToString(),
+                                        Session["MS_itemStrength"].ToString(), Session["MS_itemPackType"].ToString(), Session["MS_itemPackSize"].ToString(), Session["MS_Description"].ToString()
+                                        , Session["MS_Bonus12"].ToString(), Session["MS_Bonus25"].ToString(), Session["MS_Bonus50"].ToString(), Session["MS_Active"].ToString());
+                    }
+                    #endregion
+
+
+                    #region Populating Product Type DropDown
+                    ProductType.Items.Add("Medicine(HAAD)");
+                    ProductType.Items.Add("Medicine(Non HAAD)");
+                    ProductType.Items.Add("NonMedicine");
+
+                    if (Session["MODE"].Equals("EDIT"))
+                    {
+                        foreach (ListItem Items in ProductType.Items)
+                        {
+                            if (Items.Text.Equals(Session["MS_ItemType"].ToString()))
+                            {
+                                ProductType.SelectedIndex = ProductType.Items.IndexOf(Items);
+                                break;
+                            }
+                        }
+                        //int selIndex;
+                        //int.TryParse(Session["MS_ProductOrderType"].ToString(), out selIndex);
+                        //ddlProductOrderType.SelectedIndex = selIndex;
+                        // foreach( )
+                    }
+                    #endregion
+
+                    #region Populating Product Department DropDown
                     try
                     {
                         connection.Open();
-                        SqlCommand command = new SqlCommand("sp_ProductsCount", connection);
+                        SqlCommand command = new SqlCommand("Sp_GetDepartmentList", connection);
                         command.CommandType = CommandType.StoredProcedure;
-
                         DataSet ds = new DataSet();
                         SqlDataAdapter sA = new SqlDataAdapter(command);
                         sA.Fill(ds);
-
-                        if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(7))
+                        ProductDept.DataSource = ds.Tables[0];
+                        ProductDept.DataTextField = "Name";
+                        ProductDept.DataValueField = "DepId";
+                        ProductDept.DataBind();
+                        if (ProductDept != null)
                         {
-                            BarCodeSerial.Text = "2" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
-                        }
-                        else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(6))
-                        {
-                            BarCodeSerial.Text = "20" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
-                        }
-                        else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(5))
-                        {
-                            BarCodeSerial.Text = "200" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
-                        }
-                        else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(4))
-                        {
-                            BarCodeSerial.Text = "2000" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
-                        }
-                        else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(3))
-                        {
-                            BarCodeSerial.Text = "20000" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
+                            ProductDept.Items.Insert(0, "Select Department");
+                            ProductDept.SelectedIndex = 0;
                         }
 
-                        else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(2))
+                        if (!Session["DepartmentID"].Equals(null))
                         {
-                            BarCodeSerial.Text = "200000" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
+                            int DepartmentID = int.Parse(Session["DepartmentID"].ToString());
+                            ProductDept.SelectedIndex = DepartmentID;
+                            ProductDept.SelectedValue = DepartmentID.ToString();
+                            Session.Remove("DepartmentID");
                         }
-
-                        else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(1))
+                        if (Session["MODE"].Equals("EDIT"))
                         {
-                            BarCodeSerial.Text = "2000000" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
-                        }
-                        else if (ds.Tables[0].Rows[0][0].ToString().Length < 1)
-                        {
-                            BarCodeSerial.Text = "2000000" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
+                            int selIndex;
+                            int.TryParse(Session["MS_ProductOrderType"].ToString(), out selIndex);
+                            ddlProductOrderType.SelectedIndex = selIndex;
+                            // foreach( )
                         }
                     }
                     catch (Exception ex)
@@ -82,80 +182,21 @@ namespace IMS
                     {
                         connection.Close();
                     }
-                    #endregion 
+                    #endregion
 
-                    BarCodeSerial.Visible = true;
-                }
-                else if (Session["MODE"].Equals("EDIT"))
-                {
-                    btnCreateProduct.Text = "UPDATE";
-                    //BarCodeSerial.Visible = false;
-                }
+                    #region Populate Product Order Type
 
-                #region Master Search Mechanism
-                if (Session["PageMasterProduct"] != null && Session["PageMasterProduct"].ToString() != null && 
-                    Session["PageMasterProduct"].ToString() != "" && Session["PageMasterProduct"].ToString()!="false")
-                {
-                    LoadData();
+                    ddlProductOrderType.DataSource = IMSGlobal.GetOrdersType();
+                    ddlProductOrderType.DataTextField = "Name";
+                    ddlProductOrderType.DataValueField = "OrderTypeId";
+                    ddlProductOrderType.DataBind();
 
-                    FromMaster_Load(Session["MS_ItemNo"].ToString(), Session["MS_ItemName"].ToString(), Session["MS_ItemType"].ToString(), Session["MS_Manufacterer"].ToString(),
-                                    Session["MS_Category"].ToString(), Session["MS_GenericName"].ToString(), Session["MS_Control"].ToString(), Session["MS_BinNumber"].ToString(),
-                                    Session["MS_GreenRainCode"].ToString(), Session["MS_BrandName"].ToString(), Session["MS_MaxiMumDiscount"].ToString(), Session["MS_LineID"].ToString(),
-                                    Session["MS_UnitSale"].ToString(), Session["MS_UnitCost"].ToString(), Session["MS_itemAWT"].ToString(), Session["MS_itemForm"].ToString(),
-                                    Session["MS_itemStrength"].ToString(), Session["MS_itemPackType"].ToString(), Session["MS_itemPackSize"].ToString(), Session["MS_Description"].ToString()
-                                    , Session["MS_Bonus12"].ToString(), Session["MS_Bonus25"].ToString(), Session["MS_Bonus50"].ToString(), Session["MS_Active"].ToString());
-                }
-                #endregion
-
-
-                #region Populating Product Type DropDown
-                ProductType.Items.Add("Medicine(HAAD)");
-                ProductType.Items.Add("Medicine(Non HAAD)");
-                ProductType.Items.Add("NonMedicine");
-
-                if (Session["MODE"].Equals("EDIT"))
-                {
-                    foreach (ListItem Items  in ProductType.Items) 
+                    if (ddlProductOrderType != null)
                     {
-                        if (Items.Text.Equals(Session["MS_ItemType"].ToString())) 
-                        {
-                            ProductType.SelectedIndex = ProductType.Items.IndexOf( Items);
-                            break;
-                        }
+                        ddlProductOrderType.Items.Insert(0, "Select Product Order Type");
+                        ddlProductOrderType.SelectedIndex = 0;
                     }
-                    //int selIndex;
-                    //int.TryParse(Session["MS_ProductOrderType"].ToString(), out selIndex);
-                    //ddlProductOrderType.SelectedIndex = selIndex;
-                    // foreach( )
-                }
-                #endregion
 
-                #region Populating Product Department DropDown
-                try
-                {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand("Sp_GetDepartmentList", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    DataSet ds = new DataSet();
-                    SqlDataAdapter sA = new SqlDataAdapter(command);
-                    sA.Fill(ds);
-                    ProductDept.DataSource = ds.Tables[0];
-                    ProductDept.DataTextField = "Name";
-                    ProductDept.DataValueField = "DepId";
-                    ProductDept.DataBind();
-                    if (ProductDept != null) 
-                    {
-                        ProductDept.Items.Insert(0, "Select Department");
-                        ProductDept.SelectedIndex = 0;
-                    }
-                    
-                    if (!Session["DepartmentID"].Equals(null))
-                    {
-                        int DepartmentID = int.Parse(Session["DepartmentID"].ToString());
-                        ProductDept.SelectedIndex = DepartmentID;
-                        ProductDept.SelectedValue = DepartmentID.ToString();
-                        Session.Remove("DepartmentID");
-                    }
                     if (Session["MODE"].Equals("EDIT"))
                     {
                         int selIndex;
@@ -163,42 +204,32 @@ namespace IMS
                         ddlProductOrderType.SelectedIndex = selIndex;
                         // foreach( )
                     }
+                    #endregion
                 }
                 catch (Exception ex)
                 {
-
+                    throw ex;
                 }
-                finally
-                {
-                    connection.Close();
-                }
-                #endregion
-
-                #region Populate Product Order Type
-
-                ddlProductOrderType.DataSource=IMSGlobal.GetOrdersType();
-                ddlProductOrderType.DataTextField = "Name";
-                ddlProductOrderType.DataValueField = "OrderTypeId";
-                ddlProductOrderType.DataBind();
-                
-                if (ddlProductOrderType !=null)
-                {
-                    ddlProductOrderType.Items.Insert(0,"Select Product Order Type");
-                    ddlProductOrderType.SelectedIndex = 0;
-                }
-               
-                if (Session["MODE"].Equals("EDIT")) 
-                {
-                    int selIndex; 
-                    int.TryParse(Session["MS_ProductOrderType"].ToString(),out selIndex); 
-                    ddlProductOrderType.SelectedIndex =selIndex;
-                   // foreach( )
-                }
-                #endregion
             }
+            expHandler.CheckForErrorMessage(Session); 
         }
 
-
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
         public void FromMaster_Load(String ItemNo, String ItemName, String ItemType, String Manufacturer, String Category, String GenericName,
                                     String Control, String BinNumber, String GreenRain, String BrandName, String MaxDiscount, String LineID,
                                     String UnitSale, String UnitCost, String ItemAwt, String Form, String Strength, String itemPackType,
@@ -264,10 +295,12 @@ namespace IMS
 
         protected void btnCreateProduct_Click(object sender, EventArgs e)
         {
-                if (ProductType.SelectedItem.ToString() == "Medicine(HAAD)" && 
+            try
+            {
+                if (ProductType.SelectedItem.ToString() == "Medicine(HAAD)" &&
                     (GreenRainCode.Text.Equals("") || GreenRainCode.Text.Equals(null)))
                 {
-                        WebMessageBoxUtil.Show("FOR HADD MEDICINES, PLEASE ENTER THE RESPECTIVE GREENRAIN CODE");
+                    WebMessageBoxUtil.Show("FOR HADD MEDICINES, PLEASE ENTER THE RESPECTIVE GREENRAIN CODE");
                 }
                 else
                 {
@@ -376,7 +409,7 @@ namespace IMS
                             {
                                 command.Parameters.AddWithValue("@p_Active", 1);
                             }
-                            else 
+                            else
                             {
                                 command.Parameters.AddWithValue("@p_Active", 0);
                             }
@@ -458,14 +491,14 @@ namespace IMS
                             {
                                 command.Parameters.AddWithValue("@p_subCatID", int.Parse(ProductSubCat.SelectedValue.ToString()));
                             }
-                            else 
+                            else
                             {
                                 command.Parameters.AddWithValue("@p_subCatID", DBNull.Value);
                             }
-                            int res1, res4,res6,res7,res8,res9;
+                            int res1, res4, res6, res7, res8, res9;
                             float res2, res3, res5;
 
-                            
+
                             if (int.TryParse(Session["MS_ProductID"].ToString(), out res6))
                             {
                                 command.Parameters.AddWithValue("@p_ProductID", res6);
@@ -545,7 +578,7 @@ namespace IMS
                             {
                                 command.Parameters.AddWithValue("@p_Active", 0);
                             }
-                            
+
                             command.Parameters.AddWithValue("@p_form", ItemForm.Text.ToString());
                             command.Parameters.AddWithValue("@p_strength", ItemStrength.Text.ToString());
                             command.Parameters.AddWithValue("@p_packtype", PackType.Text.ToString());
@@ -593,11 +626,18 @@ namespace IMS
                         {
                             connection.Close();
                         }
-                        
-                        Response.Redirect("ManageProducts.aspx",false);
+
+                        Response.Redirect("ManageProducts.aspx", false);
                         #endregion
                     }
                 }
+            }
+            catch (Exception exp) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw exp;
+            }
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -653,7 +693,9 @@ namespace IMS
             }
             catch (Exception ex)
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -721,7 +763,9 @@ namespace IMS
             }
             catch (Exception ex)
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -757,7 +801,9 @@ namespace IMS
             }
             catch (Exception ex)
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {

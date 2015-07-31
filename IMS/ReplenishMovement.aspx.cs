@@ -1,7 +1,9 @@
-﻿using IMSCommon.Util;
+﻿using IMS.Util;
+using IMSCommon.Util;
 using iTextSharp.text;
 using iTextSharp.text.html.simpleparser;
 using iTextSharp.text.pdf;
+using log4net;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,8 +21,14 @@ namespace IMS
     public partial class ReplenishMovement : System.Web.UI.Page
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if(!IsPostBack)
             {
                 try
@@ -62,31 +70,59 @@ namespace IMS
                 }
                 catch(Exception ex)
                 {
-                    WebMessageBoxUtil.Show(ex.Message);
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
                 }
             }
+            expHandler.CheckForErrorMessage(Session);
+        }
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
         public void DisplayMainGrid(DataTable dt)
         {
-            DataTable displayTable = new DataTable();
-            displayTable.Clear();
-            displayTable.Columns.Add("VendorID", typeof(int));
-            displayTable.Columns.Add("VendorName", typeof(String));
-
-            for(int i=0;i<dt.Rows.Count;i++)
+            try
             {
-                int VendorID = Convert.ToInt32(dt.Rows[i]["VendorID"].ToString());
-                String VendorName = dt.Rows[i]["VendorName"].ToString();
-                displayTable.Rows.Add(VendorID, VendorName);
-                displayTable.AcceptChanges();
-            }
+                DataTable displayTable = new DataTable();
+                displayTable.Clear();
+                displayTable.Columns.Add("VendorID", typeof(int));
+                displayTable.Columns.Add("VendorName", typeof(String));
 
-            DataView dv = displayTable.DefaultView;
-            displayTable = null;
-            displayTable = dv.ToTable(true, "VendorID", "VendorName");
-            gvVendorNames.DataSource = null;
-            gvVendorNames.DataSource = displayTable;
-            gvVendorNames.DataBind();
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    int VendorID = Convert.ToInt32(dt.Rows[i]["VendorID"].ToString());
+                    String VendorName = dt.Rows[i]["VendorName"].ToString();
+                    displayTable.Rows.Add(VendorID, VendorName);
+                    displayTable.AcceptChanges();
+                }
+
+                DataView dv = displayTable.DefaultView;
+                displayTable = null;
+                displayTable = dv.ToTable(true, "VendorID", "VendorName");
+                gvVendorNames.DataSource = null;
+                gvVendorNames.DataSource = displayTable;
+                gvVendorNames.DataBind();
+            }
+            catch (Exception ex) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
         }
 
         public void LoadData()
@@ -126,7 +162,9 @@ namespace IMS
             catch (Exception ex)
             {
                 //ex Message should be displayed
-                WebMessageBoxUtil.Show(ex.Message);
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -172,8 +210,9 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                //ex Message should be displayed
-                WebMessageBoxUtil.Show(ex.Message);
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -217,7 +256,9 @@ namespace IMS
             }
             catch(Exception ex)
             {
-                WebMessageBoxUtil.Show(ex.Message);
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
         }
         protected void gvVendorNames_SelectedIndexChanged(object sender, EventArgs e)
@@ -272,7 +313,9 @@ namespace IMS
             }
             catch(Exception ex)
             {
-                WebMessageBoxUtil.Show(ex.Message);
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -282,35 +325,71 @@ namespace IMS
 
         protected void gvVendorProducts_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-
-            if (e.CommandName == "NewVendor")
+            try
             {
-               // String Text = txtVendor.Text + '%';
-                VendorsPopupGrid.SelectSearch = true;
-                VendorsPopupGrid.RepProdID = e.CommandArgument.ToString().Split(',')[0];
-                VendorsPopupGrid.RepVenID = e.CommandArgument.ToString().Split(',')[1];
-                VendorsPopupGrid.PopulateWithSearch();
-                mpeCongratsMessageDiv.Show();
-               
-            }
-         
-            else if (e.CommandName == "UpdateStock")
-            {
-                Label lblProductID = (Label)((GridView)sender).Rows[((GridView)sender).EditIndex].FindControl("lblProductID");
-                Label lblVendorID = (Label)((GridView)sender).Rows[((GridView)sender).EditIndex].FindControl("lblVendorID");
-                int ProductID = 0;
-                int MainVendorID = 0;
-                int UpdatedQuantity = 0;
-                int.TryParse(lblProductID.Text.ToString(), out ProductID);
-                int.TryParse(lblVendorID.Text.ToString(), out MainVendorID);
-
-                TextBox txtQuantity = (TextBox)((GridView)sender).Rows[((GridView)sender).EditIndex].FindControl("txtQuantity");
-
-                int.TryParse(txtQuantity.Text.ToString(), out UpdatedQuantity);
-
-                DataTable dtChanged = (DataTable)Session["DataTableView"];
-                if(UpdatedQuantity >0)
+                if (e.CommandName == "NewVendor")
                 {
+                    // String Text = txtVendor.Text + '%';
+                    VendorsPopupGrid.SelectSearch = true;
+                    VendorsPopupGrid.RepProdID = e.CommandArgument.ToString().Split(',')[0];
+                    VendorsPopupGrid.RepVenID = e.CommandArgument.ToString().Split(',')[1];
+                    VendorsPopupGrid.PopulateWithSearch();
+                    mpeCongratsMessageDiv.Show();
+
+                }
+
+                else if (e.CommandName == "UpdateStock")
+                {
+                    Label lblProductID = (Label)((GridView)sender).Rows[((GridView)sender).EditIndex].FindControl("lblProductID");
+                    Label lblVendorID = (Label)((GridView)sender).Rows[((GridView)sender).EditIndex].FindControl("lblVendorID");
+                    int ProductID = 0;
+                    int MainVendorID = 0;
+                    int UpdatedQuantity = 0;
+                    int.TryParse(lblProductID.Text.ToString(), out ProductID);
+                    int.TryParse(lblVendorID.Text.ToString(), out MainVendorID);
+
+                    TextBox txtQuantity = (TextBox)((GridView)sender).Rows[((GridView)sender).EditIndex].FindControl("txtQuantity");
+
+                    int.TryParse(txtQuantity.Text.ToString(), out UpdatedQuantity);
+
+                    DataTable dtChanged = (DataTable)Session["DataTableView"];
+                    if (UpdatedQuantity > 0)
+                    {
+                        for (int i = 0; i < dtChanged.Rows.Count; i++)
+                        {
+                            int Product = 0;
+                            int.TryParse(dtChanged.Rows[i]["ProductID"].ToString(), out Product);
+
+                            int Vendor = 0;
+                            int.TryParse(dtChanged.Rows[i]["VendorID"].ToString(), out Vendor);
+
+                            if (Product.Equals(ProductID) && Vendor.Equals(MainVendorID))
+                            {
+                                dtChanged.Rows[i]["QtySold"] = UpdatedQuantity;
+                                dtChanged.AcceptChanges();
+                            }
+                        }
+                    }
+
+                    Session["DataTableView"] = dtChanged;
+
+                    ((GridView)sender).EditIndex = -1;
+                    DisplayMainGrid((DataTable)Session["DataTableView"]);
+                }
+
+                else if (e.CommandName == "Delete")
+                {
+                    String lblProductID = e.CommandArgument.ToString().Split(',')[0];
+                    String lblVendorID = e.CommandArgument.ToString().Split(',')[1];
+                    int ProductID = 0;
+                    int MainVendorID = 0;
+                    ArrayList list = new ArrayList();
+
+                    int.TryParse(lblProductID, out ProductID);
+                    int.TryParse(lblVendorID, out MainVendorID);
+
+                    DataTable dtChanged = (DataTable)Session["DataTableView"];
+
                     for (int i = 0; i < dtChanged.Rows.Count; i++)
                     {
                         int Product = 0;
@@ -321,53 +400,25 @@ namespace IMS
 
                         if (Product.Equals(ProductID) && Vendor.Equals(MainVendorID))
                         {
-                            dtChanged.Rows[i]["QtySold"] = UpdatedQuantity;
-                            dtChanged.AcceptChanges();
+                            list.Add(i);
                         }
                     }
-                }
 
-                Session["DataTableView"] = dtChanged;
-
-                ((GridView)sender).EditIndex = -1;
-                DisplayMainGrid((DataTable)Session["DataTableView"]);
-            }
-
-            else if (e.CommandName == "Delete")
-            {
-                String lblProductID = e.CommandArgument.ToString().Split(',')[0];
-                String lblVendorID = e.CommandArgument.ToString().Split(',')[1];
-                int ProductID = 0;
-                int MainVendorID = 0;
-                ArrayList list = new ArrayList();
-
-                int.TryParse(lblProductID, out ProductID);
-                int.TryParse(lblVendorID, out MainVendorID);
-
-                DataTable dtChanged = (DataTable)Session["DataTableView"];
-
-                for (int i = 0; i < dtChanged.Rows.Count; i++)
-                {
-                    int Product = 0;
-                    int.TryParse(dtChanged.Rows[i]["ProductID"].ToString(), out Product);
-
-                    int Vendor = 0;
-                    int.TryParse(dtChanged.Rows[i]["VendorID"].ToString(), out Vendor);
-
-                    if (Product.Equals(ProductID) && Vendor.Equals(MainVendorID))
+                    foreach (int i in list)
                     {
-                        list.Add(i);
+                        dtChanged.Rows[i].Delete();
+                        dtChanged.AcceptChanges();
                     }
-                }
 
-                foreach(int i in list)
-                {
-                    dtChanged.Rows[i].Delete();
-                    dtChanged.AcceptChanges();
+                    Session["DataTableView"] = dtChanged;
+                    DisplayMainGrid((DataTable)Session["DataTableView"]);
                 }
-
-                Session["DataTableView"] = dtChanged;
-                DisplayMainGrid((DataTable)Session["DataTableView"]);
+            }
+            catch (Exception ex) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
         }
 
@@ -401,41 +452,49 @@ namespace IMS
 
         protected void ddlPreviousVendors_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-            Label lblProduct = (Label) ((GridView)((DropDownList)sender).Parent.Parent.Parent.Parent).Rows[0].FindControl("lblProductID");
-            Label lblVendor = (Label) ((GridView)((DropDownList)sender).Parent.Parent.Parent.Parent).Rows[0].FindControl("lblVendorID");
-
-            int ProductID = 0;
-            int MainVendorID = 0;
-
-            int.TryParse(lblProduct.Text.ToString(), out ProductID);
-            int.TryParse(lblVendor.Text.ToString(), out MainVendorID);
-
-            int SelectedVendorID = 0;
-            int.TryParse(((DropDownList)sender).SelectedValue.ToString(), out SelectedVendorID);
-
-            String SelectedVendorName = ((DropDownList)sender).SelectedItem.ToString();
-
-            DataTable dtChanged = (DataTable)Session["DataTableView"];
-
-            for (int i = 0; i < dtChanged.Rows.Count; i++)
+            try
             {
-                int Product = 0;
-                int.TryParse(dtChanged.Rows[i]["ProductID"].ToString(), out Product);
+                Label lblProduct = (Label)((GridView)((DropDownList)sender).Parent.Parent.Parent.Parent).Rows[0].FindControl("lblProductID");
+                Label lblVendor = (Label)((GridView)((DropDownList)sender).Parent.Parent.Parent.Parent).Rows[0].FindControl("lblVendorID");
 
-                int Vendor = 0;
-                int.TryParse(dtChanged.Rows[i]["VendorID"].ToString(), out Vendor);
+                int ProductID = 0;
+                int MainVendorID = 0;
 
-                if (Product.Equals(ProductID) && Vendor.Equals(MainVendorID))
+                int.TryParse(lblProduct.Text.ToString(), out ProductID);
+                int.TryParse(lblVendor.Text.ToString(), out MainVendorID);
+
+                int SelectedVendorID = 0;
+                int.TryParse(((DropDownList)sender).SelectedValue.ToString(), out SelectedVendorID);
+
+                String SelectedVendorName = ((DropDownList)sender).SelectedItem.ToString();
+
+                DataTable dtChanged = (DataTable)Session["DataTableView"];
+
+                for (int i = 0; i < dtChanged.Rows.Count; i++)
                 {
-                    dtChanged.Rows[i]["VendorID"] = SelectedVendorID;
-                    dtChanged.Rows[i]["VendorName"] = SelectedVendorName;
-                    dtChanged.AcceptChanges();
-                }
-            }
+                    int Product = 0;
+                    int.TryParse(dtChanged.Rows[i]["ProductID"].ToString(), out Product);
 
-            Session["DataTableView"] = dtChanged;
-            DisplayMainGrid((DataTable)Session["DataTableView"]);
+                    int Vendor = 0;
+                    int.TryParse(dtChanged.Rows[i]["VendorID"].ToString(), out Vendor);
+
+                    if (Product.Equals(ProductID) && Vendor.Equals(MainVendorID))
+                    {
+                        dtChanged.Rows[i]["VendorID"] = SelectedVendorID;
+                        dtChanged.Rows[i]["VendorName"] = SelectedVendorName;
+                        dtChanged.AcceptChanges();
+                    }
+                }
+
+                Session["DataTableView"] = dtChanged;
+                DisplayMainGrid((DataTable)Session["DataTableView"]);
+            }
+            catch (Exception ex) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
         }
 
 
@@ -580,7 +639,9 @@ namespace IMS
                 }
                 catch (Exception ex)
                 {
-                    WebMessageBoxUtil.Show(ex.Message);
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
                 }
                 finally
                 {

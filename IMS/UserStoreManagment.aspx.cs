@@ -9,6 +9,8 @@ using System.Data.Sql;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Configuration;
+using log4net;
+using IMS.Util;
 
 namespace IMS
 {
@@ -19,8 +21,14 @@ namespace IMS
         DataTable dtAllAvailableStore = new DataTable();
         DataTable dtAllAssociatedStore = new DataTable();
         string SystemIDAvailable;
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!IsPostBack)
             {
                 #region Populating Available Store Drop Down DropDown
@@ -53,7 +61,9 @@ namespace IMS
                 }
                 catch (Exception ex)
                 {
-
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
                 }
                 finally
                 {
@@ -90,7 +100,9 @@ namespace IMS
                 }
                 catch (Exception ex)
                 {
-
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
                 }
                 finally
                 {
@@ -100,28 +112,54 @@ namespace IMS
                 //SelectCheckBox_OnCheckedChanged(null, null);
                
             }
+            expHandler.CheckForErrorMessage(Session);
 
+        }
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
 
         protected void SelectCheckBox_OnCheckedChanged(object sender, EventArgs e)
         {
-            //DataTable dt = new DataTable();
-            //dt.Columns.AddRange(new DataColumn[1] { new DataColumn("txtName")});
-            Pharmacy_List = new List<string>();
-            foreach (GridViewRow row in gvAllAvailableStore.Rows)
+            try
             {
-
-                CheckBox chkRow = (row.Cells[0].FindControl("CCheckbox") as CheckBox);
-                if (chkRow != null && chkRow.Checked)
+                //DataTable dt = new DataTable();
+                //dt.Columns.AddRange(new DataColumn[1] { new DataColumn("txtName")});
+                Pharmacy_List = new List<string>();
+                foreach (GridViewRow row in gvAllAvailableStore.Rows)
                 {
-                    SystemIDAvailable = (row.Cells[0].FindControl("lblSystemID") as Label).Text;
-                    string simple = (row.Cells[1].FindControl("lblNameAvailable") as Label).Text;
-                    DataTable dt = (DataTable)Session["dtAvailable"];
-                    Pharmacy_List.Add(SystemIDAvailable);
-                }
 
+                    CheckBox chkRow = (row.Cells[0].FindControl("CCheckbox") as CheckBox);
+                    if (chkRow != null && chkRow.Checked)
+                    {
+                        SystemIDAvailable = (row.Cells[0].FindControl("lblSystemID") as Label).Text;
+                        string simple = (row.Cells[1].FindControl("lblNameAvailable") as Label).Text;
+                        DataTable dt = (DataTable)Session["dtAvailable"];
+                        Pharmacy_List.Add(SystemIDAvailable);
+                    }
+
+                }
+                AssociateStore(Pharmacy_List);
             }
-            AssociateStore(Pharmacy_List);            
+            catch (Exception ex) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
         }
 
         protected void gvAllAvailableStore_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -131,47 +169,65 @@ namespace IMS
 
         protected void btnSwapeOne_Click(object sender, EventArgs e)
         {
-            DataTable dtAvailable = (DataTable)Session["dtAvailable"];
-            DataTable dtAssociated = (DataTable)Session["dtAssociated"];
-            for (int i = dtAssociated.Rows.Count - 1; i >= 0; i--)
+            try
             {
-                if (((bool)dtAssociated.Rows[i]["Checked"] == true))
+                DataTable dtAvailable = (DataTable)Session["dtAvailable"];
+                DataTable dtAssociated = (DataTable)Session["dtAssociated"];
+                for (int i = dtAssociated.Rows.Count - 1; i >= 0; i--)
                 {
-                    dtAssociated.Rows[i]["Checked"] = false;
+                    if (((bool)dtAssociated.Rows[i]["Checked"] == true))
+                    {
+                        dtAssociated.Rows[i]["Checked"] = false;
+                    }
                 }
+                for (int i = dtAvailable.Rows.Count - 1; i >= 0; i--)
+                {
+                    if (((bool)dtAvailable.Rows[i]["Checked"] == true))
+                    {
+                        dtAvailable.Rows[i]["Checked"] = false;
+                        dtAssociated.Rows.Add(dtAvailable.Rows[i].ItemArray);
+                        dtAvailable.Rows.Remove(dtAvailable.Rows[i]);
+                    }
+                }
+                BindGrid();
             }
-            for (int i = dtAvailable.Rows.Count - 1; i >= 0; i--)
+            catch (Exception ex) 
             {
-                if (((bool)dtAvailable.Rows[i]["Checked"] == true))
-                {
-                    dtAvailable.Rows[i]["Checked"] = false;
-                    dtAssociated.Rows.Add(dtAvailable.Rows[i].ItemArray);
-                    dtAvailable.Rows.Remove(dtAvailable.Rows[i]);
-                }
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
-            BindGrid();
         }
 
         protected void AssociateStore(List<string> Pharmacy)
         {
-            if (Pharmacy.Count > 0)
+            try
             {
-                DataTable dt = (DataTable)Session["dtAvailable"];
-
-                for (int i = 0; i < dt.Rows.Count; i++)
+                if (Pharmacy.Count > 0)
                 {
-                    dt.Rows[i]["Checked"] = false;
-                }
+                    DataTable dt = (DataTable)Session["dtAvailable"];
 
-                for (int i = 0; i < Pharmacy.Count; i++)
-                {
-                    DataRow[] drs = dt.Select("SystemID = " + Pharmacy[i].ToString());
-                   
-                    if (drs.Length > 0 )
+                    for (int i = 0; i < dt.Rows.Count; i++)
                     {
-                        drs[0]["Checked"] = true;
-                    }                    
+                        dt.Rows[i]["Checked"] = false;
+                    }
+
+                    for (int i = 0; i < Pharmacy.Count; i++)
+                    {
+                        DataRow[] drs = dt.Select("SystemID = " + Pharmacy[i].ToString());
+
+                        if (drs.Length > 0)
+                        {
+                            drs[0]["Checked"] = true;
+                        }
+                    }
                 }
+            }
+            catch (Exception ex) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
         }
 
@@ -279,6 +335,9 @@ namespace IMS
             }
             catch (Exception ex)
             {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -321,8 +380,10 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                
-                //throw ex;
+
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally 
             {
@@ -337,7 +398,7 @@ namespace IMS
         protected void btnBack_Click(object sender, EventArgs e)
         {
             string ID = Request.QueryString["ID"];
-            Response.Redirect("RegisterUsers.aspx?ID=" + ID);
+            Response.Redirect("RegisterUsers.aspx?ID=" + ID,false);
         }
 
         protected void gvAllAvailableStore_PageIndexChanging(object sender, GridViewPageEventArgs e)

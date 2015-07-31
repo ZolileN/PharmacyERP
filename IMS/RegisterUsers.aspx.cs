@@ -10,6 +10,8 @@ using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Configuration;
 using IMSCommon.Util;
+using log4net;
+using IMS.Util;
 
 
 namespace IMS
@@ -18,8 +20,14 @@ namespace IMS
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         private string USERID = string.Empty;
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!IsPostBack)
             {
 
@@ -67,7 +75,9 @@ namespace IMS
                 }
                 catch (Exception ex)
                 {
-
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
                 }
                 finally
                 {
@@ -103,7 +113,9 @@ namespace IMS
                 }
                 catch (Exception ex)
                 {
-
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
                 }
                 finally
                 {
@@ -131,39 +143,64 @@ namespace IMS
 
                 // End Here
             }
-            
+            expHandler.CheckForErrorMessage(Session);
         }
 
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
         private void UpdateSaleman(string var)
         {
-            int x = 0;
+            try
+            {
+                int x = 0;
 
-            btnAssociatedStore.Visible = true;
+                btnAssociatedStore.Visible = true;
 
-            //Start here SP 
-            SqlCommand command = new SqlCommand("Sp_SearchByUser_ID", connection);
-            command.CommandType = CommandType.StoredProcedure;
+                //Start here SP 
+                SqlCommand command = new SqlCommand("Sp_SearchByUser_ID", connection);
+                command.CommandType = CommandType.StoredProcedure;
 
-            DataSet ds2 = new DataSet();
+                DataSet ds2 = new DataSet();
 
-            command.Parameters.AddWithValue("@p_UserID", var);
+                command.Parameters.AddWithValue("@p_UserID", var);
 
-            SqlDataAdapter sA = new SqlDataAdapter(command);
-            sA.Fill(ds2);
-            EmployeeID.Text = ds2.Tables[0].Rows[0]["U_EmpID"].ToString();
-            //uPwd.Text = ds2.Tables[0].Rows[0]["U_Password"].ToString();
-            string PwdValue = ds2.Tables[0].Rows[0]["U_Password"].ToString();
-            userPwd.TextMode = TextBoxMode.SingleLine;
-            userPwd.Text = PwdValue;
-            //uPwd.TextMode = TextBoxMode.Password;
-            ddlURole.SelectedValue = ds2.Tables[0].Rows[0]["U_RolesID"].ToString();
-            ddlURole.Enabled = false;
-            fName.Text = ds2.Tables[0].Rows[0]["U_FirstName"].ToString();
-            lstName.Text = ds2.Tables[0].Rows[0]["U_LastName"].ToString();
-            Address.Text = ds2.Tables[0].Rows[0]["Address"].ToString();
-            ContactNo.Text = ds2.Tables[0].Rows[0]["Contact"].ToString();
-            btnAddEmployee.Visible = false;
-            //End Here SP
+                SqlDataAdapter sA = new SqlDataAdapter(command);
+                sA.Fill(ds2);
+                EmployeeID.Text = ds2.Tables[0].Rows[0]["U_EmpID"].ToString();
+                //uPwd.Text = ds2.Tables[0].Rows[0]["U_Password"].ToString();
+                string PwdValue = ds2.Tables[0].Rows[0]["U_Password"].ToString();
+                userPwd.TextMode = TextBoxMode.SingleLine;
+                userPwd.Text = PwdValue;
+                //uPwd.TextMode = TextBoxMode.Password;
+                ddlURole.SelectedValue = ds2.Tables[0].Rows[0]["U_RolesID"].ToString();
+                ddlURole.Enabled = false;
+                fName.Text = ds2.Tables[0].Rows[0]["U_FirstName"].ToString();
+                lstName.Text = ds2.Tables[0].Rows[0]["U_LastName"].ToString();
+                Address.Text = ds2.Tables[0].Rows[0]["Address"].ToString();
+                ContactNo.Text = ds2.Tables[0].Rows[0]["Contact"].ToString();
+                btnAddEmployee.Visible = false;
+                //End Here SP
+            }
+            catch (Exception ex) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
         }
 
         protected void btnBack_Click(object sender, EventArgs e)
@@ -222,6 +259,9 @@ namespace IMS
             catch (Exception ex)
             {
                 Errormessage = ex.Message;
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -306,6 +346,9 @@ namespace IMS
             catch (Exception ex)
             {
                 Errormessage = ex.Message;
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -341,21 +384,30 @@ namespace IMS
 
         protected void btnAssociatedStore_Click(object sender, EventArgs e)
         {
-            string USERID = Request.QueryString["ID"];
-            connection.Open();
-            SqlCommand commandUserID = new SqlCommand("SELECT MAX(UserID) from [tbl_Users]", connection);
-
-            long id = Convert.ToInt64(commandUserID.ExecuteScalar());
-            if (string.IsNullOrWhiteSpace(USERID))
+            try
             {
+                string USERID = Request.QueryString["ID"];
+                connection.Open();
+                SqlCommand commandUserID = new SqlCommand("SELECT MAX(UserID) from [tbl_Users]", connection);
 
-                Response.Redirect("UserStoreManagment.aspx?ID=" + id);
+                long id = Convert.ToInt64(commandUserID.ExecuteScalar());
+                if (string.IsNullOrWhiteSpace(USERID))
+                {
+
+                    Response.Redirect("UserStoreManagment.aspx?ID=" + id);
+                }
+                else
+                {
+                    Response.Redirect("UserStoreManagment.aspx?ID=" + USERID);
+                }
+                connection.Close();
             }
-            else
+            catch (Exception ex) 
             {
-                Response.Redirect("UserStoreManagment.aspx?ID=" + USERID);
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
-            connection.Close();
         }
     }
 }

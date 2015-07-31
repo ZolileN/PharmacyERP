@@ -1,4 +1,6 @@
-﻿using IMSCommon.Util;
+﻿using IMS.Util;
+using IMSCommon.Util;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -13,10 +15,13 @@ namespace IMS
 {
     public partial class IMSLogin : System.Web.UI.Page
     {
+        private ILog log;
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
+
+        private ExceptionHandler expHandler= ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
@@ -85,6 +90,10 @@ namespace IMS
             }
             catch (Exception exp)
             {
+                if (log.IsErrorEnabled)
+                {
+                    log.Error(expHandler.GenerateLogString(exp));
+                }
             }
             finally 
             {

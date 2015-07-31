@@ -1,4 +1,6 @@
-﻿using IMSCommon.Util;
+﻿using IMS.Util;
+using IMSCommon.Util;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,8 +17,14 @@ namespace IMS
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if(!IsPostBack)
             {
                 if (Session["Storename"] != null)
@@ -26,10 +34,26 @@ namespace IMS
                     PopulateStoreDropDown();
                 }
             }
+            expHandler.CheckForErrorMessage(Session);
             
         }
 
-        
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
 
         private void PopulateStoreDropDown()
         {
@@ -103,33 +127,63 @@ namespace IMS
 
         private void BindGrid()
         {
-            DataSet resultSet = new DataSet();
-            int StoreId = int.Parse(Session["SystemId"].ToString());
-            SqlCommand comm = new SqlCommand("sp_GetStoredVendors", connection);
-            comm.CommandType = CommandType.StoredProcedure;
-            comm.Parameters.AddWithValue("@StoreId", StoreId);
-            SqlDataAdapter SA = new SqlDataAdapter(comm);
-            SA.Fill(resultSet);
+            try
+            {
+                DataSet resultSet = new DataSet();
+                int StoreId = int.Parse(Session["SystemId"].ToString());
+                SqlCommand comm = new SqlCommand("sp_GetStoredVendors", connection);
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@StoreId", StoreId);
+                SqlDataAdapter SA = new SqlDataAdapter(comm);
+                SA.Fill(resultSet);
 
-            dgvVendors.DataSource = resultSet;
-            dgvVendors.DataBind();
+                dgvVendors.DataSource = resultSet;
+                dgvVendors.DataBind();
+            }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            
+            }
         }
         protected void dgvVendors_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            int VendorId = int.Parse(((Label)dgvVendors.Rows[e.RowIndex].FindControl("lblSupID")).Text);
-            int StoreId = int.Parse(((Label)dgvVendors.Rows[e.RowIndex].FindControl("lblStoreID")).Text);
-            connection.Open();
+            try
+            {
+                int VendorId = int.Parse(((Label)dgvVendors.Rows[e.RowIndex].FindControl("lblSupID")).Text);
+                int StoreId = int.Parse(((Label)dgvVendors.Rows[e.RowIndex].FindControl("lblStoreID")).Text);
+                connection.Open();
 
-            SqlCommand command3 = new SqlCommand("sp_DeleteFromtblVendors_Store", connection);
-            command3.CommandType = CommandType.StoredProcedure;
-            command3.Parameters.AddWithValue("@VendorID", VendorId);
-            command3.Parameters.AddWithValue("@StoreID", StoreId);
-            command3.ExecuteNonQuery();
+                SqlCommand command3 = new SqlCommand("sp_DeleteFromtblVendors_Store", connection);
+                command3.CommandType = CommandType.StoredProcedure;
+                command3.Parameters.AddWithValue("@VendorID", VendorId);
+                command3.Parameters.AddWithValue("@StoreID", StoreId);
+                command3.ExecuteNonQuery();
 
-            BindGrid();
+                BindGrid();
 
-            connection.Close();
-            dgvVendors.Visible = true;
+                connection.Close();
+                dgvVendors.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+             
+            }
         }
 
         protected void dgvVendors_PageIndexChanging(object sender, GridViewPageEventArgs e)

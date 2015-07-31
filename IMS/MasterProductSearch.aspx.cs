@@ -10,6 +10,8 @@ using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Configuration;
 using IMSCommon.Util;
+using log4net;
+using IMS.Util;
 
 namespace IMS
 {
@@ -17,8 +19,15 @@ namespace IMS
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
             if (!IsPostBack)
             {
                 if (Session["ProductMasterSearch"] != null && Session["ProductMasterSearch"].ToString() != null && Session["ProductMasterSearch"].ToString() != "")
@@ -26,8 +35,25 @@ namespace IMS
                     PopulateDropDown(Session["ProductMasterSearch"].ToString());
                 }
             }
-        }
+            expHandler.CheckForErrorMessage(Session);
 
+        }
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
         public void PopulateDropDown(String Text)
         {
             #region Populating Product Name Dropdown
@@ -57,6 +83,9 @@ namespace IMS
             catch (Exception ex)
             {
 
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -71,72 +100,75 @@ namespace IMS
 
         protected void StockDisplayGrid_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-           try
-           {
-               if (e.CommandName.Equals("Select"))
-               {
-                   Label ItemNo = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("DrugID");
-                   Label ItemName = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("DrugName");
-                   Label ItemType = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("DrugType");
-                   Label Manufacterer = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("Manufacterer");
-                   Label Category = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("Category");
-                   Label GenericName = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("GenericName");
-                   Label Control = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("Control");
-                   Label Bin_Number = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("Bin_Number");
-                   Label GreenRainCode = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("GreenRainCode");
-                   Label Brand_Name = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("Brand_Name");
-                   Label MaxiMumDiscount = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("MaxiMumDiscount");
-                   Label LineID = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("LineID");
-                   Label UnitSale = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("UnitSale");
-                   Label UnitCost = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("UnitCost");
-                   Label itemAWT = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("itemAWT");
-                   Label itemForm = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("itemForm");
-                   Label itemStrength = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("itemStrength");
-                   Label itemPackType = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("itemPackType");
-                   Label itemPackSize = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("itemPackSize");
+            try
+            {
+                if (e.CommandName.Equals("Select"))
+                {
+                    Label ItemNo = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("DrugID");
+                    Label ItemName = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("DrugName");
+                    Label ItemType = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("DrugType");
+                    Label Manufacterer = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("Manufacterer");
+                    Label Category = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("Category");
+                    Label GenericName = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("GenericName");
+                    Label Control = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("Control");
+                    Label Bin_Number = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("Bin_Number");
+                    Label GreenRainCode = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("GreenRainCode");
+                    Label Brand_Name = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("Brand_Name");
+                    Label MaxiMumDiscount = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("MaxiMumDiscount");
+                    Label LineID = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("LineID");
+                    Label UnitSale = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("UnitSale");
+                    Label UnitCost = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("UnitCost");
+                    Label itemAWT = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("itemAWT");
+                    Label itemForm = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("itemForm");
+                    Label itemStrength = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("itemStrength");
+                    Label itemPackType = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("itemPackType");
+                    Label itemPackSize = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("itemPackSize");
 
-                   Session["PageMasterProduct"] = "true";
+                    Session["PageMasterProduct"] = "true";
 
-                   Session["MS_ItemNo"] = ItemNo.Text.ToString();
-                   Session["MS_ItemName"] = ItemName.Text.ToString();
-                   Session["MS_ItemType"] = ItemType.Text.ToString();
-                   Session["MS_Manufacterer"] = Manufacterer.Text.ToString();
-                   Session["MS_Category"] = Category.Text.ToString();
-                   Session["MS_GenericName"] = GenericName.Text.ToString();
-                   Session["MS_Control"] = Control.Text.ToString();
-                   Session["MS_BinNumber"] = Bin_Number.Text.ToString();
-                   Session["MS_GreenRainCode"] = GreenRainCode.Text.ToString();
-                   Session["MS_BrandName"] = Brand_Name.Text.ToString();
-                   Session["MS_MaxiMumDiscount"] = MaxiMumDiscount.Text.ToString();
-                   Session["MS_LineID"] = LineID.Text.ToString();
-                   Session["MS_UnitSale"] = UnitSale.Text.ToString();
-                   Session["MS_UnitCost"] = UnitCost.Text.ToString();
-                   Session["MS_itemAWT"] = itemAWT.Text.ToString();
-                   Session["MS_itemForm"] = itemForm.Text.ToString();
-                   Session["MS_itemStrength"] = itemStrength.Text.ToString();
-                   Session["MS_itemPackType"] = itemPackType.Text.ToString();
-                   Session["MS_itemPackSize"] = itemPackSize.Text.ToString();
-                   Session["MS_Bonus12"]=""; 
-                   Session["MS_Bonus25"]="";
-                   Session["MS_Bonus50"] = "";
-                   Session["MS_Control"] = "";
-                   Session["MS_BinNumber"] = "";
-                   Session["MS_GreenRainCode"] = "";
-                   Session["MS_Description"] = "";
-                   Session["MS_Active"] = "1";
-                   Response.Redirect("Addproduct.aspx",false);
+                    Session["MS_ItemNo"] = ItemNo.Text.ToString();
+                    Session["MS_ItemName"] = ItemName.Text.ToString();
+                    Session["MS_ItemType"] = ItemType.Text.ToString();
+                    Session["MS_Manufacterer"] = Manufacterer.Text.ToString();
+                    Session["MS_Category"] = Category.Text.ToString();
+                    Session["MS_GenericName"] = GenericName.Text.ToString();
+                    Session["MS_Control"] = Control.Text.ToString();
+                    Session["MS_BinNumber"] = Bin_Number.Text.ToString();
+                    Session["MS_GreenRainCode"] = GreenRainCode.Text.ToString();
+                    Session["MS_BrandName"] = Brand_Name.Text.ToString();
+                    Session["MS_MaxiMumDiscount"] = MaxiMumDiscount.Text.ToString();
+                    Session["MS_LineID"] = LineID.Text.ToString();
+                    Session["MS_UnitSale"] = UnitSale.Text.ToString();
+                    Session["MS_UnitCost"] = UnitCost.Text.ToString();
+                    Session["MS_itemAWT"] = itemAWT.Text.ToString();
+                    Session["MS_itemForm"] = itemForm.Text.ToString();
+                    Session["MS_itemStrength"] = itemStrength.Text.ToString();
+                    Session["MS_itemPackType"] = itemPackType.Text.ToString();
+                    Session["MS_itemPackSize"] = itemPackSize.Text.ToString();
+                    Session["MS_Bonus12"] = "";
+                    Session["MS_Bonus25"] = "";
+                    Session["MS_Bonus50"] = "";
+                    Session["MS_Control"] = "";
+                    Session["MS_BinNumber"] = "";
+                    Session["MS_GreenRainCode"] = "";
+                    Session["MS_Description"] = "";
+                    Session["MS_Active"] = "1";
+                    Response.Redirect("Addproduct.aspx", false);
 
 
-               }
-           }
-            catch(Exception ex)
-           {
+                }
+            }
+            catch (Exception ex)
+            {
 
-           }
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
             finally
-           {
+            {
 
-           }
+            }
         }
 
         protected void StockDisplayGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -150,7 +182,7 @@ namespace IMS
 
         protected void btnBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Addproduct.aspx");
+            Response.Redirect("Addproduct.aspx",false);
         }
     }
 }

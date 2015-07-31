@@ -1,5 +1,7 @@
-﻿using IMSBusinessLogic;
+﻿using IMS.Util;
+using IMSBusinessLogic;
 using IMSCommon;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -18,6 +20,9 @@ namespace IMS
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
         public static DataSet systemSet; //This needs to be removed as not used in the entire page
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -27,40 +32,68 @@ namespace IMS
                     BindGrid();
 
                 }
-                catch (Exception exp) { }
+                catch (Exception ex)
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
+                }
             }
+            expHandler.CheckForErrorMessage(Session);
         }
-
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
         private void BindGrid()
         {
-            ds = VendorBLL.GetAllVendors(connection);
-            //ProductSet = ds;
-            gdvVendor.DataSource = null;
-            gdvVendor.DataSource = ds;
-            gdvVendor.DataBind();
-            //drpVendor.DataSource = ds;
-            //drpVendor.Items.Insert(0, new ListItem("Select Product", ""));
-            //drpVendor.DataTextField = "SupName";
-            //drpVendor.DataValueField = "Supp_ID";
+            try
+            {
+                ds = VendorBLL.GetAllVendors(connection);
 
-            //drpVendor.DataBind();
+                gdvVendor.DataSource = null;
+                gdvVendor.DataSource = ds;
+                gdvVendor.DataBind();
+            }
+            catch (Exception ex) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
         }
 
         private void BindGridDistinct(int ID)
         {
-            Vendor vendor = new Vendor();
-            vendor.supp_ID = ID;
-            ds = VendorBLL.GetDistinct(connection, vendor);
-            //ProductSet = ds;
-            gdvVendor.DataSource = null;
-            gdvVendor.DataSource = ds;
-            gdvVendor.DataBind();
-            //drpVendor.DataSource = ds;
-            //drpVendor.Items.Insert(0, new ListItem("Select Product", ""));
-            //drpVendor.DataTextField = "SupName";
-            //drpVendor.DataValueField = "Supp_ID";
+            try
+            {
+                Vendor vendor = new Vendor();
+                vendor.supp_ID = ID;
+                ds = VendorBLL.GetDistinct(connection, vendor);
 
-            //drpVendor.DataBind();
+                gdvVendor.DataSource = null;
+                gdvVendor.DataSource = ds;
+                gdvVendor.DataBind();
+            }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
+          
         }
 
         protected void gdvVendor_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -75,16 +108,25 @@ namespace IMS
 
         protected void gdvVendor_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            gdvVendor.PageIndex = e.NewPageIndex;
+            try
+            {
+                gdvVendor.PageIndex = e.NewPageIndex;
 
-            Vendor vendor = new Vendor();
-            vendor.SupName = SelectProduct.Text;
-            ds = VendorBLL.GetDistinctByNane(connection, vendor);
-            //ProductSet = ds;
-            gdvVendor.DataSource = null;
-            gdvVendor.DataSource = ds;
-            gdvVendor.DataBind();
-            //BindGrid();
+                Vendor vendor = new Vendor();
+                vendor.SupName = SelectProduct.Text;
+                ds = VendorBLL.GetDistinctByNane(connection, vendor);
+                //ProductSet = ds;
+                gdvVendor.DataSource = null;
+                gdvVendor.DataSource = ds;
+                gdvVendor.DataBind();
+                //BindGrid();
+            }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
         }
 
         protected void gdvVendor_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -113,7 +155,12 @@ namespace IMS
 
 
             }
-            catch (Exception exp) { }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
             finally
             {
                 gdvVendor.EditIndex = -1;
@@ -176,7 +223,9 @@ namespace IMS
             }
             catch (Exception ex)
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {

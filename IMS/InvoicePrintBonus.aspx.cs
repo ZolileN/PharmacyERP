@@ -10,6 +10,8 @@ using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Configuration;
 using System.IO;
+using log4net;
+using IMS.Util;
 
 namespace IMS
 {
@@ -17,9 +19,14 @@ namespace IMS
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet InvoiceSet;
-
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!IsPostBack)
             {
                 InvoiceDate.Text = Session["PrintInvoiceDate"].ToString();
@@ -43,6 +50,23 @@ namespace IMS
                 ToAddress.Text = dsTo.Tables[0].Rows[0]["SystemAddress"].ToString();
                 LoadData();
             }
+            expHandler.CheckForErrorMessage(Session);
+        }
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
         public void LoadData()
         {
@@ -92,6 +116,9 @@ namespace IMS
             }
             catch (Exception ex)
             {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -117,7 +144,9 @@ namespace IMS
             }
             catch (Exception ex)
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -128,7 +157,7 @@ namespace IMS
 
         protected void btnBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("SalesOrderInvoice.aspx");
+            Response.Redirect("SalesOrderInvoice.aspx",false);
         }
 
        

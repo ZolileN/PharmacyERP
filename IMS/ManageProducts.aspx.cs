@@ -10,6 +10,8 @@ using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Configuration;
 using IMSCommon.Util;
+using log4net;
+using IMS.Util;
 
 namespace IMS
 {
@@ -17,14 +19,21 @@ namespace IMS
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if(!IsPostBack)
             {
                 string searchVal = txtSearch.Text;
                 if (!string.IsNullOrEmpty(searchVal))
                 {
-                    //do here
+                    //do here 
+                    //REPLY  (30-JULY-2014) - Moiz : OK!!!
                 }
                 BindGrid();
 
@@ -33,8 +42,24 @@ namespace IMS
                     btnAddProduct.Enabled = false;
                 }
             }
+            expHandler.CheckForErrorMessage(Session);
         }
-
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
         private void BindGrid()
         {
             DataTable dt = new DataTable();
@@ -72,6 +97,10 @@ namespace IMS
             }
             catch (Exception ex)
             {
+
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -303,6 +332,9 @@ namespace IMS
             catch(Exception ex)
             {
 
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -334,110 +366,7 @@ namespace IMS
 
         #endregion
 
-        //protected void SelectProduct_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        connection.Open();
-
-        //        String Text = SelectProduct.SelectedItem.ToString() + "%";
-        //        SqlCommand command = new SqlCommand("SELECT * From tbl_ProductMaster Where tbl_ProductMaster.Product_Name LIKE '" + Text + "' AND Status = 1", connection);
-        //        DataSet ds = new DataSet();
-        //        SqlDataAdapter sA = new SqlDataAdapter(command);
-        //        sA.Fill(ds);
-        //        if (SelectProduct.DataSource != null)
-        //        {
-        //            SelectProduct.DataSource = null;
-        //        }
-
-        //        ProductSet = null;
-        //        ProductSet = ds;
-
-        //        StockDisplayGrid.DataSource = ds;
-        //        StockDisplayGrid.DataBind();
-        //    }
-        //    catch(Exception ex)
-        //    {
-
-        //    }
-        //    finally
-        //    {
-        //        connection.Close();
-
-        //    }
-        //}
-
-        //protected void btnSearchProduct_Click(object sender, ImageClickEventArgs e)
-        //{
-        //    connection.Open();
-
-        //    String Text = txtSearch.Value.ToString() + "%";
-        //    SqlCommand command = new SqlCommand("SELECT * From tbl_ProductMaster Where tbl_ProductMaster.Product_Name LIKE '" + Text + "' AND Status = 1", connection);
-        //    DataSet ds = new DataSet();
-        //    SqlDataAdapter sA = new SqlDataAdapter(command);
-        //    sA.Fill(ds);
-        //    if (SelectProduct.DataSource != null)
-        //    {
-        //        SelectProduct.DataSource = null;
-        //    }
-
-        //    ProductSet = null;
-        //    ProductSet = ds;
-
-        //    StockDisplayGrid.DataSource = ds;
-        //    StockDisplayGrid.DataBind();
-        //    //if (txtProduct.Text.Length >= 3)
-        //    //{
-        //    //    PopulateDropDown(txtProduct.Text);
-        //    //    SelectProduct.Visible = true;
-        //    //}
-        //}
-
-        //public void PopulateDropDown(String Text)
-        //{
-        //    #region Populating Product Name Dropdown
-
-        //    try
-        //    {
-        //        connection.Open();
-
-        //        Text = Text + "%";
-        //        SqlCommand command = new SqlCommand("SELECT * From tbl_ProductMaster Where tbl_ProductMaster.Product_Name LIKE '" + Text + "' AND Status = 1", connection);
-        //        DataSet ds = new DataSet();
-        //        SqlDataAdapter sA = new SqlDataAdapter(command);
-        //        sA.Fill(ds);
-        //        if (SelectProduct.DataSource != null)
-        //        {
-        //            SelectProduct.DataSource = null;
-        //        }
-
-        //        ProductSet = null;
-        //        ProductSet = ds;
-                
-        //        StockDisplayGrid.DataSource = ds;
-        //        StockDisplayGrid.DataBind();
-                
-        //        SelectProduct.DataSource = ds.Tables[0];
-        //        SelectProduct.DataTextField = "Product_Name";
-        //        SelectProduct.DataValueField = "ProductID";
-        //        SelectProduct.DataBind();
-        //        if (SelectProduct != null)
-        //        {
-        //            SelectProduct.Items.Insert(0, "Select Product");
-        //            SelectProduct.SelectedIndex = 0;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //    }
-        //    finally
-        //    {
-        //        connection.Close();
-        //    }
-        //    #endregion
-        //}
-
+       
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
             if (Convert.ToInt32(Session["UserSys"]).Equals(1))

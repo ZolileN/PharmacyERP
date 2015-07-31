@@ -1,9 +1,12 @@
 ﻿
+using IMS.Util;
 using IMSBusinessLogic;
 using IMSCommon;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -15,8 +18,14 @@ namespace IMS
     public partial class AddDepartment : System.Web.UI.Page
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!IsPostBack)
             {
                 if (Convert.ToInt32(Session["dId"].ToString()) > 0)
@@ -26,47 +35,72 @@ namespace IMS
                     btnSaveDepartment.Text = "Update";
                 }
             }
+            expHandler.CheckForErrorMessage(Session);
 
         }
-
-        protected void btnSaveDepartment_Click(object sender, EventArgs e)
+        private void Page_Error(object sender, EventArgs e)
         {
-            DepartmentBLL depManager = new DepartmentBLL();
-
-            if (Convert.ToInt32(Session["dId"].ToString()) > 0)
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                int selectedId = int.Parse(Session["dId"].ToString());
-                Department depToUpdate = new Department();
-                depToUpdate.DepartmentID = selectedId;
-                depToUpdate.Name = DepartmentName.Text;
-                depToUpdate.Code = DepartmentCode.Text;
-                depManager.Update(depToUpdate, connection); 
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
             }
             else
             {
-                Department depToAdd = new Department();
-                depToAdd.Name = DepartmentName.Text;
-                depToAdd.Code = DepartmentCode.Text;
-
-                depManager.Add(depToAdd, connection);
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
             }
-            Session.Remove("dname");
-            Session.Remove("dcode");
-            Session.Remove("dId"); 
+            // Clear the error from the server.
+            Server.ClearError();
+        }
+        protected void btnSaveDepartment_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DepartmentBLL depManager = new DepartmentBLL();
 
-            Response.Redirect("ManageDepartment.aspx");
+                if (Convert.ToInt32(Session["dId"].ToString()) > 0)
+                {
+                    int selectedId = int.Parse(Session["dId"].ToString());
+                    Department depToUpdate = new Department();
+                    depToUpdate.DepartmentID = selectedId;
+                    depToUpdate.Name = DepartmentName.Text;
+                    depToUpdate.Code = DepartmentCode.Text;
+                    depManager.Update(depToUpdate, connection);
+                }
+                else
+                {
+                    Department depToAdd = new Department();
+                    depToAdd.Name = DepartmentName.Text;
+                    depToAdd.Code = DepartmentCode.Text;
+
+                    depManager.Add(depToAdd, connection);
+                }
+                Session.Remove("dname");
+                Session.Remove("dcode");
+                Session.Remove("dId");
+
+                Response.Redirect("ManageDepartment.aspx", false);
+            }
+            catch (Exception exp) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw exp;
+            }
         }
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             DepartmentName.Text = "";
             DepartmentCode.Text = "";
-            Response.Redirect("ManageDepartment.aspx");
+            Response.Redirect("ManageDepartment.aspx",false);
         }
 
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("ManageDepartment.aspx");
+            Response.Redirect("ManageDepartment.aspx",false);
         }
     }
 }

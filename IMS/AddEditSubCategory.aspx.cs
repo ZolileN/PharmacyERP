@@ -1,5 +1,7 @@
-﻿using IMSBusinessLogic;
+﻿using IMS.Util;
+using IMSBusinessLogic;
 using IMSCommon;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,8 +17,14 @@ namespace IMS
     public partial class AddEditSubCategory : System.Web.UI.Page
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!IsPostBack)
             {
                 
@@ -38,8 +46,24 @@ namespace IMS
                     btnSaveSubCategory.Text = "Update";
                 }
             }
+            expHandler.CheckForErrorMessage(Session);
         }
-
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
         private void PopulateddDepartment()
         {
             #region Populating Department DropDown
@@ -63,7 +87,9 @@ namespace IMS
             }
             catch (Exception ex)
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -96,7 +122,9 @@ namespace IMS
             }
             catch (Exception ex)
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -106,43 +134,52 @@ namespace IMS
         }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect("ManageSubCategory.aspx");
+            Response.Redirect("ManageSubCategory.aspx",false);
         }
 
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("ManageSubCategory.aspx");
+            Response.Redirect("ManageSubCategory.aspx",false);
         }
 
         protected void btnSaveSubCategory_Click(object sender, EventArgs e)
         {
-            SubCategoryBLL subCategoryManager = new SubCategoryBLL();
-            if (Convert.ToInt32(Session["subcatid"].ToString()) > 0)
+            try
             {
-                string catId = ddCategory.SelectedValue;
+                SubCategoryBLL subCategoryManager = new SubCategoryBLL();
+                if (Convert.ToInt32(Session["subcatid"].ToString()) > 0)
+                {
+                    string catId = ddCategory.SelectedValue;
 
-                string depName = ddDepartment.SelectedItem.Text;
+                    string depName = ddDepartment.SelectedItem.Text;
 
-                int selectedId = int.Parse(Session["subcatid"].ToString());
-                SubCategory subCategoryToUpdate = new SubCategory(); 
-                subCategoryToUpdate.SubCategoryID = selectedId;
-                subCategoryToUpdate.Name = txtSubCategoryName.Text;
-                subCategoryToUpdate.CategoryID = int.Parse(catId);
+                    int selectedId = int.Parse(Session["subcatid"].ToString());
+                    SubCategory subCategoryToUpdate = new SubCategory();
+                    subCategoryToUpdate.SubCategoryID = selectedId;
+                    subCategoryToUpdate.Name = txtSubCategoryName.Text;
+                    subCategoryToUpdate.CategoryID = int.Parse(catId);
 
-                subCategoryManager.UpdateSubCat(subCategoryToUpdate, connection);
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('SubCategory SuccessFully Updated.')", true);
-               
+                    subCategoryManager.UpdateSubCat(subCategoryToUpdate, connection);
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('SubCategory SuccessFully Updated.')", true);
+
+                }
+                else
+                {
+                    SubCategory subCategoryToAdd = new SubCategory();
+                    subCategoryToAdd.Name = txtSubCategoryName.Text;
+                    subCategoryToAdd.CategoryID = Convert.ToInt32(ddCategory.Text);
+
+                    subCategoryManager.AddNew(subCategoryToAdd, connection);
+                }
+                Response.Redirect("ManageSubCategory.aspx",false);
+
             }
-            else
+            catch (Exception ex)
             {
-                SubCategory subCategoryToAdd = new SubCategory();
-                subCategoryToAdd.Name = txtSubCategoryName.Text;
-                subCategoryToAdd.CategoryID = Convert.ToInt32(ddCategory.Text);
-
-                subCategoryManager.AddNew(subCategoryToAdd, connection);
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
-            Response.Redirect("ManageSubCategory.aspx");
-            
         }
 
         protected void ddDepartment_SelectedIndexChanged(object sender, EventArgs e)

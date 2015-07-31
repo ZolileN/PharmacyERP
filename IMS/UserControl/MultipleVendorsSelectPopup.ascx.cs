@@ -1,7 +1,9 @@
 ﻿using AjaxControlToolkit;
+using IMS.Util;
 using IMSBusinessLogic;
 using IMSCommon;
 using IMSCommon.Util;
+using log4net;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,6 +20,9 @@ namespace IMS.UserControl
 
     public partial class MultipleVendorsSelectPopup : System.Web.UI.UserControl
     {
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         DataSet ds;
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
@@ -43,6 +48,10 @@ namespace IMS.UserControl
         
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
             if (!IsPostBack)
             {
                 try
@@ -60,7 +69,12 @@ namespace IMS.UserControl
                         txtSearch.Visible = true;
                     }
                 }
-                catch (Exception exp) { }
+                catch (Exception ex) 
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
+                }
             }
             if (IsPostBack)
             {
@@ -75,6 +89,24 @@ namespace IMS.UserControl
                     txtSearch.Visible = true;
                 }
             }
+            expHandler.CheckForErrorMessage(Session);
+        }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
 
         public void PopulateforAssociation() 
@@ -123,6 +155,9 @@ namespace IMS.UserControl
                 }
                 catch (Exception ex)
                 {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
                 }
                 finally
                 {
@@ -137,41 +172,59 @@ namespace IMS.UserControl
         }
         private void BindGrid()
         {
-            ds = VendorBLL.GetAllVendors(connection);
-            ProductSet = ds;
-            gdvVendor.DataSource = null;
-            gdvVendor.DataSource = ds;
-            gdvVendor.DataBind();
-
-            
-            PopulatePreviousState();
-
-            if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
+            try
             {
-                ((CheckBox)gdvVendor.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
-                ViewState["checkAllState"] = true;
+                ds = VendorBLL.GetAllVendors(connection);
+                ProductSet = ds;
+                gdvVendor.DataSource = null;
+                gdvVendor.DataSource = ds;
+                gdvVendor.DataBind();
+
+
+                PopulatePreviousState();
+
+                if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
+                {
+                    ((CheckBox)gdvVendor.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                    ViewState["checkAllState"] = true;
+                }
+            }
+            catch (Exception ex) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
         }
 
         protected void gdvVendor_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            ArrayList CheckBoxArray = (ArrayList)ViewState["CheckBoxArray"];
-            if (e.Row.RowType == DataControlRowType.DataRow && CheckBoxArray != null)
+            try
             {
-                if (((bool)ViewState["SelectAllChecked"]) == true)
+                ArrayList CheckBoxArray = (ArrayList)ViewState["CheckBoxArray"];
+                if (e.Row.RowType == DataControlRowType.DataRow && CheckBoxArray != null)
                 {
-                    //CheckBox chkAll = (CheckBox)gdvVendor.HeaderRow.Cells[0].FindControl("chkboxSelectAll");
-                    //chkAll.Checked = true;
+                    if (((bool)ViewState["SelectAllChecked"]) == true)
+                    {
+                        //CheckBox chkAll = (CheckBox)gdvVendor.HeaderRow.Cells[0].FindControl("chkboxSelectAll");
+                        //chkAll.Checked = true;
 
-                    CheckBox chk = (CheckBox)e.Row.FindControl("chkCtrl");
-                    chk.Checked = true;
+                        CheckBox chk = (CheckBox)e.Row.FindControl("chkCtrl");
+                        chk.Checked = true;
+                    }
+                    else
+                    {
+                        CheckBox chk = (CheckBox)e.Row.FindControl("chkCtrl");
+                        chk.Checked = false;
+                    }
                 }
-                else
-                {
-                    CheckBox chk = (CheckBox)e.Row.FindControl("chkCtrl");
-                    chk.Checked = false;
-                }
-            } 
+            }
+            catch (Exception ex) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
         }
 
         protected void gdvVendor_SelectedIndexChanged(object sender, EventArgs e)
@@ -248,7 +301,12 @@ namespace IMS.UserControl
                     ltMetaTags.Text = ds.Tables[0].Rows[0]["SupName"].ToString();
                 }
             }
-            catch (Exception exp) { }
+            catch (Exception ex) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
 
         }
 
@@ -469,7 +527,9 @@ namespace IMS.UserControl
                                 }
                                 catch (Exception ex)
                                 {
-                                    connection.Close();
+                                    if (connection.State == ConnectionState.Open)
+                                        connection.Close();
+                                    throw ex;
                                 }
 
                             }
@@ -548,7 +608,9 @@ namespace IMS.UserControl
           
             catch (Exception ex)
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -591,9 +653,11 @@ namespace IMS.UserControl
                     }
                 }
             }
-            catch
+            catch(Exception ex)
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {

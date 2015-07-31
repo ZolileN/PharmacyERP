@@ -1,8 +1,10 @@
 ﻿using AjaxControlToolkit;
 using CrystalDecisions.CrystalReports.Engine;
+using IMS.Util;
 using IMSBusinessLogic;
 using IMSCommon;
 using IMSCommon.Util;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -19,8 +21,14 @@ namespace IMS
 {
     public partial class ReportPrinting : System.Web.UI.Page
     {
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if(!IsPostBack)
             {
                 ReportDocument doc = new ReportDocument();
@@ -36,8 +44,25 @@ namespace IMS
 
                 //Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "printPDF('" + hdnResultValue.Value + "')", true);
             }
+            expHandler.CheckForErrorMessage(Session);
         }
 
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
         public void PrintingReport()
         {
             printDiv.InnerText = string.Empty;
@@ -59,7 +84,8 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                throw;
+               
+                throw ex;
             }
         }
         public string GetDefaultPrinter()

@@ -10,15 +10,23 @@ using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Configuration;
 using IMSCommon.Util;
+using log4net;
+using IMS.Util;
 
 namespace IMS
 {
     public partial class UserManagment : System.Web.UI.Page
     {
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet UserSet;
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             #region Populating User Role Drop Down DropDown
             try
             {
@@ -41,6 +49,9 @@ namespace IMS
                     }
                     catch (Exception ex)
                     {
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
+                        throw ex;
                     }
                     finally
                     {
@@ -54,26 +65,53 @@ namespace IMS
             }
             catch (Exception ex)
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
                 connection.Close();
             }
             #endregion
+            expHandler.CheckForErrorMessage(Session);
 
         }
 
-
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
         protected void SalemanDisplayGrid_RowEditing(object sender, GridViewEditEventArgs e)
         {
-            string ID = "";
-            SalemanDisplayGrid.EditIndex = e.NewEditIndex;
-            Label UserID = (Label)SalemanDisplayGrid.Rows[e.NewEditIndex].FindControl("lblUserID");
-            Label roleName = (Label)SalemanDisplayGrid.Rows[e.NewEditIndex].FindControl("lblroleName");
-            ID = UserID.Text;
-            Session["ur_RoleName"] = roleName.Text;
-            Response.Redirect("RegisterUsers.aspx?ID=" + ID);
+            try
+            {
+                string ID = "";
+                SalemanDisplayGrid.EditIndex = e.NewEditIndex;
+                Label UserID = (Label)SalemanDisplayGrid.Rows[e.NewEditIndex].FindControl("lblUserID");
+                Label roleName = (Label)SalemanDisplayGrid.Rows[e.NewEditIndex].FindControl("lblroleName");
+                ID = UserID.Text;
+                Session["ur_RoleName"] = roleName.Text;
+                Response.Redirect("RegisterUsers.aspx?ID=" + ID, false);
+            }
+            catch (Exception ex) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
         }
         private void BindGrid()
         {
@@ -106,6 +144,9 @@ namespace IMS
             }
             catch (Exception ex)
             {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -164,7 +205,12 @@ namespace IMS
                 BindGrid();
 
             }
-            catch (Exception exp) { }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
             finally 
             {
                 if (connection.State == ConnectionState.Open)
@@ -189,12 +235,12 @@ namespace IMS
         protected void btnAddSalesman_Click(object sender, EventArgs e)
         {
             Session["ur_RoleName"] = "Admin";
-            Response.Redirect("RegisterUsers.aspx");
+            Response.Redirect("RegisterUsers.aspx",false);
         }
 
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("WarehouseMain.aspx");
+            Response.Redirect("WarehouseMain.aspx",false);
         }
     }
 }

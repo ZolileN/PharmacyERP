@@ -11,20 +11,44 @@ using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Configuration;
 using IMSCommon.Util;
+using log4net;
+using IMS.Util;
 
 namespace IMS
 {
     public partial class PharmacyManagement : System.Web.UI.Page
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!IsPostBack)
             {
                 BindGrid();
             }
+            expHandler.CheckForErrorMessage(Session);
         }
-
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
         private void BindGrid()
         {
             try
@@ -47,7 +71,8 @@ namespace IMS
             }
             catch (Exception ex)
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             finally
             {
@@ -86,9 +111,10 @@ namespace IMS
                 command.ExecuteNonQuery();
 
             }
-            catch
+            catch(Exception ex)
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             finally
             {
@@ -99,23 +125,31 @@ namespace IMS
 
         protected void dgvWarehouse_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName == "Edit")
+            try
             {
-                int SystemId ;
-                
-                Label lblSystemID = (Label)dgvWarehouse.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblSystemID");
-                Label lblSystemRoleID = (Label)dgvWarehouse.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblSystemRoleID");
-                Label lblPharmacyID = (Label)dgvWarehouse.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblPharmacyID");
-                Label lblBarterExchangeID = (Label)dgvWarehouse.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblBarterExchangeID");
-                int.TryParse(lblSystemID.Text.ToString(), out SystemId);
-                
-                Session["SystemId"] = SystemId;
-                Session["SystemRoleID"] = lblSystemRoleID.Text;
-                Session["BarterExchangeID"] = lblBarterExchangeID.Text;
-                Session["PharmacyID"] = lblPharmacyID.Text;
-                Session["Action"] = "Edit";
-                Session["SysToAdd"] = RoleNames.store;
-                Response.Redirect("AddSystem.aspx", false);
+                if (e.CommandName == "Edit")
+                {
+                    int SystemId;
+
+                    Label lblSystemID = (Label)dgvWarehouse.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblSystemID");
+                    Label lblSystemRoleID = (Label)dgvWarehouse.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblSystemRoleID");
+                    Label lblPharmacyID = (Label)dgvWarehouse.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblPharmacyID");
+                    Label lblBarterExchangeID = (Label)dgvWarehouse.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblBarterExchangeID");
+                    int.TryParse(lblSystemID.Text.ToString(), out SystemId);
+
+                    Session["SystemId"] = SystemId;
+                    Session["SystemRoleID"] = lblSystemRoleID.Text;
+                    Session["BarterExchangeID"] = lblBarterExchangeID.Text;
+                    Session["PharmacyID"] = lblPharmacyID.Text;
+                    Session["Action"] = "Edit";
+                    Session["SysToAdd"] = RoleNames.store;
+                    Response.Redirect("AddSystem.aspx", false);
+                }
+            }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 
@@ -127,19 +161,27 @@ namespace IMS
 
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("StoreMain.aspx");
+            Response.Redirect("StoreMain.aspx",false);
         }
 
         protected void btnSearchPharma_Click(object sender, EventArgs e)
         {
-            DataView dv = ((DataSet)ViewState["PharmacyResultSet"]).Tables[0].DefaultView;
-            dv.RowFilter = "SystemName LIKE '"+ txtSearchPharma.Text +"%'";
+            try
+            {
+                DataView dv = ((DataSet)ViewState["PharmacyResultSet"]).Tables[0].DefaultView;
+                dv.RowFilter = "SystemName LIKE '" + txtSearchPharma.Text + "%'";
 
-            DataTable dt = new DataTable();
-            dt = dv.ToTable();
+                DataTable dt = new DataTable();
+                dt = dv.ToTable();
 
-            dgvWarehouse.DataSource = dt;
-            dgvWarehouse.DataBind();
+                dgvWarehouse.DataSource = dt;
+                dgvWarehouse.DataBind();
+            }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
         }
     }
 }

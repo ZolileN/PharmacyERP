@@ -1,5 +1,7 @@
 ﻿using AjaxControlToolkit;
+using IMS.Util;
 using IMSCommon.Util;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -19,49 +21,79 @@ namespace IMS
         public static DataSet systemSet;
         public static bool FirstOrder;
         string Vendorname = "";
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
-           
 
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!IsPostBack)
             {
-                if (Session["Vendorname"]!=null)
+                try
                 {
-                    lblVendor.Text = Session["Vendorname"].ToString();
-                    Vendorname = Session["Vendorname"].ToString();
-                }
-                
-                if ((Session["OrderNumber"] != null && Session["FromViewPlacedOrders"] != null))  
-                {
-                    Session["FirstOrder"] = true;
-
-                    systemSet = new DataSet();
-                    ProductSet = new DataSet();
-                    LoadData();
-                    BindGrid();
-                    if (StockDisplayGrid.DataSource != null)
+                    if (Session["Vendorname"] != null)
                     {
-                        //btnAccept.Visible = true;
-                        //btnAccept.Text = "RE-GENERATE ORDER";
-                        btnDecline.Visible = true;
+                        lblVendor.Text = Session["Vendorname"].ToString();
+                        Vendorname = Session["Vendorname"].ToString();
                     }
-                    Session["FromViewPlacedOrders"] = null;
-                    //Session["isGenOption"] = null;
-                }
-                else
-                {
-                    Session["OrderNumber"] = "";
-                    Session["FromViewPlacedOrders"] = null;
-                    Session["FirstOrder"] = false;
-                    //Session["isGenOption"] = null;
 
-                    systemSet = new DataSet();
-                    ProductSet = new DataSet();
-                    LoadData();
+                    if ((Session["OrderNumber"] != null && Session["FromViewPlacedOrders"] != null))
+                    {
+                        Session["FirstOrder"] = true;
+
+                        systemSet = new DataSet();
+                        ProductSet = new DataSet();
+                        LoadData();
+                        BindGrid();
+                        if (StockDisplayGrid.DataSource != null)
+                        {
+                            //btnAccept.Visible = true;
+                            //btnAccept.Text = "RE-GENERATE ORDER";
+                            btnDecline.Visible = true;
+                        }
+                        Session["FromViewPlacedOrders"] = null;
+                        //Session["isGenOption"] = null;
+                    }
+                    else
+                    {
+                        Session["OrderNumber"] = "";
+                        Session["FromViewPlacedOrders"] = null;
+                        Session["FirstOrder"] = false;
+                        //Session["isGenOption"] = null;
+
+                        systemSet = new DataSet();
+                        ProductSet = new DataSet();
+                        LoadData();
+                    }
+                }
+                catch (Exception ex) 
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
                 }
             }
+            expHandler.CheckForErrorMessage(Session);
         }
-
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
         private void LoadData()
         {
             #region Getting Vendors
@@ -138,7 +170,12 @@ namespace IMS
                     command.ExecuteNonQuery();
                 }
             }
-            catch (Exception exp) { }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
             finally
             {
                 connection.Close();
@@ -164,7 +201,12 @@ namespace IMS
 
                 command.ExecuteNonQuery();
             }
-            catch (Exception exp) { }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
             finally
             {
                 connection.Close();
@@ -262,7 +304,9 @@ namespace IMS
                     }
                     catch (Exception ex)
                     {
-
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
+                        throw ex;
                     }
                     finally
                     {
@@ -314,7 +358,9 @@ namespace IMS
                     }
                     catch (Exception ex)
                     {
-
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
+                        throw ex;
                     }
                     finally
                     {
@@ -427,7 +473,9 @@ namespace IMS
                     }
                     catch (Exception ex)
                     {
-
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
+                        throw ex;
                     }
                     finally
                     {
@@ -458,7 +506,9 @@ namespace IMS
                 }
                 catch (Exception ex)
                 {
-
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
                 }
                 finally
                 {
@@ -526,7 +576,9 @@ namespace IMS
             }
             catch (Exception ex)
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -552,40 +604,7 @@ namespace IMS
         {
             lblttlcst.Visible = false;
             Response.Redirect("WarehouseMain.aspx", false);
-            //lblTotalCostALL.Visible = false;
-            ////must be checked for sessions
-            //if (Session["FromViewPlacedOrders"] != null && Session["FromViewPlacedOrders"].ToString().Equals("true") && Session["FromViewPlacedOrders"].ToString() != null)
-            //{
-            //    Session["OrderNumber"] = "";
-            //    Session["FromViewPlacedOrders"] = null;
-            //    Session["FirstOrder"] = false;
-            //    // Session["isGenOption"] = null;
-            //    Response.Redirect("ViewPlacedOrders.aspx", false);
-            //}
-            //else
-            //{
-
-            //    if (Session["OrderNumber"] != null)
-            //    {
-            //        //order number is "" after coming from page unload()
-            //        if (!Session["OrderNumber"].ToString().Equals(""))
-            //        {
-            //            int orderID = int.Parse(Session["OrderNumber"].ToString());
-            //            if (connection.State == ConnectionState.Closed)
-            //            {
-            //                connection.Open();
-            //            }
-            //            SqlCommand command = new SqlCommand("sp_DeleteOrder", connection);
-            //            command.CommandType = CommandType.StoredProcedure;
-            //            command.Parameters.AddWithValue("@p_OrderID", orderID);
-            //            command.ExecuteNonQuery();
-            //        }
-            //    }
-            //    Session["OrderNumber"] = "";
-            //    Session["FromViewPlacedOrders"] = null;
-            //    Session["FirstOrder"] = false;
-            //    Response.Redirect("PlaceOrder.aspx", false);
-           // }
+            
         }
 
 
@@ -681,7 +700,9 @@ namespace IMS
             }
             catch (Exception ex)
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {

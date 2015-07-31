@@ -10,6 +10,8 @@ using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Configuration;
 using IMSCommon.Util;
+using log4net;
+using IMS.Util;
 
 namespace IMS
 {
@@ -21,8 +23,14 @@ namespace IMS
         public DataSet systemSet;
         public static bool FirstOrder;
         public GridView innerGrid;
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if(!IsPostBack)
             {
                 BindGrid();
@@ -33,8 +41,24 @@ namespace IMS
                 //    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "script", "$(function () { setExpiryDates(" + id + ");return false });", true);
                 //}
             }
+            expHandler.CheckForErrorMessage(Session);
         }
-
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
         private void BindGrid()
         {
             DataSet ds = new DataSet();
@@ -75,6 +99,9 @@ namespace IMS
             catch (Exception ex)
             {
 
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -116,7 +143,13 @@ namespace IMS
                 sendQty.Text = ds.Tables[0].Rows[0]["SentQuantity"].ToString();
                 RetQty.Text = ds.Tables[0].Rows[0]["ReturnedQuantity"].ToString();
             }
-            catch (Exception exp) { }
+            catch (Exception ex)
+            {
+
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
             finally 
             {
                 if (connection.State == ConnectionState.Open)
@@ -135,118 +168,130 @@ namespace IMS
 
         protected void StockDisplayGrid_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            try
             {
-                Label Status = (Label)e.Row.FindControl("lblStatus");
-                Button btnEdit = (Button)e.Row.FindControl("btnEdit");
-                Button btnDetail = (Button)e.Row.FindControl("btnDetails");
-                Button btnDelete = (Button)e.Row.FindControl("btnDelete");
+                if (e.Row.RowType == DataControlRowType.DataRow)
+                {
+                    Label Status = (Label)e.Row.FindControl("lblStatus");
+                    Button btnEdit = (Button)e.Row.FindControl("btnEdit");
+                    Button btnDetail = (Button)e.Row.FindControl("btnDetails");
+                    Button btnDelete = (Button)e.Row.FindControl("btnDelete");
 
-           
 
-                if (Status.Text.Equals("Complete") || Status.Text.Equals("Partial"))
-                {
-                    btnDelete.Enabled = false;
-                }
-                else
-                {
-                    btnEdit.Enabled = true;
-                    btnDelete.Enabled = true;
-                }
 
-                if (Session["ExistingOrder"].Equals(true))
-                {
-                    // btnDetail.Enabled = false;
-                }
-                else
-                {
-                    btnDetail.Enabled = true;
-                }
-                Label ProductStrength = (Label)e.Row.FindControl("ProductStrength2");
-                Label Label1 = (Label)e.Row.FindControl("Label1");
+                    if (Status.Text.Equals("Complete") || Status.Text.Equals("Partial"))
+                    {
+                        btnDelete.Enabled = false;
+                    }
+                    else
+                    {
+                        btnEdit.Enabled = true;
+                        btnDelete.Enabled = true;
+                    }
 
-                Label dosage = (Label)e.Row.FindControl("dosage2");
-                Label Label2 = (Label)e.Row.FindControl("Label2");
+                    if (Session["ExistingOrder"].Equals(true))
+                    {
+                        // btnDetail.Enabled = false;
+                    }
+                    else
+                    {
+                        btnDetail.Enabled = true;
+                    }
+                    Label ProductStrength = (Label)e.Row.FindControl("ProductStrength2");
+                    Label Label1 = (Label)e.Row.FindControl("Label1");
 
-                Label packSize = (Label)e.Row.FindControl("packSize2");
-                Label Label3 = (Label)e.Row.FindControl("Label3");
+                    Label dosage = (Label)e.Row.FindControl("dosage2");
+                    Label Label2 = (Label)e.Row.FindControl("Label2");
 
-                if (String.IsNullOrWhiteSpace(ProductStrength.Text))
-                {
-                    ProductStrength.Visible = false;
-                    Label1.Visible = false;
-                }
-                else
-                {
-                    ProductStrength.Visible = true;
-                    Label1.Visible = true;
-                }
+                    Label packSize = (Label)e.Row.FindControl("packSize2");
+                    Label Label3 = (Label)e.Row.FindControl("Label3");
 
-                if (String.IsNullOrWhiteSpace(dosage.Text))
-                {
-                    dosage.Visible = false;
-                    Label2.Visible = false;
-                }
-                else
-                {
-                    dosage.Visible = true;
-                    Label2.Visible = true;
-                }
+                    if (String.IsNullOrWhiteSpace(ProductStrength.Text))
+                    {
+                        ProductStrength.Visible = false;
+                        Label1.Visible = false;
+                    }
+                    else
+                    {
+                        ProductStrength.Visible = true;
+                        Label1.Visible = true;
+                    }
 
-                if (String.IsNullOrWhiteSpace(packSize.Text))
-                {
-                    packSize.Visible = false;
-                    Label3.Visible = false;
-                }
-                else
-                {
-                    packSize.Visible = true;
-                    Label3.Visible = true;
-                }
+                    if (String.IsNullOrWhiteSpace(dosage.Text))
+                    {
+                        dosage.Visible = false;
+                        Label2.Visible = false;
+                    }
+                    else
+                    {
+                        dosage.Visible = true;
+                        Label2.Visible = true;
+                    }
 
-                Label OrderDetailID = (Label)e.Row.FindControl("OrderDetailNo");
-                GridView Details = (GridView)e.Row.FindControl("StockDetailDisplayGrid");
-                innerGrid = Details;
-                innerGrid.RowDataBound += innerGrid_RowDataBound;
-                #region Display Requests
-                try
-                {
-                    if (connection.State == ConnectionState.Open)
+                    if (String.IsNullOrWhiteSpace(packSize.Text))
+                    {
+                        packSize.Visible = false;
+                        Label3.Visible = false;
+                    }
+                    else
+                    {
+                        packSize.Visible = true;
+                        Label3.Visible = true;
+                    }
+
+                    Label OrderDetailID = (Label)e.Row.FindControl("OrderDetailNo");
+                    GridView Details = (GridView)e.Row.FindControl("StockDetailDisplayGrid");
+                    innerGrid = Details;
+                    innerGrid.RowDataBound += innerGrid_RowDataBound;
+                    #region Display Requests
+                    try
+                    {
+                        if (connection.State == ConnectionState.Open)
+                        {
+                            connection.Close();
+                        }
+                        connection.Open();
+                        SqlCommand command = new SqlCommand("sp_getSaleOrderDetail", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@p_OrderDetID", Convert.ToInt32(OrderDetailID.Text));
+
+                        DataSet ds = new DataSet();
+
+                        SqlDataAdapter sA = new SqlDataAdapter(command);
+                        sA.Fill(ds);
+                        ProductSet = ds;
+                        Details.DataSource = null;
+                        Details.DataSource = ds.Tables[0];
+                        Details.DataBind();
+
+                        for (int i = 0; i < Details.Rows.Count; i++)
+                        {
+                            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "script", "$(function () { setExpiryDates(" + i + ");return false });", true);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
+                        throw ex;
+                    }
+                    finally
                     {
                         connection.Close();
                     }
-                    connection.Open();
-                    SqlCommand command = new SqlCommand("sp_getSaleOrderDetail", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_OrderDetID", Convert.ToInt32(OrderDetailID.Text));
 
-                    DataSet ds = new DataSet();
-
-                    SqlDataAdapter sA = new SqlDataAdapter(command);
-                    sA.Fill(ds);
-                    ProductSet = ds;
-                    Details.DataSource = null;
-                    Details.DataSource = ds.Tables[0];
-                    Details.DataBind();
-
-                    for (int i = 0; i < Details.Rows.Count; i++)
-                    {
-                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "script", "$(function () { setExpiryDates(" + i + ");return false });", true);
-                    }
-                }
-                catch (Exception ex)
-                {
+                    #endregion
 
                 }
-                finally
-                {
-                    connection.Close();
-                }
-
-                #endregion
-
             }
+            catch (Exception ex) 
+            {
 
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
 
         }
 
@@ -307,11 +352,14 @@ namespace IMS
 
                     }
                 }
-                Response.Redirect("ReceiveSalesOrder.aspx");
+                Response.Redirect("ReceiveSalesOrder.aspx",false);
             }
             catch(Exception ex)
             {
-                connection.Close();
+
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
            
         }
@@ -330,7 +378,7 @@ namespace IMS
                 //Session["ProductID"] = ProductID.Text;
                 //Session["RequestedTo"] = RequestedTo.Text;
 
-                Response.Redirect("RecieveSOFullEdit.aspx");
+                Response.Redirect("RecieveSOFullEdit.aspx",false);
             }
                  
         }

@@ -1,5 +1,7 @@
-﻿using IMSBusinessLogic;
+﻿using IMS.Util;
+using IMSBusinessLogic;
 using IMSCommon;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,8 +18,15 @@ namespace IMS
     {
         private DataSet ds;
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
             if (!IsPostBack)
             {
                 try
@@ -25,8 +34,14 @@ namespace IMS
                     BindGrid(false);
                     BindDropSearch();
                 }
-                catch (Exception exp) { }
+                catch (Exception ex) 
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
+                }
             }
+            expHandler.CheckForErrorMessage(Session);
         }
         protected void btnBack_Click(object sender, EventArgs e)
         {
@@ -100,7 +115,12 @@ namespace IMS
                     }
                 }
             }
-            catch (Exception exp) { }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
             finally
             {
                 CategoryDisplayGrid.EditIndex = -1;
@@ -120,7 +140,12 @@ namespace IMS
                 categoryManager.Delete(categoryToDelete, connection);
 
             }
-            catch (Exception exp) { }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
             finally
             {
                 CategoryDisplayGrid.EditIndex = -1;
@@ -141,33 +166,33 @@ namespace IMS
             Session["depId"] = depId.Text;
             Session["CatId"] = id.Text;
  
-            Response.Redirect("AddEditCategory.aspx");
+            Response.Redirect("AddEditCategory.aspx",false);
 
             //BindGrid(false);
         }
 
         private void BindGrid(bool isSearch)
         {
-            //if (ddlCatName.SelectedIndex != -1 && isSearch)
-            //{
-            //    Category obj = new Category();
-            //    obj.CategoryID = int.Parse(ddlCatName.SelectedValue);
-            //    CategoryBLL ins = new CategoryBLL();
-            //    ds = ins.GetById(obj);
-            //}
-            //else
+            try
             {
                 ds = CategoryBLL.GetAllCategories(connection);
-            }
-            CategoryDisplayGrid.DataSource = ds;
-            CategoryDisplayGrid.DataBind();
 
-            DropDownList depList = (DropDownList)CategoryDisplayGrid.FooterRow.FindControl("ddlAddDepName");
-            depList.DataSource = DepartmentBLL.GetAllDepartment(connection);
-            depList.DataBind();
-            depList.DataTextField = "Name";
-            depList.DataValueField = "DepId";
-            depList.DataBind();
+                CategoryDisplayGrid.DataSource = ds;
+                CategoryDisplayGrid.DataBind();
+
+                DropDownList depList = (DropDownList)CategoryDisplayGrid.FooterRow.FindControl("ddlAddDepName");
+                depList.DataSource = DepartmentBLL.GetAllDepartment(connection);
+                depList.DataBind();
+                depList.DataTextField = "Name";
+                depList.DataValueField = "DepId";
+                depList.DataBind();
+            }
+            catch (Exception ex) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
         }
 
         private void BindDropSearch()
@@ -200,8 +225,12 @@ namespace IMS
                         DataRowView dr = e.Row.DataItem as DataRowView;
                         depList.SelectedValue = (string)e.Row.DataItem; // you can use e.Row.DataItem to get the value
                     }
-                    catch (Exception exo)
-                    { }
+                    catch (Exception ex)
+                    {
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
+                        throw ex;
+                    }
                 }
             }
 
@@ -210,29 +239,38 @@ namespace IMS
 
         protected void CategoryDisplayGrid_Sorting(object sender, GridViewSortEventArgs e)
         {
-            DataView sortedView;
-            string sortingDirection = string.Empty;
-            if (direction == SortDirection.Ascending)
+            try
             {
-                direction = SortDirection.Descending;
-                sortingDirection = "Desc";
+                DataView sortedView;
+                string sortingDirection = string.Empty;
+                if (direction == SortDirection.Ascending)
+                {
+                    direction = SortDirection.Descending;
+                    sortingDirection = "Desc";
 
+                }
+                else
+                {
+                    direction = SortDirection.Ascending;
+                    sortingDirection = "Asc";
+
+                }
+
+
+                ds = CategoryBLL.GetAllCategories(connection);
+                CategoryDisplayGrid.DataSource = ds;
+                sortedView = new DataView(ds.Tables[0]);
+                sortedView.Sort = e.SortExpression + " " + sortingDirection;
+                Session["SortedView"] = sortedView;
+                CategoryDisplayGrid.DataSource = sortedView;
+                CategoryDisplayGrid.DataBind();
             }
-            else
+            catch (Exception ex) 
             {
-                direction = SortDirection.Ascending;
-                sortingDirection = "Asc";
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
-
-
-            ds = CategoryBLL.GetAllCategories(connection);
-            CategoryDisplayGrid.DataSource = ds;
-            sortedView = new DataView(ds.Tables[0]);
-            sortedView.Sort = e.SortExpression + " " + sortingDirection;
-            Session["SortedView"] = sortedView;
-            CategoryDisplayGrid.DataSource = sortedView;
-            CategoryDisplayGrid.DataBind();
         }
 
         public SortDirection direction
@@ -254,7 +292,7 @@ namespace IMS
         protected void btnAddCategory_Click(object sender, EventArgs e)
         {
             Session["CatId"] = "0";
-            Response.Redirect("AddEditCategory.aspx");
+            Response.Redirect("AddEditCategory.aspx",false);
         }
 
         protected void btnGoBack_Click(object sender, EventArgs e)

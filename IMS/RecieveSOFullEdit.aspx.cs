@@ -1,4 +1,6 @@
-﻿using IMSCommon.Util;
+﻿using IMS.Util;
+using IMSCommon.Util;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,15 +17,37 @@ namespace IMS
     public partial class RecieveSOFullEdit : System.Web.UI.Page
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
-
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if(!IsPostBack)
             {
                 BindGrid();
             }
+            expHandler.CheckForErrorMessage(Session);
         }
 
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
         private void BindGrid()
         {
             #region Display Products
@@ -67,7 +91,9 @@ namespace IMS
             }
             catch (Exception ex)
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -275,7 +301,9 @@ namespace IMS
             }
             catch(Exception ex)
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -303,32 +331,41 @@ namespace IMS
 
         protected void dgvReceiveSOGrid_RowEditing(object sender, GridViewEditEventArgs e)
         {
-            dgvReceiveSOGrid.EditIndex = e.NewEditIndex;
-            //BindGrid();
-            int OrderDetId, AvailableQty, SentQty, BonusQty, DelieveredQty, DelieveredBonusQty, DamagedQty, ExpiredQty, RejectedQty = 0;
-             
-            int RowIndex = dgvReceiveSOGrid.EditIndex;
+            try
+            {
+                dgvReceiveSOGrid.EditIndex = e.NewEditIndex;
+                //BindGrid();
+                int OrderDetId, AvailableQty, SentQty, BonusQty, DelieveredQty, DelieveredBonusQty, DamagedQty, ExpiredQty, RejectedQty = 0;
 
-            TextBox txtDelieveredQty = (TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("DelieveredQtyVal");
-            TextBox txtRejected = (TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("txtReturnedQuantity");
-            txtRejected.TextChanged += txtReturnedQuantity_TextChanged;
+                int RowIndex = dgvReceiveSOGrid.EditIndex;
 
-            DelieveredQty = int.Parse(txtDelieveredQty.Text);
+                TextBox txtDelieveredQty = (TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("DelieveredQtyVal");
+                TextBox txtRejected = (TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("txtReturnedQuantity");
+                txtRejected.TextChanged += txtReturnedQuantity_TextChanged;
 
-            OrderDetId = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("OrderDetID")).Text);
-            AvailableQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("lblAvailableStock")).Text);
-            SentQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("SendQuantityVal")).Text);
+                DelieveredQty = int.Parse(txtDelieveredQty.Text);
 
-            BonusQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("BonusQuantityVal")).Text);
-            DelieveredQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("DelieveredQtyVal")).Text);
-            DelieveredBonusQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("delBonusQtyVal")).Text);
-            DamagedQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("DamagedQuantityVal")).Text);
-            ExpiredQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("txtExpiredQuantity")).Text);
-            RejectedQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("txtReturnedQuantity")).Text);
-            
-            DelieveredQty = SentQty + (BonusQty - DelieveredBonusQty) - (DamagedQty + ExpiredQty + RejectedQty);
+                OrderDetId = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("OrderDetID")).Text);
+                AvailableQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("lblAvailableStock")).Text);
+                SentQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("SendQuantityVal")).Text);
 
-            txtDelieveredQty.Text = DelieveredQty.ToString();
+                BonusQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("BonusQuantityVal")).Text);
+                DelieveredQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("DelieveredQtyVal")).Text);
+                DelieveredBonusQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("delBonusQtyVal")).Text);
+                DamagedQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("DamagedQuantityVal")).Text);
+                ExpiredQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("txtExpiredQuantity")).Text);
+                RejectedQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("txtReturnedQuantity")).Text);
+
+                DelieveredQty = SentQty + (BonusQty - DelieveredBonusQty) - (DamagedQty + ExpiredQty + RejectedQty);
+
+                txtDelieveredQty.Text = DelieveredQty.ToString();
+            }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
         }
 
         private int CalculateDelieveredQty(int SentQty, int BonusQty, int DelieveredBonusQty, int DamagedQty, int ExpiredQty, int RejectedQty)
@@ -342,47 +379,64 @@ namespace IMS
 
         protected void dgvReceiveSOGrid_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            try
             {
-                TextBox txtDelBonus = (TextBox)e.Row.FindControl("delBonusQtyVal");
+                if (e.Row.RowType == DataControlRowType.DataRow)
+                {
+                    TextBox txtDelBonus = (TextBox)e.Row.FindControl("delBonusQtyVal");
 
-                TextBox txtDamagedQuantity = (TextBox)e.Row.FindControl("DamagedQuantityVal");
-                TextBox txtExpiredQuantity = (TextBox)e.Row.FindControl("txtExpiredQuantity");
-                TextBox txtReturnedQuantity = (TextBox)e.Row.FindControl("txtReturnedQuantity");
+                    TextBox txtDamagedQuantity = (TextBox)e.Row.FindControl("DamagedQuantityVal");
+                    TextBox txtExpiredQuantity = (TextBox)e.Row.FindControl("txtExpiredQuantity");
+                    TextBox txtReturnedQuantity = (TextBox)e.Row.FindControl("txtReturnedQuantity");
 
-                DataRowView drv = (DataRowView)e.Row.DataItem;
-                int id = (int)e.Row.RowIndex;
+                    DataRowView drv = (DataRowView)e.Row.DataItem;
+                    int id = (int)e.Row.RowIndex;
 
 
-                txtDelBonus.Attributes.Add("onchange", "SetDelieveredQty(" + id + ");return false;");
+                    txtDelBonus.Attributes.Add("onchange", "SetDelieveredQty(" + id + ");return false;");
 
-                txtDamagedQuantity.Attributes.Add("onchange", "SetDelieveredQty(" + id + ");return false;");
-                txtExpiredQuantity.Attributes.Add("onchange", "SetDelieveredQty(" + id + ");return false;");
-                txtReturnedQuantity.Attributes.Add("onchange", "SetDelieveredQty(" + id + ");return false;");
+                    txtDamagedQuantity.Attributes.Add("onchange", "SetDelieveredQty(" + id + ");return false;");
+                    txtExpiredQuantity.Attributes.Add("onchange", "SetDelieveredQty(" + id + ");return false;");
+                    txtReturnedQuantity.Attributes.Add("onchange", "SetDelieveredQty(" + id + ");return false;");
+                }
             }
-
+            catch (Exception ex) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
             
         }
 
         protected void txtReturnedQuantity_TextChanged(object sender, EventArgs e)
         {
-            int OrderDetId, AvailableQty, SentQty, BonusQty, DelieveredQty, DelieveredBonusQty, DamagedQty, ExpiredQty, RejectedQty = 0;
-            TextBox txtDelieveredQty = (TextBox)dgvReceiveSOGrid.Rows[0].FindControl("DelieveredQtyVal");
+            try
+            {
+                int OrderDetId, AvailableQty, SentQty, BonusQty, DelieveredQty, DelieveredBonusQty, DamagedQty, ExpiredQty, RejectedQty = 0;
+                TextBox txtDelieveredQty = (TextBox)dgvReceiveSOGrid.Rows[0].FindControl("DelieveredQtyVal");
 
-            OrderDetId = int.Parse(((Label)dgvReceiveSOGrid.Rows[0].FindControl("OrderDetID")).Text);
-            AvailableQty = int.Parse(((Literal)dgvReceiveSOGrid.Rows[0].FindControl("lblAvailableStock")).Text);
-            SentQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[0].FindControl("SendQuantityVal")).Text);
+                OrderDetId = int.Parse(((Label)dgvReceiveSOGrid.Rows[0].FindControl("OrderDetID")).Text);
+                AvailableQty = int.Parse(((Literal)dgvReceiveSOGrid.Rows[0].FindControl("lblAvailableStock")).Text);
+                SentQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[0].FindControl("SendQuantityVal")).Text);
 
-            BonusQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[0].FindControl("BonusQuantityVal")).Text);
-            DelieveredQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[0].FindControl("DelieveredQtyVal")).Text);
-            DelieveredBonusQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[0].FindControl("delBonusQtyVal")).Text);
-            DamagedQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[0].FindControl("DamagedQuantityVal")).Text);
-            ExpiredQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[0].FindControl("txtExpiredQuantity")).Text);
-            RejectedQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[0].FindControl("txtReturnedQuantity")).Text);
+                BonusQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[0].FindControl("BonusQuantityVal")).Text);
+                DelieveredQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[0].FindControl("DelieveredQtyVal")).Text);
+                DelieveredBonusQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[0].FindControl("delBonusQtyVal")).Text);
+                DamagedQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[0].FindControl("DamagedQuantityVal")).Text);
+                ExpiredQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[0].FindControl("txtExpiredQuantity")).Text);
+                RejectedQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[0].FindControl("txtReturnedQuantity")).Text);
 
-            DelieveredQty = SentQty + (BonusQty - DelieveredBonusQty) - (DamagedQty + ExpiredQty + RejectedQty);
+                DelieveredQty = SentQty + (BonusQty - DelieveredBonusQty) - (DamagedQty + ExpiredQty + RejectedQty);
 
-            txtDelieveredQty.Text = DelieveredQty.ToString();
+                txtDelieveredQty.Text = DelieveredQty.ToString();
+            }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
         }
 
     }

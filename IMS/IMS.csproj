@@ -111,6 +111,9 @@
     <Reference Include="itextsharp.xtra">
       <HintPath>C:\Users\abdul.haseeb\Downloads\itextsharp-all-5.5.5\itextsharp-dll-xtra\itextsharp.xtra.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>C:\Users\moiz.rauf\Documents\Visual Studio 2013\Projects\ErrorTest\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -2161,6 +2164,9 @@
     <Compile Include="UserStoreManagment.aspx.designer.cs">
       <DependentUpon>UserStoreManagment.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Util\ErrorMessageUtility.cs" />
+    <Compile Include="Util\ExceptionHandler.cs" />
+    <Compile Include="Util\RedirectionStrategy.cs" />
     <Compile Include="VendorsPopup.aspx.cs">
       <DependentUpon>VendorsPopup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2256,6 +2262,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="CrystalReports\" />
+    <Folder Include="ErrorPages\" />
     <Folder Include="StoreManagement\StoreRequests\" />
   </ItemGroup>
   <ItemGroup>

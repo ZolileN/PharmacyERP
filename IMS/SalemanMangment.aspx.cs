@@ -10,6 +10,8 @@ using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Configuration;
 using IMSCommon.Util;
+using log4net;
+using IMS.Util;
 
 namespace IMS
 {
@@ -17,15 +19,22 @@ namespace IMS
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet UserSet;
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             #region Populating User Role Drop Down DropDown
             try
             {
                 if (!IsPostBack)
                 {
+
                     BindGrid();
-                   
+
                     if (connection.State == ConnectionState.Closed)
                     {
                         connection.Open();
@@ -36,21 +45,13 @@ namespace IMS
                     SqlDataAdapter SA = new SqlDataAdapter(command);
 
                     SA.Fill(ds);
-                    //ddlUserRole.DataSource = ds.Tables[0];
-                    //ddlUserRole.DataTextField = "user_RoleName";
-                    //ddlUserRole.DataValueField = "user_RoleID";
-                    //ddlUserRole.DataBind();
-                    //if (ddlUserRole != null)
-                    //{
-                    //    ddlUserRole.Items.Insert(0, "Select User Role");
-                    //    ddlUserRole.SelectedIndex = 0;
-                    //}
-
                 }
             }
             catch (Exception ex)
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -58,10 +59,26 @@ namespace IMS
             }
 
             #endregion
+            expHandler.CheckForErrorMessage(Session);
             
         }
 
-         
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
         //protected void btnSearch_Click(object sender, EventArgs e)
         //{
         //    try
@@ -162,6 +179,9 @@ namespace IMS
             }
             catch (Exception ex)
             {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -201,7 +221,7 @@ namespace IMS
 
         protected void SalemanDisplayGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-           try
+            try
             {
                 GridViewRow row = (GridViewRow)SalemanDisplayGrid.Rows[e.RowIndex];
                 Label label = (Label)SalemanDisplayGrid.Rows[e.RowIndex].FindControl("lblUserID");
@@ -220,7 +240,12 @@ namespace IMS
                 BindGrid();
 
             }
-            catch (Exception exp) { }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
             finally
             {
                 if (connection.State == ConnectionState.Open)
@@ -246,12 +271,12 @@ namespace IMS
         protected void btnAddSalesman_Click(object sender, EventArgs e)
         {
             Session["ur_RoleName"] = "Salesman";
-            Response.Redirect("RegisterUsers.aspx");
+            Response.Redirect("RegisterUsers.aspx",false);
         }
 
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("WarehouseMain.aspx");
+            Response.Redirect("WarehouseMain.aspx",false);
         }
 
 

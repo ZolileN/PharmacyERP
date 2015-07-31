@@ -10,6 +10,8 @@ using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Configuration;
 using IMSCommon.Util;
+using log4net;
+using IMS.Util;
 
 namespace IMS
 {
@@ -19,17 +21,50 @@ namespace IMS
         public static DataSet ProductSet;
         public static DataSet systemSet; //This needs to be removed as not used in the entire page
         public static bool TotalExceeded;
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if(!IsPostBack)
             {
-                lblTotalQuantity.Text = Session["TotalQuantity"].ToString();
-                lblQuan.Text = Session["SO_Quan"].ToString();
-                lblBonQuan.Text = Session["SO_BQuan"].ToString();
-                //TotalExceeded = false;
-                BindGrid();
-                Session["TotalExceeded"] = false;
-            }    
+                try
+                {
+                    lblTotalQuantity.Text = Session["TotalQuantity"].ToString();
+                    lblQuan.Text = Session["SO_Quan"].ToString();
+                    lblBonQuan.Text = Session["SO_BQuan"].ToString();
+                    //TotalExceeded = false;
+                    BindGrid();
+                    Session["TotalExceeded"] = false;
+                }
+                catch (Exception ex) 
+                {
+
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
+                }
+            }
+            expHandler.CheckForErrorMessage(Session);
+        }
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
         public void BindGrid()
         {
@@ -74,6 +109,9 @@ namespace IMS
             catch(Exception ex)
             {
 
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -82,83 +120,73 @@ namespace IMS
         }
         protected void btnAcceptStock_Click(object sender, EventArgs e)
         {
-            int TotalQuantity,quan,bQuan;
-            TotalQuantity=quan=bQuan=0;
-            int.TryParse(lblQuan.Text,out quan);
-            int.TryParse(lblBonQuan.Text,out bQuan);
-            int.TryParse(lblTotalQuantity.Text, out TotalQuantity);
-            ////DataTable filterSet = this.StockDisplayGrid as DataTable;
-            int totVal, totBonVal;
-            totVal = totBonVal = 0;
-            //DataView dataView =  StockDisplayGrid.DataSource;
-            DataSet ds = ProductSet;
-            int selectedSum = 0;
-            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            try
             {
-                int val, bonVal;
-                val = bonVal = 0;
-                //if (Convert.ToInt32(filterSet.Rows[i]["ProductID"]).Equals(ProductNO))
-                //{
-                //    ProductPresent = true;
-                //    break;
-                //}
-                
-                int.TryParse(ds.Tables[0].Rows[i]["SentQuantity"].ToString(), out val);
-                int.TryParse(ds.Tables[0].Rows[i]["BonusQuantity"].ToString(), out bonVal);
-                selectedSum += (val+bonVal);
-                totVal += val;
-                totBonVal += bonVal;
-            }
+                int TotalQuantity, quan, bQuan;
+                TotalQuantity = quan = bQuan = 0;
+                int.TryParse(lblQuan.Text, out quan);
+                int.TryParse(lblBonQuan.Text, out bQuan);
+                int.TryParse(lblTotalQuantity.Text, out TotalQuantity);
+                ////DataTable filterSet = this.StockDisplayGrid as DataTable;
+                int totVal, totBonVal;
+                totVal = totBonVal = 0;
+                //DataView dataView =  StockDisplayGrid.DataSource;
+                DataSet ds = ProductSet;
+                int selectedSum = 0;
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    int val, bonVal;
+                    val = bonVal = 0;
+                    //if (Convert.ToInt32(filterSet.Rows[i]["ProductID"]).Equals(ProductNO))
+                    //{
+                    //    ProductPresent = true;
+                    //    break;
+                    //}
 
-            if (totVal > quan) 
-            {
-                WebMessageBoxUtil.Show("Selected Quantity can not be larger than " + quan.ToString());
-                return;
-            }
-            if (totBonVal > bQuan)
-            {
-                WebMessageBoxUtil.Show("Selected Bonus Quantity can not be larger than " + bQuan.ToString());
-                return;
-            }
-            if (selectedSum > TotalQuantity) 
-            {
-                WebMessageBoxUtil.Show("Selected Quantity can not be larger than "+ TotalQuantity.ToString());
-                return;
-            }
-          
+                    int.TryParse(ds.Tables[0].Rows[i]["SentQuantity"].ToString(), out val);
+                    int.TryParse(ds.Tables[0].Rows[i]["BonusQuantity"].ToString(), out bonVal);
+                    selectedSum += (val + bonVal);
+                    totVal += val;
+                    totBonVal += bonVal;
+                }
 
-            Session["OrderSalesDetail"] = true;
-            Session["ViewSalesOrders"] = false;
-            Response.Redirect("OrderSalesManual.aspx");
+                if (totVal > quan)
+                {
+                    WebMessageBoxUtil.Show("Selected Quantity can not be larger than " + quan.ToString());
+                    return;
+                }
+                if (totBonVal > bQuan)
+                {
+                    WebMessageBoxUtil.Show("Selected Bonus Quantity can not be larger than " + bQuan.ToString());
+                    return;
+                }
+                if (selectedSum > TotalQuantity)
+                {
+                    WebMessageBoxUtil.Show("Selected Quantity can not be larger than " + TotalQuantity.ToString());
+                    return;
+                }
+
+
+                Session["OrderSalesDetail"] = true;
+                Session["ViewSalesOrders"] = false;
+                Response.Redirect("OrderSalesManual.aspx",false);
+            }
+            catch(Exception ex)
+            {
+
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
         }
         protected void btnDeclineStock_Click(object sender, EventArgs e)
         {
             #region Canceling Selection of Stocks in OrderDetailEntry
-                //try
-                //{
-                //    int productID = int.Parse(Session["ProductID"].ToString());
-                //    int OrderDetailID = int.Parse(Session["OderDetailID"].ToString());
-
-                //    connection.Open();
-                //    SqlCommand command = new SqlCommand("sp_DeleteSaleOrderDetails", connection);
-                //    command.CommandType = CommandType.StoredProcedure;
-                //    command.Parameters.AddWithValue("@p_OrderDetailID", OrderDetailID);
-                //    command.Parameters.AddWithValue("@p_ProductID", productID);
-                  
-                //    command.ExecuteNonQuery();
-                //}
-                //catch (Exception ex)
-                //{
-
-                //}
-                //finally
-                //{
-                //    connection.Close();
-                //}
+               
             #endregion
 
             Session["OrderSalesDetail"] = true;
-            Response.Redirect("OrderSalesManual.aspx");
+            Response.Redirect("OrderSalesManual.aspx",false);
         }
         protected void StockDisplayGrid_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -248,6 +276,9 @@ namespace IMS
                         catch (Exception ex)
                         {
 
+                            if (connection.State == ConnectionState.Open)
+                                connection.Close();
+                            throw ex;
                         }
                         finally
                         {
@@ -295,7 +326,9 @@ namespace IMS
                 }
                 catch (Exception ex)
                 {
-
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
                 }
                 finally
                 {
