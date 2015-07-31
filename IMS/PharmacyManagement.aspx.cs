@@ -161,7 +161,7 @@ namespace IMS
 
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("StoreMain.aspx",false);
+            Response.Redirect("WarehouseMain.aspx", false);
         }
 
         protected void btnSearchPharma_Click(object sender, EventArgs e)

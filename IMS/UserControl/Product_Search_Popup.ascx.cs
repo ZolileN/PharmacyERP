@@ -1,5 +1,7 @@
 ﻿using AjaxControlToolkit;
+using IMS.Util;
 using IMSCommon.Util;
+using log4net;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,6 +21,9 @@ namespace IMS.UserControl
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
         bool selectAll=false;
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
 
         public bool SelectAll
         {
@@ -53,7 +58,9 @@ namespace IMS.UserControl
 
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!IsPostBack)
             {
                 Control ctl = this.Parent;
@@ -95,9 +102,27 @@ namespace IMS.UserControl
                     txtSearch.Visible = true;
                 }
             }
+            expHandler.CheckForErrorMessage(Session);
             
         }
-        
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
+
         public void PopulateGrid()
         {
             if (Session["Text"] != null)
@@ -150,6 +175,10 @@ namespace IMS.UserControl
                 }
                 catch (Exception ex)
                 {
+
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
                 }
                 finally
                 {
@@ -205,6 +234,10 @@ namespace IMS.UserControl
             }
             catch (Exception ex)
             {
+
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -532,6 +565,9 @@ namespace IMS.UserControl
             catch (Exception ex)
             {
 
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -639,6 +675,9 @@ namespace IMS.UserControl
                     catch (Exception ex)
                     {
 
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
+                        throw ex;
                     }
                     finally
                     {
@@ -739,7 +778,13 @@ namespace IMS.UserControl
                 ModalPopupExtender mpe = (ModalPopupExtender)this.Parent.FindControl("mpeCongratsMessageDiv");
                 mpe.Show();
             }
-            catch (Exception exp) { }
+            catch (Exception ex)
+            {
+
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
         }
 
         public void BindAssociatedVendorGrid()
@@ -775,9 +820,12 @@ namespace IMS.UserControl
                     }
                 }
             }
-            catch
+            catch(Exception ex)
             {
 
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {

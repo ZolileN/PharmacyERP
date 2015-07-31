@@ -125,7 +125,7 @@ namespace IMSBusinessLogic
             }
             catch (Exception ex)
             {
-                throw exp;
+                throw ex;
             }
             finally
             {
@@ -147,7 +147,7 @@ namespace IMSBusinessLogic
             }
             catch (Exception ex)
             {
-                throw exp;
+                throw ex;
             }
             finally
             {
@@ -171,7 +171,7 @@ namespace IMSBusinessLogic
             }
             catch (Exception ex)
             {
-                throw exp;
+                throw ex;
             }
             finally
             {
@@ -194,7 +194,7 @@ namespace IMSBusinessLogic
             }
             catch (Exception ex)
             {
-                throw exp;
+                throw ex;
             }
             finally
             {

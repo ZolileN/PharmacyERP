@@ -1,6 +1,8 @@
 ﻿using AjaxControlToolkit;
+using IMS.Util;
 using IMSBusinessLogic;
 using IMSCommon;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,6 +17,9 @@ namespace IMS.UserControl
 {
     public partial class VendorsPopupGrid : System.Web.UI.UserControl
     {
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         DataSet ds;
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
@@ -42,6 +47,9 @@ namespace IMS.UserControl
         
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!IsPostBack)
             {
                 try
@@ -55,11 +63,32 @@ namespace IMS.UserControl
                      }
                    
                 }
-                catch (Exception exp) { }
+                catch (Exception ex) 
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
+                }
             }
+            expHandler.CheckForErrorMessage(Session);
         }
 
-       
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
         public void PopulateGrid()
         {
             if (Session["txtVendor"] != null)
@@ -107,6 +136,9 @@ namespace IMS.UserControl
                 }
                 catch (Exception ex)
                 {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
                 }
                 finally
                 {
@@ -129,43 +161,58 @@ namespace IMS.UserControl
        
         private void BindGrid()
         {
-            int id;
-            DataSet ds1 = new DataSet();
-            if (int.TryParse(Session["UserSys"].ToString(), out id))
+            try
             {
-                if (connection.State == ConnectionState.Closed)
+                int id;
+                DataSet ds1 = new DataSet();
+                if (int.TryParse(Session["UserSys"].ToString(), out id))
                 {
-                    connection.Open();
-                }
-                SqlCommand command = new SqlCommand("dbo.Sp_GetVendorByName", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                if (Session["txtVendor"] != null)
-                {
-                    command.Parameters.AddWithValue("@p_Supp_Name", Session["txtVendor"].ToString());
-                }
-                else
-                {
-                    command.Parameters.AddWithValue("@p_Supp_Name", DBNull.Value);
-                }
-                command.Parameters.AddWithValue("@p_SysID", id);
-                if (!Session["UserRole"].ToString().Equals("Store"))
-                {
-                    command.Parameters.AddWithValue("@p_isStore", false);
-                }
-                else
-                {
-                    command.Parameters.AddWithValue("@p_isStore", true);
-                }
-                SqlDataAdapter SA = new SqlDataAdapter(command);
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
+                    SqlCommand command = new SqlCommand("dbo.Sp_GetVendorByName", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    if (Session["txtVendor"] != null)
+                    {
+                        command.Parameters.AddWithValue("@p_Supp_Name", Session["txtVendor"].ToString());
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_Supp_Name", DBNull.Value);
+                    }
+                    command.Parameters.AddWithValue("@p_SysID", id);
+                    if (!Session["UserRole"].ToString().Equals("Store"))
+                    {
+                        command.Parameters.AddWithValue("@p_isStore", false);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_isStore", true);
+                    }
+                    SqlDataAdapter SA = new SqlDataAdapter(command);
 
-                ProductSet = null;
-                SA.Fill(ds1);
+                    ProductSet = null;
+                    SA.Fill(ds1);
 
-                ProductSet = ds1;
-                gdvVendor.DataSource = null;
-                gdvVendor.DataSource = ds1;
-                gdvVendor.DataBind();
-            } 
+                    ProductSet = ds1;
+                    gdvVendor.DataSource = null;
+                    gdvVendor.DataSource = ds1;
+                    gdvVendor.DataBind();
+                }
+            }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                
+            }
         }
 
         protected void gdvVendor_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -236,90 +283,103 @@ namespace IMS.UserControl
                     ltMetaTags.Text = ds.Tables[0].Rows[0]["SupName"].ToString();
                 }
             }
-            catch (Exception exp) { }
+            catch (Exception ex) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
              
         }
 
         protected void SelectVendor_Click(object sender, EventArgs e)
         {
-
-            GridViewRow rows = gdvVendor.SelectedRow;
-            foreach (GridViewRow row in gdvVendor.Rows)
+            try
             {
-                if (row.RowType == DataControlRowType.DataRow)
+                GridViewRow rows = gdvVendor.SelectedRow;
+                foreach (GridViewRow row in gdvVendor.Rows)
                 {
-                    CheckBox chkRow = (row.Cells[0].FindControl("chkCtrl") as CheckBox);
-                    if (chkRow.Checked)
+                    if (row.RowType == DataControlRowType.DataRow)
                     {
-                        Control ctl = this.Parent;
-                        if ((ViewState["displaySearch"] != null && ((bool)ViewState["displaySearch"]) == true))
+                        CheckBox chkRow = (row.Cells[0].FindControl("chkCtrl") as CheckBox);
+                        if (chkRow.Checked)
                         {
-
-                           // string val=  ;
-                            Label id = row.Cells[8].FindControl("lblSupID") as Label;
-                            //string val2= id.Text;
-                        //    Session["Rep_Params"] = val+"~"+val2;
-                            #region change logic
-
-                            String NewVendorName = Server.HtmlDecode(row.Cells[1].Text);
-                            String NewVendorID = id.Text;
-
-                            int NewVendor = 0;
-                            int.TryParse(NewVendorID, out NewVendor);
-
-                            String lblProductID = ViewState["repProdID"].ToString(); //
-                            String lblVendorID =  ViewState["repVenID"].ToString();// e.CommandArgument.ToString().Split(',')[1];
-                            int ProductID = 0;
-                            int MainVendorID = 0;
-
-                            int.TryParse(lblProductID, out ProductID);
-                            int.TryParse(lblVendorID, out MainVendorID);
-
-
-                            DataTable dtChanged = (DataTable)Session["DataTableView"];
-                            for (int i = 0; i < dtChanged.Rows.Count; i++)
+                            Control ctl = this.Parent;
+                            if ((ViewState["displaySearch"] != null && ((bool)ViewState["displaySearch"]) == true))
                             {
-                                int Product = 0;
-                                int.TryParse(dtChanged.Rows[i]["ProductID"].ToString(), out Product);
 
-                                int Vendor = 0;
-                                int.TryParse(dtChanged.Rows[i]["VendorID"].ToString(), out Vendor);
+                                // string val=  ;
+                                Label id = row.Cells[8].FindControl("lblSupID") as Label;
+                                //string val2= id.Text;
+                                //    Session["Rep_Params"] = val+"~"+val2;
+                                #region change logic
 
-                                if (Product.Equals(ProductID) && Vendor.Equals(MainVendorID))
+                                String NewVendorName = Server.HtmlDecode(row.Cells[1].Text);
+                                String NewVendorID = id.Text;
+
+                                int NewVendor = 0;
+                                int.TryParse(NewVendorID, out NewVendor);
+
+                                String lblProductID = ViewState["repProdID"].ToString(); //
+                                String lblVendorID = ViewState["repVenID"].ToString();// e.CommandArgument.ToString().Split(',')[1];
+                                int ProductID = 0;
+                                int MainVendorID = 0;
+
+                                int.TryParse(lblProductID, out ProductID);
+                                int.TryParse(lblVendorID, out MainVendorID);
+
+
+                                DataTable dtChanged = (DataTable)Session["DataTableView"];
+                                for (int i = 0; i < dtChanged.Rows.Count; i++)
                                 {
-                                    dtChanged.Rows[i]["VendorID"] = NewVendorID;
-                                    dtChanged.Rows[i]["VendorName"] = NewVendorName;
-                                    dtChanged.AcceptChanges();
-                                }
-                            }
-                            Session["DataTableView"] = dtChanged;
-                            //calling method
-                            ReplenishMovement p = Page as ReplenishMovement;
-                            if (p != null)
-                                p.DisplayMainGrid((DataTable)Session["DataTableView"]);
+                                    int Product = 0;
+                                    int.TryParse(dtChanged.Rows[i]["ProductID"].ToString(), out Product);
 
-                            ViewState.Remove("repProdID");
-                            ViewState.Remove("repVenID");
-                            ViewState.Remove("displaySearch");
-                            #endregion
-                        }
-                        else
-                        {
-                            TextBox ltMetaTags = null;
-                            Button btnContinue = (Button)ctl.FindControl("btnContinue");
-                            // Label lblVendirId = (Label)
-                            btnContinue.Visible = true;
-                            ltMetaTags = (TextBox)ctl.FindControl("txtVendor");
-                            if (ltMetaTags != null)
+                                    int Vendor = 0;
+                                    int.TryParse(dtChanged.Rows[i]["VendorID"].ToString(), out Vendor);
+
+                                    if (Product.Equals(ProductID) && Vendor.Equals(MainVendorID))
+                                    {
+                                        dtChanged.Rows[i]["VendorID"] = NewVendorID;
+                                        dtChanged.Rows[i]["VendorName"] = NewVendorName;
+                                        dtChanged.AcceptChanges();
+                                    }
+                                }
+                                Session["DataTableView"] = dtChanged;
+                                //calling method
+                                ReplenishMovement p = Page as ReplenishMovement;
+                                if (p != null)
+                                    p.DisplayMainGrid((DataTable)Session["DataTableView"]);
+
+                                ViewState.Remove("repProdID");
+                                ViewState.Remove("repVenID");
+                                ViewState.Remove("displaySearch");
+                                #endregion
+                            }
+                            else
                             {
-                                ltMetaTags.Text = Server.HtmlDecode(row.Cells[1].Text);
+                                TextBox ltMetaTags = null;
+                                Button btnContinue = (Button)ctl.FindControl("btnContinue");
+                                // Label lblVendirId = (Label)
+                                btnContinue.Visible = true;
+                                ltMetaTags = (TextBox)ctl.FindControl("txtVendor");
+                                if (ltMetaTags != null)
+                                {
+                                    ltMetaTags.Text = Server.HtmlDecode(row.Cells[1].Text);
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            Session.Remove("txtVendor");
+                Session.Remove("txtVendor");
+            }
+            catch (Exception ex) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
         }
 
         protected void chkCtrl_CheckedChanged(object sender, EventArgs e)
@@ -332,46 +392,55 @@ namespace IMS.UserControl
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-            DataSet ds = new DataSet();
-            int id;
-            if (int.TryParse(Session["UserSys"].ToString(), out id))
+            try
             {
-                if (connection.State == ConnectionState.Closed)
+                DataSet ds = new DataSet();
+                int id;
+                if (int.TryParse(Session["UserSys"].ToString(), out id))
                 {
-                    connection.Open();
-                }
-                SqlCommand command = new SqlCommand("dbo.Sp_GetVendorByName", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                if (txtVendor.Text != null)
-                {
-                    command.Parameters.AddWithValue("@p_Supp_Name", txtVendor.Text);
-                }
-                else
-                {
-                    command.Parameters.AddWithValue("@p_Supp_Name", DBNull.Value);
-                }
-                command.Parameters.AddWithValue("@p_SysID", id);
-                if (!Session["UserRole"].ToString().Equals("Store"))
-                {
-                    command.Parameters.AddWithValue("@p_isStore", false);
-                }
-                else
-                {
-                    command.Parameters.AddWithValue("@p_isStore", true);
-                }
-                SqlDataAdapter SA = new SqlDataAdapter(command);
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
+                    SqlCommand command = new SqlCommand("dbo.Sp_GetVendorByName", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    if (txtVendor.Text != null)
+                    {
+                        command.Parameters.AddWithValue("@p_Supp_Name", txtVendor.Text);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_Supp_Name", DBNull.Value);
+                    }
+                    command.Parameters.AddWithValue("@p_SysID", id);
+                    if (!Session["UserRole"].ToString().Equals("Store"))
+                    {
+                        command.Parameters.AddWithValue("@p_isStore", false);
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_isStore", true);
+                    }
+                    SqlDataAdapter SA = new SqlDataAdapter(command);
 
-                ProductSet = null;
-                SA.Fill(ds);
+                    ProductSet = null;
+                    SA.Fill(ds);
 
-                ProductSet = ds;
-                gdvVendor.DataSource = null;
-                gdvVendor.DataSource = ds;
-                gdvVendor.DataBind();
+                    ProductSet = ds;
+                    gdvVendor.DataSource = null;
+                    gdvVendor.DataSource = ds;
+                    gdvVendor.DataBind();
 
-                ModalPopupExtender mpe = (ModalPopupExtender)this.Parent.FindControl("mpeCongratsMessageDiv");
-                mpe.Show();
-            } 
+                    ModalPopupExtender mpe = (ModalPopupExtender)this.Parent.FindControl("mpeCongratsMessageDiv");
+                    mpe.Show();
+                }
+            }
+            catch (Exception ex) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
         }
 
       

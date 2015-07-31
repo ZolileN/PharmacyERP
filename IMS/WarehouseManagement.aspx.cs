@@ -146,7 +146,7 @@ namespace IMS
 
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("StoreMain.aspx");
+            Response.Redirect("WarehouseMain.aspx");
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using AjaxControlToolkit;
+using IMS.Util;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,72 +17,120 @@ namespace IMS.UserControl
     {
         DataSet ds;
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
-        
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            System.Uri url = Request.Url;
+            pageURL = url.AbsolutePath.ToString();
+            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+            expHandler.CheckForErrorMessage(Session);
         }
-
-        public void populateGrid()
+        private void Page_Error(object sender, EventArgs e)
         {
-            int id;
-            DataSet ds1 = new DataSet();
-
-            if (connection.State == ConnectionState.Closed)
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
-                connection.Open();
-            }
-            SqlCommand command = new SqlCommand("dbo.Sp_GetUserby_Role", connection);
-            command.CommandType = CommandType.StoredProcedure;
-
-            if (Session["txtSalesman"] != null)
-            {
-                command.Parameters.AddWithValue("@p_userName", Session["txtSalesman"].ToString());
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
             }
             else
             {
-                command.Parameters.AddWithValue("@p_userName", DBNull.Value);
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
             }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
+        public void populateGrid()
+        {
+            try
+            {
+                int id;
+                DataSet ds1 = new DataSet();
 
-            command.Parameters.AddWithValue("@p_roleName", "Salesman");
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("dbo.Sp_GetUserby_Role", connection);
+                command.CommandType = CommandType.StoredProcedure;
 
-            SqlDataAdapter SA = new SqlDataAdapter(command);
+                if (Session["txtSalesman"] != null)
+                {
+                    command.Parameters.AddWithValue("@p_userName", Session["txtSalesman"].ToString());
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@p_userName", DBNull.Value);
+                }
+
+                command.Parameters.AddWithValue("@p_roleName", "Salesman");
+
+                SqlDataAdapter SA = new SqlDataAdapter(command);
 
 
-            SA.Fill(ds1);
+                SA.Fill(ds1);
 
 
-            gdvSalesman.DataSource = null;
-            gdvSalesman.DataSource = ds1;
-            gdvSalesman.DataBind();
+                gdvSalesman.DataSource = null;
+                gdvSalesman.DataSource = ds1;
+                gdvSalesman.DataBind();
+            }
+            catch (Exception ex) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
 
         }
         private void BindGrid()
         {
-            int id;
-            DataSet ds1 = new DataSet();
-
-            if (connection.State == ConnectionState.Closed)
+            try
             {
-                connection.Open();
+                int id;
+                DataSet ds1 = new DataSet();
+
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("dbo.Sp_GetUserby_Role", connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("@p_userName", DBNull.Value);
+
+
+                command.Parameters.AddWithValue("@p_roleName", "Salesman");
+
+                SqlDataAdapter SA = new SqlDataAdapter(command);
+
+
+                SA.Fill(ds1);
+
+
+                gdvSalesman.DataSource = null;
+                gdvSalesman.DataSource = ds1;
+                gdvSalesman.DataBind();
             }
-            SqlCommand command = new SqlCommand("dbo.Sp_GetUserby_Role", connection);
-            command.CommandType = CommandType.StoredProcedure;
-
-            command.Parameters.AddWithValue("@p_userName", DBNull.Value);
-
-
-            command.Parameters.AddWithValue("@p_roleName", "Salesman");
-
-            SqlDataAdapter SA = new SqlDataAdapter(command);
-
-
-            SA.Fill(ds1);
-
-
-            gdvSalesman.DataSource = null;
-            gdvSalesman.DataSource = ds1;
-            gdvSalesman.DataBind();
+            catch (Exception ex) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
 
         }
 
@@ -121,28 +171,42 @@ namespace IMS.UserControl
 
         protected void SelectSalesman_Click(object sender, EventArgs e)
         {
-            GridViewRow rows = gdvSalesman.SelectedRow;
-            foreach (GridViewRow row in gdvSalesman.Rows)
-             {
-                 if (row.RowType == DataControlRowType.DataRow)
-                 {
-                     CheckBox chkRow = (row.Cells[0].FindControl("chkCtrl") as CheckBox);
-                     Control ctl = this.Parent;
-                     TextBox ltMetaTags = null;
-                     TextBox ltSalID = null;
-                     ltMetaTags = (TextBox)ctl.FindControl("txtSlman");
-                     ltSalID = (TextBox)ctl.FindControl("lblSlmanID");
+            try
+            {
+                GridViewRow rows = gdvSalesman.SelectedRow;
+                foreach (GridViewRow row in gdvSalesman.Rows)
+                {
+                    if (row.RowType == DataControlRowType.DataRow)
+                    {
+                        CheckBox chkRow = (row.Cells[0].FindControl("chkCtrl") as CheckBox);
+                        Control ctl = this.Parent;
+                        TextBox ltMetaTags = null;
+                        TextBox ltSalID = null;
+                        ltMetaTags = (TextBox)ctl.FindControl("txtSlman");
+                        ltSalID = (TextBox)ctl.FindControl("lblSlmanID");
 
-                     if (chkRow.Checked)
-                     {
-                         Label Name = (Label)row.Cells[0].FindControl("lblName");
-                         Label salemanID = (Label)row.Cells[0].FindControl("lblSalemanID");
-                         ltMetaTags.Text = Name.Text;
-                         ltSalID.Text = salemanID.Text;
-                         break;
-                     }
-                 }
-             }
+                        if (chkRow.Checked)
+                        {
+                            Label Name = (Label)row.Cells[0].FindControl("lblName");
+                            Label salemanID = (Label)row.Cells[0].FindControl("lblSalemanID");
+                            ltMetaTags.Text = Name.Text;
+                            ltSalID.Text = salemanID.Text;
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
         }
     }
 }
