@@ -175,9 +175,9 @@
                                 </ul>
                             </li>
  
-                            <li><a href="ManageVendor.aspx">Manage Vendors</a>
-                                <%--<ul><li><a href="SalemanMangment.aspx">Saleman Manage</a></li></ul>--%>
-                            </li>
+                            <%--<li><a href="ManageVendor.aspx">Manage Vendors</a>
+                               
+                            </li>--%>
                              
          <li><a href="#">Reports</a>
                             	<ul>
@@ -478,8 +478,8 @@
 
                                 </li>
                            
-                            <li><a href="StoreTransfers_StoreRequests.aspx">Store Transfers</a></li>
-                            <li><a href="ReceiveStock.aspx">Store Receivings</a></li>
+                          <%--  <li><a href="StoreTransfers_StoreRequests.aspx">Store Transfers</a></li>
+                            <li><a href="ReceiveStock.aspx">Store Receivings</a></li>--%>
 
                             <li><a href="#">Pharmacy Requests</a>
                                 <ul>
