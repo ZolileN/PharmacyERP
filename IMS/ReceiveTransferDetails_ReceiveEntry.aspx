@@ -125,6 +125,15 @@
                                     <ItemStyle Width="150px" HorizontalAlign="Left" />
                                 </asp:TemplateField>
 
+                                 <asp:TemplateField HeaderText="Requested Bonus Qty">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblRequestedBonusQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("RequestedBonusQty") %>' Width="140px"></asp:Label>
+                                    </ItemTemplate>
+
+                                    <ItemStyle Width="150px" HorizontalAlign="Left" />
+                                </asp:TemplateField>
+
+
                                 <asp:TemplateField HeaderText="Sent Qty">
                                     <ItemTemplate>
                                          <asp:TextBox ID="txtSendQty" runat="server" CssClass="grid-input-form" Text='<%# Eval("SentQty") %>' Width="140px"></asp:TextBox>
