@@ -72,8 +72,9 @@ namespace IMS
             for (int i = 0; i < dgvReceiveTransferDetailsReceive.Rows.Count; i++)
             {
                 DateTime RequestDate, Expiry;
-                int TransferedQty, TransferedBonusQty, TransferDetID, StockId, ProdctID, Barcode, ReqQty = 0, AvailableQty;
+                int TransferedQty, TransferedBonusQty, TransferDetID, StockId, ProdctID,  ReqQty = 0, AvailableQty;
                 decimal CP, SP;
+                double Barcode;
 
 
                 // Label lblentryID = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblentryID");
@@ -92,7 +93,7 @@ namespace IMS
                 TextBox txtTransferedQty = (TextBox)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("txtSendQty");
                 TextBox txtTransferedBonusQty = (TextBox)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("txtBonusQty");
 
-                int.TryParse(lblBarCode.Text.ToString(), out Barcode);
+                double.TryParse(lblBarCode.Text.ToString(), out Barcode);
                 int.TryParse(lblAvailableStock.Text.ToString(), out AvailableQty);
                 int.TryParse(lblRequestedQty.Text.ToString(), out ReqQty);
                 
@@ -223,7 +224,7 @@ namespace IMS
             }
         }
 
-        private void UpdateStockMinus(int TransferDetailID, int ProductID, int quantity, int Sent, DateTime Expiry, int StockID,decimal CP, decimal SP,string BatchNO,int ReqQty, int Barcode )
+        private void UpdateStockMinus(int TransferDetailID, int ProductID, int quantity, int Sent, DateTime Expiry, int StockID, decimal CP, decimal SP, string BatchNO, int ReqQty, double Barcode)
         {
             try
             {
