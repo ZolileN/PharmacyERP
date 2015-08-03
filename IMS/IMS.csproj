@@ -2293,10 +2293,10 @@
       <LastGenOutput>NearestExpiryItems.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Report\barcode_Print.rdlc" />
-    <EmbeddedResource Include="rpt_POSSALES.rpt">
+    <Content Include="rpt_POSSALES.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_POSSALES.cs</LastGenOutput>
-    </EmbeddedResource>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
