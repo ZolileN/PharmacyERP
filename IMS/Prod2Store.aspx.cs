@@ -24,21 +24,28 @@ namespace IMS
         string storeName = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if (!IsPostBack)
+            try
             {
-                if (Session["StoreName"] != null)
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
                 {
-                    lblStore.Text = Session["StoreName"].ToString();
-                    storeName = Session["StoreName"].ToString();
-                    lblStoreId.Text = Session["StoreID"].ToString();
+                    if (Session["StoreName"] != null)
+                    {
+                        lblStore.Text = Session["StoreName"].ToString();
+                        storeName = Session["StoreName"].ToString();
+                        lblStoreId.Text = Session["StoreID"].ToString();
+                    }
+
+                    BindGrid();
                 }
-              
-                BindGrid();
+                expHandler.CheckForErrorMessage(Session);
             }
-            expHandler.CheckForErrorMessage(Session);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         private void Page_Error(object sender, EventArgs e)
         {

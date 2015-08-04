@@ -24,25 +24,32 @@ namespace IMS
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if(!IsPostBack)
+            try
             {
-                string searchVal = txtSearch.Text;
-                if (!string.IsNullOrEmpty(searchVal))
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
                 {
-                    //do here 
-                    //REPLY  (30-JULY-2014) - Moiz : OK!!!
-                }
-                BindGrid();
+                    string searchVal = txtSearch.Text;
+                    if (!string.IsNullOrEmpty(searchVal))
+                    {
+                        //do here 
+                        //REPLY  (30-JULY-2014) - Moiz : OK!!!
+                    }
+                    BindGrid();
 
-                if(IsWarehouse().Equals(false))
-                {
-                    btnAddProduct.Enabled = false;
+                    if (IsWarehouse().Equals(false))
+                    {
+                        btnAddProduct.Enabled = false;
+                    }
                 }
+                expHandler.CheckForErrorMessage(Session);
             }
-            expHandler.CheckForErrorMessage(Session);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         private void Page_Error(object sender, EventArgs e)
         {

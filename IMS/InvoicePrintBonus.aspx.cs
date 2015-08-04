@@ -24,33 +24,40 @@ namespace IMS
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if (!IsPostBack)
+            try
             {
-                InvoiceDate.Text = Session["PrintInvoiceDate"].ToString();
-                DueDate.Text = Session["PrintDueDate"].ToString();
-                SalesMan.Text = Session["SalesMan"].ToString();
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
+                {
+                    InvoiceDate.Text = Session["PrintInvoiceDate"].ToString();
+                    DueDate.Text = Session["PrintDueDate"].ToString();
+                    SalesMan.Text = Session["SalesMan"].ToString();
 
-                if (Session["PrintCheck"].ToString().Equals("Actual"))
-                {
-                    Invoice.Text = Session["PrintInvoiceNumber"].ToString();
-                    lblTotalBonusAmount.Visible = false;
-                    //Label9.Visible = false;
+                    if (Session["PrintCheck"].ToString().Equals("Actual"))
+                    {
+                        Invoice.Text = Session["PrintInvoiceNumber"].ToString();
+                        lblTotalBonusAmount.Visible = false;
+                        //Label9.Visible = false;
+                    }
+                    else if (Session["PrintCheck"].ToString().Equals("Bonus"))
+                    {
+                        Invoice.Text = "B" + Session["PrintInvoiceNumber"].ToString();
+                        lblTotalSentAmount.Visible = false;
+                        //Label8.Visible = false;
+                    }
+                    DataSet dsTo = GetSystems(Convert.ToInt32(Session["RequestedFromID"].ToString()));
+                    To.Text = dsTo.Tables[0].Rows[0]["SystemName"].ToString();
+                    ToAddress.Text = dsTo.Tables[0].Rows[0]["SystemAddress"].ToString();
+                    LoadData();
                 }
-                else if (Session["PrintCheck"].ToString().Equals("Bonus"))
-                {
-                    Invoice.Text = "B" + Session["PrintInvoiceNumber"].ToString();
-                    lblTotalSentAmount.Visible = false;
-                    //Label8.Visible = false;
-                }
-                DataSet dsTo = GetSystems(Convert.ToInt32(Session["RequestedFromID"].ToString()));
-                To.Text = dsTo.Tables[0].Rows[0]["SystemName"].ToString();
-                ToAddress.Text = dsTo.Tables[0].Rows[0]["SystemAddress"].ToString();
-                LoadData();
+                expHandler.CheckForErrorMessage(Session);
             }
-            expHandler.CheckForErrorMessage(Session);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         private void Page_Error(object sender, EventArgs e)
         {

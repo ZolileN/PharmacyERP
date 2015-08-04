@@ -58,51 +58,58 @@ namespace IMS.UserControl
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if (!IsPostBack)
+            try
             {
-                Control ctl = this.Parent;
-                TextBox txtsearch = null;
-                txtsearch = (TextBox)ctl.FindControl("txtSearch");
-                if (txtsearch.Text != null)
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
                 {
-                    text = txtsearch.Text;
-                }
+                    Control ctl = this.Parent;
+                    TextBox txtsearch = null;
+                    txtsearch = (TextBox)ctl.FindControl("txtSearch");
+                    if (txtsearch.Text != null)
+                    {
+                        text = txtsearch.Text;
+                    }
 
-               
-                BindGrid();
 
-                if (selectAll)
-                {
-                    ((CheckBox)StockDisplayGrid.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
-                    ViewState["checkAllState"] = true;
-                }
-                if (ViewState["selectSearch"] != null && ((bool)ViewState["selectSearch"]) == true)
-                {
-                    lblSelectVendor.Visible = true;
-                    btnSearchStore.Visible = true;
-                    txtSearch.Visible = true;
-                }
-            }
-            if (IsPostBack) 
-            {
-                if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll==true)
-                {
-                    if (!(ViewState["selectSearch"] != null && ((bool)ViewState["selectSearch"]) == true))
+                    BindGrid();
+
+                    if (selectAll)
                     {
                         ((CheckBox)StockDisplayGrid.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                        ViewState["checkAllState"] = true;
+                    }
+                    if (ViewState["selectSearch"] != null && ((bool)ViewState["selectSearch"]) == true)
+                    {
+                        lblSelectVendor.Visible = true;
+                        btnSearchStore.Visible = true;
+                        txtSearch.Visible = true;
                     }
                 }
-                if (ViewState["selectSearch"] != null && ((bool)ViewState["selectSearch"]) == true)
+                if (IsPostBack)
                 {
-                    lblSelectVendor.Visible = true;
-                    btnSearchStore.Visible = true;
-                    txtSearch.Visible = true;
+                    if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
+                    {
+                        if (!(ViewState["selectSearch"] != null && ((bool)ViewState["selectSearch"]) == true))
+                        {
+                            ((CheckBox)StockDisplayGrid.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                        }
+                    }
+                    if (ViewState["selectSearch"] != null && ((bool)ViewState["selectSearch"]) == true)
+                    {
+                        lblSelectVendor.Visible = true;
+                        btnSearchStore.Visible = true;
+                        txtSearch.Visible = true;
+                    }
                 }
+                expHandler.CheckForErrorMessage(Session);
             }
-            expHandler.CheckForErrorMessage(Session);
+            catch (Exception ex) 
+            {
+                throw ex;
+            }
             
         }
 

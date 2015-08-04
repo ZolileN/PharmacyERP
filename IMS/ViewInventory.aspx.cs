@@ -30,231 +30,238 @@ namespace IMS
        
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if (!IsPostBack)
+            try
             {
-
-                Session.Remove("dsProdcts");
-                Session.Remove("dsProducts_MP");
-
-                #region remove print sessions
-
-                Session.Remove("Search_DepID");
-                Session.Remove("Search_CatID");
-                Session.Remove("Search_SubCatID");
-                Session.Remove("Search_ProdIdOrg");
-                Session.Remove("Search_ProdType");
-                Session.Remove("Search_ProdId");
-                Session.Remove("Search_ProdName");
-                Session.Remove("Search_Active");
-                
-                #endregion
-
-                #region Populating Product Type DropDown
-                ProductType.Items.Add("Select Product Type");
-                ProductType.Items.Add("Medicine(HAAD)");
-                ProductType.Items.Add("Medicine(Non HAAD)");
-                ProductType.Items.Add("Non Medicine");
-
-                ProductType.SelectedIndex = 0;
-                #endregion
-
-                #region Populating Product Department DropDown
-                try
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
                 {
-                    //connection.Open();
-                    //SqlCommand command = new SqlCommand("Select * From tblDepartment", connection);
-                    //DataSet ds = new DataSet();
-                    //SqlDataAdapter sA = new SqlDataAdapter(command);
-                    //sA.Fill(ds);
-                    ProductDept.DataSource = DepartmentBLL.GetAllDepartment(connection); ;
-                    ProductDept.DataTextField = "Name";
-                    ProductDept.DataValueField = "DepId";
-                    ProductDept.DataBind();
-                    if (ProductDept != null)
+
+                    Session.Remove("dsProdcts");
+                    Session.Remove("dsProducts_MP");
+
+                    #region remove print sessions
+
+                    Session.Remove("Search_DepID");
+                    Session.Remove("Search_CatID");
+                    Session.Remove("Search_SubCatID");
+                    Session.Remove("Search_ProdIdOrg");
+                    Session.Remove("Search_ProdType");
+                    Session.Remove("Search_ProdId");
+                    Session.Remove("Search_ProdName");
+                    Session.Remove("Search_Active");
+
+                    #endregion
+
+                    #region Populating Product Type DropDown
+                    ProductType.Items.Add("Select Product Type");
+                    ProductType.Items.Add("Medicine(HAAD)");
+                    ProductType.Items.Add("Medicine(Non HAAD)");
+                    ProductType.Items.Add("Non Medicine");
+
+                    ProductType.SelectedIndex = 0;
+                    #endregion
+
+                    #region Populating Product Department DropDown
+                    try
                     {
-                        ProductDept.Items.Insert(0, "Select Department");
-                        ProductDept.SelectedIndex = 0;
-                    }
-                }
-                catch (Exception ex)
-                {
-
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
-                    throw ex;
-                }
-                finally
-                {
-                    connection.Close();
-                }
-                #endregion
-
-                #region Populating Category Dropdown
-                try
-                {
-                    //connection.Open();
-                    //SqlCommand command = new SqlCommand("Select * From tblCategory", connection);
-                    //DataSet ds = new DataSet();
-                    //SqlDataAdapter sA = new SqlDataAdapter(command);
-                    //sA.Fill(ds);
-                    ProductCat.DataSource = CategoryBLL.GetCategoryBasic(connection);
-                    ProductCat.DataTextField = "Name";
-                    ProductCat.DataValueField = "CategoryID";
-                    ProductCat.DataBind();
-                    if (ProductCat != null)
-                    {
-                        ProductCat.Items.Insert(0, "Select Category");
-                        ProductCat.SelectedIndex = 0;
-                    }
-                }
-                catch (Exception ex)
-                {
-
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
-                    throw ex;
-                }
-                finally
-                {
-                    connection.Close();
-                }
-                #endregion
-
-                #region Populating SubCategory Dropdown
-                try
-                {
-                    //connection.Open();
-                    //SqlCommand command = new SqlCommand("Select * From tblSub_Category", connection);
-                    //DataSet ds = new DataSet();
-                    //SqlDataAdapter sA = new SqlDataAdapter(command);
-                    //sA.Fill(ds);
-                    ProductSubCat.DataSource = SubCategoryBLL.GetSubCategoriesBasic(connection);
-                    ProductSubCat.DataTextField = "Name";
-                    ProductSubCat.DataValueField = "Sub_CatID";
-                    ProductSubCat.DataBind();
-
-                    if (ProductSubCat != null)
-                    {
-                        ProductSubCat.Items.Insert(0, "Select Sub Category");
-                        ProductSubCat.SelectedIndex = 0;
-                    }
-                }
-                catch (Exception ex)
-                {
-
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
-                    throw ex;
-                }
-                finally
-                {
-                    connection.Close();
-                }
-                #endregion
-
-                #region populate active dropdown
-                ddlActive.Items.Add("Select Option");
-                ddlActive.Items.Add("All Active");
-                ddlActive.Items.Add("All in-Active");
-                ddlActive.Items.Add("All Active & Non-Zero Stock");
-                ddlActive.SelectedIndex = 0;
-                #endregion
-
-                #region ProductOrderType dropdown population
-                ddlProductOrderType.DataSource = IMSGlobal.GetOrdersType();
-                ddlProductOrderType.DataTextField = "Name";
-                ddlProductOrderType.DataValueField = "OrderTypeId";
-                ddlProductOrderType.DataBind();
-
-                if (ddlProductOrderType != null)
-                {
-                    ddlProductOrderType.Items.Insert(0, "Select Product Order Type");
-                    ddlProductOrderType.SelectedIndex = 0;
-                }
-                #endregion
-
-                #region Populating Stores
-                try
-                {
-                    DataSet dsS = new DataSet();
-                    if (connection.State == ConnectionState.Closed)
-                    {
-                        connection.Open();
-
-                    }
-                    SqlCommand command = new SqlCommand("Sp_GetSystem_ByID", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    command.Parameters.AddWithValue("@p_SystemID", DBNull.Value);
-                    SqlDataAdapter sA = new SqlDataAdapter(command);
-                    sA.Fill(dsS);
-                    ddlStockAt.DataSource = dsS.Tables[0];
-                    ddlStockAt.DataTextField = "SystemName";
-                    ddlStockAt.DataValueField = "SystemID";
-                    ddlStockAt.DataBind();
-                    if (ddlStockAt != null)
-                    {
-                        ddlStockAt.Items.Insert(0, "Select Store");
-                        ddlStockAt.SelectedIndex = 0;
-                    }
-                    //Set index of system role incase the system role is not warehouse
-                    if (!Session["UserRole"].ToString().Equals("WareHouse"))
-                    {
-                        foreach (System.Web.UI.WebControls.ListItem Items in ddlStockAt.Items)
+                        //connection.Open();
+                        //SqlCommand command = new SqlCommand("Select * From tblDepartment", connection);
+                        //DataSet ds = new DataSet();
+                        //SqlDataAdapter sA = new SqlDataAdapter(command);
+                        //sA.Fill(ds);
+                        ProductDept.DataSource = DepartmentBLL.GetAllDepartment(connection); ;
+                        ProductDept.DataTextField = "Name";
+                        ProductDept.DataValueField = "DepId";
+                        ProductDept.DataBind();
+                        if (ProductDept != null)
                         {
-                            if (Items.Value.Equals(Session["UserSys"].ToString()))
-                            {
-                                ddlStockAt.SelectedIndex = ddlStockAt.Items.IndexOf(Items);
-                                ddlStockAt.Enabled = false;
-                                break;
-                            }
+                            ProductDept.Items.Insert(0, "Select Department");
+                            ProductDept.SelectedIndex = 0;
                         }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        
-                        if (Session["Inventory_StoreID"] != null) 
+
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
+                        throw ex;
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                    #endregion
+
+                    #region Populating Category Dropdown
+                    try
+                    {
+                        //connection.Open();
+                        //SqlCommand command = new SqlCommand("Select * From tblCategory", connection);
+                        //DataSet ds = new DataSet();
+                        //SqlDataAdapter sA = new SqlDataAdapter(command);
+                        //sA.Fill(ds);
+                        ProductCat.DataSource = CategoryBLL.GetCategoryBasic(connection);
+                        ProductCat.DataTextField = "Name";
+                        ProductCat.DataValueField = "CategoryID";
+                        ProductCat.DataBind();
+                        if (ProductCat != null)
+                        {
+                            ProductCat.Items.Insert(0, "Select Category");
+                            ProductCat.SelectedIndex = 0;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
+                        throw ex;
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                    #endregion
+
+                    #region Populating SubCategory Dropdown
+                    try
+                    {
+                        //connection.Open();
+                        //SqlCommand command = new SqlCommand("Select * From tblSub_Category", connection);
+                        //DataSet ds = new DataSet();
+                        //SqlDataAdapter sA = new SqlDataAdapter(command);
+                        //sA.Fill(ds);
+                        ProductSubCat.DataSource = SubCategoryBLL.GetSubCategoriesBasic(connection);
+                        ProductSubCat.DataTextField = "Name";
+                        ProductSubCat.DataValueField = "Sub_CatID";
+                        ProductSubCat.DataBind();
+
+                        if (ProductSubCat != null)
+                        {
+                            ProductSubCat.Items.Insert(0, "Select Sub Category");
+                            ProductSubCat.SelectedIndex = 0;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
+                        throw ex;
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                    #endregion
+
+                    #region populate active dropdown
+                    ddlActive.Items.Add("Select Option");
+                    ddlActive.Items.Add("All Active");
+                    ddlActive.Items.Add("All in-Active");
+                    ddlActive.Items.Add("All Active & Non-Zero Stock");
+                    ddlActive.SelectedIndex = 0;
+                    #endregion
+
+                    #region ProductOrderType dropdown population
+                    ddlProductOrderType.DataSource = IMSGlobal.GetOrdersType();
+                    ddlProductOrderType.DataTextField = "Name";
+                    ddlProductOrderType.DataValueField = "OrderTypeId";
+                    ddlProductOrderType.DataBind();
+
+                    if (ddlProductOrderType != null)
+                    {
+                        ddlProductOrderType.Items.Insert(0, "Select Product Order Type");
+                        ddlProductOrderType.SelectedIndex = 0;
+                    }
+                    #endregion
+
+                    #region Populating Stores
+                    try
+                    {
+                        DataSet dsS = new DataSet();
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+
+                        }
+                        SqlCommand command = new SqlCommand("Sp_GetSystem_ByID", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("@p_SystemID", DBNull.Value);
+                        SqlDataAdapter sA = new SqlDataAdapter(command);
+                        sA.Fill(dsS);
+                        ddlStockAt.DataSource = dsS.Tables[0];
+                        ddlStockAt.DataTextField = "SystemName";
+                        ddlStockAt.DataValueField = "SystemID";
+                        ddlStockAt.DataBind();
+                        if (ddlStockAt != null)
+                        {
+                            ddlStockAt.Items.Insert(0, "Select Store");
+                            ddlStockAt.SelectedIndex = 0;
+                        }
+                        //Set index of system role incase the system role is not warehouse
+                        if (!Session["UserRole"].ToString().Equals("WareHouse"))
                         {
                             foreach (System.Web.UI.WebControls.ListItem Items in ddlStockAt.Items)
                             {
-                                if (Items.Value.Equals(Session["Inventory_StoreID"].ToString()))
+                                if (Items.Value.Equals(Session["UserSys"].ToString()))
                                 {
                                     ddlStockAt.SelectedIndex = ddlStockAt.Items.IndexOf(Items);
-                                    Session.Remove("Inventory_StoreID");
+                                    ddlStockAt.Enabled = false;
                                     break;
                                 }
                             }
                         }
-                    }
-                }
-                catch (Exception ex)
-                {
+                        else
+                        {
 
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
-                    throw ex;
-                }
-                finally
-                {
-                    if (connection.State == ConnectionState.Open)
+                            if (Session["Inventory_StoreID"] != null)
+                            {
+                                foreach (System.Web.UI.WebControls.ListItem Items in ddlStockAt.Items)
+                                {
+                                    if (Items.Value.Equals(Session["Inventory_StoreID"].ToString()))
+                                    {
+                                        ddlStockAt.SelectedIndex = ddlStockAt.Items.IndexOf(Items);
+                                        Session.Remove("Inventory_StoreID");
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
                     {
-                        connection.Close();
+
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
+                        throw ex;
+                    }
+                    finally
+                    {
+                        if (connection.State == ConnectionState.Open)
+                        {
+                            connection.Close();
+                        }
+                    }
+                    #endregion
+                    if (Request.QueryString["Id"] != null)
+                    {
+                        BindByProductID();
+                    }
+                    else
+                    {
+                        BindGridbyFilters();
                     }
                 }
-                #endregion
-                if (Request.QueryString["Id"] != null)
-                {
-                    BindByProductID();
-                }
-                else
-                {
-                    BindGridbyFilters();
-                }
+                expHandler.CheckForErrorMessage(Session);
             }
-            expHandler.CheckForErrorMessage(Session);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private void Page_Error(object sender, EventArgs e)

@@ -24,18 +24,25 @@ namespace IMS
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if (!IsPostBack)
+            try
             {
-                dsDistinct = (DataTable)Session["TransferRequestGrid"];
-                distinctStores = dsDistinct.DefaultView.ToTable(true, "SystemID");
-                drpTransferDetailsReport.DataSource = distinctStores;
-                drpTransferDetailsReport.DataBind();
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
+                {
+                    dsDistinct = (DataTable)Session["TransferRequestGrid"];
+                    distinctStores = dsDistinct.DefaultView.ToTable(true, "SystemID");
+                    drpTransferDetailsReport.DataSource = distinctStores;
+                    drpTransferDetailsReport.DataBind();
 
+                }
+                expHandler.CheckForErrorMessage(Session);
             }
-            expHandler.CheckForErrorMessage(Session);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         private void Page_Error(object sender, EventArgs e)
         {

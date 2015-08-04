@@ -32,18 +32,25 @@ namespace IMS.UserControl
         
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if (!IsPostBack)
+            try
             {
-                if (isOpenedFromCreateTransferReq)
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
                 {
+                    if (isOpenedFromCreateTransferReq)
+                    {
 
+                    }
+                    BindGrid();
                 }
-                BindGrid();
+                expHandler.CheckForErrorMessage(Session);
             }
-            expHandler.CheckForErrorMessage(Session);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private void Page_Error(object sender, EventArgs e)

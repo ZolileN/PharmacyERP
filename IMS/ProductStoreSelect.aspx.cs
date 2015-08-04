@@ -34,7 +34,10 @@ namespace IMS
                    // BindGrid();
 
                 }
-                catch (Exception ex) { }
+                catch (Exception ex) 
+                {
+                    throw ex;
+                }
             }
             expHandler.CheckForErrorMessage(Session);
         }

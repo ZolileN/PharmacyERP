@@ -25,56 +25,63 @@ namespace IMS
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if (!IsPostBack)
+            try
             {
-                #region Populating System Types
-                try
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
                 {
-                    int Role_ID = 2;
-                    connection.Open();
-                    SqlCommand command = new SqlCommand("sp_GetSystem_byRoleID", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_RoleID", Role_ID);
-
-                    DataSet ds = new DataSet();
-                    SqlDataAdapter sA = new SqlDataAdapter(command);
-                    sA.Fill(ds);
-                    StockAt.DataSource = ds.Tables[0];
-                    StockAt.DataTextField = "SystemName";
-                    StockAt.DataValueField = "SystemID";
-                    StockAt.DataBind();
-                    if (StockAt != null)
+                    #region Populating System Types
+                    try
                     {
-                        StockAt.Items.Insert(0, "Select System");
-                        StockAt.SelectedIndex = 0;
+                        int Role_ID = 2;
+                        connection.Open();
+                        SqlCommand command = new SqlCommand("sp_GetSystem_byRoleID", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@p_RoleID", Role_ID);
+
+                        DataSet ds = new DataSet();
+                        SqlDataAdapter sA = new SqlDataAdapter(command);
+                        sA.Fill(ds);
+                        StockAt.DataSource = ds.Tables[0];
+                        StockAt.DataTextField = "SystemName";
+                        StockAt.DataValueField = "SystemID";
+                        StockAt.DataBind();
+                        if (StockAt != null)
+                        {
+                            StockAt.Items.Insert(0, "Select System");
+                            StockAt.SelectedIndex = 0;
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    if (connection.State == ConnectionState.Open)
+                    catch (Exception ex)
+                    {
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
+                        throw ex;
+                    }
+                    finally
+                    {
                         connection.Close();
-                    throw ex;
-                }
-                finally
-                {
-                    connection.Close();
-                }
-                #endregion
+                    }
+                    #endregion
 
-                if (StockAt.SelectedIndex == -1)
-                {
-                    LoadData(null);
-                }
-                else
-                {
-                    LoadData(StockAt.SelectedValue);
-                }
+                    if (StockAt.SelectedIndex == -1)
+                    {
+                        LoadData(null);
+                    }
+                    else
+                    {
+                        LoadData(StockAt.SelectedValue);
+                    }
 
+                }
+                expHandler.CheckForErrorMessage(Session);
             }
-            expHandler.CheckForErrorMessage(Session);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         private void Page_Error(object sender, EventArgs e)
         {

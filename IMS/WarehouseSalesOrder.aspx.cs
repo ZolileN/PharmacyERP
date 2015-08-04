@@ -20,13 +20,20 @@ namespace IMS
         public static bool FirstOrder;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            try
             {
-                FirstOrder = false;
-                systemSet = new DataSet();
-                ProductSet = new DataSet();
-                LoadData();
+                if (!IsPostBack)
+                {
+                    FirstOrder = false;
+                    systemSet = new DataSet();
+                    ProductSet = new DataSet();
+                    LoadData();
 
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 

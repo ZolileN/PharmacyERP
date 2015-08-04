@@ -22,19 +22,26 @@ namespace IMS
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if(!IsPostBack)
+            try
             {
-                if (Session["Storename"] != null)
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
                 {
-                    spnStoreName.InnerHtml = Session["Storename"].ToString();
-                    BindGrid();
-                    PopulateStoreDropDown();
+                    if (Session["Storename"] != null)
+                    {
+                        spnStoreName.InnerHtml = Session["Storename"].ToString();
+                        BindGrid();
+                        PopulateStoreDropDown();
+                    }
                 }
+                expHandler.CheckForErrorMessage(Session);
             }
-            expHandler.CheckForErrorMessage(Session);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             
         }
 

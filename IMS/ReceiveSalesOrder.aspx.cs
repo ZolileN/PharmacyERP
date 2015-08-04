@@ -26,37 +26,44 @@ namespace IMS
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if (!IsPostBack)
+            try
             {
-                Session["ViewSalesOrders"] = false;
-
-                #region Populating Order Status DropDown
-                OrderStatus.Items.Add("Pending");
-                OrderStatus.Items.Add("Partial");
-                OrderStatus.Items.Add("Complete");
-                if (OrderStatus != null)
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
                 {
-                    OrderStatus.Items.Insert(0, "Select Order Status");
-                    OrderStatus.SelectedIndex = 0;
+                    Session["ViewSalesOrders"] = false;
+
+                    #region Populating Order Status DropDown
+                    OrderStatus.Items.Add("Pending");
+                    OrderStatus.Items.Add("Partial");
+                    OrderStatus.Items.Add("Complete");
+                    if (OrderStatus != null)
+                    {
+                        OrderStatus.Items.Insert(0, "Select Order Status");
+                        OrderStatus.SelectedIndex = 0;
+                    }
+
+                    #endregion
+
+
+                    if (StockAt.SelectedIndex <= 0)
+                    {
+                        LoadData("");
+                    }
+                    else
+                    {
+                        LoadData(StockAt.SelectedValue);
+                    }
+
                 }
-
-                #endregion
-
-
-                if (StockAt.SelectedIndex <= 0)
-                {
-                    LoadData("");
-                }
-                else
-                {
-                    LoadData(StockAt.SelectedValue);
-                }
-
+                expHandler.CheckForErrorMessage(Session);
             }
-            expHandler.CheckForErrorMessage(Session);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private void Page_Error(object sender, EventArgs e)

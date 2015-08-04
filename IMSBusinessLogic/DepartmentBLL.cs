@@ -94,7 +94,7 @@ namespace IMSBusinessLogic
                 command.ExecuteNonQuery();
                 WebMessageBoxUtil.Show("Department Successfully Updated ");
             }
-            catch (Exception exp)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -149,7 +149,7 @@ namespace IMSBusinessLogic
                 command.ExecuteNonQuery();
                 WebMessageBoxUtil.Show("Department Successfully Added ");
             }
-            catch (Exception exp)
+            catch (Exception ex)
             {
                 throw ex;
             }

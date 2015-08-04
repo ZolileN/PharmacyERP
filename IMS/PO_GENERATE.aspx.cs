@@ -37,43 +37,50 @@ namespace IMS
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if (!IsPostBack)
+            try
             {
-                FirstOrder = false;
-                systemSet = new DataSet();
-                ProductSet = new DataSet();
-                LoadData();
-                #region Getting & Populating Values
-                PO_Number.Text = Session["OrderNumber"].ToString();
-                DataSet dsProducts = (DataSet)Session["dsProducts_PO"];
-                PO_Date.Text = ((DateTime)dsProducts.Tables[0].Rows[0]["OrderDate"]).Date.ToString();
-
-                PO_FromName.Text = dsProducts.Tables[0].Rows[0]["SystemName"].ToString();
-                PO_FromAddress.Text = dsProducts.Tables[0].Rows[0]["SystemAddress"].ToString();
-                PO_FromPhone.Text = "Phone: " + dsProducts.Tables[0].Rows[0]["SystemPhone"].ToString();
-
-                PO_ToName.Text = dsProducts.Tables[0].Rows[0]["SupName"].ToString();
-                PO_ToAddress.Text = dsProducts.Tables[0].Rows[0]["VendorAddress"].ToString();
-                PO_ToPhone.Text = "Phone:" + dsProducts.Tables[0].Rows[0]["VendorPhone"].ToString();
-                PO_ToEmail.Text = "Email:" + dsProducts.Tables[0].Rows[0]["VendorEmail"].ToString();
-                float TCost = 0;
-                for (int i = 0; i < dsProducts.Tables[0].Rows.Count; i++)
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
                 {
-                    float Cost =0;
-                    if (float.TryParse(dsProducts.Tables[0].Rows[i]["totalCostPrice"].ToString(), out Cost))
-                    {
-                        TCost += Cost;
-                    }
-                }
-                lblTotalCostALL.Text = TCost.ToString();
-                #endregion
+                    FirstOrder = false;
+                    systemSet = new DataSet();
+                    ProductSet = new DataSet();
+                    LoadData();
+                    #region Getting & Populating Values
+                    PO_Number.Text = Session["OrderNumber"].ToString();
+                    DataSet dsProducts = (DataSet)Session["dsProducts_PO"];
+                    PO_Date.Text = ((DateTime)dsProducts.Tables[0].Rows[0]["OrderDate"]).Date.ToString();
 
-                //ExportGridToPDF();
+                    PO_FromName.Text = dsProducts.Tables[0].Rows[0]["SystemName"].ToString();
+                    PO_FromAddress.Text = dsProducts.Tables[0].Rows[0]["SystemAddress"].ToString();
+                    PO_FromPhone.Text = "Phone: " + dsProducts.Tables[0].Rows[0]["SystemPhone"].ToString();
+
+                    PO_ToName.Text = dsProducts.Tables[0].Rows[0]["SupName"].ToString();
+                    PO_ToAddress.Text = dsProducts.Tables[0].Rows[0]["VendorAddress"].ToString();
+                    PO_ToPhone.Text = "Phone:" + dsProducts.Tables[0].Rows[0]["VendorPhone"].ToString();
+                    PO_ToEmail.Text = "Email:" + dsProducts.Tables[0].Rows[0]["VendorEmail"].ToString();
+                    float TCost = 0;
+                    for (int i = 0; i < dsProducts.Tables[0].Rows.Count; i++)
+                    {
+                        float Cost = 0;
+                        if (float.TryParse(dsProducts.Tables[0].Rows[i]["totalCostPrice"].ToString(), out Cost))
+                        {
+                            TCost += Cost;
+                        }
+                    }
+                    lblTotalCostALL.Text = TCost.ToString();
+                    #endregion
+
+                    //ExportGridToPDF();
+                }
+                expHandler.CheckForErrorMessage(Session);
             }
-            expHandler.CheckForErrorMessage(Session);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         private void Page_Error(object sender, EventArgs e)
         {

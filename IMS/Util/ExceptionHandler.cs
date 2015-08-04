@@ -377,7 +377,7 @@ namespace IMS.Util
         {
             //+ Log error
             string errorMessage = this.GenerateLogString(exp);
-           // File.WriteAllText("log.txt", errorMessage);
+          
             log.Error(errorMessage);
             //-
 
@@ -416,7 +416,7 @@ namespace IMS.Util
             string[] splitString = exp.StackTrace.Split(new string[] { "line" }, StringSplitOptions.None);
             string[] lineSplit = splitString[1].Split(new string[] { "\r\n" }, StringSplitOptions.None);
             string innerException = exp.InnerException != null ? exp.InnerException.Message : string.Empty;
-            errorMessage = exp.GetType().ToString() + " Message : " + exp.Message + "Inner Exception : " + innerException + " Method : " + exp.TargetSite + " Line # : " + lineSplit[0] + " Stack trace # : " + exp.StackTrace;
+            errorMessage = exp.GetType().ToString() + " Message : " + exp.Message + " Inner Exception : " + innerException + " Method : " + exp.TargetSite + " Line # : " + lineSplit[0] + " Stack trace # : " + exp.StackTrace;
 
             return errorMessage;
         }

@@ -187,7 +187,7 @@ namespace IMSBusinessLogic
                 command.ExecuteNonQuery();
                 WebMessageBoxUtil.Show("Category Successfully Updated ");
             }
-            catch (Exception exp)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -213,7 +213,7 @@ namespace IMSBusinessLogic
                 command.ExecuteNonQuery();
                 WebMessageBoxUtil.Show("Category Successfully Deleted ");
             }
-            catch (Exception exp)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -241,7 +241,7 @@ namespace IMSBusinessLogic
                 command.ExecuteNonQuery();
                 WebMessageBoxUtil.Show("Category Successfully Added ");
             }
-            catch (Exception exp)
+            catch (Exception ex)
             {
                 throw ex;
             }

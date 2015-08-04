@@ -21,77 +21,84 @@ namespace IMS
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if (!IsPostBack)
+            try
             {
-                if (Session["Action"].Equals("Edit"))
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
                 {
-                    
-                    btnAddSystem.Visible = false;
-                    btnCancelSystem.Visible = true;
-                    btnEditSystem.Visible = true;
-                    btnDeleteSystem.Visible = true;
-                    lblStoreType.Visible = true;
-                    ddlPharmacyType.Visible = true;
-
-                    if (Session["SystemId"] != null)
+                    if (Session["Action"].Equals("Edit"))
                     {
-                        regTitleSt.Visible = false;
-                        regTitleWH.Visible = false;
-                        EditTitleWH.Visible = true;
-                        EditTitleSt.Visible = false;
-                        LoadData();
-                    }
 
-                    if (Session["SysToAdd"].Equals(RoleNames.store))
-                    {
-                        regTitleSt.Visible = false;
-                        regTitleWH.Visible = false;
-                        EditTitleWH.Visible = false;
-                        EditTitleSt.Visible = true;
+                        btnAddSystem.Visible = false;
+                        btnCancelSystem.Visible = true;
+                        btnEditSystem.Visible = true;
+                        btnDeleteSystem.Visible = true;
                         lblStoreType.Visible = true;
                         ddlPharmacyType.Visible = true;
-                        FillPharmacyTypes();
+
+                        if (Session["SystemId"] != null)
+                        {
+                            regTitleSt.Visible = false;
+                            regTitleWH.Visible = false;
+                            EditTitleWH.Visible = true;
+                            EditTitleSt.Visible = false;
+                            LoadData();
+                        }
+
+                        if (Session["SysToAdd"].Equals(RoleNames.store))
+                        {
+                            regTitleSt.Visible = false;
+                            regTitleWH.Visible = false;
+                            EditTitleWH.Visible = false;
+                            EditTitleSt.Visible = true;
+                            lblStoreType.Visible = true;
+                            ddlPharmacyType.Visible = true;
+                            FillPharmacyTypes();
+                        }
+                        else
+                        {
+                            regTitleSt.Visible = false;
+                            regTitleWH.Visible = false;
+                            EditTitleWH.Visible = true;
+                            EditTitleSt.Visible = false;
+                            lblStoreType.Visible = false;
+                            ddlPharmacyType.Visible = false;
+                        }
+
                     }
                     else
                     {
-                        regTitleSt.Visible = false;
-                        regTitleWH.Visible = false;
-                        EditTitleWH.Visible = true;
-                        EditTitleSt.Visible = false;
-                        lblStoreType.Visible = false;
-                        ddlPharmacyType.Visible = false;
+                        btnAddSystem.Visible = true;
+                        if (Session["SysToAdd"].Equals(RoleNames.store))
+                        {
+                            regTitleSt.Visible = true;
+                            regTitleWH.Visible = false;
+                            EditTitleWH.Visible = false;
+                            EditTitleSt.Visible = false;
+                            lblStoreType.Visible = true;
+                            ddlPharmacyType.Visible = true;
+                            FillPharmacyTypes();
+                        }
+
                     }
 
-                }
-                else 
-                {
-                    btnAddSystem.Visible = true;
                     if (Session["SysToAdd"].Equals(RoleNames.store))
                     {
-                        regTitleSt.Visible = true;
-                        regTitleWH.Visible = false;
-                        EditTitleWH.Visible = false;
-                        EditTitleSt.Visible = false;
-                        lblStoreType.Visible = true;
-                        ddlPharmacyType.Visible = true;
-                        FillPharmacyTypes();
+                        lblPhar.Visible = true;
+                        pharmacyID.Visible = true;
+                        lblBarterID.Visible = true;
+                        txtBarterValue.Visible = true;
+
                     }
-                    
                 }
-                
-                if(Session["SysToAdd"].Equals(RoleNames.store))
-                {
-                    lblPhar.Visible = true;
-                    pharmacyID.Visible = true;
-                    lblBarterID.Visible = true;
-                    txtBarterValue.Visible = true;
-                    
-                }
+                expHandler.CheckForErrorMessage(Session);
             }
-            expHandler.CheckForErrorMessage(Session);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private void Page_Error(object sender, EventArgs e)

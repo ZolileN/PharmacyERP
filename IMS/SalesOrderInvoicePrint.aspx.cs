@@ -21,28 +21,35 @@ namespace IMS
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            try
             {
-                InvoiceDate.Text = Session["PrintInvoiceDate"].ToString();
-                DueDate.Text = Session["PrintDueDate"].ToString();
-                SalesMan.Text = Session["SalesMan"].ToString();
+                if (!IsPostBack)
+                {
+                    InvoiceDate.Text = Session["PrintInvoiceDate"].ToString();
+                    DueDate.Text = Session["PrintDueDate"].ToString();
+                    SalesMan.Text = Session["SalesMan"].ToString();
 
-                if (Session["PrintCheck"].ToString().Equals("Actual"))
-                {
-                   Invoice.Text = Session["PrintInvoiceNumber"].ToString();                
-                   lblTotalBonusAmount.Visible = false;
-                   //Label9.Visible = false;
+                    if (Session["PrintCheck"].ToString().Equals("Actual"))
+                    {
+                        Invoice.Text = Session["PrintInvoiceNumber"].ToString();
+                        lblTotalBonusAmount.Visible = false;
+                        //Label9.Visible = false;
+                    }
+                    else if (Session["PrintCheck"].ToString().Equals("Bonus"))
+                    {
+                        Invoice.Text = "B" + Session["PrintInvoiceNumber"].ToString();
+                        lblTotalSentAmount.Visible = false;
+                        //Label8.Visible = false;
+                    }
+                    DataSet dsTo = GetSystems(Convert.ToInt32(Session["RequestedFromID"].ToString()));
+                    To.Text = dsTo.Tables[0].Rows[0]["SystemName"].ToString();
+                    ToAddress.Text = dsTo.Tables[0].Rows[0]["SystemAddress"].ToString();
+                    LoadData();
                 }
-                else if (Session["PrintCheck"].ToString().Equals("Bonus"))
-                {
-                    Invoice.Text = "B" + Session["PrintInvoiceNumber"].ToString();            
-                    lblTotalSentAmount.Visible = false;
-                    //Label8.Visible = false;
-                }
-                DataSet dsTo = GetSystems(Convert.ToInt32(Session["RequestedFromID"].ToString()));
-                To.Text = dsTo.Tables[0].Rows[0]["SystemName"].ToString();
-                ToAddress.Text = dsTo.Tables[0].Rows[0]["SystemAddress"].ToString();
-                LoadData();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
         public void LoadData()

@@ -22,23 +22,30 @@ namespace IMS
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if (!IsPostBack)
+            try
             {
-
-
-                if (Request.QueryString["Id"] != null)
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
                 {
-                    EditTitleWH.Visible = true;
-                    regTitleWH.Visible = false;
-                    btnCreateVendor.Visible = false;
-                    btnUpdateVendor.Visible = true;
-                    LoadData();
+
+
+                    if (Request.QueryString["Id"] != null)
+                    {
+                        EditTitleWH.Visible = true;
+                        regTitleWH.Visible = false;
+                        btnCreateVendor.Visible = false;
+                        btnUpdateVendor.Visible = true;
+                        LoadData();
+                    }
                 }
+                expHandler.CheckForErrorMessage(Session);
             }
-            expHandler.CheckForErrorMessage(Session);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private void Page_Error(object sender, EventArgs e)

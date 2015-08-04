@@ -26,136 +26,143 @@ namespace IMS
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if (!IsPostBack)
+            try
             {
-                
-                Session.Remove("dsProdcts");
-                Session.Remove("dsProducts_MP");
-                btnCreateOrder.Attributes.Add("OnClientClick", "if(ValidateForm()) {return false; }");
-
-                txtIvnoice.Text = "SO-" + DateTime.Now.TimeOfDay.Hours + "_" + DateTime.Now.TimeOfDay.Minutes;
-                txtIvnoice.Enabled = false;
-                if (Session["OrderNumberSO"] != null && Session["OrderSalesDetail"] != null && Session["OrderSalesDetail"].Equals(true) && Session["ViewSalesOrders"] != null)
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
                 {
-                    if (Session["ViewSalesOrders"] != null && Session["ViewSalesOrders"].Equals(true))
+
+                    Session.Remove("dsProdcts");
+                    Session.Remove("dsProducts_MP");
+                    btnCreateOrder.Attributes.Add("OnClientClick", "if(ValidateForm()) {return false; }");
+
+                    txtIvnoice.Text = "SO-" + DateTime.Now.TimeOfDay.Hours + "_" + DateTime.Now.TimeOfDay.Minutes;
+                    txtIvnoice.Enabled = false;
+                    if (Session["OrderNumberSO"] != null && Session["OrderSalesDetail"] != null && Session["OrderSalesDetail"].Equals(true) && Session["ViewSalesOrders"] != null)
                     {
-                        btnAccept.Text = "RE-GENERATE ORDER";
-                        Session["ViewSalesOrders"] = false;
-                    }
-                    Session["ViewSalesOrders"] = null;
-                    Session["FirstOrderSO"] = true;
-                    systemSet = new DataSet();
-                    ProductSet = new DataSet();
-                    LoadData();
-                    btnAccept.Visible = true;
-                    
-                    btnDecline.Visible = true;
-                    #region Populating System Types
-                    try
-                    {
-                        if (connection.State == ConnectionState.Closed)
+                        if (Session["ViewSalesOrders"] != null && Session["ViewSalesOrders"].Equals(true))
                         {
-                            connection.Open();
+                            btnAccept.Text = "RE-GENERATE ORDER";
+                            Session["ViewSalesOrders"] = false;
                         }
-                        SqlCommand command = new SqlCommand("sp_GetAllSystem", connection);
-                        command.CommandType = CommandType.StoredProcedure;
-                        
-                        DataSet ds = new DataSet();
-                        SqlDataAdapter sA = new SqlDataAdapter(command);
-                        sA.Fill(ds);
-                        StockAt.DataSource = ds.Tables[0];
-                        StockAt.DataTextField = "SystemName";
-                        StockAt.DataValueField = "SystemID";
-                        StockAt.DataBind();
-                        if (StockAt != null)
+                        Session["ViewSalesOrders"] = null;
+                        Session["FirstOrderSO"] = true;
+                        systemSet = new DataSet();
+                        ProductSet = new DataSet();
+                        LoadData();
+                        btnAccept.Visible = true;
+
+                        btnDecline.Visible = true;
+                        #region Populating System Types
+                        try
                         {
-                            StockAt.Items.Insert(0, "Select System");
-                            if (Session["SelectedIndexValue"] != null)
+                            if (connection.State == ConnectionState.Closed)
                             {
-                                // set index based on value
-                                foreach (ListItem Items in StockAt.Items)
-                                {
-                                    if (Items.Text.Equals(Session["SelectedIndexValue"].ToString()))
-                                    {
-                                        StockAt.SelectedIndex = StockAt.Items.IndexOf(Items);
-                                        break;
-                                    }
-                                }
-                                StockAt.Enabled = false;
+                                connection.Open();
                             }
-                            
+                            SqlCommand command = new SqlCommand("sp_GetAllSystem", connection);
+                            command.CommandType = CommandType.StoredProcedure;
+
+                            DataSet ds = new DataSet();
+                            SqlDataAdapter sA = new SqlDataAdapter(command);
+                            sA.Fill(ds);
+                            StockAt.DataSource = ds.Tables[0];
+                            StockAt.DataTextField = "SystemName";
+                            StockAt.DataValueField = "SystemID";
+                            StockAt.DataBind();
+                            if (StockAt != null)
+                            {
+                                StockAt.Items.Insert(0, "Select System");
+                                if (Session["SelectedIndexValue"] != null)
+                                {
+                                    // set index based on value
+                                    foreach (ListItem Items in StockAt.Items)
+                                    {
+                                        if (Items.Text.Equals(Session["SelectedIndexValue"].ToString()))
+                                        {
+                                            StockAt.SelectedIndex = StockAt.Items.IndexOf(Items);
+                                            break;
+                                        }
+                                    }
+                                    StockAt.Enabled = false;
+                                }
+
+                            }
                         }
-                    }
-                    catch (Exception ex)
-                    {
-
-                        if (connection.State == ConnectionState.Open)
-                            connection.Close();
-                        throw ex;
-                    }
-                    finally
-                    {
-                        connection.Close();
-                    }
-                    #endregion
-
-                    if (Session["Invoice"] != null)
-                    {
-                        txtIvnoice.Text = Session["Invoice"].ToString();
-                        txtIvnoice.Enabled = false;
-                    }
-                    BindGrid();
-                }
-                else
-                {
-                    Session.Remove("SalesManID");
-                    Session["OrderNumberSO"] = "";
-                    Session["FirstOrderSO"] = false;
-                    Session["OrderSalesDetail"] = false;
-                    Session["ExistingOrder"] = false;
-                    systemSet = new DataSet();
-                    ProductSet = new DataSet();
-                    #region Populating System Types
-                    try
-                    {
-                        if (connection.State == ConnectionState.Closed)
+                        catch (Exception ex)
                         {
-                            connection.Open();
-                        }
-                        SqlCommand command = new SqlCommand("sp_GetAllSystem", connection);
-                        command.CommandType = CommandType.StoredProcedure;
-                        DataSet ds = new DataSet();
-                        SqlDataAdapter sA = new SqlDataAdapter(command);
-                        sA.Fill(ds);
-                        StockAt.DataSource = ds.Tables[0];
-                        StockAt.DataTextField = "SystemName";
-                        StockAt.DataValueField = "SystemID";
-                        StockAt.DataBind();
-                        if (StockAt != null)
-                        {
-                            StockAt.Items.Insert(0, "Select System");
-                            StockAt.SelectedIndex = 0;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
 
-                        if (connection.State == ConnectionState.Open)
+                            if (connection.State == ConnectionState.Open)
+                                connection.Close();
+                            throw ex;
+                        }
+                        finally
+                        {
                             connection.Close();
-                        throw ex;
+                        }
+                        #endregion
+
+                        if (Session["Invoice"] != null)
+                        {
+                            txtIvnoice.Text = Session["Invoice"].ToString();
+                            txtIvnoice.Enabled = false;
+                        }
+                        BindGrid();
                     }
-                    finally
+                    else
                     {
-                        connection.Close();
+                        Session.Remove("SalesManID");
+                        Session["OrderNumberSO"] = "";
+                        Session["FirstOrderSO"] = false;
+                        Session["OrderSalesDetail"] = false;
+                        Session["ExistingOrder"] = false;
+                        systemSet = new DataSet();
+                        ProductSet = new DataSet();
+                        #region Populating System Types
+                        try
+                        {
+                            if (connection.State == ConnectionState.Closed)
+                            {
+                                connection.Open();
+                            }
+                            SqlCommand command = new SqlCommand("sp_GetAllSystem", connection);
+                            command.CommandType = CommandType.StoredProcedure;
+                            DataSet ds = new DataSet();
+                            SqlDataAdapter sA = new SqlDataAdapter(command);
+                            sA.Fill(ds);
+                            StockAt.DataSource = ds.Tables[0];
+                            StockAt.DataTextField = "SystemName";
+                            StockAt.DataValueField = "SystemID";
+                            StockAt.DataBind();
+                            if (StockAt != null)
+                            {
+                                StockAt.Items.Insert(0, "Select System");
+                                StockAt.SelectedIndex = 0;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+
+                            if (connection.State == ConnectionState.Open)
+                                connection.Close();
+                            throw ex;
+                        }
+                        finally
+                        {
+                            connection.Close();
+                        }
+                        #endregion
+                        LoadData();
                     }
-                    #endregion
-                    LoadData();
                 }
+                expHandler.CheckForErrorMessage(Session);
             }
-            expHandler.CheckForErrorMessage(Session);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         private void Page_Error(object sender, EventArgs e)
         {
