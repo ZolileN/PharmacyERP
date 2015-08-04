@@ -509,6 +509,32 @@ namespace IMS
 
                 Response.Redirect("ViewPackingList_SO.aspx", false);
             }
+
+            #region Mapping of PO - SO
+
+            DataSet SaleOrderFullSet = new DataSet();
+            int SaleOrderID = Convert.ToInt32(dsProducts.Tables[0].Rows[0]["OrderID"].ToString());
+            try
+            {
+                #region Get Full Current Saled Order DataSet
+                connection.Open();
+                SqlCommand command = new SqlCommand("sp_Mapping_getSaleOrderDetails_byID", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_SaleOrderID", SaleOrderID);
+
+                SqlDataAdapter sdA = new SqlDataAdapter(command);
+                sdA.Fill(SaleOrderFullSet);
+                #endregion
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+
+            }
+            #endregion
         }
 
         /// <summary>
