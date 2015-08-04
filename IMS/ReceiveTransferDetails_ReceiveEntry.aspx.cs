@@ -108,6 +108,7 @@ namespace IMS
                 Decimal.TryParse(lblCP.Text.ToString(), out CP);
                 Decimal.TryParse(lblSP.Text.ToString(), out SP);
                 string BatchNo = lblBatchNumber.Text.ToString();
+                int userID = Convert.ToInt32(Session["UserID"].ToString());
 
                 if (TransferedQty > 0)
                 {
@@ -128,6 +129,7 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_CP", CP);
                     command.Parameters.AddWithValue("@p_SP", SP);
                     command.Parameters.AddWithValue("@p_BatchNo", BatchNo);
+                    command.Parameters.AddWithValue("@p_TransferToUserID", userID);
 
                     command.CommandType = CommandType.StoredProcedure;
                     command.ExecuteNonQuery();
