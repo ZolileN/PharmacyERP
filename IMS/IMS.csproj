@@ -238,7 +238,7 @@
   <ItemGroup>
     <Content Include="AcceptOrder.aspx" />
     <Content Include="AcceptPurchaseOrder.aspx" />
-    <Content Include="AcceptSalesOrders.aspx" />
+    <Content Include="Unused Pages\AcceptSalesOrders.aspx" />
     <Content Include="AddDepartment.aspx" />
     <Content Include="AddEditCategory.aspx" />
     <Content Include="AddEditSubCategory.aspx" />
@@ -1280,11 +1280,11 @@
     <Compile Include="AcceptPurchaseOrder.aspx.designer.cs">
       <DependentUpon>AcceptPurchaseOrder.aspx</DependentUpon>
     </Compile>
-    <Compile Include="AcceptSalesOrders.aspx.cs">
+    <Compile Include="Unused Pages\AcceptSalesOrders.aspx.cs">
       <DependentUpon>AcceptSalesOrders.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="AcceptSalesOrders.aspx.designer.cs">
+    <Compile Include="Unused Pages\AcceptSalesOrders.aspx.designer.cs">
       <DependentUpon>AcceptSalesOrders.aspx</DependentUpon>
     </Compile>
     <Compile Include="AddDepartment.aspx.cs">

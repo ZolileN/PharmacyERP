@@ -22,48 +22,55 @@ namespace IMS
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if (!IsPostBack)
+            try
             {
-                #region Getting Vendors
-                try
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
                 {
-                    connection.Open();
-                    DataSet ds = new DataSet();
-                    SqlCommand command = new SqlCommand("Sp_GetVendor", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    SqlDataAdapter dA = new SqlDataAdapter(command);
-                    dA.Fill(ds);
-
-                    StockAt.DataSource = ds.Tables[0];
-                    StockAt.DataTextField = "SupName";
-                    StockAt.DataValueField = "SuppID";
-                    StockAt.DataBind();
-                    if (StockAt != null)
+                    #region Getting Vendors
+                    try
                     {
-                        StockAt.Items.Insert(0, "Select Vendor");
-                        StockAt.SelectedIndex = 0;
+                        connection.Open();
+                        DataSet ds = new DataSet();
+                        SqlCommand command = new SqlCommand("Sp_GetVendor", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        SqlDataAdapter dA = new SqlDataAdapter(command);
+                        dA.Fill(ds);
+
+                        StockAt.DataSource = ds.Tables[0];
+                        StockAt.DataTextField = "SupName";
+                        StockAt.DataValueField = "SuppID";
+                        StockAt.DataBind();
+                        if (StockAt != null)
+                        {
+                            StockAt.Items.Insert(0, "Select Vendor");
+                            StockAt.SelectedIndex = 0;
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    if (connection.State == ConnectionState.Open)
+                    catch (Exception ex)
+                    {
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
+                        throw ex;
+                    }
+                    finally
+                    {
                         connection.Close();
-                    throw ex;
+                    }
+
+
+
+                    #endregion
+                    LoadData();
                 }
-                finally
-                {
-                    connection.Close();
-                }
-
-
-
-                #endregion
-                LoadData();
+                expHandler.CheckForErrorMessage(Session);
             }
-            expHandler.CheckForErrorMessage(Session);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         private void Page_Error(object sender, EventArgs e)
         {

@@ -37,33 +37,40 @@ namespace IMS
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if (!IsPostBack)
+            try
             {
-                if (Request.QueryString["Id"] != null)
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
                 {
-                    //Session["FirstOrderSO"] = false;
-                    int req_ID = int.Parse(Request.QueryString["Id"].ToString());
-                    LoadData(req_ID.ToString());
-                    #region RequestTo&FROM Population
-                    if (Session["WH_SoID"] != null)
+                    if (Request.QueryString["Id"] != null)
                     {
-                        SaleOrder.Text = Session["WH_SoID"].ToString();
+                        //Session["FirstOrderSO"] = false;
+                        int req_ID = int.Parse(Request.QueryString["Id"].ToString());
+                        LoadData(req_ID.ToString());
+                        #region RequestTo&FROM Population
+                        if (Session["WH_SoID"] != null)
+                        {
+                            SaleOrder.Text = Session["WH_SoID"].ToString();
+                        }
+                        DataSet dsTo = GetSystems(Convert.ToInt32(Session["WH_RequestedFromID"].ToString()));
+                        DataSet dsFROM = GetSystems(Convert.ToInt32(Session["UserSys"].ToString()));
+                        SendDate.Text = System.DateTime.Now.ToShortDateString();
+                        //From.Text = dsFROM.Tables[0].Rows[0]["SystemName"].ToString();
+                        // FromAddress.Text = dsFROM.Tables[0].Rows[0]["SystemAddress"].ToString();
+                        To.Text = dsTo.Tables[0].Rows[0]["SystemName"].ToString();
+                        ToAddress.Text = dsTo.Tables[0].Rows[0]["SystemAddress"].ToString();
+                        #endregion
                     }
-                    DataSet dsTo = GetSystems(Convert.ToInt32(Session["WH_RequestedFromID"].ToString()));
-                    DataSet dsFROM = GetSystems(Convert.ToInt32(Session["UserSys"].ToString()));
-                    SendDate.Text = System.DateTime.Now.ToShortDateString();
-                    //From.Text = dsFROM.Tables[0].Rows[0]["SystemName"].ToString();
-                    // FromAddress.Text = dsFROM.Tables[0].Rows[0]["SystemAddress"].ToString();
-                    To.Text = dsTo.Tables[0].Rows[0]["SystemName"].ToString();
-                    ToAddress.Text = dsTo.Tables[0].Rows[0]["SystemAddress"].ToString();
-                    #endregion
+
                 }
-                
+                expHandler.CheckForErrorMessage(Session);
             }
-            expHandler.CheckForErrorMessage(Session);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private void Page_Error(object sender, EventArgs e)

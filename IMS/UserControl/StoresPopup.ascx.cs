@@ -1,4 +1,6 @@
 ﻿using AjaxControlToolkit;
+using IMS.Util;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -20,6 +22,9 @@ namespace IMS.UserControl
         string destinationPage = string.Empty;
         string sessionName = string.Empty;
         string sessionID = string.Empty;
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         public string SourcePage
         {
             //get { return sourcePage; }
@@ -44,10 +49,38 @@ namespace IMS.UserControl
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            try
             {
-                BindGrid();
+
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
+                {
+                    BindGrid();
+                }
+                expHandler.CheckForErrorMessage(Session);
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
 
         public void BindGrid()
@@ -80,6 +113,9 @@ namespace IMS.UserControl
             }
             catch (Exception ex)
             {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -129,6 +165,9 @@ namespace IMS.UserControl
                 }
                 catch (Exception ex)
                 {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
                 }
                 finally
                 {
@@ -263,25 +302,34 @@ namespace IMS.UserControl
 
         public void PopulateStoreWithStock()
         {
-            DataSet dsResults = new DataSet();
-            int ProductID = int.Parse(Session["ProductId"].ToString());
-            int LogedInStoreID;
-            int.TryParse(Session["UserSys"].ToString(), out LogedInStoreID);
-
-            if(connection.State == ConnectionState.Closed)
+            try
             {
-                connection.Open();
+                DataSet dsResults = new DataSet();
+                int ProductID = int.Parse(Session["ProductId"].ToString());
+                int LogedInStoreID;
+                int.TryParse(Session["UserSys"].ToString(), out LogedInStoreID);
+
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("sp_GetStoreByProductID", connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("@p_LogedInStoreID", LogedInStoreID);
+                command.Parameters.AddWithValue("@ProductID", ProductID);
+                SqlDataAdapter da = new SqlDataAdapter(command);
+                da.Fill(dsResults);
+
+                dgvStoresPopup.DataSource = dsResults;
+                dgvStoresPopup.DataBind();
             }
-            SqlCommand command = new SqlCommand("sp_GetStoreByProductID", connection); 
-            command.CommandType = CommandType.StoredProcedure;
-
-            command.Parameters.AddWithValue("@p_LogedInStoreID", LogedInStoreID);
-            command.Parameters.AddWithValue("@ProductID", ProductID);
-            SqlDataAdapter da = new SqlDataAdapter(command);
-            da.Fill(dsResults);
-
-            dgvStoresPopup.DataSource = dsResults;
-            dgvStoresPopup.DataBind();
+            catch (Exception ex) 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
         }
     }
 }

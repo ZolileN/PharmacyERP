@@ -22,31 +22,38 @@ namespace IMS
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if (!IsPostBack)
+            try
             {
-                
-                PopulateddDepartment();
-                if (Convert.ToInt32(Session["subcatid"].ToString()) > 0)
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
                 {
-                    txtSubCategoryName.Text = Session["subcatname"].ToString();
-                    ddDepartment.SelectedIndex= 1;
-                    
-                    foreach (ListItem Items  in ddCategory.Items) 
+
+                    PopulateddDepartment();
+                    if (Convert.ToInt32(Session["subcatid"].ToString()) > 0)
                     {
-                        if (Items.Text.Equals(Session["catname"].ToString())) 
+                        txtSubCategoryName.Text = Session["subcatname"].ToString();
+                        ddDepartment.SelectedIndex = 1;
+
+                        foreach (ListItem Items in ddCategory.Items)
                         {
-                           ddCategory.SelectedIndex = ddCategory.Items.IndexOf( Items);
-                            break;
+                            if (Items.Text.Equals(Session["catname"].ToString()))
+                            {
+                                ddCategory.SelectedIndex = ddCategory.Items.IndexOf(Items);
+                                break;
+                            }
                         }
+
+                        btnSaveSubCategory.Text = "Update";
                     }
-                   
-                    btnSaveSubCategory.Text = "Update";
                 }
+                expHandler.CheckForErrorMessage(Session);
             }
-            expHandler.CheckForErrorMessage(Session);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         private void Page_Error(object sender, EventArgs e)
         {

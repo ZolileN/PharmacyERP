@@ -24,31 +24,38 @@ namespace IMS
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if (!IsPostBack)
+            try
             {
-                if (Session["PrintInvoiceNumber"] != null && Session["PrintInvoiceNumber"].ToString() != "")
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
                 {
-                    txtIvnoice.Text = Session["PrintInvoiceNumber"].ToString();
-                }
-                if (Session["PrintInvoiceDate"] != null && Session["PrintInvoiceDate"].ToString() != "")
-                {
-                    DateTextBox.Text = Session["PrintInvoiceDate"].ToString();
-                }
-                if (Session["PrintDueDate"] != null && Session["PrintDueDate"].ToString() != "")
-                {
-                    DateTextBox2.Text = Session["PrintDueDate"].ToString();
-                }
+                    if (Session["PrintInvoiceNumber"] != null && Session["PrintInvoiceNumber"].ToString() != "")
+                    {
+                        txtIvnoice.Text = Session["PrintInvoiceNumber"].ToString();
+                    }
+                    if (Session["PrintInvoiceDate"] != null && Session["PrintInvoiceDate"].ToString() != "")
+                    {
+                        DateTextBox.Text = Session["PrintInvoiceDate"].ToString();
+                    }
+                    if (Session["PrintDueDate"] != null && Session["PrintDueDate"].ToString() != "")
+                    {
+                        DateTextBox2.Text = Session["PrintDueDate"].ToString();
+                    }
 
-                LoadData();
-                ddlSalesMan.Items.Add("Select-SalesMan");
-                ddlSalesMan.Items.Add("Mohanad Karim");
-                ddlSalesMan.Items.Add("Mohamed Irshad");
-                ddlSalesMan.Items.Add("Shareef");
+                    LoadData();
+                    ddlSalesMan.Items.Add("Select-SalesMan");
+                    ddlSalesMan.Items.Add("Mohanad Karim");
+                    ddlSalesMan.Items.Add("Mohamed Irshad");
+                    ddlSalesMan.Items.Add("Shareef");
+                }
+                expHandler.CheckForErrorMessage(Session);
             }
-            expHandler.CheckForErrorMessage(Session);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private void Page_Error(object sender, EventArgs e)

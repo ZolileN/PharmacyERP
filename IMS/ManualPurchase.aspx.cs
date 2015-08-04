@@ -604,7 +604,14 @@ namespace IMS
         protected void btnCancelOrder_Click(object sender, EventArgs e)
         {
             lblttlcst.Visible = false;
-            Response.Redirect("WarehouseMain.aspx", false);
+            if (Convert.ToInt32(Session["UserSys"]).Equals(1))
+            {
+                Response.Redirect("WarehouseMain.aspx", false);
+            }
+            else
+            {
+                Response.Redirect("StoreMain.aspx", false);
+            }
             
         }
 

@@ -23,20 +23,27 @@ namespace IMS
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if (!IsPostBack)
+            try
             {
-                if (Convert.ToInt32(Session["dId"].ToString()) > 0)
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
                 {
-                    DepartmentName.Text = Session["dname"].ToString();
-                    DepartmentCode.Text = Session["dcode"].ToString();
-                    btnSaveDepartment.Text = "Update";
+                    if (Convert.ToInt32(Session["dId"].ToString()) > 0)
+                    {
+                        DepartmentName.Text = Session["dname"].ToString();
+                        DepartmentCode.Text = Session["dcode"].ToString();
+                        btnSaveDepartment.Text = "Update";
+                    }
                 }
-            }
-            expHandler.CheckForErrorMessage(Session);
+                expHandler.CheckForErrorMessage(Session);
 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         private void Page_Error(object sender, EventArgs e)
         {

@@ -1,5 +1,7 @@
 ﻿using AjaxControlToolkit;
+using IMS.Util;
 using IMSCommon.Util;
+using log4net;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,6 +21,9 @@ namespace IMS.UserControl
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
         bool selectAll=false;
+        private ILog log;
+        private string pageURL;
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
 
         public bool SelectAll
         {
@@ -53,51 +58,78 @@ namespace IMS.UserControl
 
         protected void Page_Load(object sender, EventArgs e)
         {
-           
-            if (!IsPostBack)
+            try
             {
-                Control ctl = this.Parent;
-                TextBox txtsearch = null;
-                txtsearch = (TextBox)ctl.FindControl("txtSearch");
-                if (txtsearch.Text != null)
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
                 {
-                    text = txtsearch.Text;
-                }
+                    Control ctl = this.Parent;
+                    TextBox txtsearch = null;
+                    txtsearch = (TextBox)ctl.FindControl("txtSearch");
+                    if (txtsearch.Text != null)
+                    {
+                        text = txtsearch.Text;
+                    }
 
-               
-                BindGrid();
 
-                if (selectAll)
-                {
-                    ((CheckBox)StockDisplayGrid.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
-                    ViewState["checkAllState"] = true;
-                }
-                if (ViewState["selectSearch"] != null && ((bool)ViewState["selectSearch"]) == true)
-                {
-                    lblSelectVendor.Visible = true;
-                    btnSearchStore.Visible = true;
-                    txtSearch.Visible = true;
-                }
-            }
-            if (IsPostBack) 
-            {
-                if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll==true)
-                {
-                    if (!(ViewState["selectSearch"] != null && ((bool)ViewState["selectSearch"]) == true))
+                    BindGrid();
+
+                    if (selectAll)
                     {
                         ((CheckBox)StockDisplayGrid.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                        ViewState["checkAllState"] = true;
+                    }
+                    if (ViewState["selectSearch"] != null && ((bool)ViewState["selectSearch"]) == true)
+                    {
+                        lblSelectVendor.Visible = true;
+                        btnSearchStore.Visible = true;
+                        txtSearch.Visible = true;
                     }
                 }
-                if (ViewState["selectSearch"] != null && ((bool)ViewState["selectSearch"]) == true)
+                if (IsPostBack)
                 {
-                    lblSelectVendor.Visible = true;
-                    btnSearchStore.Visible = true;
-                    txtSearch.Visible = true;
+                    if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
+                    {
+                        if (!(ViewState["selectSearch"] != null && ((bool)ViewState["selectSearch"]) == true))
+                        {
+                            ((CheckBox)StockDisplayGrid.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                        }
+                    }
+                    if (ViewState["selectSearch"] != null && ((bool)ViewState["selectSearch"]) == true)
+                    {
+                        lblSelectVendor.Visible = true;
+                        btnSearchStore.Visible = true;
+                        txtSearch.Visible = true;
+                    }
                 }
+                expHandler.CheckForErrorMessage(Session);
+            }
+            catch (Exception ex) 
+            {
+                throw ex;
             }
             
         }
-        
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
+
         public void PopulateGrid()
         {
             if (Session["Text"] != null)
@@ -150,6 +182,10 @@ namespace IMS.UserControl
                 }
                 catch (Exception ex)
                 {
+
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
                 }
                 finally
                 {
@@ -205,6 +241,10 @@ namespace IMS.UserControl
             }
             catch (Exception ex)
             {
+
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -532,6 +572,9 @@ namespace IMS.UserControl
             catch (Exception ex)
             {
 
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {
@@ -639,6 +682,9 @@ namespace IMS.UserControl
                     catch (Exception ex)
                     {
 
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
+                        throw ex;
                     }
                     finally
                     {
@@ -739,7 +785,13 @@ namespace IMS.UserControl
                 ModalPopupExtender mpe = (ModalPopupExtender)this.Parent.FindControl("mpeCongratsMessageDiv");
                 mpe.Show();
             }
-            catch (Exception exp) { }
+            catch (Exception ex)
+            {
+
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
         }
 
         public void BindAssociatedVendorGrid()
@@ -775,9 +827,12 @@ namespace IMS.UserControl
                     }
                 }
             }
-            catch
+            catch(Exception ex)
             {
 
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
             }
             finally
             {

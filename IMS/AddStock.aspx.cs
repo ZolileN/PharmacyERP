@@ -27,74 +27,81 @@ namespace IMS
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if (!IsPostBack)
+            try
             {
-                if (Request.QueryString["Id"] != null)
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
                 {
-                    FetchProductInfo();
+                    if (Request.QueryString["Id"] != null)
+                    {
+                        FetchProductInfo();
+                    }
+                    #region previos code
+                    //ProductSet = new DataSet();
+                    //ProductTable = new DataTable();
+
+                    //#region Populating Product List
+                    //try
+                    //{
+                    //    connection.Open();
+                    //    /*SqlCommand command = new SqlCommand("Select ProductID, Product_Name From tbl_ProductMaster Where tbl_ProductMaster.Product_Id_Org LIKE '444%' AND Status = 1", connection);
+                    //    DataSet ds = new DataSet();
+                    //    SqlDataAdapter sA = new SqlDataAdapter(command);
+                    //    sA.Fill(ds);
+                    //    ProductSet = ds;
+                    //    if (SelectProduct != null)
+                    //    {
+                    //    }*/
+                    //}
+                    //catch (Exception ex)
+                    //{
+
+                    //}
+                    //finally
+                    //{
+                    //    connection.Close();
+                    //}
+                    //#endregion
+
+                    //#region Populating System Types
+                    ////try
+                    ////{
+                    ////    connection.Open();
+                    ////    SqlCommand command = new SqlCommand("Select * From tbl_System", connection); // needs to be completed
+                    ////    DataSet ds = new DataSet();
+                    ////    SqlDataAdapter sA = new SqlDataAdapter(command);
+                    ////    sA.Fill(ds);
+                    ////    StockAt.DataSource = ds.Tables[0];
+                    ////    StockAt.DataTextField = "SystemName";
+                    ////    StockAt.DataValueField = "SystemID";
+                    ////    StockAt.DataBind();
+                    ////    if (StockAt != null)
+                    ////    {
+                    ////        StockAt.Items.Insert(0, "Select System");
+                    ////        StockAt.SelectedIndex = 0;
+                    ////    }
+                    ////}
+                    ////catch (Exception ex)
+                    ////{
+
+                    ////}
+                    ////finally
+                    ////{
+                    ////    connection.Close();
+                    ////}
+                    //#endregion
+                    //PopulateDropDown(null); 
+                    #endregion
+
                 }
-                #region previos code
-                //ProductSet = new DataSet();
-                //ProductTable = new DataTable();
-
-                //#region Populating Product List
-                //try
-                //{
-                //    connection.Open();
-                //    /*SqlCommand command = new SqlCommand("Select ProductID, Product_Name From tbl_ProductMaster Where tbl_ProductMaster.Product_Id_Org LIKE '444%' AND Status = 1", connection);
-                //    DataSet ds = new DataSet();
-                //    SqlDataAdapter sA = new SqlDataAdapter(command);
-                //    sA.Fill(ds);
-                //    ProductSet = ds;
-                //    if (SelectProduct != null)
-                //    {
-                //    }*/
-                //}
-                //catch (Exception ex)
-                //{
-
-                //}
-                //finally
-                //{
-                //    connection.Close();
-                //}
-                //#endregion
-
-                //#region Populating System Types
-                ////try
-                ////{
-                ////    connection.Open();
-                ////    SqlCommand command = new SqlCommand("Select * From tbl_System", connection); // needs to be completed
-                ////    DataSet ds = new DataSet();
-                ////    SqlDataAdapter sA = new SqlDataAdapter(command);
-                ////    sA.Fill(ds);
-                ////    StockAt.DataSource = ds.Tables[0];
-                ////    StockAt.DataTextField = "SystemName";
-                ////    StockAt.DataValueField = "SystemID";
-                ////    StockAt.DataBind();
-                ////    if (StockAt != null)
-                ////    {
-                ////        StockAt.Items.Insert(0, "Select System");
-                ////        StockAt.SelectedIndex = 0;
-                ////    }
-                ////}
-                ////catch (Exception ex)
-                ////{
-
-                ////}
-                ////finally
-                ////{
-                ////    connection.Close();
-                ////}
-                //#endregion
-                //PopulateDropDown(null); 
-                #endregion
-
+                expHandler.CheckForErrorMessage(Session);
             }
-            expHandler.CheckForErrorMessage(Session);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
             //if( Session["SelectProduct"].Equals(null))
             //{

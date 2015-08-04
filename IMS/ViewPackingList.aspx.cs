@@ -25,23 +25,30 @@ namespace IMS
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if(!IsPostBack)
+            try
             {
-                LoadData(Session["RequestedNO"].ToString());
-                #region RequestTo&FROM Population
-                DataSet dsTo = GetSystems(Convert.ToInt32(Session["RequestedFromID"].ToString()));
-                DataSet dsFROM = GetSystems(Convert.ToInt32(Session["UserSys"].ToString()));
-                SendDate.Text = "Send Date : " + System.DateTime.Now.ToShortDateString();
-                From.Text = dsFROM.Tables[0].Rows[0]["SystemName"].ToString();
-                FromAddress.Text = dsFROM.Tables[0].Rows[0]["SystemAddress"].ToString();
-                To.Text = dsTo.Tables[0].Rows[0]["SystemName"].ToString();
-                ToAddress.Text = dsTo.Tables[0].Rows[0]["SystemAddress"].ToString();
-                #endregion
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
+                {
+                    LoadData(Session["RequestedNO"].ToString());
+                    #region RequestTo&FROM Population
+                    DataSet dsTo = GetSystems(Convert.ToInt32(Session["RequestedFromID"].ToString()));
+                    DataSet dsFROM = GetSystems(Convert.ToInt32(Session["UserSys"].ToString()));
+                    SendDate.Text = "Send Date : " + System.DateTime.Now.ToShortDateString();
+                    From.Text = dsFROM.Tables[0].Rows[0]["SystemName"].ToString();
+                    FromAddress.Text = dsFROM.Tables[0].Rows[0]["SystemAddress"].ToString();
+                    To.Text = dsTo.Tables[0].Rows[0]["SystemName"].ToString();
+                    ToAddress.Text = dsTo.Tables[0].Rows[0]["SystemAddress"].ToString();
+                    #endregion
+                }
+                expHandler.CheckForErrorMessage(Session);
             }
-            expHandler.CheckForErrorMessage(Session);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private void Page_Error(object sender, EventArgs e)

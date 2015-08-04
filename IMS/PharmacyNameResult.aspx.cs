@@ -24,14 +24,21 @@ namespace IMS
         string clientName;
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+            try
+            {
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-            clientName = Request["search"].ToString();
-            Getresult();
-            
-            expHandler.CheckForErrorMessage(Session);
+                clientName = Request["search"].ToString();
+                Getresult();
+
+                expHandler.CheckForErrorMessage(Session);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
         }
 

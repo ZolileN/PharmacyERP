@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IMS.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,16 +10,19 @@ namespace IMS
 {
     public partial class WarehouseMain : System.Web.UI.Page
     {
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 
-                if (Session["isHeadOffice"].ToString().ToLower().Equals("true"))
+                if (Session["isHeadOffice"] != null && Session["isHeadOffice"].ToString().ToLower().Equals("true"))
                 {
                   //  ButtonBack.Visible = true;
                 }
+                
             }
+            expHandler.CheckForErrorMessage(Session);
         }
 
         protected void btnManageInventory_Click(object sender, EventArgs e)

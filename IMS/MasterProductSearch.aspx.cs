@@ -24,19 +24,26 @@ namespace IMS
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
-            if (!IsPostBack)
+            try
             {
-                if (Session["ProductMasterSearch"] != null && Session["ProductMasterSearch"].ToString() != null && Session["ProductMasterSearch"].ToString() != "")
-                {
-                    PopulateDropDown(Session["ProductMasterSearch"].ToString());
-                }
-            }
-            expHandler.CheckForErrorMessage(Session);
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+                if (!IsPostBack)
+                {
+                    if (Session["ProductMasterSearch"] != null && Session["ProductMasterSearch"].ToString() != null && Session["ProductMasterSearch"].ToString() != "")
+                    {
+                        PopulateDropDown(Session["ProductMasterSearch"].ToString());
+                    }
+                }
+                expHandler.CheckForErrorMessage(Session);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         private void Page_Error(object sender, EventArgs e)
         {

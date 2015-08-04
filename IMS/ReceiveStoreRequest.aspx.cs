@@ -20,37 +20,44 @@ namespace IMS
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if (!IsPostBack) 
+            try
             {
-                #region Populating Request From DropDown
-                ddlReqFrom.Items.Add("Salesman Requests");
-                ddlReqFrom.Items.Add("Store Requests");
-                ddlReqFrom.Items.Add("Both");
-                if (ddlReqFrom != null)
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
                 {
-                    ddlReqFrom.Items.Insert(0, "Select Request From");
-                    ddlReqFrom.SelectedIndex = 0;
+                    #region Populating Request From DropDown
+                    ddlReqFrom.Items.Add("Salesman Requests");
+                    ddlReqFrom.Items.Add("Store Requests");
+                    ddlReqFrom.Items.Add("Both");
+                    if (ddlReqFrom != null)
+                    {
+                        ddlReqFrom.Items.Insert(0, "Select Request From");
+                        ddlReqFrom.SelectedIndex = 0;
+                    }
+
+                    #endregion
+
+                    #region Populating Request Status DropDown
+                    ddlReqStatus.Items.Add("Complete");
+                    ddlReqStatus.Items.Add("Incomplete");
+                    ddlReqStatus.Items.Add("Both");
+                    if (ddlReqStatus != null)
+                    {
+                        ddlReqStatus.Items.Insert(0, "Select Request Status");
+                        ddlReqStatus.SelectedIndex = 0;
+                    }
+
+                    #endregion
+                    bindGrid();
                 }
-
-                #endregion
-
-                #region Populating Request Status DropDown
-                ddlReqStatus.Items.Add("Complete");
-                ddlReqStatus.Items.Add("Incomplete");
-                ddlReqStatus.Items.Add("Both");
-                if (ddlReqStatus != null)
-                {
-                    ddlReqStatus.Items.Insert(0, "Select Request Status");
-                    ddlReqStatus.SelectedIndex = 0;
-                }
-
-                #endregion
-                bindGrid();
+                expHandler.CheckForErrorMessage(Session);
             }
-            expHandler.CheckForErrorMessage(Session);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         private void Page_Error(object sender, EventArgs e)
         {
@@ -198,6 +205,7 @@ namespace IMS
 
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
+                throw ex;
             }
             finally
             {

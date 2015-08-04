@@ -26,58 +26,65 @@ namespace IMS
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Uri url = Request.Url;
-            pageURL = url.AbsolutePath.ToString();
-            log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-            if(!IsPostBack)
+            try
             {
-                String Parameter = "";
-                if (Request.QueryString["Param"] != null)
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                if (!IsPostBack)
                 {
-                    Parameter = Request.QueryString["Param"].ToString();
-                    if(Parameter.Equals("Movement"))
+                    String Parameter = "";
+                    if (Request.QueryString["Param"] != null)
                     {
-                        Session["parameter"] = "Movement";
+                        Parameter = Request.QueryString["Param"].ToString();
+                        if (Parameter.Equals("Movement"))
+                        {
+                            Session["parameter"] = "Movement";
+                        }
+                        else if (Parameter.Equals("Calculation"))
+                        {
+                            Session["parameter"] = "Calculation";
+                        }
                     }
-                    else if (Parameter.Equals("Calculation"))
+
+                    if (Parameter.Equals("Calculation") || (Session["parameter"] != null && Session["parameter"].ToString().Equals("Calculation")))
                     {
                         Session["parameter"] = "Calculation";
+
+                        lblSaleDates.Visible = true;
+                        lblFromDate.Visible = true;
+                        lblToDate.Visible = true;
+                        lblReplenishDays.Visible = true;
+                        lblReplenishHeader.Text = "Replenish ( Calculation )";
+                        txtFromDate.Visible = true;
+                        txtReplenishDays.Visible = true;
+                        txtToDate.Visible = true;
+
+
+
                     }
-                }
+                    else
+                    {
+                        Session["parameter"] = "Movement";
+                        lblReplenishHeader.Text = "Replenish ( Movement )";
+                        lblSaleDates.Visible = false;
+                        lblFromDate.Visible = false;
+                        lblToDate.Visible = false;
+                        lblReplenishDays.Visible = false;
 
-                if (Parameter.Equals("Calculation") || (Session["parameter"]!=null && Session["parameter"].ToString().Equals("Calculation")))
-                {
-                    Session["parameter"] = "Calculation";
-
-                    lblSaleDates.Visible = true;
-                    lblFromDate.Visible = true;
-                    lblToDate.Visible = true;
-                    lblReplenishDays.Visible = true;
-                    lblReplenishHeader.Text = "Replenish ( Calculation )";
-                    txtFromDate.Visible = true;
-                    txtReplenishDays.Visible = true;
-                    txtToDate.Visible = true;
-
-                   
-
-                }
-                else
-                {
-                    Session["parameter"] = "Movement";
-                    lblReplenishHeader.Text = "Replenish ( Movement )";
-                    lblSaleDates.Visible = false;
-                    lblFromDate.Visible = false;
-                    lblToDate.Visible = false;
-                    lblReplenishDays.Visible = false;
-
-                    txtFromDate.Visible = false;
-                    txtReplenishDays.Visible = false;
-                    txtToDate.Visible = false;
-                }
+                        txtFromDate.Visible = false;
+                        txtReplenishDays.Visible = false;
+                        txtToDate.Visible = false;
+                    }
                     LoadVendors();
-                
+
+                }
+                expHandler.CheckForErrorMessage(Session);
             }
-            expHandler.CheckForErrorMessage(Session);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         private void Page_Error(object sender, EventArgs e)
         {
