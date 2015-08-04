@@ -14,7 +14,7 @@ namespace IMS
             if (!IsPostBack)
             {
                 
-                if (Session["isHeadOffice"].ToString().ToLower().Equals("true"))
+                if (Session["isHeadOffice"] != null && Session["isHeadOffice"].ToString().ToLower().Equals("true"))
                 {
                   //  ButtonBack.Visible = true;
                 }

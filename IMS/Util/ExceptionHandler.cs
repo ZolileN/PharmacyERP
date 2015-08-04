@@ -2,6 +2,7 @@
 using log4net;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.SessionState;
@@ -15,8 +16,8 @@ namespace IMS.Util
     public class ExceptionHandler
     {
         #region fields
-        private static ExceptionHandler _handler=null;
-        private Dictionary<string, Dictionary<string,string>> redirectionLookup;
+        private static ExceptionHandler _handler = null;
+        private Dictionary<string, Dictionary<string, string>> redirectionLookup;
         private const string GENERAL = "General";
         private const string PHARMACY = "Store";
         private const string STORE = "WareHouse";
@@ -28,7 +29,8 @@ namespace IMS.Util
         #region Constructor
         private ExceptionHandler()
         {
-            redirectionLookup = new Dictionary<string, Dictionary<string,string>>() 
+            log4net.Config.XmlConfigurator.Configure();
+            redirectionLookup = new Dictionary<string, Dictionary<string, string>>() 
             {
                 {"/AcceptOrder.aspx",
                     new Dictionary<String,String>()
@@ -362,9 +364,9 @@ namespace IMS.Util
         #endregion
 
         #region public methods
-        public static ExceptionHandler GetInstance() 
+        public static ExceptionHandler GetInstance()
         {
-            if (_handler == null) 
+            if (_handler == null)
             {
                 _handler = new ExceptionHandler();
             }
@@ -375,17 +377,18 @@ namespace IMS.Util
         {
             //+ Log error
             string errorMessage = this.GenerateLogString(exp);
+           // File.WriteAllText("log.txt", errorMessage);
             log.Error(errorMessage);
             //-
-                     
+
             //redirect to different page in case of remote as strategy
             if (redirectionStrategy == RedirectionStrategy.Remote)
             {
                 SetErrorMessage(session, ErrorMessageUtility.remoteMessage);
-                string url=urlLookup(sourcePage,session);
+                string url = urlLookup(sourcePage, session);
                 if (url != null)
-                    server.Transfer(url,false);
-                else 
+                    server.Transfer(url, false);
+                else
                 {
                     if (Convert.ToInt32(session["UserSys"]).Equals(1))
                     {
@@ -397,24 +400,24 @@ namespace IMS.Util
                     }
                 }
             }
-            else 
+            else
             {
                 SetErrorMessage(session, ErrorMessageUtility.genericMessage);
-                server.Transfer(sourcePage, false);
+                server.Transfer(sourcePage + ".aspx", false);
             }
-          
+
         }
         #endregion
 
         #region helper methods
-        public String GenerateLogString(Exception exp) 
+        public String GenerateLogString(Exception exp)
         {
             string errorMessage;
             string[] splitString = exp.StackTrace.Split(new string[] { "line" }, StringSplitOptions.None);
             string[] lineSplit = splitString[1].Split(new string[] { "\r\n" }, StringSplitOptions.None);
-            string innerException= exp.InnerException != null ? exp.InnerException.Message : string.Empty;
-            errorMessage = exp.GetType().ToString() + " Message : " + exp.Message + "Inner Exception : " + innerException + " Method : " + exp.TargetSite + " Line # : " + lineSplit[0] + " Stack trace # : "+exp.StackTrace;
-            
+            string innerException = exp.InnerException != null ? exp.InnerException.Message : string.Empty;
+            errorMessage = exp.GetType().ToString() + " Message : " + exp.Message + "Inner Exception : " + innerException + " Method : " + exp.TargetSite + " Line # : " + lineSplit[0] + " Stack trace # : " + exp.StackTrace;
+
             return errorMessage;
         }
 
