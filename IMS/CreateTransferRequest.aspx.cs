@@ -205,6 +205,7 @@ namespace IMS.StoreManagement.StoreRequests
 
                                 #region  Creating Transfer Order
 
+                                int userID = Convert.ToInt32(Session["UserID"].ToString());
 
                                 int p_TransferBy = 0;
                                 int p_TransferTo = 0;
@@ -227,8 +228,9 @@ namespace IMS.StoreManagement.StoreRequests
                                     {
                                         command.Parameters.AddWithValue("@p_TransferBy", p_TransferBy);
                                     }
-
+                                    
                                     command.Parameters.AddWithValue("@p_TransferStatus", "Initiated");
+                                    command.Parameters.AddWithValue("@p_TransferByUserID", userID);
                                     DataTable dt = new DataTable();
                                     SqlDataAdapter dA = new SqlDataAdapter(command);
                                     dA.Fill(dt);

@@ -930,11 +930,14 @@ namespace IMS
                             {
                                 command.Parameters.AddWithValue("@p_RequestFrom", pRequestFrom);
                             }
+                            int userID = Convert.ToInt32(Session["UserID"].ToString());
 
                             command.Parameters.AddWithValue("@p_OrderType", OrderType);
                             command.Parameters.AddWithValue("@p_Invoice", Invoice);
                             command.Parameters.AddWithValue("@p_OrderMode", OrderMode);
                             command.Parameters.AddWithValue("@p_Vendor", Vendor);
+                            command.Parameters.AddWithValue("@p_userID", userID);
+
                             if(int.TryParse(ddlSalesman.SelectedValue.ToString(), out Salesman))
                             {
                                 command.Parameters.AddWithValue("@p_Salesman", Salesman);
