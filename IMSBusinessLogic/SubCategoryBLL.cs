@@ -123,7 +123,7 @@ namespace IMSBusinessLogic
                 //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Product SuccessFully Updated.')", true);
                 WebMessageBoxUtil.Show("SubCategory Successfully Updated ");
             }
-            catch (Exception ex)
+            catch (Exception exp)
             {
                 throw ex;
             }
@@ -145,7 +145,7 @@ namespace IMSBusinessLogic
                 command.ExecuteNonQuery();
                 WebMessageBoxUtil.Show("SubCategory Successfully Deleted ");
             }
-            catch (Exception ex)
+            catch (Exception exp)
             {
                 throw ex;
             }
@@ -169,7 +169,7 @@ namespace IMSBusinessLogic
                 command.ExecuteNonQuery();
                 WebMessageBoxUtil.Show("SubCategory Successfully Added ");
             }
-            catch (Exception ex)
+            catch (Exception exp)
             {
                 throw ex;
             }
@@ -192,7 +192,7 @@ namespace IMSBusinessLogic
                 command.ExecuteNonQuery();
                 WebMessageBoxUtil.Show("SubCategory Successfully Added ");
             }
-            catch (Exception ex)
+            catch (Exception exp)
             {
                 throw ex;
             }

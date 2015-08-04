@@ -509,6 +509,32 @@ namespace IMS
 
                 Response.Redirect("ViewPackingList_SO.aspx", false);
             }
+
+            #region Mapping of PO - SO
+
+            DataSet SaleOrderFullSet = new DataSet();
+            int SaleOrderID = Convert.ToInt32(dsProducts.Tables[0].Rows[0]["OrderID"].ToString());
+            try
+            {
+                #region Get Full Current Saled Order DataSet
+                connection.Open();
+                SqlCommand command = new SqlCommand("sp_Mapping_getSaleOrderDetails_byID", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_SaleOrderID", SaleOrderID);
+
+                SqlDataAdapter sdA = new SqlDataAdapter(command);
+                sdA.Fill(SaleOrderFullSet);
+                #endregion
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+
+            }
+            #endregion
         }
 
         /// <summary>
@@ -904,11 +930,14 @@ namespace IMS
                             {
                                 command.Parameters.AddWithValue("@p_RequestFrom", pRequestFrom);
                             }
+                            int userID = Convert.ToInt32(Session["UserID"].ToString());
 
                             command.Parameters.AddWithValue("@p_OrderType", OrderType);
                             command.Parameters.AddWithValue("@p_Invoice", Invoice);
                             command.Parameters.AddWithValue("@p_OrderMode", OrderMode);
                             command.Parameters.AddWithValue("@p_Vendor", Vendor);
+                            command.Parameters.AddWithValue("@p_userID", userID);
+
                             if(int.TryParse(ddlSalesman.SelectedValue.ToString(), out Salesman))
                             {
                                 command.Parameters.AddWithValue("@p_Salesman", Salesman);
