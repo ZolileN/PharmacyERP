@@ -163,6 +163,8 @@ namespace IMS
                 int.TryParse(lblAvailableQty.Text.ToString(), out AvailableQty);
                 int.TryParse(lblSentQty.Text.ToString(), out TransferedQty);
                 int.TryParse(lblProductID.Text.ToString(), out ProductId);
+                int userID = Convert.ToInt32(Session["UserID"].ToString());
+
                 if (e.CommandName == "Edit")
                 {
                     Session["TransferDetailID"] = TransferDetailNo;
@@ -184,6 +186,7 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_Status", "Accepted");
                     command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
                     command.Parameters.AddWithValue("@p_ProductID", ProductId);
+                    command.Parameters.AddWithValue("@p_TransferToUserID", userID);
 
                     command.CommandType = CommandType.StoredProcedure;
                     command.ExecuteNonQuery();
@@ -294,7 +297,8 @@ namespace IMS
                         int.TryParse(lblAvailableQty.Text.ToString(), out AvailableQty);
                         int.TryParse(lblSentQty.Text.ToString(), out TransferedQty);
                         int.TryParse(lblProductID.Text.ToString(), out ProductId);
-                         
+                        int userID = Convert.ToInt32(Session["UserID"].ToString());
+
                         if (connection.State == ConnectionState.Closed)
                         {
                             connection.Open();
@@ -309,7 +313,8 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_Status", "Accepted");
                         command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
                         command.Parameters.AddWithValue("@p_ProductID", ProductId);
-                         
+                        command.Parameters.AddWithValue("@p_TransferToUserID", userID);
+ 
                         command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 
@@ -355,7 +360,7 @@ namespace IMS
 
                     string abc = lblStoreID.Text;
 
-                    int SystemID;
+                    
                     GridView gvReceiveTransfer = (GridView)repReceiveTransfer.Items[0].FindControl("dgvReceiveTransfer");
                     int TransferNo, TransferDetailNo, RequestedQty, TransferedQty, AvailableQty, ProductId;
                     int LogedInStoreID;
@@ -377,22 +382,16 @@ namespace IMS
                     int.TryParse(lblAvailableQty.Text.ToString(), out AvailableQty);
                     int.TryParse(lblSentQty.Text.ToString(), out TransferedQty);
                     int.TryParse(lblProductID.Text.ToString(), out ProductId);
-
+                    int SystemID;
                     int.TryParse(lblStoreID.Text.ToString(), out SystemID);
 
                     if (connection.State == ConnectionState.Closed)
                     {
                         connection.Open();
                     }
-                    SqlCommand command = new SqlCommand("sp_UpdateTransferOrderDetials_AcceptAll", connection);
-                    command.Parameters.AddWithValue("@p_TransferID", TransferNo);
-                    command.Parameters.AddWithValue("@p_TransferDetID", TransferDetailNo);
-                    command.Parameters.AddWithValue("@p_RequestedQty", RequestedQty);
-                    command.Parameters.AddWithValue("@p_TransferedQty", TransferedQty);
-                    command.Parameters.AddWithValue("@p_AvailableQty", AvailableQty);
-                    command.Parameters.AddWithValue("@p_Status", "Accepted");
+                    SqlCommand command = new SqlCommand("sp_UpdateTransferOrderDetials_Generate", connection);
+                     
                     command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
-                    command.Parameters.AddWithValue("@p_ProductID", ProductId);
                     command.Parameters.AddWithValue("@p_SystemID", SystemID);
 
                     command.CommandType = CommandType.StoredProcedure;
@@ -579,6 +578,7 @@ namespace IMS
                         int.TryParse(lblAvailableQty.Text.ToString(), out AvailableQty);
                         int.TryParse(lblSentQty.Text.ToString(), out TransferedQty);
                         int.TryParse(lblProductID.Text.ToString(), out ProductId);
+                        int userID = Convert.ToInt32(Session["UserID"].ToString());
 
                         if (connection.State == ConnectionState.Closed)
                         {
@@ -594,6 +594,8 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_Status", "Accepted");
                         command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
                         command.Parameters.AddWithValue("@p_ProductID", ProductId);
+                        command.Parameters.AddWithValue("@p_TransferToUserID", userID);
+                         
 
                         command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
@@ -665,20 +667,26 @@ namespace IMS
                     int.TryParse(lblAvailableQty.Text.ToString(), out AvailableQty);
                     int.TryParse(lblSentQty.Text.ToString(), out TransferedQty);
                     int.TryParse(lblProductID.Text.ToString(), out ProductId);
-
+                    
                     if (connection.State == ConnectionState.Closed)
                     {
                         connection.Open();
                     }
-                    SqlCommand command = new SqlCommand("sp_UpdateTransferOrderDetials_AcceptAll", connection);
-                    command.Parameters.AddWithValue("@p_TransferID", TransferNo);
-                    command.Parameters.AddWithValue("@p_TransferDetID", TransferDetailNo);
-                    command.Parameters.AddWithValue("@p_RequestedQty", RequestedQty);
-                    command.Parameters.AddWithValue("@p_TransferedQty", TransferedQty);
-                    command.Parameters.AddWithValue("@p_AvailableQty", AvailableQty);
-                    command.Parameters.AddWithValue("@p_Status", "Accepted");
+                    //SqlCommand command = new SqlCommand("sp_UpdateTransferOrderDetials_AcceptAll", connection);
+                    //command.Parameters.AddWithValue("@p_TransferID", TransferNo);
+                    //command.Parameters.AddWithValue("@p_TransferDetID", TransferDetailNo);
+                    //command.Parameters.AddWithValue("@p_RequestedQty", RequestedQty);
+                    //command.Parameters.AddWithValue("@p_TransferedQty", TransferedQty);
+                    //command.Parameters.AddWithValue("@p_AvailableQty", AvailableQty);
+                    //command.Parameters.AddWithValue("@p_Status", "Accepted");
+                    //command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
+                    //command.Parameters.AddWithValue("@p_ProductID", ProductId);
+
+                    SqlCommand command = new SqlCommand("sp_UpdateTransferOrderDetials_Generate", connection);
+
                     command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
-                    command.Parameters.AddWithValue("@p_ProductID", ProductId);
+                    command.Parameters.AddWithValue("@p_SystemID", LogedInStoreID);
+
 
                     command.CommandType = CommandType.StoredProcedure;
                     command.ExecuteNonQuery();
