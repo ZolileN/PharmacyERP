@@ -389,5 +389,10 @@ namespace IMS
             }
                  
         }
+
+        protected void StockDisplayGrid_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+
+        }
     }
 }

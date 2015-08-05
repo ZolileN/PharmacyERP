@@ -61,7 +61,7 @@
         <div class="form-horizontal">
     <div class="form-group">
         <asp:GridView ID="StockDisplayGrid" CssClass="table table-striped table-bordered table-condensed"  Visible="true" runat="server" AllowPaging="false" PageSize="10" 
-                AutoGenerateColumns="false" OnRowDataBound="StockDisplayGrid_RowDataBound"   onrowcommand="StockDisplayGrid_RowCommand" >
+                AutoGenerateColumns="false" OnRowDataBound="StockDisplayGrid_RowDataBound" OnRowEditing="StockDisplayGrid_RowEditing"   onrowcommand="StockDisplayGrid_RowCommand" >
                  <Columns>
                      <asp:TemplateField Visible="false">
                         <ItemTemplate>
