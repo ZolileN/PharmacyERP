@@ -31,19 +31,21 @@ namespace IMS
                 {
 
                     PopulateddDepartment();
+
+                    PopulateddCategory();
                     if (Convert.ToInt32(Session["subcatid"].ToString()) > 0)
                     {
+                        
                         txtSubCategoryName.Text = Session["subcatname"].ToString();
-                        ddDepartment.SelectedIndex = 1;
-
-                        foreach (ListItem Items in ddCategory.Items)
-                        {
-                            if (Items.Text.Equals(Session["catname"].ToString()))
-                            {
-                                ddCategory.SelectedIndex = ddCategory.Items.IndexOf(Items);
-                                break;
-                            }
-                        }
+                        
+                        //foreach (ListItem Items in ddCategory.Items)
+                        //{
+                        //    if (Items.Text.Contains(Session["catname"].ToString()))
+                        //    {
+                        //        ddCategory.SelectedIndex = ddCategory.Items.IndexOf(Items);
+                        //        break;
+                        //    }
+                        //}
 
                         btnSaveSubCategory.Text = "Update";
                     }
@@ -83,13 +85,33 @@ namespace IMS
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
                 ddDepartment.DataSource = ds.Tables[0];
+                
+               
+
                 ddDepartment.DataTextField = "Name";
                 ddDepartment.DataValueField = "DepId";
                 ddDepartment.DataBind();
                 if (ddDepartment != null)
                 {
                     ddDepartment.Items.Insert(0, "Select Department");
-                    ddDepartment.SelectedIndex = 0;
+
+                    if (Session["DepartmentName"] != null)
+                    {
+                        foreach (ListItem Items in ddDepartment.Items)
+                        {
+                            if (Items.Text.Contains(Session["DepartmentName"].ToString()))
+                            {
+                                ddDepartment.SelectedIndex = ddDepartment.Items.IndexOf(Items);
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ddDepartment.SelectedIndex = 0;
+                    }
+                  
+                    
                 }
             }
             catch (Exception ex)
@@ -124,7 +146,23 @@ namespace IMS
                 if (ddCategory != null)
                 {
                     ddCategory.Items.Insert(0, "Select Category");
-                    ddCategory.SelectedIndex = 0;
+
+                    if (Session["catname"] != null)
+                    {
+                        foreach (ListItem Items in ddCategory.Items)
+                        {
+                            if (Items.Text.Contains(Session["catname"].ToString()))
+                            {
+                                ddCategory.SelectedIndex = ddCategory.Items.IndexOf(Items);
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ddCategory.SelectedIndex = 0;
+                    }
+                     
                 }
             }
             catch (Exception ex)

@@ -36,7 +36,10 @@ namespace IMS
                     #region Getting Vendors
                     try
                     {
-                        connection.Open();
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
                         DataSet ds = new DataSet();
                         SqlCommand command = new SqlCommand("Sp_GetVendor", connection);
                         command.CommandType = CommandType.StoredProcedure;
@@ -123,7 +126,10 @@ namespace IMS
                   int idSys;
                   if (int.TryParse(Session["UserSys"].ToString(), out idSys))
                   {
-                      connection.Open();
+                      if(connection.State == ConnectionState.Closed)
+                      {
+                          connection.Open();
+                      }
                       SqlCommand command = new SqlCommand("sp_GetPendingOrders_ByVendorID", connection);
                       command.CommandType = CommandType.StoredProcedure;
                       command.Parameters.AddWithValue("@p_storedAt", idSys);
@@ -214,7 +220,10 @@ namespace IMS
                 int idSys;
                 if (int.TryParse(Session["UserSys"].ToString(), out idSys))
                 {
-                    connection.Open();
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
                     SqlCommand command = new SqlCommand("sp_GetPendingOrders_ByVendorID", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_storedAt", idSys);
@@ -368,7 +377,10 @@ namespace IMS
                     Label OrderNo = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("OrderNO");
 
                     int orderID = int.Parse(OrderNo.Text.ToString());
-                    connection.Open();
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
                     SqlCommand command = new SqlCommand("sp_DeleteOrder", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_OrderID", orderID);

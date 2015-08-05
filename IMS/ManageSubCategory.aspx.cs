@@ -132,7 +132,9 @@ namespace IMS
                 Label subcatid = (Label)row.FindControl("lblSubCat_ID");
                 Label subcatname = (Label)row.FindControl("lblSubCat_Name");
                 Label catname = (Label)row.FindControl("lblCat_Id");
+                Label lblDepartmentName = (Label)row.FindControl("lblDep_Id");
 
+                Session["DepartmentName"] = lblDepartmentName.Text;
                 Session["subcatname"] = subcatname.Text;
                 Session["catname"] = catname.Text;
                 Session["subcatid"] = subcatid.Text;
