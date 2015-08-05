@@ -109,7 +109,9 @@ namespace IMS
                     {
                         command.Parameters.AddWithValue("@p_RequestFrom", pRequestFrom);
                     }
+                    int userID = Convert.ToInt32(Session["UserID"].ToString());
 
+                    command.Parameters.AddWithValue("@p_userID", userID);
                     command.Parameters.AddWithValue("@p_OrderType", OrderType);
                     command.Parameters.AddWithValue("@p_Invoice", Invoice);
                     command.Parameters.AddWithValue("@p_OrderMode", OrderMode);

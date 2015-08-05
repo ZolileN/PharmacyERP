@@ -544,6 +544,10 @@ namespace IMS
                             command.Parameters.AddWithValue("@p_RequestFrom", pRequestFrom);
                         }
 
+                        int userID = Convert.ToInt32(Session["UserID"].ToString());
+
+                        command.Parameters.AddWithValue("@p_userID", userID);
+                        
                         command.Parameters.AddWithValue("@p_OrderType", 3);
                         command.Parameters.AddWithValue("@p_Invoice", "");
                         command.Parameters.AddWithValue("@p_OrderMode", "Vendor");
