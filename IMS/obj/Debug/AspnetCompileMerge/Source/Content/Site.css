@@ -94,7 +94,21 @@ input[type="password"] {
     }
 
 
+.add-btn {
+    width:21px;
+    height:21px;
+    background: url(../Images/add-icon.png) top left no-repeat;
+    border:0px;
+    text-indent:-444em;
+    margin-top:5px;
+    margin-bottom:5px;
+}
 
+    .add-btn:focus {
+    background-color:none !important;
+    background: url(../Images/add-icon.png) top left no-repeat;
+    outline:none ;
+    }
 
     
 .del-btn {
