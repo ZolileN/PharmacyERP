@@ -406,6 +406,14 @@ namespace IMS
             try
             {
                 StockDisplayGrid.EditIndex = e.NewEditIndex;
+                if (StockAt.SelectedIndex <= 0)
+                {
+                    LoadData("");
+                }
+                else
+                {
+                    LoadData(StockAt.SelectedValue);
+                }
                 //DataTable filterSet = StockDisplayGrid.DataSource as DataTable;
                 //DataView dataView = filterSet.DefaultView;
                 //Label OrderNo = (Label)StockDisplayGrid.Rows[e.NewEditIndex].FindControl("OrderNO");
@@ -426,14 +434,7 @@ namespace IMS
                     connection.Close();
                 throw ex;
             }
-            if (StockAt.SelectedIndex <= 0)
-            {
-                LoadData("");
-            }
-            else
-            {
-                LoadData(StockAt.SelectedValue);
-            }
+            
         }
 
         protected Boolean IsStatusComplete(String status)
@@ -469,12 +470,21 @@ namespace IMS
 
                 if (Status.Text.Equals("Complete") || Status.Text.Equals("Partial"))
                 {
-                    btnDelete.Enabled = false;
+                    if (btnDelete != null)
+                    {
+                        btnDelete.Enabled = false;
+                    }
                 }
                 else
                 {
-                    btnEdit.Enabled = true;
-                    btnDelete.Enabled = true;
+                    if (btnEdit != null)
+                    {
+                        btnEdit.Enabled = true;
+                    }
+                    if (btnDelete != null)
+                    {
+                        btnDelete.Enabled = true;
+                    }
                 }
             }
         }

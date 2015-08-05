@@ -18,6 +18,7 @@
                      <tr><td>
                     <h4>Add Product</h4>
                     </td>
+                         
                     <td align="right">
                         <asp:Button ID="btnCreateProduct" runat="server" OnClick="btnCreateProduct_Click"  Text="Save" CssClass="btn btn-primary" ValidationGroup="exSave"/>
                          <asp:Button ID="btnCancelProduct" runat="server" OnClick="btnCancelProduct_Click" Text="CANCEL" CssClass="btn btn-default" />
@@ -27,15 +28,16 @@
                     <tr>
         	            <td height="6"></td>
                     </tr>
-                    <!--<tr>
+                    <tr>
                          <td>
                              Search Product in Master Archive
                          </td>
+                        
                          <td>
                               <asp:TextBox runat="server" ID="txtProduct" CssClass="form-control product master-search"/>
                               <asp:Button runat="server" ID="btnMasterSearch" CssClass ="btn btn-sm btn-primary" Text="Master Search" OnClick="btnMasterSearch_Click"/>
                          </td>
-                     </tr>-->
+                     </tr>
                     </table>
       
         <hr />

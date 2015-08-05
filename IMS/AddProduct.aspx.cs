@@ -41,7 +41,8 @@ namespace IMS
                         #region Populating BarCode Serial
                         try
                         {
-                            connection.Open();
+                            if (connection.State == ConnectionState.Closed)
+                                connection.Open();
                             SqlCommand command = new SqlCommand("sp_ProductsCount", connection);
                             command.CommandType = CommandType.StoredProcedure;
 
@@ -86,11 +87,14 @@ namespace IMS
                         }
                         catch (Exception ex)
                         {
-
+                            if(connection.State== ConnectionState.Open)
+                                connection.Close();
+                            throw ex;
                         }
                         finally
                         {
-                            connection.Close();
+                            if (connection.State == ConnectionState.Open)
+                                connection.Close();
                         }
                         #endregion
 
@@ -143,7 +147,8 @@ namespace IMS
                     #region Populating Product Department DropDown
                     try
                     {
-                        connection.Open();
+                        if (connection.State == ConnectionState.Closed)
+                            connection.Open();
                         SqlCommand command = new SqlCommand("Sp_GetDepartmentList", connection);
                         command.CommandType = CommandType.StoredProcedure;
                         DataSet ds = new DataSet();
@@ -159,7 +164,7 @@ namespace IMS
                             ProductDept.SelectedIndex = 0;
                         }
 
-                        if (!Session["DepartmentID"].Equals(null))
+                        if (Session["DepartmentID"] != null && !String.IsNullOrEmpty(Session["DepartmentID"].ToString()))
                         {
                             int DepartmentID = int.Parse(Session["DepartmentID"].ToString());
                             ProductDept.SelectedIndex = DepartmentID;
@@ -176,11 +181,14 @@ namespace IMS
                     }
                     catch (Exception ex)
                     {
-
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
+                        throw ex;
                     }
                     finally
                     {
-                        connection.Close();
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
                     }
                     #endregion
 
@@ -208,6 +216,8 @@ namespace IMS
                 }
                 catch (Exception ex)
                 {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
                     throw ex;
                 }
             }
@@ -312,6 +322,7 @@ namespace IMS
                         string errorMessage = "";
                         try
                         {
+                            if(connection.State == ConnectionState.Closed)
                             connection.Open();
                             SqlCommand command = new SqlCommand("sp_InsertProduct", connection);
                             command.CommandType = CommandType.StoredProcedure;
@@ -426,11 +437,14 @@ namespace IMS
                         }
                         catch (Exception ex)
                         {
-                            errorMessage = ex.Message;
+                            if (connection.State == ConnectionState.Open)
+                                connection.Close();
+                            throw ex;
                         }
                         finally
                         {
-                            connection.Close();
+                            if (connection.State == ConnectionState.Open)
+                                connection.Close();
                         }
 
                         if (x == 1)
@@ -470,6 +484,7 @@ namespace IMS
                         #region Updating Product
                         try
                         {
+                            if (connection.State == ConnectionState.Closed)
                             connection.Open();
                             SqlCommand command = new SqlCommand("sp_UpdateProduct", connection);
                             command.CommandType = CommandType.StoredProcedure;
@@ -620,11 +635,14 @@ namespace IMS
                         }
                         catch (Exception ex)
                         {
-
+                            if (connection.State == ConnectionState.Open)
+                                connection.Close();
+                            throw ex;
                         }
                         finally
                         {
-                            connection.Close();
+                            if (connection.State == ConnectionState.Open)
+                                connection.Close();
                         }
 
                         Response.Redirect("ManageProducts.aspx", false);
@@ -699,7 +717,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }
@@ -714,7 +733,14 @@ namespace IMS
                 }
                 SqlCommand command = new SqlCommand("Sp_GetCategoryList", connection);
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@p_deptID", Convert.ToInt32(ProductDept.SelectedValue.ToString()));
+                if (ProductDept.SelectedIndex > 0)
+                {
+                    command.Parameters.AddWithValue("@p_deptID", Convert.ToInt32(ProductDept.SelectedValue.ToString()));
+                }
+                else 
+                {
+                    command.Parameters.AddWithValue("@p_deptID", DBNull.Value);
+                }
                 DataSet ds = new DataSet();
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
@@ -727,7 +753,7 @@ namespace IMS
                     ProductCat.Items.Insert(0, "Select Category");
                     ProductCat.SelectedIndex = 0;
                 }
-                if (!Session["CategoryID"].Equals(null))
+                if (Session["CategoryID"]!=null && !String.IsNullOrEmpty(Session["CategoryID"].ToString()))
                 {
                    // int CategoryID = int.Parse(Session["CategoryID"].ToString());
                     ProductCat.SelectedValue = Session["CategoryID"].ToString();
@@ -751,7 +777,7 @@ namespace IMS
                     ProductSubCat.SelectedIndex = 0;
                 }
 
-                if (!Session["SubCategoryID"].Equals(null))
+                if (Session["SubCategoryID"]!=null && !String.IsNullOrEmpty(Session["SubCategoryID"].ToString()))
                 {
                     //int SubCategoryID = int.Parse(Session["SubCategoryID"].ToString());
                     ProductSubCat.SelectedValue = Session["SubCategoryID"].ToString();
@@ -807,7 +833,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }
@@ -815,7 +842,7 @@ namespace IMS
         protected void btnMasterSearch_Click(object sender, EventArgs e)
         {
             Session["ProductMasterSearch"] = txtProduct.Text.ToString();
-            Response.Redirect("MasterProductSearch.aspx");
+            Response.Redirect("MasterProductSearch.aspx",false);
         }
 
      

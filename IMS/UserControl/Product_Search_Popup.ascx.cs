@@ -108,6 +108,8 @@ namespace IMS.UserControl
             }
             catch (Exception ex) 
             {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
                 throw ex;
             }
             

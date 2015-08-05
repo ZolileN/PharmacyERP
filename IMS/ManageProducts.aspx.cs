@@ -77,7 +77,8 @@ namespace IMS
                 int id;
                 if (int.TryParse(Session["UserSys"].ToString(), out id))
                 {
-                    connection.Open();
+                    if (connection.State == ConnectionState.Closed)
+                        connection.Open();
                     String Query;
                     SqlCommand command;
                     if (Convert.ToInt32(Session["UserSys"]).Equals(1))
@@ -111,7 +112,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }
@@ -292,7 +294,8 @@ namespace IMS
                     try
                     {
                             Label ItemNo = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("UPC");
-                            connection.Open();
+                            if (connection.State == ConnectionState.Closed)
+                                connection.Open();
                             SqlCommand command = new SqlCommand("sp_DeleteProduct", connection);
                             command.CommandType = CommandType.StoredProcedure;
                             
@@ -345,7 +348,8 @@ namespace IMS
             }
             finally
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
 
         }
