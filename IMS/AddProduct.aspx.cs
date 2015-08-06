@@ -282,7 +282,7 @@ namespace IMS
                 ProdcutBrand.Enabled = false;
                 ProductType.Enabled = false;
                 //incase of non-haad items editing is enabled
-                if (ItemType.Equals("Medicine(HAAD)"))
+                if (ItemType.ToString().ToLower().Equals("Medicine(HAAD)".ToLower()))
                 {
                     ProductCost.Enabled = false;
                     ProductSale.Enabled = false;

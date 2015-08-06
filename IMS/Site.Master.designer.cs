@@ -28,7 +28,7 @@ namespace IMS {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbllogin;
+        protected global::System.Web.UI.WebControls.Literal lbllogin;
         
         /// <summary>
         /// imgLogout control.
@@ -37,7 +37,7 @@ namespace IMS {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button imgLogout;
+        protected global::System.Web.UI.WebControls.ImageButton imgLogout;
         
         /// <summary>
         /// warehouseNav control.

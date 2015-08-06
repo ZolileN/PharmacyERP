@@ -33,7 +33,37 @@
                 display: none !important;
             }
         }
+
+         .userInfo{
+                  -webkit-border-radius: 10px;
+                  border-radius: 10px;
+                  background:#FFF;
+                  padding:6px 45px 7px 10px;
+                  position: absolute;
+                  top: 16px;
+                  right: 3px;
+
+        }
+        .userInfo span{
+            display:inline-block;
+            float:left;
+
+        }
+        .userInfo input{
+            position:absolute;
+            display:inline-block;
+            top:-8px;
+            right:-5px;
+            left:auto !important;
+            outline:none;
+            border:0px;
+
+        }
     </style>
+   
+       
+                                                                                                                                                                                                           
+
     <asp:ContentPlaceHolder runat="server" ID="HeadContent" />
 </head>
 <body>
@@ -43,12 +73,16 @@
                 
                 <div class="logo">
                 </div>
-                <div class="user-menu no-print">
-                   <asp:Label ID="lbllogin" runat="server" visible="false"/>
-                    <asp:Button ID="imgLogout" runat="server" Text="Logout"  OnClick="Unnamed_Click" />
-                       <%--<a runat="server" href="~/IMSLogin.aspx" onclick="Unnamed_Click">Logout</a>--%>
+           
+            <div class="userInfo no-print">
+                <span>
+                <asp:Literal ID="lbllogin" runat="server" visible="false"></asp:Literal>
+                    </span>
+              
+                 <asp:ImageButton id="imgLogout" runat="server" ImageUrl="images/logoutIcon.png"  OnClick="Unnamed_Click" />
                     
-                </div>
+                       <%--<a runat="server" href="~/IMSLogin.aspx" onclick="Unnamed_Click">Logout</a>--%>
+               </div>
             </div>
 
    
