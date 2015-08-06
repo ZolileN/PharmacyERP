@@ -114,8 +114,18 @@ namespace IMS
 
                 Vendor vendor = new Vendor();
                 vendor.SupName = SelectProduct.Text;
-                ds = VendorBLL.GetDistinctByNane(connection, vendor);
-                //ProductSet = ds;
+                int SysID = Convert.ToInt32(Session["UserSys"].ToString());
+                bool isStore;
+
+                if (!Session["UserRole"].ToString().Equals("Store"))
+                {
+                    isStore = false;
+                }
+                else
+                {
+                    isStore = true;
+                }
+                ds = VendorBLL.GetDistinctByNane(connection, vendor, SysID, isStore);
                 gdvVendor.DataSource = null;
                 gdvVendor.DataSource = ds;
                 gdvVendor.DataBind();
@@ -259,7 +269,18 @@ namespace IMS
         {
             Vendor vendor = new Vendor();
             vendor.SupName = SelectProduct.Text;
-            ds = VendorBLL.GetDistinctByNane(connection, vendor);
+            int SysID = Convert.ToInt32(Session["UserSys"].ToString());
+            bool isStore;
+           
+            if (!Session["UserRole"].ToString().Equals("Store"))
+            {
+                isStore = false;
+            }
+            else
+            {
+                isStore = true;
+            }
+            ds = VendorBLL.GetDistinctByNane(connection, vendor, SysID, isStore);
             //ProductSet = ds;
             gdvVendor.DataSource = null;
             gdvVendor.DataSource = ds;

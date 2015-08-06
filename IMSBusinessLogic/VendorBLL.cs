@@ -161,7 +161,7 @@ namespace IMSBusinessLogic
             }
         }
 
-        public static DataSet GetDistinctByNane(SqlConnection connection, Vendor vendor)
+        public static DataSet GetDistinctByNane(SqlConnection connection, Vendor vendor, int SysID, bool isStore)
         {
             DataSet resultSet = new DataSet();
             try
@@ -170,6 +170,9 @@ namespace IMSBusinessLogic
                 SqlCommand command = new SqlCommand("Sp_GetVendorByName", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_Supp_Name", vendor.SupName);
+                command.Parameters.AddWithValue("@p_isStore", isStore);
+                command.Parameters.AddWithValue("@p_SysID", SysID );
+
                 SqlDataAdapter SA = new SqlDataAdapter(command);
                 SA.Fill(resultSet);
 
