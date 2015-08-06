@@ -195,8 +195,6 @@ namespace IMS
         }
         private void LoadData()
         {
-           
-
              #region Populate salesman dropdown
 
             try
@@ -706,7 +704,8 @@ namespace IMS
             if (status)
             {
                 SO_PO_Mapping(Convert.ToInt32(dsProducts.Tables[0].Rows[0]["OrderID"].ToString()));
-            
+
+                
                 Session["FirstOrderSO"] = false;
                 Session["OrderSalesDetail"] = false;
                 Session["SelectedIndexValue"] = StockAt.SelectedItem;
@@ -1057,7 +1056,7 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_ProductID", Convert.ToInt32(lblProductId.Text));
                     command.Parameters.AddWithValue("@p_SysID", Convert.ToInt32(Session["UserSys"].ToString()));
 
-                   // command.Parameters.AddWithValue("@p_ProductID",  txtSearch.Text);
+                 // command.Parameters.AddWithValue("@p_ProductID",  txtSearch.Text);
                     DataSet QuantitySet = new DataSet();
                     SqlDataAdapter sA = new SqlDataAdapter(command);
                     sA.Fill(QuantitySet);
@@ -1240,7 +1239,6 @@ namespace IMS
                     }
                     else
                     {
-                       // Session["DetailID"] = "0";// declaring session as  0;
                         #region Product Existing in the Current Order
                         DataSet ds = new DataSet();
                         try
@@ -1447,6 +1445,8 @@ namespace IMS
             {
                 WebMessageBoxUtil.Show("Both ordered and bonus quanities cannot be 0");
             }
+
+            ViewState["OrderNumberSO"] = Session["OrderNumberSO"];
         }
 
         private void BindGrid()

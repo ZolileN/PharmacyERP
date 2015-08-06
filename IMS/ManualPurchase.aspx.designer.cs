@@ -121,6 +121,15 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.TextBox SelectPrice;
         
         /// <summary>
+        /// txtPercentageDiscount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPercentageDiscount;
+        
+        /// <summary>
         /// btnCreateOrder control.
         /// </summary>
         /// <remarks>
