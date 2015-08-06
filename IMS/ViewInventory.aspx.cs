@@ -559,7 +559,7 @@ namespace IMS
         protected void StockDisplayGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             dgvStockDisplayGrid.PageIndex = e.NewPageIndex;
-            BindGrid();
+            BindGridbyFilters();
         }
 
         protected void StockDisplayGrid_RowCommand(object sender, GridViewCommandEventArgs e)

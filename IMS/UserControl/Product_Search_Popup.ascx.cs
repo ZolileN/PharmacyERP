@@ -136,7 +136,7 @@ namespace IMS.UserControl
         {
             if (Session["Text"] != null)
             {
-               
+                ViewState["first"] = false;
                 DataTable dt = new DataTable();
                 DataSet ds = new DataSet();
                 #region Getting Product Details
@@ -200,6 +200,7 @@ namespace IMS.UserControl
         public void BindGrid()
         {
             //SaveCurrentState();
+            ViewState["first"] = false;
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
             #region Getting Product Details
@@ -257,6 +258,7 @@ namespace IMS.UserControl
 
         public void selectAllProducts()
         {
+            ViewState["first"] = false;
             DataSet productSet = (DataSet)Session["dsProducts_PopUp"];
             ArrayList CheckBoxArray;
             if (ViewState["CheckBoxArray"] != null)
