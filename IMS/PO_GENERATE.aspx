@@ -193,6 +193,13 @@
                     <ItemStyle Width="110px" HorizontalAlign="Left" />
                 </asp:TemplateField>
 
+                 <asp:TemplateField HeaderText="Discount %"  HeaderStyle-Width ="110px">
+                        <ItemTemplate>
+                            <asp:Label ID="lblDiscount" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Discount") %>' ></asp:Label>
+                        </ItemTemplate>
+                        <ItemStyle  Width="90px" HorizontalAlign="Left"/>
+               </asp:TemplateField>
+
             </Columns>
         </asp:GridView>
         <br />

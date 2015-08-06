@@ -326,9 +326,9 @@ namespace IMS
                         SqlCommand command = new SqlCommand("sp_InserOrderDetail_ByStore", connection);
                         command.CommandType = CommandType.StoredProcedure;
                         int ProductNumber = 0;
-                        int OrderNumber, BonusOrdered, Quantity;
-                        OrderNumber = BonusOrdered = Quantity = 0;
-
+                        int OrderNumber, BonusOrdered, Quantity, PercentageDiscount;
+                        OrderNumber = BonusOrdered = Quantity = PercentageDiscount = 0;
+                        
                         if (int.TryParse(Session["OrderNumber"].ToString(), out OrderNumber))
                         {
                             command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
@@ -350,6 +350,14 @@ namespace IMS
                         else
                         {
                             command.Parameters.AddWithValue("@p_OrderBonusQuantity", DBNull.Value);
+                        }
+                        if (int.TryParse(txtPercentageDiscount.Text.ToString(), out PercentageDiscount))
+                        {
+                            command.Parameters.AddWithValue("@p_PercentageDiscount", PercentageDiscount);
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@p_PercentageDiscount", DBNull.Value);
                         }
 
                         command.Parameters.AddWithValue("@p_status", "Pending");
@@ -519,6 +527,7 @@ namespace IMS
                 BindGrid();
                 //txtProduct.Text = "";
                 //SelectProduct.Visible = false;
+                txtPercentageDiscount.Text = "";
                 txtSearch.Text = "";
                 // RequestTo.Visible = false;
                 SelectQuantity.Text = "";
