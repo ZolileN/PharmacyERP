@@ -115,7 +115,7 @@
                  <Columns>
                      <asp:TemplateField HeaderText="Action">
                         <ItemTemplate>
-                            <asp:LinkButton CssClass="btn btn-default edit-btn" ID="btnEdit" Visible= '<%# IsWarehouse() %>' Text="Edit" runat="server" CommandName="Edit" CommandArgument='<%# Container.DisplayIndex%>'/>
+                            <asp:LinkButton CssClass="btn btn-default edit-btn" ID="btnEdit" Visible="true" Text="Edit" runat="server" CommandName="Edit" CommandArgument='<%# Container.DisplayIndex%>'/>
                             <span onclick="return confirm('Are you sure you want to delete this record?')">
                                 <asp:LinkButton CssClass="btn btn-default del-btn" ID="btnDelete" Text="Delete" Visible= '<%# IsWarehouse() %>' runat="server" CommandName="Delete" CommandArgument='<%# Container.DisplayIndex  %>'/>
                             </span>
@@ -170,7 +170,7 @@
                         </ItemTemplate>
                         <ItemStyle  Width="110px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
-
+                     
                      
                  </Columns>
             <PagerStyle CssClass = "GridPager" />
