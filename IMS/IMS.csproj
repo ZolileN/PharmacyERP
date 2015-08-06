@@ -238,6 +238,7 @@
   <ItemGroup>
     <Content Include="AcceptOrder.aspx" />
     <Content Include="AcceptPurchaseOrder.aspx" />
+    <Content Include="Images\logoutIcon.png" />
     <Content Include="Unused Pages\AcceptSalesOrders.aspx" />
     <Content Include="AddDepartment.aspx" />
     <Content Include="AddEditCategory.aspx" />
