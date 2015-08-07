@@ -413,6 +413,7 @@ namespace IMS
             }
             finally
             {
+                if (connection.State == ConnectionState.Open)
                 connection.Close();
             }
 
@@ -510,6 +511,7 @@ namespace IMS
             }
             finally
             {
+                if (connection.State == ConnectionState.Open)
                 connection.Close();
             }
         }

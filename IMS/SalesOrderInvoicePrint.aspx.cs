@@ -117,20 +117,28 @@ namespace IMS
 
         protected void btnBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("SalesOrderInvoice.aspx");
+            Response.Redirect("SalesOrderInvoice.aspx",false);
         }
 
         protected void StockDisplayGrid_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (Session["PrintCheck"].ToString().Equals("Actual"))
+            try
             {
-                e.Row.Cells[7].Visible = false;
-                e.Row.Cells[8].Visible = false;
+                if (Session["PrintCheck"].ToString().Equals("Actual"))
+                {
+                    e.Row.Cells[7].Visible = false;
+                    e.Row.Cells[8].Visible = false;
+                }
+                else if (Session["PrintCheck"].ToString().Equals("Bonus"))
+                {
+                    e.Row.Cells[5].Visible = false;
+                    e.Row.Cells[6].Visible = false;
+                }
             }
-            else if (Session["PrintCheck"].ToString().Equals("Bonus"))
+            catch (Exception ex)
             {
-                e.Row.Cells[5].Visible = false;
-                e.Row.Cells[6].Visible = false;
+                
+                //throw;
             }
         }
     }

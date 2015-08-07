@@ -294,6 +294,7 @@ namespace IMS
                     }
                     finally
                     {
+                        if (connection.State == ConnectionState.Open)
                         connection.Close();
                     }
 

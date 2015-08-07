@@ -283,7 +283,7 @@ namespace IMS
                     command = new SqlCommand("sp_UpdateTransferOrderDetials_Generate", connection);
                     command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
                     command.Parameters.AddWithValue("@p_SystemID", int.Parse(Session["WH_RequestedFromID"].ToString()));
-
+               
                     //command.Parameters.AddWithValue("@p_TransferID", TransferNo);
                     //command.Parameters.AddWithValue("@p_TransferDetID", TransferDetailNo);
                     //command.Parameters.AddWithValue("@p_RequestedQty", RequestedQty);
@@ -348,7 +348,7 @@ namespace IMS
                 int OrderType = 3;//incase of vendor this should be 3
 
                 OrderMode = "Transfer";
-
+                int userID = Convert.ToInt32(Session["UserID"].ToString());
 
                 if (connection.State == ConnectionState.Closed)
                 {
@@ -373,7 +373,7 @@ namespace IMS
                 command.Parameters.AddWithValue("@p_Vendor", DBNull.Value);
 
                 command.Parameters.AddWithValue("@p_Salesman", DBNull.Value);
-
+                command.Parameters.AddWithValue("@p_userID", userID);
                 command.Parameters.AddWithValue("@p_orderStatus", "Pending");
                 DataTable dt = new DataTable();
                 SqlDataAdapter dA = new SqlDataAdapter(command);
@@ -691,7 +691,7 @@ namespace IMS
             {
                 int TransferNo, TransferDetailNo, RequestedQty, requestedBonusQty, TransferedQty, transferedBonusQty, ReceivedQty, AvailableQty, ProductId, Discount;
                 int LogedInStoreID;
-
+                 int userID = Convert.ToInt32(Session["UserID"].ToString());
                 int.TryParse(Session["UserSys"].ToString(), out LogedInStoreID);
                 GridView dgvReceiveTransfer = (GridView)sender;
                 Label lblTransferNo = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblRequestNo");
@@ -751,7 +751,9 @@ namespace IMS
                                 }
                             }
                         }
+                       
 
+                        
                         if (connection.State == ConnectionState.Closed)
                         {
                             connection.Open();
@@ -776,7 +778,7 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
                         command.Parameters.AddWithValue("@p_ProductID", ProductId);
                         command.Parameters.AddWithValue("@p_Discount", Discount);
-
+                        command.Parameters.AddWithValue("@p_TransferToUserID", userID);
                         command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
 

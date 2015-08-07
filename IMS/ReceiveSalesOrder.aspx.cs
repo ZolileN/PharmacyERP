@@ -275,30 +275,38 @@ namespace IMS
 
         protected void StockDisplayGrid_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            try
             {
-                Label Status = (Label)e.Row.FindControl("OrderStatus");
-                Button btnEdit = (Button)e.Row.FindControl("btnEdit");
-                Button btnDelete = (Button)e.Row.FindControl("btnDelete");
+                if (e.Row.RowType == DataControlRowType.DataRow)
+                {
+                    Label Status = (Label)e.Row.FindControl("OrderStatus");
+                    Button btnEdit = (Button)e.Row.FindControl("btnEdit");
+                    Button btnDelete = (Button)e.Row.FindControl("btnDelete");
 
-                if (Status.Text.Equals("Complete") || Status.Text.Equals("Partial"))
-                {
-                    if (btnDelete != null)
+                    if (Status.Text.Equals("Complete") || Status.Text.Equals("Partial"))
                     {
-                        btnDelete.Enabled = false;
+                        if (btnDelete != null)
+                        {
+                            btnDelete.Enabled = false;
+                        }
+                    }
+                    else
+                    {
+                        if (btnEdit != null)
+                        {
+                            btnEdit.Enabled = true;
+                        }
+                        if (btnDelete != null)
+                        {
+                            btnDelete.Enabled = true;
+                        }
                     }
                 }
-                else
-                {
-                    if (btnEdit != null)
-                    {
-                        btnEdit.Enabled = true;
-                    }
-                    if (btnDelete != null)
-                    {
-                        btnDelete.Enabled = true;
-                    }
-                }
+            }
+            catch (Exception ex)
+            {
+                
+                //throw;
             }
         }
 

@@ -280,49 +280,57 @@ namespace IMS
 
         protected void StockDisplayGrid_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            try
             {
-                Label ProductStrength = (Label)e.Row.FindControl("ProductStrength2");
-                Label Label1 = (Label)e.Row.FindControl("Label1");
+                if (e.Row.RowType == DataControlRowType.DataRow)
+                {
+                    Label ProductStrength = (Label)e.Row.FindControl("ProductStrength2");
+                    Label Label1 = (Label)e.Row.FindControl("Label1");
 
-                Label dosage = (Label)e.Row.FindControl("dosage2");
-                Label Label2 = (Label)e.Row.FindControl("Label2");
+                    Label dosage = (Label)e.Row.FindControl("dosage2");
+                    Label Label2 = (Label)e.Row.FindControl("Label2");
 
-                Label packSize = (Label)e.Row.FindControl("packSize2");
-                Label Label3 = (Label)e.Row.FindControl("Label3");
+                    Label packSize = (Label)e.Row.FindControl("packSize2");
+                    Label Label3 = (Label)e.Row.FindControl("Label3");
 
-                if (String.IsNullOrWhiteSpace(ProductStrength.Text))
-                {
-                    ProductStrength.Visible = false;
-                    Label1.Visible = false;
-                }
-                else
-                {
-                    ProductStrength.Visible = true;
-                    Label1.Visible = true;
-                }
+                    if (String.IsNullOrWhiteSpace(ProductStrength.Text))
+                    {
+                        ProductStrength.Visible = false;
+                        Label1.Visible = false;
+                    }
+                    else
+                    {
+                        ProductStrength.Visible = true;
+                        Label1.Visible = true;
+                    }
 
-                if (String.IsNullOrWhiteSpace(dosage.Text))
-                {
-                    dosage.Visible = false;
-                    Label2.Visible = false;
-                }
-                else
-                {
-                    dosage.Visible = true;
-                    Label2.Visible = true;
-                }
+                    if (String.IsNullOrWhiteSpace(dosage.Text))
+                    {
+                        dosage.Visible = false;
+                        Label2.Visible = false;
+                    }
+                    else
+                    {
+                        dosage.Visible = true;
+                        Label2.Visible = true;
+                    }
 
-                if (String.IsNullOrWhiteSpace(packSize.Text))
-                {
-                    packSize.Visible = false;
-                    Label3.Visible = false;
+                    if (String.IsNullOrWhiteSpace(packSize.Text))
+                    {
+                        packSize.Visible = false;
+                        Label3.Visible = false;
+                    }
+                    else
+                    {
+                        packSize.Visible = true;
+                        Label3.Visible = true;
+                    }
                 }
-                else
-                {
-                    packSize.Visible = true;
-                    Label3.Visible = true;
-                }
+            }
+            catch (Exception ex)
+            {
+                
+                //throw;
             }
         }
     }

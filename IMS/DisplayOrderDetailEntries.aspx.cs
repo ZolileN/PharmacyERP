@@ -716,14 +716,22 @@ namespace IMS
 
         protected void StockDisplayGrid_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            try
             {
-                TextBox txtReturnedQuantity = (TextBox)e.Row.FindControl("txtAddExpDate");
-                if (txtReturnedQuantity!= null)
+                if (e.Row.RowType == DataControlRowType.DataRow)
                 {
-                    txtReturnedQuantity.Attributes.Add("onselect", "CheckExpiry(" + e.Row.RowIndex + ");return false;");
+                    TextBox txtReturnedQuantity = (TextBox)e.Row.FindControl("txtAddExpDate");
+                    if (txtReturnedQuantity != null)
+                    {
+                        txtReturnedQuantity.Attributes.Add("onselect", "CheckExpiry(" + e.Row.RowIndex + ");return false;");
 
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                
+                //throw;
             }
         }
 

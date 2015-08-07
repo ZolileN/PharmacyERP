@@ -98,7 +98,7 @@ namespace IMS
         }
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
-            Response.Redirect("ReplenishMovement.aspx");
+            Response.Redirect("ReplenishMovement.aspx",false);
         }
 
         protected void gvReplenismentPO_RowDataBound(object sender, GridViewRowEventArgs e)

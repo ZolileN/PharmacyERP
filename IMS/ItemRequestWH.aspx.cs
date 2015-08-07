@@ -108,20 +108,20 @@ namespace IMS
                         WebMessageBoxUtil.Show("Both ordered quantities cannot be 0");
                     }
                 }
-                else if (e.CommandName.Equals("Delete"))
-                {
+                //else if (e.CommandName.Equals("Delete"))
+                //{
 
-                    int orderDetID = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("OrderDetailNo")).Text);
-                    if (connection.State == ConnectionState.Closed)
-                    {
-                        connection.Open();
-                    }
-                    SqlCommand command = new SqlCommand("Sp_DeleteTransferDetails", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
+                //    int orderDetID = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("OrderDetailNo")).Text);
+                //    if (connection.State == ConnectionState.Closed)
+                //    {
+                //        connection.Open();
+                //    }
+                //    SqlCommand command = new SqlCommand("Sp_DeleteTransferDetails", connection);
+                //    command.CommandType = CommandType.StoredProcedure;
+                //    command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
 
-                    command.ExecuteNonQuery();
-                }
+                //    command.ExecuteNonQuery();
+                //}
             }
             catch (Exception ex)
             {
@@ -525,32 +525,36 @@ namespace IMS
 
         protected void StockDisplayGrid_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            try
             {
-                Label Status = (Label)e.Row.FindControl("lblStatus");
-                Button btnEdit = (Button)e.Row.FindControl("btnEdit");
-                Button btnDelete = (Button)e.Row.FindControl("btnDelete");
-
-                if (Status.Text.Equals("Complete") || Status.Text.Equals("Partial"))
+                if (e.Row.RowType == DataControlRowType.DataRow)
                 {
-                    if (btnDelete != null)
-                    {
-                        btnDelete.Enabled = false;
-                    }
-                }
-                else
-                {
-                    if (btnEdit != null)
-                    {
-                        btnEdit.Enabled = true;
-                    }
-                    if (btnDelete != null)
-                    {
-                        btnDelete.Enabled = true;
-                    }
-                }
+                    Label Status = (Label)e.Row.FindControl("lblStatus");
+                    Button btnEdit = (Button)e.Row.FindControl("btnEdit");
+                    Button btnDelete = (Button)e.Row.FindControl("btnDelete");
 
+                    if (Status.Text.Equals("Complete") || Status.Text.Equals("Partial"))
+                    {
+                        if (btnDelete != null)
+                        {
+                            btnDelete.Enabled = false;
+                        }
+                    }
+                    else
+                    {
+                        if (btnEdit != null)
+                        {
+                            btnEdit.Enabled = true;
+                        }
+                        if (btnDelete != null)
+                        {
+                            btnDelete.Enabled = true;
+                        }
+                    }
+
+                }
             }
+            catch (Exception ex) { }
         }
 
         protected void btnAccept_Click(object sender, EventArgs e)
@@ -586,7 +590,7 @@ namespace IMS
                         connection.Open();
                     }
                     //fetch order detail entries
-                    SqlCommand command = new SqlCommand("Sp_GetTransferReceiveEntry_byTransferID", connection);
+                    SqlCommand command = new SqlCommand("Sp_FetchTransferReceiveEntry_byTransferID", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_TransferID", orderID);
                     SqlDataAdapter sA = new SqlDataAdapter(command);

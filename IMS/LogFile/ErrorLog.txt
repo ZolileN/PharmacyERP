@@ -1,0 +1,67 @@
+ERROR - 2015-08-07 12:13:07,875 - [Source = IMS.OrderSalesManual]-  System.NullReferenceException Message : Object reference not set to an instance of an object. Inner Exception :  Method : Void BindGrid() Stack trace # :    at IMS.OrderSalesManual.BindGrid() in d:\code\PharmacyERP\IMS\OrderSalesManual.aspx.cs:line 1501
+   at IMS.OrderSalesManual.StockDisplayGrid_RowEditing(Object sender, GridViewEditEventArgs e) in d:\code\PharmacyERP\IMS\OrderSalesManual.aspx.cs:line 1032
+   at System.Web.UI.WebControls.GridView.OnRowEditing(GridViewEditEventArgs e)
+   at System.Web.UI.WebControls.GridView.HandleEdit(Int32 rowIndex)
+   at System.Web.UI.WebControls.GridView.HandleEvent(EventArgs e, Boolean causesValidation, String validationGroup)
+   at System.Web.UI.WebControls.GridView.OnBubbleEvent(Object source, EventArgs e)
+   at System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args)
+   at System.Web.UI.WebControls.GridViewRow.OnBubbleEvent(Object source, EventArgs e)
+   at System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args)
+   at System.Web.UI.WebControls.Button.OnCommand(CommandEventArgs e)
+   at System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   at System.Web.UI.WebControls.Button.System.Web.UI.IPostBackEventHandler.RaisePostBackEvent(String eventArgument)
+   at System.Web.UI.Page.RaisePostBackEvent(IPostBackEventHandler sourceControl, String eventArgument)
+   at System.Web.UI.Page.RaisePostBackEvent(NameValueCollection postData)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+ ------------------------------------------------------------------------------------------------------ 
+ ERROR - 2015-08-07 12:20:25,106 - [Source = IMS.OrderSalesManual_Details]-  System.NullReferenceException Message : Object reference not set to an instance of an object. Inner Exception :  Method : Void BindGrid() Stack trace # :    at IMS.OrderSalesManual_Details.BindGrid() in d:\code\PharmacyERP\IMS\OrderSalesManual_Details.aspx.cs:line 114
+   at IMS.OrderSalesManual_Details.StockDisplayGrid_RowEditing(Object sender, GridViewEditEventArgs e) in d:\code\PharmacyERP\IMS\OrderSalesManual_Details.aspx.cs:line 344
+   at System.Web.UI.WebControls.GridView.OnRowEditing(GridViewEditEventArgs e)
+   at System.Web.UI.WebControls.GridView.HandleEdit(Int32 rowIndex)
+   at System.Web.UI.WebControls.GridView.HandleEvent(EventArgs e, Boolean causesValidation, String validationGroup)
+   at System.Web.UI.WebControls.GridView.OnBubbleEvent(Object source, EventArgs e)
+   at System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args)
+   at System.Web.UI.WebControls.GridViewRow.OnBubbleEvent(Object source, EventArgs e)
+   at System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args)
+   at System.Web.UI.WebControls.Button.OnCommand(CommandEventArgs e)
+   at System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   at System.Web.UI.WebControls.Button.System.Web.UI.IPostBackEventHandler.RaisePostBackEvent(String eventArgument)
+   at System.Web.UI.Page.RaisePostBackEvent(IPostBackEventHandler sourceControl, String eventArgument)
+   at System.Web.UI.Page.RaisePostBackEvent(NameValueCollection postData)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+ ------------------------------------------------------------------------------------------------------ 
+ ERROR - 2015-08-07 12:27:02,614 - [Source = IMS.OrderSalesManual_Details]-  System.NullReferenceException Message : Object reference not set to an instance of an object. Inner Exception :  Method : Void BindGrid() Stack trace # :    at IMS.OrderSalesManual_Details.BindGrid() in d:\code\PharmacyERP\IMS\OrderSalesManual_Details.aspx.cs:line 114
+   at IMS.OrderSalesManual_Details.StockDisplayGrid_RowEditing(Object sender, GridViewEditEventArgs e) in d:\code\PharmacyERP\IMS\OrderSalesManual_Details.aspx.cs:line 344
+   at System.Web.UI.WebControls.GridView.OnRowEditing(GridViewEditEventArgs e)
+   at System.Web.UI.WebControls.GridView.HandleEdit(Int32 rowIndex)
+   at System.Web.UI.WebControls.GridView.HandleEvent(EventArgs e, Boolean causesValidation, String validationGroup)
+   at System.Web.UI.WebControls.GridView.OnBubbleEvent(Object source, EventArgs e)
+   at System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args)
+   at System.Web.UI.WebControls.GridViewRow.OnBubbleEvent(Object source, EventArgs e)
+   at System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args)
+   at System.Web.UI.WebControls.Button.OnCommand(CommandEventArgs e)
+   at System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   at System.Web.UI.WebControls.Button.System.Web.UI.IPostBackEventHandler.RaisePostBackEvent(String eventArgument)
+   at System.Web.UI.Page.RaisePostBackEvent(IPostBackEventHandler sourceControl, String eventArgument)
+   at System.Web.UI.Page.RaisePostBackEvent(NameValueCollection postData)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+ ------------------------------------------------------------------------------------------------------ 
+ ERROR - 2015-08-07 19:10:48,834 - [Source = IMS.ItemRequestWH]-  System.Data.SqlClient.SqlException Message : The DELETE statement conflicted with the REFERENCE constraint "FK_tblTransferDetails_tblTransferMaster". The conflict occurred in database "eIventory12-05-2015", table "dbo.tblTransferDetails", column 'TransferID'.
+The statement has been terminated. Inner Exception :  Method : Void btnDecline_Click(System.Object, System.EventArgs) Stack trace # :    at IMS.ItemRequestWH.btnDecline_Click(Object sender, EventArgs e) in d:\code\PharmacyERP\IMS\ItemRequestWH.aspx.cs:line 637
+   at System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   at System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   at System.Web.UI.WebControls.Button.System.Web.UI.IPostBackEventHandler.RaisePostBackEvent(String eventArgument)
+   at System.Web.UI.Page.RaisePostBackEvent(IPostBackEventHandler sourceControl, String eventArgument)
+   at System.Web.UI.Page.RaisePostBackEvent(NameValueCollection postData)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+ ------------------------------------------------------------------------------------------------------ 
+ ERROR - 2015-08-07 19:14:05,140 - [Source = IMS.ItemRequestWH]-  System.Data.SqlClient.SqlException Message : The DELETE statement conflicted with the REFERENCE constraint "FK_tblTransferDetails_tblTransferMaster". The conflict occurred in database "eIventory12-05-2015", table "dbo.tblTransferDetails", column 'TransferID'.
+The statement has been terminated. Inner Exception :  Method : Void btnDecline_Click(System.Object, System.EventArgs) Stack trace # :    at IMS.ItemRequestWH.btnDecline_Click(Object sender, EventArgs e) in d:\code\PharmacyERP\IMS\ItemRequestWH.aspx.cs:line 637
+   at System.Web.UI.WebControls.Button.OnClick(EventArgs e)
+   at System.Web.UI.WebControls.Button.RaisePostBackEvent(String eventArgument)
+   at System.Web.UI.WebControls.Button.System.Web.UI.IPostBackEventHandler.RaisePostBackEvent(String eventArgument)
+   at System.Web.UI.Page.RaisePostBackEvent(IPostBackEventHandler sourceControl, String eventArgument)
+   at System.Web.UI.Page.RaisePostBackEvent(NameValueCollection postData)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+ ------------------------------------------------------------------------------------------------------ 
+ 
