@@ -153,7 +153,7 @@ namespace IMS
         {
             try
             {
-                if (txtFromDate.Text.Equals(txtToDate.Text))
+                if (txtFromDate.Text.Equals(txtToDate.Text) && Session["parameter"].Equals("Calculation"))
                 {
                     WebMessageBoxUtil.Show("From & Two Dates cannot be equal, please change it");
                 }

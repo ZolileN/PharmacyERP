@@ -31,6 +31,10 @@ namespace IMS
             {
                 try
                 {
+                    if (Session["UserRole"].ToString().Equals("Store"))
+                    {
+                        btnAddCategory.Enabled = false;
+                    }
                     BindGrid(false);
                     BindDropSearch();
                 }
@@ -210,6 +214,25 @@ namespace IMS
 
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+                try
+                {
+                    if (Session["UserRole"].ToString().Equals("Store"))
+                    {
+                        LinkButton btnEdit = (LinkButton)e.Row.FindControl("btnEdit");
+                        LinkButton btnDelete = (LinkButton)e.Row.FindControl("btnDelete");
+                        btnEdit.Visible = false;
+                        btnDelete.Visible = false;
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+                finally
+                {
+
+                }
+
                 if ((e.Row.RowState & DataControlRowState.Edit) > 0)
                 {
                     try

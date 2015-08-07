@@ -32,6 +32,10 @@ namespace IMS
             {
                 try
                 {
+                    if (Session["UserRole"].ToString().Equals("Store"))
+                    {
+                        btnAddSubCategory.Enabled = false;
+                    }
                     BindGrid(false);
                     BindDropSearch();
                 }
@@ -193,6 +197,28 @@ namespace IMS
 
         protected void SubCategoryDisplayGrid_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                try
+                {
+                    if (Session["UserRole"].ToString().Equals("Store"))
+                    {
+                        LinkButton btnEdit = (LinkButton)e.Row.FindControl("btnEdit");
+                        LinkButton btnDelete = (LinkButton)e.Row.FindControl("btnDelete");
+                        btnEdit.Visible = false;
+                        btnDelete.Visible = false;
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+                finally
+                {
+
+                }
+            }
+
             if (e.Row.RowType == DataControlRowType.DataRow && SubCategoryDisplayGrid.EditIndex == e.Row.RowIndex)
             {
                 try

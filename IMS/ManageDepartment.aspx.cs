@@ -31,7 +31,10 @@ namespace IMS
             {
                 try
                 {
-
+                    if (Session["UserRole"].ToString().Equals("Store"))
+                    {
+                        btnAddDepartment.Enabled = false;
+                    }
                     BindGrid(false);
                     //BindDropSearch();
                 }
@@ -196,6 +199,29 @@ namespace IMS
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
             Response.Redirect("WarehouseMain.aspx", false);
+        }
+
+        protected void DepDisplayGrid_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                try
+                {
+                    if (Session["UserRole"].ToString().Equals("Store"))
+                    {
+                        LinkButton btnEdit = (LinkButton)e.Row.FindControl("btnEdit");
+                        LinkButton btnDelete = (LinkButton)e.Row.FindControl("btnDelete");
+                        btnEdit.Visible = false;
+                        btnDelete.Visible = false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                }
+                finally
+                {
+                }
+            }
         }
     }
 }

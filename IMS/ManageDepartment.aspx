@@ -24,7 +24,7 @@
         <hr />
     <asp:GridView ID="DepDisplayGrid" runat="server" width="100%" AllowPaging="True" PageSize="10" CssClass="table table-striped table-bordered table-condensed DeptTbl"
                 AutoGenerateColumns="false" OnPageIndexChanging="DepDisplayGrid_PageIndexChanging"   onrowcancelingedit="DepDisplayGrid_RowCancelingEdit" ShowFooter="true"
-            onrowcommand="DepDisplayGrid_RowCommand"  onrowdeleting="DepDisplayGrid_RowDeleting" onrowediting="DepDisplayGrid_RowEditing">
+            onrowcommand="DepDisplayGrid_RowCommand"  onrowdeleting="DepDisplayGrid_RowDeleting" onrowediting="DepDisplayGrid_RowEditing" OnRowDataBound ="DepDisplayGrid_RowDataBound">
                 <Columns>
                     <asp:TemplateField HeaderText="Department ID">
                         <ItemTemplate>
