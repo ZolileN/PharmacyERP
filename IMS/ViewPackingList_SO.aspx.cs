@@ -207,6 +207,7 @@ namespace IMS
         {
             Session["OrderSalesDetail"] = true;
             Session["ViewSalesOrders"] = false;
+            Session["RegenerationMapping"] = "YES";
             Response.Redirect("OrderSalesManual.aspx",false);
             //Response.Redirect("ManageOrders.aspx", false);
         }

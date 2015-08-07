@@ -153,19 +153,26 @@ namespace IMS
         {
             try
             {
-                Session["FromSalesDate"] = txtFromDate.Text;
-                Session["ToSalesDate"] = txtToDate.Text;
-                Session["ReplenishDays"] = txtReplenishDays.Text;
-
-                if (ddlVendorNames.SelectedItem.ToString().Equals("All Vendors"))
+                if (txtFromDate.Text.Equals(txtToDate.Text))
                 {
-                    Session["ReplenishVendorID"] = -1;
-                    Response.Redirect("ReplenishMovement.aspx");
+                    WebMessageBoxUtil.Show("From & Two Dates cannot be equal, please change it");
                 }
                 else
                 {
-                    Session["ReplenishVendorID"] = ddlVendorNames.SelectedValue;
-                    Response.Redirect("ReplenishMovement.aspx");
+                    Session["FromSalesDate"] = txtFromDate.Text;
+                    Session["ToSalesDate"] = txtToDate.Text;
+                    Session["ReplenishDays"] = txtReplenishDays.Text;
+
+                    if (ddlVendorNames.SelectedItem.ToString().Equals("All Vendors"))
+                    {
+                        Session["ReplenishVendorID"] = -1;
+                        Response.Redirect("ReplenishMovement.aspx");
+                    }
+                    else
+                    {
+                        Session["ReplenishVendorID"] = ddlVendorNames.SelectedValue;
+                        Response.Redirect("ReplenishMovement.aspx");
+                    }
                 }
             }
             catch (Exception ex) 

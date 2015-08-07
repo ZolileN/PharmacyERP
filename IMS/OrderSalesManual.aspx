@@ -48,7 +48,7 @@
                 </span>
                 <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Text="REFRESH" CssClass="btn btn-default btn-large" Visible="False" />
                 <asp:Button ID="btnCancelOrder" runat="server" OnClick="btnCancelOrder_Click" Text="Go Back" CssClass="btn btn-default btn-large" />
-                
+                <asp:Button ID="btnMapPreviousOrders" runat="server" OnClick="btnMapPreviousOrders_Click" Text="Map Prev. Orders" CssClass="btn btn-default btn-large" />
             </td>
         </tr>
 		<tr>
@@ -116,10 +116,7 @@
             <td><asp:Label runat="server" AssociatedControlID="SelectDiscount" CssClass="control-label">Enter Discount %</asp:Label></td>
             <td> <asp:TextBox runat="server" ID="SelectDiscount" CssClass="form-control" /></td>
         </tr>
-       <tr>
-          
-       </tr>
-       
+              
     </table>
 
     

@@ -45,6 +45,7 @@ namespace IMS
                         if (Session["ViewSalesOrders"] != null && Session["ViewSalesOrders"].Equals(true))
                         {
                             btnAccept.Text = "RE-GENERATE ORDER";
+                            
                             Session["ViewSalesOrders"] = false;
                         }
                         Session["ViewSalesOrders"] = null;
@@ -500,6 +501,68 @@ namespace IMS
             return ds;
         }
 
+
+        public void RegenerationSO_MappingChanges(int SalesOrder)
+        {
+            DataSet dsPrevMappedValues = new DataSet();
+
+            #region Deleting and Selecting Previous Mapped Values
+            try
+            {
+                if (connection.State == ConnectionState.Closed) { connection.Open(); }
+                SqlCommand command = new SqlCommand("sp_Get_MappingSOPO_bySOID", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_SOID", SalesOrder);
+                SqlDataAdapter sdA = new SqlDataAdapter(command);
+                sdA.Fill(dsPrevMappedValues);
+
+                command = new SqlCommand("sp_Delete_SOPOMap_bySOID", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_SOID", SalesOrder);
+                command.ExecuteNonQuery();
+
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open) { connection.Close();}
+            }
+            #endregion
+
+            #region Reverting Back QS and BQS Values
+            try
+            {
+                if (connection.State == ConnectionState.Closed) { connection.Open(); }
+                for(int i=0;i<dsPrevMappedValues.Tables[0].Rows.Count;i++)
+                {
+                    int PODetailID = Convert.ToInt32(dsPrevMappedValues.Tables[0].Rows[i]["PO_DetID"].ToString());
+                    int PODetailEntryID = Convert.ToInt32(dsPrevMappedValues.Tables[0].Rows[i]["PO_DetEntryID"].ToString());
+                    int QS = Convert.ToInt32(dsPrevMappedValues.Tables[0].Rows[i]["QuantitySold"].ToString());
+                    int BQS = Convert.ToInt32(dsPrevMappedValues.Tables[0].Rows[i]["BonusQuantitySold"].ToString());
+
+                    SqlCommand comm = new SqlCommand("sp_MappingChanges_PO_QS_BQS_Revert", connection);
+                    comm.CommandType = CommandType.StoredProcedure;
+                    comm.Parameters.AddWithValue("@p_PODetID", PODetailID);
+                    comm.Parameters.AddWithValue("@p_POEnryID", PODetailEntryID);
+                    comm.Parameters.AddWithValue("@p_QS", QS);
+                    comm.Parameters.AddWithValue("@p_BQS", BQS);
+
+                    comm.ExecuteNonQuery();
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open) { connection.Close(); }
+            }
+            #endregion
+        }
         public void InsertionMapping(int PO_ID, int PO_DetID, int PO_DetEntryID, int SO_ID, int SO_DetID, int SO_DetEntryID, int ProductID, int VendorID, int QS, int BQS,
                                      DateTime PO_RecieveDate, DateTime SO_CreationDate, DateTime ExpiryDate, Decimal UCP, Decimal USP, String UpdateCheck)
 
@@ -600,6 +663,14 @@ namespace IMS
 
                     int SendQuantity = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["SendQuantity"].ToString());
                     int BonusSendQuantity = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["BonusQuantity"].ToString());
+                    
+                    SO_ID = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["OrderID"].ToString());
+                    SO_DetID = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["orderDetailID"].ToString());
+                    SO_DetEntryID = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["entryID"].ToString());
+                    USP = Convert.ToDecimal(SaleOrderFullSet.Tables[0].Rows[i]["CostPrice"].ToString());
+                    ProdID = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["ProductID"].ToString());
+                    ExpiryDate = DateTime.Parse(SaleOrderFullSet.Tables[0].Rows[i]["ExpiryDate"].ToString());
+                    SO_CreationDate = DateTime.Parse(SaleOrderFullSet.Tables[0].Rows[i]["OrderDate"].ToString());
 
                     for (int j = 0; j < dtFiltered.Rows.Count; j++)
                     {
@@ -614,21 +685,18 @@ namespace IMS
                         PO_DetID = Convert.ToInt32(dtFiltered.Rows[j]["orderDetailID"].ToString());
                         PO_DetEntryID = Convert.ToInt32(dtFiltered.Rows[j]["entryID"].ToString());
 
-                        SO_ID = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["OrderID"].ToString());
-                        SO_DetID = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["orderDetailID"].ToString());
-                        SO_DetEntryID = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["entryID"].ToString());
+                       
 
-                        ProdID = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["ProductID"].ToString());
+                       
                         VendID = Convert.ToInt32(dtFiltered.Rows[j]["OrderRequestedFor"].ToString());
 
                         UCP = Convert.ToDecimal(dtFiltered.Rows[j]["CostPrice"].ToString());
-                        USP = Convert.ToDecimal(SaleOrderFullSet.Tables[0].Rows[i]["CostPrice"].ToString());
+                        
 
-                        ExpiryDate = DateTime.Parse(SaleOrderFullSet.Tables[0].Rows[i]["ExpiryDate"].ToString());
+                        
                         PO_RecieveDate = DateTime.Parse(dtFiltered.Rows[j]["ReceivedDate"].ToString());
-                        SO_CreationDate = DateTime.Parse(SaleOrderFullSet.Tables[0].Rows[i]["OrderDate"].ToString());
-
-                        if (SendQuantity > 0)
+                        
+                        if (SendQuantity > 0 && RecievedQuantity > 0)
                         {
                             if (PO_QuantitySold + SendQuantity <= RecievedQuantity)
                             {
@@ -650,7 +718,7 @@ namespace IMS
                             }
                         }
 
-                        if (BonusSendQuantity > 0)
+                        if (BonusSendQuantity > 0 && BonusQuantity > 0)
                         {
                             if (PO_BonusQuantitySold + BonusSendQuantity <= BonusQuantity)
                             {
@@ -696,6 +764,14 @@ namespace IMS
         }
         protected void btnAccept_Click(object sender, EventArgs e)
         {
+            if(btnAccept.Text.Equals("RE-GENERATE ORDER"))
+            {
+                RegenerationSO_MappingChanges(Convert.ToInt32(Session["OrderNumberSO"].ToString()));
+            }
+            else if (Session["RegenerationMapping"] != null && Session["RegenerationMapping"].ToString().Equals("YES"))
+            {
+                RegenerationSO_MappingChanges(Convert.ToInt32(Session["OrderNumberSO"].ToString()));
+            }
             DataSet dsProducts = (DataSet)Session["dsProdcts"];
 
             Session["RequestedNO"] = Convert.ToInt32(dsProducts.Tables[0].Rows[0]["OrderID"].ToString());
@@ -1865,6 +1941,42 @@ namespace IMS
                 connection.Close();
             }
             #endregion
+        }
+
+        protected void btnMapPreviousOrders_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+
+                SqlCommand command = new SqlCommand("sp_GetAllSaleOrderID", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter sdA = new SqlDataAdapter(command);
+
+                DataSet ds = new DataSet();
+                sdA.Fill(ds);
+
+                DataTable dt = ds.Tables[0];
+
+                for(int i=0;i<dt.Rows.Count;i++)
+                {
+                    SO_PO_Mapping(Convert.ToInt32(dt.Rows[i]["OrderID"].ToString()));
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
         }
 
         

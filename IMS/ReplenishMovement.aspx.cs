@@ -48,13 +48,13 @@ namespace IMS
                         int.TryParse((Session["ReplenishDays"].ToString()), out ReplenishDays);
 
                         LoadData_SalesDate(Days,ReplenishDays);
-                        ViewState["VendorID"] = 0;
+                        ViewState["VendorID"] = -1;
                         DisplayMainGrid((DataTable)Session["DataTableView"]);
                     }
                     else
                     {
                         LoadData();
-                        ViewState["VendorID"] = 0;
+                        ViewState["VendorID"] = -1;
                         DisplayMainGrid((DataTable)Session["DataTableView"]);
                     }
 
@@ -454,8 +454,9 @@ namespace IMS
         {
             try
             {
-                Label lblProduct = (Label)((GridView)((DropDownList)sender).Parent.Parent.Parent.Parent).Rows[0].FindControl("lblProductID");
-                Label lblVendor = (Label)((GridView)((DropDownList)sender).Parent.Parent.Parent.Parent).Rows[0].FindControl("lblVendorID");
+                GridViewRow gvr = (GridViewRow)(((Control)sender).NamingContainer);
+                Label lblProduct = (Label)((GridView)((DropDownList)sender).Parent.Parent.Parent.Parent).Rows[gvr.RowIndex].FindControl("lblProductID");
+                Label lblVendor = (Label)((GridView)((DropDownList)sender).Parent.Parent.Parent.Parent).Rows[gvr.RowIndex].FindControl("lblVendorID");
 
                 int ProductID = 0;
                 int MainVendorID = 0;
