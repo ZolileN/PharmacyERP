@@ -121,12 +121,18 @@ namespace IMS
                 if (e.CommandName.Equals("UpdateStock"))
                 {
                     int quan, bonusquantity, quanOrg;
-                    quan = bonusquantity = quanOrg = 0;
+                    quan = bonusquantity = quanOrg =  0;
+                    float discount = 0;
+                    //original quantities
+                    int.TryParse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblQuantityOrg")).Text, out quanOrg);
+                    
+                    //changed quantity
                     int.TryParse(((TextBox)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("txtQuantity")).Text, out quan);
                     int orderDetID = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("OrderDetailNo")).Text);
                     int.TryParse(((TextBox)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("txtBonusQuantity")).Text, out bonusquantity);
-                    int.TryParse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblQuantityOrg")).Text, out quanOrg);
                     string status = ((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblStatus")).Text;
+                    float.TryParse(((TextBox)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("txtDiscount")).Text, out discount);//
+                    
                     if (quan + bonusquantity > 0)
                     {
                         if (connection.State == ConnectionState.Closed)
@@ -138,16 +144,19 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
                         command.Parameters.AddWithValue("@p_Qauntity", quan);
                         command.Parameters.AddWithValue("@p_bonusQauntity", bonusquantity);
-
+                        command.Parameters.AddWithValue("@p_discount",discount);
                         command.ExecuteNonQuery();
 
                         if (!status.Equals("Pending"))
                         {
-                            command = new SqlCommand("Sp_UpdateOrderStatus", connection);
-                            command.CommandType = CommandType.StoredProcedure;
-                            command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
-                            command.Parameters.AddWithValue("@p_Status", "Partial");
-                            command.ExecuteNonQuery();
+                            if (quan != quanOrg )
+                            {
+                                command = new SqlCommand("Sp_UpdateOrderStatus", connection);
+                                command.CommandType = CommandType.StoredProcedure;
+                                command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
+                                command.Parameters.AddWithValue("@p_Status", "Partial");
+                                command.ExecuteNonQuery();
+                            }
                         }
                     }
                     else
@@ -155,20 +164,20 @@ namespace IMS
                         WebMessageBoxUtil.Show("Both ordered quantities cannot be 0");
                     }
                 }
-                else if (e.CommandName.Equals("Delete"))
-                {
+                //else if (e.CommandName.Equals("Delete"))
+                //{
                      
-                    int orderDetID = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("OrderDetailNo")).Text);
-                    if (connection.State == ConnectionState.Closed)
-                    {
-                        connection.Open();
-                    }
-                    SqlCommand command = new SqlCommand("sp_DeleteOrderDetailsbyID", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
+                //    int orderDetID = int.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("OrderDetailNo")).Text);
+                //    if (connection.State == ConnectionState.Closed)
+                //    {
+                //        connection.Open();
+                //    }
+                //    SqlCommand command = new SqlCommand("sp_DeleteOrderDetailsbyID", connection);
+                //    command.CommandType = CommandType.StoredProcedure;
+                //    command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
 
-                    command.ExecuteNonQuery();
-                }
+                //    command.ExecuteNonQuery();
+                //}
             }
             catch (Exception ex)
             {
@@ -373,7 +382,8 @@ namespace IMS
                     }
                     finally
                     {
-                        connection.Close();
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
                     }
                     #endregion
 
@@ -430,8 +440,8 @@ namespace IMS
                                     command = new SqlCommand("sp_InserOrderDetail_ByStore", connection);
                                     command.CommandType = CommandType.StoredProcedure;
 
-                                    int BonusOrdered, ProductNumber, Quantity;
-                                    OrderNumber = BonusOrdered = ProductNumber = Quantity = 0;
+                                    int BonusOrdered, ProductNumber, Quantity, PercentageDiscount;
+                                    OrderNumber = BonusOrdered = ProductNumber = Quantity = PercentageDiscount = 0;
 
                                     if (int.TryParse(Session["OrderNumber"].ToString(), out OrderNumber))
                                     {
@@ -457,7 +467,14 @@ namespace IMS
                                     {
                                         command.Parameters.AddWithValue("@p_OrderBonusQuantity", DBNull.Value);
                                     }
-
+                                    if (int.TryParse(txtPercentageDiscount.Text.ToString(), out PercentageDiscount))
+                                    {
+                                        command.Parameters.AddWithValue("@p_PercentageDiscount", PercentageDiscount);
+                                    }
+                                    else
+                                    {
+                                        command.Parameters.AddWithValue("@p_PercentageDiscount", DBNull.Value);
+                                    }
                                     command.Parameters.AddWithValue("@p_status", "Pending");
                                     command.Parameters.AddWithValue("@p_comments", "Generated to Vendor");
 
@@ -465,11 +482,15 @@ namespace IMS
                                 }
                                 catch (Exception ex)
                                 {
-
+                                    if (connection.State == ConnectionState.Open)
+                                        connection.Close();
+                                    throw ex;
                                 }
                                 finally
                                 {
-                                    connection.Close();
+                                    if (connection.State == ConnectionState.Open)
+                                        connection.Close();
+
                                 }
                                 #endregion
                             }
@@ -521,7 +542,9 @@ namespace IMS
                 }
                 finally
                 {
-                    connection.Close();
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                 
                 }
                 #endregion
                 BindGrid();
@@ -592,7 +615,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }
@@ -635,12 +659,20 @@ namespace IMS
 
                 if (Status.Text.Equals("Complete") || Status.Text.Equals("Partial"))
                 {
-                    btnDelete.Enabled = false;
+                    if (btnDelete != null)
+                    {
+                        btnDelete.Enabled = false;
+                    }
                 }
                 else
                 {
+                    if (btnEdit != null){
                     btnEdit.Enabled = true;
-                    btnDelete.Enabled = true;
+                    }
+                    if (btnDelete != null)
+                    {
+                        btnDelete.Enabled = true;
+                    }
                 }
 
             }

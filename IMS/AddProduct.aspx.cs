@@ -276,7 +276,7 @@ namespace IMS
             if (!Session["UserRole"].ToString().Equals("WareHouse"))
             {
                 BarCodeSerial.Enabled = false;
-
+                btnMasterSearch.Enabled = false;
                 GreenRainCode.Enabled = false;
                 ProductName.Enabled = false;
                 ProdcutBrand.Enabled = false;

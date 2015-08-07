@@ -189,7 +189,7 @@
 
                       <asp:TemplateField HeaderText="Bonus<br>Qty"  HeaderStyle-Width ="110px">
                         <ItemTemplate>
-                            <asp:Label ID="lblBonusQuantity" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Bonus") %>' ></asp:Label>
+                            <asp:Label ID="lblBonusQuantity" CssClass="col-md-2 control-label" runat="server" Text='<%#Eval("Bonus") %>' ></asp:Label>
                         </ItemTemplate>
                         
                         <EditItemTemplate>
