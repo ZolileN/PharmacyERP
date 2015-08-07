@@ -123,6 +123,7 @@ namespace IMS.UserControl
         {
             if (Session["txtVendor"].ToString() != "%")
             {
+                ViewState["first"] = false;
                 DataTable dt = new DataTable();
                 DataSet ds = new DataSet();
                 #region Getting Product Details
@@ -174,6 +175,7 @@ namespace IMS.UserControl
         {
             try
             {
+                ViewState["first"] = false;
                 ds = VendorBLL.GetAllVendors(connection);
                 ProductSet = ds;
                 gdvVendor.DataSource = null;

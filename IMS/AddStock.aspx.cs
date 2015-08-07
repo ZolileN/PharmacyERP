@@ -251,17 +251,17 @@ namespace IMS
                 connection.Close();
             }
 
-            if (x == 1)
+            if (x > 0)
             {
                 WebMessageBoxUtil.Show("Record Inserted Successfully");
-                SelectProduct.Text = "";
-                Quantity.Text = "";
-                ProductName.Text = "";
-                DateTextBox.Text = "";
-                BarCodeSerial.Text = "";
-                ProductCost.Text = "";
-                ProductSale.Text = "";
-                BatchNo.Text = "";
+                //SelectProduct.Text = "";
+                //Quantity.Text = "";
+                //ProductName.Text = "";
+                //DateTextBox.Text = "";
+                //BarCodeSerial.Text = "";
+                //ProductCost.Text = "";
+                //ProductSale.Text = "";
+                //BatchNo.Text = "";
             }
             else
             {

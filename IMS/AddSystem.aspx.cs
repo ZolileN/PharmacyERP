@@ -142,8 +142,10 @@ namespace IMS
                 sysAddress.Text = dsResults.Tables[0].Rows[0]["SystemAddress"].ToString();
                 sysPhone.Text = dsResults.Tables[0].Rows[0]["SystemPhone"].ToString();
                 sysFax.Text = dsResults.Tables[0].Rows[0]["SystemFax"].ToString();
-                txtBarterValue.Text = Session["BarterExchangeID"].ToString();
-                pharmacyID.Text = Session["PharmacyID"].ToString();
+                txtBarterValue.Text = dsResults.Tables[0].Rows[0]["BarterExchangeID"].ToString();
+                pharmacyID.Text = dsResults.Tables[0].Rows[0]["System_PharmacyID"].ToString();
+               // txtBarterValue.Text = Session["BarterExchangeID"].ToString();
+              //  pharmacyID.Text = Session["PharmacyID"].ToString();
 
                 selSys.Visible = false;
                 SysDDL.Visible = false;
