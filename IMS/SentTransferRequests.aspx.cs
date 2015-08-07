@@ -106,7 +106,10 @@ namespace IMS
                 if (dsStatic.Tables[0].Rows[e.Row.RowIndex]["TransferStatus"].ToString() == "Accepted")
                 {
                     Button btnReceive = (Button)e.Row.FindControl("btnReceive");
-                    btnReceive.Visible = true;
+                    if (btnReceive != null)
+                    {
+                        btnReceive.Visible = true;
+                    }
                 }
             }
         }

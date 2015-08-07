@@ -265,16 +265,24 @@ namespace IMS
 
         protected void dgvReceiveTransferDetailsReceive_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            try
             {
-                TextBox txtSentQuantity = (TextBox)e.Row.FindControl("txtSendQty");
+                if (e.Row.RowType == DataControlRowType.DataRow)
+                {
+                    TextBox txtSentQuantity = (TextBox)e.Row.FindControl("txtSendQty");
 
-                DataRowView drv = (DataRowView)e.Row.DataItem;
-                int id = (int)e.Row.RowIndex;
+                    DataRowView drv = (DataRowView)e.Row.DataItem;
+                    int id = (int)e.Row.RowIndex;
 
 
-                txtSentQuantity.Attributes.Add("onchange", "Validate(" + id + ");return false;");
+                    txtSentQuantity.Attributes.Add("onchange", "Validate(" + id + ");return false;");
 
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                //throw;
             }
         }
 

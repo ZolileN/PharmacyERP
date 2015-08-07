@@ -164,6 +164,7 @@ namespace IMS
                         WebMessageBoxUtil.Show("Both ordered quantities cannot be 0");
                     }
                 }
+                
                 //else if (e.CommandName.Equals("Delete"))
                 //{
                      
@@ -651,30 +652,39 @@ namespace IMS
 
         protected void StockDisplayGrid_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            try
             {
-                Label Status = (Label)e.Row.FindControl("lblStatus");
-                Button btnEdit = (Button)e.Row.FindControl("btnEdit");
-                Button btnDelete = (Button)e.Row.FindControl("btnDelete");
-
-                if (Status.Text.Equals("Complete") || Status.Text.Equals("Partial"))
+                if (e.Row.RowType == DataControlRowType.DataRow)
                 {
-                    if (btnDelete != null)
-                    {
-                        btnDelete.Enabled = false;
-                    }
-                }
-                else
-                {
-                    if (btnEdit != null){
-                    btnEdit.Enabled = true;
-                    }
-                    if (btnDelete != null)
-                    {
-                        btnDelete.Enabled = true;
-                    }
-                }
+                    Label Status = (Label)e.Row.FindControl("lblStatus");
+                    Button btnEdit = (Button)e.Row.FindControl("btnEdit");
+                    Button btnDelete = (Button)e.Row.FindControl("btnDelete");
 
+                    if (Status.Text.Equals("Complete") || Status.Text.Equals("Partial"))
+                    {
+                        if (btnDelete != null)
+                        {
+                            btnDelete.Enabled = false;
+                        }
+                    }
+                    else
+                    {
+                        if (btnEdit != null)
+                        {
+                            btnEdit.Enabled = true;
+                        }
+                        if (btnDelete != null)
+                        {
+                            btnDelete.Enabled = true;
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                //throw;
             }
         }
 

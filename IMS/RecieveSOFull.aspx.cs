@@ -188,12 +188,21 @@ namespace IMS
 
                     if (Status.Text.Equals("Complete") || Status.Text.Equals("Partial"))
                     {
-                        btnDelete.Enabled = false;
+                        if (btnDelete != null)
+                        {
+                            btnDelete.Enabled = false;
+                        }
                     }
                     else
                     {
-                        btnEdit.Enabled = true;
-                        btnDelete.Enabled = true;
+                        if (btnEdit != null)
+                        {
+                            btnEdit.Enabled = true;
+                        }
+                        if (btnDelete != null)
+                        {
+                            btnDelete.Enabled = true;
+                        }
                     }
 
                     if (Session["ExistingOrder"].Equals(true))
@@ -285,6 +294,7 @@ namespace IMS
                     }
                     finally
                     {
+                        if (connection.State == ConnectionState.Open)
                         connection.Close();
                     }
 

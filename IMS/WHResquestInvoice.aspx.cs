@@ -192,11 +192,11 @@ namespace IMS
                 #region Display Requests
                 try
                 {
-                    if (connection.State == ConnectionState.Open)
+                    if (connection.State == ConnectionState.Closed)
                     {
-                        connection.Close();
+                        connection.Open();
                     }
-                    connection.Open();
+                   
                     SqlCommand command = new SqlCommand("sp_getTransferDetailsReceiveEntry_TransferDetailID", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_TransferDetailID", Convert.ToInt32(OrderDetailID.Text));
@@ -218,7 +218,10 @@ namespace IMS
                 }
                 finally
                 {
-                    connection.Close();
+                    if (connection.State == ConnectionState.Open)
+                    {
+                        connection.Close();
+                    }
                 }
             }
                 #endregion

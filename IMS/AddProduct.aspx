@@ -2,6 +2,11 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <style>
+   .masterSearch{
+    height:30px !important;
+   }
+  </style>
      <div class="form-horizontal">
     
              
@@ -28,20 +33,38 @@
                     <tr>
         	            <td height="6"></td>
                     </tr>
-                    <tr>
-                         <td>
+                   <%-- <tr>
+                       <td>
                              Search Product in Master Archive
                          </td>
                         
                          <td>
                               <asp:TextBox runat="server" ID="txtProduct" CssClass="form-control product master-search"/>
-                              <asp:Button runat="server" ID="btnMasterSearch" CssClass ="btn btn-sm btn-primary" Text="Master Search" OnClick="btnMasterSearch_Click"/>
+                            <asp:Button runat="server" ID="btnMasterSearch" CssClass ="btn btn-sm btn-primary" Text="Master Search" OnClick="btnMasterSearch_Click"/>
                          </td>
-                     </tr>
+                     </tr>--%>
+
                     </table>
+                    <table>
+                    <tr><td>
+                    <label>Search Product in Master Archive:</label>
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>
+                        <asp:TextBox runat="server" ID="txtProduct" CssClass="masterSearch"/>
+                        </td>
+                        <td>
+                        &nbsp;&nbsp;<asp:Button runat="server" ID="btnMasterSearch" CssClass ="btn btn-primary btn-sm" Text="Master Search" OnClick="btnMasterSearch_Click"/>
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                    <td height="16""></td>
+                    </tr>
+                    </table>
+        <hr>
       
-        <hr />
-        
+              
 
          <table cellspacing="5" cellpadding="5" border="0" width="100%" class="formTbl">
              <tr>

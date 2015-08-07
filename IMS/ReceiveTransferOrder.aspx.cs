@@ -413,6 +413,7 @@ namespace IMS
             }
             finally
             {
+                if (connection.State == ConnectionState.Open)
                 connection.Close();
             }
 
@@ -510,6 +511,7 @@ namespace IMS
             }
             finally
             {
+                if (connection.State == ConnectionState.Open)
                 connection.Close();
             }
         }
@@ -518,16 +520,25 @@ namespace IMS
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                Button abc = (Button)e.Row.FindControl("btnAccept");
+                 
                 if (dsStatic.Tables[0].Rows[e.Row.RowIndex]["TransferStatus"].ToString() == "Accepted" || dsStatic.Tables[0].Rows[e.Row.RowIndex]["TransferStatus"].ToString() == "Received")
                 {
                     GridView gv = (GridView)sender;
                     Button btnAccept = (Button)e.Row.FindControl("btnAccept");
-                    btnAccept.Visible = false;
+                    if (btnAccept != null)
+                    {
+                        btnAccept.Visible = false;
+                    }
                     Button btnDeny = (Button)e.Row.FindControl("btnDeny");
-                    btnDeny.Visible = false;
+                    if (btnDeny != null)
+                    {
+                        btnDeny.Visible = false;
+                    }
                     Button btnEdit = (Button)e.Row.FindControl("btnEdit");
-                    btnEdit.Visible = false;
+                    if (btnEdit != null)
+                    {
+                        btnEdit.Visible = false;
+                    }
                     
                     HtmlGenericControl btnStaticAccepted = (HtmlGenericControl)e.Row.FindControl("btnStaticAccepted");
                     btnStaticAccepted.Visible = true;  

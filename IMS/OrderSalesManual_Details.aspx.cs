@@ -341,39 +341,63 @@ namespace IMS
         protected void StockDisplayGrid_RowEditing(object sender, GridViewEditEventArgs e)
         {
             StockDisplayGrid.EditIndex = e.NewEditIndex;
+           
             BindGrid();
         }
         protected void StockDisplayGrid_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             int Total =0;
+
             if(e.Row.RowType == DataControlRowType.DataRow)
             {
-                int AvailableStock = Convert.ToInt32(((Label)e.Row.FindControl("lblAvStock")).Text.ToString());
-                int SentQuantity = Convert.ToInt32(((Label)e.Row.FindControl("lblQuantity")).Text.ToString());
-                int BonusQuantity = Convert.ToInt32(((Label)e.Row.FindControl("lblBonus")).Text.ToString());
-                Button EditButton = (Button)e.Row.FindControl("btnEdit");
-                Button RefreshButton = (Button)e.Row.FindControl("btnRefresh");
-
-
-                if (AvailableStock.Equals(0) && SentQuantity.Equals(0) && BonusQuantity.Equals(0))
+                //Moiz: this code will throw an exception when in edit template will figure it out
+               
+                try
                 {
-                    EditButton.Enabled = false;
-                    RefreshButton.Enabled = true;
+                    int AvailableStock = Convert.ToInt32(((Label)e.Row.FindControl("lblAvStock")).Text.ToString());
+                    int SentQuantity = Convert.ToInt32(((Label)e.Row.FindControl("lblQuantity")).Text.ToString());
+                    int BonusQuantity = Convert.ToInt32(((Label)e.Row.FindControl("lblBonus")).Text.ToString());
+                    Button EditButton = (Button)e.Row.FindControl("btnEdit");
+                    Button RefreshButton = (Button)e.Row.FindControl("btnRefresh");
+
+
+                    if (AvailableStock.Equals(0) && SentQuantity.Equals(0) && BonusQuantity.Equals(0))
+                    {
+                        if (EditButton != null)
+                        {
+                            EditButton.Enabled = false;
+                        }
+                        if (RefreshButton != null)
+                        {
+                            RefreshButton.Enabled = true;
+                        }
+                    }
+                    //else if(AvailableStock.Equals(0))
+                    //{
+                    //    EditButton.Enabled = false;
+                    //    RefreshButton.Enabled = false;
+                    //}
+                    else
+                    {
+                        if (EditButton != null)
+                        {
+                            EditButton.Enabled = true;
+                        }
+                        if (RefreshButton != null)
+                        {
+                            RefreshButton.Enabled = true;
+                        }
+                    }
+
+                    if (Session["TotalExceeded"].Equals(true))
+                    {
+                        if (EditButton != null)
+                        {
+                            EditButton.Enabled = false;
+                        }
+                    }
                 }
-                //else if(AvailableStock.Equals(0))
-                //{
-                //    EditButton.Enabled = false;
-                //    RefreshButton.Enabled = false;
-                //}
-                else
-                {
-                    EditButton.Enabled = true;
-                    RefreshButton.Enabled = true;
-                }
-
-                if (Session["TotalExceeded"].Equals(true))
-                {
-                    EditButton.Enabled = false;
+                catch (Exception ex) { //Exception pi gai!!! Jugaar 
                 }
             }
         }
