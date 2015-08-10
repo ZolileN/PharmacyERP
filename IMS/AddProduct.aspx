@@ -25,7 +25,7 @@
                     </td>
                          
                     <td align="right">
-                        <asp:Button ID="btnCreateProduct" runat="server" OnClick="btnCreateProduct_Click"  Text="Save" CssClass="btn btn-primary" ValidationGroup="exSave"/>
+                        <asp:Button ID="btnCreateProduct" runat="server" OnClick="btnCreateProduct_Click"  Text="Save" CssClass="btn btn-primary" OnClientClick="return ValidateForm();" ValidationGroup="exSave"/>
                          <asp:Button ID="btnCancelProduct" runat="server" OnClick="btnCancelProduct_Click" Text="CANCEL" CssClass="btn btn-default" />
                          <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnGoBack_Click"/>
                      
@@ -157,4 +157,20 @@
                  <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnGoBack_Click"/></td>--%>
              </tr>
                 </table>
+     <script type="text/javascript">
+         function ValidateForm() {
+
+             if (document.getElementById("MainContent_ProductCost").value == null || document.getElementById("MainContent_ProductCost").value == '') {
+                 alert("Please enter Cost Price");
+                 return false;
+             }
+             if (document.getElementById("MainContent_ProductSale").value == null || document.getElementById("MainContent_ProductSale").value == '') {
+                 alert("Please enter Sale Price");
+                 return false;
+             }
+
+             return true;
+
+         }
+        </script>
 </asp:Content>
