@@ -524,8 +524,8 @@
 
                                     <li class="hasChild"><a href="StoreRequests.aspx">Manage Transfers</a>
                                      <ul>
-                                                <li><a href="SentTransferRequests.aspx">Receive Request</a></li>
-                                                <li><a href="ReceiveTransferOrder.aspx"> Send Request</a></li>
+                                                <li><a href="SentTransferRequests.aspx">Receive Transfer Request</a></li>
+                                                <li><a href="ReceiveTransferOrder.aspx"> Send Transfer Request</a></li>
                                      </ul>
                                     </li>
                                 </ul> 

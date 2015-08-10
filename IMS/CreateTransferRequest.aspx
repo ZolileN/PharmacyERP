@@ -38,7 +38,7 @@
            <td><asp:Label id="lblProd"  AssociatedControlID="txtSearch" runat="server" >Select Product</asp:Label></td>
            <td>
                <asp:Label ID="lblProductId" runat="server" Visible="false"></asp:Label>
-               <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control product" ></asp:TextBox>
+               <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control product" Width="70%"></asp:TextBox>
            	   <asp:Button ID="btnSearchProduct" runat="server" CssClass="search-btn getProducts" OnClick="btnSearchProduct_Click"   />
 
                  <cc1:ModalPopupExtender ID="mpeCongratsMessageDiv" runat="server" BackgroundCssClass="overLaypop"
@@ -58,7 +58,7 @@
             <td>
                 <asp:Label ID="lblStoreId"  runat="server" Visible="false"></asp:Label>
 
-            	 <asp:TextBox ID="txtStore" runat="server" CssClass="form-control product" ></asp:TextBox>
+            	 <asp:TextBox ID="txtStore" runat="server" CssClass="form-control product" Width="70%" ></asp:TextBox>
            	   <asp:Button ID="btnSelectStore" runat="server" CssClass="search-btn getProducts" OnClick="btnSelectStore_Click"   />
 
                   <cc1:ModalPopupExtender ID="mpeStoresPopupDiv" runat="server" BackgroundCssClass="overLaypop"

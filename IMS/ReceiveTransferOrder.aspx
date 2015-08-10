@@ -6,7 +6,7 @@
       <table width="100%">
 
         <tbody><tr>
-        	<td> <h4 id="topHead">Manage Transfers</h4></td>
+        	<td> <h4 id="topHead">Send Transfer Request(s)</h4></td>
             <td align="right">
                 <asp:Button ID="btnAcceptAll" runat="server" CssClass="btn btn-success acptAllTransfers" Text="Accept All Transfers" OnClick="btnAcceptAll_Click" />
                 <asp:Button ID="btnGenTransferAll" runat="server" CssClass="btn btn-info" Text="Generate All Transfers" OnClick="btnGenTransferAll_Click" />
