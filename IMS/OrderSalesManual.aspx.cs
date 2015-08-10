@@ -1025,44 +1025,6 @@ namespace IMS
                     }
 
                 }
-                else if (e.CommandName.Equals("Delete"))
-                {
-                    long orderDetID = long.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("OrderDetailNo")).Text);
-                    connection.Open();
-
-                    
-                        SqlCommand command3 = new SqlCommand("sp_getOrderDetailRecieve_ID", connection);
-                        command3.CommandType = CommandType.StoredProcedure;
-                        command3.Parameters.AddWithValue("@p_OrderDetID", orderDetID);
-                        DataSet ds = new DataSet();
-                        SqlDataAdapter sA = new SqlDataAdapter(command3);
-                        sA.Fill(ds);
-
-                        for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-                        {
-                            int StockID = int.Parse(ds.Tables[0].Rows[i]["StockID"].ToString());
-                            int quantity = int.Parse(ds.Tables[0].Rows[i]["Quantity"].ToString());
-                            SqlCommand command2 = new SqlCommand();
-                            command2 = new SqlCommand("Sp_UpdateStockBy_StockID", connection);
-                            command2.CommandType = CommandType.StoredProcedure;
-                            command2.Parameters.AddWithValue("@p_StockID", StockID);
-                            command2.Parameters.AddWithValue("@p_quantity", quantity);
-                            command2.Parameters.AddWithValue("@p_Action", "Add");
-                            command2.ExecuteNonQuery();
-                        }
-                    
-
-                    SqlCommand command = new SqlCommand("sp_DeleteSO_ID", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
-
-                    command.ExecuteNonQuery();
-                    if (StockDisplayGrid.Rows.Count == 1)
-                    {
-                        btnAccept.Visible = false;
-                        btnDecline.Visible = false;
-                    }
-                }
                 else if (e.CommandName.Equals("Details"))
                 {
                     int orderDetID = 0;
@@ -1100,6 +1062,56 @@ namespace IMS
 
         protected void StockDisplayGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
+            try
+            {
+                long orderDetID = long.Parse(((Label)StockDisplayGrid.Rows[e.RowIndex].FindControl("OrderDetailNo")).Text);
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+
+                SqlCommand command3 = new SqlCommand("sp_getOrderDetailRecieve_ID", connection);
+                command3.CommandType = CommandType.StoredProcedure;
+                command3.Parameters.AddWithValue("@p_OrderDetID", orderDetID);
+                DataSet ds = new DataSet();
+                SqlDataAdapter sA = new SqlDataAdapter(command3);
+                sA.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    int StockID = int.Parse(ds.Tables[0].Rows[i]["StockID"].ToString());
+                    int quantity = int.Parse(ds.Tables[0].Rows[i]["Quantity"].ToString());
+                    SqlCommand command2 = new SqlCommand();
+                    command2 = new SqlCommand("Sp_UpdateStockBy_StockID", connection);
+                    command2.CommandType = CommandType.StoredProcedure;
+                    command2.Parameters.AddWithValue("@p_StockID", StockID);
+                    command2.Parameters.AddWithValue("@p_quantity", quantity);
+                    command2.Parameters.AddWithValue("@p_Action", "Add");
+                    command2.ExecuteNonQuery();
+                }
+
+                SqlCommand command = new SqlCommand("sp_DeleteSO_ID", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
+
+                command.ExecuteNonQuery();
+                if (StockDisplayGrid.Rows.Count == 1)
+                {
+                    btnAccept.Visible = false;
+                    btnDecline.Visible = false;
+                }
+            }
+            catch(Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                { connection.Close(); }
+                throw ex;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                BindGrid();
+            }
         }
 
         protected void StockDisplayGrid_RowEditing(object sender, GridViewEditEventArgs e)
@@ -1560,8 +1572,10 @@ namespace IMS
                 StockDisplayGrid.DataSource = ds.Tables[0];
                 StockDisplayGrid.DataBind();
 
-                ddlSalesman.DataValueField = ds.Tables[0].Rows[0]["SalesManID"].ToString();
-
+                if  (ds.Tables[0].Rows.Count>0)
+                {
+                    ddlSalesman.DataValueField = ds.Tables[0].Rows[0]["SalesManID"].ToString();
+                }
                  
 
                 if(StockDisplayGrid.DataSource == null)
@@ -1783,7 +1797,10 @@ namespace IMS
                 }
                 else
                 {
-                    btnDetail.Enabled = true;
+                    if (btnDetail != null)
+                    {
+                        btnDetail.Enabled = true;
+                    }
                 }
                 Label ProductStrength = (Label)e.Row.FindControl("ProductStrength2");
                 Label Label1 = (Label)e.Row.FindControl("Label1");
