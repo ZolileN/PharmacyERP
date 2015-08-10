@@ -281,18 +281,28 @@ namespace IMS
                 dt = new DataTable();
 
 
-
-                using (OleDbConnection conn = new OleDbConnection(connString))
+                try
                 {
-                    conn.Open();
-                    using (OleDbCommand cmd = new OleDbCommand(sql, conn))
+                    using (OleDbConnection conn = new OleDbConnection(connString))
                     {
-                        using (OleDbDataReader rdr = cmd.ExecuteReader())
+                        conn.Open();
+                        using (OleDbCommand cmd = new OleDbCommand(sql, conn))
                         {
-                            dt.Load(rdr);
-                            //return dt;
+                            using (OleDbDataReader rdr = cmd.ExecuteReader())
+                            {
+                                dt.Load(rdr);
+                                //return dt;
+                            }
                         }
                     }
+                }
+                catch(Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+
                 }
             }
             HaadLIST(dt);

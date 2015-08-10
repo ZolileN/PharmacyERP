@@ -86,6 +86,14 @@
                                     <ItemStyle Width="150px" HorizontalAlign="Left" />
                                 </asp:TemplateField>
                                 
+                                 <asp:TemplateField HeaderText="Transfered Bonus Qty" >
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblTransferedBonusQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("TransferedBonusQty") %>' Width="140px"></asp:Label>
+                                    </ItemTemplate>
+
+                                    <ItemStyle Width="150px" HorizontalAlign="Left" />
+                                </asp:TemplateField>
+
                                   <asp:TemplateField HeaderText="Sent Qty" >
                                     <ItemTemplate>
                                         <asp:Label ID="lblSentQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("SentQty") %>' Width="140px"></asp:Label>
