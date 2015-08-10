@@ -145,7 +145,7 @@
                               </ItemTemplate>
                           <EditItemTemplate>
                             <asp:LinkButton ID="btnUpdate" CssClass="btn btn-primary btn-sm" Text="Re-Generate Order" runat="server" CommandName="ReGen"></asp:LinkButton>
-                            <asp:LinkButton ID="btnView" CssClass="btn btn-primary btn-sm"  Text="Update Accepted Order" runat="server" CommandName="UpdateRec"  Visible='<%# IsStatusComplete((String) Eval("Status")) %>' />
+                            <asp:LinkButton ID="btnView" CssClass="btn btn-primary btn-sm"  Text="Update Accepted Order"  runat="server" CommandName="UpdateRec"  Visible='<%# IsStatusComplete((String) Eval("Status")) %>' />
                             <asp:LinkButton ID="btnCancel" Text="Cancel" CssClass="btn btn-default btn-sm"  runat="server" CommandName="Cancel" />
 
                         </EditItemTemplate>
