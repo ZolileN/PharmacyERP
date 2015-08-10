@@ -198,6 +198,7 @@ namespace IMS
                             command.Parameters.AddWithValue("@p_Status", "Accepted");
                             command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
                             command.Parameters.AddWithValue("@p_ProductID", ProductId);
+                            command.Parameters.AddWithValue("@p_TransferedBonQty", transferedBonusQty);
                            // command.Parameters.AddWithValue("@p_SystemID", int.Parse(Session["WH_RequestedFromID"].ToString()));
                             command.Parameters.AddWithValue("@p_TransferToUserID", userID);
 
@@ -645,8 +646,9 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_Batch", dt.Rows[0]["BatchNumber"]);
                         command.Parameters.AddWithValue("@p_TransferredQty", stockSet[id]);
                         command.Parameters.AddWithValue("@p_DeliveredBonQty", DBNull.Value);
+                        command.Parameters.AddWithValue("@p_RequestedBonusQty", Bonus);
                         command.Parameters.AddWithValue("@p_RequestedQty", dt.Rows[0]["RequestedQty"]);
-
+                       
                         command.Parameters.AddWithValue("@p_BarCode", dt.Rows[0]["BarCode"]);
 
                         x = command.ExecuteNonQuery();
@@ -725,7 +727,7 @@ namespace IMS
                         }
 
                         command.Parameters.AddWithValue("@p_DeliveredBonQty", stockSetBonus[id]);
-                       
+                        command.Parameters.AddWithValue("@p_RequestedBonusQty", Bonus);
                         command.Parameters.AddWithValue("@p_RequestedQty", dt.Rows[0]["RequestedQty"]);
 
                         command.Parameters.AddWithValue("@p_BarCode", dt.Rows[0]["BarCode"]);

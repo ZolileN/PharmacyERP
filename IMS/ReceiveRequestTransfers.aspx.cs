@@ -145,7 +145,7 @@ namespace IMS
                    // ReceivedQty = ReceivedQty + DelieveredBonusQty; 
                     UpdateStockPlus(TransferDetID, ReceivedQty, ProductID, barcode, Expiry, CP, SP, BatchNumber);
                     Session.Remove("TransferDetailsID");
-                    Response.Redirect("SentTransferRequests.aspx");
+                    Response.Redirect("SentTransferRequests.aspx",false);
 
                 }
             }

@@ -102,6 +102,22 @@ namespace IMS
             }
         }
 
+        protected Boolean IsWarehouse()
+        {
+            int id;
+            int.TryParse(Session["UserSys"].ToString(), out id);
+
+            if (Session["UserRole"].ToString().Equals("WareHouse"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
         private void Page_Error(object sender, EventArgs e)
         {
             Exception exc = Server.GetLastError();
@@ -451,12 +467,23 @@ namespace IMS
 
         protected Boolean IsStatusComplete(String status)
         {
-            if (status.Equals("Complete") || status.Equals("Partial"))
+            //incase of pharmacy property is hidden
+            if (Session["UserRole"].ToString().Equals("WareHouse"))
             {
-                return true;
+                if (status.Equals("Complete") || status.Equals("Partial"))
+                {
+                    return true;
+                }
+                else
+                    return false;
             }
             else
+            {
                 return false;
+            }
+
+
+            
         }
         protected void btnBack_Click(object sender, EventArgs e)
         {
