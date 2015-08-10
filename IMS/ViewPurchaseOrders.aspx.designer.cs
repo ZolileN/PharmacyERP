@@ -13,6 +13,15 @@ namespace IMS {
     public partial class ViewPurchaseOrders {
         
         /// <summary>
+        /// btnSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSearch;
+        
+        /// <summary>
         /// btnBack control.
         /// </summary>
         /// <remarks>
@@ -31,22 +40,22 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.DropDownList StockAt;
         
         /// <summary>
-        /// SelectProduct control.
+        /// DateTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox SelectProduct;
+        protected global::System.Web.UI.WebControls.TextBox DateTextBox;
         
         /// <summary>
-        /// btnSearchProduct control.
+        /// txtOrderNO control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton btnSearchProduct;
+        protected global::System.Web.UI.WebControls.TextBox txtOrderNO;
         
         /// <summary>
         /// StockDisplayGrid control.
