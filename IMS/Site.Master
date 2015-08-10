@@ -470,7 +470,7 @@
                                     <li><a href="PharmacyManagement.aspx">Manage Pharmacy</a></li>									 
                                     <li><a href="UserManagment.aspx">Manage Users</a></li>									 
                                     <li><a href="SalemanMangment.aspx">Manage Salesman</a></li>
-                                    <li><a href="HAADPopulation.aspx">HAAD List Population</a></li> 
+                                    <!--<li><a href="HAADPopulation.aspx">HAAD List Population</a></li>--> 
                                       <li><a href="#">Manage returned Items</a></li>
                                      
                                </ul>
@@ -508,7 +508,7 @@
                                     </li>                                           
                                          <li><a href="SelectWarehouse.aspx">Item Request to Store</a></li>   
                                             <li><a href="SelectVendor.aspx">Direct Pharmacy Purchase</a></li>
-                                     <li><a href="ViewPlacedOrders.aspx">View Store Purchase</a></li>
+                                     <!--<li><a href="ViewPlacedOrders.aspx">View Store Purchase</a></li>-->
                                        </ul>
 
                                 </li>
