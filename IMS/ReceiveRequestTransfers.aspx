@@ -10,7 +10,7 @@
             
           <td align="right">
           
-              <asp:Button ID="btnAcceptAll" runat="server" CssClass="btn btn-success btn-large" Text="Accept All" OnClick="btnAcceptAll_Click" />
+              <asp:Button ID="btnAcceptAll" runat="server" CssClass="btn btn-success btn-large" Text="Accept" OnClick="btnAcceptAll_Click" />
               <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default" Text="Back" OnClick="btnBack_Click" /> 
                    
                 
