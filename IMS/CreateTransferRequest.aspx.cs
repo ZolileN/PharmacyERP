@@ -638,8 +638,8 @@ namespace IMS.StoreManagement.StoreRequests
                     int.TryParse(txtBonusQty.Text.ToString(), out BonusQty);
 
                     TextBox txtPercentageDiscount = (TextBox)dgvCreateTransfer.Rows[rowindex].FindControl("txtPercentageDiscount");
-                    int PercentDiscount = 0;
-                    int.TryParse(txtPercentageDiscount.Text.ToString(), out PercentDiscount);
+                    float PercentDiscount = 0;
+                    float.TryParse(txtPercentageDiscount.Text.ToString(), out PercentDiscount);
 
                     dtStatic.Rows[rowindex]["RequestedQty"] = TransferedQty;
                     dtStatic.Rows[rowindex]["BonusQty"] = BonusQty;
