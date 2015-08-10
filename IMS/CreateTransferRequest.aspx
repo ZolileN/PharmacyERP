@@ -167,7 +167,7 @@
                         </ItemTemplate>
 
                           <EditItemTemplate>
-                              <asp:TextBox ID="txtTransferQty" runat="server" Text='<%# Eval("TransferedQty") %>'  Width="140px" ></asp:TextBox>
+                              <asp:TextBox ID="txtTransferQty" runat="server" Text='<%# Eval("RequestedQty") %>'  Width="140px" ></asp:TextBox>
                           </EditItemTemplate>
                         <ItemStyle  Width="150px" HorizontalAlign="Left"/>
                     </asp:TemplateField> 

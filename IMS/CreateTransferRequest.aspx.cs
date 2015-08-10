@@ -633,7 +633,17 @@ namespace IMS.StoreManagement.StoreRequests
                     int TransferedQty = 0;
                     int.TryParse(tbTransferedQty.Text.ToString(), out TransferedQty);
 
-                    dtStatic.Rows[0]["TransferedQty"] = TransferedQty;
+                    TextBox txtBonusQty = (TextBox)dgvCreateTransfer.Rows[rowindex].FindControl("txtBonusQty");
+                    int BonusQty = 0;
+                    int.TryParse(txtBonusQty.Text.ToString(), out BonusQty);
+
+                    TextBox txtPercentageDiscount = (TextBox)dgvCreateTransfer.Rows[rowindex].FindControl("txtPercentageDiscount");
+                    int PercentDiscount = 0;
+                    int.TryParse(txtPercentageDiscount.Text.ToString(), out PercentDiscount);
+
+                    dtStatic.Rows[rowindex]["RequestedQty"] = TransferedQty;
+                    dtStatic.Rows[rowindex]["BonusQty"] = BonusQty;
+                    dtStatic.Rows[rowindex]["PercentageDiscount"] = PercentDiscount;
                     dtStatic.AcceptChanges();
                      
 
