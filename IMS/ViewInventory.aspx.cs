@@ -90,7 +90,8 @@ namespace IMS
                     }
                     finally
                     {
-                        connection.Close();
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
                     }
                     #endregion
 
@@ -121,7 +122,8 @@ namespace IMS
                     }
                     finally
                     {
-                        connection.Close();
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
                     }
                     #endregion
 
@@ -153,7 +155,8 @@ namespace IMS
                     }
                     finally
                     {
-                        connection.Close();
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
                     }
                     #endregion
 
@@ -294,7 +297,11 @@ namespace IMS
                 if (int.TryParse(Session["UserSys"].ToString(), out id))
                 {
 
-                    connection.Open();
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+
+                    }
                     SqlCommand command = new SqlCommand("sp_ViewInventory_byFilters", connection);
                     #region with parameter approach
                     command.CommandType = CommandType.StoredProcedure;
@@ -426,8 +433,12 @@ namespace IMS
                 int id;
                 if (int.TryParse(Session["UserSys"].ToString(), out id))
                 {
-                    
-                    connection.Open();
+
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+
+                    }
                     SqlCommand command = new SqlCommand("sp_ViewInventory_byFilters", connection);
                     #region with parameter approach
                     command.CommandType = CommandType.StoredProcedure;
