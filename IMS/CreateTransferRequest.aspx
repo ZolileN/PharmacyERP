@@ -35,7 +35,7 @@
     <table cellspacing="5" cellpadding="5" border="0" style="margin-left:10px;" class="formTbl" id="vendorSelect" width="">
 
        <tr>
-           <td><asp:Label id="lblProd" runat="server" >Select Product</asp:Label></td>
+           <td><asp:Label id="lblProd"  AssociatedControlID="txtSearch" runat="server" >Select Product</asp:Label></td>
            <td>
                <asp:Label ID="lblProductId" runat="server" Visible="false"></asp:Label>
                <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control product" ></asp:TextBox>
@@ -54,9 +54,9 @@
          
 
 
-           <td><asp:Label id="lblSelectStore" runat="server" >Select Pharmacy</asp:Label></td>
+           <td><asp:Label id="lblSelectStore"  AssociatedControlID="txtStore"  runat="server" >Select Pharmacy</asp:Label></td>
             <td>
-                <asp:Label ID="lblStoreId" runat="server" Visible="false"></asp:Label>
+                <asp:Label ID="lblStoreId"  runat="server" Visible="false"></asp:Label>
 
             	 <asp:TextBox ID="txtStore" runat="server" CssClass="form-control product" ></asp:TextBox>
            	   <asp:Button ID="btnSelectStore" runat="server" CssClass="search-btn getProducts" OnClick="btnSelectStore_Click"   />
@@ -71,10 +71,22 @@
                         </div>
             </td>
            <td>
-               <asp:Label ID="lbQty" runat="server">Quantity</asp:Label>
+               <asp:Label ID="lbQty" AssociatedControlID="txtTransferredQty" runat="server">Quantity</asp:Label>
            </td>
            <td>
                <asp:TextBox ID="txtTransferredQty" runat="server" style="width:60px" CssClass="form-control product" ></asp:TextBox>
+            </td>
+           <td>
+               <asp:Label ID="lblBonusQty"  AssociatedControlID="txtBonusQty" runat="server">Bonus Quantity</asp:Label>
+           </td>
+           <td>
+               <asp:TextBox ID="txtBonusQty" runat="server" style="width:40px" CssClass="form-control product" ></asp:TextBox>
+            </td>
+           <td>
+               <asp:Label ID="lblDiscount"  AssociatedControlID="txtPercentageDiscount" runat="server">Discount %</asp:Label>
+           </td>
+           <td>
+               <asp:TextBox ID="txtPercentageDiscount" runat="server" style="width:60px" CssClass="form-control product" ></asp:TextBox>
             </td>
            <td>
                <asp:Button ID="btnAddRequest" runat="server" Text="Add Request" CssClass="btn btn-primary btn-sm" OnClick="btnAddRequest_Click"   />
@@ -156,6 +168,28 @@
 
                           <EditItemTemplate>
                               <asp:TextBox ID="txtTransferQty" runat="server" Text='<%# Eval("TransferedQty") %>'  Width="140px" ></asp:TextBox>
+                          </EditItemTemplate>
+                        <ItemStyle  Width="150px" HorizontalAlign="Left"/>
+                    </asp:TemplateField> 
+
+                      <asp:TemplateField HeaderText="Bonus Qty"  HeaderStyle-Width ="150px">
+                        <ItemTemplate>
+                            <asp:Label ID="lblBonusQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("BonusQty") %>'  Width="140px"></asp:Label>
+                        </ItemTemplate>
+
+                          <EditItemTemplate>
+                              <asp:TextBox ID="txtBonusQty" runat="server" Text='<%# Eval("BonusQty") %>'  Width="140px" ></asp:TextBox>
+                          </EditItemTemplate>
+                        <ItemStyle  Width="150px" HorizontalAlign="Left"/>
+                    </asp:TemplateField> 
+                     
+                      <asp:TemplateField HeaderText="Discount %"  HeaderStyle-Width ="150px">
+                        <ItemTemplate>
+                            <asp:Label ID="lblPercentageDiscount" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("PercentageDiscount") %>'  Width="140px"></asp:Label>
+                        </ItemTemplate>
+
+                          <EditItemTemplate>
+                              <asp:TextBox ID="txtPercentageDiscount" runat="server" Text='<%# Eval("PercentageDiscount") %>'  Width="140px" ></asp:TextBox>
                           </EditItemTemplate>
                         <ItemStyle  Width="150px" HorizontalAlign="Left"/>
                     </asp:TemplateField> 

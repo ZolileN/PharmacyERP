@@ -77,6 +77,9 @@ namespace IMS
                 dtGridSource.Columns.Add("RequestedFrom");
                 dtGridSource.Columns.Add("RequestedTo");
                 dtGridSource.Columns.Add("RequestedQty");
+                dtGridSource.Columns.Add("BonusQty");
+                dtGridSource.Columns.Add("PercentageDiscount");
+
 
                 int StoreId = Convert.ToInt32(((DataRowView)e.Item.DataItem).Row[0].ToString());
                 DataSet ds = new DataSet();

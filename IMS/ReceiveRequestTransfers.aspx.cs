@@ -96,7 +96,7 @@ namespace IMS
 
                 for (int i = 0; i < dgvReceiveOurTransfersEntry.Rows.Count; i++)
                 {
-                    int entryID, ReceivedQty, TransferDetID = 0, ProductID, barcode;
+                    int entryID, ReceivedQty, TransferDetID = 0, ProductID, barcode, DelieveredBonusQty;
                     decimal CP, SP;
                     DateTime Expiry;
                     string BatchNumber;
@@ -123,6 +123,9 @@ namespace IMS
                     Label lblExpiryDate = (Label)dgvReceiveOurTransfersEntry.Rows[i].FindControl("lblExpiryDate");
                     DateTime.TryParse(lblExpiryDate.Text.ToString(), out Expiry);
 
+                    Label lblTransferedBonusQty = (Label)dgvReceiveOurTransfersEntry.Rows[i].FindControl("lblTransferedBonusQty");
+                    int.TryParse(lblTransferedBonusQty.Text.ToString(), out DelieveredBonusQty);
+
                     if (connection.State == ConnectionState.Closed)
                     {
                         connection.Open();
@@ -133,11 +136,13 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_entryID", entryID);
                     command.Parameters.AddWithValue("@p_ReceiveQty", ReceivedQty);
                     command.Parameters.AddWithValue("@p_TransferDetID", TransferDetID);
+                    command.Parameters.AddWithValue("@p_DelieveredBonusQty", DelieveredBonusQty);
 
                     command.CommandType = CommandType.StoredProcedure;
                     command.ExecuteNonQuery();
 
                     // Update Stock for this Store (Add Received Stock)
+                   // ReceivedQty = ReceivedQty + DelieveredBonusQty; 
                     UpdateStockPlus(TransferDetID, ReceivedQty, ProductID, barcode, Expiry, CP, SP, BatchNumber);
                     Session.Remove("TransferDetailsID");
                     Response.Redirect("SentTransferRequests.aspx");
