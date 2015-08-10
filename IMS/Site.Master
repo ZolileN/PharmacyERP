@@ -470,6 +470,7 @@
                                     <li><a href="PharmacyManagement.aspx">Manage Pharmacy</a></li>									 
                                     <li><a href="UserManagment.aspx">Manage Users</a></li>									 
                                     <li><a href="SalemanMangment.aspx">Manage Salesman</a></li>
+                                    <li><a href="HAADPopulation.aspx">HAAD List Population</a></li> 
                                       <li><a href="#">Manage returned Items</a></li>
                                      
                                </ul>
