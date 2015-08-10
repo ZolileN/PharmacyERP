@@ -848,7 +848,7 @@ namespace IMS
                         {
                             command.Parameters.AddWithValue("@p_TransferedQty", TransferedQty);
                         }
-                        command.Parameters.AddWithValue("@p_DeliveredBonQty", requestedBonusQty);
+                        command.Parameters.AddWithValue("@p_TransferedBonusQty", requestedBonusQty);
                         command.Parameters.AddWithValue("@p_AvailableQty", AvailableQty);
                         command.Parameters.AddWithValue("@p_Status", "Accepted");
                         command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);

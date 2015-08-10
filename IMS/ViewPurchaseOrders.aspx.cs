@@ -93,10 +93,15 @@ namespace IMS
             #region Display Requests
             try
             {
-                connection.Open();
+
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("Sp_GetPendingPOs", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_RequestedByID", Session["UserSys"]);
+
                 if (StockAt.SelectedIndex > 0)
                 {
                     command.Parameters.AddWithValue("@p_RequestedForID", Convert.ToInt32(StockAt.SelectedValue.ToString()));
@@ -107,6 +112,25 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_RequestedForID", DBNull.Value);
 
                 }
+
+                if (String.IsNullOrWhiteSpace(DateTextBox.Text.ToString()))
+                {
+                    command.Parameters.AddWithValue("@p_OrderDate", DBNull.Value);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@p_OrderDate", Convert.ToDateTime(DateTextBox.Text.ToString()));
+                }
+
+                if (String.IsNullOrWhiteSpace(txtOrderNO.Text.ToString()))
+                {
+                    command.Parameters.AddWithValue("@p_OrderID", DBNull.Value);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@p_OrderID", Convert.ToInt32(txtOrderNO.Text.ToString()));
+                }
+
                 DataSet ds = new DataSet();
 
                 SqlDataAdapter sA = new SqlDataAdapter(command);
@@ -203,11 +227,7 @@ namespace IMS
 
         protected void btnSearchProduct_Click(object sender, ImageClickEventArgs e)
         {
-            if (SelectProduct.Text.Length >= 3)
-            {
-                PopulateDropDown(SelectProduct.Text);
-                StockAt.Visible = true;
-            }
+            LoadData();
         }
 
         public void PopulateDropDown(String Text)
@@ -256,6 +276,11 @@ namespace IMS
                 connection.Close();
             }
             #endregion
+        }
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            LoadData();
         }
     }
 }

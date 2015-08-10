@@ -2,11 +2,19 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+      <script src="Scripts/jquery.js"  type="text/javascript"></script>
+          <script src="Scripts/jquery-ui.js" type="text/javascript"></script>
+          <link rel="stylesheet" href="Style/jquery-ui.css" />
+          <script>
+              $(function () { $("#<%= DateTextBox.ClientID %>").datepicker(); });
+
+          </script>
     <table width="100%">
 
         <tbody><tr>
         	<td> <h4>Receive PO(s)</h4></td>
             <td align="right">
+                <asp:Button ID="btnSearch" runat="server" OnClick="btnSearch_Click" Enabled="true" Text="SEARCH" CssClass="btn btn-primary"/>
                <asp:Button ID="btnBack" runat="server" OnClick="btnBack_Click" Text="Go Back" CssClass="btn btn-default btn-large" Visible="true" /> 
                
             </td>
@@ -19,26 +27,40 @@
             <tr>
             <td><label>Vendor Name </label></td>
             <td>
-                <asp:DropDownList runat="server" ID="StockAt" CssClass="form-control product" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="StockAt_SelectedIndexChanged"   />
+                <asp:DropDownList runat="server" ID="StockAt" CssClass="form-control product" Width="29%" />
 
                    <%--<asp:SqlDataSource ID="StockAtDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:IMSConnectionString %>" SelectCommand="SELECT [SuppID], [SupName] FROM [tblVendor]"></asp:SqlDataSource>--%>
 
-                   <asp:TextBox runat="server" ID="SelectProduct" CssClass="form-control product" Visible="false"/>
-                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click" Visible="false" Text="SearchProduct" Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
+                  <%-- <asp:TextBox runat="server" ID="SelectProduct" CssClass="form-control product" Visible="false"/>--%>
+               <%-- <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click" Visible="false" Text="SearchProduct" Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />--%>
                 
                 
                </td>
-             <%--<td>
+                 <td>
+                   <asp:Label runat="server" AssociatedControlID="DateTextBox"  CssClass="control-label">Order Date</asp:Label>
+               </td>
 
-                <asp:TextBox runat="server" ID="SelectProduct" CssClass="form-control product"/>
-                <asp:ImageButton ID="btnSearchProduct" runat="server" OnClick="btnSearchProduct_Click" Text="SearchProduct" Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />
-                <br />
-                <asp:DropDownList runat="server" ID="StockAt" CssClass="form-control" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="StockAt_SelectedIndexChanged" Visible="false"/>
-                <br/>
-             </td>--%>
-      </tr></tbody></table>
+             <td>
+                    <asp:TextBox runat="server" ID="DateTextBox" CssClass="form-control" />
+                
+               </td>
+           <td>
+                   <asp:Label runat="server" AssociatedControlID="txtOrderNO"  CssClass="control-label">Order Number</asp:Label>
+               </td>
 
-         <br />
+             <td>
+                     <asp:TextBox runat="server" ID="txtOrderNO" CssClass="form-control" />
+                
+               </td>
+                <td colspan="100%">
+                 
+            </td>
+       
+               
+         </tr>
+        </tbody></table>
+
+        <hr>
     <div class="form-group">
         <asp:GridView ID="StockDisplayGrid" CssClass="table table-striped table-bordered table-condensed"  Visible="true" runat="server" AllowPaging="True" PageSize="10" 
                 AutoGenerateColumns="false" OnSelectedIndexChanged="StockDisplayGrid_SelectedIndexChanged" OnPageIndexChanging="StockDisplayGrid_PageIndexChanging"   onrowcancelingedit="StockDisplayGrid_RowCancelingEdit" 

@@ -39,7 +39,8 @@ namespace IMS.StoreManagement.StoreRequests
                     dtStatic.Columns.Add("RequestedFrom");
                     dtStatic.Columns.Add("RequestedTo");
                     dtStatic.Columns.Add("RequestedQty");
-
+                    dtStatic.Columns.Add("BonusQty");
+                    dtStatic.Columns.Add("PercentageDiscount");
                 }
                 expHandler.CheckForErrorMessage(Session);
             }
@@ -151,13 +152,15 @@ namespace IMS.StoreManagement.StoreRequests
         protected void btnAddRequest_Click(object sender, EventArgs e)
         {
           
-            dtStatic.Rows.Add(lblProductId.Text, lblStoreId.Text, txtSearch.Text, Session["UserSys"].ToString(), txtStore.Text, txtTransferredQty.Text);
+            dtStatic.Rows.Add(lblProductId.Text, lblStoreId.Text, txtSearch.Text, Session["UserSys"].ToString(), txtStore.Text, txtTransferredQty.Text, txtBonusQty.Text,txtPercentageDiscount.Text);
             dgvCreateTransfer.DataSource = dtStatic;
             dgvCreateTransfer.DataBind();
             Session["TransferRequestGrid"] = dtStatic;
             txtSearch.Text = "";
             txtStore.Text = "";
             txtTransferredQty.Text = "";
+            txtBonusQty.Text = "";
+            txtPercentageDiscount.Text = "";
         }
 
         protected void btnGenerateRequest_Click(object sender, EventArgs e)
@@ -289,7 +292,13 @@ namespace IMS.StoreManagement.StoreRequests
                                     {
                                         command.Parameters.AddWithValue("@p_RequestedQty", DBNull.Value);
                                     }
+                                    int BonusQty = 0;
+                                    double DiscountPercentage;
+                                    int.TryParse(drDetails["BonusQty"].ToString(),out BonusQty);
+                                    double.TryParse(drDetails["PercentageDiscount"].ToString(), out DiscountPercentage);
 
+                                    command.Parameters.AddWithValue("@p_ReqBonusQty", BonusQty);
+                                    command.Parameters.AddWithValue("@p_Discount", DiscountPercentage);
 
                                     command.Parameters.AddWithValue("@p_TransferStatus", "Initiated");
 
@@ -401,6 +410,15 @@ namespace IMS.StoreManagement.StoreRequests
                                         {
                                             command.Parameters.AddWithValue("@p_RequestedQty", DBNull.Value);
                                         }
+
+                                        int BonusQty = 0;
+                                        
+                                        double DiscountPercentage;
+                                        int.TryParse(drDetails["BonusQty"].ToString(), out BonusQty);
+                                        double.TryParse(drDetails["PercentageDiscount"].ToString(), out DiscountPercentage);
+
+                                        command.Parameters.AddWithValue("@p_ReqBonusQty", BonusQty);
+                                        command.Parameters.AddWithValue("@p_Discount", DiscountPercentage);
 
 
                                         command.Parameters.AddWithValue("@p_TransferStatus", "Initiated");

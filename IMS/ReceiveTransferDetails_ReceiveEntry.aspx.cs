@@ -72,13 +72,14 @@ namespace IMS
             for (int i = 0; i < dgvReceiveTransferDetailsReceive.Rows.Count; i++)
             {
                 DateTime RequestDate, Expiry;
-                int TransferedQty, TransferedBonusQty, TransferDetID, StockId, ProdctID,  ReqQty = 0, AvailableQty;
+                int TransferedQty, TransferedBonusQty, TransferDetID, StockId, ProdctID,  ReqQty = 0, AvailableQty ;
                 decimal CP, SP;
                 double Barcode;
 
 
                 // Label lblentryID = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblentryID");
-                Label lblTransferDetailsID = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblTransferDetailsID");
+                Label lblRequestedBonusQty = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblRequestedBonusQty");
+                Label lblTransferDetailsID = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblTransferDetailsID"); 
                 Label lblProductID = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblProductID");
 
                 Label lblBarCode = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblBarCode");
@@ -135,7 +136,7 @@ namespace IMS
                     command.ExecuteNonQuery();
 
                     //Update Stock
-                    UpdateStockMinus(TransferDetID, ProdctID, AvailableQty, TransferedQty, Expiry, StockId, CP, SP, BatchNo, ReqQty, Barcode);
+                    UpdateStockMinus(TransferDetID, ProdctID, AvailableQty, TransferedQty, Expiry, StockId, CP, SP, BatchNo, ReqQty, Barcode, TransferedBonusQty);
 
                     if (!Session["UserRole"].ToString().Equals("WareHouse"))
                     {
@@ -226,7 +227,7 @@ namespace IMS
             }
         }
 
-        private void UpdateStockMinus(int TransferDetailID, int ProductID, int quantity, int Sent, DateTime Expiry, int StockID, decimal CP, decimal SP, string BatchNO, int ReqQty, double Barcode)
+        private void UpdateStockMinus(int TransferDetailID, int ProductID, int quantity, int Sent, DateTime Expiry, int StockID, decimal CP, decimal SP, string BatchNO, int ReqQty, double Barcode, int TransferedBonusQty)
         {
             try
             {
@@ -234,6 +235,7 @@ namespace IMS
                 {
                     connection.Open();
                 }
+                Sent = Sent + TransferedBonusQty;
 
                 SqlCommand command;
                 command = new SqlCommand("Sp_UpdateStockBy_ExpiryStockID", connection);
