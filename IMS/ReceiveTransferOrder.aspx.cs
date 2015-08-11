@@ -288,7 +288,7 @@ namespace IMS
 
 
                         int.TryParse(Session["UserSys"].ToString(), out LogedInStoreID);
-                        Label lblRequestedBonusQty = (Label)gvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblRequestedBonusQty");
+                        Label lblRequestedBonusQty = (Label)gvReceiveTransfer.Rows[i].FindControl("lblRequestedBonusQty");
 
                         Label lblTransferNo = (Label)gvReceiveTransfer.Rows[i].FindControl("lblRequestNo");
                         Label lblTransferDetailsID = (Label)gvReceiveTransfer.Rows[i].FindControl("lblTransferDetailsID");
