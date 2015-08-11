@@ -223,7 +223,7 @@ namespace IMS
 
                 if (ddlSalesman != null)
                 {
-                    ddlSalesman.Items.Insert(0, "Select System");
+                    ddlSalesman.Items.Insert(0, "Select SalesMan");
                     if (Session["SalesManID"] != null)
                     {
                         // set index based on value
