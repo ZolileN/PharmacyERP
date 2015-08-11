@@ -436,15 +436,32 @@ namespace IMS.UserControl
         {
             if ((bool)ViewState["first"] == true)
             {
-                selectAllProducts();
-                ViewState["first"] = false;
+                CheckBox chkAll = (CheckBox)StockDisplayGrid.HeaderRow.Cells[0].FindControl("chkboxSelectAll");
+                if (chkAll.Checked)
+                {
+                    selectAllProducts();
+                    ViewState["first"] = false;
+                }
+                else 
+                {
+                    ViewState["first"] = false;
+                }
             }
             //else
             //{
             //    SaveCurrentState();
             //}
-            SaveCurrentState();
+            SaveCurrentState(); 
             StockDisplayGrid.PageIndex = e.NewPageIndex;
+
+            //in-case its the first page set viewstate["first"] =true, so the user can avail the select all option
+            if (StockDisplayGrid.PageIndex == 0) 
+            {
+                if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true))
+                {
+                    ViewState["first"] = true;
+                }
+            }
             
             if (Session["Text"] != null)
             {
@@ -526,7 +543,7 @@ namespace IMS.UserControl
                     Session["MS_Bonus12"] = dt.Rows[0]["Bonus12Quantity"].ToString();
                     Session["MS_Bonus25"] = dt.Rows[0]["Bonus25Quantity"].ToString();
                     Session["MS_Bonus50"] = dt.Rows[0]["Bonus50Quantity"].ToString();
-                    Response.Redirect("Addproduct.aspx");
+                    Response.Redirect("Addproduct.aspx",false);
                     #endregion
 
                 }
@@ -537,7 +554,8 @@ namespace IMS.UserControl
                     try
                     {
                         Label ItemNo = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("UPC");
-                        connection.Open();
+                        if (connection.State == ConnectionState.Closed)
+                            connection.Open();
                         SqlCommand command = new SqlCommand("sp_DeleteProduct", connection);
                         command.CommandType = CommandType.StoredProcedure;
 
@@ -563,10 +581,14 @@ namespace IMS.UserControl
                     }
                     catch (Exception ex)
                     {
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
+                        throw ex;
                     }
                     finally
                     {
-                        connection.Close();
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
                     }
                     #endregion
 
@@ -582,7 +604,8 @@ namespace IMS.UserControl
             }
             finally
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
 
         }
@@ -617,8 +640,16 @@ namespace IMS.UserControl
                // SaveCurrentState();
                 if ((bool)ViewState["first"] == true)
                 {
-                    selectAllProducts();
-                    ViewState["first"] = false;
+                    CheckBox chkAll = (CheckBox)StockDisplayGrid.HeaderRow.Cells[0].FindControl("chkboxSelectAll");
+                    if (chkAll.Checked)
+                    {
+                        selectAllProducts();
+                        ViewState["first"] = false;
+                    }
+                    else
+                    {
+                        ViewState["first"] = false;
+                    }
                 }
                 //else
                 //{
@@ -650,7 +681,9 @@ namespace IMS.UserControl
                             }
                             catch (Exception ex)
                             {
-
+                                if (connection.State == ConnectionState.Open)
+                                    connection.Close();
+                                throw ex;
                             }
                             
                         }
@@ -764,10 +797,15 @@ namespace IMS.UserControl
                                 }
                                 catch (Exception ex)
                                 {
+                                    if (connection.State == ConnectionState.Open)
+                                        connection.Close();
+                                    throw ex;
                                 }
                                 finally
                                 {
-                                    connection.Close();
+                                    if (connection.State == ConnectionState.Open)
+                                        connection.Close();
+                                    
                                 }
                                 #endregion
 
@@ -804,6 +842,7 @@ namespace IMS.UserControl
             {
                 if (!String.IsNullOrEmpty(txtSearch.Value))
                 {
+                    if(connection.State==ConnectionState.Closed)
                     connection.Open();
                     DataSet resultSet = new DataSet();
 
@@ -840,7 +879,9 @@ namespace IMS.UserControl
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+             
             }
 
         }
