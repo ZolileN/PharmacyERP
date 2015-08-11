@@ -116,7 +116,6 @@ namespace IMS
                 command.Parameters.AddWithValue("@p_SystemID", SystemId);
                 command.CommandType = CommandType.StoredProcedure;
                 command.ExecuteNonQuery();
-
             }
             catch(Exception ex)
             {
@@ -142,6 +141,10 @@ namespace IMS
                 Session["Action"] = "Edit";
                 Session["SysToAdd"] = RoleNames.warehouse;
                 Response.Redirect("AddSystem.aspx", false);
+            }
+            if(e.CommandName == "Delete")
+            {
+
             }
         }
 
