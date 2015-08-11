@@ -182,7 +182,7 @@ namespace IMS
                         int.TryParse(lblProductID.Text.ToString(), out ProductId);
                         int userID = Convert.ToInt32(Session["UserID"].ToString());
 
-                        if (AvailableQty > 0)
+                        if (AvailableQty > 0 && (RequestedQty + requestedBonusQty <= AvailableQty))
                         {
                             if (connection.State == ConnectionState.Closed)
                             {
@@ -800,7 +800,7 @@ namespace IMS
                 }
                 if (e.CommandName == "AcceptProductTransfer")
                 {
-                    if (AvailableQty > 0)
+                    if (AvailableQty > 0 && (RequestedQty+requestedBonusQty <= AvailableQty)) 
                     {
                         bool isSuccessful = false;
                         //update transfer entry first

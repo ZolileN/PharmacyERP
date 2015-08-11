@@ -31,7 +31,7 @@
                             </h4>
                             <%-- This option is temporarily hidden --%>
                             <asp:Button ID="btnGenTransfer" runat="server" Visible="true" CssClass="btn btn-info fl-r" Text="Generate SO" CommandName="GenTransferOrder" />
-                            <asp:Button ID="btnAcceptTransferOrder" runat="server" CssClass="btn btn-success fl-r acceptAll" Text="Accept All" CommandName="AcceptTransferOrder"/>
+                            <asp:Button ID="btnAcceptTransferOrder" runat="server" CssClass="btn btn-success fl-r acceptAll" Text="Accept All" Visible="false" CommandName="AcceptTransferOrder"/>
 
                         </td>
                     </tr>
