@@ -336,8 +336,9 @@ namespace IMS
                         SqlCommand command = new SqlCommand("sp_InserOrderDetail_ByStore", connection);
                         command.CommandType = CommandType.StoredProcedure;
                         int ProductNumber = 0;
-                        int OrderNumber, BonusOrdered, Quantity, PercentageDiscount;
-                        OrderNumber = BonusOrdered = Quantity = PercentageDiscount = 0;
+                        int OrderNumber, BonusOrdered, Quantity;
+                        float PercentageDiscount;
+                        OrderNumber = BonusOrdered = Quantity = 0;
                         
                         if (int.TryParse(Session["OrderNumber"].ToString(), out OrderNumber))
                         {
@@ -361,7 +362,7 @@ namespace IMS
                         {
                             command.Parameters.AddWithValue("@p_OrderBonusQuantity", DBNull.Value);
                         }
-                        if (int.TryParse(txtPercentageDiscount.Text.ToString(), out PercentageDiscount))
+                        if (float.TryParse(txtPercentageDiscount.Text.ToString(), out PercentageDiscount))
                         {
                             command.Parameters.AddWithValue("@p_PercentageDiscount", PercentageDiscount);
                         }
@@ -441,8 +442,9 @@ namespace IMS
                                     command = new SqlCommand("sp_InserOrderDetail_ByStore", connection);
                                     command.CommandType = CommandType.StoredProcedure;
 
-                                    int BonusOrdered, ProductNumber, Quantity, PercentageDiscount;
-                                    OrderNumber = BonusOrdered = ProductNumber = Quantity = PercentageDiscount = 0;
+                                    int BonusOrdered, ProductNumber, Quantity;
+                                    float PercentageDiscount;
+                                    OrderNumber = BonusOrdered = ProductNumber = Quantity = 0;
 
                                     if (int.TryParse(Session["OrderNumber"].ToString(), out OrderNumber))
                                     {
@@ -468,7 +470,7 @@ namespace IMS
                                     {
                                         command.Parameters.AddWithValue("@p_OrderBonusQuantity", DBNull.Value);
                                     }
-                                    if (int.TryParse(txtPercentageDiscount.Text.ToString(), out PercentageDiscount))
+                                    if (float.TryParse(txtPercentageDiscount.Text.ToString(), out PercentageDiscount))
                                     {
                                         command.Parameters.AddWithValue("@p_PercentageDiscount", PercentageDiscount);
                                     }
