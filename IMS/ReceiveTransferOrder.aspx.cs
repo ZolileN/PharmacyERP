@@ -288,7 +288,7 @@ namespace IMS
 
 
                         int.TryParse(Session["UserSys"].ToString(), out LogedInStoreID);
-                        Label lblRequestedBonusQty = (Label)gvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblRequestedBonusQty");
+                        Label lblRequestedBonusQty = (Label)gvReceiveTransfer.Rows[i].FindControl("lblRequestedBonusQty");
 
                         Label lblTransferNo = (Label)gvReceiveTransfer.Rows[i].FindControl("lblRequestNo");
                         Label lblTransferDetailsID = (Label)gvReceiveTransfer.Rows[i].FindControl("lblTransferDetailsID");
@@ -726,7 +726,7 @@ namespace IMS
                     SqlCommand command = new SqlCommand("sp_UpdateTransferOrderDetials_Generate", connection);
 
                     command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
-                    command.Parameters.AddWithValue("@p_SystemID", LogedInStoreID);
+                    command.Parameters.AddWithValue("@p_SystemID", DBNull.Value);
 
 
                     command.CommandType = CommandType.StoredProcedure;
