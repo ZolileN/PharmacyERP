@@ -189,13 +189,21 @@ namespace IMS.StoreManagement.StoreRequests
                                 SqlCommand command = new SqlCommand("sp_getStock_Quantity", connection);
                                 command.CommandType = CommandType.StoredProcedure;
                                 command.Parameters.AddWithValue("@p_ProductID", Convert.ToInt32(drDetails["ProductID"].ToString()));
-                                command.Parameters.AddWithValue("@p_SysID", Convert.ToInt32(Session["UserSys"].ToString()));
+                                command.Parameters.AddWithValue("@p_SysID", Convert.ToInt32(lblStoreId.Text.ToString()));
 
 
                                 DataSet QuantitySet = new DataSet();
                                 SqlDataAdapter sA = new SqlDataAdapter(command);
                                 sA.Fill(QuantitySet);
-                                RemainingStock = Convert.ToInt32(QuantitySet.Tables[0].Rows[0][0].ToString());
+                                if (QuantitySet != null && QuantitySet.Tables[0].Rows.Count > 0 && QuantitySet.Tables[0].Rows[0][0].ToString()!="")
+                                {
+                                    RemainingStock = Convert.ToInt32(QuantitySet.Tables[0].Rows[0][0].ToString());
+                                }
+                                else
+                                {
+                                    WebMessageBoxUtil.Show("The requested quantity exceeds the total stock limit of the selected pharmacy");
+                                    return;
+                                }
 
                             }
                             catch (Exception ex)

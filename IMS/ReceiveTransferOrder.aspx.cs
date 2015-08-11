@@ -726,7 +726,7 @@ namespace IMS
                     SqlCommand command = new SqlCommand("sp_UpdateTransferOrderDetials_Generate", connection);
 
                     command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
-                    command.Parameters.AddWithValue("@p_SystemID", LogedInStoreID);
+                    command.Parameters.AddWithValue("@p_SystemID", DBNull.Value);
 
 
                     command.CommandType = CommandType.StoredProcedure;
