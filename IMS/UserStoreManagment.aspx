@@ -88,7 +88,7 @@
                 
             <td  style="vertical-align:top;background:none !important; border:0px !important;" >
                 <asp:GridView ID="gvAssociatesStore" runat="server" ShowHeaderWhenEmpty="true" CssClass="table table-striped table-bordered table-condensed" AllowPaging="True" PageSize="10"
-                    AutoGenerateColumns="false">
+                    AutoGenerateColumns="false" OnPageIndexChanging="gvAssociatesStore_PageIndexChanging">
                     <Columns>
                         <asp:TemplateField HeaderText="System ID" Visible="false">
                             <ItemTemplate>
