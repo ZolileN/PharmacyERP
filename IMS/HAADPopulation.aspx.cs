@@ -265,18 +265,18 @@ namespace IMS
 
             DataTable dt = null;
             DataSet ds = null;
-            if (HaadFileImport.FileName.Length > 0)
+            //if (HaadFileImport.FileName.Length > 0)
             {
-                a = HaadFileImport.FileName.Split('.');
+               // a = HaadFileImport.FileName.Split('.');
                 //fileName = Convert.ToString(System.DateTime.Now.Ticks) + "." + a.GetValue(1).ToString();
                 //FilePath = Server.MapPath(@"~\APIExcelSheet");
-                FilePath = System.IO.Path.GetDirectoryName(HaadFileImport.FileName);
+             //   FilePath = System.IO.Path.GetDirectoryName(HaadFileImport.FileName);
                // HaadFileImport.SaveAs(FilePath + @"\" + fileName);
 
-                FullName = FilePath + @"\" + fileName;
-                
+             //   FullName = FilePath + @"\" + fileName;
+                FilePath = Server.MapPath(@"HAAD_Source\\HaadList.xlsx").ToString();
                 // Database Saved Code
-                string connString = string.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 12.0;HDR=yes'", @"G:\HaadList.xlsx");
+                string connString = string.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 12.0;HDR=yes'", FilePath);
                 string sql = "SELECT * from [Sheet1$]";
                 dt = new DataTable();
 
