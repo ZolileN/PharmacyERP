@@ -75,6 +75,12 @@ namespace IMS.UserControl
                         connection.Close();
                     throw ex;
                 }
+                finally
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+
+                }
             }
             if (IsPostBack)
             {
@@ -134,7 +140,8 @@ namespace IMS.UserControl
                     {
                         //String Query = "Select * FROM tblVendor Where  SupName Like '" + Session["txtVendor"].ToString() + "'";
 
-                        connection.Open();
+                        if (connection.State == ConnectionState.Closed)
+                            connection.Open();
                         SqlCommand command = new SqlCommand("sp_GetVendor_byNameParam", connection);
                         command.Parameters.AddWithValue("@p_VendName", Session["txtVendor"].ToString());
                         SqlDataAdapter SA = new SqlDataAdapter(command);
@@ -162,7 +169,9 @@ namespace IMS.UserControl
                 }
                 finally
                 {
-                    connection.Close();
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+
                 }
                 #endregion
             }
@@ -197,6 +206,12 @@ namespace IMS.UserControl
                     connection.Close();
                 throw ex;
             }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }
 
         protected void gdvVendor_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -227,6 +242,12 @@ namespace IMS.UserControl
                     connection.Close();
                 throw ex;
             }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }
 
         protected void gdvVendor_SelectedIndexChanged(object sender, EventArgs e)
@@ -238,12 +259,31 @@ namespace IMS.UserControl
         {
             if ((bool)ViewState["first"] == true)
             {
-                selectAllProducts();
-                ViewState["first"] = false;
+                CheckBox chkAll = (CheckBox)gdvVendor.HeaderRow.Cells[0].FindControl("chkboxSelectAll");
+
+                if (chkAll.Checked)
+                {
+                    selectAllProducts();
+                    ViewState["first"] = false;
+                }
+                else
+                {
+                    ViewState["first"] = false;
+                }
             }
 
             SaveCurrentState();
             gdvVendor.PageIndex = e.NewPageIndex;
+
+            if (gdvVendor.PageIndex == 0)
+            {
+                if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true))
+                {
+                   
+                    ViewState["first"] = true;
+                }
+            }
+
             if (Session["txtVendor"] != null)
             {
                 PopulateGrid();
@@ -308,6 +348,12 @@ namespace IMS.UserControl
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
             }
 
         }
@@ -495,9 +541,20 @@ namespace IMS.UserControl
                 {
                     if ((bool)ViewState["first"] == true)
                     {
-                        selectAllProducts();
-                        ViewState["first"] = false;
+
+                        CheckBox chkAll = (CheckBox)gdvVendor.HeaderRow.Cells[0].FindControl("chkboxSelectAll");
+
+                        if (chkAll.Checked)
+                        {
+                            selectAllProducts();
+                            ViewState["first"] = false;
+                        }
+                        else
+                        {
+                            ViewState["first"] = false;
+                        }
                     }
+
                     SaveCurrentState();
                     if (ViewState["CheckBoxArray"] != null)
                     {
@@ -524,7 +581,7 @@ namespace IMS.UserControl
                                     command.Parameters.AddWithValue("@StoreId", StoreId);
 
                                     command.ExecuteNonQuery();
-                                    connection.Close();
+                                   
 
                                 }
                                 catch (Exception ex)
@@ -532,6 +589,12 @@ namespace IMS.UserControl
                                     if (connection.State == ConnectionState.Open)
                                         connection.Close();
                                     throw ex;
+                                }
+                                finally
+                                {
+                                    if (connection.State == ConnectionState.Open)
+                                        connection.Close();
+
                                 }
 
                             }
@@ -616,7 +679,8 @@ namespace IMS.UserControl
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
 
             }
         }
@@ -627,7 +691,8 @@ namespace IMS.UserControl
             {
                 if (!String.IsNullOrEmpty(txtSearch.Value))
                 {
-                    connection.Open();
+                    if (connection.State == ConnectionState.Closed)
+                        connection.Open();
                     DataSet resultSet = new DataSet();
 
                     SqlCommand comm = new SqlCommand("Sp_GetStoreVendorsByName", connection);
@@ -663,7 +728,9 @@ namespace IMS.UserControl
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
             }
              
         }
@@ -676,7 +743,18 @@ namespace IMS.UserControl
                 ModalPopupExtender mpe = (ModalPopupExtender)this.Parent.FindControl("mpeCongratsMessageDiv");
                 mpe.Show();
             }
-            catch (Exception exp) { }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }
     }
 }
