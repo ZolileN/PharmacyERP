@@ -135,7 +135,14 @@ namespace IMS
                 connection.Open();
                 SqlCommand command = new SqlCommand("Sp_GetCategoryList", connection);
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@p_deptID", Convert.ToInt32(ddDepartment.SelectedValue.ToString()));
+                if (ddDepartment.SelectedIndex > 0)
+                {
+                    command.Parameters.AddWithValue("@p_deptID", Convert.ToInt32(ddDepartment.SelectedValue.ToString()));
+                }
+                else 
+                {
+                    command.Parameters.AddWithValue("@p_deptID", DBNull.Value);
+                }
                 DataSet ds = new DataSet();
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);

@@ -418,5 +418,12 @@ namespace IMS
             gvAllAvailableStore.DataSource = dt;
             gvAllAvailableStore.DataBind();
         }
+
+        protected void gvAssociatesStore_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvAssociatesStore.PageIndex = e.NewPageIndex;
+            gvAssociatesStore.DataSource = (DataTable)Session["dtAssociated"];
+            gvAssociatesStore.DataBind();
+        }
     }
 }

@@ -65,7 +65,7 @@
                         <ItemTemplate>
                             <asp:Button CssClass="btn btn-default edit-btn" ID="btnEdit" Text="Edit" runat="server" CommandName="Edit" CommandArgument='<%# Container.DisplayIndex  %>'/>
                             <span onclick="return confirm('Are you sure you want to delete this record?')">
-                                <asp:Button CssClass="btn btn-default del-btn" ID="btnDelete" Text="Delete" runat="server" CommandName="Delete" CommandArgument='<%# Container.DisplayIndex  %>'/>
+                                <asp:Button Visible="false" CssClass="btn btn-default del-btn" ID="btnDelete" Text="Delete" runat="server" CommandName="Delete" CommandArgument='<%# Container.DisplayIndex  %>'/>
                             </span>
                               </ItemTemplate>
                          <ItemStyle  Width="150px" HorizontalAlign="Left"/>
