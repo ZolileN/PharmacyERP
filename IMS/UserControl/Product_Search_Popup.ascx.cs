@@ -136,6 +136,90 @@ namespace IMS.UserControl
             Server.ClearError();
         }
 
+        public void PopulateGridForPM()
+        {
+            if (Session["Text"] != null)
+            {
+                ViewState["first"] = false;
+                DataTable dt = new DataTable();
+                DataSet ds = new DataSet();
+                #region Getting Product Details
+                try
+                {
+                    int id;
+                    if (int.TryParse(Session["UserSys"].ToString(), out id))
+                    {
+
+                        // String Query = "Select * FROM tbl_ProductMaster Where Status = 1 and Product_Name Like '" + Session["Text"].ToString() + "'";
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
+                        SqlCommand command=null;
+                        if (Session["UserRole"].ToString().Equals("WareHouse"))
+                        {
+                            command = new SqlCommand("dbo.Sp_GetProductByName", connection);
+                            command.CommandType = CommandType.StoredProcedure;
+                            if (Session["Text"] != null)
+                            {
+                                command.Parameters.AddWithValue("@p_prodName", Session["Text"].ToString());
+                            }
+                            else
+                            {
+                                command.Parameters.AddWithValue("@p_prodName", DBNull.Value);
+                            }
+                        }
+                        else
+                        {
+                            command = new SqlCommand("Sp_GetMappedProductByName", connection);
+                            command.CommandType = CommandType.StoredProcedure;
+                            command.Parameters.AddWithValue("@p_StoreID", id);
+                            if (Session["Text"] != null)
+                            {
+                                command.Parameters.AddWithValue("@p_prodName", Session["Text"].ToString());
+                            }
+                            else
+                            {
+                                command.Parameters.AddWithValue("@p_prodName", DBNull.Value);
+                            }
+                        }
+                        
+                        SqlDataAdapter SA = new SqlDataAdapter(command);
+
+
+                        SA.Fill(ds);
+                        Session["dsProducts_PopUp"] = ds;
+                        ProductSet = ds;
+                        StockDisplayGrid.DataSource = ds;
+                        StockDisplayGrid.DataBind();
+                        PopulatePreviousState();
+
+                        if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true) || selectAll == true)
+                        {
+                            ((CheckBox)StockDisplayGrid.HeaderRow.FindControl("chkboxSelectAll")).Enabled = true;
+                            ViewState["checkAllState"] = true;
+                        }
+
+
+
+                    }
+
+                }
+                catch (Exception ex)
+                {
+
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+                #endregion
+            }
+        }
+
         public void PopulateGrid()
         {
             if (Session["Text"] != null)
@@ -778,22 +862,41 @@ namespace IMS.UserControl
                                         {
                                             connection.Open();
                                         }
-                                        SqlCommand command = new SqlCommand("dbo.Sp_GetProductByName", connection);
-                                        command.CommandType = CommandType.StoredProcedure;
-                                        if (Session["Text"] != null)
+                                        
+                                        SqlCommand command = null;
+                                        if (Session["UserRole"].ToString().Equals("WareHouse"))
                                         {
-                                            //if (!string.IsNullOrEmpty(description))
-                                            //{
-                                            //    command.Parameters.AddWithValue("@p_prodName", description);
-                                            //}
-                                            //else
-                                            //{
+                                            command = new SqlCommand("dbo.Sp_GetProductByName", connection);
+                                            command.CommandType = CommandType.StoredProcedure;
+                                            if (Session["Text"] != null)
+                                            {
+                                                //if (!string.IsNullOrEmpty(description))
+                                                //{
+                                                //    command.Parameters.AddWithValue("@p_prodName", description);
+                                                //}
+                                                //else
+                                                //{
                                                 command.Parameters.AddWithValue("@p_prodName", ltMetaTags.Text);
-                                           // }
+                                                // }
+                                            }
+                                            else
+                                            {
+                                                command.Parameters.AddWithValue("@p_prodName", DBNull.Value);
+                                            }
                                         }
                                         else
                                         {
-                                            command.Parameters.AddWithValue("@p_prodName", DBNull.Value);
+                                            command = new SqlCommand("Sp_GetMappedProductByName", connection);
+                                            command.CommandType = CommandType.StoredProcedure;
+                                            command.Parameters.AddWithValue("@p_StoreID", id);
+                                            if (Session["Text"] != null)
+                                            {
+                                                command.Parameters.AddWithValue("@p_prodName", ltMetaTags.Text);
+                                            }
+                                            else
+                                            {
+                                                command.Parameters.AddWithValue("@p_prodName", DBNull.Value);
+                                            }
                                         }
                                         SqlDataAdapter SA = new SqlDataAdapter(command);
 

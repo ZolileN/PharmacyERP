@@ -260,38 +260,49 @@ namespace IMS
                    // DataView dv = ProductSet.Tables[0].DefaultView;
                     dv.RowFilter = "Product_Id_Org = '"+ ItemNo.Text + "'";
                     DataTable dt = dv.ToTable();
-                    Session["DrugType"] = dt.Rows[0]["DrugType"].ToString();
-                    Session["MS_Manufacterer"] = "";
-                    Session["MS_Category"] = "";
-                    Session["MS_Description"] = dt.Rows[0]["Description"] !=null ? dt.Rows[0]["Description"].ToString():string.Empty;
-                    Session["MS_GenericName"] = dt.Rows[0]["GName"]!=null?dt.Rows[0]["GName"].ToString():string.Empty;
-                    Session["MS_Control"] = dt.Rows[0]["Control"]!=null?dt.Rows[0]["Control"].ToString():string.Empty;
-                    Session["MS_BinNumber"] = dt.Rows[0]["binNumber"] !=null? dt.Rows[0]["binNumber"].ToString() : string.Empty;
-                    Session["MS_GreenRainCode"] = GreenRainCode.Text.ToString();
-                    Session["MS_BrandName"] = dt.Rows[0]["Brand_Name"]!=null?dt.Rows[0]["Brand_Name"].ToString(): string.Empty;
-                    Session["MS_MaxiMumDiscount"] = dt.Rows[0]["MaxiMumDiscount"]!=null?dt.Rows[0]["MaxiMumDiscount"].ToString():string.Empty;
-                    Session["MS_LineID"] = dt.Rows[0]["LineID"]!=null?dt.Rows[0]["LineID"].ToString():string.Empty;
-                    Session["MS_UnitSale"] = UnitSale.Text.ToString();
-                    Session["MS_UnitCost"] = UnitCost.Text.ToString();
-                    Session["MS_itemAWT"] = dt.Rows[0]["itemAWT"]!=null?dt.Rows[0]["itemAWT"].ToString():string.Empty;
-                    Session["MS_itemForm"] = dt.Rows[0]["itemForm"] !=null? dt.Rows[0]["itemForm"].ToString() : string.Empty;
-                    Session["MS_itemStrength"] = dt.Rows[0]["itemStrength"]!=null?dt.Rows[0]["itemStrength"].ToString(): string.Empty;
-                    Session["MS_itemPackType"] = dt.Rows[0]["itemPackType"] !=null ? dt.Rows[0]["itemPackType"].ToString() : string.Empty;
-                    Session["MS_itemPackSize"] = dt.Rows[0]["itemPackSize"] !=null? dt.Rows[0]["itemPackSize"].ToString() : string.Empty;
-                    Session["MS_ProductID"] = dt.Rows[0]["ProductID"] !=null? dt.Rows[0]["ProductID"].ToString() : string.Empty;
-                    Session["MS_ProductOrderType"] = dt.Rows[0]["productOrderType"]!=null?dt.Rows[0]["productOrderType"].ToString():string.Empty;
-                    Session["MS_Bonus12"] = dt.Rows[0]["Bonus12Quantity"] !=null? dt.Rows[0]["Bonus12Quantity"].ToString() : string.Empty;
-                    Session["MS_Bonus25"] = dt.Rows[0]["Bonus25Quantity"] !=null? dt.Rows[0]["Bonus25Quantity"].ToString() : string.Empty;
-                    Session["MS_Bonus50"] = dt.Rows[0]["Bonus50Quantity"] !=null? dt.Rows[0]["Bonus50Quantity"].ToString() : string.Empty;
-                    if (dt.Rows[0]["Active"] != null)
+                    if (dt.Rows.Count != 0)
                     {
-                        Session["MS_Active"] = dt.Rows[0]["Active"] !=null? dt.Rows[0]["Active"].ToString() : string.Empty;
+                        Session["DrugType"] = dt.Rows[0]["DrugType"].ToString();
+                        Session["MS_Manufacterer"] = "";
+                        Session["MS_Category"] = "";
+                        Session["MS_Description"] = dt.Rows[0]["Description"] != null ? dt.Rows[0]["Description"].ToString() : string.Empty;
+                        Session["MS_GenericName"] = dt.Rows[0]["GName"] != null ? dt.Rows[0]["GName"].ToString() : string.Empty;
+                        Session["MS_Control"] = dt.Rows[0]["Control"] != null ? dt.Rows[0]["Control"].ToString() : string.Empty;
+                        Session["MS_BinNumber"] = dt.Rows[0]["binNumber"] != null ? dt.Rows[0]["binNumber"].ToString() : string.Empty;
+                        Session["MS_GreenRainCode"] = GreenRainCode.Text.ToString();
+                        Session["MS_BrandName"] = dt.Rows[0]["Brand_Name"] != null ? dt.Rows[0]["Brand_Name"].ToString() : string.Empty;
+                        Session["MS_MaxiMumDiscount"] = dt.Rows[0]["MaxiMumDiscount"] != null ? dt.Rows[0]["MaxiMumDiscount"].ToString() : string.Empty;
+                        Session["MS_LineID"] = dt.Rows[0]["LineID"] != null ? dt.Rows[0]["LineID"].ToString() : string.Empty;
+                        Session["MS_UnitSale"] = UnitSale.Text.ToString();
+                        Session["MS_UnitCost"] = UnitCost.Text.ToString();
+                        Session["MS_itemAWT"] = dt.Rows[0]["itemAWT"] != null ? dt.Rows[0]["itemAWT"].ToString() : string.Empty;
+                        Session["MS_itemForm"] = dt.Rows[0]["itemForm"] != null ? dt.Rows[0]["itemForm"].ToString() : string.Empty;
+                        Session["MS_itemStrength"] = dt.Rows[0]["itemStrength"] != null ? dt.Rows[0]["itemStrength"].ToString() : string.Empty;
+                        Session["MS_itemPackType"] = dt.Rows[0]["itemPackType"] != null ? dt.Rows[0]["itemPackType"].ToString() : string.Empty;
+                        Session["MS_itemPackSize"] = dt.Rows[0]["itemPackSize"] != null ? dt.Rows[0]["itemPackSize"].ToString() : string.Empty;
+                        Session["MS_ProductID"] = dt.Rows[0]["ProductID"] != null ? dt.Rows[0]["ProductID"].ToString() : string.Empty;
+                        Session["MS_ProductOrderType"] = dt.Rows[0]["productOrderType"] != null ? dt.Rows[0]["productOrderType"].ToString() : string.Empty;
+                        Session["MS_Bonus12"] = dt.Rows[0]["Bonus12Quantity"] != null ? dt.Rows[0]["Bonus12Quantity"].ToString() : string.Empty;
+                        Session["MS_Bonus25"] = dt.Rows[0]["Bonus25Quantity"] != null ? dt.Rows[0]["Bonus25Quantity"].ToString() : string.Empty;
+                        Session["MS_Bonus50"] = dt.Rows[0]["Bonus50Quantity"] != null ? dt.Rows[0]["Bonus50Quantity"].ToString() : string.Empty;
+                        if (dt.Rows[0]["Active"] != null)
+                        {
+                            Session["MS_Active"] = dt.Rows[0]["Active"] != null ? dt.Rows[0]["Active"].ToString() : string.Empty;
+                        }
+                        else
+                        {
+                            Session["MS_Active"] = "1";
+                        }
+                        Response.Redirect("Addproduct.aspx", false);
                     }
-                    else
+                    else 
                     {
-                        Session["MS_Active"] = "1";
+                        if (!Session["UserRole"].ToString().Equals("WareHouse")) 
+                        {
+                            WebMessageBoxUtil.Show("Product is not associated with this store");
+                        }
                     }
-                    Response.Redirect("Addproduct.aspx",false);
+
                     #endregion
 
                 }
@@ -408,7 +419,7 @@ namespace IMS
         {
             String Text = txtSearch.Text + '%';
             Session["Text"] = Text;
-            ProductsPopupGrid.PopulateGrid();
+            ProductsPopupGrid.PopulateGridForPM();
             mpeCongratsMessageDiv.Show();
         }
     }
