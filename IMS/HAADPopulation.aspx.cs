@@ -106,7 +106,7 @@ namespace IMS
                     {
                         String Status = dt.Rows[i]["Status"].ToString();
 
-                        if (Status.ToLower().Equals("active"))
+                        if (Status.ToLower().Equals("active") || Status.ToLower().Equals("grace"))
                         {
                             String GreenRain = dt.Rows[i]["Greenrain Code"].ToString();
                             String ProductName = dt.Rows[i]["Package Name"].ToString();

@@ -65,7 +65,7 @@ namespace IMS
                     for (int i = 0; i < dsProducts.Tables[0].Rows.Count; i++)
                     {
                         float Cost = 0;
-                        if (float.TryParse(dsProducts.Tables[0].Rows[i]["totalCostPrice"].ToString(), out Cost))
+                        if (float.TryParse(dsProducts.Tables[0].Rows[i]["totalDiscountPrice"].ToString(), out Cost))
                         {
                             TCost += Cost;
                         }

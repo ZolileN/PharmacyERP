@@ -185,9 +185,44 @@
 
                         </asp:TemplateField>
 
-                        <asp:TemplateField HeaderText="Requested Quantity" HeaderStyle-Width="150px">
+                        <asp:TemplateField HeaderText="Requested<br>Quantity" HeaderStyle-Width="50px">
                             <ItemTemplate>
-                                <asp:Label ID="TransferedQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Qauntity") %>' Width="140px"></asp:Label>
+                                <asp:Label ID="TransferedQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Qauntity") %>' Width="50px"></asp:Label>
+                            </ItemTemplate>
+                            <ItemStyle Width="150px" HorizontalAlign="Left" />
+                        </asp:TemplateField>
+
+                         <asp:TemplateField HeaderText="Requested<br>Bonus Quantity" HeaderStyle-Width="50px">
+                            <ItemTemplate>
+                                <asp:Label ID="TransferedBonusQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Bonus") %>' Width="50px"></asp:Label>
+                            </ItemTemplate>
+                            <ItemStyle Width="150px" HorizontalAlign="Left" />
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Unit<br>Cost Price" HeaderStyle-Width="50px">
+                            <ItemTemplate>
+                                <asp:Label ID="TransferedQtyCP" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("UnitCost") %>' Width="50px"></asp:Label>
+                            </ItemTemplate>
+                            <ItemStyle Width="150px" HorizontalAlign="Left" />
+                        </asp:TemplateField>
+
+                         <asp:TemplateField HeaderText="Total<br>Cost Price" HeaderStyle-Width="50px">
+                            <ItemTemplate>
+                                <asp:Label ID="TransferedQtyTotalCP" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("totalCostPrice") %>' Width="50px"></asp:Label>
+                            </ItemTemplate>
+                            <ItemStyle Width="150px" HorizontalAlign="Left" />
+                        </asp:TemplateField>
+
+                         <asp:TemplateField HeaderText="Discount %" HeaderStyle-Width="50px">
+                            <ItemTemplate>
+                                <asp:Label ID="TransferedQtyDiscount" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Discount") %>' Width="50px"></asp:Label>
+                            </ItemTemplate>
+                            <ItemStyle Width="150px" HorizontalAlign="Left" />
+                        </asp:TemplateField>
+
+                         <asp:TemplateField HeaderText="Discounted<br>Cost Price" HeaderStyle-Width="50px">
+                            <ItemTemplate>
+                                <asp:Label ID="TransferedQtyDiscountedCP" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("DiscountCostPrice") %>' Width="50px"></asp:Label>
                             </ItemTemplate>
                             <ItemStyle Width="150px" HorizontalAlign="Left" />
                         </asp:TemplateField>
