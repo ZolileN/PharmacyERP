@@ -133,7 +133,7 @@
                      <asp:TemplateField HeaderText="Accepted<br>Bonus Qty">
                        
                         <ItemTemplate>
-                             <asp:TextBox ID="delBonusQtyVal" CssClass="grid-input-form"    runat="server" Text=' <%#Eval("OrderedBonusQuantity")==DBNull.Value? int.Parse(Eval("BonusQuantity").ToString()) :int.Parse( Eval("OrderedBonusQuantity").ToString())  %> ' ></asp:TextBox>
+                             <asp:TextBox ID="delBonusQtyVal" CssClass="grid-input-form"    runat="server" Text=' <%# int.Parse(Eval("BonusQuantity").ToString())==0? int.Parse( Eval("OrderedBonusQuantity").ToString())   : int.Parse(Eval("BonusQuantity").ToString())%> ' ></asp:TextBox>
                          </ItemTemplate>
                         <ItemStyle   HorizontalAlign="Left"/>
                     </asp:TemplateField>
@@ -216,27 +216,39 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
                 return;
             }
-           
-            if (Number(BonusQty) - Number(DelieveredBonusQty) > 0)
+            if (Number(SentQty) == 0) {
+                
+                var AcceptedBonusQty = (Number(DelieveredBonusQty) - Number(BonusQty)) - (Number(DamagedQty) + Number(ExpiredQty) + Number(RejectedQty));
+                var delqty = "MainContent_dgvReceiveSOGrid_delBonusQtyVal_" + id;
+                document.getElementById(delqty).value = AcceptedBonusQty;
+
+                if (Number(AcceptedBonusQty) > Number(BonusQty)) {
+                    alert("Sent bonus qty and Accepted bonus qty mismatch. Please re-adjust.")
+                    return;
+                }
+
+            }
+            if (Number(SentQty) != 0)
             {
-                var DelieveredQty = Number(SentQty) + (Number(BonusQty) - Number(DelieveredBonusQty)) - (Number(DamagedQty) + Number(ExpiredQty) + Number(RejectedQty));
+                if (Number(BonusQty) - Number(DelieveredBonusQty) > 0) {
+                    var DelieveredQty = Number(SentQty) + (Number(BonusQty) - Number(DelieveredBonusQty)) - (Number(DamagedQty) + Number(ExpiredQty) + Number(RejectedQty));
 
-            }
-            else {
-                var DelieveredQty = Number(SentQty) + (Number(BonusQty) - Number(DelieveredBonusQty)) - (Number(DamagedQty) + Number(ExpiredQty) + Number(RejectedQty));
+                }
+                else {
+                    var DelieveredQty = Number(SentQty) + (Number(BonusQty) - Number(DelieveredBonusQty)) - (Number(DamagedQty) + Number(ExpiredQty) + Number(RejectedQty));
 
+                }
+
+                var delqty = "MainContent_dgvReceiveSOGrid_DelieveredQtyVal_" + id;
+                document.getElementById(delqty).value = DelieveredQty;
+                if (Number(DelieveredQty) > Number(SentQty)) {
+                    alert("Sent Quantity and Accepted Qty mismatch. Please re-adjust it.")
+                    return;
+                }
             }
-           // var DelieveredQty = Number(SentQty) + (Number(BonusQty) - Number(DelieveredBonusQty)) - (Number(DamagedQty) + Number(ExpiredQty) + Number(RejectedQty));
             
-            var delqty = "MainContent_dgvReceiveSOGrid_DelieveredQtyVal_" + id;
-            document.getElementById(delqty).value = DelieveredQty;
 
-            // var SentQty = document.getElementById("MainContent_dgvReceiveSOGrid_SendQuantityVal_0").innerHTML;
-            //var BonusQty = document.getElementById("MainContent_dgvReceiveSOGrid_BonusQuantityVal_0").innerHTML;
-            //var DelieveredBonusQty = document.getElementById("MainContent_dgvReceiveSOGrid_delBonusQtyVal_0").value;
-            //var DamagedQty = document.getElementById("MainContent_dgvReceiveSOGrid_DamagedQuantityVal_0").value;
-            //var ExpiredQty = document.getElementById("MainContent_dgvReceiveSOGrid_txtExpiredQuantity_0").value;
-            //var RejectedQty = document.getElementById("MainContent_dgvReceiveSOGrid_txtReturnedQuantity_0").value;
+            
 
         }
 
