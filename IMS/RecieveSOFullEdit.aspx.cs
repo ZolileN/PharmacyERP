@@ -31,6 +31,7 @@ namespace IMS
                 {
                     BindGrid();
                 }
+
                 expHandler.CheckForErrorMessage(Session);
             }
             catch (Exception ex)
@@ -352,31 +353,7 @@ namespace IMS
             try
             {
                 dgvReceiveSOGrid.EditIndex = e.NewEditIndex;
-                //BindGrid();
-                int OrderDetId, AvailableQty, SentQty, BonusQty, DelieveredQty, DelieveredBonusQty, DamagedQty, ExpiredQty, RejectedQty = 0;
-
-                int RowIndex = dgvReceiveSOGrid.EditIndex;
-
-                TextBox txtDelieveredQty = (TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("DelieveredQtyVal");
-                TextBox txtRejected = (TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("txtReturnedQuantity");
-                txtRejected.TextChanged += txtReturnedQuantity_TextChanged;
-
-                DelieveredQty = int.Parse(txtDelieveredQty.Text);
-
-                OrderDetId = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("OrderDetID")).Text);
-                AvailableQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("lblAvailableStock")).Text);
-                SentQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("SendQuantityVal")).Text);
-
-                BonusQty = int.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("BonusQuantityVal")).Text);
-                DelieveredQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("DelieveredQtyVal")).Text);
-                DelieveredBonusQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("delBonusQtyVal")).Text);
-                DamagedQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("DamagedQuantityVal")).Text);
-                ExpiredQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("txtExpiredQuantity")).Text);
-                RejectedQty = int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("txtReturnedQuantity")).Text);
-
-                DelieveredQty = SentQty + (BonusQty - DelieveredBonusQty) - (DamagedQty + ExpiredQty + RejectedQty);
-
-                txtDelieveredQty.Text = DelieveredQty.ToString();
+                BindGrid();
             }
             catch (Exception ex)
             {

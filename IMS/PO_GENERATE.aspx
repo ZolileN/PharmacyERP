@@ -165,40 +165,45 @@
                     <ItemStyle Width="250px" HorizontalAlign="Left" />
                 </asp:TemplateField>
 
-                <asp:TemplateField HeaderText="Ordered Quantity" HeaderStyle-Width="150px">
+                <asp:TemplateField HeaderText="Ordered<br>Quantity" HeaderStyle-Width="150px">
                     <ItemTemplate>
                         <asp:Label ID="lblQuantity" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Qauntity") %>'></asp:Label>
                     </ItemTemplate>
                     <ItemStyle Width="110px" HorizontalAlign="Left" />
                 </asp:TemplateField>
 
-                <asp:TemplateField HeaderText="Ordered Bonus" HeaderStyle-Width="120px">
+                <asp:TemplateField HeaderText="Ordered<br>Bonus" HeaderStyle-Width="120px">
                     <ItemTemplate>
                         <asp:Label ID="lblBonus" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Bonus") %>'></asp:Label>
                     </ItemTemplate>
                     <ItemStyle Width="110px" HorizontalAlign="Left" />
                 </asp:TemplateField>
 
-                <asp:TemplateField HeaderText="Unit Cost Price" HeaderStyle-Width="150px">
+                <asp:TemplateField HeaderText="Unit<br>Cost Price" HeaderStyle-Width="150px">
                     <ItemTemplate>
                         <asp:Label ID="lblUnitCost" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("UnitCost") %>'></asp:Label>
                     </ItemTemplate>
                     <ItemStyle Width="110px" HorizontalAlign="Left" />
                 </asp:TemplateField>
 
-                <asp:TemplateField HeaderText="Total Cost Price" HeaderStyle-Width="150px">
+                <asp:TemplateField HeaderText="Total<br>Cost Price" HeaderStyle-Width="150px">
                     <ItemTemplate>
                         <asp:Label ID="lblTotalCost" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("totalCostPrice") %>'></asp:Label>
                     </ItemTemplate>
                     <ItemStyle Width="110px" HorizontalAlign="Left" />
                 </asp:TemplateField>
-
                  <asp:TemplateField HeaderText="Discount %"  HeaderStyle-Width ="110px">
                         <ItemTemplate>
                             <asp:Label ID="lblDiscount" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Discount") %>' ></asp:Label>
                         </ItemTemplate>
                         <ItemStyle  Width="90px" HorizontalAlign="Left"/>
                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Discounted<br>Cost Price" HeaderStyle-Width="150px">
+                    <ItemTemplate>
+                        <asp:Label ID="lblTotalCost" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("totalDiscountPrice") %>'></asp:Label>
+                    </ItemTemplate>
+                    <ItemStyle Width="110px" HorizontalAlign="Left" />
+                </asp:TemplateField>
 
             </Columns>
         </asp:GridView>

@@ -36,7 +36,7 @@
            <td>
                <asp:Label runat="server" ID="lblProd"  CssClass="control-label">Select Product</asp:Label></td>
            <td>
-               <asp:TextBox ID="txtSearch" runat="server" CssClass="product"></asp:TextBox>
+               <asp:TextBox ID="txtSearch" runat="server" CssClass="product" Width="70%"></asp:TextBox>
                <asp:Label ID="lblProductId" runat="server" Visible="false"></asp:Label>
                 
                <asp:ImageButton ID="btnSearchProduct" runat="server"   CssClass="search-btn getProducts" OnClick="btnSearchProduct_Click1" />
@@ -63,6 +63,12 @@
            </td>
            <td>
                <asp:TextBox runat="server" ID="SelectPrice"  autocomplete="off"  style="width:60px"/>
+           </td>
+           <td>
+               <asp:Label runat="server" AssociatedControlID="txtDiscount" CssClass="control-label">Discount %</asp:Label>
+           </td>
+           <td>
+               <asp:TextBox runat="server" ID="txtDiscount"  autocomplete="off"  style="width:60px"/>
            </td>
            <td>
                 <asp:Button ID="btnCreateOrder" runat="server" OnClick="btnCreateOrder_Click" Text="ADD" CssClass="btn btn-primary btn-sm" OnClientClick="return ValidateForm();" ValidationGroup="ExSave"/>
@@ -189,10 +195,22 @@
                     </ItemTemplate>
                     <ItemStyle Width="110px" HorizontalAlign="Left" />
                 </asp:TemplateField>
-
+                 <asp:TemplateField HeaderText="Discount %" HeaderStyle-Width="110px">
+                    <ItemTemplate>
+                        <asp:Label ID="lblUnitDiscount" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Discount") %>'></asp:Label>
+                    </ItemTemplate>
+                    <ItemStyle Width="110px" HorizontalAlign="Left" />
+                </asp:TemplateField>
                 <asp:TemplateField HeaderText="Total<br>Cost Price" HeaderStyle-Width="110px">
                     <ItemTemplate>
                         <asp:Label ID="lblTotalCost" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("totalCostPrice") %>'></asp:Label>
+                    </ItemTemplate>
+                    <ItemStyle Width="110px" HorizontalAlign="Left" />
+                </asp:TemplateField>
+
+                  <asp:TemplateField HeaderText="Discount<br>Cost Price" HeaderStyle-Width="110px">
+                    <ItemTemplate>
+                        <asp:Label ID="tblDiscountPrice" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("DiscountCostPrice") %>'></asp:Label>
                     </ItemTemplate>
                     <ItemStyle Width="110px" HorizontalAlign="Left" />
                 </asp:TemplateField>

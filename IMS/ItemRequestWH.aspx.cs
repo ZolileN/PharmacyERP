@@ -180,8 +180,11 @@ namespace IMS
         {
             int quan, bQuan;
             quan = bQuan = 0;
+            float discount = 0;
             int.TryParse(SelectQuantity.Text.ToString(), out quan);
             int.TryParse(SelectPrice.Text.ToString(), out bQuan);
+            float.TryParse(txtDiscount.Text.ToString(), out discount);
+
             if (quan + bQuan > 0)
             {
                 //btnAccept.Visible = true;
@@ -280,6 +283,7 @@ namespace IMS
                             command.Parameters.AddWithValue("@p_ReqBonusQty", DBNull.Value);
                         }
 
+                        command.Parameters.AddWithValue("@p_Discount", discount);
                         command.Parameters.AddWithValue("@p_TransferStatus", "Initiated");
 
                         DataSet LinkResult = new DataSet();
@@ -483,7 +487,7 @@ namespace IMS
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
                     float Cost = 0;
-                    if (float.TryParse(ds.Tables[0].Rows[i]["totalCostPrice"].ToString(), out Cost))
+                    if (float.TryParse(ds.Tables[0].Rows[i]["DiscountCostPrice"].ToString(), out Cost))
                     {
                         TCost += Cost;
                     }
