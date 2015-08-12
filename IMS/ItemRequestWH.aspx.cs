@@ -405,7 +405,7 @@ namespace IMS
                             {
                                 command.Parameters.AddWithValue("@p_ReqBonusQty", DBNull.Value);
                             }
-
+                            command.Parameters.AddWithValue("@p_Discount", discount);
                             command.Parameters.AddWithValue("@p_TransferStatus", "Initiated");
 
                             DataSet LinkResult = new DataSet();
