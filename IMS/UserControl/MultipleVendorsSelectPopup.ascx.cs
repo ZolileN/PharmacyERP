@@ -562,43 +562,54 @@ namespace IMS.UserControl
                         Control ctl = this.Parent;
                         Label lbstoreId = (Label)ctl.FindControl("lblStoreId");
                         ArrayList CheckBoxArray = (ArrayList)ViewState["CheckBoxArray"];
-
-                        foreach (var item in CheckBoxArray)
+                        
+                        if (connection.State == ConnectionState.Closed)
                         {
-                            if (item.ToString().Contains("ID"))
+                            connection.Open();
+                        }
+                        try
+                        {
+                            foreach (var item in CheckBoxArray)
                             {
-                                string[] key = item.ToString().Split('-');
-                                try
+                                if (item.ToString().Contains("ID"))
                                 {
-                                    if (connection.State == ConnectionState.Closed)
+                                    string[] key = item.ToString().Split('-');
+                                    try
                                     {
-                                        connection.Open();
+
+                                        SqlCommand command = new SqlCommand("sp_AddVendorsToStore", connection);
+                                        command.CommandType = CommandType.StoredProcedure;
+
+                                        command.Parameters.AddWithValue("@VendorId", int.Parse(key[1]));
+                                        command.Parameters.AddWithValue("@StoreId", StoreId);
+
+                                        command.ExecuteNonQuery();
+
+
                                     }
-                                    SqlCommand command = new SqlCommand("sp_AddVendorsToStore", connection);
-                                    command.CommandType = CommandType.StoredProcedure;
+                                    catch (Exception ex)
+                                    {
+                                        string message = expHandler.GenerateLogString(ex);
+                                        log.Error(message);
+                                    }
 
-                                    command.Parameters.AddWithValue("@VendorId", int.Parse(key[1]));
-                                    command.Parameters.AddWithValue("@StoreId", StoreId);
-
-                                    command.ExecuteNonQuery();
-                                   
 
                                 }
-                                catch (Exception ex)
-                                {
-                                    if (connection.State == ConnectionState.Open)
-                                        connection.Close();
-                                    throw ex;
-                                }
-                                finally
-                                {
-                                    if (connection.State == ConnectionState.Open)
-                                        connection.Close();
-
-                                }
-
                             }
                         }
+                        catch (Exception ex)
+                        {
+                            if (connection.State == ConnectionState.Open)
+                                connection.Close();
+                            throw ex;
+                        }
+                        finally
+                        {
+                            if (connection.State == ConnectionState.Open)
+                                connection.Close();
+
+                        }
+
                         WebMessageBoxUtil.Show("Vendors have been successfully associated ");
                         GridView gvParentVendors = (GridView)ctl.FindControl("dgvVendors");
                         DataSet resultSet = new DataSet();

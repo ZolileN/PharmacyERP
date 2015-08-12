@@ -641,6 +641,7 @@ namespace IMS.UserControl
 
         protected void SelectProduct_Click(object sender, EventArgs e)
         {
+            
             if ((ViewState["checkAllState"] != null && ((bool)ViewState["checkAllState"]) == true))
             {
                // SaveCurrentState();
@@ -671,33 +672,43 @@ namespace IMS.UserControl
                     {
                         connection.Open();
                     }
-                    foreach (var item in CheckBoxArray)
+                    try
                     {
-                        if (item.ToString().Contains("ID"))
+                        foreach (var item in CheckBoxArray)
                         {
-                            string[] key = item.ToString().Split('-');
-                            try
+                            if (item.ToString().Contains("ID"))
                             {
-                                SqlCommand command = new SqlCommand("Sp_AddNewStoreProduct", connection);
-                                command.CommandType = CommandType.StoredProcedure;
-                                command.Parameters.AddWithValue("@p_ProductID", int.Parse(key[1]));
-                                command.Parameters.AddWithValue("@p_StoreID", int.Parse(lbstoreId.Text));
-                                command.ExecuteNonQuery();
+                                string[] key = item.ToString().Split('-');
+                                try
+                                {
+                                    SqlCommand command = new SqlCommand("Sp_AddNewStoreProduct", connection);
+                                    command.CommandType = CommandType.StoredProcedure;
+                                    command.Parameters.AddWithValue("@p_ProductID", int.Parse(key[1]));
+                                    command.Parameters.AddWithValue("@p_StoreID", int.Parse(lbstoreId.Text));
+                                    command.ExecuteNonQuery();
+
+                                }
+                                catch (Exception ex)
+                                {
+                                    string message = expHandler.GenerateLogString(ex);
+                                    log.Error(message);
+                                }
+
 
                             }
-                            catch (Exception ex)
-                            {
-                                if (connection.State == ConnectionState.Open)
-                                    connection.Close();
-                                throw ex;
-                            }
-                            finally 
-                            {
-                                if (connection.State == ConnectionState.Open)
-                                    connection.Close();
-                            }
-                            
                         }
+                    }
+                    catch (Exception ex)
+                    {
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
+                        throw ex;
+                    }
+                    finally
+                    {
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
+
                     }
                     ViewState.Remove("CheckBoxArray"); 
                     WebMessageBoxUtil.Show("Products have been successfully associated ");
