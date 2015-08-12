@@ -40,12 +40,17 @@ namespace IMS
                     BindGrid();
                     Session["TotalExceeded"] = false;
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
 
                     if (connection.State == ConnectionState.Open)
                         connection.Close();
                     throw ex;
+                }
+                finally 
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
                 }
             }
             expHandler.CheckForErrorMessage(Session);
@@ -70,7 +75,10 @@ namespace IMS
         {
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("sp_getProductStock", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_orderDetailID", Convert.ToInt32(Session["OderDetailID"].ToString()));
@@ -115,7 +123,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
         protected void btnAcceptStock_Click(object sender, EventArgs e)
@@ -169,14 +178,19 @@ namespace IMS
 
                 Session["OrderSalesDetail"] = true;
                 Session["ViewSalesOrders"] = false;
-                Response.Redirect("OrderSalesManual.aspx",false);
+                Response.Redirect("OrderSalesManual.aspx", false);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
         protected void btnDeclineStock_Click(object sender, EventArgs e)
@@ -232,7 +246,10 @@ namespace IMS
                             DateTime Expiry = Convert.ToDateTime(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblExpiry")).Text);
                             String Batch = ((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblBatch")).Text.ToString();
 
-                            connection.Open();
+                            if (connection.State == ConnectionState.Closed)
+                            {
+                                connection.Open();
+                            }
                             SqlCommand command = new SqlCommand("sp_EntrySaleOrderDetails", connection);
                             command.CommandType = CommandType.StoredProcedure;
                             command.Parameters.AddWithValue("@p_OrderDetailID", OrderDetailID);
@@ -305,7 +322,10 @@ namespace IMS
                     int bonusquantity = int.Parse(((Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblBonus")).Text);
                     int totalquantity = sendquantity + bonusquantity;
 
-                    connection.Open();
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
                     SqlCommand command = new SqlCommand("sp_EntryDeleteSaleOrderDetails", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_OrderDetailID", OrderDetailID);
@@ -332,7 +352,8 @@ namespace IMS
                 }
                 finally
                 {
-                    connection.Close();
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
                     StockDisplayGrid.EditIndex = -1;
                     BindGrid();
                 }
@@ -398,6 +419,12 @@ namespace IMS
                     }
                 }
                 catch (Exception ex) { //Exception pi gai!!! Jugaar 
+                }
+                finally
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+
                 }
             }
         }

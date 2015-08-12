@@ -20,7 +20,10 @@ namespace IMSBusinessLogic
             DataSet resultSet = new DataSet();
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("Sp_GetVendor", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 SqlDataAdapter SA = new SqlDataAdapter(command);
@@ -33,7 +36,8 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
 
             }
             return resultSet;
@@ -44,7 +48,10 @@ namespace IMSBusinessLogic
             DataSet resultSet = new DataSet();
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("Sp_GetVendorById", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_Supp_ID", vendor.supp_ID);
@@ -58,7 +65,8 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
 
             }
             return resultSet;
@@ -68,7 +76,10 @@ namespace IMSBusinessLogic
         {
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("Sp_UpdateVendor", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_Supp_ID", vendor.supp_ID);
@@ -98,7 +109,8 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 
@@ -106,7 +118,10 @@ namespace IMSBusinessLogic
         {
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("Sp_DeleteVendor", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_Supp_ID", vendor.supp_ID);
@@ -120,7 +135,8 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 
@@ -128,7 +144,10 @@ namespace IMSBusinessLogic
         {
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("Sp_AddNewVendor", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_SupName", vendor.SupName);
@@ -157,7 +176,8 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 
@@ -166,7 +186,10 @@ namespace IMSBusinessLogic
             DataSet resultSet = new DataSet();
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("Sp_GetVendorByName", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_Supp_Name", vendor.SupName);
@@ -183,7 +206,8 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
 
             }
             return resultSet;

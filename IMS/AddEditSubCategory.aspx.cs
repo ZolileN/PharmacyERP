@@ -56,6 +56,12 @@ namespace IMS
             {
                 throw ex;
             }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }
         private void Page_Error(object sender, EventArgs e)
         {
@@ -78,7 +84,11 @@ namespace IMS
             #region Populating Department DropDown
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+
+                }
                 SqlCommand command = new SqlCommand("Sp_GetDepartmentList", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 DataSet ds = new DataSet();
@@ -122,7 +132,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }
@@ -132,7 +143,11 @@ namespace IMS
             #region Populating Category DropDown
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+
+                }
                 SqlCommand command = new SqlCommand("Sp_GetCategoryList", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 if (ddDepartment.SelectedIndex > 0)
@@ -180,7 +195,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }
@@ -223,7 +239,7 @@ namespace IMS
 
                     subCategoryManager.AddNew(subCategoryToAdd, connection);
                 }
-                Response.Redirect("ManageSubCategory.aspx",false);
+                Response.Redirect("ManageSubCategory.aspx", false);
 
             }
             catch (Exception ex)
@@ -231,6 +247,11 @@ namespace IMS
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 

@@ -43,11 +43,11 @@ namespace IMS
                         TimeSpan diff = ToDate - FromDate;
                         double TotalDays = diff.TotalDays;
                         int Days = Convert.ToInt32(TotalDays);
-                        
+
                         int ReplenishDays = 0;
                         int.TryParse((Session["ReplenishDays"].ToString()), out ReplenishDays);
 
-                        LoadData_SalesDate(Days,ReplenishDays);
+                        LoadData_SalesDate(Days, ReplenishDays);
                         ViewState["VendorID"] = -1;
                         DisplayMainGrid((DataTable)Session["DataTableView"]);
                     }
@@ -58,21 +58,26 @@ namespace IMS
                         DisplayMainGrid((DataTable)Session["DataTableView"]);
                     }
 
-                  if(Session["parameter"]!=null && Session["parameter"].ToString().Equals("Calculation"))
-                  {
-                      lblReplenishHeader.Text = "Replenish ( Calculation )";
-                  }
-                  else
-                  {
-                      lblReplenishHeader.Text = "Replenish ( Movement )";
-                  }
-                  
+                    if (Session["parameter"] != null && Session["parameter"].ToString().Equals("Calculation"))
+                    {
+                        lblReplenishHeader.Text = "Replenish ( Calculation )";
+                    }
+                    else
+                    {
+                        lblReplenishHeader.Text = "Replenish ( Movement )";
+                    }
+
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     if (connection.State == ConnectionState.Open)
                         connection.Close();
                     throw ex;
+                }
+                finally 
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
                 }
             }
             expHandler.CheckForErrorMessage(Session);
@@ -117,11 +122,16 @@ namespace IMS
                 gvVendorNames.DataSource = displayTable;
                 gvVendorNames.DataBind();
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 
@@ -135,7 +145,10 @@ namespace IMS
 
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand cmd = new SqlCommand("sp_ReplenishProductSet_ByDate", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@p_SystemID", SystemID);
@@ -182,7 +195,10 @@ namespace IMS
 
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand cmd = new SqlCommand("sp_ReplenishProducts_Calculation", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@p_SystemID", SystemID);
@@ -254,11 +270,16 @@ namespace IMS
 
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
         protected void gvVendorNames_SelectedIndexChanged(object sender, EventArgs e)
@@ -291,7 +312,10 @@ namespace IMS
                     int ProductID = 0;
                     int.TryParse(lblProductID.Text.ToString(), out ProductID);
 
-                    connection.Open();
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
                     SqlCommand cmd = new SqlCommand("sp_GetProductVendors_Replenishment", connection);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@productID", ProductID);
@@ -414,11 +438,16 @@ namespace IMS
                     DisplayMainGrid((DataTable)Session["DataTableView"]);
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 
@@ -490,11 +519,16 @@ namespace IMS
                 Session["DataTableView"] = dtChanged;
                 DisplayMainGrid((DataTable)Session["DataTableView"]);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 

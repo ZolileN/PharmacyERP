@@ -131,7 +131,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
                 StockDisplayGrid.EditIndex = -1;
                 BindGrid();
             }
@@ -162,7 +163,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
                 StockDisplayGrid.EditIndex = -1;
                 BindGrid();
             }
@@ -232,7 +234,8 @@ namespace IMS
                     }
                     finally
                     {
-                        connection.Close();
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
                     }
                     #endregion
 
@@ -292,11 +295,14 @@ namespace IMS
                     }
                     catch (Exception ex)
                     {
-
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
+                        throw ex;
                     }
                     finally
                     {
-                        connection.Close();
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
                     }
                     #endregion
 
@@ -335,7 +341,8 @@ namespace IMS
                     }
                     finally
                     {
-                        connection.Close();
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
                     }
 
                     int ProductNO = 0;
@@ -413,7 +420,8 @@ namespace IMS
                         }
                         finally
                         {
-                            connection.Close();
+                            if (connection.State == ConnectionState.Open)
+                                connection.Close();
                         }
                         #endregion
 
@@ -492,7 +500,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }
@@ -555,6 +564,12 @@ namespace IMS
                 }
             }
             catch (Exception ex) { }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }
 
         protected void btnAccept_Click(object sender, EventArgs e)

@@ -83,6 +83,12 @@ namespace IMS
             {
                 throw ex;
             }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }
         private void Page_Error(object sender, EventArgs e)
         {
@@ -104,7 +110,10 @@ namespace IMS
         {
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("sp_GenerateSO", connection);
                 command.CommandType = CommandType.StoredProcedure;
 
@@ -133,7 +142,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
         protected void StockDisplayGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -291,6 +301,8 @@ namespace IMS
             }
             finally
             {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
                 document.Close();
             }
         }
@@ -475,6 +487,12 @@ namespace IMS
                 }
             }
             catch (Exception ex) { }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }  
     }
 }

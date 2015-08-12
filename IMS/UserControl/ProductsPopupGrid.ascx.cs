@@ -51,6 +51,12 @@ namespace IMS.UserControl
             {
                 throw ex;
             }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }
 
         private void Page_Error(object sender, EventArgs e)
@@ -83,7 +89,10 @@ namespace IMS.UserControl
                     if (int.TryParse(Session["UserSys"].ToString(), out id))
                     {
                         DataSet ds2 = new DataSet();
-                        connection.Open();
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
                         SqlCommand command = new SqlCommand("dbo.Sp_GetStockByName", connection);
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@p_prodName", Session["Text"].ToString());
@@ -114,7 +123,8 @@ namespace IMS.UserControl
                 }
                 finally
                 {
-                    connection.Close();
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
                 }
                 #endregion
             }
@@ -133,7 +143,10 @@ namespace IMS.UserControl
                 if (int.TryParse(Session["UserSys"].ToString(), out id))
                 {
                     DataSet ds2 = new DataSet();
-                    connection.Open();
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
                     SqlCommand command = new SqlCommand("dbo.Sp_GetStockByName_OtherStoreStock", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_prodName", Session["Text"].ToString());
@@ -158,7 +171,8 @@ namespace IMS.UserControl
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }
@@ -174,7 +188,10 @@ namespace IMS.UserControl
                 {
                      
                     DataSet ds2 = new DataSet();
-                    connection.Open();
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
                     SqlCommand command = new SqlCommand("dbo.Sp_GetStockByName", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_prodName", DBNull.Value);
@@ -205,7 +222,8 @@ namespace IMS.UserControl
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }
@@ -312,7 +330,10 @@ namespace IMS.UserControl
                     try
                     {
                         Label ItemNo = (Label)StockDisplayGrid.Rows[Convert.ToInt32(e.CommandArgument)].FindControl("UPC");
-                        connection.Open();
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
                         SqlCommand command = new SqlCommand("sp_DeleteProduct", connection);
                         command.CommandType = CommandType.StoredProcedure;
 
@@ -341,7 +362,8 @@ namespace IMS.UserControl
                     }
                     finally
                     {
-                        connection.Close();
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
                     }
                     #endregion
 
@@ -356,7 +378,8 @@ namespace IMS.UserControl
             }
             finally
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
 
         }

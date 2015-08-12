@@ -41,6 +41,11 @@ namespace IMS
                         connection.Close();
                     throw ex;
                 }
+                finally 
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                }
             }
             expHandler.CheckForErrorMessage(Session);
         }
@@ -76,6 +81,11 @@ namespace IMS
                     connection.Close();
                 throw ex;
             }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
         }
 
         private void BindGridDistinct(int ID)
@@ -95,6 +105,11 @@ namespace IMS
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
           
         }
@@ -140,6 +155,11 @@ namespace IMS
                     connection.Close();
                 throw ex;
             }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
         }
 
         protected void gdvVendor_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -176,6 +196,8 @@ namespace IMS
             }
             finally
             {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
                 gdvVendor.EditIndex = -1;
                 BindGrid();
             }
@@ -208,7 +230,10 @@ namespace IMS
 
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
 
                 //Text = Text + "%";
                 SqlCommand command = new SqlCommand("sp_GetVendor_byNameParam", connection);
@@ -242,7 +267,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }

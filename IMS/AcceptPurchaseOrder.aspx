@@ -284,8 +284,9 @@
 
                   if (diffDays <= 90) {
                       ex.style.color = "red";
+                      
                   }
               }
-
+              
           </script>
 </asp:Content>

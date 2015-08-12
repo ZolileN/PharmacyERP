@@ -202,7 +202,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
         protected void btnGoBack_Click(object sender, EventArgs e)

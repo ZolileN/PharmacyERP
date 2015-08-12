@@ -44,6 +44,12 @@ namespace IMS
             {
                 throw ex;
             }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }
         private void Page_Error(object sender, EventArgs e)
         {
@@ -90,11 +96,16 @@ namespace IMS
 
                 Response.Redirect("ManageDepartment.aspx", false);
             }
-            catch (Exception exp) 
+            catch (Exception exp)
             {
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw exp;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 

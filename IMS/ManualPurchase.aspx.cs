@@ -69,11 +69,16 @@ namespace IMS
                         LoadData();
                     }
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
                     if (connection.State == ConnectionState.Open)
                         connection.Close();
                     throw ex;
+                }
+                finally 
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
                 }
             }
             expHandler.CheckForErrorMessage(Session);
@@ -188,7 +193,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
                 StockDisplayGrid.EditIndex = -1;
                 BindGrid();
             }
@@ -219,7 +225,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
                 StockDisplayGrid.EditIndex = -1;
                 BindGrid();
             }
@@ -321,7 +328,8 @@ namespace IMS
                     }
                     finally
                     {
-                        connection.Close();
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
                     }
                     #endregion
 
@@ -512,7 +520,8 @@ namespace IMS
                     }
                     finally
                     {
-                        connection.Close();
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
                     }
 
 
@@ -687,6 +696,12 @@ namespace IMS
             {
                 
                 //throw;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
             }
         }
 

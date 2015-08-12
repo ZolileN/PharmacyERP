@@ -68,7 +68,8 @@ namespace IMS
                 }
                 finally
                 {
-                    connection.Close();
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
                 }
                 #endregion
             }
@@ -173,7 +174,10 @@ namespace IMS
                         //int stockID = int.Parse(_StockID.Text);
                         int stockID = int.Parse(e.CommandArgument.ToString());
                         String Query = "Delete From tblStock_Detail Where StockID = '" + stockID + "'";
-                        connection.Open();
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
                         SqlCommand command = new SqlCommand(Query, connection);
                         command.ExecuteNonQuery();
                         WebMessageBoxUtil.Show("Stock Successfully Deleted ");
@@ -186,7 +190,8 @@ namespace IMS
                     }
                     finally
                     {
-
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
                         BindGrid();
                        // StockDisplayGrid.EditIndex = -1;
                     }
@@ -292,7 +297,10 @@ namespace IMS
 
                     #region query execution
 
-                    connection.Open();
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
                     SqlCommand command = new SqlCommand("Sp_UpdateStock", connection);
                     command.CommandType = CommandType.StoredProcedure;
                    
@@ -361,6 +369,8 @@ namespace IMS
             }
             finally
             {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
                 StockDisplayGrid.EditIndex = -1;
                 BindGrid();
                
@@ -398,7 +408,8 @@ namespace IMS
             }
             finally
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
                 BindGrid();
                // StockDisplayGrid.EditIndex = -1;
             }

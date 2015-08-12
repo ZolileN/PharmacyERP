@@ -166,7 +166,8 @@ namespace IMS
                             {
                                 BarCodeSerial = "1000000" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
                             }
-                            connection.Close();
+                            if (connection.State == ConnectionState.Open)
+                                connection.Close();
                             #endregion
 
                             #region Creation Product
@@ -237,6 +238,8 @@ namespace IMS
                     finally
                     {
                         //connection.Close();
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
                     }
 
                     //if (x == 1)

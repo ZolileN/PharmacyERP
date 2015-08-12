@@ -220,10 +220,16 @@ namespace IMS
 
 
             }
-            catch (Exception exp) { }
+            catch (Exception exp)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                
+            }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 
@@ -249,7 +255,8 @@ namespace IMS
             catch (Exception exp) { }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 
@@ -285,6 +292,12 @@ namespace IMS
             {
                 
                 //throw;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
             }
         }
 

@@ -36,7 +36,10 @@ namespace IMS
                     try
                     {
                         int Role_ID = 2;
-                        connection.Open();
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
                         SqlCommand command = new SqlCommand("sp_GetSystem_byRoleID", connection);
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@p_RoleID", Role_ID);
@@ -62,7 +65,8 @@ namespace IMS
                     }
                     finally
                     {
-                        connection.Close();
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
                     }
                     #endregion
 
@@ -81,6 +85,12 @@ namespace IMS
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
             }
         }
         private void Page_Error(object sender, EventArgs e)
@@ -104,7 +114,10 @@ namespace IMS
             #region Display Requests
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("sp_GetGeneratedOrder_store_warehouse", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_StoreID", StoreID);
@@ -126,7 +139,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }
@@ -184,7 +198,8 @@ namespace IMS
             }
             finally
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 

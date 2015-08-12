@@ -36,6 +36,12 @@ namespace IMS
             {
                 throw ex;
             }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }
         private void Page_Error(object sender, EventArgs e)
         {
@@ -84,7 +90,8 @@ namespace IMS
              }
             finally
              {
-                 connection.Close();
+                 if (connection.State == ConnectionState.Open)
+                     connection.Close();
              }
         }
 
@@ -134,7 +141,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
     }

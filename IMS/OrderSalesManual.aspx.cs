@@ -101,7 +101,8 @@ namespace IMS
                         }
                         finally
                         {
-                            connection.Close();
+                            if (connection.State == ConnectionState.Open)
+                                connection.Close();
                         }
                         #endregion
 
@@ -152,7 +153,8 @@ namespace IMS
                         }
                         finally
                         {
-                            connection.Close();
+                            if (connection.State == ConnectionState.Open)
+                                connection.Close();
                         }
                         #endregion
                         LoadData();
@@ -163,6 +165,12 @@ namespace IMS
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
             }
         }
         private void Page_Error(object sender, EventArgs e)
@@ -251,7 +259,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }
@@ -426,7 +435,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
                 //Response.Redirect("Warehouse_StoreRequests.aspx");
             }
         }
@@ -435,7 +445,10 @@ namespace IMS
         {
             try
             {
+                if (connection.State == ConnectionState.Closed)
+                {
                     connection.Open();
+                }
                     SqlCommand command = new SqlCommand("sp_GetStockID_OrderDetails", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_orderDetID", orderDetailID);
@@ -475,7 +488,10 @@ namespace IMS
             DataSet ds = new DataSet();
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("Sp_GetSystem_ByID", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_SystemID", ID);
@@ -496,7 +512,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             return ds;
         }
@@ -524,6 +541,8 @@ namespace IMS
             }
             catch(Exception ex)
             {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
                 throw ex;
             }
             finally
@@ -555,6 +574,8 @@ namespace IMS
             }
             catch(Exception ex)
             {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
                 throw ex;
             }
             finally
@@ -596,6 +617,8 @@ namespace IMS
             }
             catch(Exception ex)
             {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
                 throw ex;
             }
             finally
@@ -754,7 +777,10 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                throw ex;
+                
+                //log error 
+                string message = expHandler.GenerateLogString(ex);
+                log.Error(message);
             }
             finally
             {
@@ -853,7 +879,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
                
             }
             return status;
@@ -866,7 +893,10 @@ namespace IMS
                 if (Session["OrderNumberSO"] != null)
                 {
                     int orderID = int.Parse(Session["OrderNumberSO"].ToString());
-                    connection.Open();
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
 
                     SqlCommand command = new SqlCommand("sp_GetOrderDetailRecieve", connection);
                     command.CommandType = CommandType.StoredProcedure;
@@ -978,7 +1008,10 @@ namespace IMS
                         if (TotalQuantity <= (availablestock + Convert.ToInt32(Session["PreviousValueMain"].ToString())))
                         {
                             UpdateStockPlus(orderDetID, Convert.ToInt32(Session["PreviousValueMain"].ToString()));
-                            connection.Open();
+                            if (connection.State == ConnectionState.Closed)
+                            {
+                                connection.Open();
+                            }
 
                             #region remove entry from sales order receiving
                             //need to test this
@@ -1054,7 +1087,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
                 StockDisplayGrid.EditIndex = -1;
                 BindGrid();
             }
@@ -1160,7 +1194,8 @@ namespace IMS
                 }
                 finally
                 {
-                    connection.Close();
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
                 }
 
                 if ((quan + bonQuan) <= RemainingStock)
@@ -1232,7 +1267,8 @@ namespace IMS
                         }
                         finally
                         {
-                            connection.Close();
+                            if (connection.State == ConnectionState.Open)
+                                connection.Close();
                         }
                         #endregion
 
@@ -1298,7 +1334,8 @@ namespace IMS
                         }
                         finally
                         {
-                            connection.Close();
+                            if (connection.State == ConnectionState.Open)
+                                connection.Close();
                         }
                         #endregion
 
@@ -1356,7 +1393,8 @@ namespace IMS
                         }
                         finally
                         {
-                            connection.Close();
+                            if (connection.State == ConnectionState.Open)
+                                connection.Close();
                         }
 
                         int ProductNO = 0;
@@ -1439,7 +1477,8 @@ namespace IMS
                             }
                             finally
                             {
-                                connection.Close();
+                                if (connection.State == ConnectionState.Open)
+                                    connection.Close();
                             }
                             #endregion
 
@@ -1505,7 +1544,8 @@ namespace IMS
                     }
                     finally
                     {
-                        connection.Close();
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
                     }
                     #endregion
                     btnAccept.Visible = true;
@@ -1592,7 +1632,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
 
@@ -1748,7 +1789,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }
@@ -1854,7 +1896,10 @@ namespace IMS
                     {
                         connection.Close();
                     }
-                    connection.Open();
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
                     SqlCommand command = new SqlCommand("sp_getSaleOrderDetail", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_OrderDetID", Convert.ToInt32(OrderDetailID.Text));
@@ -1965,7 +2010,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }

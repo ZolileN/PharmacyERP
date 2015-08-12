@@ -35,7 +35,10 @@ namespace IMS.UserControl
 
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
 
                 Text = Text + "%";
                 SqlCommand command = new SqlCommand("SELECT * From tbl_ProductSuperMaster Where tbl_ProductSuperMaster.DrugName LIKE '" + Text + "'", connection);
@@ -59,7 +62,8 @@ namespace IMS.UserControl
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }

@@ -39,6 +39,12 @@ namespace IMS
             {
                 throw ex;
             }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
 
         }
 
@@ -103,6 +109,11 @@ namespace IMS
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
     

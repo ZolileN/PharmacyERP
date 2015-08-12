@@ -111,7 +111,10 @@ namespace IMSBusinessLogic
         {
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("Sp_UpdateSelectedSubCategory", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_Id", subCategory.SubCategoryID);
@@ -129,7 +132,8 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 
@@ -137,7 +141,10 @@ namespace IMSBusinessLogic
         {
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("Sp_DeleteSubCategory", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_Id", subCategory.SubCategoryID);
@@ -151,7 +158,8 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 
@@ -159,7 +167,10 @@ namespace IMSBusinessLogic
         {
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("Sp_AddNewSubCategory", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_Name", subCategory.Name);
@@ -175,7 +186,8 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 
@@ -183,7 +195,10 @@ namespace IMSBusinessLogic
         {
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("Sp_AddNewSubCategorys", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_Name", subCategory.Name);
@@ -198,7 +213,8 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 
@@ -206,7 +222,10 @@ namespace IMSBusinessLogic
         {
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                } 
                 SqlCommand command = new SqlCommand("Sp_UpdateSubCategory", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_Id", subCategory.SubCategoryID);
@@ -222,7 +241,8 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
     }

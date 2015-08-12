@@ -38,11 +38,16 @@ namespace IMS
                     BindGrid(false);
                     BindDropSearch();
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
                     if (connection.State == ConnectionState.Open)
                         connection.Close();
                     throw ex;
+                }
+                finally 
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
                 }
             }
             expHandler.CheckForErrorMessage(Session);
@@ -127,6 +132,8 @@ namespace IMS
             }
             finally
             {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
                 CategoryDisplayGrid.EditIndex = -1;
                 BindGrid(false);
             }
@@ -152,6 +159,8 @@ namespace IMS
             }
             finally
             {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
                 CategoryDisplayGrid.EditIndex = -1;
                 BindGrid(false);
             }
@@ -191,11 +200,16 @@ namespace IMS
                 depList.DataValueField = "DepId";
                 depList.DataBind();
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 
@@ -230,6 +244,8 @@ namespace IMS
                 }
                 finally
                 {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
 
                 }
 
@@ -253,6 +269,11 @@ namespace IMS
                         if (connection.State == ConnectionState.Open)
                             connection.Close();
                         throw ex;
+                    }
+                    finally 
+                    {
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
                     }
                 }
             }
@@ -288,11 +309,16 @@ namespace IMS
                 CategoryDisplayGrid.DataSource = sortedView;
                 CategoryDisplayGrid.DataBind();
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 

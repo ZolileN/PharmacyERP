@@ -49,6 +49,12 @@ namespace IMS
             {
                 throw ex;
             }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }
         private void Page_Error(object sender, EventArgs e)
         {
@@ -112,7 +118,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
 
@@ -295,21 +302,25 @@ namespace IMS
                     finally
                     {
                         if (connection.State == ConnectionState.Open)
-                        connection.Close();
+                            connection.Close();
                     }
 
                     #endregion
 
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
 
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
             }
-
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
         }
 
         void innerGrid_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -369,14 +380,19 @@ namespace IMS
 
                     }
                 }
-                Response.Redirect("ReceiveSalesOrder.aspx",false);
+                Response.Redirect("ReceiveSalesOrder.aspx", false);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
            
         }

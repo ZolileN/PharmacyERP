@@ -38,11 +38,16 @@ namespace IMS
                     BindGrid(false);
                     //BindDropSearch();
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
                     if (connection.State == ConnectionState.Open)
                         connection.Close();
                     throw ex;
+                }
+                finally 
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
                 }
             }
             expHandler.CheckForErrorMessage(Session);
@@ -188,6 +193,11 @@ namespace IMS
                     connection.Close();
                 throw ex;
             }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
         }
 
         protected void btnAddDepartment_Click(object sender, EventArgs e)
@@ -211,8 +221,16 @@ namespace IMS
                     {
                         LinkButton btnEdit = (LinkButton)e.Row.FindControl("btnEdit");
                         LinkButton btnDelete = (LinkButton)e.Row.FindControl("btnDelete");
-                        btnEdit.Visible = false;
-                        btnDelete.Visible = false;
+                        if (btnEdit != null)
+                        {
+                            btnEdit.Visible = false;
+                        }
+                        if (btnDelete != null)
+                        {
+                            btnDelete.Visible = false;
+                        }
+
+
                     }
                 }
                 catch (Exception ex)
@@ -220,6 +238,9 @@ namespace IMS
                 }
                 finally
                 {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+
                 }
             }
         }

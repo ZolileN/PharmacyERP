@@ -64,7 +64,8 @@ namespace IMS
                     }
                     finally
                     {
-                        connection.Close();
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
                     }
 
 
@@ -223,7 +224,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }
@@ -299,7 +301,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }
@@ -451,16 +454,21 @@ namespace IMS
                 //Session["SelecetedRowIndex"] = e.NewEditIndex;
                 //StockDisplayGrid.EditIndex = 0;
                 //LoadParameterized(OrderNo.Text.ToString(),4);
-                
+
                 //StockDisplayGrid.DataSource = dataView;
                 //StockDisplayGrid.DataBind();
                 //StockDisplayGrid.EditIndex = 0;
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             
         }
@@ -602,7 +610,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }

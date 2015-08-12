@@ -65,6 +65,12 @@ namespace IMS.UserControl
             {
                 throw ex;
             }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }
         private void Page_Error(object sender, EventArgs e)
         {
@@ -119,7 +125,8 @@ namespace IMS.UserControl
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }
@@ -171,7 +178,8 @@ namespace IMS.UserControl
                 }
                 finally
                 {
-                    connection.Close();
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
                 }
                 #endregion
             }
@@ -324,11 +332,16 @@ namespace IMS.UserControl
                 dgvStoresPopup.DataSource = dsResults;
                 dgvStoresPopup.DataBind();
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
     }

@@ -93,7 +93,10 @@ namespace IMS
             #region Display Orders
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("sp_GetPendingSO_byID", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 if (String.IsNullOrWhiteSpace(VendorID) || StockAt.SelectedIndex <= 0)
@@ -150,7 +153,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }
@@ -237,7 +241,10 @@ namespace IMS
 
 
                     int orderID = int.Parse(OrderNo.Text.ToString());
-                    connection.Open();
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
                     #region Order Deletion
 
 
@@ -427,7 +434,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }

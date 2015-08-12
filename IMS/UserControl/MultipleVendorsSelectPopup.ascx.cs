@@ -612,7 +612,8 @@ namespace IMS.UserControl
                         gvParentVendors.DataSource = resultSet;
                         gvParentVendors.DataBind();
 
-                        connection.Close();
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
                         gvParentVendors.Visible = true;
                     }
                 }

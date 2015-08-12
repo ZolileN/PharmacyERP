@@ -37,6 +37,12 @@ namespace IMS
             {
                 throw ex;
             }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }
 
         private void Page_Error(object sender, EventArgs e)
@@ -60,7 +66,10 @@ namespace IMS
             #region Display Products
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                  
                 SqlCommand command = new SqlCommand("Sp_GetSODetail_RecByID", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -104,7 +113,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }
@@ -314,7 +324,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 
@@ -373,6 +384,11 @@ namespace IMS
                     connection.Close();
                 throw ex;
             }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
         }
 
         private int CalculateDelieveredQty(int SentQty, int BonusQty, int DelieveredBonusQty, int DamagedQty, int ExpiredQty, int RejectedQty)
@@ -407,11 +423,16 @@ namespace IMS
                     txtReturnedQuantity.Attributes.Add("onchange", "SetDelieveredQty(" + id + ");return false;");
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             
         }
@@ -443,6 +464,11 @@ namespace IMS
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 

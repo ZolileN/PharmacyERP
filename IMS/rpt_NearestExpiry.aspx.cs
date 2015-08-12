@@ -293,7 +293,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
 
             DataSet dS = new DataSet();
@@ -355,6 +356,8 @@ namespace IMS
             }
             finally
             {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
 
             }
         }
@@ -373,6 +376,8 @@ namespace IMS
             }
             finally
             {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
 
             }
         }
@@ -391,6 +396,8 @@ namespace IMS
             }
             finally
             {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
 
             }
         }
@@ -409,6 +416,8 @@ namespace IMS
             }
             finally
             {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
 
             }
         }

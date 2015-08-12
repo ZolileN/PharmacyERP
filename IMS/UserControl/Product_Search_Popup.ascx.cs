@@ -106,13 +106,17 @@ namespace IMS.UserControl
                 }
                 expHandler.CheckForErrorMessage(Session);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
             }
-            
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
         }
 
         private void Page_Error(object sender, EventArgs e)
@@ -191,7 +195,8 @@ namespace IMS.UserControl
                 }
                 finally
                 {
-                    connection.Close();
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
                 }
                 #endregion
             }
@@ -251,7 +256,8 @@ namespace IMS.UserControl
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }
@@ -685,6 +691,11 @@ namespace IMS.UserControl
                                     connection.Close();
                                 throw ex;
                             }
+                            finally 
+                            {
+                                if (connection.State == ConnectionState.Open)
+                                    connection.Close();
+                            }
                             
                         }
                     }
@@ -833,6 +844,11 @@ namespace IMS.UserControl
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 

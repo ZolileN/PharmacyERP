@@ -46,6 +46,12 @@ namespace IMS
             {
                 throw ex;
             }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }
 
         private void Page_Error(object sender, EventArgs e)
@@ -74,7 +80,7 @@ namespace IMS
                 Vendor obj = new Vendor();
 
                 obj.supp_ID = int.Parse(Request.QueryString["Id"].ToString());
-                ds = VendorBLL.GetDistinct(connection,obj);
+                ds = VendorBLL.GetDistinct(connection, obj);
 
 
                 //    ds.Tables[0].Rows[0]["Supp_ID"].ToString();
@@ -94,7 +100,7 @@ namespace IMS
                 txtConPerson.Text = ds.Tables[0].Rows[0]["ConPerson"].ToString();
                 txtDiscount.Text = ds.Tables[0].Rows[0]["Discount"].ToString();
                 txtCredit.Text = ds.Tables[0].Rows[0]["Credit"].ToString();
-                
+
 
             }
             catch (Exception ex)
@@ -103,6 +109,11 @@ namespace IMS
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
 
         }
@@ -147,6 +158,8 @@ namespace IMS
             }
             finally 
             {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
                 Clear();
             }
         }
@@ -208,6 +221,8 @@ namespace IMS
             }
             finally
             {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
                 Clear();
             }
         }

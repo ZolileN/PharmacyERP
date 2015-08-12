@@ -99,6 +99,12 @@ namespace IMS
             {
                 throw ex;
             }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }
 
         private void Page_Error(object sender, EventArgs e)
@@ -160,7 +166,8 @@ namespace IMS
             }
             finally
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 
@@ -212,7 +219,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
         private void bindValues()
@@ -254,7 +262,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 
@@ -301,7 +310,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
                 btnCancelSystem_Click(sender, e);
             }
         }
@@ -313,7 +323,11 @@ namespace IMS
              {
                  try
                  {
-                     connection.Open();
+                     if (connection.State == ConnectionState.Closed)
+                     {
+                         connection.Open();
+
+                     }
                      SqlCommand command = new SqlCommand("Sp_DeleteSystem", connection);
                      command.CommandType = CommandType.StoredProcedure;
 
@@ -331,7 +345,8 @@ namespace IMS
                  }
                  finally
                  {
-                     connection.Close();
+                     if (connection.State == ConnectionState.Open)
+                         connection.Close();
                      btnCancelSystem_Click(sender, e);
                      bindValues();
                  }
@@ -399,7 +414,8 @@ namespace IMS
                 }
                 finally
                 {
-                    connection.Close();
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
                     btnCancelSystem_Click(sender, e);
                 }
                 
@@ -426,7 +442,10 @@ namespace IMS
                 int val;
                 if (int.TryParse(SysDDL.SelectedValue, out val))
                 {
-                    connection.Open();
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
                     SqlCommand command = new SqlCommand("Sp_GetSystem_ByID", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_SystemID", val);
@@ -485,7 +504,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
     }

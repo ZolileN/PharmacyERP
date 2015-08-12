@@ -38,6 +38,12 @@ namespace IMS
                 {
                     throw ex;
                 }
+                finally
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+
+                }
             }
             expHandler.CheckForErrorMessage(Session);
         }

@@ -64,6 +64,12 @@ namespace IMS
             {
                 throw ex;
             }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }
 
         private void Page_Error(object sender, EventArgs e)
@@ -94,7 +100,10 @@ namespace IMS
             #region Display Orders
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("sp_GetPendingSO_byID", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 if (String.IsNullOrWhiteSpace(VendorID) || StockAt.SelectedIndex <= 0)
@@ -151,7 +160,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }
@@ -308,6 +318,12 @@ namespace IMS
                 
                 //throw;
             }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }
 
         protected void OrderStatus_SelectedIndexChanged(object sender, EventArgs e)
@@ -349,7 +365,10 @@ namespace IMS
 
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
 
                 //Text = Text + "%";
                 SqlCommand command = new SqlCommand("Sp_GetSystem_byName", connection);
@@ -384,7 +403,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }

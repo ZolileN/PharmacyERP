@@ -32,7 +32,10 @@ namespace IMS
                     #region Getting Vendors
                     try
                     {
-                        connection.Open();
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
                         DataSet ds = new DataSet();
                         SqlCommand command = new SqlCommand("Sp_GetVendor", connection);
                         command.CommandType = CommandType.StoredProcedure;
@@ -57,7 +60,8 @@ namespace IMS
                     }
                     finally
                     {
-                        connection.Close();
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
                     }
 
 
@@ -147,7 +151,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }
@@ -194,7 +199,8 @@ namespace IMS
             }
             finally
             {
-
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 
@@ -273,7 +279,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }

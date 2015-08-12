@@ -33,7 +33,10 @@ namespace IMS.UserControl
 
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
 
                 Text = Text + "%";
                 SqlCommand command = new SqlCommand("SELECT ProductID,Product_Name From tbl_ProductMaster Where tbl_ProductMaster.Product_Name LIKE '" + Text + "' AND tbl_ProductMaster.Product_Id_Org LIKE '444%' AND Status = 1", connection);
@@ -56,7 +59,8 @@ namespace IMS.UserControl
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }

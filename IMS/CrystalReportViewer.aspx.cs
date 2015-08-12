@@ -81,7 +81,12 @@ namespace IMS
             {
 
             }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
 
+            }
             DataTable displayTable = new DataTable();
             displayTable.Clear();
             displayTable.Columns.Add("OrderID", typeof(int));

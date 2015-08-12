@@ -45,6 +45,11 @@ namespace IMS
                         connection.Close();
                     throw ex;
                 }
+                finally 
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                }
             }
             expHandler.CheckForErrorMessage(Session);
         }
@@ -95,6 +100,8 @@ namespace IMS
             }
             finally
             {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
                 SubCategoryDisplayGrid.EditIndex = -1;
                 BindGrid(false);
             }
@@ -121,6 +128,8 @@ namespace IMS
             }
             finally
             {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
                 SubCategoryDisplayGrid.EditIndex = -1;
                 BindGrid(false);
             }
@@ -144,11 +153,16 @@ namespace IMS
                 Session["subcatid"] = subcatid.Text;
                 Response.Redirect("AddEditSubCategory.aspx");
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             
 
@@ -192,6 +206,11 @@ namespace IMS
                     connection.Close();
                 throw ex;
             }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
 
         }
 
@@ -205,8 +224,14 @@ namespace IMS
                     {
                         LinkButton btnEdit = (LinkButton)e.Row.FindControl("btnEdit");
                         LinkButton btnDelete = (LinkButton)e.Row.FindControl("btnDelete");
-                        btnEdit.Visible = false;
-                        btnDelete.Visible = false;
+                        if (btnEdit != null)
+                        {
+                            btnEdit.Visible = false;
+                        }
+                        if (btnDelete != null)
+                        {
+                            btnDelete.Visible = false;
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -215,6 +240,8 @@ namespace IMS
                 }
                 finally
                 {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
 
                 }
             }
@@ -247,6 +274,11 @@ namespace IMS
                     if (connection.State == ConnectionState.Open)
                         connection.Close();
                     throw ex;
+                }
+                finally 
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
                 }
             }
         }
@@ -285,6 +317,11 @@ namespace IMS
                     connection.Close();
                 throw ex;
             }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
         }
 
         protected void ddlCategoryName_SelectedIndexChanged(object sender, EventArgs e)
@@ -303,11 +340,16 @@ namespace IMS
                 depList.DataValueField = "DepId";
                 depList.DataBind();
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 

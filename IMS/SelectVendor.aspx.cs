@@ -50,6 +50,11 @@ namespace IMS
                         connection.Close();
                     throw ex;
                 }
+                finally 
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                }
             }
             expHandler.CheckForErrorMessage(Session);
         }

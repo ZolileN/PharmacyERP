@@ -42,15 +42,20 @@ namespace IMS
                                 break;
                             }
                         }
-                       // CategoryDepartment.SelectedItem.Text = Session["depId"].ToString();
+                        // CategoryDepartment.SelectedItem.Text = Session["depId"].ToString();
                         btnSaveCategory.Text = "Update";
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     if (connection.State == ConnectionState.Open)
                         connection.Close();
                     throw ex;
+                }
+                finally 
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
                 }
                 
             }
@@ -77,7 +82,11 @@ namespace IMS
             #region Populating Department DropDown
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+
+                }
                 SqlCommand command = new SqlCommand("Sp_GetDepartmentList", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 DataSet ds = new DataSet();
@@ -101,7 +110,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }
@@ -125,12 +135,12 @@ namespace IMS
                 if (Convert.ToInt32(Session["CatId"].ToString()) > 0)
                 {
                     int selectedId = int.Parse(Session["CatId"].ToString());
-                    Category categoryToUpdate = new Category(); 
+                    Category categoryToUpdate = new Category();
                     categoryToUpdate.CategoryID = selectedId;
                     categoryToUpdate.Name = CategoryName.Text;
                     categoryToUpdate.DepartmentID = Convert.ToInt32(CategoryDepartment.SelectedValue);
                     categoryManager.Update(categoryToUpdate, connection);
-                     
+
                 }
                 else
                 {
@@ -144,15 +154,20 @@ namespace IMS
 
                 Session.Remove("Catname");
                 Session.Remove("depId");
-                Session.Remove("CatId"); 
+                Session.Remove("CatId");
 
-                Response.Redirect("ManageCategory.aspx",false);
+                Response.Redirect("ManageCategory.aspx", false);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             
         }

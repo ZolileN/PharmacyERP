@@ -51,7 +51,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
         protected void btnCreateRequest_Click(object sender, EventArgs e)

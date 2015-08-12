@@ -349,6 +349,7 @@ namespace IMS
             }
             finally
             {
+                if (connection.State == ConnectionState.Open)
                 connection.Close();
             }
             #endregion
@@ -418,6 +419,7 @@ namespace IMS
             }
             finally
             {
+                if (connection.State == ConnectionState.Open)
                 connection.Close();
             }
             #endregion
@@ -560,6 +562,7 @@ namespace IMS
             }
             finally
             {
+                if (connection.State == ConnectionState.Open)
                 connection.Close();
             }
             #endregion
@@ -847,6 +850,8 @@ namespace IMS
                // btnEmail.Visible = true;
                 //btnFax.Visible = true;
                 //btnPrint.Enabled = false;
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
 
         }

@@ -55,19 +55,24 @@ namespace IMS.UserControl
                 try
                 {
                     BindGrid();
-                     if ((ViewState["displaySearch"] != null && ((bool)ViewState["displaySearch"]) == true)) 
-                     {
-                         lblSelectVendor.Visible = true;
-                         txtVendor.Visible = true;
-                         btnSearch.Visible = true;
-                     }
-                   
+                    if ((ViewState["displaySearch"] != null && ((bool)ViewState["displaySearch"]) == true))
+                    {
+                        lblSelectVendor.Visible = true;
+                        txtVendor.Visible = true;
+                        btnSearch.Visible = true;
+                    }
+
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
                     if (connection.State == ConnectionState.Open)
                         connection.Close();
                     throw ex;
+                }
+                finally 
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
                 }
             }
             expHandler.CheckForErrorMessage(Session);
@@ -142,7 +147,8 @@ namespace IMS.UserControl
                 }
                 finally
                 {
-                    connection.Close();
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
                 }
                 #endregion
             }
@@ -283,11 +289,16 @@ namespace IMS.UserControl
                     ltMetaTags.Text = ds.Tables[0].Rows[0]["SupName"].ToString();
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
              
         }
@@ -374,11 +385,16 @@ namespace IMS.UserControl
 
                 Session.Remove("txtVendor");
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 
@@ -435,11 +451,16 @@ namespace IMS.UserControl
                     mpe.Show();
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 

@@ -39,6 +39,12 @@ namespace IMS
             {
                 throw ex;
             }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }
         private void Page_Error(object sender, EventArgs e)
         {
@@ -67,7 +73,10 @@ namespace IMS
                 if (int.TryParse(Session["UserSys"].ToString(), out id))
                 {
 
-                    connection.Open();
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
                     SqlCommand command = new SqlCommand("sp_ViewInventory_byFilters", connection);
                     #region with parameter approach
                     #region Filters with null value
@@ -206,7 +215,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }
@@ -331,6 +341,12 @@ namespace IMS
             {
                 
                 //throw;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
             }
         }
     }

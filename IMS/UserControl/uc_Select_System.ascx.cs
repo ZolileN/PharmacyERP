@@ -56,7 +56,10 @@ namespace IMS.UserControl
                 try
                 {
                     //sys ddl action is set true;
-                    connection.Open();
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
                     SqlCommand command = new SqlCommand("Sp_GetSystems_ByRoles", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_RoleName", Session["SysToAdd"].ToString());
@@ -86,7 +89,8 @@ namespace IMS.UserControl
                 }
                 finally
                 {
-                    connection.Close();
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
                 }
             }
         }

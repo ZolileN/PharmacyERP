@@ -81,7 +81,8 @@ namespace IMS
                 }
                 finally
                 {
-                    connection.Close();
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
                 }
                 #endregion
 
@@ -89,7 +90,10 @@ namespace IMS
                 try
                 {
                     SqlCommand command = new SqlCommand();
-                    connection.Open();
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
                     if (Session["ur_RoleName"] != null && Session["ur_RoleName"].ToString().Equals("Salesman"))
                     {
                         command = new SqlCommand("SELECT *  FROM [dbo].[tbl_System] where System_RoleID IN (1,3)", connection);
@@ -119,7 +123,8 @@ namespace IMS
                 }
                 finally
                 {
-                    connection.Close();
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
                 }
                 #endregion
 
@@ -195,11 +200,16 @@ namespace IMS
                 btnAddEmployee.Visible = false;
                 //End Here SP
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 
@@ -236,7 +246,10 @@ namespace IMS
             String Errormessage = "";
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("sp_AddNewUser", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_EmpID", EmployeeID.Text);
@@ -265,7 +278,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
 
 
@@ -313,7 +327,10 @@ namespace IMS
 
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("Sp_UpdateNewUser", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_UserID", var);
@@ -352,7 +369,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
 
 
@@ -387,7 +405,10 @@ namespace IMS
             try
             {
                 string USERID = Request.QueryString["ID"];
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand commandUserID = new SqlCommand("SELECT MAX(UserID) from [tbl_Users]", connection);
 
                 long id = Convert.ToInt64(commandUserID.ExecuteScalar());
@@ -400,13 +421,18 @@ namespace IMS
                 {
                     Response.Redirect("UserStoreManagment.aspx?ID=" + USERID);
                 }
-                connection.Close();
+
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw ex;
+            }
+            finally 
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
     }

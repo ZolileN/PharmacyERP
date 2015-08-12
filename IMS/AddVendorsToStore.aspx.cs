@@ -42,7 +42,12 @@ namespace IMS
             {
                 throw ex;
             }
-            
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }
 
         private void Page_Error(object sender, EventArgs e)
@@ -166,7 +171,10 @@ namespace IMS
             {
                 int VendorId = int.Parse(((Label)dgvVendors.Rows[e.RowIndex].FindControl("lblSupID")).Text);
                 int StoreId = int.Parse(((Label)dgvVendors.Rows[e.RowIndex].FindControl("lblStoreID")).Text);
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
 
                 SqlCommand command3 = new SqlCommand("sp_DeleteFromtblVendors_Store", connection);
                 command3.CommandType = CommandType.StoredProcedure;
@@ -176,7 +184,6 @@ namespace IMS
 
                 BindGrid();
 
-                connection.Close();
                 dgvVendors.Visible = true;
             }
             catch (Exception ex)

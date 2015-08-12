@@ -48,6 +48,12 @@ namespace IMS.StoreManagement.StoreRequests
             {
                 throw ex;
             }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }
         private void Page_Error(object sender, EventArgs e)
         {
@@ -215,7 +221,8 @@ namespace IMS.StoreManagement.StoreRequests
                             }
                             finally
                             {
-                                connection.Close();
+                                if (connection.State == ConnectionState.Open)
+                                    connection.Close();
 
                             }
                             if (Session["FirstOrderTransfer"].Equals(false))
@@ -267,7 +274,8 @@ namespace IMS.StoreManagement.StoreRequests
                                 }
                                 finally
                                 {
-                                    connection.Close();
+                                    if (connection.State == ConnectionState.Open)
+                                        connection.Close();
                                 }
                                 #endregion
 
@@ -327,7 +335,8 @@ namespace IMS.StoreManagement.StoreRequests
                                 }
                                 finally
                                 {
-                                    connection.Close();
+                                    if (connection.State == ConnectionState.Open)
+                                        connection.Close();
                                 }
                                 #endregion
                                 int TransferDetailID = Convert.ToInt32(Session["TransferDetailID"].ToString());
@@ -368,7 +377,8 @@ namespace IMS.StoreManagement.StoreRequests
                                 }
                                 finally
                                 {
-                                    connection.Close();
+                                    if (connection.State == ConnectionState.Open)
+                                        connection.Close();
                                 }
 
                                 int ProductNO = 0;
@@ -448,7 +458,8 @@ namespace IMS.StoreManagement.StoreRequests
                                     }
                                     finally
                                     {
-                                        connection.Close();
+                                        if (connection.State == ConnectionState.Open)
+                                            connection.Close();
                                     }
                                     #endregion
                                     int TransferDetailID = Convert.ToInt32(Session["TransferDetailID"].ToString());
@@ -584,7 +595,8 @@ namespace IMS.StoreManagement.StoreRequests
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 
@@ -611,7 +623,8 @@ namespace IMS.StoreManagement.StoreRequests
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
                 BindGrid();
             }
         }

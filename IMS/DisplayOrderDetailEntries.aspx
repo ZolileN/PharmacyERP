@@ -205,15 +205,15 @@
                         </FooterTemplate>
                          <ItemStyle  Width="60px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
-                     <asp:TemplateField HeaderText="Discount<br>%age" >
+                     <asp:TemplateField HeaderText="Discount<br>%age" Visible="false">
                         <ItemTemplate>
-                            <asp:Label ID="lblDisc" Text='<%# Eval("DiscountPercentage") %>' runat="server" ></asp:Label>
+                            <asp:Label ID="lblDisc" Text='<%# Eval("DiscountPercentage") %>' runat="server" Visible="false"></asp:Label>
                         </ItemTemplate>
                           <EditItemTemplate>
-                             <asp:TextBox ID="txtDisc" Text='<%# Eval("DiscountPercentage") %>'  runat="server" Width="47px"></asp:TextBox>
+                             <asp:TextBox ID="txtDisc" Text='<%# Eval("DiscountPercentage") %>'  runat="server" Width="47px" Visible="false" ></asp:TextBox>
                          </EditItemTemplate>
                           <FooterTemplate>
-                            <asp:TextBox ID="txtAddDisPer" runat="server" CssClass="grid-input-form" Width="47px"></asp:TextBox>
+                            <asp:TextBox ID="txtAddDisPer" runat="server" CssClass="grid-input-form" Width="47px" Visible="false"></asp:TextBox>
                         </FooterTemplate>
                          <ItemStyle  Width="60px" HorizontalAlign="Left"/>
                     </asp:TemplateField>

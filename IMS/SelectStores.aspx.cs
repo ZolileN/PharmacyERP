@@ -57,6 +57,10 @@ namespace IMS
                
                 throw ex;
             }
+            finally
+            {
+                
+            }
         }
 
         protected void btnContinue_Click(object sender, EventArgs e)

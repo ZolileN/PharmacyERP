@@ -22,6 +22,8 @@ namespace IMS
         private string pageURL;
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         
+        
+       
         protected void Page_Load(object sender, EventArgs e)
         {
             System.Uri url = Request.Url;
@@ -38,65 +40,7 @@ namespace IMS
                     {
                         btnCreateProduct.Text = "ADD";
 
-                        #region Populating BarCode Serial
-                        try
-                        {
-                            if (connection.State == ConnectionState.Closed)
-                                connection.Open();
-                            SqlCommand command = new SqlCommand("sp_ProductsCount", connection);
-                            command.CommandType = CommandType.StoredProcedure;
-
-                            DataSet ds = new DataSet();
-                            SqlDataAdapter sA = new SqlDataAdapter(command);
-                            sA.Fill(ds);
-
-                            if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(7))
-                            {
-                                BarCodeSerial.Text = "2" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
-                            }
-                            else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(6))
-                            {
-                                BarCodeSerial.Text = "20" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
-                            }
-                            else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(5))
-                            {
-                                BarCodeSerial.Text = "200" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
-                            }
-                            else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(4))
-                            {
-                                BarCodeSerial.Text = "2000" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
-                            }
-                            else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(3))
-                            {
-                                BarCodeSerial.Text = "20000" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
-                            }
-
-                            else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(2))
-                            {
-                                BarCodeSerial.Text = "200000" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
-                            }
-
-                            else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(1))
-                            {
-                                BarCodeSerial.Text = "2000000" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
-                            }
-                            else if (ds.Tables[0].Rows[0][0].ToString().Length < 1)
-                            {
-                                BarCodeSerial.Text = "2000000" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            if(connection.State== ConnectionState.Open)
-                                connection.Close();
-                            throw ex;
-                        }
-                        finally
-                        {
-                            if (connection.State == ConnectionState.Open)
-                                connection.Close();
-                        }
-                        #endregion
+                        generateBarcodeSerial();
 
                         BarCodeSerial.Visible = true;
                     }
@@ -220,6 +164,11 @@ namespace IMS
                         connection.Close();
                     throw ex;
                 }
+                finally 
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                }
             }
             expHandler.CheckForErrorMessage(Session); 
         }
@@ -245,8 +194,10 @@ namespace IMS
                                     String UnitSale, String UnitCost, String ItemAwt, String Form, String Strength, String itemPackType,
                                     String itemPackSize, String Description = "", string b12 = "", string b25 = "", string b50 = "", string _active = "")
         {
-            BarCodeSerial.Text = ItemNo;
-            
+            if (Session["PageMasterProduct"].ToString().ToLower().Equals("false"))
+            {
+                BarCodeSerial.Text = ItemNo;
+            }
             GreenRainCode.Text = GreenRain;
             ProductName.Text = ItemName;
             ProdcutBrand.Text = BrandName;
@@ -307,6 +258,70 @@ namespace IMS
                 bonus50.Enabled = false;
                 chkActive.Enabled = false;
             }
+        }
+
+
+        private void generateBarcodeSerial()
+        {
+            #region Populating BarCode Serial
+            try
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+                SqlCommand command = new SqlCommand("sp_ProductsCount", connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                DataSet ds = new DataSet();
+                SqlDataAdapter sA = new SqlDataAdapter(command);
+                sA.Fill(ds);
+
+                if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(7))
+                {
+                    BarCodeSerial.Text = "2" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
+                }
+                else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(6))
+                {
+                    BarCodeSerial.Text = "20" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
+                }
+                else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(5))
+                {
+                    BarCodeSerial.Text = "200" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
+                }
+                else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(4))
+                {
+                    BarCodeSerial.Text = "2000" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
+                }
+                else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(3))
+                {
+                    BarCodeSerial.Text = "20000" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
+                }
+
+                else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(2))
+                {
+                    BarCodeSerial.Text = "200000" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
+                }
+
+                else if (ds.Tables[0].Rows[0][0].ToString().Length.Equals(1))
+                {
+                    BarCodeSerial.Text = "2000000" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
+                }
+                else if (ds.Tables[0].Rows[0][0].ToString().Length < 1)
+                {
+                    BarCodeSerial.Text = "2000000" + (Int32.Parse(ds.Tables[0].Rows[0][0].ToString()) + 1).ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
+            #endregion
         }
         protected void btnAddProduct_Click(object sender, EventArgs e)
         {
@@ -508,6 +523,7 @@ namespace IMS
                             ItemStrength.Text = "";
                             PackType.Text = "";
                             PackSize.Text = "";
+                            generateBarcodeSerial();
                         }
                         else
                         {
@@ -701,6 +717,7 @@ namespace IMS
                                 bonus12.Text = "";
                                 bonus25.Text = "";
                                 bonus50.Text = "";
+                                generateBarcodeSerial();
                             }
                         }
                         catch (Exception ex)
@@ -725,6 +742,11 @@ namespace IMS
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
                 throw exp;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 
@@ -865,7 +887,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }

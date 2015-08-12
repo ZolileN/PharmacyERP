@@ -87,6 +87,10 @@ namespace IMS
                
                 throw ex;
             }
+            finally
+            {
+               
+            }
         }
         public string GetDefaultPrinter()
         {

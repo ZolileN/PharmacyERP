@@ -40,6 +40,12 @@ namespace IMS
             {
                 throw ex;
             }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }
         public void LoadData()
         {
@@ -49,7 +55,11 @@ namespace IMS
             #region Display Products
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+
+                }
                 SqlCommand command = new SqlCommand("Sp_GetPODetails_ByID", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 int OrderNumber = 0;
@@ -74,7 +84,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
             #endregion
         }
@@ -161,6 +172,12 @@ namespace IMS
                 }
             }
             catch (Exception ex) { }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }
 
         protected void btnBack_Click(object sender, EventArgs e)
@@ -392,7 +409,11 @@ namespace IMS
                     {
                         #region query execution
                       //  int requesteeID = int.Parse(Session["RequestDesID"].ToString());
-                        connection.Open();
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+
+                        }
                         SqlCommand command = new SqlCommand("Sp_StockReceiving", connection);
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@p_OrderDetailID", int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblOrdDet_id")).Text));
@@ -461,7 +482,8 @@ namespace IMS
                 }
                 finally
                 {
-                    connection.Close();
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
                     StockDisplayGrid.EditIndex = -1;
                     LoadData();
                 }

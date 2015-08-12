@@ -23,7 +23,10 @@ namespace IMS
                 #region Populating Product Department DropDown
                 try
                 {
-                    connection.Open();
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
                     SqlCommand command = new SqlCommand("Sp_GetDepartmentList", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     DataSet ds = new DataSet();
@@ -41,11 +44,14 @@ namespace IMS
                 }
                 catch (Exception ex)
                 {
-
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                   
                 }
                 finally
                 {
-                    connection.Close();
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
                 }
                 #endregion
             }

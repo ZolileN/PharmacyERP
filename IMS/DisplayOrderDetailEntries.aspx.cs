@@ -41,6 +41,12 @@ namespace IMS
             {
                 throw ex;
             }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }
 
         private void Page_Error(object sender, EventArgs e)
@@ -84,7 +90,10 @@ namespace IMS
                 try
                 {
                     #region Query Execution
-                    connection.Open();
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
                     SqlCommand command = new SqlCommand("Sp_GetPOrderDetails_ID", connection);
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -129,7 +138,10 @@ namespace IMS
             try
             {
                 #region Query Execution
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("Sp_GetOrderDetail_ReceiveEntries", connection);
                 command.CommandType = CommandType.StoredProcedure;
 
@@ -310,7 +322,10 @@ namespace IMS
                     {
                         #region Query execution
 
+                        if (connection.State == ConnectionState.Closed)
+                        {
                             connection.Open();
+                        }
                             SqlCommand command = new SqlCommand("Sp_StockReceiving", connection);
                             command.CommandType = CommandType.StoredProcedure;
                             command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
@@ -606,7 +621,10 @@ namespace IMS
                     if (orderedQuantity >= (recQuan + expQuan + defQuan + retQuan))
                     {
                         #region Query execution
-                        connection.Open();
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
                         SqlCommand command = new SqlCommand("Sp_StockReceiving", connection);
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
@@ -733,6 +751,12 @@ namespace IMS
                 
                 //throw;
             }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
         }
 
         protected void StockDisplayGrid_RowEditing(object sender, GridViewEditEventArgs e)
@@ -784,7 +808,10 @@ namespace IMS
                 #region Query Execution
 
 
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("Sp_DeleteOrderDetail_ReceiveEntry", connection);
                 command.CommandType = CommandType.StoredProcedure;
 

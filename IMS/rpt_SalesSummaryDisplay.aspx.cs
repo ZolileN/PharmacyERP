@@ -204,7 +204,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
         protected void btnGoBack_Click(object sender, EventArgs e)
@@ -305,6 +306,12 @@ namespace IMS
             catch (Exception ex)
             {
                 WebMessageBoxUtil.Show(ex.Message);
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
             }
         }
     }

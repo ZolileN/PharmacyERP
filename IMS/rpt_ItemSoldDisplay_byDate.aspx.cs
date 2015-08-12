@@ -254,7 +254,8 @@ namespace IMS
             }
             finally
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
 
@@ -349,6 +350,12 @@ namespace IMS
             catch(Exception ex)
             {
                 WebMessageBoxUtil.Show(ex.Message);
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
             }
         }
 

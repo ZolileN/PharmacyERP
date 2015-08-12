@@ -29,7 +29,10 @@ namespace IMS
             try
             {
                 DropDownList userList = new DropDownList();
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 SqlCommand command = new SqlCommand("sp_GetAllUsers", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 DataSet ds = new DataSet();
@@ -100,7 +103,8 @@ namespace IMS
             }
             finally 
             {
-                connection.Close();
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
             }
         }
     }
