@@ -1182,7 +1182,8 @@ namespace IMS
                     DataSet QuantitySet = new DataSet();
                     SqlDataAdapter sA = new SqlDataAdapter(command);
                     sA.Fill(QuantitySet);
-                    RemainingStock = Convert.ToInt32(QuantitySet.Tables[0].Rows[0][0].ToString());
+                    if (QuantitySet != null && QuantitySet.Tables.Count > 0 && QuantitySet.Tables[0].Rows.Count > 0 && QuantitySet.Tables[0].Rows[0][0].ToString().Trim().Length > 0)
+                        RemainingStock = Convert.ToInt32(QuantitySet.Tables[0].Rows[0][0].ToString());
 
                 }
                 catch (Exception ex)

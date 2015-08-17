@@ -442,6 +442,7 @@ namespace IMS
 
                     }
                     SqlCommand command = new SqlCommand("sp_ViewInventory_byFilters", connection);
+                    command.CommandTimeout = 0;
                     #region with parameter approach
                     command.CommandType = CommandType.StoredProcedure;
                     if (ddlStockAt.SelectedIndex <= 0)
