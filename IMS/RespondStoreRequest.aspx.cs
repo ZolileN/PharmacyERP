@@ -387,6 +387,7 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_Salesman", DBNull.Value);
                     command.Parameters.AddWithValue("@p_userID", userID);
                     command.Parameters.AddWithValue("@p_orderStatus", "Pending");
+                    command.Parameters.AddWithValue("@p_isCreatedSO", "true");
                     DataTable dt = new DataTable();
                     SqlDataAdapter dA = new SqlDataAdapter(command);
                     dA.Fill(dt);
@@ -480,7 +481,7 @@ namespace IMS
                             #region adding entry to salesOrder detail
                             foreach (DataRow _entryRow in dtDetail.Rows)
                             {
-                                command = new SqlCommand("sp_EntrySaleOrderDetails", connection);
+                                command = new SqlCommand("sp_EntrySaleOrderDetails_SODetails", connection);
                                 command.CommandType = CommandType.StoredProcedure;
                                 command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
                                 command.Parameters.AddWithValue("@p_ProductID", int.Parse(_entryRow["ProductID"].ToString()));
@@ -540,7 +541,7 @@ namespace IMS
 
                             foreach (DataRow _entryRow in dtDetail.Rows)
                             {
-                                command = new SqlCommand("sp_EntrySaleOrderDetails", connection);
+                                command = new SqlCommand("sp_EntrySaleOrderDetails_SODetails", connection);
                                 command.CommandType = CommandType.StoredProcedure;
                                 command.Parameters.AddWithValue("@p_OrderDetailID", int.Parse(dtSODetail.Rows[0]["OrderDetailID"].ToString()));
                                 command.Parameters.AddWithValue("@p_ProductID", int.Parse(_entryRow["ProductID"].ToString()));
