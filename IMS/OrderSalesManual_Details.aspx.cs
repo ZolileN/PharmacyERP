@@ -250,7 +250,7 @@ namespace IMS
                             {
                                 connection.Open();
                             }
-                            SqlCommand command = new SqlCommand("sp_EntrySaleOrderDetails", connection);
+                            SqlCommand command = new SqlCommand("sp_EntrySaleOrderDetails_SODetails", connection);
                             command.CommandType = CommandType.StoredProcedure;
                             command.Parameters.AddWithValue("@p_OrderDetailID", OrderDetailID);
                             command.Parameters.AddWithValue("@p_ProductID", ProductID);

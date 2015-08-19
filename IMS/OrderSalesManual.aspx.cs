@@ -38,6 +38,7 @@ namespace IMS
                     Session.Remove("dsProducts_MP");
                     btnCreateOrder.Attributes.Add("OnClientClick", "if(ValidateForm()) {return false; }");
 
+                  
                     txtIvnoice.Text = "SO-" + DateTime.Now.TimeOfDay.Hours + "_" + DateTime.Now.TimeOfDay.Minutes;
                     txtIvnoice.Enabled = false;
                     if (Session["OrderNumberSO"] != null && Session["OrderSalesDetail"] != null && Session["OrderSalesDetail"].Equals(true) && Session["ViewSalesOrders"] != null)
@@ -159,12 +160,15 @@ namespace IMS
                         #endregion
                         LoadData();
                     }
+                    //Check if user has some Pending sales orders Load those
+                    LoadPendingSalesOrdersForLoggedinnUser();
+
                 }
                 expHandler.CheckForErrorMessage(Session);
             }
             catch (Exception ex)
             {
-                throw ex;
+               // throw ex;
             }
             finally
             {
@@ -790,6 +794,24 @@ namespace IMS
         }
         protected void btnAccept_Click(object sender, EventArgs e)
         {
+            for (int i = 0; i < StockDisplayGrid.Rows.Count; i++)
+            {
+
+                int orderDetID = 0;
+                int.TryParse(((Label)StockDisplayGrid.Rows[i].FindControl("OrderDetailNo")).Text, out orderDetID);
+                int ProductID = 0;
+                int.TryParse(((Label)StockDisplayGrid.Rows[i].FindControl("lblProductID")).Text, out ProductID);
+                int quan = 0;
+                int.TryParse(((Label)StockDisplayGrid.Rows[i].FindControl("lblQuantity")).Text, out quan);
+                int bonus = 0;
+                int.TryParse(((Label)StockDisplayGrid.Rows[i].FindControl("lblBonus")).Text, out bonus);
+                int Total = quan + bonus;
+                float Discount = 0;
+                float.TryParse(SelectDiscount.Text.ToString(), out Discount);
+
+                UpdateStockMinus(orderDetID, Total, ProductID, Discount, bonus, quan);
+            }
+
             if(btnAccept.Text.Equals("RE-GENERATE ORDER"))
             {
                 RegenerationSO_MappingChanges(Convert.ToInt32(Session["OrderNumberSO"].ToString()));
@@ -799,7 +821,6 @@ namespace IMS
                 RegenerationSO_MappingChanges(Convert.ToInt32(Session["OrderNumberSO"].ToString()));
             }
             DataSet dsProducts = (DataSet)Session["dsProdcts"];
-
             Session["RequestedNO"] = Convert.ToInt32(dsProducts.Tables[0].Rows[0]["OrderID"].ToString());
             bool status=checkOrderStatus(Convert.ToInt32(dsProducts.Tables[0].Rows[0]["OrderID"].ToString()));
 
@@ -1041,7 +1062,7 @@ namespace IMS
                             float.TryParse(SelectDiscount.Text.ToString(), out Discount); // Needs to check
                             int Total = quan + bonus;
 
-                            UpdateStockMinus(orderDetID, Total, ProductID, Discount, bonus, quan);
+                           // UpdateStockMinus(orderDetID, Total, ProductID, Discount, bonus, quan);
 
                             #endregion
 
@@ -1182,7 +1203,8 @@ namespace IMS
                     DataSet QuantitySet = new DataSet();
                     SqlDataAdapter sA = new SqlDataAdapter(command);
                     sA.Fill(QuantitySet);
-                    RemainingStock = Convert.ToInt32(QuantitySet.Tables[0].Rows[0][0].ToString());
+                    if (QuantitySet != null && QuantitySet.Tables.Count > 0 && QuantitySet.Tables[0].Rows.Count > 0 && QuantitySet.Tables[0].Rows[0][0].ToString().Trim().Length > 0)
+                        RemainingStock = Convert.ToInt32(QuantitySet.Tables[0].Rows[0][0].ToString());
 
                 }
                 catch (Exception ex)
@@ -1250,6 +1272,7 @@ namespace IMS
                                 command.Parameters.AddWithValue("@p_Salesman", DBNull.Value);
                             }
                             command.Parameters.AddWithValue("@p_orderStatus", "Pending");
+                            command.Parameters.AddWithValue("@p_isCreatedSO", "false");
                             DataTable dt = new DataTable();
                             SqlDataAdapter dA = new SqlDataAdapter(command);
                             dA.Fill(dt);
@@ -1354,7 +1377,7 @@ namespace IMS
                         float.TryParse(SelectDiscount.Text.ToString(), out Discount);
                         int Total = SendQuantity + BonusQuantity;
 
-                        UpdateStockMinus(orderDetID, Total, Product, Discount, BonusQuantity, SendQuantity);
+                        //UpdateStockMinus(orderDetID, Total, Product, Discount, BonusQuantity, SendQuantity);
 
                         #endregion
 
@@ -1496,7 +1519,7 @@ namespace IMS
                             float.TryParse(SelectDiscount.Text.ToString(), out Discount);
                             int Total = SendQuantity + BonusQuantity;
 
-                            UpdateStockMinus(orderDetID, Total, Product, Discount, BonusQuantity, SendQuantity);
+                          //  UpdateStockMinus(orderDetID, Total, Product, Discount, BonusQuantity, SendQuantity);
 
                             #endregion
 
@@ -1529,6 +1552,7 @@ namespace IMS
                         if (orderDetID !=0)
                         {
                             command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
+                            Session["orderDetID"] = orderDetID;
 
                         }
                         command.ExecuteNonQuery();
@@ -1562,7 +1586,7 @@ namespace IMS
                 txtProduct.Text = "";
                 SelectProduct.Visible = false;
                 SelectBonus.Text = "";
-                SelectDiscount.Text = "";
+               // SelectDiscount.Text = "";
                 StockAt.Enabled = false;
                 ddlSalesman.Enabled = false;
                 SelectQuantity.Text = "";
@@ -2050,6 +2074,38 @@ namespace IMS
                     connection.Close();
                 }
             }
+        }
+
+        private void LoadPendingSalesOrdersForLoggedinnUser()
+        {
+            try
+            {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("sp_GetUserPendingSaleOrders", connection);
+                command.Parameters.AddWithValue("@p_LoggedinnUserId", int.Parse(Session["UserSys"].ToString()));
+                command.CommandType = CommandType.StoredProcedure;
+                command.ExecuteNonQuery();
+
+                DataSet dsResults = new DataSet();
+                SqlDataAdapter da = new SqlDataAdapter(command);
+                da.Fill(dsResults);
+                if (dsResults != null)
+                {
+                    StockDisplayGrid.DataSource = dsResults;
+                    StockDisplayGrid.DataBind();
+                    btnAccept.Visible = true;
+                    btnDecline.Visible = true;
+                }
+                Session["OrderNumberSO"] = dsResults.Tables[0].Rows[0]["OrderDetailID"];
+            }
+            catch (Exception ex)
+            {
+
+            }
+
         }
 
         

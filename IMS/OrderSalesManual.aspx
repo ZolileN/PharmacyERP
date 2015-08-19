@@ -247,6 +247,13 @@
                           <ItemStyle  Width="60px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
 
+                      <%--<asp:TemplateField HeaderText="Discount %"  >
+                                        <ItemTemplate>
+                                            <asp:Label ID="DiscountPercentage" CssClass="" runat="server" Text='<%# Eval("Discount") %>' Width="110px"></asp:Label>
+                                        </ItemTemplate>
+                                        <ItemStyle Width="50px" HorizontalAlign="Left" />
+                     </asp:TemplateField>--%>
+
                     
                      <asp:TemplateField HeaderText="OrderStatus" Visible ="false" HeaderStyle-Width ="110px">
                         <ItemTemplate>
