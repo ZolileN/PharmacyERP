@@ -2,7 +2,7 @@
 
 <%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="cc1" %>
 <%@ Register TagName="VendorsPopup" TagPrefix="UCVendorsPopup"  Src="~/UserControl/VendorsPopupGrid.ascx"%>
-
+<%@ Register TagName="OrdersPopup" TagPrefix="UCOrdersPopup" Src="~/UserControl/uc_Order_Display.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 
 
@@ -64,6 +64,14 @@
                         </div>
              
 	<img src="images/po-img.png" width="344" height="344" class="poImg">
-   
+    <asp:Label id="lblSelectStore"  runat="server" visible="false"/>
+         <cc1:ModalPopupExtender ID="mpeOrdersPopupDiv" runat="server" BackgroundCssClass="overLaypop"
+                       RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="btnContinue" ClientIDMode="AutoID"
+                       PopupControlID="OrdersPopupG"   >
+                    </cc1:ModalPopupExtender>
+
+                <div id="OrdersPopupG" class="congrats-cont" style="display: none; ">
+                            <UCOrdersPopup:OrdersPopup  id="ordersPopupGrid" runat="server" />
+                                </div>
         
 </asp:Content>

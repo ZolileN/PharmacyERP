@@ -122,8 +122,11 @@ namespace IMS
         protected void btnContinue_Click(object sender, EventArgs e)
         {
             string Vendorname = txtVendor.Text;
-            Session["Vendorname"] = Vendorname; 
-            Response.Redirect("ManualPurchase.aspx?" + Vendorname);
+            Session["Vendorname"] = Vendorname;
+            ordersPopupGrid.populateGrid();
+            mpeOrdersPopupDiv.Show();
+
+            //Response.Redirect("ManualPurchase.aspx?" + Vendorname);
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)

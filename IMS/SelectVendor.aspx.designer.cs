@@ -65,5 +65,32 @@ namespace IMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::IMS.UserControl.VendorsPopupGrid VendorsPopupGrid;
+        
+        /// <summary>
+        /// lblSelectStore control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSelectStore;
+        
+        /// <summary>
+        /// mpeOrdersPopupDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ModalPopupExtender mpeOrdersPopupDiv;
+        
+        /// <summary>
+        /// ordersPopupGrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::IMS.UserControl.uc_Order_Display ordersPopupGrid;
     }
 }

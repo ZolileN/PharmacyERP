@@ -1182,6 +1182,7 @@
     <Content Include="UserControl\rpt_ucSubCategory.ascx" />
     <Content Include="UserControl\StoresPopup.ascx" />
     <Content Include="UserControl\SuperMasterProducts.ascx" />
+    <Content Include="UserControl\uc_Order_Display.ascx" />
     <Content Include="UserControl\uc_printBarcode.ascx" />
     <Content Include="UserControl\uc_Select_Salesman.ascx" />
     <Content Include="UserControl\uc_Select_System.ascx" />
@@ -2122,6 +2123,13 @@
     </Compile>
     <Compile Include="UserControl\SuperMasterProducts.ascx.designer.cs">
       <DependentUpon>SuperMasterProducts.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\uc_Order_Display.ascx.cs">
+      <DependentUpon>uc_Order_Display.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControl\uc_Order_Display.ascx.designer.cs">
+      <DependentUpon>uc_Order_Display.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserControl\uc_printBarcode.ascx.cs">
       <DependentUpon>uc_printBarcode.ascx</DependentUpon>

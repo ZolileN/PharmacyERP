@@ -34,6 +34,7 @@ namespace IMS
             {
                 try
                 {
+                    
                     if (Session["Vendorname"] != null)
                     {
                         lblVendor.Text = Session["Vendorname"].ToString();
@@ -68,6 +69,7 @@ namespace IMS
                         ProductSet = new DataSet();
                         LoadData();
                     }
+                    
                 }
                 catch (Exception ex)
                 {
@@ -312,6 +314,7 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_Vendor", Vendor);
                         command.Parameters.AddWithValue("@p_orderStatus", "Pending");
                         command.Parameters.AddWithValue("@p_userID", userID);
+                        command.Parameters.AddWithValue("@p_isPOGen", false);
                         DataTable dt = new DataTable();
                         SqlDataAdapter dA = new SqlDataAdapter(command);
                         dA.Fill(dt);

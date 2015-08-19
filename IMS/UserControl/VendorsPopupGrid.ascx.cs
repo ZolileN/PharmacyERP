@@ -377,6 +377,7 @@ namespace IMS.UserControl
                                 if (ltMetaTags != null)
                                 {
                                     ltMetaTags.Text = Server.HtmlDecode(row.Cells[1].Text);
+                                    Session["Vendorname_PO"] = ltMetaTags.Text;
                                 }
                             }
                         }

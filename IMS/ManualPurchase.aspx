@@ -3,14 +3,12 @@
 <%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="cc1" %>
  
 <%@ Register TagName="ProductsPopup"  TagPrefix="UCProductsPopup" Src="~/UserControl/ProductsPopupGrid.ascx" %>
-
  
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-     
+    
+                        
     <table width="100%">
 
         <tbody><tr>
@@ -253,5 +251,5 @@
             </tr>
          </table>
         <br />
-        
+   
 </asp:Content>
