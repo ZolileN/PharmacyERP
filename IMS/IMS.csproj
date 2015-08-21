@@ -1182,11 +1182,11 @@
     <Content Include="UserControl\rpt_ucSubCategory.ascx" />
     <Content Include="UserControl\StoresPopup.ascx" />
     <Content Include="UserControl\SuperMasterProducts.ascx" />
-<<<<<<< HEAD
+ 
     <Content Include="UserControl\uc_PendingSalesOrderPopUp.ascx" />
-=======
+ 
     <Content Include="UserControl\uc_Order_Display.ascx" />
->>>>>>> origin/master
+ 
     <Content Include="UserControl\uc_printBarcode.ascx" />
     <Content Include="UserControl\uc_Select_Salesman.ascx" />
     <Content Include="UserControl\uc_Select_System.ascx" />
@@ -2128,21 +2128,21 @@
     <Compile Include="UserControl\SuperMasterProducts.ascx.designer.cs">
       <DependentUpon>SuperMasterProducts.ascx</DependentUpon>
     </Compile>
-<<<<<<< HEAD
+ 
     <Compile Include="UserControl\uc_PendingSalesOrderPopUp.ascx.cs">
       <DependentUpon>uc_PendingSalesOrderPopUp.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="UserControl\uc_PendingSalesOrderPopUp.ascx.designer.cs">
       <DependentUpon>uc_PendingSalesOrderPopUp.ascx</DependentUpon>
-=======
+    </Compile>
     <Compile Include="UserControl\uc_Order_Display.ascx.cs">
       <DependentUpon>uc_Order_Display.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="UserControl\uc_Order_Display.ascx.designer.cs">
       <DependentUpon>uc_Order_Display.ascx</DependentUpon>
->>>>>>> origin/master
+ 
     </Compile>
     <Compile Include="UserControl\uc_printBarcode.ascx.cs">
       <DependentUpon>uc_printBarcode.ascx</DependentUpon>
