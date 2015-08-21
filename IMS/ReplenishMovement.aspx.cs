@@ -588,6 +588,7 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_OrderMode", "Vendor");
                         command.Parameters.AddWithValue("@p_Vendor", VendorCheck);
                         command.Parameters.AddWithValue("@p_orderStatus", "Pending");
+                        command.Parameters.AddWithValue("@p_isPOGen", true);
                         DataTable dt = new DataTable();
                         SqlDataAdapter dA = new SqlDataAdapter(command);
                         dA.Fill(dt);

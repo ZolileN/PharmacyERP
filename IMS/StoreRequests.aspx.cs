@@ -118,6 +118,7 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_OrderMode", OrderMode);
                     command.Parameters.AddWithValue("@p_Vendor", Vendor);
                     command.Parameters.AddWithValue("@p_orderStatus", "Initiated");
+                    command.Parameters.AddWithValue("@p_isPOGen", false);
                     DataTable dt = new DataTable();
                     SqlDataAdapter dA = new SqlDataAdapter(command);
                     dA.Fill(dt);
