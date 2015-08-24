@@ -197,11 +197,22 @@ namespace IMS
 
                 #endregion
 
-                DateTime dtFROM = Convert.ToDateTime(Session["rptItemPurchaseDateF"].ToString());
-                DateTime dtTo = Convert.ToDateTime(Session["rptItemPurchaseDateT"].ToString());
+                DateTime dtFROM;
+                DateTime dtTo;
+                if (Session["rptItemPurchaseDateF"].ToString() != "" && Session["rptItemPurchaseDateT"].ToString() != "")
+                {
+                    dtFROM = Convert.ToDateTime(Session["rptItemPurchaseDateF"].ToString());
+                    dtTo = Convert.ToDateTime(Session["rptItemPurchaseDateT"].ToString());
 
-                command.Parameters.AddWithValue("@p_FromDate", dtFROM);
-                command.Parameters.AddWithValue("@p_ToDate", dtTo);
+
+                    command.Parameters.AddWithValue("@p_FromDate", dtFROM);
+                    command.Parameters.AddWithValue("@p_ToDate", dtTo);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@p_FromDate", DBNull.Value);
+                    command.Parameters.AddWithValue("@p_ToDate", DBNull.Value);
+                }
                 DataSet ds = new DataSet();
                 SqlDataAdapter dA = new SqlDataAdapter(command);
                 
@@ -297,9 +308,9 @@ namespace IMS
                     connection.Close();
             }
 
-            DataSet dS = new DataSet();
-            dS.Tables.Add((DataTable)Session["dtItemPurchased"]);
-            dS.AcceptChanges();
+            //DataSet dS = new DataSet();
+            //dS.Tables.Add((DataTable)Session["dtItemPurchased"]);
+            //dS.AcceptChanges();
 
             myReportDocument.Load(Server.MapPath("~/NearestExpiryItems.rpt"));
             App_Code.Barcode dsReport = new App_Code.Barcode();

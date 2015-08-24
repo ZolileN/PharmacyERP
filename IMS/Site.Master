@@ -237,7 +237,7 @@
                <!--<li class="hasChild"><a href="#">Item Purchase Reports</a>
                <ul>-->
                    <li><a href="rpt_ItemPurchase_Selection.aspx?Param=Date">Item Purchase Detail Report </a></li>
-                   <!--<li><a href="rpt_NearestExpiry.aspx">Nearest Expiry Item Report </a></li>-->
+                   <li><a href="rpt_NearestExpiry.aspx">Nearest Expiry Item Report </a></li>
                    <li><a href="rpt_POSSALES_Selection.aspx">POS Item Sold Report </a></li>
                    <!--<li><a href="rpt_ItemPurchase_Selection.aspx?Param=Pharmacy">Item Purchase Report by Pharmacy </a></li>
                    <li><a href="rpt_ItemPurchase_Selection.aspx?Param=Price">Item Purchase Report by Price</a></li>

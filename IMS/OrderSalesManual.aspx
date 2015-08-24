@@ -48,7 +48,7 @@
                 </span>
                 <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Text="REFRESH" CssClass="btn btn-default btn-large" Visible="False" />
                 <asp:Button ID="btnCancelOrder" runat="server" OnClick="btnCancelOrder_Click" Text="Go Back" CssClass="btn btn-default btn-large" />
-                <asp:Button ID="btnMapPreviousOrders" runat="server" OnClick="btnMapPreviousOrders_Click" Visible="false" Text="Map Prev. Orders" CssClass="btn btn-default btn-large" />
+                <asp:Button ID="btnMapPreviousOrders" runat="server" OnClick="btnMapPreviousOrders_Click" Visible="true" Text="Map Prev. Orders" CssClass="btn btn-default btn-large" />
             </td>
         </tr>
 		<tr>

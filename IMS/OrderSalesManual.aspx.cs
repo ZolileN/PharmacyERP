@@ -656,11 +656,13 @@ namespace IMS
 
                     #region Get Full Current Purchase Order DataSet for a product and Filtering it on Expiry Dates
 
+                    #region Getting Required DataSet For QuantitySold
                     if (connection.State.Equals(ConnectionState.Closed)) { connection.Open(); }
                     command = new SqlCommand("sp_Mapping_getPurchaseOrderDetails_byProductID", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_ProductID", Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["ProductID"].ToString()));
                     command.Parameters.AddWithValue("@p_ExpiryDate", DateTime.Parse(SaleOrderFullSet.Tables[0].Rows[i]["ExpiryDate"].ToString()));
+                    command.Parameters.AddWithValue("@p_Option", "QauntitySold");
 
                     sdA = new SqlDataAdapter(command);
                     sdA.Fill(PurchasOrderFullSet);
@@ -677,6 +679,34 @@ namespace IMS
 
                         dtFiltered = dv.ToTable();
                     }
+                    #endregion
+
+
+                    #region Getting Required DataSet For Bonus QuantitySold
+                    if (connection.State.Equals(ConnectionState.Closed)) { connection.Open(); }
+                    command = new SqlCommand("sp_Mapping_getPurchaseOrderDetails_byProductID", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@p_ProductID", Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["ProductID"].ToString()));
+                    command.Parameters.AddWithValue("@p_ExpiryDate", DateTime.Parse(SaleOrderFullSet.Tables[0].Rows[i]["ExpiryDate"].ToString()));
+                    command.Parameters.AddWithValue("@p_Option", "BonusQauntitySold");
+                    PurchasOrderFullSet = null;
+                    PurchasOrderFullSet = new DataSet();
+                    sdA = new SqlDataAdapter(command);
+                    sdA.Fill(PurchasOrderFullSet);
+                    if (connection.State.Equals(ConnectionState.Open)) { connection.Close(); }
+                    DataTable dtFilteredBonus = new DataTable();
+                    dtFilteredBonus = PurchasOrderFullSet.Tables[0];
+
+                    if (PurchasOrderFullSet != null && PurchasOrderFullSet.Tables[0].Rows.Count != 0)
+                    {
+                        DateTime Expiry = DateTime.Parse(SaleOrderFullSet.Tables[0].Rows[i]["ExpiryDate"].ToString());
+                        DataView dv = PurchasOrderFullSet.Tables[0].DefaultView;
+                        String Expiry1 = Expiry.ToShortDateString();
+                        dv.RowFilter = "ExpiryDate = #" + Expiry + "#";
+
+                        dtFilteredBonus = dv.ToTable();
+                    }
+                    #endregion
 
                     #endregion
 
@@ -699,13 +729,14 @@ namespace IMS
                     ExpiryDate = DateTime.Parse(SaleOrderFullSet.Tables[0].Rows[i]["ExpiryDate"].ToString());
                     SO_CreationDate = DateTime.Parse(SaleOrderFullSet.Tables[0].Rows[i]["OrderDate"].ToString());
 
+                    #region Mapping Quantity Sold
                     for (int j = 0; j < dtFiltered.Rows.Count; j++)
                     {
                         int RecievedQuantity = Convert.ToInt32(dtFiltered.Rows[j]["ReceivedQuantity"].ToString());
-                        int BonusQuantity = Convert.ToInt32(dtFiltered.Rows[j]["BonusQuantity"].ToString());
+                        int BonusQuantity = 0;
 
                         int PO_QuantitySold = Convert.ToInt32(dtFiltered.Rows[j]["QuantitySold"].ToString());
-                        int PO_BonusQuantitySold = Convert.ToInt32(dtFiltered.Rows[j]["BonusQuantitySold"].ToString());
+                        int PO_BonusQuantitySold = 0;
 
 
                         PO_ID = Convert.ToInt32(dtFiltered.Rows[j]["OrderID"].ToString());
@@ -729,7 +760,7 @@ namespace IMS
                             {
                                 
                                 QS = SendQuantity;
-                                InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, QS, BQS, PO_RecieveDate, SO_CreationDate,
+                                InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, QS, 0, PO_RecieveDate, SO_CreationDate,
                                                  ExpiryDate, UCP, USP, "QS");
                                 SendQuantity = 0;
                                 //need to update the QS and BQS on PO Tables
@@ -739,20 +770,50 @@ namespace IMS
                                 int Remaining = RecievedQuantity - PO_QuantitySold;
                                 SendQuantity = SendQuantity - Remaining;
                                 QS = Remaining;
-                                InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, QS, BQS, PO_RecieveDate, SO_CreationDate,
+                                InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, QS, 0, PO_RecieveDate, SO_CreationDate,
                                                 ExpiryDate, UCP, USP, "QS");
                                 //need to update the QS and BQS on PO Tables
                             }
                         }
+                        if (BonusSendQuantity <= 0 && SendQuantity <= 0)
+                        {
+                            break;
+                        }
+
+                    }
+                    #endregion
+
+                    #region Mapping Bonus Quantity Sold
+
+                    for (int j = 0; j < dtFilteredBonus.Rows.Count; j++)
+                    {
+                        int RecievedQuantity = 0;
+                        int BonusQuantity = Convert.ToInt32(dtFilteredBonus.Rows[j]["BonusQuantity"].ToString());
+
+                        int PO_QuantitySold = 0;
+                        int PO_BonusQuantitySold = Convert.ToInt32(dtFilteredBonus.Rows[j]["BonusQuantitySold"].ToString());
+
+
+                        PO_ID = Convert.ToInt32(dtFilteredBonus.Rows[j]["OrderID"].ToString());
+                        PO_DetID = Convert.ToInt32(dtFilteredBonus.Rows[j]["orderDetailID"].ToString());
+                        PO_DetEntryID = Convert.ToInt32(dtFilteredBonus.Rows[j]["entryID"].ToString());
+
+                        VendID = Convert.ToInt32(dtFilteredBonus.Rows[j]["OrderRequestedFor"].ToString());
+
+                        UCP = Convert.ToDecimal(dtFilteredBonus.Rows[j]["CostPrice"].ToString());
+
+
+
+                        PO_RecieveDate = DateTime.Parse(dtFilteredBonus.Rows[j]["ReceivedDate"].ToString());
 
                         if (BonusSendQuantity > 0 && BonusQuantity > 0)
                         {
                             if (PO_BonusQuantitySold + BonusSendQuantity <= BonusQuantity)
                             {
                                 //Mapping Insertion
-                                
+
                                 BQS = BonusSendQuantity;
-                                InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, QS, BQS, PO_RecieveDate, SO_CreationDate,
+                                InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, 0, BQS, PO_RecieveDate, SO_CreationDate,
                                                 ExpiryDate, UCP, USP, "BQS");
                                 BonusSendQuantity = 0;
                                 //need to update the QS and BQS on PO Tables
@@ -762,7 +823,7 @@ namespace IMS
                                 int Remaining = BonusQuantity - PO_BonusQuantitySold;
                                 BonusSendQuantity = BonusSendQuantity - Remaining;
                                 BQS = Remaining;
-                                InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, QS, BQS, PO_RecieveDate, SO_CreationDate,
+                                InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, 0, BQS, PO_RecieveDate, SO_CreationDate,
                                                 ExpiryDate, UCP, USP, "BQS");
                             }
                         }
@@ -773,6 +834,8 @@ namespace IMS
                         }
 
                     }
+                    #endregion
+
                     #endregion
 
                 }
