@@ -444,6 +444,9 @@ namespace IMS
 
                                 command.Parameters.AddWithValue("@p_status", "Pending");
                                 command.Parameters.AddWithValue("@p_comments", "Generated to Internal Pharmacy");
+                                float Discount;
+                                command.Parameters.AddWithValue("@p_Discount", DBNull.Value);
+
                                 DataSet LinkResult = new DataSet();
                                 SqlDataAdapter sA = new SqlDataAdapter(command);
                                 sA.Fill(LinkResult);

@@ -27,7 +27,7 @@ namespace IMS
         protected void Page_Load(object sender, EventArgs e)
         {
             try
-            {
+            { 
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
                 log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -38,7 +38,7 @@ namespace IMS
                     Session.Remove("dsProducts_MP");
                     btnCreateOrder.Attributes.Add("OnClientClick", "if(ValidateForm()) {return false; }");
 
-                  
+
                     txtIvnoice.Text = "SO-" + DateTime.Now.TimeOfDay.Hours + "_" + DateTime.Now.TimeOfDay.Minutes;
                     txtIvnoice.Enabled = false;
                     if (Session["OrderNumberSO"] != null && Session["OrderSalesDetail"] != null && Session["OrderSalesDetail"].Equals(true) && Session["ViewSalesOrders"] != null)
@@ -46,7 +46,7 @@ namespace IMS
                         if (Session["ViewSalesOrders"] != null && Session["ViewSalesOrders"].Equals(true))
                         {
                             btnAccept.Text = "RE-GENERATE ORDER";
-                            
+
                             Session["ViewSalesOrders"] = false;
                         }
                         Session["ViewSalesOrders"] = null;
@@ -160,15 +160,32 @@ namespace IMS
                         #endregion
                         LoadData();
                     }
-                    //Check if user has some Pending sales orders Load those
-                    LoadPendingSalesOrdersForLoggedinnUser();
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
+                    SqlCommand commnd = new SqlCommand("sp_GetUserPendingSaleOrders", connection);
+                    commnd.Parameters.AddWithValue("@p_LoggedinnUserId", int.Parse(Session["UserSys"].ToString()));
+                    commnd.CommandType = CommandType.StoredProcedure;
+                    commnd.ExecuteNonQuery();
+
+                    DataSet dsResults = new DataSet();
+                    SqlDataAdapter da = new SqlDataAdapter(commnd);
+                    da.Fill(dsResults);
+                    if (dsResults.Tables[0].Rows.Count > 0)
+                    {
+                        uc_PendingSalesOrderPopUp.BindGrid();
+                        mpeNonGeneratedSOsPopup.Show();
+                    }
+                   
 
                 }
                 expHandler.CheckForErrorMessage(Session);
+                 
             }
             catch (Exception ex)
             {
-               // throw ex;
+                 throw ex;
             }
             finally
             {
@@ -871,8 +888,48 @@ namespace IMS
                 int Total = quan + bonus;
                 float Discount = 0;
                 float.TryParse(SelectDiscount.Text.ToString(), out Discount);
+                int RemainingStock = 0;
+                try
+                {
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
+                    SqlCommand command = new SqlCommand("sp_getStock_Quantity", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@p_ProductID", ProductID);
+                    command.Parameters.AddWithValue("@p_SysID", Convert.ToInt32(Session["UserSys"].ToString()));
 
-                UpdateStockMinus(orderDetID, Total, ProductID, Discount, bonus, quan);
+                    DataSet QuantitySet = new DataSet();
+                    SqlDataAdapter sA = new SqlDataAdapter(command);
+                    sA.Fill(QuantitySet);
+                    if (QuantitySet != null && QuantitySet.Tables.Count > 0 && QuantitySet.Tables[0].Rows.Count > 0 && QuantitySet.Tables[0].Rows[0][0].ToString().Trim().Length > 0)
+                        RemainingStock = Convert.ToInt32(QuantitySet.Tables[0].Rows[0][0].ToString());
+
+                }
+                catch (Exception ex)
+                {
+
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                    throw ex;
+                }
+                finally
+                {
+                    if (connection.State == ConnectionState.Open)
+                        connection.Close();
+                }
+
+                if ((quan + bonus) <= RemainingStock)
+                {
+                    UpdateStockMinus(orderDetID, Total, ProductID, Discount, bonus, quan);
+                }
+                else
+                {
+                    WebMessageBoxUtil.Show("Available Stock ('" + RemainingStock.ToString() + "') is less than the entered quantity " + Total + "[BONUS + SENT]");
+                    return;
+                }
+                
             }
 
             if(btnAccept.Text.Equals("RE-GENERATE ORDER"))
@@ -1261,8 +1318,7 @@ namespace IMS
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_ProductID", Convert.ToInt32(lblProductId.Text));
                     command.Parameters.AddWithValue("@p_SysID", Convert.ToInt32(Session["UserSys"].ToString()));
-
-                 // command.Parameters.AddWithValue("@p_ProductID",  txtSearch.Text);
+                     
                     DataSet QuantitySet = new DataSet();
                     SqlDataAdapter sA = new SqlDataAdapter(command);
                     sA.Fill(QuantitySet);
@@ -1402,6 +1458,16 @@ namespace IMS
 
                             command.Parameters.AddWithValue("@p_status", "Pending");
                             command.Parameters.AddWithValue("@p_comments", "Generated to Outside Store");
+                            float Discount;
+                            if (float.TryParse(SelectDiscount.Text.ToString(), out Discount))
+                            {
+                                command.Parameters.AddWithValue("@p_Discount", Discount);
+                            }
+                            else
+                            {
+                                command.Parameters.AddWithValue("@p_Discount", DBNull.Value);
+                            }
+
                             DataSet LinkResult = new DataSet();
                             SqlDataAdapter sA = new SqlDataAdapter(command);
                             sA.Fill(LinkResult);
@@ -1431,13 +1497,11 @@ namespace IMS
 
                         int Product, SendQuantity, BonusQuantity;
                         Product = SendQuantity = BonusQuantity = 0;
-                        float Discount = 0;
-
+                         
                         int.TryParse(lblProductId.Text, out Product);
                         int.TryParse(SelectQuantity.Text.ToString(), out SendQuantity);
                         int.TryParse(SelectBonus.Text.ToString(), out BonusQuantity);
 
-                        float.TryParse(SelectDiscount.Text.ToString(), out Discount);
                         int Total = SendQuantity + BonusQuantity;
 
                         //UpdateStockMinus(orderDetID, Total, Product, Discount, BonusQuantity, SendQuantity);
@@ -1544,7 +1608,15 @@ namespace IMS
 
                                 command.Parameters.AddWithValue("@p_status", "Pending");
                                 command.Parameters.AddWithValue("@p_comments", "Generated to Outside Store");
-
+                                float Discount;
+                                if (float.TryParse(SelectDiscount.Text.ToString(), out Discount))
+                                {
+                                    command.Parameters.AddWithValue("@p_Discount", Discount);
+                                }
+                                else
+                                {
+                                    command.Parameters.AddWithValue("@p_Discount", DBNull.Value);
+                                }
                                 DataSet LinkResult = new DataSet();
                                 SqlDataAdapter sA = new SqlDataAdapter(command);
                                 sA.Fill(LinkResult);
@@ -1574,12 +1646,12 @@ namespace IMS
 
                             int Product, SendQuantity, BonusQuantity;
                             Product = SendQuantity = BonusQuantity = 0;
-                            float Discount = 0;
+                            //float Discount = 0;
                             int.TryParse(lblProductId.Text, out Product);
                             int.TryParse(SelectQuantity.Text.ToString(), out SendQuantity);
                             int.TryParse(SelectBonus.Text.ToString(), out BonusQuantity);
 
-                            float.TryParse(SelectDiscount.Text.ToString(), out Discount);
+                            //float.TryParse(SelectDiscount.Text.ToString(), out Discount);
                             int Total = SendQuantity + BonusQuantity;
 
                           //  UpdateStockMinus(orderDetID, Total, Product, Discount, BonusQuantity, SendQuantity);
@@ -2141,34 +2213,12 @@ namespace IMS
 
         private void LoadPendingSalesOrdersForLoggedinnUser()
         {
-            try
-            {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
-                SqlCommand command = new SqlCommand("sp_GetUserPendingSaleOrders", connection);
-                command.Parameters.AddWithValue("@p_LoggedinnUserId", int.Parse(Session["UserSys"].ToString()));
-                command.CommandType = CommandType.StoredProcedure;
-                command.ExecuteNonQuery();
+            
 
-                DataSet dsResults = new DataSet();
-                SqlDataAdapter da = new SqlDataAdapter(command);
-                da.Fill(dsResults);
-                if (dsResults != null)
-                {
-                    StockDisplayGrid.DataSource = dsResults;
-                    StockDisplayGrid.DataBind();
-                    btnAccept.Visible = true;
-                    btnDecline.Visible = true;
-                }
-                Session["OrderNumberSO"] = dsResults.Tables[0].Rows[0]["OrderDetailID"];
-            }
-            catch (Exception ex)
-            {
+        }
 
-            }
-
+        protected void lblSosPopup_Click(object sender, EventArgs e)
+        {
         }
 
         

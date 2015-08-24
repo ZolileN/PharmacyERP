@@ -175,6 +175,42 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.DropDownList SelectProduct;
         
         /// <summary>
+        /// lblSosPopup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSosPopup;
+        
+        /// <summary>
+        /// lblSosPopups control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button lblSosPopups;
+        
+        /// <summary>
+        /// mpeNonGeneratedSOsPopup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ModalPopupExtender mpeNonGeneratedSOsPopup;
+        
+        /// <summary>
+        /// uc_PendingSalesOrderPopUp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::IMS.UserControl.uc_PendingSalesOrderPopUp uc_PendingSalesOrderPopUp;
+        
+        /// <summary>
         /// SelectQuantity control.
         /// </summary>
         /// <remarks>
