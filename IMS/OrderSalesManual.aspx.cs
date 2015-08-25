@@ -49,6 +49,10 @@ namespace IMS
 
                             Session["ViewSalesOrders"] = false;
                         }
+                        if (Session["OrderSalesDetail"].Equals(true))
+                        {
+                            btnAccept.Text = "RE-GENERATE ORDER";
+                        }
                         Session["ViewSalesOrders"] = null;
                         Session["FirstOrderSO"] = true;
                         systemSet = new DataSet();
@@ -891,6 +895,20 @@ namespace IMS
                 int RemainingStock = 0;
                 try
                 {
+                    //In case of Re-Generate SO, Delete the OrderDetailEntries for that Order and Add stock First.. 
+                    if (btnAccept.Text.Equals("RE-GENERATE ORDER"))
+                    {
+                        UpdateStockPlus(orderDetID, Total);
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
+                        SqlCommand comm = new SqlCommand("sp_DeleteFromtblSaleOrderDetail_Receive", connection);
+                        comm.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
+                        comm.CommandType = CommandType.StoredProcedure;
+                        comm.ExecuteNonQuery();
+                         
+                    }
                     if (connection.State == ConnectionState.Closed)
                     {
                         connection.Open();
@@ -906,6 +924,16 @@ namespace IMS
                     if (QuantitySet != null && QuantitySet.Tables.Count > 0 && QuantitySet.Tables[0].Rows.Count > 0 && QuantitySet.Tables[0].Rows[0][0].ToString().Trim().Length > 0)
                         RemainingStock = Convert.ToInt32(QuantitySet.Tables[0].Rows[0][0].ToString());
 
+
+                    if ((quan + bonus) <= RemainingStock)
+                    {
+                        UpdateStockMinus(orderDetID, Total, ProductID, Discount, bonus, quan);
+                    }
+                    else
+                    {
+                        WebMessageBoxUtil.Show("Available Stock ('" + RemainingStock.ToString() + "') is less than the entered quantity " + Total + "[BONUS + SENT]");
+                        return;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -920,16 +948,6 @@ namespace IMS
                         connection.Close();
                 }
 
-                if ((quan + bonus) <= RemainingStock)
-                {
-                    UpdateStockMinus(orderDetID, Total, ProductID, Discount, bonus, quan);
-                }
-                else
-                {
-                    WebMessageBoxUtil.Show("Available Stock ('" + RemainingStock.ToString() + "') is less than the entered quantity " + Total + "[BONUS + SENT]");
-                    return;
-                }
-                
             }
 
             if(btnAccept.Text.Equals("RE-GENERATE ORDER"))
@@ -1024,7 +1042,7 @@ namespace IMS
                     connection.Close();
                
             }
-            return true;// status;
+            return status;
         }
         protected void btnDecline_Click(object sender, EventArgs e)
         {
