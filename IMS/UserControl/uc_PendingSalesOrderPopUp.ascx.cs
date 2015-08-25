@@ -82,6 +82,7 @@ namespace IMS.UserControl
                 {
                     gdvPendingSOs.DataSource = dsResults;
                     gdvPendingSOs.DataBind();
+                    Session["OrderNumberSO"] = dsResults.Tables[0].Rows[0]["OrderID"].ToString();
                     Session["dsProdcts"] = dsResults;
                     Session["dsSalesOrders"] = dsResults;
                 }

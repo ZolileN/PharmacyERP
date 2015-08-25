@@ -39,8 +39,8 @@ namespace IMS
                     btnCreateOrder.Attributes.Add("OnClientClick", "if(ValidateForm()) {return false; }");
 
 
-                    txtIvnoice.Text = "SO-" + DateTime.Now.TimeOfDay.Hours + "_" + DateTime.Now.TimeOfDay.Minutes;
-                    txtIvnoice.Enabled = false;
+                  //  txtIvnoice.Text = "SO-" + DateTime.Now.TimeOfDay.Hours + "_" + DateTime.Now.TimeOfDay.Minutes;
+                   // txtIvnoice.Enabled = false;
                     if (Session["OrderNumberSO"] != null && Session["OrderSalesDetail"] != null && Session["OrderSalesDetail"].Equals(true) && Session["ViewSalesOrders"] != null)
                     {
                         if (Session["ViewSalesOrders"] != null && Session["ViewSalesOrders"].Equals(true))
@@ -109,8 +109,8 @@ namespace IMS
 
                         if (Session["Invoice"] != null)
                         {
-                            txtIvnoice.Text = Session["Invoice"].ToString();
-                            txtIvnoice.Enabled = false;
+                           // txtIvnoice.Text = Session["Invoice"].ToString();
+                           // txtIvnoice.Enabled = false;
                         }
                         BindGrid();
                     }
@@ -946,7 +946,7 @@ namespace IMS
 
             if (status)
             {
-                SO_PO_Mapping(Convert.ToInt32(dsProducts.Tables[0].Rows[0]["OrderID"].ToString()));
+                //SO_PO_Mapping(Convert.ToInt32(dsProducts.Tables[0].Rows[0]["OrderID"].ToString()));
 
                 
                 Session["FirstOrderSO"] = false;
@@ -1024,7 +1024,7 @@ namespace IMS
                     connection.Close();
                
             }
-            return status;
+            return true;// status;
         }
         protected void btnDecline_Click(object sender, EventArgs e)
         {
@@ -1215,7 +1215,7 @@ namespace IMS
                     Session["SO_BQuan"] = bonus;
                     Session["SO_Quan"] = quan;
                     Session["SelectedIndexValue"] = StockAt.SelectedItem;
-                    Session["Invoice"] = txtIvnoice.Text;
+                    //Session["Invoice"] = txtIvnoice.Text;
                     Response.Redirect("OrderSalesManual_Details.aspx",false);
                 }
             }
@@ -1352,7 +1352,7 @@ namespace IMS
 
                         OrderMode = "Sales";
 
-                        String Invoice = txtIvnoice.Text;
+                       // String Invoice = txtIvnoice.Text;
                         String Vendor = "True";
                         int Salesman = 0;
                         
@@ -1377,7 +1377,7 @@ namespace IMS
                             int userID = Convert.ToInt32(Session["UserID"].ToString());
 
                             command.Parameters.AddWithValue("@p_OrderType", OrderType);
-                            command.Parameters.AddWithValue("@p_Invoice", Invoice);
+                            command.Parameters.AddWithValue("@p_Invoice", DBNull.Value);
                             command.Parameters.AddWithValue("@p_OrderMode", OrderMode);
                             command.Parameters.AddWithValue("@p_Vendor", Vendor);
                             command.Parameters.AddWithValue("@p_userID", userID);
