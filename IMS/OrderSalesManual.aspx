@@ -83,15 +83,15 @@
     <hr>
     <table cellspacing="5" cellpadding="5" border="0" width="100%" class="formTbl">
 
-        <tr>
+        <%--<tr>
             <td>
-                <asp:Label runat="server" AssociatedControlID="txtIvnoice" CssClass="control-label">Invoice No </asp:Label></td>
+                <asp:Label runat="server" AssociatedControlID="txtIvnoice" CssClass="control-label" Visible="false">Invoice No </asp:Label></td>
             <td>
-                <asp:TextBox runat="server" ID="txtIvnoice" CssClass="form-control" /></td>
+                <asp:TextBox runat="server" ID="txtIvnoice" CssClass="form-control"  Visible="false" /></td>
 
 
 
-        </tr>
+        </tr>--%>
         <tr>
 
             <td>
