@@ -38,13 +38,13 @@
         <tbody><tr>
             <td><label>Date From: </label></td>
           <td>
-                <asp:TextBox ID="txtDateFrom" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtDateFrom" runat="server" OnClientClick="return ValidateForm();"></asp:TextBox>
           </td>
             <td>
                  <label>Date To</label>
             </td>
             <td>
-                <asp:TextBox ID="txtDateTO" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtDateTO" runat="server" OnClientClick="return ValidateForm();"></asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -145,4 +145,20 @@
     <div id="_ProductDiv" class="congrats-cont" style="display: none; ">
                             <ucProductPopup:ProductPopup  id="ProductPopupGrid" runat="server"/>
                         </div>
+    <script type="text/javascript">
+        function ValidateForm() {
+
+            if (document.getElementById("MainContent_txtDateFrom").value == null || document.getElementById("MainContent_txtDateFrom").value == '') {
+                alert("Please enter Cost Price");
+                return false;
+            }
+            if (document.getElementById("MainContent_txtDateTO").value == null || document.getElementById("MainContent_txtDateTO").value == '') {
+                alert("Please enter Sale Price");
+                return false;
+            }
+
+            return true;
+
+        }
+        </script>
 </asp:Content>

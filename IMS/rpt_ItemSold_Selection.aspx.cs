@@ -43,6 +43,10 @@ namespace IMS
                     {
                         Session["Display"] = "rpt_ItemSoldDisplay_bySalesMan.aspx";
                     }
+                    else if (Parameter.ToLower().Equals("Profitability".ToLower())) 
+                    {
+                        ViewState["isProfReport"] = true;
+                    }
                 }
 
                 if (Session["rptItemSoldDateFrom"] != null && Session["rptItemSoldDateFrom"].ToString() != "")

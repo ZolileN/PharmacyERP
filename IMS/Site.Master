@@ -228,6 +228,7 @@
                <!--<li class="hasChild"><a href="#">Item Sold Reports</a>
                <ul>-->
                    <li><a href="rpt_ItemSold_Selection.aspx?Param=Date">Item Sold Detail Report </a></li>
+                   <li><a href="rpt_ItemSold_Selection.aspx?Param=Profitability">Profitability Report </a></li>
                    <!--<li><a href="rpt_ItemSold_Selection.aspx?Param=Pharmacy">Item Sold Report by Pharmacy </a></li>
                    <li><a href="rpt_ItemSold_Selection.aspx?Param=SalesMan">Item Sold Report by SalesMan</a></li>
                    <li><a href="rpt_ItemSold_Selection.aspx?Param=Price">Item Sold Report by Price</a></li>
