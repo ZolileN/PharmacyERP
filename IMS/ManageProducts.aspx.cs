@@ -89,7 +89,7 @@ namespace IMS
                     SqlCommand command;
                     if (Convert.ToInt32(Session["UserSys"]).Equals(1))
                     {
-                        Query = "Select * FROM tbl_ProductMaster Where Status = 1";
+                        Query = "sp_GetProductsList";
                         command = new SqlCommand(Query, connection);                        
                     }
                     else
@@ -390,7 +390,7 @@ namespace IMS
         protected void StockDisplayGrid_RowEditing(object sender, GridViewEditEventArgs e)
         {
             StockDisplayGrid.EditIndex = e.NewEditIndex;
-            BindGrid();
+           // BindGrid();
         }
 
         protected void StockDisplayGrid_SelectedIndexChanged(object sender, EventArgs e)

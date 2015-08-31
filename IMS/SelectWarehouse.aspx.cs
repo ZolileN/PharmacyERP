@@ -34,7 +34,7 @@ namespace IMS
                         connection.Open();
 
                     }
-                    SqlCommand command = new SqlCommand("Sp_GetSystems_ByRoles", connection);
+                    SqlCommand command = new SqlCommand("Sp_GetWarehouseSystems_ByRoles", connection);
                     command.CommandType = CommandType.StoredProcedure;
 
                     command.Parameters.AddWithValue("@p_RoleName", "Warehouse");

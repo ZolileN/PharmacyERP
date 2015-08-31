@@ -133,7 +133,7 @@
                      <asp:TemplateField HeaderText="Accepted<br>Bonus Qty">
                        
                         <ItemTemplate>
-                             <asp:TextBox ID="delBonusQtyVal" CssClass="grid-input-form"    runat="server" Text=' <%# int.Parse(Eval("BonusQuantity").ToString())==0? int.Parse( Eval("OrderedBonusQuantity").ToString())   : int.Parse(Eval("BonusQuantity").ToString())%> ' ></asp:TextBox>
+                             <asp:TextBox ID="delBonusQtyVal" CssClass="grid-input-form"    runat="server" Text=' <%# int.Parse(Eval("BonusQuantity").ToString())==0? 0   : int.Parse(Eval("BonusQuantity").ToString())%> ' ></asp:TextBox>
                          </ItemTemplate>
                         <ItemStyle   HorizontalAlign="Left"/>
                     </asp:TemplateField>
