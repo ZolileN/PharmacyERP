@@ -43,23 +43,16 @@ namespace IMS
                     {
                         Session["Display"] = "rpt_ItemSoldDisplay_bySalesMan.aspx";
                     }
-<<<<<<< HEAD
-                    else if (Parameter.ToLower().Equals("Profitability".ToLower())) 
-                    {
-                        ViewState["isProfReport"] = true;
-                    }
-=======
                     else if (Parameter.ToLower().Equals("Profitability".ToLower()))
                     {
                         ViewState["isProfReport"] = true;
                     }
                 }
-
-
+                
                 if (ViewState["isProfReport"].Equals(true))
                 {
                     ltlMainHeader.Text = "Profitability Report";
->>>>>>> origin/master
+
                 }
 
                 if (Session["rptItemSoldDateFrom"] != null && Session["rptItemSoldDateFrom"].ToString() != "")
