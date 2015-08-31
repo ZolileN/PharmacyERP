@@ -40,7 +40,7 @@
 
         <tbody>
             <tr>
-<<<<<<< HEAD
+ 
         	<td> <h4>Generate Sale Orders</h4></td>
             <td align="right">
             		                		                 	 
@@ -54,7 +54,7 @@
                 <asp:Button ID="btnMapPreviousOrders" runat="server" OnClick="btnMapPreviousOrders_Click" Visible="true" Text="Map Prev. Orders" CssClass="btn btn-default btn-large" />
             </td>
         </tr>
-		<tr>
+		<%--<tr>
             <td height="5"></td>
 =======
                 <td>
@@ -71,10 +71,10 @@
                     <asp:Button ID="btnCancelOrder" runat="server" OnClick="btnCancelOrder_Click" Text="Go Back" CssClass="btn btn-default btn-large" />
                     <asp:Button ID="btnMapPreviousOrders" runat="server" OnClick="btnMapPreviousOrders_Click" Visible="false" Text="Map Prev. Orders" CssClass="btn btn-default btn-large" />
                 </td>
-            </tr>
+            </tr>--%>
             <tr>
                 <td height="5"></td>
->>>>>>> origin/master
+ 
 
             </tr>
         </tbody>
@@ -83,15 +83,15 @@
     <hr>
     <table cellspacing="5" cellpadding="5" border="0" width="100%" class="formTbl">
 
-        <tr>
+        <%--<tr>
             <td>
-                <asp:Label runat="server" AssociatedControlID="txtIvnoice" CssClass="control-label">Invoice No </asp:Label></td>
+                <asp:Label runat="server" AssociatedControlID="txtIvnoice" CssClass="control-label" Visible="false">Invoice No </asp:Label></td>
             <td>
-                <asp:TextBox runat="server" ID="txtIvnoice" CssClass="form-control" /></td>
+                <asp:TextBox runat="server" ID="txtIvnoice" CssClass="form-control"  Visible="false" /></td>
 
 
 
-        </tr>
+        </tr>--%>
         <tr>
 
             <td>
@@ -103,7 +103,7 @@
             <td>
                 <asp:Label runat="server" AssociatedControlID="StockAt" CssClass="control-label">Select Pharmacy </asp:Label></td>
             <td>
-                <asp:DropDownList runat="server" ID="StockAt" CssClass="form-control" Width="280" AutoPostBack="True" OnSelectedIndexChanged="StockAt_SelectedIndexChanged" />
+                <asp:DropDownList runat="server" ID="StockAt" CssClass="form-control" Width="280"  OnSelectedIndexChanged="StockAt_SelectedIndexChanged" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="StockAt" CssClass="text-danger" ErrorMessage="The Store field is required." ValidationGroup="ExSave" /></td>
 
 

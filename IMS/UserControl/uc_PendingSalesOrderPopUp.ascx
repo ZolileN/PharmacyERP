@@ -76,6 +76,15 @@
                 </ItemTemplate>
             </asp:TemplateField>
          
+            <asp:TemplateField HeaderText="Delete" >
+                        <ItemTemplate>
+                              <span onclick="return confirm('Are you sure you want to delete this record?')">
+                                <asp:Button CssClass="btn btn-default del-btn" ID="btnDelete" Text="Delete" runat="server" CommandName="Delete" CommandArgument='<%# Container.DisplayIndex  %>'/>
+                            </span>
+                        </ItemTemplate>
+                         <ItemStyle  Width="200px" HorizontalAlign="Left"/>
+                    </asp:TemplateField>
+
         </Columns>
         <PagerStyle CssClass="GridPager" />
 

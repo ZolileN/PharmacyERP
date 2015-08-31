@@ -39,8 +39,8 @@ namespace IMS
                     btnCreateOrder.Attributes.Add("OnClientClick", "if(ValidateForm()) {return false; }");
 
 
-                    txtIvnoice.Text = "SO-" + DateTime.Now.TimeOfDay.Hours + "_" + DateTime.Now.TimeOfDay.Minutes;
-                    txtIvnoice.Enabled = false;
+                  //  txtIvnoice.Text = "SO-" + DateTime.Now.TimeOfDay.Hours + "_" + DateTime.Now.TimeOfDay.Minutes;
+                   // txtIvnoice.Enabled = false;
                     if (Session["OrderNumberSO"] != null && Session["OrderSalesDetail"] != null && Session["OrderSalesDetail"].Equals(true) && Session["ViewSalesOrders"] != null)
                     {
                         if (Session["ViewSalesOrders"] != null && Session["ViewSalesOrders"].Equals(true))
@@ -48,6 +48,10 @@ namespace IMS
                             btnAccept.Text = "RE-GENERATE ORDER";
 
                             Session["ViewSalesOrders"] = false;
+                        }
+                        if (Session["OrderSalesDetail"].Equals(true))
+                        {
+                            btnAccept.Text = "RE-GENERATE ORDER";
                         }
                         Session["ViewSalesOrders"] = null;
                         Session["FirstOrderSO"] = true;
@@ -109,8 +113,8 @@ namespace IMS
 
                         if (Session["Invoice"] != null)
                         {
-                            txtIvnoice.Text = Session["Invoice"].ToString();
-                            txtIvnoice.Enabled = false;
+                           // txtIvnoice.Text = Session["Invoice"].ToString();
+                           // txtIvnoice.Enabled = false;
                         }
                         BindGrid();
                     }
@@ -605,7 +609,7 @@ namespace IMS
             }
             #endregion
         }
-        public void InsertionMapping(int PO_ID, int PO_DetID, int PO_DetEntryID, int SO_ID, int SO_DetID, int SO_DetEntryID, int ProductID, int VendorID, int QS, int BQS,
+        public void InsertionMapping(int PO_ID, int PO_DetID, int PO_DetEntryID, int SO_ID, int SO_DetID, int SO_DetEntryID, int ProductID, int VendorID, int QS, int QS_FromBonus, int BQS,
                                      DateTime PO_RecieveDate, DateTime SO_CreationDate, DateTime ExpiryDate, Decimal UCP, Decimal USP, String UpdateCheck)
 
         {
@@ -625,6 +629,7 @@ namespace IMS
                 command.Parameters.AddWithValue("@p_ProductID", ProductID);
                 command.Parameters.AddWithValue("@p_Vendor", VendorID);
                 command.Parameters.AddWithValue("@p_QauntitySold", QS);
+                command.Parameters.AddWithValue("@p_QS_FromBonus", QS_FromBonus);
                 command.Parameters.AddWithValue("@p_BonusQuantitySold", BQS);
                 command.Parameters.AddWithValue("@p_PORecieveDate", PO_RecieveDate);
                 command.Parameters.AddWithValue("@p_SOCreationDate", SO_CreationDate);
@@ -746,60 +751,6 @@ namespace IMS
                     ExpiryDate = DateTime.Parse(SaleOrderFullSet.Tables[0].Rows[i]["ExpiryDate"].ToString());
                     SO_CreationDate = DateTime.Parse(SaleOrderFullSet.Tables[0].Rows[i]["OrderDate"].ToString());
 
-                    #region Mapping Quantity Sold
-                    for (int j = 0; j < dtFiltered.Rows.Count; j++)
-                    {
-                        int RecievedQuantity = Convert.ToInt32(dtFiltered.Rows[j]["ReceivedQuantity"].ToString());
-                        int BonusQuantity = 0;
-
-                        int PO_QuantitySold = Convert.ToInt32(dtFiltered.Rows[j]["QuantitySold"].ToString());
-                        int PO_BonusQuantitySold = 0;
-
-
-                        PO_ID = Convert.ToInt32(dtFiltered.Rows[j]["OrderID"].ToString());
-                        PO_DetID = Convert.ToInt32(dtFiltered.Rows[j]["orderDetailID"].ToString());
-                        PO_DetEntryID = Convert.ToInt32(dtFiltered.Rows[j]["entryID"].ToString());
-
-                       
-
-                       
-                        VendID = Convert.ToInt32(dtFiltered.Rows[j]["OrderRequestedFor"].ToString());
-
-                        UCP = Convert.ToDecimal(dtFiltered.Rows[j]["CostPrice"].ToString());
-                        
-
-                        
-                        PO_RecieveDate = DateTime.Parse(dtFiltered.Rows[j]["ReceivedDate"].ToString());
-                        
-                        if (SendQuantity > 0 && RecievedQuantity > 0)
-                        {
-                            if (PO_QuantitySold + SendQuantity <= RecievedQuantity)
-                            {
-                                
-                                QS = SendQuantity;
-                                InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, QS, 0, PO_RecieveDate, SO_CreationDate,
-                                                 ExpiryDate, UCP, USP, "QS");
-                                SendQuantity = 0;
-                                //need to update the QS and BQS on PO Tables
-                            }
-                            else
-                            {
-                                int Remaining = RecievedQuantity - PO_QuantitySold;
-                                SendQuantity = SendQuantity - Remaining;
-                                QS = Remaining;
-                                InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, QS, 0, PO_RecieveDate, SO_CreationDate,
-                                                ExpiryDate, UCP, USP, "QS");
-                                //need to update the QS and BQS on PO Tables
-                            }
-                        }
-                        if (BonusSendQuantity <= 0 && SendQuantity <= 0)
-                        {
-                            break;
-                        }
-
-                    }
-                    #endregion
-
                     #region Mapping Bonus Quantity Sold
 
                     for (int j = 0; j < dtFilteredBonus.Rows.Count; j++)
@@ -828,9 +779,9 @@ namespace IMS
                             if (PO_BonusQuantitySold + BonusSendQuantity <= BonusQuantity)
                             {
                                 //Mapping Insertion
-
+                                // need to check for re generation
                                 BQS = BonusSendQuantity;
-                                InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, 0, BQS, PO_RecieveDate, SO_CreationDate,
+                                InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, 0, 0, BQS, PO_RecieveDate, SO_CreationDate,
                                                 ExpiryDate, UCP, USP, "BQS");
                                 BonusSendQuantity = 0;
                                 //need to update the QS and BQS on PO Tables
@@ -840,7 +791,7 @@ namespace IMS
                                 int Remaining = BonusQuantity - PO_BonusQuantitySold;
                                 BonusSendQuantity = BonusSendQuantity - Remaining;
                                 BQS = Remaining;
-                                InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, 0, BQS, PO_RecieveDate, SO_CreationDate,
+                                InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, 0, 0, BQS, PO_RecieveDate, SO_CreationDate,
                                                 ExpiryDate, UCP, USP, "BQS");
                             }
                         }
@@ -852,6 +803,75 @@ namespace IMS
 
                     }
                     #endregion
+
+                    #region Mapping Quantity Sold
+                    for (int j = 0; j < dtFiltered.Rows.Count; j++)
+                    {
+                        int RecievedQuantity = Convert.ToInt32(dtFiltered.Rows[j]["ReceivedQuantity"].ToString());
+                        int BonusQuantity = Convert.ToInt32(dtFiltered.Rows[j]["BonusQuantity"].ToString());;
+
+                        int PO_QuantitySold = Convert.ToInt32(dtFiltered.Rows[j]["QuantitySold"].ToString());
+                        int PO_BonusQuantitySold = Convert.ToInt32(dtFiltered.Rows[j]["BonusQuantitySold"].ToString());
+
+                        PO_ID = Convert.ToInt32(dtFiltered.Rows[j]["OrderID"].ToString());
+                        PO_DetID = Convert.ToInt32(dtFiltered.Rows[j]["orderDetailID"].ToString());
+                        PO_DetEntryID = Convert.ToInt32(dtFiltered.Rows[j]["entryID"].ToString());
+
+                        VendID = Convert.ToInt32(dtFiltered.Rows[j]["OrderRequestedFor"].ToString());
+
+                        UCP = Convert.ToDecimal(dtFiltered.Rows[j]["CostPrice"].ToString());
+                    
+                        PO_RecieveDate = DateTime.Parse(dtFiltered.Rows[j]["ReceivedDate"].ToString());
+                        
+                        if (SendQuantity > 0 && RecievedQuantity > 0)
+                        {
+                            if (PO_QuantitySold + SendQuantity <= RecievedQuantity)
+                            {
+                                
+                                QS = SendQuantity;
+                                InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, QS, 0, 0, PO_RecieveDate, SO_CreationDate,
+                                                 ExpiryDate, UCP, USP, "QS");
+                                SendQuantity = 0;
+                                //need to update the QS and BQS on PO Tables
+                            }
+                            else
+                            {
+                                int Remaining = RecievedQuantity - PO_QuantitySold;
+                                SendQuantity = SendQuantity - Remaining;
+                                QS = Remaining;
+                                InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, QS, 0, 0, PO_RecieveDate, SO_CreationDate,
+                                                ExpiryDate, UCP, USP, "QS");
+
+                                if(SendQuantity>0 && BonusQuantity >PO_BonusQuantitySold)
+                                {
+                                    int RemainingBonus = BonusQuantity - PO_BonusQuantitySold;
+                                    if (RemainingBonus > SendQuantity)
+                                    {
+                                        QS = SendQuantity;
+                                        InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, QS, 0, 0, PO_RecieveDate, SO_CreationDate,
+                                                        ExpiryDate, UCP, USP, "QS");
+                                        SendQuantity = 0;
+                                    }
+                                    else
+                                    {
+                                        SendQuantity = SendQuantity - RemainingBonus;
+                                        QS = RemainingBonus;
+                                        InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, 0, QS, 0, PO_RecieveDate, SO_CreationDate,
+                                                ExpiryDate, UCP, USP, "BQS");
+                                    }
+                                    
+                                }
+                            }
+                        }
+                        if (SendQuantity <= 0)
+                        {
+                            break;
+                        }
+
+                    }
+                    #endregion
+
+                   
 
                     #endregion
 
@@ -891,6 +911,20 @@ namespace IMS
                 int RemainingStock = 0;
                 try
                 {
+                    //In case of Re-Generate SO, Delete the OrderDetailEntries for that Order and Add stock First.. 
+                    if (btnAccept.Text.Equals("RE-GENERATE ORDER"))
+                    {
+                        UpdateStockPlus(orderDetID, Total);
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
+                        SqlCommand comm = new SqlCommand("sp_DeleteFromtblSaleOrderDetail_Receive", connection);
+                        comm.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
+                        comm.CommandType = CommandType.StoredProcedure;
+                        comm.ExecuteNonQuery();
+                         
+                    }
                     if (connection.State == ConnectionState.Closed)
                     {
                         connection.Open();
@@ -906,6 +940,16 @@ namespace IMS
                     if (QuantitySet != null && QuantitySet.Tables.Count > 0 && QuantitySet.Tables[0].Rows.Count > 0 && QuantitySet.Tables[0].Rows[0][0].ToString().Trim().Length > 0)
                         RemainingStock = Convert.ToInt32(QuantitySet.Tables[0].Rows[0][0].ToString());
 
+
+                    if ((quan + bonus) <= RemainingStock)
+                    {
+                        UpdateStockMinus(orderDetID, Total, ProductID, Discount, bonus, quan);
+                    }
+                    else
+                    {
+                        WebMessageBoxUtil.Show("Available Stock ('" + RemainingStock.ToString() + "') is less than the entered quantity " + Total + "[BONUS + SENT]");
+                        return;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -920,16 +964,6 @@ namespace IMS
                         connection.Close();
                 }
 
-                if ((quan + bonus) <= RemainingStock)
-                {
-                    UpdateStockMinus(orderDetID, Total, ProductID, Discount, bonus, quan);
-                }
-                else
-                {
-                    WebMessageBoxUtil.Show("Available Stock ('" + RemainingStock.ToString() + "') is less than the entered quantity " + Total + "[BONUS + SENT]");
-                    return;
-                }
-                
             }
 
             if(btnAccept.Text.Equals("RE-GENERATE ORDER"))
@@ -1215,7 +1249,7 @@ namespace IMS
                     Session["SO_BQuan"] = bonus;
                     Session["SO_Quan"] = quan;
                     Session["SelectedIndexValue"] = StockAt.SelectedItem;
-                    Session["Invoice"] = txtIvnoice.Text;
+                    //Session["Invoice"] = txtIvnoice.Text;
                     Response.Redirect("OrderSalesManual_Details.aspx",false);
                 }
             }
@@ -1352,7 +1386,7 @@ namespace IMS
 
                         OrderMode = "Sales";
 
-                        String Invoice = txtIvnoice.Text;
+                       // String Invoice = txtIvnoice.Text;
                         String Vendor = "True";
                         int Salesman = 0;
                         
@@ -1377,7 +1411,7 @@ namespace IMS
                             int userID = Convert.ToInt32(Session["UserID"].ToString());
 
                             command.Parameters.AddWithValue("@p_OrderType", OrderType);
-                            command.Parameters.AddWithValue("@p_Invoice", Invoice);
+                            command.Parameters.AddWithValue("@p_Invoice", DBNull.Value);
                             command.Parameters.AddWithValue("@p_OrderMode", OrderMode);
                             command.Parameters.AddWithValue("@p_Vendor", Vendor);
                             command.Parameters.AddWithValue("@p_userID", userID);
@@ -1716,7 +1750,10 @@ namespace IMS
                     WebMessageBoxUtil.Show("Available Stock ('" + RemainingStock.ToString() + "') is less than the entered quantity [BONUS + SENT]");
                     //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Remaining Stock is less then the entered quantity, please enter less quantity to proceed')", true);
                 }
-                BindGrid();
+                if (!string.IsNullOrEmpty(Session["OrderNumberSO"].ToString()))
+                {
+                    BindGrid();
+                }
                 txtSearch.Text = "";
                 txtProduct.Text = "";
                 SelectProduct.Visible = false;

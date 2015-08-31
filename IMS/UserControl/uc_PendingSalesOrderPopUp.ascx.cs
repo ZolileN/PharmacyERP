@@ -82,6 +82,7 @@ namespace IMS.UserControl
                 {
                     gdvPendingSOs.DataSource = dsResults;
                     gdvPendingSOs.DataBind();
+                    Session["OrderNumberSO"] = dsResults.Tables[0].Rows[0]["OrderID"].ToString();
                     Session["dsProdcts"] = dsResults;
                     Session["dsSalesOrders"] = dsResults;
                 }
@@ -115,7 +116,26 @@ namespace IMS.UserControl
 
         protected void gdvPendingSOs_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
+            try
+            {
+                int OrderID = int.Parse(((Label)gdvPendingSOs.Rows[e.RowIndex].FindControl("lblOrderID")).Text.ToString());
+                if(connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("sp_DeleteNonGeneratedSaleOrder", connection);
+                command.Parameters.AddWithValue("@p_OrderID", OrderID);
+                command.CommandType = CommandType.StoredProcedure;
+                command.ExecuteNonQuery();
+            }
+            catch(Exception ex)
+            {
 
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
 
         protected void gdvPendingSOs_RowEditing(object sender, GridViewEditEventArgs e)

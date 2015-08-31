@@ -21,10 +21,17 @@ namespace IMS.UserControl
         private ILog log;
         private string pageURL;
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
+
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
+                if (IsPostBack)
+                {
+                    //Response.Redirect("ManualPurchase.aspx", false);
+
+                }
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
                 log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);

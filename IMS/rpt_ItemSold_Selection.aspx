@@ -21,7 +21,7 @@
     <table width="100%">
 
         <tbody><tr>
-        	<td> <h4>Item Sold Detail Report</h4></td>
+        	<td> <h4><asp:Literal ID="ltlMainHeader" runat="server" Text="Item Sold Detail Report"></asp:Literal></h4></td>
             <td align="right">
             <asp:Button ID="btnCreateReport" runat="server" CssClass="btn btn-success btn-default" Text="CREATE REPORT" OnClick="btnCreateReport_Click" />
             <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnGoBack_Click" />

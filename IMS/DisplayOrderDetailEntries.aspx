@@ -331,6 +331,27 @@
                   $(".clDate").datepicker();
               });
               $(function () { $("[id$=MainContent_StockDisplayGrid_txtAddExpDate]").datepicker(); });
+              
+              var tblDetailsGrid = document.getElementById("MainContent_StockDisplayGrid").getElementsByTagName("tr").length;
+              for (var i = 0; i < tblDetailsGrid; i++) {
+
+
+                  var id = "MainContent_StockDisplayGrid_lblExpDate_" + i;
+                  var ex = document.getElementById(id);
+
+                  var expiry = document.getElementById(id).innerHTML;
+                  var abc = expiry.replace(',', ' ');
+                  var date1 = new Date(abc);
+                  var date2 = new Date();
+
+                  var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+                  var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+                  if (diffDays <= 90) {
+                      ex.style.color = "red";
+
+                  }
+              }
 
               function CheckExpiry( ) {
                    

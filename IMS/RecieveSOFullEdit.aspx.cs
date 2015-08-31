@@ -169,6 +169,7 @@ namespace IMS
                     {
                         connection.Open();
                     }
+                    DateTime Expiry;
 
                     ProductDescription = ((Literal)dgvReceiveSOGrid.Rows[RowIndex].FindControl("ProductDescription")).Text;
                     ExpiryDate = ((Literal)dgvReceiveSOGrid.Rows[RowIndex].FindControl("lblExpiryDate")).Text;
@@ -212,9 +213,10 @@ namespace IMS
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@quantity", -OldStockSum);
                         command.Parameters.AddWithValue("@ProductID", int.Parse(ProductID));
-                        if (ExpiryDate != null)
+                        if (DateTime.TryParse(ExpiryDate, out Expiry))
                         {
-                            command.Parameters.AddWithValue("@expirydate", DateTime.Parse(ExpiryDate));
+                            command.Parameters.AddWithValue("@expirydate", Expiry);
+
                         }
                         else
                         {
@@ -250,9 +252,11 @@ namespace IMS
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@quantity", addtoStockQty);
                         command.Parameters.AddWithValue("@ProductID", int.Parse(ProductID));
-                        if (ExpiryDate != null)
+
+                        if (DateTime.TryParse(ExpiryDate, out Expiry))
                         {
-                            command.Parameters.AddWithValue("@expirydate", DateTime.Parse(ExpiryDate));
+                            command.Parameters.AddWithValue("@expirydate", Expiry);
+
                         }
                         else
                         {
@@ -279,14 +283,16 @@ namespace IMS
                     command2.Parameters.AddWithValue("@returnedQty", RejectedQty);
                     command2.Parameters.AddWithValue("@returnedStatus", int.Parse(((DropDownList)dgvReceiveSOGrid.Rows[RowIndex].FindControl("ddNotAcceptedAction")).SelectedValue));
 
-                    if (ExpiryDate != null && !String.IsNullOrEmpty(ExpiryDate.ToString()))
+                    if (DateTime.TryParse(ExpiryDate, out Expiry))
                     {
-                        command2.Parameters.AddWithValue("@expiredDate", DateTime.Parse(ExpiryDate));
+                        command2.Parameters.AddWithValue("@expiredDate", Expiry);
+
                     }
-                    else 
+                    else
                     {
                         command2.Parameters.AddWithValue("@expiredDate", DBNull.Value);
                     }
+                     
                     command2.Parameters.AddWithValue("@OrderDetId", OrderDetId);
                     command2.ExecuteNonQuery();
 
@@ -300,14 +306,17 @@ namespace IMS
                     command3.Parameters.AddWithValue("@p_ProductID", int.Parse(ProductID));
                     command3.Parameters.AddWithValue("@p_BarCode", long.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("BarCode")).Text));
                     command3.Parameters.AddWithValue("@p_Bonus", int.Parse(((TextBox)dgvReceiveSOGrid.Rows[RowIndex].FindControl("delBonusQtyVal")).Text));
-                    if (ExpiryDate != null && !String.IsNullOrEmpty(ExpiryDate.ToString()))
+
+                    if (DateTime.TryParse(ExpiryDate, out Expiry))
                     {
-                        command3.Parameters.AddWithValue("@p_Expiry", DateTime.Parse(ExpiryDate));
+                        command3.Parameters.AddWithValue("@p_Expiry", Expiry);
+
                     }
                     else
                     {
                         command3.Parameters.AddWithValue("@p_Expiry", DBNull.Value);
                     }
+                     
                     command3.Parameters.AddWithValue("@p_Cost", double.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("UnitCost")).Text));
                     command3.Parameters.AddWithValue("@p_Sales", double.Parse(((Label)dgvReceiveSOGrid.Rows[RowIndex].FindControl("UnitSale")).Text));     
                     command3.Parameters.AddWithValue("@p_isPO", "TRUE");

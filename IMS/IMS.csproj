@@ -1182,11 +1182,8 @@
     <Content Include="UserControl\rpt_ucSubCategory.ascx" />
     <Content Include="UserControl\StoresPopup.ascx" />
     <Content Include="UserControl\SuperMasterProducts.ascx" />
- 
     <Content Include="UserControl\uc_PendingSalesOrderPopUp.ascx" />
- 
     <Content Include="UserControl\uc_Order_Display.ascx" />
- 
     <Content Include="UserControl\uc_printBarcode.ascx" />
     <Content Include="UserControl\uc_Select_Salesman.ascx" />
     <Content Include="UserControl\uc_Select_System.ascx" />
@@ -1285,6 +1282,12 @@
     </Compile>
     <Compile Include="AcceptPurchaseOrder.aspx.designer.cs">
       <DependentUpon>AcceptPurchaseOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Profitability.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Profitability.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Unused Pages\AcceptSalesOrders.aspx.cs">
       <DependentUpon>AcceptSalesOrders.aspx</DependentUpon>
@@ -2128,7 +2131,6 @@
     <Compile Include="UserControl\SuperMasterProducts.ascx.designer.cs">
       <DependentUpon>SuperMasterProducts.ascx</DependentUpon>
     </Compile>
- 
     <Compile Include="UserControl\uc_PendingSalesOrderPopUp.ascx.cs">
       <DependentUpon>uc_PendingSalesOrderPopUp.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2142,7 +2144,6 @@
     </Compile>
     <Compile Include="UserControl\uc_Order_Display.ascx.designer.cs">
       <DependentUpon>uc_Order_Display.ascx</DependentUpon>
- 
     </Compile>
     <Compile Include="UserControl\uc_printBarcode.ascx.cs">
       <DependentUpon>uc_printBarcode.ascx</DependentUpon>
@@ -2314,6 +2315,10 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>NearestExpiryItems.cs</LastGenOutput>
     </Content>
+    <EmbeddedResource Include="Profitability.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Profitability.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Report\barcode_Print.rdlc" />
     <Content Include="rpt_POSSALES.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

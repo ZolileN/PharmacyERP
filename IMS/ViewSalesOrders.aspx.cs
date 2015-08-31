@@ -444,5 +444,16 @@ namespace IMS
         {
 
         }
+
+        protected Boolean IsStatusPending(String status)
+        {
+            //Check if the status is PEnding only return true else return false as we stop allow user to Re-Generate Partial or Complete status SOs
+            if (status.Equals("Pending"))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
     }
 }
