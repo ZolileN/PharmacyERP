@@ -288,9 +288,9 @@ namespace IMS
             dS.AcceptChanges();
 
             myReportDocument.Load(Server.MapPath("~/Profitability.rpt"));
-            App_Code.Barcode dsReport = new App_Code.Barcode();
-            dsReport.Tables[0].Merge((DataTable)Session["dtItemSoldDate"]);
-            myReportDocument.SetDataSource(dsReport.Tables[0]);
+           // App_Code.Barcode dsReport = new App_Code.Barcode();
+            //dsReport.Tables[0].Merge((DataTable)Session["dtItemSoldDate"]);
+            myReportDocument.SetDataSource(dS.Tables[0]);
 
             myReportDocument.SetParameterValue("Product", Session["selectionProduct"].ToString());
             myReportDocument.SetParameterValue("Subcategory", Session["selectionSubCategory"].ToString());
