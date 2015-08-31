@@ -964,7 +964,7 @@ namespace IMS
 
             if (status)
             {
-                //SO_PO_Mapping(Convert.ToInt32(dsProducts.Tables[0].Rows[0]["OrderID"].ToString()));
+                SO_PO_Mapping(Convert.ToInt32(dsProducts.Tables[0].Rows[0]["OrderID"].ToString()));
 
                 
                 Session["FirstOrderSO"] = false;
@@ -1734,7 +1734,10 @@ namespace IMS
                     WebMessageBoxUtil.Show("Available Stock ('" + RemainingStock.ToString() + "') is less than the entered quantity [BONUS + SENT]");
                     //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Remaining Stock is less then the entered quantity, please enter less quantity to proceed')", true);
                 }
-                BindGrid();
+                if (!string.IsNullOrEmpty(Session["OrderNumberSO"].ToString()))
+                {
+                    BindGrid();
+                }
                 txtSearch.Text = "";
                 txtProduct.Text = "";
                 SelectProduct.Visible = false;
