@@ -444,6 +444,8 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_orderMasterID", int.Parse(((Label)StockDisplayGrid.Rows[RowIndex].FindControl("lblOrdMs_id")).Text));
                         command.Parameters.AddWithValue("@p_isInternal", "TRUE");
                         command.Parameters.AddWithValue("@p_isPO", "TRUE");
+                        //Moiz: 8-31-2015 variable added to ensure discount percentage of only the first entry is updated
+                        command.Parameters.AddWithValue("@p_isFirst",true);
                         if (!(string.IsNullOrEmpty(lblExpOrg) || string.IsNullOrWhiteSpace(lblExpOrg)))
                         {
                             command.Parameters.AddWithValue("@p_expiryOriginal", expiryOrg);
