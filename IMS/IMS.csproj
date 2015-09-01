@@ -2315,10 +2315,10 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>NearestExpiryItems.cs</LastGenOutput>
     </Content>
-    <EmbeddedResource Include="Profitability.rpt">
+    <Content Include="Profitability.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Profitability.cs</LastGenOutput>
-    </EmbeddedResource>
+    </Content>
     <EmbeddedResource Include="Report\barcode_Print.rdlc" />
     <Content Include="rpt_POSSALES.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
