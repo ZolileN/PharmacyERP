@@ -49,9 +49,13 @@ namespace IMS
                     }
                 }
                 
-                if (ViewState["isProfReport"].Equals(true))
+                if (ViewState["isProfReport"]!=null && ViewState["isProfReport"].Equals(true))
                 {
                     ltlMainHeader.Text = "Profitability Report";
+                    ddlBarterCustomer.Visible = false;
+                    ddlSalesMan.Visible = false;
+                    lblSalesman.Visible = false;
+                    lblbarter.Visible = false;
 
                 }
 
@@ -215,7 +219,7 @@ namespace IMS
                     if (CustID != 0)
                     {
                         dv = dtfilterSet.DefaultView;
-                        dv.RowFilter = "OrderRequestedFor = '" + CustID + "'";
+                        dv.RowFilter = "SystemID = '" + CustID + "'";
                         dtfilterSet = dv.ToTable();
 
                     }
@@ -301,7 +305,7 @@ namespace IMS
             myReportDocument.SetParameterValue("ToDate", Session["rptItemSoldDateTo"].ToString());
 
             Session["ReportDocument"] = myReportDocument;
-            Session["ReportPrinting_Redirection"] = "rpt_ItemSold_Selection.aspx";
+            Session["ReportPrinting_Redirection"] = "rpt_ItemSold_Selection.aspx?Param=Profitability";
         }
         public void LoadData()
         {
@@ -591,7 +595,7 @@ namespace IMS
                 Session["rptSalesManID"] = 0;
                 Session["rptSalesMan"] = "All";            
             }
-            if (ViewState["isProfReport"].Equals(true))
+            if (ViewState["isProfReport"] != null && ViewState["isProfReport"].Equals(true))
             {
                 LoadDataProfitability();
             }

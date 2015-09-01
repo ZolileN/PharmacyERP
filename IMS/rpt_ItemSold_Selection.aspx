@@ -59,7 +59,7 @@
 			
 			</td>
             	
-				 <td><label>Barter Customer:</label></td>
+				 <td><asp:label id="lblbarter" runat="server">Barter Customer:</asp:label></td>
             <td>
 			     <asp:DropDownList ID="ddlBarterCustomer" runat="server" OnSelectedIndexChanged="ddlBarterCustomer_SelectedIndexChanged" Enabled="true"></asp:DropDownList>
 			</td>
