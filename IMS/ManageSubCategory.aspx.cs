@@ -116,7 +116,7 @@ namespace IMS
                 int selectedId = int.Parse(ID.Text);
                 SubCategory subCategoryToDelete = new SubCategory();//= empid.Text;
                 subCategoryToDelete.SubCategoryID = selectedId;
-                subCategoryManager.Delete(subCategoryToDelete, connection);
+                subCategoryManager.Delete(subCategoryToDelete);
 
 
             }
@@ -177,13 +177,13 @@ namespace IMS
         {
             try
             {
-                ds = SubCategoryBLL.GetAllSubCategories(connection);
+                ds = SubCategoryBLL.GetAllSubCategories();
 
                 SubCategoryDisplayGrid.DataSource = ds;
                 SubCategoryDisplayGrid.DataBind();
 
                 DropDownList catList = (DropDownList)SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddCategoryName");
-                catList.DataSource = InventoryBLL.GetDistinct(connection);
+                catList.DataSource = SubCategoryBLL.GetDistinct();
                 catList.DataBind();
                 catList.DataTextField = "categoryName";
                 //catList.DataValueField = "categoryID";
@@ -193,8 +193,8 @@ namespace IMS
                 string catId = ((DropDownList)(SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddCategoryName"))).SelectedItem.Text;
                 Category obj2 = new Category();
                 obj2.Name = catId;
-                SubCategoryBLL ins = new SubCategoryBLL();
-                depList.DataSource = ins.GetDepListByCategoryName(obj2, connection);
+                 
+                depList.DataSource = DepartmentBLL.GetAllDepartment();
                 depList.DataBind();
                 depList.DataTextField = "Name";
                 depList.DataValueField = "DepId";
@@ -251,7 +251,7 @@ namespace IMS
                 try
                 {
                     DropDownList catList = (DropDownList)e.Row.FindControl("ddlCategoryName");
-                    catList.DataSource = InventoryBLL.GetDistinct(connection);
+                    catList.DataSource = SubCategoryBLL.GetDistinct();
                     catList.DataBind();
                     catList.DataTextField = "categoryName";
                     // catList.DataValueField = "categoryID";
@@ -261,8 +261,8 @@ namespace IMS
                     string catId = ((DropDownList)(e.Row.FindControl("ddlCategoryName"))).SelectedItem.Text;
                     Category obj2 = new Category();
                     obj2.Name = catId;
-                    SubCategoryBLL ins = new SubCategoryBLL();
-                    depList.DataSource = ins.GetDepListByCategoryName(obj2, connection);
+                    
+                    depList.DataSource = DepartmentBLL.GetAllDepartment();
                     depList.DataBind();
                     depList.DataTextField = "Name";
                     depList.DataValueField = "DepId";
@@ -304,8 +304,8 @@ namespace IMS
                 string catId = ((DropDownList)(SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddCategoryName"))).SelectedItem.Text;
                 Category obj2 = new Category();
                 obj2.Name = catId;
-                SubCategoryBLL ins = new SubCategoryBLL();
-                depList.DataSource = ins.GetDepListByCategoryName(obj2, connection);
+
+                depList.DataSource = DepartmentBLL.GetAllDepartment();
                 depList.DataBind();
                 depList.DataTextField = "Name";
                 depList.DataValueField = "DepId";
@@ -333,8 +333,8 @@ namespace IMS
                 string catId = ((DropDownList)(SubCategoryDisplayGrid.Rows[SubCategoryDisplayGrid.EditIndex].FindControl("ddlCategoryName"))).SelectedItem.Text;
                 Category obj2 = new Category();
                 obj2.Name = catId;
-                SubCategoryBLL ins = new SubCategoryBLL();
-                depList.DataSource = ins.GetDepListByCategoryName(obj2, connection);
+
+                depList.DataSource = DepartmentBLL.GetAllDepartment();
                 depList.DataBind();
                 depList.DataTextField = "Name";
                 depList.DataValueField = "DepId";

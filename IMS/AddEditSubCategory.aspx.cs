@@ -235,9 +235,9 @@ namespace IMS
                 {
                     SubCategory subCategoryToAdd = new SubCategory();
                     subCategoryToAdd.Name = txtSubCategoryName.Text;
-                    subCategoryToAdd.CategoryID = Convert.ToInt32(ddCategory.Text);
+                    subCategoryToAdd.CategoryID = Convert.ToInt32(ddCategory.SelectedValue);
 
-                    subCategoryManager.AddNew(subCategoryToAdd, connection);
+                    subCategoryManager.AddNew(subCategoryToAdd);
                 }
                 Response.Redirect("ManageSubCategory.aspx", false);
 

@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="DAL\CategoryDAL.cs" />
     <Compile Include="DAL\DepartmentDAL.cs" />
+    <Compile Include="DAL\SubCategoryDAL.cs" />
     <Compile Include="DataAccessBase.cs" />
     <Compile Include="DataBaseHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
