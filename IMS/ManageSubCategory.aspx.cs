@@ -183,7 +183,7 @@ namespace IMS
                 SubCategoryDisplayGrid.DataBind();
 
                 DropDownList catList = (DropDownList)SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddCategoryName");
-                catList.DataSource = CategoryBLL.GetDistinct(connection);
+                catList.DataSource = InventoryBLL.GetDistinct(connection);
                 catList.DataBind();
                 catList.DataTextField = "categoryName";
                 //catList.DataValueField = "categoryID";
@@ -193,7 +193,7 @@ namespace IMS
                 string catId = ((DropDownList)(SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddCategoryName"))).SelectedItem.Text;
                 Category obj2 = new Category();
                 obj2.Name = catId;
-                CategoryBLL ins = new CategoryBLL();
+                SubCategoryBLL ins = new SubCategoryBLL();
                 depList.DataSource = ins.GetDepListByCategoryName(obj2, connection);
                 depList.DataBind();
                 depList.DataTextField = "Name";
@@ -251,7 +251,7 @@ namespace IMS
                 try
                 {
                     DropDownList catList = (DropDownList)e.Row.FindControl("ddlCategoryName");
-                    catList.DataSource = CategoryBLL.GetDistinct(connection);
+                    catList.DataSource = InventoryBLL.GetDistinct(connection);
                     catList.DataBind();
                     catList.DataTextField = "categoryName";
                     // catList.DataValueField = "categoryID";
@@ -261,7 +261,7 @@ namespace IMS
                     string catId = ((DropDownList)(e.Row.FindControl("ddlCategoryName"))).SelectedItem.Text;
                     Category obj2 = new Category();
                     obj2.Name = catId;
-                    CategoryBLL ins = new CategoryBLL();
+                    SubCategoryBLL ins = new SubCategoryBLL();
                     depList.DataSource = ins.GetDepListByCategoryName(obj2, connection);
                     depList.DataBind();
                     depList.DataTextField = "Name";
@@ -304,7 +304,7 @@ namespace IMS
                 string catId = ((DropDownList)(SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddCategoryName"))).SelectedItem.Text;
                 Category obj2 = new Category();
                 obj2.Name = catId;
-                CategoryBLL ins = new CategoryBLL();
+                SubCategoryBLL ins = new SubCategoryBLL();
                 depList.DataSource = ins.GetDepListByCategoryName(obj2, connection);
                 depList.DataBind();
                 depList.DataTextField = "Name";
@@ -333,7 +333,7 @@ namespace IMS
                 string catId = ((DropDownList)(SubCategoryDisplayGrid.Rows[SubCategoryDisplayGrid.EditIndex].FindControl("ddlCategoryName"))).SelectedItem.Text;
                 Category obj2 = new Category();
                 obj2.Name = catId;
-                CategoryBLL ins = new CategoryBLL();
+                SubCategoryBLL ins = new SubCategoryBLL();
                 depList.DataSource = ins.GetDepListByCategoryName(obj2, connection);
                 depList.DataBind();
                 depList.DataTextField = "Name";

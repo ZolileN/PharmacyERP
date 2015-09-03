@@ -47,6 +47,35 @@ namespace IMSBusinessLogic
             return resultSet;
         }
 
+        public static DataSet GetDistinct(SqlConnection connection)
+        {
+            DataSet resultSet = new DataSet();
+            try
+            {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("Sp_GetDistinctCategories", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter SA = new SqlDataAdapter(command);
+                SA.Fill(resultSet);
+
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
+            return resultSet;
+        }
+
+
         public static DataSet GetSubCategoriesBasic(SqlConnection connection)
         {
 
@@ -79,34 +108,37 @@ namespace IMSBusinessLogic
             }
             return resultSet;
         }
-        //public DataSet GetById(SubCategory val, SqlConnection connection)
-        //{
-        //    DataSet resultSet = new DataSet();
-        //    try
-        //    {
-        //        String Query = "SELECT tblSub_Category.Sub_CatID as subCatID, tblSub_Category.Name as subCatName,tblCategory.Name as categoryName,tblDepartment.Name as DepartmentName" +
-        //                        " FROM tblSub_Category INNER JOIN tblCategory on tblCategory.CategoryID=tblSub_Category.CategoryID INNER JOIN tblDepartment On tblCategory.DepartmentID=tblDepartment.DepId "
-        //                        + "Where tblSub_Category.Sub_CatID = '" + val.SubCategoryID + "' ORDER BY subCatID ASC";
 
 
-        //        connection.Open();
-        //        SqlCommand command = new SqlCommand(Query, connection);
-        //        SqlDataAdapter SA = new SqlDataAdapter(command);
-        //        SA.Fill(resultSet);
+        public DataSet GetDepListByCategoryName(Category val, SqlConnection connection)
+        {
+            DataSet resultSet = new DataSet();
+            try
+            {
+                //String Query = "SELECT * FROM tblDepartment";
 
-        //    }
-        //    catch (Exception exp)
-        //    {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("Sp_GetDepartmentList", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter SA = new SqlDataAdapter(command);
+                SA.Fill(resultSet);
 
-        //    }
-        //    finally
-        //    {
-        //        connection.Close();
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
 
-        //    }
-        //    return resultSet;
-        //}
-
+            }
+            return resultSet;
+        }
         public void Update(SubCategory subCategory, SqlConnection connection)
         {
             try

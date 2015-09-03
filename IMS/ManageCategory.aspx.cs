@@ -17,7 +17,6 @@ namespace IMS
     public partial class ManageCategory : System.Web.UI.Page
     {
         private DataSet ds;
-        public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         private ILog log;
         private string pageURL;
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
@@ -40,14 +39,12 @@ namespace IMS
                 }
                 catch (Exception ex)
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
+                   
                     throw ex;
                 }
                 finally 
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
+                   
                 }
             }
             expHandler.CheckForErrorMessage(Session);
@@ -89,7 +86,7 @@ namespace IMS
                     {
                         categoryToAdd.DepartmentID = res;
 
-                        categoryManager.Add(categoryToAdd,connection);
+                        categoryManager.Add(categoryToAdd);
                         
                     }
                     else
@@ -116,7 +113,7 @@ namespace IMS
                     if (int.TryParse(depName, out res))
                     {
                         categoryToUpdate.DepartmentID = int.Parse(depName);
-                        categoryManager.Update(categoryToUpdate, connection);
+                        categoryManager.Update(categoryToUpdate);
                     }
                     else
                     {
@@ -126,14 +123,12 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
+               
                 throw ex;
             }
             finally
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
+               
                 CategoryDisplayGrid.EditIndex = -1;
                 BindGrid(false);
             }
@@ -148,19 +143,17 @@ namespace IMS
                 int selectedId = int.Parse(ID.Text);
                 Category categoryToDelete = new Category();//= empid.Text;
                 categoryToDelete.CategoryID = selectedId;
-                categoryManager.Delete(categoryToDelete, connection);
+                categoryManager.Delete(categoryToDelete);
 
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
+              
                 throw ex;
             }
             finally
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
+              
                 CategoryDisplayGrid.EditIndex = -1;
                 BindGrid(false);
             }
@@ -188,7 +181,7 @@ namespace IMS
         {
             try
             {
-                ds = CategoryBLL.GetAllCategories(connection);
+                ds = CategoryBLL.GetAllCategories();
 
                 CategoryDisplayGrid.DataSource = ds;
                 CategoryDisplayGrid.DataBind();
@@ -202,14 +195,12 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
+               
                 throw ex;
             }
             finally 
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
+               
             }
         }
 
@@ -244,8 +235,7 @@ namespace IMS
                 }
                 finally
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
+                 
 
                 }
 
@@ -266,14 +256,11 @@ namespace IMS
                     }
                     catch (Exception ex)
                     {
-                        if (connection.State == ConnectionState.Open)
-                            connection.Close();
+                      
                         throw ex;
                     }
                     finally 
                     {
-                        if (connection.State == ConnectionState.Open)
-                            connection.Close();
                     }
                 }
             }
@@ -301,7 +288,7 @@ namespace IMS
                 }
 
 
-                ds = CategoryBLL.GetAllCategories(connection);
+                ds = CategoryBLL.GetAllCategories();
                 CategoryDisplayGrid.DataSource = ds;
                 sortedView = new DataView(ds.Tables[0]);
                 sortedView.Sort = e.SortExpression + " " + sortingDirection;
@@ -311,14 +298,12 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
+                
                 throw ex;
             }
             finally 
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
+                
             }
         }
 

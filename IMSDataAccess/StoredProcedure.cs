@@ -49,7 +49,8 @@ namespace IMSDataAccess
             Sp_GetProductExpiryDetails,
             Sp_GetOrderDetails,
             Sp_GetPendingOrderDetails,
-            Sp_GetAvailableProduct
+            Sp_GetAvailableProduct,
+            Sp_GetCategories
 
         }
         public enum Delete

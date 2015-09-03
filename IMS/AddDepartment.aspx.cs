@@ -17,7 +17,6 @@ namespace IMS
 {
     public partial class AddDepartment : System.Web.UI.Page
     {
-        public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         private ILog log;
         private string pageURL;
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
@@ -46,9 +45,7 @@ namespace IMS
             }
             finally
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
-
+              
             }
         }
         private void Page_Error(object sender, EventArgs e)
@@ -98,14 +95,12 @@ namespace IMS
             }
             catch (Exception exp)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
+                
                 throw exp;
             }
             finally 
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
+               
             }
         }
 

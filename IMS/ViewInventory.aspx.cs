@@ -98,7 +98,7 @@ namespace IMS
                         //DataSet ds = new DataSet();
                         //SqlDataAdapter sA = new SqlDataAdapter(command);
                         //sA.Fill(ds);
-                        ProductCat.DataSource = CategoryBLL.GetCategoryBasic(connection);
+                        ProductCat.DataSource = InventoryBLL.GetCategoryBasic(connection);
                         ProductCat.DataTextField = "Name";
                         ProductCat.DataValueField = "CategoryID";
                         ProductCat.DataBind();

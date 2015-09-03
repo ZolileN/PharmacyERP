@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\CategoryDAL.cs" />
     <Compile Include="DAL\DepartmentDAL.cs" />
     <Compile Include="DataAccessBase.cs" />
     <Compile Include="DataBaseHelper.cs" />
