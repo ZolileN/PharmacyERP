@@ -80,7 +80,7 @@ namespace IMS
                     depToUpdate.DepartmentID = selectedId;
                     depToUpdate.Name = DepartmentName.Text;
                     depToUpdate.Code = DepartmentCode.Text;
-                    depManager.Update(depToUpdate, connection);
+                    depManager.Update(depToUpdate);
                 }
                 else
                 {
@@ -88,7 +88,7 @@ namespace IMS
                     depToAdd.Name = DepartmentName.Text;
                     depToAdd.Code = DepartmentCode.Text;
 
-                    depManager.Add(depToAdd, connection);
+                    depManager.Add(depToAdd);
                 }
                 Session.Remove("dname");
                 Session.Remove("dcode");
