@@ -93,7 +93,7 @@ namespace IMS
                 int selectedId = int.Parse(ID.Text);
                 Department depToDelete = new Department();//= empid.Text;
                 depToDelete.DepartmentID = selectedId;
-                depManager.Delete(depToDelete,connection);
+                depManager.Delete(depToDelete);
 
 
             }
@@ -183,7 +183,7 @@ namespace IMS
         {
             try
             {
-                ds = DepartmentBLL.GetAllDepartment(connection);
+                ds = DepartmentBLL.GetAllDepartment();
                 DepDisplayGrid.DataSource = ds;
                 DepDisplayGrid.DataBind();
             }

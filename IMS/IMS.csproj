@@ -1230,6 +1230,7 @@
     <Content Include="App_Code\dsItemPurchase.xss">
       <DependentUpon>dsItemPurchase.xsd</DependentUpon>
     </Content>
+    <Content Include="CrystalReports\Report.xlsx" />
     <None Include="Project_Readme.html" />
     <Content Include="Site.Mobile.Master" />
     <None Include="Properties\PublishProfiles\DPS.pubxml" />
@@ -2284,7 +2285,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="CrystalReports\" />
     <Folder Include="ErrorPages\" />
     <Folder Include="StoreManagement\StoreRequests\" />
   </ItemGroup>

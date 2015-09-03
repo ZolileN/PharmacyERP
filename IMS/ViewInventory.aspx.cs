@@ -66,12 +66,7 @@ namespace IMS
                     #region Populating Product Department DropDown
                     try
                     {
-                        //connection.Open();
-                        //SqlCommand command = new SqlCommand("Select * From tblDepartment", connection);
-                        //DataSet ds = new DataSet();
-                        //SqlDataAdapter sA = new SqlDataAdapter(command);
-                        //sA.Fill(ds);
-                        ProductDept.DataSource = DepartmentBLL.GetAllDepartment(connection); ;
+                        ProductDept.DataSource = DepartmentBLL.GetAllDepartment(); ;
                         ProductDept.DataTextField = "Name";
                         ProductDept.DataValueField = "DepId";
                         ProductDept.DataBind();

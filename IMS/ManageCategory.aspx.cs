@@ -194,7 +194,7 @@ namespace IMS
                 CategoryDisplayGrid.DataBind();
 
                 DropDownList depList = (DropDownList)CategoryDisplayGrid.FooterRow.FindControl("ddlAddDepName");
-                depList.DataSource = DepartmentBLL.GetAllDepartment(connection);
+                depList.DataSource = DepartmentBLL.GetAllDepartment();
                 depList.DataBind();
                 depList.DataTextField = "Name";
                 depList.DataValueField = "DepId";
@@ -254,7 +254,7 @@ namespace IMS
                     try
                     {
                         DropDownList depList = (DropDownList)e.Row.FindControl("ddlDepName");
-                        depList.DataSource = DepartmentBLL.GetAllDepartment(connection);
+                        depList.DataSource = DepartmentBLL.GetAllDepartment();
                         depList.DataBind();
                         depList.DataTextField = "Name";
                         depList.DataValueField = "DepId";

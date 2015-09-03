@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="IMSCommon">
+      <HintPath>..\IMSCommon\bin\Debug\IMSCommon.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -41,17 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\DepartmentDAL.cs" />
     <Compile Include="DataAccessBase.cs" />
     <Compile Include="DataBaseHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlHelper.cs" />
     <Compile Include="StoredProcedure.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\IMSCommon\IMSCommon.csproj">
-      <Project>{ec9c2abd-9598-4777-a394-5e5ff700280c}</Project>
-      <Name>IMSCommon</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
