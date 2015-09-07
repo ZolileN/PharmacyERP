@@ -13,6 +13,7 @@ using System.Configuration;
 using IMSCommon.Util;
 using log4net;
 using IMS.Util;
+using IMSBusinessLogic;
 
 namespace IMS
 {
@@ -22,6 +23,7 @@ namespace IMS
         private ILog log;
         private string pageURL;
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -60,17 +62,9 @@ namespace IMS
         {
             try
             {
+                SystemBLL sysBll = new SystemBLL();
                 DataSet dsResults = new DataSet();
-                if(connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
-                SqlCommand command = new SqlCommand("sp_ManageWarehouse_GetWarehouse", connection);
-                command.CommandType = CommandType.StoredProcedure;
-
-                command.ExecuteNonQuery();
-                SqlDataAdapter dA = new SqlDataAdapter(command);
-                dA.Fill(dsResults);
+                dsResults= sysBll.SelectAllWarehouse();
                 dgvWarehouse.DataSource = dsResults;
                 dgvWarehouse.DataBind();
 
@@ -81,11 +75,7 @@ namespace IMS
                     connection.Close();
                 throw ex;
             }
-            finally
-            {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
-            }
+            
         }
 
         protected void btnAddWH_Click(object sender, EventArgs e)
@@ -104,32 +94,7 @@ namespace IMS
 
         protected void dgvWarehouse_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            try
-            {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
-                int SystemId;
-                Label lblSystemID = (Label)dgvWarehouse.Rows[e.RowIndex].FindControl("lblSystemID");
-                int.TryParse(lblSystemID.Text.ToString(),out SystemId);
-                SqlCommand command = new SqlCommand("Sp_DeleteSystem", connection);
-                command.Parameters.AddWithValue("@p_SystemID", SystemId);
-                command.CommandType = CommandType.StoredProcedure;
-                command.ExecuteNonQuery();
-            }
-            catch(Exception ex)
-            {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
-                throw ex;
-            }
-            finally
-            {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
-                BindGrid();
-            }
+            
         }
 
         protected void dgvWarehouse_RowCommand(object sender, GridViewCommandEventArgs e)

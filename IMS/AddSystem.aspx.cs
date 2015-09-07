@@ -1,4 +1,5 @@
 ﻿using IMS.Util;
+using IMSBusinessLogic;
 using IMSCommon.Util;
 using log4net;
 using System;
@@ -19,6 +20,7 @@ namespace IMS
         private ILog log;
         private string pageURL;
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
+        SystemBLL sysBll = new SystemBLL();
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -99,12 +101,7 @@ namespace IMS
             {
                 throw ex;
             }
-            finally
-            {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
-
-            }
+           
         }
 
         private void Page_Error(object sender, EventArgs e)
@@ -128,21 +125,11 @@ namespace IMS
             try
             {
                 sysID.Text = Session["SystemId"].ToString();
+
                 DataSet dsResults = new DataSet();
                 int SystemID = int.Parse(Session["SystemId"].ToString());
-                if(connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
-                SqlCommand command = new SqlCommand("Sp_GetSystem_ByID", connection);
-                command.Parameters.AddWithValue("@p_SystemID", SystemID);
-                command.CommandType = CommandType.StoredProcedure;
-                command.ExecuteNonQuery();
-                SqlDataAdapter dA = new SqlDataAdapter(command);
-                dA.Fill(dsResults);
-
-               
-
+                dsResults = sysBll.SelectByID(SystemID);
+                
                 sysName.Text = dsResults.Tables[0].Rows[0]["SystemName"].ToString();
                 sysDesc.Text = dsResults.Tables[0].Rows[0]["Description"].ToString();
                 sysAddress.Text = dsResults.Tables[0].Rows[0]["SystemAddress"].ToString();
@@ -160,32 +147,19 @@ namespace IMS
             }
             catch(Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
-            finally
-            {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
-            }
+            
         }
 
         private void FillPharmacyTypes()
         {
             try
             {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
-                SqlCommand command = new SqlCommand("sp_GetSystemRoles", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                 
                 DataSet ds = new DataSet();
 
-                SqlDataAdapter sA = new SqlDataAdapter(command);
-                sA.Fill(ds);
+                ds = sysBll.SelectSystemRoles();
+
                 ddlPharmacyType.DataSource = null;
                 ddlPharmacyType.DataSource = ds.Tables[0];
                 ddlPharmacyType.DataBind(); 
@@ -213,33 +187,19 @@ namespace IMS
             }
             catch (Exception exp)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
+                
                 throw exp;
             }
-            finally
-            {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
-            }
+            
         }
         private void bindValues()
         {
             try
             {
-                //sys ddl action is set true;
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
-                SqlCommand command = new SqlCommand("Sp_GetSystems_ByRoles", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@p_RoleName", Session["SysToAdd"].ToString());
-                command.Parameters.AddWithValue("@p_systemName", DBNull.Value);
+                          
                 DataSet ds = new DataSet();
-
-                SqlDataAdapter sA = new SqlDataAdapter(command);
-                sA.Fill(ds);
+                ds = sysBll.SelectSystemsByRoles(Session["SysToAdd"].ToString(), null);
+              
                 SysDDL.DataSource = null;
                 SysDDL.DataSource = ds.Tables[0];
                 SysDDL.DataBind();
@@ -260,11 +220,7 @@ namespace IMS
                     connection.Close();
                 throw exp;
             }
-            finally
-            {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
-            }
+            
         }
 
         protected void btnAddSystem_Click(object sender, EventArgs e)
@@ -272,25 +228,30 @@ namespace IMS
             try
             {
                 int SystemRoles = 0;
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
+                //if (connection.State == ConnectionState.Closed)
+                //{
+                //    connection.Open();
+                //}
                 int.TryParse(ddlPharmacyType.SelectedValue, out SystemRoles);
-                 
-                SqlCommand command = new SqlCommand("Sp_AddNewSystem", connection);
-                command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.AddWithValue("@p_Name", sysName.Text.ToString());
-                command.Parameters.AddWithValue("@p_Description", sysDesc.Text.ToString());
-                command.Parameters.AddWithValue("@p_SystemRoleName", Session["SysToAdd"].ToString());
-                command.Parameters.AddWithValue("@p_SystemAddress", sysAddress.Text.ToString());
-                command.Parameters.AddWithValue("@p_SystemPhone", sysPhone.Text.ToString());
-                command.Parameters.AddWithValue("@p_SystemFax", sysFax.Text.ToString());
-                command.Parameters.AddWithValue("@p_PharmacyID", pharmacyID.Text.ToString());
-                command.Parameters.AddWithValue("@p_BarterID", txtBarterValue.Text.ToString());
-                command.Parameters.AddWithValue("@p_SystemRolesID", SystemRoles);
-                command.ExecuteNonQuery();
+                #region original code
+                //SqlCommand command = new SqlCommand("Sp_AddNewSystem", connection);
+                //command.CommandType = CommandType.StoredProcedure;
+
+                //command.Parameters.AddWithValue("@p_Name", sysName.Text.ToString());
+                //command.Parameters.AddWithValue("@p_Description", sysDesc.Text.ToString());
+                //command.Parameters.AddWithValue("@p_SystemRoleName", Session["SysToAdd"].ToString());
+                //command.Parameters.AddWithValue("@p_SystemAddress", sysAddress.Text.ToString());
+                //command.Parameters.AddWithValue("@p_SystemPhone", sysPhone.Text.ToString());
+                //command.Parameters.AddWithValue("@p_SystemFax", sysFax.Text.ToString());
+                //command.Parameters.AddWithValue("@p_PharmacyID", pharmacyID.Text.ToString());
+                //command.Parameters.AddWithValue("@p_BarterID", txtBarterValue.Text.ToString());
+                //command.Parameters.AddWithValue("@p_SystemRolesID", SystemRoles);
+                //command.ExecuteNonQuery(); 
+                #endregion
+                sysBll.Insert(sysName.Text.ToString(), sysDesc.Text.ToString(), Session["SysToAdd"].ToString(), sysAddress.Text.ToString(), sysPhone.Text.ToString()
+                    , sysFax.Text.ToString(), pharmacyID.Text.ToString(), txtBarterValue.Text.ToString(), SystemRoles);
+                
                 WebMessageBoxUtil.Show("System successfully added");
                 if (Session["SysToAdd"].Equals(RoleNames.store))
                 {
@@ -304,53 +265,21 @@ namespace IMS
             }
             catch (Exception exp) 
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
+                //if (connection.State == ConnectionState.Open)
+                //    connection.Close();
                 throw exp;
             }
             finally
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
+                //if (connection.State == ConnectionState.Open)
+                //    connection.Close();
                 btnCancelSystem_Click(sender, e);
             }
         }
 
         protected void btnDeleteSystem_Click(object sender, EventArgs e)
         {
-             int val;
-             if (int.TryParse(sysID.Text, out val))
-             {
-                 try
-                 {
-                     if (connection.State == ConnectionState.Closed)
-                     {
-                         connection.Open();
-
-                     }
-                     SqlCommand command = new SqlCommand("Sp_DeleteSystem", connection);
-                     command.CommandType = CommandType.StoredProcedure;
-
-                     command.Parameters.AddWithValue("@p_SystemID", val);
-
-
-                     command.ExecuteNonQuery();
-                     WebMessageBoxUtil.Show("System successfully deleted");
-                 }
-                 catch (Exception exp) 
-                 {
-                     if (connection.State == ConnectionState.Open)
-                         connection.Close();
-                     throw exp;
-                 }
-                 finally
-                 {
-                     if (connection.State == ConnectionState.Open)
-                         connection.Close();
-                     btnCancelSystem_Click(sender, e);
-                     bindValues();
-                 }
-             }
+             
         }
 
         protected void btnCancelSystem_Click(object sender, EventArgs e)
@@ -378,24 +307,30 @@ namespace IMS
             {
                 try
                 {
-                    if (connection.State == ConnectionState.Closed) 
-                    {
-                        connection.Open();
-                    }
+                    #region original code
+                    //if (connection.State == ConnectionState.Closed) 
+                    //{
+                    //    connection.Open();
+                    //}
+
+                    //SqlCommand command = new SqlCommand("Sp_UpdateSystems", connection);
+                    //command.CommandType = CommandType.StoredProcedure;
+
+                    //command.Parameters.AddWithValue("@p_Name", sysName.Text.ToString());
+                    //command.Parameters.AddWithValue("@p_Description", sysDesc.Text.ToString());
+                    //command.Parameters.AddWithValue("@p_SystemID", val);
+                    //command.Parameters.AddWithValue("@p_SystemAddress", sysAddress.Text.ToString());
+                    //command.Parameters.AddWithValue("@p_SystemPhone", sysPhone.Text.ToString());
+                    //command.Parameters.AddWithValue("@p_SystemFax", sysFax.Text.ToString());
+                    //command.Parameters.AddWithValue("@p_PharmacyID", pharmacyID.Text.ToString());
+                    //command.Parameters.AddWithValue("@p_BarterID", txtBarterValue.Text.ToString());
+
+                    //command.ExecuteNonQuery(); 
+                    #endregion
+
+                    sysBll.Update(sysName.Text.ToString(), sysDesc.Text.ToString(), val, sysAddress.Text.ToString(), sysPhone.Text.ToString(),
+                                    sysFax.Text.ToString(), pharmacyID.Text.ToString(), txtBarterValue.Text.ToString());
                     
-                    SqlCommand command = new SqlCommand("Sp_UpdateSystems", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    command.Parameters.AddWithValue("@p_Name", sysName.Text.ToString());
-                    command.Parameters.AddWithValue("@p_Description", sysDesc.Text.ToString());
-                    command.Parameters.AddWithValue("@p_SystemID", val);
-                    command.Parameters.AddWithValue("@p_SystemAddress", sysAddress.Text.ToString());
-                    command.Parameters.AddWithValue("@p_SystemPhone", sysPhone.Text.ToString());
-                    command.Parameters.AddWithValue("@p_SystemFax", sysFax.Text.ToString());
-                    command.Parameters.AddWithValue("@p_PharmacyID", pharmacyID.Text.ToString());
-                    command.Parameters.AddWithValue("@p_BarterID", txtBarterValue.Text.ToString());
-
-                    command.ExecuteNonQuery();
                     WebMessageBoxUtil.Show("System successfully updated");
                     if (Session["SysToAdd"].Equals(RoleNames.store))
                     {
@@ -408,14 +343,14 @@ namespace IMS
                 }
                 catch (Exception exp) 
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
-                    throw exp;
+                    //if (connection.State == ConnectionState.Open)
+                    //    connection.Close();
+                    //throw exp;
                 }
                 finally
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
+                    //if (connection.State == ConnectionState.Open)
+                    //    connection.Close();
                     btnCancelSystem_Click(sender, e);
                 }
                 
@@ -442,17 +377,10 @@ namespace IMS
                 int val;
                 if (int.TryParse(SysDDL.SelectedValue, out val))
                 {
-                    if (connection.State == ConnectionState.Closed)
-                    {
-                        connection.Open();
-                    }
-                    SqlCommand command = new SqlCommand("Sp_GetSystem_ByID", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_SystemID", val);
+                   
                     DataSet ds = new DataSet();
 
-                    SqlDataAdapter sA = new SqlDataAdapter(command);
-                    sA.Fill(ds);
+                    ds = sysBll.SelectByID(val);
                     if (ds.Tables[0].Rows[0]["SystemName"] != DBNull.Value || !ds.Tables[0].Rows[0]["SystemName"].Equals(""))
                     {
                         sysName.Text = ds.Tables[0].Rows[0]["SystemName"].ToString();
@@ -498,15 +426,10 @@ namespace IMS
             }
             catch (Exception exp) 
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
+              
                 throw exp;
             }
-            finally
-            {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
-            }
+          
         }
     }
 }

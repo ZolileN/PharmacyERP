@@ -42,7 +42,10 @@
     <Compile Include="CategoryBLL.cs" />
     <Compile Include="DepartmentBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SalesmanAssociationBLL.cs" />
     <Compile Include="SubCategoryBLL.cs" />
+    <Compile Include="SystemBLL.cs" />
+    <Compile Include="UserBLL.cs" />
     <Compile Include="VendorBLL.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -19,8 +19,11 @@ namespace IMSDataAccess
             Sp_AddNewUser_Role,
             Sp_AddNewStock,
             Sp_AddOrderDetails,
-            Sp_PalceeNewOrder
-            
+            Sp_PalceeNewOrder,
+            Sp_AddNewSystem,
+            sp_AddNewUser,
+            Sp_AddSalesmanSystems
+
         }
         public enum Select
         {
@@ -49,7 +52,19 @@ namespace IMSDataAccess
             Sp_GetProductExpiryDetails,
             Sp_GetOrderDetails,
             Sp_GetPendingOrderDetails,
-            Sp_GetAvailableProduct
+            Sp_GetAvailableProduct,
+            sp_ManageWarehouse_GetWarehouse,
+            sp_GetStores_Pharmacy,
+            Sp_GetSystem_ByID,
+            sp_GetSystemRoles,
+            Sp_GetSystem_ByRoles,
+            Sp_GetUserRoles,
+            Sp_GetUsers,
+            Sp_getWH_HeadOffice,
+            Sp_getAllSystems,
+            Sp_SearchByUser_ID,
+            Sp_GetUnAssociatedStores,
+            Sp_GetAssociatedStores
 
         }
         public enum Delete
@@ -63,7 +78,10 @@ namespace IMSDataAccess
             Sp_DeleteSystem_RoleById,
             Sp_DeleteUser_RoleById,
             Sp_DeleteOrderDetailByOrderDetailId,
-            Sp_DeleteOrderDetailByOrderId
+            Sp_DeleteOrderDetailByOrderId,
+            Sp_DeleteSystem,
+            Sp_DeleteUsers,
+            Sp_DeleteSalesmanSystem
         }
         public enum Update
         {
@@ -72,9 +90,11 @@ namespace IMSDataAccess
             Sp_UpdateSelectedCategory,
             Sp_UpdateProductMasterById,
             Sp_UpdateProduct_DetailById,
-            Sp_UpdateVendor ,
+            Sp_UpdateVendor,
             Sp_UpdateOrderDetail,
-            Sp_AddRecivedOrderDetails
+            Sp_AddRecivedOrderDetails,
+            Sp_UpdateSystems,
+            Sp_UpdateNewUser
         }
     }
 }

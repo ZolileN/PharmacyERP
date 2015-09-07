@@ -11,6 +11,7 @@ using System.Data.SqlTypes;
 using System.Configuration;
 using log4net;
 using IMS.Util;
+using IMSBusinessLogic;
 
 namespace IMS
 {
@@ -24,6 +25,7 @@ namespace IMS
         private ILog log;
         private string pageURL;
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
+        private SalesmanAssociationBLL slmanBll = new SalesmanAssociationBLL();
         protected void Page_Load(object sender, EventArgs e)
         {
             System.Uri url = Request.Url;
@@ -35,20 +37,24 @@ namespace IMS
                 try
                 {
                     string ID = Request.QueryString["ID"];
-                    if (connection.State == ConnectionState.Closed)
-                    {
-                        connection.Open();
-                    }
+                    
+                    #region original logic
+                    //if (connection.State == ConnectionState.Closed)
+                    //{
+                    //    connection.Open();
+                    //}
 
-                    SqlCommand command = new SqlCommand("Sp_GetUnAssociatedStores", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    SqlDataAdapter sA = new SqlDataAdapter(command);
-                   
+                    //SqlCommand command = new SqlCommand("Sp_GetUnAssociatedStores", connection);
+                    //command.CommandType = CommandType.StoredProcedure;
+                    //SqlDataAdapter sA = new SqlDataAdapter(command);
 
-                    command.Parameters.AddWithValue("@p_UserID", long.Parse(ID));
 
-                    sA.Fill(dtAllAvailableStore);
+                    //command.Parameters.AddWithValue("@p_UserID", long.Parse(ID));
 
+                    //sA.Fill(dtAllAvailableStore); 
+                    #endregion
+
+                    dtAllAvailableStore = slmanBll.SelectUnAssociatedStores(long.Parse(ID)).Tables[0];
                     DataTable dtTest = new DataTable();
                     dtAllAvailableStore.Columns.Add("Checked", typeof(bool));
                     Session["dtAvailable"] = dtAllAvailableStore;
@@ -61,15 +67,9 @@ namespace IMS
                 }
                 catch (Exception ex)
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
                     throw ex;
                 }
-                finally
-                {
-                    if(connection.State== ConnectionState.Open)
-                    connection.Close();
-                }
+                
 
                 #endregion
 
@@ -77,18 +77,21 @@ namespace IMS
                 try
                 {
                     string ID = Request.QueryString["ID"];
-                    if (connection.State == ConnectionState.Closed)
-                    {
-                        connection.Open();
-                    }
+                    #region original logic
+                    //if (connection.State == ConnectionState.Closed)
+                    //{
+                    //    connection.Open();
+                    //}
 
-                    SqlCommand command = new SqlCommand("Sp_GetAssociatedStores", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    SqlDataAdapter sA = new SqlDataAdapter(command);
+                    //SqlCommand command = new SqlCommand("Sp_GetAssociatedStores", connection);
+                    //command.CommandType = CommandType.StoredProcedure;
+                    //SqlDataAdapter sA = new SqlDataAdapter(command);
 
 
-                    command.Parameters.AddWithValue("@p_UserID", long.Parse(ID));
-                    sA.Fill(dtAllAssociatedStore);
+                    //command.Parameters.AddWithValue("@p_UserID", long.Parse(ID));
+                    //sA.Fill(dtAllAssociatedStore); 
+                    #endregion
+                    dtAllAssociatedStore = slmanBll.SelectAssociatedStores(long.Parse(ID)).Tables[0];
                     dtAllAssociatedStore.Columns.Add("Checked", typeof(bool));
                     Session["dtAssociated"] = dtAllAssociatedStore;
                     foreach (DataRow dr in dtAllAssociatedStore.Rows)
@@ -100,15 +103,10 @@ namespace IMS
                 }
                 catch (Exception ex)
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
+                  
                     throw ex;
                 }
-                finally
-                {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
-                }
+               
                 #endregion
                 //SelectCheckBox_OnCheckedChanged(null, null);
                
@@ -371,44 +369,48 @@ namespace IMS
                 DataTable dtAvailable = (DataTable)Session["dtAvailable"];
                 DataTable dtAssociated = (DataTable)Session["dtAssociated"];
                 long SystemID = 0;
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
 
-                SqlCommand command = new SqlCommand("Sp_DeleteSalesmanSystem", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@p_UserID", long.Parse(ID));
-                command.ExecuteNonQuery();
+                #region original logic
+                //if (connection.State == ConnectionState.Closed)
+                //{
+                //    connection.Open();
+                //}
+
+                //SqlCommand command = new SqlCommand("Sp_DeleteSalesmanSystem", connection);
+                //command.CommandType = CommandType.StoredProcedure;
+                //command.Parameters.AddWithValue("@p_UserID", long.Parse(ID));
+                //command.ExecuteNonQuery(); 
+               
+                
+                //foreach (DataRow dr in dtAssociated.Rows)
+                //{
+
+                //    SystemID = Convert.ToInt64(dr["SystemID"]);
+                //    command = new SqlCommand("Sp_AddSalesmanSystems", connection);
+                //    command.CommandType = CommandType.StoredProcedure;
+                //    command.Parameters.AddWithValue("@p_UserID", long.Parse(ID));
+                //    command.Parameters.AddWithValue("@p_systemID", SystemID);
+                //    //SqlCommand commandNew = new SqlCommand("insert into  [dbo].[SalesmanSystems]([UserID],SystemID) values(" + ID + "," +SystemID + ")", connection);
+                //    command.ExecuteNonQuery();
+                //}
+                //connection.Close();
+                #endregion
+
+                slmanBll.Delete(long.Parse(ID));
                 
                 foreach (DataRow dr in dtAssociated.Rows)
                 {
-
                     SystemID = Convert.ToInt64(dr["SystemID"]);
-                    command = new SqlCommand("Sp_AddSalesmanSystems", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_UserID", long.Parse(ID));
-                    command.Parameters.AddWithValue("@p_systemID", SystemID);
-                    //SqlCommand commandNew = new SqlCommand("insert into  [dbo].[SalesmanSystems]([UserID],SystemID) values(" + ID + "," +SystemID + ")", connection);
-                    command.ExecuteNonQuery();
+                    slmanBll.Insert(long.Parse(ID), SystemID);
                 }
-                connection.Close();
+
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Record Saved Successfully')", true);
             }
             catch (Exception ex)
             {
-
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
-            finally 
-            {
-                if (connection.State == ConnectionState.Open) 
-                {
-                    connection.Close();
-                }
-            }
+           
 
         }
 
