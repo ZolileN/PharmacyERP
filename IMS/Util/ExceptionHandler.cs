@@ -373,6 +373,8 @@ namespace IMS.Util
             return _handler;
         }
 
+
+        
         public void GenerateExpResponse(string sourcePage, RedirectionStrategy redirectionStrategy, HttpSessionState session, HttpServerUtility server, HttpResponse response, ILog log, Exception exp)
         {
             //+ Log error
@@ -382,9 +384,11 @@ namespace IMS.Util
             //-
 
             //redirect to different page in case of remote as strategy
+
+            string popupMessage=GeneratePopupMessage(exp, sourcePage, redirectionStrategy);
             if (redirectionStrategy == RedirectionStrategy.Remote)
             {
-                SetErrorMessage(session, ErrorMessageUtility.remoteMessage);
+                SetErrorMessage(session, popupMessage);
                 string url = urlLookup(sourcePage, session);
                 if (url != null)
                     server.Transfer(url, false);
@@ -402,7 +406,8 @@ namespace IMS.Util
             }
             else
             {
-                SetErrorMessage(session, ErrorMessageUtility.genericMessage);
+
+                SetErrorMessage(session, popupMessage);
                 server.Transfer(sourcePage + ".aspx", false);
             }
 
@@ -410,6 +415,30 @@ namespace IMS.Util
         #endregion
 
         #region helper methods
+        private string GeneratePopupMessage(Exception ex, string sourcePage, RedirectionStrategy redirectionStrategy) 
+        {
+            string message ;
+
+            if (redirectionStrategy == RedirectionStrategy.local)
+            {
+                message = ErrorMessageUtility.genericMessage;
+            }
+            else 
+            {
+                message = ErrorMessageUtility.remoteMessage;
+            }
+
+            if (sourcePage.ToLower().Contains("PharmacyManagement".ToLower()) || sourcePage.ToLower().Contains("WarehouseManagement".ToLower())) 
+            {
+                if (ex.Message.ToLower().Contains("The DELETE statement conflicted with the REFERENCE constraint".ToLower())) 
+                {
+                    message = ErrorMessageUtility.stockExistMessage;
+                }
+            }
+            
+            return message;
+        }
+
         public String GenerateLogString(Exception exp)
         {
             string errorMessage;
