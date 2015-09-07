@@ -1,5 +1,6 @@
 ﻿using IMSCommon;
 using IMSCommon.Util;
+using IMSDataAccess.DAL;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,24 +15,22 @@ namespace IMSBusinessLogic
     {
         public SubCategoryBLL() { }
 
-        public static DataSet GetAllSubCategories(SqlConnection connection)
+        public static DataSet GetAllSubCategories()
         {
 
             DataSet resultSet = new DataSet();
             try
             {
-                //String Query = "SELECT tblSub_Category.Sub_CatID as subCatID, tblSub_Category.Name as subCatName,tblCategory.Name as categoryName,tblDepartment.Name as DepartmentName "+
-                //                "FROM tblSub_Category INNER JOIN tblCategory on tblCategory.CategoryID=tblSub_Category.CategoryID "+
-                //                " INNER JOIN tblDepartment On tblCategory.DepartmentID=tblDepartment.DepId ORDER BY subCatID ASC";
-
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
-                SqlCommand command = new SqlCommand("Sp_GetAllSubCategory", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                SqlDataAdapter SA = new SqlDataAdapter(command);
-                SA.Fill(resultSet);
+                SubCategoryDAL objSubCategoryDAL = new SubCategoryDAL();
+                resultSet = objSubCategoryDAL.Select();
+                //if (connection.State == ConnectionState.Closed)
+                //{
+                //    connection.Open();
+                //}
+                //SqlCommand command = new SqlCommand("Sp_GetAllSubCategory", connection);
+                //command.CommandType = CommandType.StoredProcedure;
+                //SqlDataAdapter SA = new SqlDataAdapter(command);
+                //SA.Fill(resultSet);
 
             }
             catch (Exception exp)
@@ -40,31 +39,17 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
-
+                 
             }
             return resultSet;
         }
-
-        public static DataSet GetSubCategoriesBasic(SqlConnection connection)
+        public static DataSet GetDistinct()
         {
-
             DataSet resultSet = new DataSet();
             try
             {
-                //String Query = "SELECT tblSub_Category.Sub_CatID as subCatID, tblSub_Category.Name as subCatName,tblCategory.Name as categoryName,tblDepartment.Name as DepartmentName "+
-                //                "FROM tblSub_Category INNER JOIN tblCategory on tblCategory.CategoryID=tblSub_Category.CategoryID "+
-                //                " INNER JOIN tblDepartment On tblCategory.DepartmentID=tblDepartment.DepId ORDER BY subCatID ASC";
-
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
-                SqlCommand command = new SqlCommand("Sp_GetSubCatBasic", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                SqlDataAdapter SA = new SqlDataAdapter(command);
-                SA.Fill(resultSet);
+                SubCategoryDAL objSubCategoryDAL = new SubCategoryDAL();
+                resultSet = objSubCategoryDAL.SelectDistinctCategory();
 
             }
             catch (Exception exp)
@@ -73,57 +58,82 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
-
+                
             }
             return resultSet;
         }
-        //public DataSet GetById(SubCategory val, SqlConnection connection)
-        //{
-        //    DataSet resultSet = new DataSet();
-        //    try
-        //    {
-        //        String Query = "SELECT tblSub_Category.Sub_CatID as subCatID, tblSub_Category.Name as subCatName,tblCategory.Name as categoryName,tblDepartment.Name as DepartmentName" +
-        //                        " FROM tblSub_Category INNER JOIN tblCategory on tblCategory.CategoryID=tblSub_Category.CategoryID INNER JOIN tblDepartment On tblCategory.DepartmentID=tblDepartment.DepId "
-        //                        + "Where tblSub_Category.Sub_CatID = '" + val.SubCategoryID + "' ORDER BY subCatID ASC";
 
+        public DataSet GetCategoriesDropDown(int? DepartmentID)
+        {
+            DataSet resultSet = new DataSet();
+            try
+            { 
+                SubCategoryDAL objSubCategoryDAL = new SubCategoryDAL();
+                resultSet = objSubCategoryDAL.GetCategoriesdd(DepartmentID);
+                 
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
+            finally
+            {
+                 
+            }
+            return resultSet;
+        }
+        
 
-        //        connection.Open();
-        //        SqlCommand command = new SqlCommand(Query, connection);
-        //        SqlDataAdapter SA = new SqlDataAdapter(command);
-        //        SA.Fill(resultSet);
+    
+        public static DataSet GetSubCategoriesBasic()
+        {
 
-        //    }
-        //    catch (Exception exp)
-        //    {
+            DataSet resultSet = new DataSet();
+            try
+            { 
+                SubCategoryDAL objSubCategoryDAL = new SubCategoryDAL();
+                resultSet = objSubCategoryDAL.SelectSubCategoriesBasic();
 
-        //    }
-        //    finally
-        //    {
-        //        connection.Close();
+                //if (connection.State == ConnectionState.Closed)
+                //{
+                //    connection.Open();
+                //}
+                //SqlCommand command = new SqlCommand("Sp_GetSubCatBasic", connection);
+                //command.CommandType = CommandType.StoredProcedure;
+                //SqlDataAdapter SA = new SqlDataAdapter(command);
+                //SA.Fill(resultSet);
 
-        //    }
-        //    return resultSet;
-        //}
-
-        public void Update(SubCategory subCategory, SqlConnection connection)
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
+            finally
+            {
+                 
+            }
+            return resultSet;
+        }
+         
+        public void Update(SubCategory subCategory )
         {
             try
             {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
-                SqlCommand command = new SqlCommand("Sp_UpdateSelectedSubCategory", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@p_Id", subCategory.SubCategoryID);
-                command.Parameters.AddWithValue("@p_Name", subCategory.Name);
-                command.Parameters.AddWithValue("@p_categoryName", subCategory.CategoryName);
-                command.Parameters.AddWithValue("@p_DepartmentName", subCategory.DepartmentName);
+                SubCategoryDAL objSubCategoryDAL = new SubCategoryDAL();
+                objSubCategoryDAL.Update(subCategory.SubCategoryID, subCategory.Name, subCategory.CategoryName);
+                //if (connection.State == ConnectionState.Closed)
+                //{
+                //    connection.Open();
+                //}
+                //SqlCommand command = new SqlCommand("Sp_UpdateSelectedSubCategory", connection);
+                //command.CommandType = CommandType.StoredProcedure;
+                //command.Parameters.AddWithValue("@p_Id", subCategory.SubCategoryID);
+                //command.Parameters.AddWithValue("@p_Name", subCategory.Name);
+                //command.Parameters.AddWithValue("@p_categoryName", subCategory.CategoryName);
+                //command.Parameters.AddWithValue("@p_DepartmentName", subCategory.DepartmentName);
 
-                command.ExecuteNonQuery();
-                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Product SuccessFully Updated.')", true);
+                //command.ExecuteNonQuery();
+                ////ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Product SuccessFully Updated.')", true);
                 WebMessageBoxUtil.Show("SubCategory Successfully Updated ");
             }
             catch (Exception ex)
@@ -132,24 +142,25 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
+                
             }
         }
 
-        public void Delete(SubCategory subCategory, SqlConnection connection)
+        public void Delete(SubCategory subCategory)
         {
             try
             {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
-                SqlCommand command = new SqlCommand("Sp_DeleteSubCategory", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@p_Id", subCategory.SubCategoryID);
+                 SubCategoryDAL objSubCategoryDAL = new SubCategoryDAL();
+                 objSubCategoryDAL.Delete(subCategory.SubCategoryID);
+                //if (connection.State == ConnectionState.Closed)
+                //{
+                //    connection.Open();
+                //}
+                //SqlCommand command = new SqlCommand("Sp_DeleteSubCategory", connection);
+                //command.CommandType = CommandType.StoredProcedure;
+                //command.Parameters.AddWithValue("@p_Id", subCategory.SubCategoryID);
 
-                command.ExecuteNonQuery();
+                //command.ExecuteNonQuery();
                 WebMessageBoxUtil.Show("SubCategory Successfully Deleted ");
             }
             catch (Exception ex)
@@ -158,81 +169,56 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
             }
         }
 
-        public void Add(SubCategory subCategory, SqlConnection connection)
+      
+        public void AddNew(SubCategory subCategory)
         {
             try
             {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
-                SqlCommand command = new SqlCommand("Sp_AddNewSubCategory", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@p_Name", subCategory.Name);
-                command.Parameters.AddWithValue("@p_categoryName", subCategory.CategoryName);
-                command.Parameters.AddWithValue("@p_DepartmentName", subCategory.DepartmentName);
+                SubCategoryDAL objSubCategoryDAL = new SubCategoryDAL();
+                objSubCategoryDAL.Add(subCategory.Name, subCategory.CategoryID);
+                //if (connection.State == ConnectionState.Closed)
+                //{
+                //    connection.Open();
+                //}
+                //SqlCommand command = new SqlCommand("Sp_AddNewSubCategorys", connection);
+                //command.CommandType = CommandType.StoredProcedure;
+                //command.Parameters.AddWithValue("@p_Name", subCategory.Name);
+                //command.Parameters.AddWithValue("@p_categoryId", subCategory.CategoryID);
+
+                //command.ExecuteNonQuery();
+                WebMessageBoxUtil.Show("SubCategory Successfully Added ");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
                
-                command.ExecuteNonQuery();
-                WebMessageBoxUtil.Show("SubCategory Successfully Added ");
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
             }
         }
 
-        public void AddNew(SubCategory subCategory, SqlConnection connection)
+        public void UpdateSubCat(SubCategory subCategory)
         {
             try
             {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
-                SqlCommand command = new SqlCommand("Sp_AddNewSubCategorys", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@p_Name", subCategory.Name);
-                command.Parameters.AddWithValue("@p_categoryId", subCategory.CategoryID);
-                 
-                command.ExecuteNonQuery();
-                WebMessageBoxUtil.Show("SubCategory Successfully Added ");
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
-            }
-        }
-
-        public void UpdateSubCat(SubCategory subCategory, SqlConnection connection)
-        {
-            try
-            {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                } 
-                SqlCommand command = new SqlCommand("Sp_UpdateSubCategory", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@p_Id", subCategory.SubCategoryID);
-                command.Parameters.AddWithValue("@p_Name", subCategory.Name);
-                command.Parameters.AddWithValue("@p_CategoryID", subCategory.CategoryID);
+                SubCategoryDAL objSubCategoryDAL = new SubCategoryDAL();
+                objSubCategoryDAL.Update(subCategory.SubCategoryID, subCategory.Name, subCategory.CategoryName);
                 
-                command.ExecuteNonQuery();
+                //if (connection.State == ConnectionState.Closed)
+                //{
+                //    connection.Open();
+                //} 
+                //SqlCommand command = new SqlCommand("Sp_UpdateSubCategory", connection);
+                //command.CommandType = CommandType.StoredProcedure;
+                //command.Parameters.AddWithValue("@p_Id", subCategory.SubCategoryID);
+                //command.Parameters.AddWithValue("@p_Name", subCategory.Name);
+                //command.Parameters.AddWithValue("@p_CategoryID", subCategory.CategoryID);
+                
+                //command.ExecuteNonQuery();
                 WebMessageBoxUtil.Show("SubCategory Successfully Updated ");
             }
             catch (Exception ex)
@@ -241,9 +227,8 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
             }
         }
+        
     }
 }

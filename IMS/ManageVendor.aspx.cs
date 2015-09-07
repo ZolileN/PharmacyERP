@@ -17,9 +17,7 @@ namespace IMS
     public partial class ManageVendor : System.Web.UI.Page
     {
         DataSet ds;
-        public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
-        public static DataSet systemSet; //This needs to be removed as not used in the entire page
         private ILog log;
         private string pageURL;
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
@@ -37,14 +35,10 @@ namespace IMS
                 }
                 catch (Exception ex)
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
                     throw ex;
                 }
                 finally 
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
                 }
             }
             expHandler.CheckForErrorMessage(Session);
@@ -69,7 +63,7 @@ namespace IMS
         {
             try
             {
-                ds = VendorBLL.GetAllVendors(connection);
+                ds = VendorBLL.GetAllVendors();
 
                 gdvVendor.DataSource = null;
                 gdvVendor.DataSource = ds;
@@ -77,14 +71,10 @@ namespace IMS
             }
             catch (Exception ex) 
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally 
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
             }
         }
 
@@ -94,7 +84,7 @@ namespace IMS
             {
                 Vendor vendor = new Vendor();
                 vendor.supp_ID = ID;
-                ds = VendorBLL.GetDistinct(connection, vendor);
+                ds = VendorBLL.GetDistinct(vendor);
 
                 gdvVendor.DataSource = null;
                 gdvVendor.DataSource = ds;
@@ -102,14 +92,10 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally 
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
             }
           
         }
@@ -143,7 +129,7 @@ namespace IMS
                 {
                     isStore = true;
                 }
-                ds = VendorBLL.GetDistinctByNane(connection, vendor, SysID, isStore);
+                ds = VendorBLL.GetDistinctByNane(vendor, SysID, isStore);
                 gdvVendor.DataSource = null;
                 gdvVendor.DataSource = ds;
                 gdvVendor.DataBind();
@@ -151,14 +137,10 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally 
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
             }
         }
 
@@ -184,20 +166,16 @@ namespace IMS
                 int id = int.Parse(ID.Text);
                 Vendor vendor = new Vendor();//= empid.Text;
                 vendor.supp_ID = id;
-                _vendorBll.Delete(vendor, connection);
+                _vendorBll.Delete(vendor);
 
 
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 gdvVendor.EditIndex = -1;
                 BindGrid();
             }
@@ -219,59 +197,10 @@ namespace IMS
         {
             if (SelectProduct.Text.Length >= 3)
             {
-                PopulateDropDown(SelectProduct.Text);
-                StockAt.Visible = true;
+                
             }
         }
-
-        public void PopulateDropDown(String Text)
-        {
-            #region Populating Product Name Dropdown
-
-            try
-            {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
-
-                //Text = Text + "%";
-                SqlCommand command = new SqlCommand("sp_GetVendor_byNameParam", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@p_VendName", Text);
-                DataSet ds = new DataSet();
-                SqlDataAdapter sA = new SqlDataAdapter(command);
-                sA.Fill(ds);
-                if (StockAt.DataSource != null)
-                {
-                    StockAt.DataSource = null;
-                }
-
-                ProductSet = null;
-                ProductSet = ds;
-                StockAt.DataSource = ds.Tables[0];
-                StockAt.DataTextField = "SupName";
-                StockAt.DataValueField = "SuppID";
-                StockAt.DataBind();
-                if (StockAt != null)
-                {
-                    StockAt.Items.Insert(0, "Select Vendor");
-                    StockAt.SelectedIndex = 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
-                throw ex;
-            }
-            finally
-            {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
-            }
-            #endregion
-        }
+         
         protected void StockAt_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (StockAt.SelectedIndex == -1)
@@ -309,7 +238,7 @@ namespace IMS
             {
                 isStore = true;
             }
-            ds = VendorBLL.GetDistinctByNane(connection, vendor, SysID, isStore);
+            ds = VendorBLL.GetDistinctByNane(vendor, SysID, isStore);
             //ProductSet = ds;
             gdvVendor.DataSource = null;
             gdvVendor.DataSource = ds;

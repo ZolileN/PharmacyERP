@@ -16,7 +16,7 @@ namespace IMS
 {
     public partial class AddEditVendor : System.Web.UI.Page
     {
-        public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
+       // public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         private ILog log;
         private string pageURL;
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
@@ -48,8 +48,6 @@ namespace IMS
             }
             finally
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
 
             }
         }
@@ -80,8 +78,7 @@ namespace IMS
                 Vendor obj = new Vendor();
 
                 obj.supp_ID = int.Parse(Request.QueryString["Id"].ToString());
-                ds = VendorBLL.GetDistinct(connection, obj);
-
+                ds = VendorBLL.GetDistinct(obj);
 
                 //    ds.Tables[0].Rows[0]["Supp_ID"].ToString();
                 //  txtVendorName.Text = ds.Tables[0].Rows[0]["Supp_ID"].ToString();
@@ -106,14 +103,10 @@ namespace IMS
             catch (Exception ex)
             {
 
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally 
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
             }
 
         }
@@ -147,19 +140,15 @@ namespace IMS
 
                 obj.DateCreated = DateTime.Now;
                 VendorBLL objAdd = new VendorBLL();
-                objAdd.Add(obj, connection);
+                objAdd.Add(obj);
 
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally 
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 Clear();
             }
         }
@@ -210,19 +199,15 @@ namespace IMS
                 obj.Pincode = txtPincode.Text;
                 obj.DateCreated = DateTime.Now;
                 VendorBLL objAdd = new VendorBLL();
-                objAdd.Update(obj, connection);
+                objAdd.Update(obj);
 
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 Clear();
             }
         }

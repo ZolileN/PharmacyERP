@@ -22,7 +22,11 @@ namespace IMSDataAccess
             Sp_PalceeNewOrder,
             Sp_AddNewSystem,
             sp_AddNewUser,
-            Sp_AddSalesmanSystems
+            Sp_AddSalesmanSystems,
+            Sp_AddNewSubCategorys,
+            Sp_GetVendorById,
+            Sp_GetVendorByName
+
 
         }
         public enum Select
@@ -64,7 +68,11 @@ namespace IMSDataAccess
             Sp_getAllSystems,
             Sp_SearchByUser_ID,
             Sp_GetUnAssociatedStores,
-            Sp_GetAssociatedStores
+            Sp_GetAssociatedStores,
+            Sp_GetCategories,
+            Sp_GetAllSubCategory,
+            Sp_GetSubCatBasic
+
 
         }
         public enum Delete
@@ -94,7 +102,9 @@ namespace IMSDataAccess
             Sp_UpdateOrderDetail,
             Sp_AddRecivedOrderDetails,
             Sp_UpdateSystems,
-            Sp_UpdateNewUser
+            Sp_UpdateNewUser,
+            Sp_UpdateSubCategory
+
         }
     }
 }

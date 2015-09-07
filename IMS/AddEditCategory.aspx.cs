@@ -16,7 +16,6 @@ namespace IMS
 {
     public partial class AddEditCategory : System.Web.UI.Page
     {
-        public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         private ILog log;
         private string pageURL;
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
@@ -48,14 +47,12 @@ namespace IMS
                 }
                 catch (Exception ex)
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
+                    
                     throw ex;
                 }
                 finally 
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
+                  
                 }
                 
             }
@@ -81,17 +78,10 @@ namespace IMS
         {
             #region Populating Department DropDown
             try
-            {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-
-                }
-                SqlCommand command = new SqlCommand("Sp_GetDepartmentList", connection);
-                command.CommandType = CommandType.StoredProcedure;
+            {  
                 DataSet ds = new DataSet();
-                SqlDataAdapter sA = new SqlDataAdapter(command);
-                sA.Fill(ds);
+                ds = DepartmentBLL.GetAllDepartment();
+                 
                 CategoryDepartment.DataSource = ds.Tables[0];
                 CategoryDepartment.DataTextField = "Name";
                 CategoryDepartment.DataValueField = "DepId";
@@ -104,14 +94,12 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
+               
                 throw ex;
             }
             finally
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
+               
             }
             #endregion
         }
@@ -139,7 +127,7 @@ namespace IMS
                     categoryToUpdate.CategoryID = selectedId;
                     categoryToUpdate.Name = CategoryName.Text;
                     categoryToUpdate.DepartmentID = Convert.ToInt32(CategoryDepartment.SelectedValue);
-                    categoryManager.Update(categoryToUpdate, connection);
+                    categoryManager.Update(categoryToUpdate);
 
                 }
                 else
@@ -149,7 +137,7 @@ namespace IMS
                     categoryToAdd.Name = CategoryName.Text;
                     categoryToAdd.DepartmentID = Convert.ToInt32(CategoryDepartment.SelectedValue);
 
-                    categoryManager.Add(categoryToAdd, connection);
+                    categoryManager.Add(categoryToAdd);
                 }
 
                 Session.Remove("Catname");
@@ -160,14 +148,12 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
+                 
                 throw ex;
             }
             finally 
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
+                 
             }
             
         }

@@ -16,7 +16,6 @@ namespace IMS
 {
     public partial class ManageDepartment : System.Web.UI.Page
     {
-        public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         private DataSet ds;
         private ILog log;
         private string pageURL;
@@ -40,14 +39,10 @@ namespace IMS
                 }
                 catch (Exception ex)
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
                     throw ex;
                 }
                 finally 
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
                 }
             }
             expHandler.CheckForErrorMessage(Session);
@@ -99,8 +94,6 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally
@@ -189,14 +182,10 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally 
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
             }
         }
 
@@ -238,8 +227,6 @@ namespace IMS
                 }
                 finally
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
 
                 }
             }

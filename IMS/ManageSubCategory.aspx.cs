@@ -16,7 +16,6 @@ namespace IMS
 {
     public partial class ManageSubCategory : System.Web.UI.Page
     {
-        public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         private DataSet ds;
 
         private ILog log;
@@ -41,14 +40,10 @@ namespace IMS
                 }
                 catch (Exception ex)
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
                     throw ex;
                 }
                 finally 
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
                 }
             }
             expHandler.CheckForErrorMessage(Session);
@@ -94,14 +89,10 @@ namespace IMS
             }
             catch (Exception ex) 
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 SubCategoryDisplayGrid.EditIndex = -1;
                 BindGrid(false);
             }
@@ -116,20 +107,16 @@ namespace IMS
                 int selectedId = int.Parse(ID.Text);
                 SubCategory subCategoryToDelete = new SubCategory();//= empid.Text;
                 subCategoryToDelete.SubCategoryID = selectedId;
-                subCategoryManager.Delete(subCategoryToDelete, connection);
+                subCategoryManager.Delete(subCategoryToDelete);
 
 
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 SubCategoryDisplayGrid.EditIndex = -1;
                 BindGrid(false);
             }
@@ -155,14 +142,10 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally 
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
             }
             
 
@@ -177,13 +160,13 @@ namespace IMS
         {
             try
             {
-                ds = SubCategoryBLL.GetAllSubCategories(connection);
+                ds = SubCategoryBLL.GetAllSubCategories();
 
                 SubCategoryDisplayGrid.DataSource = ds;
                 SubCategoryDisplayGrid.DataBind();
 
                 DropDownList catList = (DropDownList)SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddCategoryName");
-                catList.DataSource = CategoryBLL.GetDistinct(connection);
+                catList.DataSource = SubCategoryBLL.GetDistinct();
                 catList.DataBind();
                 catList.DataTextField = "categoryName";
                 //catList.DataValueField = "categoryID";
@@ -193,8 +176,8 @@ namespace IMS
                 string catId = ((DropDownList)(SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddCategoryName"))).SelectedItem.Text;
                 Category obj2 = new Category();
                 obj2.Name = catId;
-                CategoryBLL ins = new CategoryBLL();
-                depList.DataSource = ins.GetDepListByCategoryName(obj2, connection);
+                 
+                depList.DataSource = DepartmentBLL.GetAllDepartment();
                 depList.DataBind();
                 depList.DataTextField = "Name";
                 depList.DataValueField = "DepId";
@@ -202,14 +185,10 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally 
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
             }
 
         }
@@ -240,8 +219,6 @@ namespace IMS
                 }
                 finally
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
 
                 }
             }
@@ -251,7 +228,7 @@ namespace IMS
                 try
                 {
                     DropDownList catList = (DropDownList)e.Row.FindControl("ddlCategoryName");
-                    catList.DataSource = CategoryBLL.GetDistinct(connection);
+                    catList.DataSource = SubCategoryBLL.GetDistinct();
                     catList.DataBind();
                     catList.DataTextField = "categoryName";
                     // catList.DataValueField = "categoryID";
@@ -261,8 +238,8 @@ namespace IMS
                     string catId = ((DropDownList)(e.Row.FindControl("ddlCategoryName"))).SelectedItem.Text;
                     Category obj2 = new Category();
                     obj2.Name = catId;
-                    CategoryBLL ins = new CategoryBLL();
-                    depList.DataSource = ins.GetDepListByCategoryName(obj2, connection);
+                    
+                    depList.DataSource = DepartmentBLL.GetAllDepartment();
                     depList.DataBind();
                     depList.DataTextField = "Name";
                     depList.DataValueField = "DepId";
@@ -271,14 +248,10 @@ namespace IMS
                 }
                 catch (Exception ex)
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
                     throw ex;
                 }
                 finally 
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
                 }
             }
         }
@@ -304,8 +277,8 @@ namespace IMS
                 string catId = ((DropDownList)(SubCategoryDisplayGrid.FooterRow.FindControl("ddlAddCategoryName"))).SelectedItem.Text;
                 Category obj2 = new Category();
                 obj2.Name = catId;
-                CategoryBLL ins = new CategoryBLL();
-                depList.DataSource = ins.GetDepListByCategoryName(obj2, connection);
+
+                depList.DataSource = DepartmentBLL.GetAllDepartment();
                 depList.DataBind();
                 depList.DataTextField = "Name";
                 depList.DataValueField = "DepId";
@@ -313,14 +286,10 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally 
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
             }
         }
 
@@ -333,8 +302,8 @@ namespace IMS
                 string catId = ((DropDownList)(SubCategoryDisplayGrid.Rows[SubCategoryDisplayGrid.EditIndex].FindControl("ddlCategoryName"))).SelectedItem.Text;
                 Category obj2 = new Category();
                 obj2.Name = catId;
-                CategoryBLL ins = new CategoryBLL();
-                depList.DataSource = ins.GetDepListByCategoryName(obj2, connection);
+
+                depList.DataSource = DepartmentBLL.GetAllDepartment();
                 depList.DataBind();
                 depList.DataTextField = "Name";
                 depList.DataValueField = "DepId";
@@ -342,14 +311,10 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally 
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
             }
         }
 
