@@ -16,7 +16,6 @@ namespace IMS
 {
     public partial class ManageSubCategory : System.Web.UI.Page
     {
-        public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         private DataSet ds;
 
         private ILog log;
@@ -41,14 +40,10 @@ namespace IMS
                 }
                 catch (Exception ex)
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
                     throw ex;
                 }
                 finally 
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
                 }
             }
             expHandler.CheckForErrorMessage(Session);
@@ -94,14 +89,10 @@ namespace IMS
             }
             catch (Exception ex) 
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 SubCategoryDisplayGrid.EditIndex = -1;
                 BindGrid(false);
             }
@@ -122,14 +113,10 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 SubCategoryDisplayGrid.EditIndex = -1;
                 BindGrid(false);
             }
@@ -155,14 +142,10 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally 
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
             }
             
 
@@ -202,14 +185,10 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally 
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
             }
 
         }
@@ -240,8 +219,6 @@ namespace IMS
                 }
                 finally
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
 
                 }
             }
@@ -271,14 +248,10 @@ namespace IMS
                 }
                 catch (Exception ex)
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
                     throw ex;
                 }
                 finally 
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
                 }
             }
         }
@@ -313,14 +286,10 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally 
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
             }
         }
 
@@ -342,14 +311,10 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally 
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
             }
         }
 

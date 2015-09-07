@@ -20,7 +20,9 @@ namespace IMSDataAccess
             Sp_AddNewStock,
             Sp_AddOrderDetails,
             Sp_PalceeNewOrder,
-            Sp_AddNewSubCategorys
+            Sp_AddNewSubCategorys,
+            Sp_GetVendorById,
+            Sp_GetVendorByName
 
         }
         public enum Select

@@ -63,9 +63,29 @@ namespace IMSBusinessLogic
             return resultSet;
         }
 
+        public DataSet GetCategoriesDropDown(int? DepartmentID)
+        {
+            DataSet resultSet = new DataSet();
+            try
+            { 
+                SubCategoryDAL objSubCategoryDAL = new SubCategoryDAL();
+                resultSet = objSubCategoryDAL.GetCategoriesdd(DepartmentID);
+                 
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
+            finally
+            {
+                 
+            }
+            return resultSet;
+        }
+        
 
     
-        public static DataSet GetSubCategoriesBasic( )
+        public static DataSet GetSubCategoriesBasic()
         {
 
             DataSet resultSet = new DataSet();
@@ -181,7 +201,7 @@ namespace IMSBusinessLogic
             }
         }
 
-        public void UpdateSubCat(SubCategory subCategory, SqlConnection connection)
+        public void UpdateSubCat(SubCategory subCategory)
         {
             try
             {
@@ -207,9 +227,8 @@ namespace IMSBusinessLogic
             }
             finally
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
             }
         }
+        
     }
 }

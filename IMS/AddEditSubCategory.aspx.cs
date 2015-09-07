@@ -16,7 +16,6 @@ namespace IMS
 {
     public partial class AddEditSubCategory : System.Web.UI.Page
     {
-        public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         private ILog log;
         private string pageURL;
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
@@ -58,16 +57,12 @@ namespace IMS
             }
             finally
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
 
             }
         }
         private void Page_Error(object sender, EventArgs e)
         {
             Exception exc = Server.GetLastError();
-            // Void Page_Load(System.Object, System.EventArgs)
-            // Handle specific exception.
             if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
             {
                 expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
@@ -76,7 +71,6 @@ namespace IMS
             {
                 expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
             }
-            // Clear the error from the server.
             Server.ClearError();
         }
         private void PopulateddDepartment()
@@ -84,16 +78,9 @@ namespace IMS
             #region Populating Department DropDown
             try
             {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-
-                }
-                SqlCommand command = new SqlCommand("Sp_GetDepartmentList", connection);
-                command.CommandType = CommandType.StoredProcedure;
+               
                 DataSet ds = new DataSet();
-                SqlDataAdapter sA = new SqlDataAdapter(command);
-                sA.Fill(ds);
+                ds = DepartmentBLL.GetAllDepartment();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
                 ddDepartment.DataSource = ds.Tables[0];
                 
                
@@ -126,14 +113,10 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
             }
             #endregion
         }
@@ -143,24 +126,18 @@ namespace IMS
             #region Populating Category DropDown
             try
             {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-
-                }
-                SqlCommand command = new SqlCommand("Sp_GetCategoryList", connection);
-                command.CommandType = CommandType.StoredProcedure;
+                SubCategoryBLL objSubCatBAL = new SubCategoryBLL();
+                DataSet ds = new DataSet();
+                 
                 if (ddDepartment.SelectedIndex > 0)
                 {
-                    command.Parameters.AddWithValue("@p_deptID", Convert.ToInt32(ddDepartment.SelectedValue.ToString()));
+                    ds = objSubCatBAL.GetCategoriesDropDown(Convert.ToInt32(ddDepartment.SelectedValue.ToString()));
                 }
                 else 
                 {
-                    command.Parameters.AddWithValue("@p_deptID", DBNull.Value);
+                    ds = objSubCatBAL.GetCategoriesDropDown(null);
                 }
-                DataSet ds = new DataSet();
-                SqlDataAdapter sA = new SqlDataAdapter(command);
-                sA.Fill(ds);
+                 
                 ddCategory.DataSource = ds.Tables[0];
                 ddCategory.DataTextField = "categoryName";
                 ddCategory.DataValueField = "categoryID";
@@ -189,14 +166,10 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
             }
             #endregion
         }
@@ -227,7 +200,7 @@ namespace IMS
                     subCategoryToUpdate.Name = txtSubCategoryName.Text;
                     subCategoryToUpdate.CategoryID = int.Parse(catId);
 
-                    subCategoryManager.UpdateSubCat(subCategoryToUpdate, connection);
+                    subCategoryManager.UpdateSubCat(subCategoryToUpdate);
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('SubCategory SuccessFully Updated.')", true);
 
                 }
@@ -244,14 +217,10 @@ namespace IMS
             }
             catch (Exception ex)
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
                 throw ex;
             }
             finally
             {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
             }
         }
 

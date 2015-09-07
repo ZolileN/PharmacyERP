@@ -42,6 +42,19 @@ namespace IMSDataAccess.DAL
             ds = dbHelper.Run(base.ConnectionString);
             return ds;
         }
+        public DataSet GetCategoriesdd(int? DepartmentID)
+        {
+            DataSet ds;
+            StoredProcedureName = StoredProcedure.Select.Sp_GetCategoryList.ToString();
+
+            SqlParameter[] parameters = {   new SqlParameter("@p_deptID", DepartmentID), 
+                                            
+                                        };
+
+            DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
+            ds = dbHelper.Run(base.ConnectionString, parameters);
+            return ds;
+        }
 
         public void Add(string subCategoryName, int CategoryID)
         {

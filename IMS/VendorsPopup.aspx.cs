@@ -35,7 +35,7 @@ namespace IMS
 
         private void BindGrid()
         {
-            ds = VendorBLL.GetAllVendors(connection);
+            ds = VendorBLL.GetAllVendors();
             ProductSet = ds;
             gdvVendor.DataSource = null;
             gdvVendor.DataSource = ds;
@@ -81,7 +81,7 @@ namespace IMS
                 int id = int.Parse(ID.Text);
                 Vendor vendor = new Vendor();//= empid.Text;
                 vendor.supp_ID = id;
-                ds = VendorBLL.GetDistinct(connection, vendor);
+                ds = VendorBLL.GetDistinct(vendor);
 
                 Session["VendorName"] = ds.Tables[0].Rows[0]["SupName"];
                 Session["VendorId"] = ds.Tables[0].Rows[0]["SuppID"];

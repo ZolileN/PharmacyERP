@@ -23,7 +23,6 @@ namespace IMS
         //}
 
         DataSet ds;
-        public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet ProductSet;
         private ILog log;
         private string pageURL;
@@ -45,15 +44,10 @@ namespace IMS
                 }
                 catch (Exception ex)
                 {
-
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
                     throw ex;
                 }
                 finally 
                 {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
                 }
             }
             expHandler.CheckForErrorMessage(Session);
@@ -77,7 +71,7 @@ namespace IMS
         private void BindGrid()
         {
             
-            ds = VendorBLL.GetAllVendors(connection);
+            ds = VendorBLL.GetAllVendors();
             ProductSet = ds;
                  
 
@@ -103,8 +97,6 @@ namespace IMS
 
         protected void gdvVendor_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            VendorBLL _vendorBll = new VendorBLL();
-
         }
 
         protected void gdvVendor_RowEditing(object sender, GridViewEditEventArgs e)
