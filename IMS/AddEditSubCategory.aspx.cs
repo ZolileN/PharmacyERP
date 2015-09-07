@@ -144,7 +144,10 @@ namespace IMS
                 ddCategory.DataBind();
                 if (ddCategory != null)
                 {
-                    ddCategory.Items.Insert(0, "Select Category");
+                    if (!ddCategory.Items[0].ToString().Contains("Select Category"))
+                    {
+                        ddCategory.Items.Insert(0, "Select Category");
+                    }
 
                     if (Session["catname"] != null)
                     {

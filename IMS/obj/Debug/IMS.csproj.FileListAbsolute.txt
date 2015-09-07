@@ -1135,3 +1135,5 @@ D:\Naseemullah\PharmacyERP\IMS\obj\Debug\IMS.pdb
 D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMS\bin\CrystalDecisions.CrystalReports.Design.dll
 D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMS\bin\CrystalDecisions.CrystalReports.Engine.dll
 D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMS\bin\CrystalDecisions.Data.AdoDotNetInterop.dll
+D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMS\bin\IMSDataAccess.dll
+D:\SyedBasit\eInventory21-04-2015\PharmacyERP\IMS\bin\IMSDataAccess.pdb

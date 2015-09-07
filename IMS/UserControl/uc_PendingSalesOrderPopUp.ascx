@@ -25,7 +25,7 @@
             
           
 
-            <asp:BoundField DataField="ProductName" HeaderText="Product Name"   />
+            <asp:BoundField DataField="ProductName" HeaderText="Product Name"  />
            <asp:BoundField DataField="FromPlace" HeaderText="Order From"   />
               <asp:TemplateField HeaderText="OrderDetailID" Visible="false">
                 <ItemTemplate>
@@ -41,7 +41,7 @@
 			
 			   <asp:TemplateField HeaderText="Order To">
                 <ItemTemplate>
-                    <asp:Label ID="lblOrderTo" runat="server" Text='<%# Eval("ToPlace") %>'></asp:Label>
+                    <asp:Label ID="lblOrderTo" runat="server" Text='<%# Eval("ToPlace") %>'  Width="160px"></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="ProductID" Visible="false">
@@ -54,18 +54,18 @@
                     <asp:Label ID="lblAvailableStock" runat="server" Text='<%# Eval("AvailableStock") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
-            <asp:TemplateField HeaderText="Qauntity Ordered">
+            <asp:TemplateField HeaderText="Qauntity Ordered" >
                 <ItemTemplate>
                     <asp:Label ID="lblQauntity" runat="server" Text='<%# Eval("Qauntity") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
-            <asp:TemplateField HeaderText="Bonus Qty">
+            <asp:TemplateField HeaderText="Bonus Qty" Visible="false">
                 <ItemTemplate>
                     <asp:Label ID="lblBonus" runat="server" Text='<%# Eval("Bonus") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             
-            <asp:TemplateField HeaderText="Discount">
+            <asp:TemplateField HeaderText="Discount" Visible="false">
                 <ItemTemplate>
                     <asp:Label ID="lblDiscount" runat="server" Text='<%# Eval("Discount") %>'></asp:Label>
                 </ItemTemplate>
