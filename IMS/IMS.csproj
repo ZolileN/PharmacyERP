@@ -126,6 +126,11 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>C:\Windows\assembly\GAC_MSIL\Microsoft.Vbe.Interop\15.0.0.0__71e9bce111e9429c\Microsoft.Vbe.Interop.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Vbe.Interop.Forms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 12.0\Visual Studio Tools for Office\PIA\Office14\Microsoft.Vbe.Interop.Forms.dll</HintPath>
+    </Reference>
     <Reference Include="OFFICE, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -1190,6 +1195,7 @@
     <Content Include="UserControl\VendorsPopupGrid.ascx" />
     <Content Include="UserManagment.aspx" />
     <Content Include="UserStoreManagment.aspx" />
+    <Content Include="UtillityFunctions.aspx" />
     <Content Include="VendorsPopup.aspx" />
     <Content Include="ViewInventory.aspx" />
     <Content Include="ViewPackingList.aspx" />
@@ -1283,6 +1289,12 @@
     </Compile>
     <Compile Include="AcceptPurchaseOrder.aspx.designer.cs">
       <DependentUpon>AcceptPurchaseOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProfitabilitySummary.cs">
+      <DependentUpon>ProfitabilitySummary.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Profitability.cs">
       <AutoGen>True</AutoGen>
@@ -2188,6 +2200,13 @@
     <Compile Include="UserStoreManagment.aspx.designer.cs">
       <DependentUpon>UserStoreManagment.aspx</DependentUpon>
     </Compile>
+    <Compile Include="UtillityFunctions.aspx.cs">
+      <DependentUpon>UtillityFunctions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UtillityFunctions.aspx.designer.cs">
+      <DependentUpon>UtillityFunctions.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Util\ErrorMessageUtility.cs" />
     <Compile Include="Util\ExceptionHandler.cs" />
     <Compile Include="Util\RedirectionStrategy.cs" />
@@ -2286,6 +2305,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ErrorPages\" />
+    <Folder Include="NewFolder1\" />
     <Folder Include="StoreManagement\StoreRequests\" />
   </ItemGroup>
   <ItemGroup>
@@ -2318,6 +2338,10 @@
     <Content Include="Profitability.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Profitability.cs</LastGenOutput>
+    </Content>
+    <Content Include="ProfitabilitySummary.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ProfitabilitySummary.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Report\barcode_Print.rdlc" />
     <Content Include="rpt_POSSALES.rpt">

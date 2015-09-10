@@ -47,15 +47,38 @@ namespace IMS
                     {
                         ViewState["isProfReport"] = true;
                     }
+                    else if (Parameter.ToLower().Equals("ProfitabilitySummary".ToLower()))
+                    {
+                        ViewState["isProfSumReport"] = true;
+                    }
                 }
                 
                 if (ViewState["isProfReport"]!=null && ViewState["isProfReport"].Equals(true))
                 {
                     ltlMainHeader.Text = "Profitability Report";
-                    ddlBarterCustomer.Visible = false;
-                    ddlSalesMan.Visible = false;
-                    lblSalesman.Visible = false;
-                    lblbarter.Visible = false;
+                    ddlBarterCustomer.Enabled = false;
+                    txtCategory.Enabled = false;
+                    txtSubcategory.Enabled = false;
+                    txtCategory.Enabled = false;
+                    txtDepartment.Enabled = false;
+                    btnSeachDepartment.Visible = false;
+                    btnSearchCategory.Visible = false;
+                    btnSearchSubcat.Visible = false;
+                    
+                }
+                else if(ViewState["isProfSumReport"] != null && ViewState["isProfSumReport"].Equals(true))
+                {
+                    ltlMainHeader.Text = "Profitability Summary Report";
+                    ddlBarterCustomer.Enabled = false;
+                    txtCategory.Enabled = false;
+                    txtSubcategory.Enabled = false;
+                    txtCategory.Enabled = false;
+                    txtDepartment.Enabled = false;
+                    btnSeachDepartment.Visible = false;
+                    btnSearchCategory.Visible = false;
+                    btnSearchSubcat.Visible = false;
+                    btnSearchProduct.Visible = false;
+                    txtProduct.Enabled = false;
 
                 }
 
@@ -140,20 +163,37 @@ namespace IMS
             ProdID = DeptID = CatID = SubCatID = CustID = SalesID = 0;
             String BarterValue = "";
 
+            
+
             DateTime dtFROM = Convert.ToDateTime(Session["rptItemSoldDateFrom"]);
             DateTime dtTo = Convert.ToDateTime(Session["rptItemSoldDateTo"]);
 
             try
             {
+                SqlCommand command = new SqlCommand();
                 connection.Open();
-
-                SqlCommand command = new SqlCommand("sp_rptProfitability", connection);
+                if (ViewState["isProfSumReport"] != null && ViewState["isProfSumReport"].Equals(true))
+                {
+                    command = new SqlCommand("sp_rptProfitabilitySumm", connection);
+                }
+                else
+                {
+                    command = new SqlCommand("sp_rptProfitability", connection);
+                }
+                
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_DateFrom", dtFROM);
                 command.Parameters.AddWithValue("@P_DateTo", dtTo);
-
+                
                 #region Applying Filters
 
+                if (Session["rptSalesManID"] != null && Session["rptSalesManID"].ToString() != "")
+                {
+                    if (int.TryParse(Session["rptSalesManID"].ToString(), out SalesID))
+                    {
+
+                    }
+                }
                 if (Session["rptCustomerID"] != null && Session["rptCustomerID"].ToString() != "")
                 {
                     if (int.TryParse(Session["rptCustomerID"].ToString(), out CustID))
@@ -266,10 +306,14 @@ namespace IMS
                         dtfilterSet = dv.ToTable();
 
                     }
+                    if (Session["rptInternalCustomers"] != null && Session["rptInternalCustomers"].ToString().Equals("Exclude"))
+                    {
+                        dv = dtfilterSet.DefaultView;
+                        dv.RowFilter = "System_RoleID <> '" + 2 + "'";
+                        dtfilterSet = dv.ToTable();
+                    }
 
-
-
-                    DataTable dtFiltered = dv.ToTable();
+                    DataTable dtFiltered = dtfilterSet;
                     Session["dtItemSoldDate"] = dtFiltered;
                 }
                 else
@@ -291,7 +335,16 @@ namespace IMS
             dS.Tables.Add((DataTable)Session["dtItemSoldDate"]);
             dS.AcceptChanges();
 
-            myReportDocument.Load(Server.MapPath("~/Profitability.rpt"));
+            if (ViewState["isProfSumReport"] != null && ViewState["isProfSumReport"].Equals(true))
+            {
+                myReportDocument.Load(Server.MapPath("~/ProfitabilitySummary.rpt"));
+                Session["ReportPrinting_Redirection"] = "rpt_ItemSold_Selection.aspx?Param=ProfitabilitySummary";
+            }
+            else
+            {
+                myReportDocument.Load(Server.MapPath("~/Profitability.rpt"));
+                Session["ReportPrinting_Redirection"] = "rpt_ItemSold_Selection.aspx?Param=Profitability";
+            }
            // App_Code.Barcode dsReport = new App_Code.Barcode();
             //dsReport.Tables[0].Merge((DataTable)Session["dtItemSoldDate"]);
             myReportDocument.SetDataSource(dS.Tables[0]);
@@ -305,7 +358,7 @@ namespace IMS
             myReportDocument.SetParameterValue("ToDate", Session["rptItemSoldDateTo"].ToString());
 
             Session["ReportDocument"] = myReportDocument;
-            Session["ReportPrinting_Redirection"] = "rpt_ItemSold_Selection.aspx?Param=Profitability";
+            
         }
         public void LoadData()
         {
@@ -598,6 +651,11 @@ namespace IMS
             if (ViewState["isProfReport"] != null && ViewState["isProfReport"].Equals(true))
             {
                 LoadDataProfitability();
+            }
+            else if (ViewState["isProfSumReport"] != null && ViewState["isProfSumReport"].Equals(true))
+            {
+                 LoadDataProfitability();
+            
             }
             else
             {

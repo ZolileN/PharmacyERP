@@ -110,11 +110,11 @@ namespace IMS
                 {
                     MySheet.Cells[lastRow, 1] = SerialNo;//SerialNo
                     SerialNo++;
-
+                    
                     DateTime dtTIme = DateTime.MinValue;
 
                     DateTime.TryParse(item["ExpiryDate"].ToString(), out dtTIme);
-
+                    
                     MySheet.Cells[lastRow, 2] = item["Description"].ToString();//ITEM DESCRIPTION
                     MySheet.Cells[lastRow, 3] = dtTIme.ToShortDateString();//Expiry Date
                     MySheet.Cells[lastRow, 4] = item["BatchNumber"].ToString();//batch No

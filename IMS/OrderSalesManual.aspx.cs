@@ -610,7 +610,7 @@ namespace IMS
             #endregion
         }
         public void InsertionMapping(int PO_ID, int PO_DetID, int PO_DetEntryID, int SO_ID, int SO_DetID, int SO_DetEntryID, int ProductID, int VendorID, int QS, int QS_FromBonus, int BQS,
-                                     DateTime PO_RecieveDate, DateTime SO_CreationDate, DateTime ExpiryDate, Decimal UCP, Decimal USP, Decimal RCP, Decimal RSP, Decimal SalesDisc, String UpdateCheck)
+                                     DateTime PO_RecieveDate, DateTime SO_CreationDate, DateTime ExpiryDate, Decimal UCP, Decimal USP, Decimal RCP, Decimal RSP, Decimal SalesDisc, Decimal DisGiven, Decimal DisTaken, String UpdateCheck)
 
         {
             try
@@ -640,6 +640,9 @@ namespace IMS
                 command.Parameters.AddWithValue("@p_RealCP", RCP);
                 command.Parameters.AddWithValue("@p_RealSP", RSP);
                 command.Parameters.AddWithValue("@p_Dicsount", SalesDisc);
+
+                command.Parameters.AddWithValue("@p_DisTaken", DisTaken);
+                command.Parameters.AddWithValue("@p_DisGiven", DisGiven);
 
                 command.Parameters.AddWithValue("@p_UpdateCheck", UpdateCheck);
 
@@ -691,6 +694,7 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_ExpiryDate", DateTime.Parse(SaleOrderFullSet.Tables[0].Rows[i]["ExpiryDate"].ToString()));
                     command.Parameters.AddWithValue("@p_Option", "QauntitySold");
 
+                    PurchasOrderFullSet = new DataSet();
                     sdA = new SqlDataAdapter(command);
                     sdA.Fill(PurchasOrderFullSet);
                     if (connection.State.Equals(ConnectionState.Open)) { connection.Close(); }
@@ -740,10 +744,10 @@ namespace IMS
                     #region Preparing SO PO Mapping Values
                     int PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, QS, BQS, VendID;
                     DateTime ExpiryDate, PO_RecieveDate, SO_CreationDate;
-                    Decimal UCP, USP, RCP, RSP, SalesDiscount;
+                    Decimal UCP, USP, RCP, RSP, SalesDiscount, DiscountGiven, DiscountTaken;
 
                     PO_ID = PO_DetID = PO_DetEntryID = SO_ID = SO_DetID = SO_DetEntryID = ProdID = QS = BQS = VendID = 0;
-                    UCP = USP = RCP = RSP = SalesDiscount = 0;
+                    UCP = USP = RCP = RSP = SalesDiscount = DiscountGiven = DiscountTaken = 0;
 
                     int SendQuantity = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["SendQuantity"].ToString());
                     int BonusSendQuantity = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["BonusQuantity"].ToString());
@@ -757,7 +761,7 @@ namespace IMS
                     ProdID = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["ProductID"].ToString());
                     ExpiryDate = DateTime.Parse(SaleOrderFullSet.Tables[0].Rows[i]["ExpiryDate"].ToString());
                     SO_CreationDate = DateTime.Parse(SaleOrderFullSet.Tables[0].Rows[i]["OrderDate"].ToString());
-
+                    DiscountGiven = Convert.ToDecimal(SaleOrderFullSet.Tables[0].Rows[i]["UnitDiscountGiven"].ToString());
                     #region Mapping Bonus Quantity Sold
 
                     for (int j = 0; j < dtFilteredBonus.Rows.Count; j++)
@@ -778,7 +782,7 @@ namespace IMS
                         UCP = Convert.ToDecimal(dtFilteredBonus.Rows[j]["CostPrice"].ToString());
                         RCP = Convert.ToDecimal(dtFilteredBonus.Rows[j]["RealCostPrice"].ToString());
 
-
+                        DiscountTaken = Convert.ToDecimal(dtFilteredBonus.Rows[j]["UnitDiscountTaken"].ToString());
 
                         PO_RecieveDate = DateTime.Parse(dtFilteredBonus.Rows[j]["ReceivedDate"].ToString());
 
@@ -790,7 +794,7 @@ namespace IMS
                                 // need to check for re generation
                                 BQS = BonusSendQuantity;
                                 InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, 0, 0, BQS, PO_RecieveDate, SO_CreationDate,
-                                                ExpiryDate, UCP, USP, RCP, RSP, SalesDiscount, "BQS");
+                                                ExpiryDate, UCP, USP, RCP, RSP, SalesDiscount, DiscountGiven, DiscountTaken, "BQS");
                                 BonusSendQuantity = 0;
                                 //need to update the QS and BQS on PO Tables
                             }
@@ -800,7 +804,7 @@ namespace IMS
                                 BonusSendQuantity = BonusSendQuantity - Remaining;
                                 BQS = Remaining;
                                 InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, 0, 0, BQS, PO_RecieveDate, SO_CreationDate,
-                                                ExpiryDate, UCP, USP, RCP, RSP, SalesDiscount, "BQS");
+                                                ExpiryDate, UCP, USP, RCP, RSP, SalesDiscount, DiscountGiven, DiscountTaken, "BQS");
                             }
                         }
 
@@ -829,6 +833,7 @@ namespace IMS
 
                         UCP = Convert.ToDecimal(dtFiltered.Rows[j]["CostPrice"].ToString());
                         RCP = Convert.ToDecimal(dtFiltered.Rows[j]["RealCostPrice"].ToString());
+                        DiscountTaken = Convert.ToDecimal(dtFilteredBonus.Rows[j]["UnitDiscountTaken"].ToString());
 
                         PO_RecieveDate = DateTime.Parse(dtFiltered.Rows[j]["ReceivedDate"].ToString());
                         
@@ -839,7 +844,7 @@ namespace IMS
                                 
                                 QS = SendQuantity;
                                 InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, QS, 0, 0, PO_RecieveDate, SO_CreationDate,
-                                                 ExpiryDate, UCP, USP, RCP, RSP, SalesDiscount, "QS");
+                                                 ExpiryDate, UCP, USP, RCP, RSP, SalesDiscount, DiscountGiven, DiscountTaken, "QS");
                                 SendQuantity = 0;
                                 //need to update the QS and BQS on PO Tables
                             }
@@ -849,7 +854,7 @@ namespace IMS
                                 SendQuantity = SendQuantity - Remaining;
                                 QS = Remaining;
                                 InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, QS, 0, 0, PO_RecieveDate, SO_CreationDate,
-                                                ExpiryDate, UCP, USP, RCP, RSP, SalesDiscount, "QS");
+                                                ExpiryDate, UCP, USP, RCP, RSP, SalesDiscount, DiscountGiven, DiscountTaken, "QS");
 
                                 if(SendQuantity>0 && BonusQuantity >PO_BonusQuantitySold)
                                 {
@@ -858,7 +863,7 @@ namespace IMS
                                     {
                                         QS = SendQuantity;
                                         InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, QS, 0, 0, PO_RecieveDate, SO_CreationDate,
-                                                        ExpiryDate, UCP, USP, RCP, RSP, SalesDiscount, "QS");
+                                                        ExpiryDate, UCP, USP, RCP, RSP, SalesDiscount, DiscountGiven, DiscountTaken, "QS");
                                         SendQuantity = 0;
                                     }
                                     else
@@ -866,7 +871,7 @@ namespace IMS
                                         SendQuantity = SendQuantity - RemainingBonus;
                                         QS = RemainingBonus;
                                         InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, 0, QS, 0, PO_RecieveDate, SO_CreationDate,
-                                                ExpiryDate, UCP, USP, RCP, RSP, SalesDiscount, "BQS");
+                                                ExpiryDate, UCP, USP, RCP, RSP, SalesDiscount, DiscountGiven, DiscountTaken, "BQS");
                                     }
                                     
                                 }
