@@ -141,10 +141,10 @@ namespace IMS
             {
                 ReportDocument doc = new ReportDocument();
                 doc = (ReportDocument)Session["ReportDocument"];
-                doc.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, Server.MapPath(@"~\CrystalReports\Report.pdf"));
+                doc.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.Excel, @"G:\PharmacyERP\IMS\CrystalReports\ProfitReport.xlsx");
 
 
-                string pdfPath = Server.MapPath(@"~\CrystalReports\Report.pdf");
+                string pdfPath = Server.MapPath(@"~\CrystalReports\ProfitReport.xlsx");
                 WebClient client = new WebClient();
                 Byte[] buffer = client.DownloadData(pdfPath);
                 Response.ContentType = "application/pdf";

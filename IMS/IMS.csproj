@@ -244,6 +244,7 @@
     <Content Include="AcceptOrder.aspx" />
     <Content Include="AcceptPurchaseOrder.aspx" />
     <Content Include="Images\logoutIcon.png" />
+    <Content Include="StockCostAdjustment.aspx" />
     <Content Include="Unused Pages\AcceptSalesOrders.aspx" />
     <Content Include="AddDepartment.aspx" />
     <Content Include="AddEditCategory.aspx" />
@@ -1301,6 +1302,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Profitability.rpt</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="StockCostAdjustment.aspx.cs">
+      <DependentUpon>StockCostAdjustment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StockCostAdjustment.aspx.designer.cs">
+      <DependentUpon>StockCostAdjustment.aspx</DependentUpon>
     </Compile>
     <Compile Include="Unused Pages\AcceptSalesOrders.aspx.cs">
       <DependentUpon>AcceptSalesOrders.aspx</DependentUpon>

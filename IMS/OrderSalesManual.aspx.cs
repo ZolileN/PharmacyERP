@@ -661,8 +661,36 @@ namespace IMS
             }
         }
         
+
+        public void UnMappedValues(int SO_ID, int ProductID, int QuantitySold, int BonusGiven, DateTime ExpiryDate)
+        {
+            try
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("sp_InsertUnMappedvalues", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_SOID", SO_ID);
+                command.Parameters.AddWithValue("@p_ProductID", ProductID);
+                command.Parameters.AddWithValue("@p_QS", QuantitySold);
+                command.Parameters.AddWithValue("@p_BQG", BonusGiven);
+                command.Parameters.AddWithValue("@p_ExpiryDate", ExpiryDate);
+
+                command.ExecuteNonQuery();
+            }
+            catch(Exception ex)
+            {
+                WebMessageBoxUtil.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+        }
+
         public void SO_PO_Mapping(int OrderID)
         {
+            //OrderID = 2256;
             #region Mapping of PO - SO
 
             DataSet SaleOrderFullSet = new DataSet();
@@ -700,70 +728,44 @@ namespace IMS
                     if (connection.State.Equals(ConnectionState.Open)) { connection.Close(); }
                     DataTable dtFiltered = new DataTable();
                     dtFiltered = PurchasOrderFullSet.Tables[0];
-
-                    if (PurchasOrderFullSet != null && PurchasOrderFullSet.Tables[0].Rows.Count != 0)
-                    {
-                        DateTime Expiry = DateTime.Parse(SaleOrderFullSet.Tables[0].Rows[i]["ExpiryDate"].ToString());
-                        DataView dv = PurchasOrderFullSet.Tables[0].DefaultView;
-                        String Expiry1 = Expiry.ToShortDateString();
-                        dv.RowFilter = "ExpiryDate = #" + Expiry + "#";
-
-                        dtFiltered = dv.ToTable();
-                    }
-                    #endregion
-
-
-                    #region Getting Required DataSet For Bonus QuantitySold
-                    if (connection.State.Equals(ConnectionState.Closed)) { connection.Open(); }
-                    command = new SqlCommand("sp_Mapping_getPurchaseOrderDetails_byProductID", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@p_ProductID", Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["ProductID"].ToString()));
-                    command.Parameters.AddWithValue("@p_ExpiryDate", DateTime.Parse(SaleOrderFullSet.Tables[0].Rows[i]["ExpiryDate"].ToString()));
-                    command.Parameters.AddWithValue("@p_Option", "BonusQauntitySold");
-                    PurchasOrderFullSet = null;
-                    PurchasOrderFullSet = new DataSet();
-                    sdA = new SqlDataAdapter(command);
-                    sdA.Fill(PurchasOrderFullSet);
-                    if (connection.State.Equals(ConnectionState.Open)) { connection.Close(); }
-                    DataTable dtFilteredBonus = new DataTable();
-                    dtFilteredBonus = PurchasOrderFullSet.Tables[0];
-
-                    if (PurchasOrderFullSet != null && PurchasOrderFullSet.Tables[0].Rows.Count != 0)
-                    {
-                        DateTime Expiry = DateTime.Parse(SaleOrderFullSet.Tables[0].Rows[i]["ExpiryDate"].ToString());
-                        DataView dv = PurchasOrderFullSet.Tables[0].DefaultView;
-                        String Expiry1 = Expiry.ToShortDateString();
-                        dv.RowFilter = "ExpiryDate = #" + Expiry + "#";
-
-                        dtFilteredBonus = dv.ToTable();
-                    }
-                    #endregion
-
-                    #endregion
-
-                    #region Preparing SO PO Mapping Values
-                    int PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, QS, BQS, VendID;
-                    DateTime ExpiryDate, PO_RecieveDate, SO_CreationDate;
-                    Decimal UCP, USP, RCP, RSP, SalesDiscount, DiscountGiven, DiscountTaken;
-
-                    PO_ID = PO_DetID = PO_DetEntryID = SO_ID = SO_DetID = SO_DetEntryID = ProdID = QS = BQS = VendID = 0;
-                    UCP = USP = RCP = RSP = SalesDiscount = DiscountGiven = DiscountTaken = 0;
-
-                    int SendQuantity = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["SendQuantity"].ToString());
-                    int BonusSendQuantity = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["BonusQuantity"].ToString());
                     
-                    SO_ID = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["OrderID"].ToString());
-                    SO_DetID = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["orderDetailID"].ToString());
-                    SO_DetEntryID = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["entryID"].ToString());
-                    USP = Convert.ToDecimal(SaleOrderFullSet.Tables[0].Rows[i]["CostPrice"].ToString());
-                    RSP = Convert.ToDecimal(SaleOrderFullSet.Tables[0].Rows[i]["RealCostPrice"].ToString());
-                    SalesDiscount = Convert.ToDecimal(SaleOrderFullSet.Tables[0].Rows[i]["Discount"].ToString());
-                    ProdID = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["ProductID"].ToString());
-                    ExpiryDate = DateTime.Parse(SaleOrderFullSet.Tables[0].Rows[i]["ExpiryDate"].ToString());
-                    SO_CreationDate = DateTime.Parse(SaleOrderFullSet.Tables[0].Rows[i]["OrderDate"].ToString());
-                    DiscountGiven = Convert.ToDecimal(SaleOrderFullSet.Tables[0].Rows[i]["UnitDiscountGiven"].ToString());
-                    #region Mapping Bonus Quantity Sold
+                    #endregion
+                    #endregion
 
+                    if (dtFiltered != null && dtFiltered.Rows.Count <= 0)
+                    {
+                        UnMappedValues(SaleOrderID, Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["ProductID"].ToString()),
+                                                    Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["SendQuantity"].ToString()),
+                                                    Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["BonusQuantity"].ToString()),
+                                                    DateTime.Parse(SaleOrderFullSet.Tables[0].Rows[i]["ExpiryDate"].ToString()));
+                    }
+                    else
+                    {
+                        #region Preparing SO PO Mapping Values
+
+                        int PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, QS, BQS, VendID;
+                        DateTime ExpiryDate, PO_RecieveDate, SO_CreationDate;
+                        Decimal UCP, USP, RCP, RSP, SalesDiscount, DiscountGiven, DiscountTaken;
+
+                        PO_ID = PO_DetID = PO_DetEntryID = SO_ID = SO_DetID = SO_DetEntryID = ProdID = QS = BQS = VendID = 0;
+                        UCP = USP = RCP = RSP = SalesDiscount = DiscountGiven = DiscountTaken = 0;
+
+                        int SendQuantity = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["SendQuantity"].ToString());
+                        int BonusSendQuantity = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["BonusQuantity"].ToString());
+
+                        SO_ID = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["OrderID"].ToString());
+                        SO_DetID = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["orderDetailID"].ToString());
+                        SO_DetEntryID = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["entryID"].ToString());
+                        USP = Convert.ToDecimal(SaleOrderFullSet.Tables[0].Rows[i]["CostPrice"].ToString());
+                        RSP = Convert.ToDecimal(SaleOrderFullSet.Tables[0].Rows[i]["RealCostPrice"].ToString());
+                        SalesDiscount = Convert.ToDecimal(SaleOrderFullSet.Tables[0].Rows[i]["Discount"].ToString());
+                        ProdID = Convert.ToInt32(SaleOrderFullSet.Tables[0].Rows[i]["ProductID"].ToString());
+                        ExpiryDate = DateTime.Parse(SaleOrderFullSet.Tables[0].Rows[i]["ExpiryDate"].ToString());
+                        SO_CreationDate = DateTime.Parse(SaleOrderFullSet.Tables[0].Rows[i]["OrderDate"].ToString());
+                        DiscountGiven = Convert.ToDecimal(SaleOrderFullSet.Tables[0].Rows[i]["UnitDiscountGiven"].ToString());
+
+                        #region Commented Area - Previous Mapping logic
+                        /*
                     for (int j = 0; j < dtFilteredBonus.Rows.Count; j++)
                     {
                         int RecievedQuantity = 0;
@@ -801,8 +803,17 @@ namespace IMS
                             else
                             {
                                 int Remaining = BonusQuantity - PO_BonusQuantitySold;
-                                BonusSendQuantity = BonusSendQuantity - Remaining;
-                                BQS = Remaining;
+
+                                if (BonusSendQuantity > Remaining)
+                                {
+                                    BonusSendQuantity = BonusSendQuantity - Remaining;
+                                    BQS = Remaining;
+                                }
+                                else if(BonusSendQuantity <= Remaining)
+                                {
+                                    BQS = BonusSendQuantity;
+                                    BonusSendQuantity = 0;
+                                }
                                 InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, 0, 0, BQS, PO_RecieveDate, SO_CreationDate,
                                                 ExpiryDate, UCP, USP, RCP, RSP, SalesDiscount, DiscountGiven, DiscountTaken, "BQS");
                             }
@@ -814,49 +825,9 @@ namespace IMS
                         }
 
                     }
-                    #endregion
-
-                    #region Mapping Quantity Sold
-                    for (int j = 0; j < dtFiltered.Rows.Count; j++)
-                    {
-                        int RecievedQuantity = Convert.ToInt32(dtFiltered.Rows[j]["ReceivedQuantity"].ToString());
-                        int BonusQuantity = Convert.ToInt32(dtFiltered.Rows[j]["BonusQuantity"].ToString());;
-
-                        int PO_QuantitySold = Convert.ToInt32(dtFiltered.Rows[j]["QuantitySold"].ToString());
-                        int PO_BonusQuantitySold = Convert.ToInt32(dtFiltered.Rows[j]["BonusQuantitySold"].ToString());
-
-                        PO_ID = Convert.ToInt32(dtFiltered.Rows[j]["OrderID"].ToString());
-                        PO_DetID = Convert.ToInt32(dtFiltered.Rows[j]["orderDetailID"].ToString());
-                        PO_DetEntryID = Convert.ToInt32(dtFiltered.Rows[j]["entryID"].ToString());
-
-                        VendID = Convert.ToInt32(dtFiltered.Rows[j]["OrderRequestedFor"].ToString());
-
-                        UCP = Convert.ToDecimal(dtFiltered.Rows[j]["CostPrice"].ToString());
-                        RCP = Convert.ToDecimal(dtFiltered.Rows[j]["RealCostPrice"].ToString());
-                        DiscountTaken = Convert.ToDecimal(dtFilteredBonus.Rows[j]["UnitDiscountTaken"].ToString());
-
-                        PO_RecieveDate = DateTime.Parse(dtFiltered.Rows[j]["ReceivedDate"].ToString());
-                        
-                        if (SendQuantity > 0 && RecievedQuantity > 0)
-                        {
-                            if (PO_QuantitySold + SendQuantity <= RecievedQuantity)
-                            {
-                                
-                                QS = SendQuantity;
-                                InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, QS, 0, 0, PO_RecieveDate, SO_CreationDate,
-                                                 ExpiryDate, UCP, USP, RCP, RSP, SalesDiscount, DiscountGiven, DiscountTaken, "QS");
-                                SendQuantity = 0;
-                                //need to update the QS and BQS on PO Tables
-                            }
-                            else
-                            {
-                                int Remaining = RecievedQuantity - PO_QuantitySold;
-                                SendQuantity = SendQuantity - Remaining;
-                                QS = Remaining;
-                                InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, QS, 0, 0, PO_RecieveDate, SO_CreationDate,
-                                                ExpiryDate, UCP, USP, RCP, RSP, SalesDiscount, DiscountGiven, DiscountTaken, "QS");
-
-                                if(SendQuantity>0 && BonusQuantity >PO_BonusQuantitySold)
+                     
+                     
+                     if(SendQuantity>0 && BonusQuantity >PO_BonusQuantitySold)
                                 {
                                     int RemainingBonus = BonusQuantity - PO_BonusQuantitySold;
                                     if (RemainingBonus > SendQuantity)
@@ -875,19 +846,168 @@ namespace IMS
                                     }
                                     
                                 }
-                            }
-                        }
-                        if (SendQuantity <= 0)
+                     
+                     
+                     
+                     */
+                        #endregion
+
+                        #region Mapping
+                        for (int j = 0; j < dtFiltered.Rows.Count; j++)
                         {
-                            break;
+                            int RecievedQuantity = Convert.ToInt32(dtFiltered.Rows[j]["ReceivedQuantity"].ToString());
+                            int BonusQuantity = Convert.ToInt32(dtFiltered.Rows[j]["BonusQuantity"].ToString()); ;
+
+                            int PO_QuantitySold = Convert.ToInt32(dtFiltered.Rows[j]["QuantitySold"].ToString());
+                            int PO_BonusQuantitySold = Convert.ToInt32(dtFiltered.Rows[j]["BonusQuantitySold"].ToString());
+
+                            PO_ID = Convert.ToInt32(dtFiltered.Rows[j]["OrderID"].ToString());
+                            PO_DetID = Convert.ToInt32(dtFiltered.Rows[j]["orderDetailID"].ToString());
+                            PO_DetEntryID = Convert.ToInt32(dtFiltered.Rows[j]["entryID"].ToString());
+
+                            VendID = Convert.ToInt32(dtFiltered.Rows[j]["OrderRequestedFor"].ToString());
+
+                            UCP = Convert.ToDecimal(dtFiltered.Rows[j]["CostPrice"].ToString());
+                            RCP = Convert.ToDecimal(dtFiltered.Rows[j]["RealCostPrice"].ToString());
+                            DiscountTaken = Convert.ToDecimal(dtFiltered.Rows[j]["UnitDiscountTaken"].ToString());
+
+                            PO_RecieveDate = DateTime.Parse(dtFiltered.Rows[j]["ReceivedDate"].ToString());
+
+                            if (SendQuantity > 0 && RecievedQuantity > 0)
+                            {
+                                #region Mapping Quantity Sold 
+                                if (PO_QuantitySold + SendQuantity <= RecievedQuantity)
+                                {
+
+                                    QS = SendQuantity;
+                                    SendQuantity = 0;
+                                }
+                                else
+                                {
+                                    int Remaining = RecievedQuantity - PO_QuantitySold;
+
+                                    if (Remaining > 0)
+                                    {
+                                        if (SendQuantity > Remaining)
+                                        {
+                                            SendQuantity = SendQuantity - Remaining;
+                                            QS = QS + Remaining;
+
+                                            if (SendQuantity > 0 && BonusQuantity > PO_BonusQuantitySold)
+                                            {
+                                                int RemainingBonus = BonusQuantity - PO_BonusQuantitySold;
+
+                                                if (RemainingBonus > 0)
+                                                {
+                                                    if (RemainingBonus > SendQuantity)
+                                                    {
+                                                        QS = QS + SendQuantity;
+                                                        SendQuantity = 0;
+                                                    }
+                                                    else
+                                                    {
+                                                        SendQuantity = SendQuantity - RemainingBonus;
+                                                        QS = QS + RemainingBonus;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        else if (SendQuantity <= Remaining)
+                                        {
+                                            QS = SendQuantity;
+                                            SendQuantity = 0;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (SendQuantity > 0 && BonusQuantity > PO_BonusQuantitySold)
+                                        {
+                                            int RemainingBonus = BonusQuantity - PO_BonusQuantitySold;
+                                            if (RemainingBonus > SendQuantity)
+                                            {
+                                                QS = QS + SendQuantity;
+                                                SendQuantity = 0;
+                                            }
+                                            else
+                                            {
+                                                SendQuantity = SendQuantity - RemainingBonus;
+                                                QS = QS + RemainingBonus;
+                                            }
+                                        }
+                                    }
+
+                                }
+                                #endregion
+
+                                #region Mapping Bonus Quantity Sold
+                                if (PO_BonusQuantitySold + BonusSendQuantity <= BonusQuantity)
+                                {
+                                    BQS = BonusSendQuantity;
+                                    // InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, 0, 0, BQS, PO_RecieveDate, SO_CreationDate,
+                                    //    ExpiryDate, UCP, USP, RCP, RSP, SalesDiscount, DiscountGiven, DiscountTaken, "BQS");
+                                    BonusSendQuantity = 0;
+                                }
+                                else
+                                {
+                                    int Remaining = BonusQuantity - PO_BonusQuantitySold;
+
+                                    if (Remaining > 0)
+                                    {
+                                        if (BonusSendQuantity > Remaining)
+                                        {
+                                            BonusSendQuantity = BonusSendQuantity - Remaining;
+                                            BQS = Remaining;
+                                        }
+                                        else if (BonusSendQuantity <= Remaining)
+                                        {
+                                            BQS = BonusSendQuantity;
+                                            BonusSendQuantity = 0;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (BonusQuantity > 0 && SendQuantity > PO_QuantitySold)
+                                        {
+                                            int RemainingBonus = SendQuantity - PO_QuantitySold;
+
+                                            if (RemainingBonus > 0)
+                                            {
+                                                if (RemainingBonus > BonusQuantity)
+                                                {
+                                                    QS = QS + BonusQuantity;
+                                                    BonusQuantity = 0;
+                                                }
+                                                else
+                                                {
+                                                    BonusQuantity = BonusQuantity - RemainingBonus;
+                                                    QS = QS + RemainingBonus;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                #endregion
+
+                               // if (QS == 0) { QS = SendQuantity; }
+                               // if (BQS == 0) { BQS = BonusQuantity; }
+                                InsertionMapping(PO_ID, PO_DetID, PO_DetEntryID, SO_ID, SO_DetID, SO_DetEntryID, ProdID, VendID, QS, 0, BQS, PO_RecieveDate, SO_CreationDate,
+                                                    ExpiryDate, UCP, USP, RCP, RSP, SalesDiscount, DiscountGiven, DiscountTaken, "BQSQS");
+
+
+                            }
+                            if (SendQuantity <= 0 && BonusSendQuantity <= 0)
+                            {
+                                break;
+                            }
+
                         }
+                        #endregion
 
+
+
+                        #endregion
                     }
-                    #endregion
-
-                   
-
-                    #endregion
 
                 }
 
@@ -1387,7 +1507,7 @@ namespace IMS
                         connection.Close();
                 }
 
-                if ((quan + bonQuan) <= RemainingStock)
+                if ((quan + bonQuan) <= RemainingStock)//Close this out
                 {
                     if (Session["FirstOrderSO"].Equals(false))
                     {

@@ -246,5 +246,337 @@ namespace IMS
                 ReadingExcelFile(f);
             }
         }
+
+        public void AdjustmentPO_Acceptence(int orderDetID, int recQuan, int bonusQuan, float CP, float SP, int OrderMasteriD, int ProductID, DateTime Expiry)
+        {
+            #region Query execution
+
+            if (connection.State == ConnectionState.Closed)
+            {
+                connection.Open();
+            }
+            SqlCommand command = new SqlCommand("Sp_StockReceiving", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
+            command.Parameters.AddWithValue("@p_ReceivedQuantity", recQuan);
+            command.Parameters.AddWithValue("@p_ExpiredQuantity", DBNull.Value);
+            command.Parameters.AddWithValue("@p_DefectedQuantity", DBNull.Value);
+            command.Parameters.AddWithValue("@p_ReturnedQuantity", DBNull.Value);
+
+            command.Parameters.AddWithValue("@p_BarCode", DBNull.Value);
+            command.Parameters.AddWithValue("@p_DiscountPercentage", DBNull.Value);
+            command.Parameters.AddWithValue("@p_Bonus", bonusQuan);
+            command.Parameters.AddWithValue("@p_BatchNumber", DBNull.Value);
+            command.Parameters.AddWithValue("@p_Expiry", Expiry);
+            
+            command.Parameters.AddWithValue("@p_Cost", CP);
+            command.Parameters.AddWithValue("@p_Sales", SP);
+
+            command.Parameters.AddWithValue("@p_BonusTotal", bonusQuan);// total bonus added
+            command.Parameters.AddWithValue("@p_RemainingQuantity", 0);
+            command.Parameters.AddWithValue("@p_SystemType", DBNull.Value);
+            command.Parameters.AddWithValue("@p_StoreID", Convert.ToInt32(Session["UserSys"].ToString()));
+            command.Parameters.AddWithValue("@p_orderMasterID", OrderMasteriD);
+            command.Parameters.AddWithValue("@p_isInternal", "TRUE");
+            command.Parameters.AddWithValue("@p_isPO", 1);
+            command.Parameters.AddWithValue("@p_ProductID", ProductID);
+
+            command.Parameters.AddWithValue("@p_expiryOriginal", Expiry);
+            command.Parameters.AddWithValue("@p_comments", "Completed");
+            
+            command.ExecuteNonQuery();
+            #endregion
+        }
+        protected void AdjumentPO(int ProductID, int Quantity, int Bonus)
+        {
+            int quan, bQuan;
+            quan = Quantity;
+            bQuan = Bonus;
+            if (quan + bQuan > 0)
+            {
+                if (Session["FirstOrder"].Equals(false))
+                {
+                    #region Creating Order
+
+                    int pRequestFrom = 1;
+                    int pRequestTo = 333;
+                    String OrderMode = "";
+                    int OrderType = 3;//incase of vendor this should be 3
+
+                    OrderMode = "Vendor";
+                    
+
+                    String Invoice = "";
+                    String Vendor = "True";
+
+
+                    try
+                    {
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
+                        SqlCommand command = new SqlCommand("sp_CreateOrder", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        //sets vendor
+
+                        command.Parameters.AddWithValue("@p_RequestTO", pRequestTo);
+                        
+
+                        if (int.TryParse(Session["UserSys"].ToString(), out pRequestFrom))
+                        {
+                            command.Parameters.AddWithValue("@p_RequestFrom", pRequestFrom);
+                        }
+
+                        command.Parameters.AddWithValue("@p_OrderType", OrderType);
+                        command.Parameters.AddWithValue("@p_Invoice", Invoice);
+                        command.Parameters.AddWithValue("@p_OrderMode", OrderMode);
+                        command.Parameters.AddWithValue("@p_Vendor", Vendor);
+                        command.Parameters.AddWithValue("@p_orderStatus", "Pending");
+                        DataTable dt = new DataTable();
+                        SqlDataAdapter dA = new SqlDataAdapter(command);
+                        dA.Fill(dt);
+                        if (dt.Rows.Count != 0)
+                        {
+                            Session["OrderNumber"] = dt.Rows[0][0].ToString();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                    #endregion
+
+                    #region Linking to Order Detail table
+
+                    try
+                    {
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
+                        SqlCommand command = new SqlCommand("sp_InserOrderDetail_ByStore", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        string ProductNumber = "";
+                        int OrderNumber, BonusOrdered;
+                        OrderNumber = BonusOrdered = 0;
+
+                        if (int.TryParse(Session["OrderNumber"].ToString(), out OrderNumber))
+                        {
+                            command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
+                        }
+                        command.Parameters.AddWithValue("@p_ProductID", ProductID);
+                        command.Parameters.AddWithValue("@p_OrderQuantity", quan);
+                        command.Parameters.AddWithValue("@p_OrderBonusQuantity", bQuan);
+                        command.Parameters.AddWithValue("@p_status", "Pending");
+                        command.Parameters.AddWithValue("@p_comments", "Generated to Vendor");
+                        command.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                    #endregion
+
+                    Session["FirstOrder"] = true;
+                }
+                else
+                {
+                    #region Product Existing in the Current Order
+                    DataSet ds = new DataSet();
+                    try
+                    {
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
+                        SqlCommand command = new SqlCommand("sp_GetOrderbyVendor", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        int OrderNumber = 0;
+
+
+                        if (int.TryParse(Session["OrderNumber"].ToString(), out OrderNumber))
+                        {
+                            command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
+                            SqlDataAdapter sA = new SqlDataAdapter(command);
+                            sA.Fill(ds);
+
+                            int ProductNO = 0;
+                            bool ProductPresent = false;
+                            command.Parameters.AddWithValue("@p_ProductID", ProductID);
+                            
+
+                            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                            {
+                                if (Convert.ToInt32(ds.Tables[0].Rows[i]["ProductID"]).Equals(ProductNO))
+                                {
+                                    ProductPresent = true;
+                                    break;
+                                }
+                            }
+
+                            if (ProductPresent.Equals(false))
+                            {
+                                #region Linking to Order Detail table
+
+                                try
+                                {
+                                    if (connection.State == ConnectionState.Closed)
+                                    {
+                                        connection.Open();
+                                    }
+                                    command = new SqlCommand("sp_InserOrderDetail_ByStore", connection);
+                                    command.CommandType = CommandType.StoredProcedure;
+
+
+                                    if (int.TryParse(Session["OrderNumber"].ToString(), out OrderNumber))
+                                    {
+                                        command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
+                                    }
+                                    command.Parameters.AddWithValue("@p_ProductID", ProductID);
+                                    command.Parameters.AddWithValue("@p_OrderQuantity", quan);
+                                    command.Parameters.AddWithValue("@p_OrderBonusQuantity", bQuan);
+                                    command.Parameters.AddWithValue("@p_status", "Pending");
+                                    command.Parameters.AddWithValue("@p_comments", "Generated to Vendor");
+                                    command.ExecuteNonQuery();
+                                }
+                                catch (Exception ex)
+                                {
+
+                                }
+                                finally
+                                {
+                                    connection.Close();
+                                }
+                                #endregion
+                            }
+                            else
+                            {
+                                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Record can not be inserted, because it is already present')", true);
+                            }
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+
+
+                    #endregion
+
+                }
+
+                #region Populate Product Info
+                try
+                {
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
+                    SqlCommand command = new SqlCommand("Sp_FillPO_Details", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    int OrderNumber = 0;
+                    command.Parameters.AddWithValue("@p_OrderDetailID", DBNull.Value);
+                    if (int.TryParse(Session["OrderNumber"].ToString(), out OrderNumber))
+                    {
+                        command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
+                        command.ExecuteNonQuery();
+                    }
+
+
+                }
+                catch (Exception ex)
+                {
+
+                }
+                finally
+                {
+                    connection.Close();
+                }
+                #endregion
+
+            }
+            else
+            {
+                WebMessageBoxUtil.Show("Both quantity and bonus quantity cannot be 0");
+                return;
+            }
+        }
+        protected void btnImPortManualPO_Click(object sender, EventArgs e)
+        {
+           try
+           {
+               connection.Open();
+               SqlCommand command = new SqlCommand("sp_SelectUnmappedSO", connection);
+               command.CommandType = CommandType.StoredProcedure;
+
+               DataSet ds = new DataSet();
+               SqlDataAdapter sdA = new SqlDataAdapter(command);
+               sdA.Fill(ds);
+
+               Session["FirstOrder"] = false;
+
+               for(int i=0;i<ds.Tables[0].Rows.Count;i++)
+               {
+                   int ProductID = Convert.ToInt32(ds.Tables[0].Rows[i]["ProductID"].ToString());
+                   int QuantitySold = Convert.ToInt32(ds.Tables[0].Rows[i]["QuantitySold"].ToString());
+                   int BonusQauntityGiven = Convert.ToInt32(ds.Tables[0].Rows[i]["BonusQauntityGiven"].ToString());
+
+                   AdjumentPO(ProductID, QuantitySold, BonusQauntityGiven);
+               }
+           }
+           catch(Exception ex)
+           {
+
+           }
+        }
+
+        protected void btnAcceptAdjustmentPO_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("sp_GetAdjustmentPO_Entries", connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                DataSet ds = new DataSet();
+                SqlDataAdapter sdA = new SqlDataAdapter(command);
+                sdA.Fill(ds);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    int ProductID = Convert.ToInt32(ds.Tables[0].Rows[i]["ProductID"].ToString());
+                    int QuantitySold = Convert.ToInt32(ds.Tables[0].Rows[i]["OrderedQuantity"].ToString());
+                    int BonusQauntityGiven = Convert.ToInt32(ds.Tables[0].Rows[i]["BonusQuantity"].ToString());
+
+                    float CP = float.Parse(ds.Tables[0].Rows[i]["OrderedQuantity"].ToString());
+                    float SP = float.Parse(ds.Tables[0].Rows[i]["BonusQuantity"].ToString());
+
+                    int orderDetailID = Convert.ToInt32(ds.Tables[0].Rows[i]["orderDetailID"].ToString());
+                    int orderMasterID = Convert.ToInt32(ds.Tables[0].Rows[i]["OrderID"].ToString());
+
+                    DateTime Expiry = DateTime.Parse(ds.Tables[0].Rows[i]["ExpiryDate"].ToString());
+
+                    AdjustmentPO_Acceptence(orderDetailID, QuantitySold, BonusQauntityGiven, CP, SP, orderMasterID, ProductID, Expiry);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
     }
 }

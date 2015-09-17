@@ -14,7 +14,7 @@ using System.Web.UI.WebControls;
 
 namespace IMS
 {
-    public partial class Prod2Store : System.Web.UI.Page
+    public partial class Prod2Store : System.Web.UI.Page //localhost:15420/Prod2Store.aspx.cs
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         private ILog log;
