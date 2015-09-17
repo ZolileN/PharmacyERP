@@ -31,7 +31,7 @@ namespace IMS
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack)
+            if (!IsPostBack)
             {
 
             }
@@ -39,9 +39,329 @@ namespace IMS
 
         public void SaleOrderCreation(String InvoiceDate, String SalesRep, String SalesTo, DataTable Products)
         {
-            
+            int sOM_ID;
+            try
+            {
+                sOM_ID = CreateSOMaster(InvoiceDate, SalesRep, SalesTo);
+
+                Dictionary<string, QtyDiscountPair> prod_QtyMap = new Dictionary<string, QtyDiscountPair>();
+                Dictionary<string, int> prod_DetIDMap = new Dictionary<string, int>();
+                Dictionary<string, int> name_IDMap = new Dictionary<string, int>();
+
+                #region map product,qty,discount
+                for (int i = 0; i < Products.Rows.Count; i++)
+                {
+                    string prodName = Products.Rows[i]["ProductName"].ToString();
+                    int qty = 0;
+                    int.TryParse(Products.Rows[i]["ProductQuantity"].ToString(), out qty);
+                    float disc = 0;
+                    float.TryParse(Products.Rows[i]["ProductDiscount"].ToString(), out disc);
+                    if (!prod_QtyMap.ContainsKey(prodName))
+                    {
+                        QtyDiscountPair val = new QtyDiscountPair(qty, disc);
+                        prod_QtyMap.Add(prodName, val);
+                    }
+                    else
+                    {
+                        QtyDiscountPair val = prod_QtyMap[prodName];
+                        val.updateQuantity(qty);
+                        val.updateDiscount(disc);
+                        prod_QtyMap.Add(prodName, val);
+                    }
+                } 
+                #endregion
+
+                #region create so detail 
+                foreach (string key in prod_QtyMap.Keys)
+                {
+                    //passing dictionary as reference to get the product Name-ID map, this is just to save DB calls
+                    int soID = CreateSODetail(key, prod_QtyMap[key].Quantity, prod_QtyMap[key].Discount, ref name_IDMap);
+                    prod_DetIDMap.Add(key, soID);
+                } 
+                #endregion
+
+                #region create so entry
+                for (int i = 0; i < Products.Rows.Count; i++)
+                {
+                    int qty = 0;
+                    float disc = 0;
+                    float ucp = 0;
+                    int prodID = 0;
+                    int orderDetailID = 0;
+                    string prodName = Products.Rows[i]["ProductName"].ToString();
+                    int.TryParse(Products.Rows[i]["ProductQuantity"].ToString(), out qty);
+                    float.TryParse(Products.Rows[i]["ProductDiscount"].ToString(), out disc);
+                    string expiry = Products.Rows[i]["ProductExpiry"].ToString();
+                    string batch = Products.Rows[i]["ProductBatch"].ToString();
+                    float.TryParse(Products.Rows[i]["ProductUCP"].ToString(), out ucp);
+
+                    if (name_IDMap.ContainsKey(prodName))
+                    {
+                        prodID = name_IDMap[prodName];
+                        if (prod_DetIDMap.ContainsKey(prodName))
+                        {
+                            orderDetailID = prod_DetIDMap[prodName];
+                            CreateSOEntry(prodID, orderDetailID, qty, disc, batch, ucp, expiry);
+                        }
+                    }
+
+                } 
+                #endregion
+                
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
+
         }
-       
+
+        private void CreateSOEntry(int productID,int orderDetailID,int qty,float Discount,string batch,float CP,string expiry) 
+        {
+            try 
+            {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+
+             
+                SqlCommand command = new SqlCommand("sp_EntrySaleOrderDetails", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_OrderDetailID", orderDetailID);
+                command.Parameters.AddWithValue("@p_ProductID",productID);
+                command.Parameters.AddWithValue("@p_StockID", DBNull.Value);
+                command.Parameters.AddWithValue("@p_CostPrice", CP);
+                command.Parameters.AddWithValue("@p_SalePrice", DBNull.Value);
+                command.Parameters.AddWithValue("@p_Expiry",expiry);
+                command.Parameters.AddWithValue("@p_Batch", batch);
+                command.Parameters.AddWithValue("@p_SendQuantity", qty);
+                command.Parameters.AddWithValue("@p_BonusQuantity", DBNull.Value);
+                command.Parameters.AddWithValue("@p_BarCode", DBNull.Value);
+                command.Parameters.AddWithValue("@p_Discount", Discount);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
+
+        }
+        private int CreateSODetail(string prodName, int quantity, float discount,ref Dictionary<string,int> name_IDMap )
+        {
+            int productID = 0;
+            int sOD_ID = 0;
+
+            try
+            {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+
+                #region fetch productID from name
+
+                SqlCommand command = new SqlCommand("Sp_GetProductByName", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_prodName", prodName);
+                DataSet ds = new DataSet();
+                SqlDataAdapter sA1 = new SqlDataAdapter(command);
+                sA1.Fill(ds);
+                if (ds != null && ds.Tables[0] != null)
+                {
+                    int.TryParse(ds.Tables[0].Rows[0][0].ToString(), out productID);
+                    if (name_IDMap.ContainsKey(prodName))
+                    {
+                        name_IDMap[prodName] = productID;
+                    }
+                    else
+                    {
+                        name_IDMap.Add(prodName, productID);
+                    }
+                    //Session["DetailID"] = LinkResult.Tables[0].Rows[0][0];
+                }
+
+                #endregion
+
+                #region Order detail Creation
+                if (productID != 0)
+                {
+                    command = new SqlCommand("sp_InserOrderDetail_ByOutStore", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+
+
+                    int OrderNumber, BonusOrdered, ProductNumber, Quantity;
+                    OrderNumber = BonusOrdered = ProductNumber = Quantity = 0;
+
+                    if (int.TryParse(Session["OrderNumberSO"].ToString(), out OrderNumber))
+                    {
+                        command.Parameters.AddWithValue("@p_OrderID", OrderNumber);
+                    }
+                    command.Parameters.AddWithValue("@p_ProductID", productID);
+
+
+                    command.Parameters.AddWithValue("@p_OrderQuantity", Quantity);
+
+
+
+                    command.Parameters.AddWithValue("@p_BonusQuantity", DBNull.Value);
+
+
+                    command.Parameters.AddWithValue("@p_status", "Pending");
+                    command.Parameters.AddWithValue("@p_comments", "Generated to Outside Store");
+
+
+                    command.Parameters.AddWithValue("@p_Discount", discount);
+
+
+                    DataSet LinkResult = new DataSet();
+                    SqlDataAdapter sA = new SqlDataAdapter(command);
+                    sA.Fill(LinkResult);
+                    if (LinkResult != null && LinkResult.Tables[0] != null)
+                    {
+                        int.TryParse(LinkResult.Tables[0].Rows[0][0].ToString(), out sOD_ID);
+                        //Session["DetailID"] = LinkResult.Tables[0].Rows[0][0];
+                    }
+
+                }
+                return sOD_ID;
+                #endregion
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
+        }
+        private int CreateSOMaster(String InvoiceDate, String SalesRep, String SalesTo)
+        {
+
+            #region Creating Order
+            int sOM_ID = 0;
+            int pRequestFrom = 0;
+            int pRequestTo = 0;
+            String OrderMode = "";
+            int OrderType = 3;//incase of vendor this should be 3
+
+            OrderMode = "Sales";
+
+            // String Invoice = txtIvnoice.Text;
+            String Vendor = "True";
+            int Salesman = 0;
+
+            try
+            {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+
+                #region fetch salesman ID from name
+
+                SqlCommand command = new SqlCommand("Sp_GetUser_ByName", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_userName", SalesRep);
+                DataSet ds = new DataSet();
+                SqlDataAdapter sA1 = new SqlDataAdapter(command);
+                sA1.Fill(ds);
+                if (ds != null && ds.Tables[0] != null)
+                {
+                    int.TryParse(ds.Tables[0].Rows[0][0].ToString(), out Salesman);
+                    
+                    //Session["DetailID"] = LinkResult.Tables[0].Rows[0][0];
+                }
+
+                #endregion
+
+                #region fetch system name
+                command = new SqlCommand("Sp_GetSystem_byName", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_storeName", SalesTo);
+                DataSet ds1 = new DataSet();
+                SqlDataAdapter sA12 = new SqlDataAdapter(command);
+                sA12.Fill(ds1);
+                if (ds != null && ds1.Tables[0] != null)
+                {
+                    int.TryParse(ds1.Tables[0].Rows[0][4].ToString(), out pRequestTo);
+
+                    //Session["DetailID"] = LinkResult.Tables[0].Rows[0][0];
+                }
+                #endregion
+
+                command = new SqlCommand("sp_CreateSO_Previous", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                //sets vendor
+                if (pRequestTo > 0)
+                {
+                    command.Parameters.AddWithValue("@p_RequestTO", pRequestTo);
+                }
+                else 
+                {
+                    command.Parameters.AddWithValue("@p_RequestTO", DBNull.Value);
+                }
+                //sets warehouse/store
+                if (int.TryParse(Session["UserSys"].ToString(), out pRequestFrom))
+                {
+                    command.Parameters.AddWithValue("@p_RequestFrom", pRequestFrom);
+                }
+                int userID = Convert.ToInt32(Session["UserID"].ToString());
+
+                command.Parameters.AddWithValue("@p_OrderType", OrderType);
+                command.Parameters.AddWithValue("@p_Invoice", DBNull.Value);
+                command.Parameters.AddWithValue("@p_OrderMode", OrderMode);
+                command.Parameters.AddWithValue("@p_Vendor", Vendor);
+                command.Parameters.AddWithValue("@p_userID", userID);
+                command.Parameters.AddWithValue("@p_dateCreated", DateTime.ParseExact(InvoiceDate, "dd/MM/yyyy", null));
+                if (Salesman>0)
+                {
+                    command.Parameters.AddWithValue("@p_Salesman", Salesman);
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@p_Salesman", DBNull.Value);
+                }
+                command.Parameters.AddWithValue("@p_orderStatus", "Pending");
+                command.Parameters.AddWithValue("@p_isCreatedSO", "false");
+                DataTable dt = new DataTable();
+                SqlDataAdapter dA = new SqlDataAdapter(command);
+                dA.Fill(dt);
+                if (dt.Rows.Count != 0)
+                {
+                    int.TryParse(dt.Rows[0][0].ToString(), out sOM_ID);
+                }
+                return sOM_ID;
+            }
+            catch (Exception ex)
+            {
+
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
+            #endregion
+
+        }
         public void ReadingExcelFile(String file)
         {
             try
@@ -60,7 +380,7 @@ namespace IMS
                 MyBook = MyApp.Workbooks.Open(file);
 
                 int Sheets = MyBook.Sheets.Count;
-                
+
                 if (Sheets > 1)
                 {
                     MySheet = (Excel.Worksheet)MyBook.Sheets[2];
@@ -109,7 +429,7 @@ namespace IMS
 
                     String[] SalesOrderTo = SalesTo.Split('\n');
                     SalesTo = SalesOrderTo[0].Trim();
-                   // SalesTo = SalesTo.Replace(System.Environment.NewLine, string.Empty);
+                    // SalesTo = SalesTo.Replace(System.Environment.NewLine, string.Empty);
                 }
 
                 List<String> ProductName = new List<string>();
@@ -121,8 +441,8 @@ namespace IMS
                 int j = 0;
                 for (int i = 2; i <= xlrange.Count + 1; i++)
                 {
-                    
-                    if (MySheet.Cells[lastRow, 2].Value != null && lastRow <=49)
+
+                    if (MySheet.Cells[lastRow, 2].Value != null && lastRow <= 49)
                     {
                         ProductName.Add(MySheet.Cells[lastRow, 2].Value.ToString());
                         ProductExpiry.Add(MySheet.Cells[lastRow, 3].Value.ToString());
@@ -157,54 +477,54 @@ namespace IMS
                 dt.Columns.Add("ProductUCP", typeof(String));
                 dt.Columns.Add("ProductDiscount", typeof(String));
 
-               for(int i=0;i<ProductName.Count;i++)
-               {
-                   DataRow dr = dt.NewRow();
-                   dr["ProductName"] = ProductName[i];
-                   dr["ProductExpiry"] = ProductExpiry[i];
-                   dr["ProductBatch"] = ProductBatch[i];
-                   dr["ProductQuantity"] = ProductQuantity[i];
-                   dr["ProductUCP"] = ProductUCP[i];
-                   dr["ProductDiscount"] = ProductDiscount[i];
-                   dt.Rows.Add(dr);
-                   dt.AcceptChanges();
-               }
+                for (int i = 0; i < ProductName.Count; i++)
+                {
+                    DataRow dr = dt.NewRow();
+                    dr["ProductName"] = ProductName[i];
+                    dr["ProductExpiry"] = ProductExpiry[i];
+                    dr["ProductBatch"] = ProductBatch[i];
+                    dr["ProductQuantity"] = ProductQuantity[i];
+                    dr["ProductUCP"] = ProductUCP[i];
+                    dr["ProductDiscount"] = ProductDiscount[i];
+                    dt.Rows.Add(dr);
+                    dt.AcceptChanges();
+                }
 
-               #region Check Invoice Number
-               if (connection.State == ConnectionState.Closed)
-               {
-                   connection.Open();
-               }
-               SqlCommand command = new SqlCommand("sp_VerifyBillNo", connection);
-               command.CommandType = CommandType.StoredProcedure;
-               command.Parameters.AddWithValue("@p_Invoice", InvoiceNumber);
+                #region Check Invoice Number
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("sp_VerifyBillNo", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@p_Invoice", InvoiceNumber);
 
 
-               DataSet ds = new DataSet();
-               SqlDataAdapter sA = new SqlDataAdapter(command);
-               sA.Fill(ds);
-               #endregion
+                DataSet ds = new DataSet();
+                SqlDataAdapter sA = new SqlDataAdapter(command);
+                sA.Fill(ds);
+                #endregion
 
-               if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
-               {
-                   SaleOrderCreation(InvoiceDate, SalesRep, SalesTo, dt);
-               }
-                
+                if (ds != null && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+                {
+                    SaleOrderCreation(InvoiceDate, SalesRep, SalesTo, dt);
+                }
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
-               
+
         }
 
-       
+
         private List<String> DirSearch(string sDir)
         {
             List<String> files = new List<String>();
             try
             {
-                foreach (string f in Directory.GetFiles(sDir,"*.xlsx",SearchOption.AllDirectories))
+                foreach (string f in Directory.GetFiles(sDir, "*.xlsx", SearchOption.AllDirectories))
                 {
                     files.Add(f);
                 }
@@ -222,26 +542,26 @@ namespace IMS
         }
         protected void btnImportManualSO_Click(object sender, EventArgs e)
         {
-            List<String> Files = DirSearch(@"G:\MANUALINVOICE\MANUALINVOICE");
+            List<String> Files = DirSearch(@"D:\MANUALINVOICE\MANUALINVOICE");
             //Files = new List<string>();
             //Files.Add(@"G:\10-05-2015-INV-344.xlsx");
             List<String> ActualInvoices = new List<String>();
             List<String> BonusInvoices = new List<String>();
 
-            foreach(string f in Files)
+            foreach (string f in Files)
             {
-               String fileName = Path.GetFileName(f);
-               if(fileName.Contains('B') || fileName.Contains('b'))
-               {
-                   BonusInvoices.Add(f);
-               }
-               else
-               {
-                   ActualInvoices.Add(f);
-               }
+                String fileName = Path.GetFileName(f);
+                if (fileName.Contains('B') || fileName.Contains('b'))
+                {
+                    BonusInvoices.Add(f);
+                }
+                else
+                {
+                    ActualInvoices.Add(f);
+                }
             }
 
-            foreach(string f in ActualInvoices)
+            foreach (string f in ActualInvoices)
             {
                 ReadingExcelFile(f);
             }
@@ -577,6 +897,42 @@ namespace IMS
             {
 
             }
+        }
+    }
+
+    /// <summary>
+    /// internal class that holds quantity and discount against a product
+    /// </summary>
+    internal class QtyDiscountPair
+    {
+        private int _quantity = 0;
+        private float _discount;
+        public int Quantity
+        {
+            get { return _quantity; }
+        }
+
+
+        public float Discount
+        {
+            get { return _discount; }
+
+        }
+
+        internal QtyDiscountPair(int qty, float disc)
+        {
+            _quantity = qty;
+            _discount = disc;
+        }
+
+        internal void updateQuantity(int val)
+        {
+            _quantity += val;
+        }
+
+        internal void updateDiscount(float val)
+        {
+            _discount = val;
         }
     }
 }
