@@ -47,6 +47,10 @@ namespace IMS
                     else if (Session["MODE"].Equals("EDIT"))
                     {
                         btnCreateProduct.Text = "UPDATE";
+                        ProductCost.Enabled = false;
+                        ProductSale.Enabled = false;
+                        
+                       
                         //BarCodeSerial.Visible = false;
                     }
 

@@ -245,6 +245,8 @@
     <Content Include="AcceptPurchaseOrder.aspx" />
     <Content Include="Images\logoutIcon.png" />
     <Content Include="StockCostAdjustment.aspx" />
+    <Content Include="StockManipulation.aspx" />
+    <Content Include="StockManipulationPrint.aspx" />
     <Content Include="Unused Pages\AcceptSalesOrders.aspx" />
     <Content Include="AddDepartment.aspx" />
     <Content Include="AddEditCategory.aspx" />
@@ -1309,6 +1311,20 @@
     </Compile>
     <Compile Include="StockCostAdjustment.aspx.designer.cs">
       <DependentUpon>StockCostAdjustment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StockManipulation.aspx.cs">
+      <DependentUpon>StockManipulation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StockManipulation.aspx.designer.cs">
+      <DependentUpon>StockManipulation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StockManipulationPrint.aspx.cs">
+      <DependentUpon>StockManipulationPrint.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StockManipulationPrint.aspx.designer.cs">
+      <DependentUpon>StockManipulationPrint.aspx</DependentUpon>
     </Compile>
     <Compile Include="Unused Pages\AcceptSalesOrders.aspx.cs">
       <DependentUpon>AcceptSalesOrders.aspx</DependentUpon>

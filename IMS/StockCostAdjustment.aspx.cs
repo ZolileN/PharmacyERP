@@ -31,10 +31,11 @@ namespace IMS
         {
             if (!IsPostBack)
             {
-                // for Testing - must Remove after linkage
+                
                 txtPhysicalQuantity.Attributes.Add("onchange", "changeValues();return false;");
-                Session["AdjustmentPorductID"] = 236456;
-                Session["AdjustmentStockID"] = 50052;
+                // for Testing - must Remove after linkage
+                //Session["AdjustmentPorductID"] = 236456;
+                //Session["AdjustmentStockID"] = 50052;
                 // ----------------------------------------    
 
                 if (Session["AdjustmentPorductID"] != null && Session["AdjustmentPorductID"].ToString() != "" &&

@@ -112,7 +112,7 @@
                    <asp:TemplateField HeaderText="Action">
                         <ItemTemplate>
                             <asp:LinkButton CssClass="btn btn-default add-btn" ID="btnAdd" Text="Add" runat="server" CommandName="AddVal" CommandArgument='<%# Container.DisplayIndex%>'/>
-                            <asp:LinkButton CssClass="btn btn-default edit-btn" ID="btnEdit" Text="Edit" runat="server" CommandName="Edit" CommandArgument='<%# Container.DisplayIndex%>'/>
+                            <!--<asp:LinkButton CssClass="btn btn-default edit-btn" ID="btnEdit" Text="Edit" runat="server" CommandName="Edit" CommandArgument='<%# Container.DisplayIndex%>'/>-->
                             <span onclick="return confirm('Are you sure you want to delete this record?')">
                                 <asp:LinkButton CssClass="btn btn-default del-btn" ID="btnDelete" Text="Delete" runat="server" CommandName="Delete" CommandArgument='<%# Container.DisplayIndex  %>'/>
                             </span>
