@@ -235,7 +235,7 @@ namespace IMS
         {
 
             Session["Print"] = null;
-             Response.Redirect("StockManipulation.aspx", false);
+            Response.Redirect("StockManipulation.aspx?Param=Printing", false);
            
         }
 

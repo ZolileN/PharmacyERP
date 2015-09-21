@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="WarehouseMain.aspx.cs" Inherits="IMS.WarehouseMain" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <img src="images/ims-main.png" width="1139" height="690">
+    <img src="images/ims-main.png" width="1139" height="690" style="margin-left:-16px; margin-top:-17px">
     
          <%--<asp:Button ID="btnManageInventory" runat="server" CssClass="btn btn-primary btn-large" Text="Manage Inventory" OnClick="btnManageInventory_Click"/>
          <asp:Button ID="btnManageOrders" runat="server" CssClass="btn btn-primary btn-large" Text="Manage Orders" OnClick="btnManageOrders_Click"/>
