@@ -193,7 +193,8 @@ namespace IMS
 
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
-
+           
+            Response.Redirect("StockManipulation?Param=Adjustment", false);
         }
     }
 }
