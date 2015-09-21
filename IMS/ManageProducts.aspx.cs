@@ -139,6 +139,10 @@ namespace IMS
 
         }
 
+        //protected void Edit(Object sender, CommandEventArgs e)
+        //{
+        //    System.Diagnostics.Debug.WriteLine("Edit");
+        //}
 
         protected void btnManageProducts_Click(object sender, EventArgs e)
         {
@@ -147,7 +151,40 @@ namespace IMS
 
         protected void btnAddProduct_Click(object sender, EventArgs e)
         {
+            Session["MODE"] = null;
             Session["MODE"] = "ADD";
+            Session.Remove("dsProducts_MP");
+
+
+            //Session.Remove("MS_ItemNo");
+            //Session.Remove("MS_ItemName");
+            //Session.Remove("MS_ItemType");
+            //Session.Remove("MS_Manufacterer");
+            ////Session.Remove("MS_Category");
+            //Session.Remove("MS_GenericName");
+            //Session.Remove("MS_Control");
+            //Session.Remove("MS_BinNumber");
+            //Session.Remove("MS_GreenRainCode");
+            //Session.Remove("MS_BrandName");
+            //Session.Remove("MS_MaxiMumDiscount");
+            //Session.Remove("MS_LineID");
+            //Session.Remove("MS_UnitSale");
+            //Session.Remove("MS_UnitCost");
+            //Session.Remove("MS_itemAWT");
+            //Session.Remove("MS_itemForm");
+            //Session.Remove("MS_itemStrength");
+            //Session.Remove("MS_itemPackType");
+            //Session.Remove("MS_itemPackSize");
+            //Session.Remove("MS_Description");
+            //Session.Remove("MS_Bonus12");
+            //Session.Remove("MS_Bonus25");
+            //Session.Remove("MS_Bonus50");
+            //Session.Remove("MS_Active");
+             
+            
+                                        
+
+
             Response.Redirect("AddProduct.aspx",false);
         }
 
