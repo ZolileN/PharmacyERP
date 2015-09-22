@@ -55,6 +55,8 @@ namespace IMS
                         }
                         Session["ViewSalesOrders"] = null;
                         Session["FirstOrderSO"] = true;
+                        Session["RequestedSalesMan"] = null;
+                        Session["RequestedFromID"] = null;
                         systemSet = new DataSet();
                         ProductSet = new DataSet();
                         LoadData();

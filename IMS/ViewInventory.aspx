@@ -1,75 +1,87 @@
 ﻿<%@ Page Title="Inventory" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ViewInventory.aspx.cs" Inherits="IMS.ViewInventory" %>
-<%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="cc1" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <%@ Register TagPrefix="uc" TagName="print_uc" Src="~/UserControl/uc_printBarcode.ascx" %>
 
- 
-<%@ Register TagName="ProductsPopup"  TagPrefix="UCProductsPopup" Src="~/UserControl/ProductsPopupGrid.ascx" %>
+
+<%@ Register TagName="ProductsPopup" TagPrefix="UCProductsPopup" Src="~/UserControl/ProductsPopupGrid.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-   <script src="Scripts/SearchSuggest.js"></script>
-       <style>
+    <script src="Scripts/SearchSuggest.js"></script>
+    <style>
+        .suggest_link {
+            background-color: #FFFFFF;
+            padding: 2px 6px 2px 6px;
+        }
 
-           .suggest_link 
-	       {
-	       background-color: #FFFFFF;
-	       padding: 2px 6px 2px 6px;
-	       }	
-	       .suggest_link_over
-	       {
-	       background-color: #3366CC;
-	       padding: 2px 6px 2px 6px;	
-	       }	
-	       #search_suggest 
-	       {
-	       position: absolute;
-	       background-color: #FFFFFF;
-	       text-align: left;
-	       border: 1px solid #000000;	
-           overflow:auto;
-       		
-	       }
+        .suggest_link_over {
+            background-color: #3366CC;
+            padding: 2px 6px 2px 6px;
+        }
 
-       </style>
-    
-            <asp:Label runat="server" ID="NoProductMessage" CssClass="control-label" Visible="false" Text="No Stock Available"></asp:Label> 
-  
-        <table width="100%">
+        #search_suggest {
+            position: absolute;
+            background-color: #FFFFFF;
+            text-align: left;
+            border: 1px solid #000000;
+            overflow: auto;
+        }
+    </style>
+
+    <asp:Label runat="server" ID="NoProductMessage" CssClass="control-label" Visible="false" Text="No Stock Available"></asp:Label>
+
+    <table width="100%">
 
         <tbody>
-        <tr>
-        <td><h4>Current Stock</h4></td>
-        <td align="right">
-                     <asp:Button ID="btnSearch" runat="server" OnClick="btnSearch_Click" Enabled="true" Text="SEARCH" CssClass="btn btn-primary"/>
-                     <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Enabled="true" Text="REFRESH" CssClass="btn btn-info"/>
-                     <asp:Button ID="btnPrint" runat="server" OnClick="btnPrint_Click" Text="PRINT" CssClass="btn btn-success btn-large" Visible="true" />
-                     <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnBack_Click"/>
-                     <asp:Button ID="btnFax" runat="server" Text="FAX" CssClass="btn btn-large no-print" Visible="false" />
-                     <asp:Button ID="btnEmail" runat="server"  Text="EMAIL" CssClass="btn btn-large no-print" Visible="false" />
-        </td>
-        </tr>
-		<tr><td height="5"></td></tr>
+            <tr>
+                <td>
+                    <h4>Current Stock</h4>
+                </td>
+                <td align="right">
+                    <asp:Button ID="btnSearch" runat="server" OnClick="btnSearch_Click" Enabled="true" Text="SEARCH" CssClass="btn btn-primary" />
+                    <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Enabled="true" Text="REFRESH" CssClass="btn btn-info" />
+                    <asp:Button ID="btnPrint" runat="server" OnClick="btnPrint_Click" Text="PRINT" CssClass="btn btn-success btn-large" Visible="true" />
+                    <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnBack_Click" />
+                    <asp:Button ID="btnFax" runat="server" Text="FAX" CssClass="btn btn-large no-print" Visible="false" />
+                    <asp:Button ID="btnEmail" runat="server" Text="EMAIL" CssClass="btn btn-large no-print" Visible="false" />
+                </td>
+            </tr>
+            <tr>
+                <td height="5"></td>
+            </tr>
         </tbody>
 
-        </table>
-
-     <table cellspacing="0" cellpadding="5" border="0" width="100%" class="formTbl">
+    </table>
+    <hr />
+    <table cellspacing="0" cellpadding="5" border="0" width="100%" class="formTbl">
         <tr>
-            <td> <asp:Label runat="server" AssociatedControlID="ProductDept" CssClass="control-label" Visible="true">Product Department</asp:Label></td>
-            <td><asp:DropDownList runat="server" ID="ProductDept" CssClass="form-control" Width="29%" Visible="true" AppendDataBoundItems="True"  /></td>
-            <td><asp:Label runat="server" AssociatedControlID="ProductCat" CssClass="control-label" Visible="true">Product Category</asp:Label></td>
-            <td><asp:DropDownList runat="server" ID="ProductCat" CssClass="form-control" Width="29%" Visible="true"  /></td>
+            <td>
+                <asp:Label runat="server" AssociatedControlID="ProductDept" CssClass="control-label" Visible="true">Product Department</asp:Label></td>
+            <td>
+                <asp:DropDownList runat="server" ID="ProductDept" CssClass="form-control" Width="29%" Visible="true" AppendDataBoundItems="True" /></td>
+            <td>
+                <asp:Label runat="server" AssociatedControlID="ProductCat" CssClass="control-label" Visible="true">Product Category</asp:Label></td>
+            <td>
+                <asp:DropDownList runat="server" ID="ProductCat" CssClass="form-control" Width="29%" Visible="true" /></td>
         </tr>
         <tr>
-            <td> <asp:Label runat="server" AssociatedControlID="ProductSubCat" CssClass=" control-label" Visible="true"> Product SubCategory </asp:Label></td>
-            <td><asp:DropDownList runat="server" ID="ProductSubCat" CssClass="form-control" Width="29%" Visible="true" /></td>
-            <td><asp:Label runat="server" AssociatedControlID="ddlProductOrderType" CssClass="control-label">Product Order Type</asp:Label></td>
-            <td><asp:DropDownList runat="server" ID="ddlProductOrderType"  CssClass="form-control" Width="29%"/></td>
-            <td><asp:Label runat="server" AssociatedControlID="ddlStockAt" CssClass="control-label">Select Pharmacy </asp:Label></td>
-            <td><asp:DropDownList runat="server" ID="ddlStockAt" CssClass="form-control" Width="280" />
-             </tr>
+            <td>
+                <asp:Label runat="server" AssociatedControlID="ProductSubCat" CssClass=" control-label" Visible="true"> Product SubCategory </asp:Label></td>
+            <td>
+                <asp:DropDownList runat="server" ID="ProductSubCat" CssClass="form-control" Width="29%" Visible="true" /></td>
+            <td>
+                <asp:Label runat="server" AssociatedControlID="ddlProductOrderType" CssClass="control-label">Product Order Type</asp:Label></td>
+            <td>
+                <asp:DropDownList runat="server" ID="ddlProductOrderType" CssClass="form-control" Width="29%" /></td>
+            <td>
+                <asp:Label runat="server" AssociatedControlID="ddlStockAt" CssClass="control-label">Select Pharmacy </asp:Label></td>
+            <td>
+                <asp:DropDownList runat="server" ID="ddlStockAt" CssClass="form-control" Width="280" />
+        </tr>
         <tr>
-            <td><asp:Label runat="server" ID="lblProd"   CssClass="control-label">Select Product</asp:Label></td>
-             
+            <td>
+                <asp:Label runat="server" ID="lblProd" CssClass="control-label">Select Product</asp:Label></td>
+
             <%--<td> 
                 <asp:TextBox ID="txtSearch" runat="server" CssClass="product"></asp:TextBox>
                 <asp:Label ID="lblProductId" runat="server" Visible="false"></asp:Label>
@@ -87,139 +99,141 @@
 
                   </td>--%>
             <td>
-                <input type="text" id="txtSearch" runat="server" name="txtSearch"   onkeyup="searchSuggest(event);" autocomplete="off"  /> 
-                <div id="search_suggest" style="visibility: hidden;" ></div>
+                <input type="text" id="txtSearch" runat="server" name="txtSearch" onkeyup="searchSuggest(event);" autocomplete="off" />
+                <div id="search_suggest" style="visibility: hidden;"></div>
             </td>
-            <td><asp:Label runat="server" AssociatedControlID="ProductType" Visible="true" CssClass=" control-label">Product Type</asp:Label></td>
-             <td><asp:DropDownList runat="server" ID="ProductType" Visible="true"  CssClass="form-control" Width="29%"/></td>
-             <td><asp:Label runat="server" AssociatedControlID="ddlActive" CssClass="control-label">Search Active</asp:Label></td>
+            <td>
+                <asp:Label runat="server" AssociatedControlID="ProductType" Visible="true" CssClass=" control-label">Product Type</asp:Label></td>
+            <td>
+                <asp:DropDownList runat="server" ID="ProductType" Visible="true" CssClass="form-control" Width="29%" /></td>
+            <td>
+                <asp:Label runat="server" AssociatedControlID="ddlActive" CssClass="control-label">Search Active</asp:Label></td>
             <%-- <td> <asp:CheckBox ID="chkActive" runat="server">
                        
                      </asp:CheckBox>
                  </td>--%>
             <td>
-                <asp:DropDownList runat="server" ID="ddlActive" Visible="true" CssClass="form-control" Width="29%"/>
+                <asp:DropDownList runat="server" ID="ddlActive" Visible="true" CssClass="form-control" Width="29%" />
             </td>
-             </tr>        
-        </table>
+        </tr>
+    </table>
 
-     <div class="form-horizontal">
-    <div class="form-group">
-        <asp:GridView ID="dgvStockDisplayGrid" runat="server" CssClass="table table-striped table-bordered table-condensed" AllowPaging="True" PageSize="10" 
+    <div class="form-horizontal">
+        <div class="form-group">
+            <asp:GridView ID="dgvStockDisplayGrid" runat="server" CssClass="table table-striped table-bordered table-condensed" AllowPaging="True" PageSize="10"
                 AutoGenerateColumns="false" OnPageIndexChanging="StockDisplayGrid_PageIndexChanging" OnRowEditing="dgvStockDisplayGrid_RowEditing" OnRowDeleting="dgvStockDisplayGrid_RowDeleting"
-            onrowcommand="StockDisplayGrid_RowCommand" OnRowDataBound="StockDisplayGrid_RowDataBound">
-                 <Columns>
-                   <asp:TemplateField HeaderText="Action">
+                OnRowCommand="StockDisplayGrid_RowCommand" OnRowDataBound="StockDisplayGrid_RowDataBound">
+                <Columns>
+                    <asp:TemplateField HeaderText="Action" Visible="false">
                         <ItemTemplate>
-                            <asp:LinkButton CssClass="btn btn-default add-btn" ID="btnAdd" Text="Add" runat="server" CommandName="AddVal" CommandArgument='<%# Container.DisplayIndex%>'/>
+                            <asp:LinkButton CssClass="btn btn-default add-btn" ID="btnAdd" Text="Add" runat="server" CommandName="AddVal" CommandArgument='<%# Container.DisplayIndex%>' />
                             <!--<asp:LinkButton CssClass="btn btn-default edit-btn" ID="btnEdit" Text="Edit" runat="server" CommandName="Edit" CommandArgument='<%# Container.DisplayIndex%>'/>-->
-                            <span onclick="return confirm('Are you sure you want to delete this record?')">
-                                <asp:LinkButton CssClass="btn btn-default del-btn" ID="btnDelete" Text="Delete" runat="server" CommandName="Delete" CommandArgument='<%# Container.DisplayIndex  %>'/>
-                            </span>
+                            <%--<span onclick="return confirm('Are you sure you want to delete this record?')">--%>
+                                <asp:LinkButton Visible="false" CssClass="btn btn-default del-btn" ID="btnDelete" Text="Delete" runat="server" CommandName="Delete" CommandArgument='<%# Container.DisplayIndex  %>' />
+                           <%-- </span>--%>
                         </ItemTemplate>
-                         <ItemStyle  Width="180px" HorizontalAlign="Left"/>
+                        <ItemStyle Width="180px" HorizontalAlign="Left" />
                     </asp:TemplateField>
-                     <asp:TemplateField HeaderText="BarCode">
+                    <asp:TemplateField HeaderText="BarCode">
                         <ItemTemplate>
                             <asp:Label ID="BarCode" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("BarCode") %>' Width="100px"></asp:Label>
                         </ItemTemplate>
-                         <ItemStyle  Width="110px" HorizontalAlign="Left"/>
+                        <ItemStyle Width="110px" HorizontalAlign="Left" />
                     </asp:TemplateField>
-                     <asp:TemplateField Visible="true" HeaderText="Product Description" HeaderStyle-Width="330px">
+                    <asp:TemplateField Visible="true" HeaderText="Product Description" HeaderStyle-Width="330px">
                         <ItemTemplate>
                             <asp:Label ID="ProductName" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("prodDesc")==DBNull.Value?"":Eval("prodDesc") %>' Width="330px"></asp:Label>
                         </ItemTemplate>
-                         <ItemStyle  Width="330px" HorizontalAlign="Left"/>
+                        <ItemStyle Width="330px" HorizontalAlign="Left" />
                     </asp:TemplateField>
-                     <asp:TemplateField HeaderText="Strength" Visible="false" HeaderStyle-Width ="125px">
+                    <asp:TemplateField HeaderText="Strength" Visible="false" HeaderStyle-Width="125px">
                         <ItemTemplate>
-                            <asp:Label ID="ProductStrength" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("strength") %>'  Width="125px" ></asp:Label>
+                            <asp:Label ID="ProductStrength" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("strength") %>' Width="125px"></asp:Label>
                         </ItemTemplate>
-                         <ItemStyle  Width="125px" HorizontalAlign="Left"/>
+                        <ItemStyle Width="125px" HorizontalAlign="Left" />
                     </asp:TemplateField>
-                     <asp:TemplateField HeaderText="Dosage Form" Visible="false" HeaderStyle-Width ="110px">
+                    <asp:TemplateField HeaderText="Dosage Form" Visible="false" HeaderStyle-Width="110px">
                         <ItemTemplate>
-                            <asp:Label ID="dosage" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("dosageForm") %>'  Width="100px" ></asp:Label>
+                            <asp:Label ID="dosage" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("dosageForm") %>' Width="100px"></asp:Label>
                         </ItemTemplate>
-                         <ItemStyle  Width="110px" HorizontalAlign="Left"/>
+                        <ItemStyle Width="110px" HorizontalAlign="Left" />
                     </asp:TemplateField>
-                      <asp:TemplateField HeaderText="Package Size" Visible="false" HeaderStyle-Width ="160px">
+                    <asp:TemplateField HeaderText="Package Size" Visible="false" HeaderStyle-Width="160px">
                         <ItemTemplate>
-                            <asp:Label ID="packSize" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("PackageSize") %>'  Width="170px" ></asp:Label>
+                            <asp:Label ID="packSize" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("PackageSize") %>' Width="170px"></asp:Label>
                         </ItemTemplate>
-                         <ItemStyle  Width="170px" HorizontalAlign="Left"/>
+                        <ItemStyle Width="170px" HorizontalAlign="Left" />
                     </asp:TemplateField>
-                   
-                     <asp:TemplateField HeaderText="Expiry">
+
+                    <asp:TemplateField HeaderText="Expiry">
                         <ItemTemplate>
-                            <asp:Label ID="lblExpiry" CssClass="col-md-2 control-label"  runat="server" Text='<%# Eval(("Expiry").ToString(), "{0:dd/MM/yyyy}")%>' Width="100px"></asp:Label>
+                            <asp:Label ID="lblExpiry" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval(("Expiry").ToString(), "{0:dd/MM/yyyy}")%>' Width="100px"></asp:Label>
                         </ItemTemplate>
-                         <ItemStyle  Width="100px" HorizontalAlign="Left"/>
+                        <ItemStyle Width="100px" HorizontalAlign="Left" />
                     </asp:TemplateField>
-                       <asp:TemplateField HeaderText="Batch">
+                    <asp:TemplateField HeaderText="Batch">
                         <ItemTemplate>
-                            <asp:Label ID="lblBatch" CssClass="col-md-2 control-label"  runat="server" Text='<%# Eval("batchNo")%>' Width="100px"></asp:Label>
+                            <asp:Label ID="lblBatch" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("batchNo")%>' Width="100px"></asp:Label>
                         </ItemTemplate>
-                         <ItemStyle  Width="100px" HorizontalAlign="Left"/>
+                        <ItemStyle Width="100px" HorizontalAlign="Left" />
                     </asp:TemplateField>
-                     <asp:TemplateField HeaderText="Unit Cost">
+                    <asp:TemplateField HeaderText="Unit Cost">
                         <ItemTemplate>
                             <asp:Label ID="lblUnitCostPrice" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("CostPrice") %>' Width="60px"></asp:Label>
                         </ItemTemplate>
-                        <ItemStyle  Width="60px" HorizontalAlign="Left"/>
-                       
+                        <ItemStyle Width="60px" HorizontalAlign="Left" />
+
                     </asp:TemplateField>
 
-                     <asp:TemplateField HeaderText="Unit Sale">
+                    <asp:TemplateField HeaderText="Unit Sale">
                         <ItemTemplate>
                             <asp:Label ID="lblUnitSalePrice" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("SalePrice") %>' Width="60px"></asp:Label>
                         </ItemTemplate>
-                        <ItemStyle  Width="60px" HorizontalAlign="Left"/>
-                       
+                        <ItemStyle Width="60px" HorizontalAlign="Left" />
+
                     </asp:TemplateField>
-                       <asp:TemplateField HeaderText="Quantity">
+                    <asp:TemplateField HeaderText="Quantity">
                         <ItemTemplate>
                             <asp:Label ID="lblQuantity" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Qauntity") %>' Width="40px"></asp:Label>
                         </ItemTemplate>
-                        <ItemStyle  Width="50px" HorizontalAlign="Left"/>
+                        <ItemStyle Width="50px" HorizontalAlign="Left" />
                     </asp:TemplateField>
-                    
-                     <%-- org command argument CommandArgument='<%# Eval("BarCode") %>'--%>
-                     
-                       <asp:TemplateField HeaderText="stockID" Visible="false">
+
+                    <%-- org command argument CommandArgument='<%# Eval("BarCode") %>'--%>
+
+                    <asp:TemplateField HeaderText="stockID" Visible="false">
                         <ItemTemplate>
                             <asp:Label ID="lblstockid" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("StockID") %>' Width="40px"></asp:Label>
                         </ItemTemplate>
-                        <ItemStyle  Width="50px" HorizontalAlign="Left"/>
+                        <ItemStyle Width="50px" HorizontalAlign="Left" />
                     </asp:TemplateField>
-                      <asp:TemplateField HeaderText="prodID" Visible="false">
+                    <asp:TemplateField HeaderText="prodID" Visible="false">
                         <ItemTemplate>
                             <asp:Label ID="lblprodID" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("ProductID") %>' Width="40px"></asp:Label>
                         </ItemTemplate>
-                        <ItemStyle  Width="50px" HorizontalAlign="Left"/>
+                        <ItemStyle Width="50px" HorizontalAlign="Left" />
                     </asp:TemplateField>
-                 </Columns>
-            <PagerStyle CssClass = "GridPager" />
-             </asp:GridView>
-       
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                
+                </Columns>
+                <PagerStyle CssClass="GridPager" />
+            </asp:GridView>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                </div>
             </div>
         </div>
     </div>
-    </div>
 
-     <asp:Button ID="_editPopupButton" runat="server" Style="display: none" />
-        <%--<cc1:ModalPopupExtender ID="mpeEditProduct" runat="server" RepositionMode="RepositionOnWindowResizeAndScroll" DropShadow="true" 
+    <asp:Button ID="_editPopupButton" runat="server" Style="display: none" />
+    <%--<cc1:ModalPopupExtender ID="mpeEditProduct" runat="server" RepositionMode="RepositionOnWindowResizeAndScroll" DropShadow="true" 
             PopupDragHandleControlID="_prodEditPanel" TargetControlID="_editPopupButton" PopupControlID="_prodEditPanel" BehaviorID="EditModalPopupMessage">
         </cc1:ModalPopupExtender>--%>
 
-        <asp:Panel ID="_prodEditPanel" runat="server" Width="100%" Style="display: none">
-            <asp:UpdatePanel ID="_prodEdit" runat="server">
-                <ContentTemplate>
-                    <uc:print_uc ID="ucPrint" runat="server" />
-                </ContentTemplate>
-            </asp:UpdatePanel>
-        </asp:Panel>
+    <asp:Panel ID="_prodEditPanel" runat="server" Width="100%" Style="display: none">
+        <asp:UpdatePanel ID="_prodEdit" runat="server">
+            <ContentTemplate>
+                <uc:print_uc ID="ucPrint" runat="server" />
+            </ContentTemplate>
+        </asp:UpdatePanel>
+    </asp:Panel>
 </asp:Content>

@@ -914,6 +914,7 @@ namespace IMS.UserControl
 
                                         SA.Fill(ds);
                                         Session["dsProducts_PopUp"] = ds;
+                                        Session["dsProducts_MP"] = ds;
                                         ProductSet = ds;
                                         gvParent.DataSource = ds;
                                         gvParent.DataBind();

@@ -753,45 +753,63 @@ namespace IMS
                 if (cb != null && cb.Checked)
                 {
                     // Delete row! (Well, not really...)
-                    
+
                     // First, get the ProductID for the selected row
                     int productID =
                           Convert.ToInt32(dgvStockDisplayGrid.DataKeys[row.RowIndex].Value.ToString());
-                        //Convert.ToInt32(dgvStockDisplayGrid.DataKeys[row.RowIndex].Value);
-               //   Convert.ToInt32(dgvStockDisplayGrid.Rows[row.RowIndex].Cells[1]);
+                    //Convert.ToInt32(dgvStockDisplayGrid.DataKeys[row.RowIndex].Value);
+                    //   Convert.ToInt32(dgvStockDisplayGrid.Rows[row.RowIndex].Cells[1]);
 
-                  System.Diagnostics.Debug.WriteLine(counter++);
-
-
-                 
-
-                 
-                      
-                 
-
-                  foreach (DataRow dr in LoadedData.Rows) {
-
-                     
-
-                      //if ((Convert.ToInt32(dr["ProductID"].ToString())).CompareTo((productID)) == 0) {
-                      if((productID).CompareTo(Convert.ToInt32(dr["SerialNum"].ToString()))==0){
-                          Print.Rows.Add(dr["ProductID"].ToString(),dr["StockID"].ToString(), dr["UPC"].ToString(), dr["GreenRainCode"].ToString(), dr["BarCode"].ToString(), dr["prodDesc"].ToString(), dr["Expiry"].ToString(), float.Parse(dr["Qauntity"].ToString(), 
-      System.Globalization.CultureInfo.InvariantCulture), dr["CostPrice"].ToString(), dr["SalePrice"].ToString());
+                    System.Diagnostics.Debug.WriteLine(counter++);
 
 
-                          System.Diagnostics.Debug.Write(productID + "\t"+counter);
 
-                      }
 
-                    
-                  }
 
-                 
 
-                  Print.AcceptChanges();
 
-                 
-                    
+
+                    foreach (DataRow dr in LoadedData.Rows)
+                    {
+
+                        //if ((Convert.ToInt32(dr["ProductID"].ToString())).CompareTo((productID)) == 0) {
+
+                        int ProductFind = Convert.ToInt32(dr["ProductID"].ToString());
+                        int StockFind = Convert.ToInt32(dr["StockID"].ToString());
+
+                        bool found = false;
+                        foreach (DataRow tr in Print.Rows)
+                        {
+
+                            if (ProductFind.Equals(Convert.ToInt32(tr["ProductID"].ToString())) && StockFind.Equals(Convert.ToInt32(tr["StockID"].ToString())))
+                            {
+
+                                found = true;
+                                break;
+                            }
+
+                        }
+
+
+                        if ((productID).CompareTo(Convert.ToInt32(dr["SerialNum"].ToString())) == 0 && found == false)
+                        {
+                            Print.Rows.Add(dr["ProductID"].ToString(), dr["StockID"].ToString(), dr["UPC"].ToString(), dr["GreenRainCode"].ToString(), dr["BarCode"].ToString(), dr["prodDesc"].ToString(), dr["Expiry"].ToString(), float.Parse(dr["Qauntity"].ToString(),
+        System.Globalization.CultureInfo.InvariantCulture), dr["CostPrice"].ToString(), dr["SalePrice"].ToString());
+
+
+                            System.Diagnostics.Debug.Write(productID + "\t" + counter);
+
+                        }
+
+
+                    }
+
+
+
+                    Print.AcceptChanges();
+
+
+
                 }
             }
 
@@ -801,14 +819,33 @@ namespace IMS
             ViewState["LoadedData"] = null;
             dgvStockDisplayGrid.DataSource = null;
             dgvStockDisplayGrid.DataBind();
-           // BindGridbyFilters();
+            // BindGridbyFilters();
         }
 
         protected void btnSearchProduct_Click(object sender, ImageClickEventArgs e)
         {
         }
 
-        
+        public bool AreAllColumnsEmpty(DataRow dr)
+            {
+             if (dr == null)
+             {
+              return true;
+             }
+             else
+             {
+              foreach(var value in dr.ItemArray)
+              {
+                if (value != null)
+                {
+                  return false;
+                }
+              }
+              return true;
+             }  
+        }
+
+
 
         protected void ProductList_SelectedIndexChanged(object sender, EventArgs e)
         {
