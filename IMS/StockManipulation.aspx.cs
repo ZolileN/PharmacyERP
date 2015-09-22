@@ -61,6 +61,7 @@ namespace IMS
 
                     DataTable print = new DataTable();
                     print.Columns.Add("ProductID", typeof(string));
+                    print.Columns.Add("StockID", typeof(string));
                     print.Columns.Add("UPC", typeof(string));
                     print.Columns.Add("GreenRainCode", typeof(string));
                     print.Columns.Add("BarCode", typeof(string));
@@ -770,9 +771,11 @@ namespace IMS
 
                   foreach (DataRow dr in LoadedData.Rows) {
 
+                     
+
                       //if ((Convert.ToInt32(dr["ProductID"].ToString())).CompareTo((productID)) == 0) {
-                      if((productID).CompareTo(Convert.ToInt32(dr["SerialNum"].ToString()))==0 ){
-                          Print.Rows.Add(dr["ProductID"].ToString(), dr["UPC"].ToString(), dr["GreenRainCode"].ToString(), dr["BarCode"].ToString(), dr["prodDesc"].ToString(), dr["Expiry"].ToString(), float.Parse(dr["Qauntity"].ToString(), 
+                      if((productID).CompareTo(Convert.ToInt32(dr["SerialNum"].ToString()))==0){
+                          Print.Rows.Add(dr["ProductID"].ToString(),dr["StockID"].ToString(), dr["UPC"].ToString(), dr["GreenRainCode"].ToString(), dr["BarCode"].ToString(), dr["prodDesc"].ToString(), dr["Expiry"].ToString(), float.Parse(dr["Qauntity"].ToString(), 
       System.Globalization.CultureInfo.InvariantCulture), dr["CostPrice"].ToString(), dr["SalePrice"].ToString());
 
 
@@ -882,13 +885,44 @@ namespace IMS
             //Adding Print Stock to Session
 
             DataTable Print = (DataTable)ViewState["Print"];
+            
+            //DataTable ChangedPrint = Print;
+            //List<int> Counters = new List<int>();
+            //int Count = 0;
+            //for (int i = 0; i < Print.Rows.Count; i++)
+            //{
+            //    int ProductID = Convert.ToInt32(Print.Rows[i]["ProductID"].ToString());
+            //    int StockID = Convert.ToInt32(Print.Rows[i]["StockID"].ToString());
+
+            //    for (int j = 1; j < Print.Rows.Count; j++)
+            //    {
+            //        int ProductID_1 = Convert.ToInt32(Print.Rows[j]["ProductID"].ToString());
+            //        int StockID_1 = Convert.ToInt32(Print.Rows[j]["StockID"].ToString());
+
+            //        if (ProductID == ProductID_1 && StockID == StockID_1)
+            //        {
+            //            Print.Rows[i].Delete();
+            //            Print.AcceptChanges();
+            //        }
+                    
+
+            //    }
+
+            //}
+
+            //for (int i = 0; i < Counters.Count; i++)
+            //{
+            //    Print.Rows[Counters[i]].Delete();
+            //    Print.AcceptChanges();
+            //}
+
             Session["Print"] = Print;
 
             #endregion
 
             Response.Redirect("StockManipulationPrint.aspx",false);
 
-
+           
         }
 
         protected void btnSearchProduct_Click1(object sender, ImageClickEventArgs e)
@@ -991,7 +1025,7 @@ namespace IMS
                         if ((productID).CompareTo(Convert.ToInt32(dr["SerialNum"].ToString())) == 0)
                         {
                             PRODUCT_ID = Convert.ToInt32(dr["ProductID"].ToString());
-                            STOCK_ID = Convert.ToInt32(dr["ProductID"].ToString());
+                            STOCK_ID = Convert.ToInt32(dr["StockID"].ToString());
 
                             Session["AdjustmentPorductID"] = PRODUCT_ID;
                             Session["AdjustmentStockID"] = STOCK_ID;
@@ -1037,7 +1071,7 @@ namespace IMS
                         if ((productID).CompareTo(Convert.ToInt32(dr["SerialNum"].ToString())) == 0)
                         {
                             PRODUCT_ID = Convert.ToInt32(dr["ProductID"].ToString());
-                            STOCK_ID = Convert.ToInt32(dr["ProductID"].ToString());
+                            STOCK_ID = Convert.ToInt32(dr["StockID"].ToString());
 
                             Session["AdjustmentPorductID"] = PRODUCT_ID;
                             Session["AdjustmentStockID"] = STOCK_ID;

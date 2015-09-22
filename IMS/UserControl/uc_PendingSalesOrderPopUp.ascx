@@ -22,57 +22,46 @@
                    
                 </ItemTemplate>
             </asp:TemplateField>
-            
-          
 
-            <asp:BoundField DataField="ProductName" HeaderText="Product Name"  />
-           <asp:BoundField DataField="FromPlace" HeaderText="Order From"   />
-              <asp:TemplateField HeaderText="OrderDetailID" Visible="false">
-                <ItemTemplate>
-                    <asp:Label ID="lblOrderDetailID" runat="server" Text='<%# Eval("OrderDetailID") %>'></asp:Label>
-                </ItemTemplate>
-            </asp:TemplateField>
-
-            <asp:TemplateField HeaderText="OrderID" Visible="false">
+            <asp:TemplateField HeaderText="Order No." Visible="true">
                 <ItemTemplate>
                     <asp:Label ID="lblOrderID" runat="server" Text='<%# Eval("OrderID") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
+
+             <asp:TemplateField HeaderText="Order Date" Visible="true">
+                <ItemTemplate>
+                    <asp:Label ID="lblOrderDate" runat="server" Text='<%# Eval("OrderDate") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
 			
+            <asp:TemplateField HeaderText="Order From" Visible="false">
+                <ItemTemplate>
+                    <asp:Label ID="lblOrderBy" runat="server" Text='<%# Eval("FromPlace") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+
 			   <asp:TemplateField HeaderText="Order To">
                 <ItemTemplate>
                     <asp:Label ID="lblOrderTo" runat="server" Text='<%# Eval("ToPlace") %>'  Width="160px"></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
-            <asp:TemplateField HeaderText="ProductID" Visible="false">
+           
+            <asp:TemplateField HeaderText="No. Of Products" >
                 <ItemTemplate>
-                    <asp:Label ID="lblProductID" runat="server" Text='<%# Eval("ProductID") %>'></asp:Label>
+                    <asp:Label ID="lblProductNumber" runat="server" Text='<%# Eval("NumberProducts") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
-            <asp:TemplateField HeaderText="AvailableStock">
+
+            <asp:TemplateField HeaderText="Total Quantity" Visible="true">
                 <ItemTemplate>
-                    <asp:Label ID="lblAvailableStock" runat="server" Text='<%# Eval("AvailableStock") %>'></asp:Label>
+                    <asp:Label ID="lblQuantity" runat="server" Text='<%# Eval("Qauntity") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
-            <asp:TemplateField HeaderText="Qauntity Ordered" >
+           
+             <asp:TemplateField HeaderText="Status" Visible="true">
                 <ItemTemplate>
-                    <asp:Label ID="lblQauntity" runat="server" Text='<%# Eval("Qauntity") %>'></asp:Label>
-                </ItemTemplate>
-            </asp:TemplateField>
-            <asp:TemplateField HeaderText="Bonus Qty" Visible="false">
-                <ItemTemplate>
-                    <asp:Label ID="lblBonus" runat="server" Text='<%# Eval("Bonus") %>'></asp:Label>
-                </ItemTemplate>
-            </asp:TemplateField>
-            
-            <asp:TemplateField HeaderText="Discount" Visible="false">
-                <ItemTemplate>
-                    <asp:Label ID="lblDiscount" runat="server" Text='<%# Eval("Discount") %>'></asp:Label>
-                </ItemTemplate>
-            </asp:TemplateField>
-             <asp:TemplateField HeaderText="Order Requested For" Visible="false">
-                <ItemTemplate>
-                    <asp:Label ID="lblOrderRequestedFor" runat="server" Text='<%# Eval("OrderRequestedFor") %>'></asp:Label>
+                    <asp:Label ID="lblStatus" runat="server" Text='<%# Eval("Status") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
          
@@ -108,3 +97,12 @@
          }
      }
     </script>
+
+
+   <!--<asp:BoundField DataField="ProductName" HeaderText="Product Name"  />
+           <asp:BoundField DataField="FromPlace" HeaderText="Order From"   />
+              <asp:TemplateField HeaderText="OrderDetailID" Visible="false">
+                <ItemTemplate>
+                    <asp:Label ID="lblOrderDetailID" runat="server" Text='<%# Eval("OrderDetailID") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>-->

@@ -182,6 +182,44 @@ namespace IMS
                         mpeNonGeneratedSOsPopup.Show();
                     }
                    
+                    
+
+                }
+                if (StockAt != null)
+                {
+                    //StockAt.Items.Insert(0, "Select System");
+                    if (Session["RequestedFromID"] != null)
+                    {
+                        // set index based on value
+                        foreach (ListItem Items in StockAt.Items)
+                        {
+                            if (Items.Text.Equals(Session["RequestedFromID"].ToString()))
+                            {
+                                StockAt.SelectedIndex = StockAt.Items.IndexOf(Items);
+                                break;
+                            }
+                        }
+                        StockAt.Enabled = false;
+                    }
+
+                }
+
+                if (ddlSalesman != null)
+                {
+                    //StockAt.Items.Insert(0, "Select System");
+                    if (Session["RequestedSalesMan"] != null)
+                    {
+                        // set index based on value
+                        foreach (ListItem Items in ddlSalesman.Items)
+                        {
+                            if (Items.Text.Equals(Session["RequestedSalesMan"].ToString()))
+                            {
+                                ddlSalesman.SelectedIndex = ddlSalesman.Items.IndexOf(Items);
+                                break;
+                            }
+                        }
+                        ddlSalesman.Enabled = false;
+                    }
 
                 }
                 expHandler.CheckForErrorMessage(Session);
@@ -1100,25 +1138,27 @@ namespace IMS
 
             }
 
-            if(btnAccept.Text.Equals("RE-GENERATE ORDER"))
+            /*if(btnAccept.Text.Equals("RE-GENERATE ORDER"))
             {
                 RegenerationSO_MappingChanges(Convert.ToInt32(Session["OrderNumberSO"].ToString()));
             }
             else if (Session["RegenerationMapping"] != null && Session["RegenerationMapping"].ToString().Equals("YES"))
             {
                 RegenerationSO_MappingChanges(Convert.ToInt32(Session["OrderNumberSO"].ToString()));
-            }
+            }*/
+
             DataSet dsProducts = (DataSet)Session["dsProdcts"];
             Session["RequestedNO"] = Convert.ToInt32(dsProducts.Tables[0].Rows[0]["OrderID"].ToString());
             bool status=checkOrderStatus(Convert.ToInt32(dsProducts.Tables[0].Rows[0]["OrderID"].ToString()));
 
             if (status)
             {
-                SO_PO_Mapping(Convert.ToInt32(dsProducts.Tables[0].Rows[0]["OrderID"].ToString()));
+                //SO_PO_Mapping(Convert.ToInt32(dsProducts.Tables[0].Rows[0]["OrderID"].ToString()));
 
                 
                 Session["FirstOrderSO"] = false;
                 Session["OrderSalesDetail"] = false;
+                Session["RequestedFromID"] = StockAt.SelectedItem.Value;
                 Session["SelectedIndexValue"] = StockAt.SelectedItem;
                 if (Session["ExistingOrder"].Equals(true)) { Session["RequestedFromID"] = Session["SystemID"]; }
 

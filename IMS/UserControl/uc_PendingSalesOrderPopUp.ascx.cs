@@ -73,18 +73,18 @@ namespace IMS.UserControl
                 SqlCommand command = new SqlCommand("sp_GetUserPendingSaleOrders", connection);
                 command.Parameters.AddWithValue("@p_LoggedinnUserId", int.Parse(Session["UserSys"].ToString()));
                 command.CommandType = CommandType.StoredProcedure;
-                command.ExecuteNonQuery();
+               // command.ExecuteNonQuery();
 
                 DataSet dsResults = new DataSet();
                 SqlDataAdapter da = new SqlDataAdapter(command);
                 da.Fill(dsResults);
-                if (dsResults.Tables[0].Rows.Count > 0)
+                if (dsResults.Tables[0].Rows.Count > 0 && dsResults.Tables[1].Rows.Count > 0)
                 {
-                    gdvPendingSOs.DataSource = dsResults;
+                    gdvPendingSOs.DataSource = dsResults.Tables[0];
                     gdvPendingSOs.DataBind();
-                    Session["OrderNumberSO"] = dsResults.Tables[0].Rows[0]["OrderID"].ToString();
-                    Session["dsProdcts"] = dsResults;
-                    Session["dsSalesOrders"] = dsResults;
+                    //Session["OrderNumberSO"] = dsResults.Tables[0].Rows[0]["OrderID"].ToString(); ---- This needs to be set in the Checked Selection.
+                    //Session["dsProdcts"] = dsResults.Tables[1];
+                    Session["dsSalesOrders"] = dsResults.Tables[1];
                 }
             }
             catch (Exception ex)
@@ -152,11 +152,34 @@ namespace IMS.UserControl
                     CheckBox chkRow = (row.Cells[0].FindControl("chkCtrl") as CheckBox);
                     if (chkRow.Checked)
                     {
-                        Session["RequestedFromID"] = ((Label)row.FindControl("lblOrderRequestedFor")).Text;
+                        Session["RequestedFromID"] = ((Label)row.FindControl("lblOrderTo")).Text;
+
+                        int SelectedOrdID = Convert.ToInt32(((Label)row.FindControl("lblOrderID")).Text.ToString());
+
+                        DataTable dt = (DataTable) Session["dsSalesOrders"];
+
+                        if (SelectedOrdID != 0)
+                        {
+                            DataView dv = dt.DefaultView;
+                            dv.RowFilter = "OrderID = " + SelectedOrdID;
+
+                            dt = dv.ToTable();
+                        }
+
+                        Session["dsSalesOrders"] = dt;
+                        DataSet RsltTable = new DataSet();
+                        RsltTable.Tables.Add(dt);
+                        Session["dsProdcts"] = RsltTable;
+
+                        Session["OrderNumberSO"] = SelectedOrdID;
+                        Session["FirstOrderSO"] = true;
                         Control ctl = this.Parent;
                         TextBox txtDiscountPercentage = null;
                         Button btnGenerateSO;
                         GridView gvStockDisplayGrid = (GridView)ctl.FindControl("StockDisplayGrid");
+
+                        DropDownList ddlStore = (DropDownList)ctl.FindControl("StockAt");
+                        DropDownList ddlSalesMan = (DropDownList)ctl.FindControl("ddlSalesman");
 
                         txtDiscountPercentage = (TextBox)ctl.FindControl("SelectDiscount");
                         btnGenerateSO = (Button)ctl.FindControl("btnAccept");
@@ -166,26 +189,61 @@ namespace IMS.UserControl
                             //txtDiscountPercentage.Text = row.Cells[10].Text;
                             Label lblDicount = (Label)row.FindControl("lblDiscount");
 
-                            txtDiscountPercentage.Text = lblDicount.Text;
+                            //txtDiscountPercentage.Text = lblDicount.Text;
                             if(btnGenerateSO != null)
                             {
                                 btnGenerateSO.Visible = true;
                             }
                         }
+
+                        if(ddlStore!=null)
+                        {
+                            foreach (ListItem Items in ddlStore.Items)
+                            {
+                                if (Items.Text.Equals(dt.Rows[0]["ToPlace"].ToString()))
+                                {
+                                    ddlStore.SelectedIndex = ddlStore.Items.IndexOf(Items);
+                                    Session["RequestedFromID"] = dt.Rows[0]["ToPlace"].ToString();
+
+                                    break;
+                                }
+                            }
+                            ddlStore.Enabled = false;
+                        }
+
+                        if(ddlSalesMan!=null)
+                        {
+                            foreach (ListItem Items in ddlSalesMan.Items)
+                            {
+                                if (Items.Text.Equals(dt.Rows[0]["SalesMan"].ToString()))
+                                {
+                                    ddlSalesMan.SelectedIndex = ddlSalesMan.Items.IndexOf(Items);
+                                    Session["RequestedSalesMan"] = dt.Rows[0]["SalesMan"].ToString();
+
+                                    break;
+                                }
+                            }
+                            //ddlSalesMan.SelectedIndex = Convert.ToInt32(dt.Rows[0]["SalesManID"].ToString());
+                            ddlSalesMan.Enabled = false;
+                        }
                         if (gvStockDisplayGrid != null)
                         {
-                            DataSet ds = (DataSet)Session["dsSalesOrders"];
-                            if (ds.Tables[0].Rows.Count > 0)
+                            DataSet ds = new DataSet();
+                            DataTable dtSaleOrders = (DataTable)Session["dsSalesOrders"];
+                            //ds.Tables.Add(dtSaleOrders);
+                            if (dtSaleOrders != null && dtSaleOrders.Rows.Count > 0)
                             {
-                                gvStockDisplayGrid.DataSource = ds;
+                                gvStockDisplayGrid.DataSource = dtSaleOrders;
                                 gvStockDisplayGrid.DataBind();
                             }
                         }
 
                     }
                 }
-                Session.Remove("dsSalesOrders");
+                
             }
+
+            Session.Remove("dsSalesOrders");
         }
     }
 }

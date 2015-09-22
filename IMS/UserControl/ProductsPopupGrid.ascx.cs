@@ -428,7 +428,11 @@ namespace IMS.UserControl
                             lbProdId.Text = Server.HtmlDecode(row.Cells[5].Text);
                         }
 
+                        //DataSet dsProducts_ProdPopUp = new DataSet();
+                        //dsProducts_ProdPopUp.Tables.Add((DataTable)Session["dsProdcts"]);
+
                         DataSet dsProducts_ProdPopUp = (DataSet)Session["dsProdcts"];
+                        
                         if (dsProducts_ProdPopUp != null && dsProducts_ProdPopUp.Tables.Count > 0 && dsProducts_ProdPopUp.Tables[0].Rows.Count > 0)
                         {
                             DataRow[] drs = dsProducts_ProdPopUp.Tables[0].Select("ProductID = '" + lbProdId.Text + "'");
@@ -438,7 +442,12 @@ namespace IMS.UserControl
                                 return;
                             }
                         }
-                        DataSet dsProducts_POPopUp = (DataSet)Session["dsProducts_MP"];
+                       
+                        DataSet dsProducts_POPopUp = new DataSet();
+                        dsProducts_POPopUp = (DataSet)Session["dsProducts_MP"];
+                        
+                       //dsProducts_POPopUp.Tables.Add((DataTable)Session["dsProducts_MP"]);
+                        
                         if (dsProducts_POPopUp != null && dsProducts_POPopUp.Tables.Count > 0 && dsProducts_POPopUp.Tables[0].Rows.Count > 0)
                         {
                             DataRow[] drs = dsProducts_POPopUp.Tables[0].Select("ProductID = '" + lbProdId.Text + "'");
