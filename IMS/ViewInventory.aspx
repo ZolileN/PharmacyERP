@@ -124,13 +124,13 @@
                 AutoGenerateColumns="false" OnPageIndexChanging="StockDisplayGrid_PageIndexChanging" OnRowEditing="dgvStockDisplayGrid_RowEditing" OnRowDeleting="dgvStockDisplayGrid_RowDeleting"
                 OnRowCommand="StockDisplayGrid_RowCommand" OnRowDataBound="StockDisplayGrid_RowDataBound">
                 <Columns>
-                    <asp:TemplateField HeaderText="Action" Visible="false">
+                    <asp:TemplateField HeaderText="Action" Visible="true">
                         <ItemTemplate>
-                            <asp:LinkButton CssClass="btn btn-default add-btn" ID="btnAdd" Text="Add" runat="server" CommandName="AddVal" CommandArgument='<%# Container.DisplayIndex%>' />
-                            <!--<asp:LinkButton CssClass="btn btn-default edit-btn" ID="btnEdit" Text="Edit" runat="server" CommandName="Edit" CommandArgument='<%# Container.DisplayIndex%>'/>-->
-                            <%--<span onclick="return confirm('Are you sure you want to delete this record?')">--%>
-                                <asp:LinkButton Visible="false" CssClass="btn btn-default del-btn" ID="btnDelete" Text="Delete" runat="server" CommandName="Delete" CommandArgument='<%# Container.DisplayIndex  %>' />
-                           <%-- </span>--%>
+                            <asp:LinkButton CssClass="btn btn-default add-btn" ID="btnAdd" Visible="false" Text="Add" runat="server" CommandName="AddVal" CommandArgument='<%# Container.DisplayIndex%>' />
+                            <asp:LinkButton CssClass="btn btn-default edit-btn" ID="btnEdit" Visible="false" Text="Edit" runat="server" CommandName="Edit" CommandArgument='<%# Container.DisplayIndex%>' />
+                                <span onclick="return confirm('Are you sure you want to delete this record?')">
+                                <asp:LinkButton CssClass="btn btn-default del-btn" ID="btnDelete" Text="Delete" runat="server" CommandName="Delete" CommandArgument='<%# Container.DisplayIndex  %>' />
+                                </span>
                         </ItemTemplate>
                         <ItemStyle Width="180px" HorizontalAlign="Left" />
                     </asp:TemplateField>

@@ -37,7 +37,10 @@ namespace IMS
                     Session.Remove("dsProdcts");
                     Session.Remove("dsProducts_MP");
                     btnCreateOrder.Attributes.Add("OnClientClick", "if(ValidateForm()) {return false; }");
-
+                    Session["RequestedSalesMan"] = null;
+                    Session["RequestedFromID"] = null;
+                    StockAt.Enabled = true;
+                    ddlSalesman.Enabled = true;
 
                   //  txtIvnoice.Text = "SO-" + DateTime.Now.TimeOfDay.Hours + "_" + DateTime.Now.TimeOfDay.Minutes;
                    // txtIvnoice.Enabled = false;
@@ -55,8 +58,7 @@ namespace IMS
                         }
                         Session["ViewSalesOrders"] = null;
                         Session["FirstOrderSO"] = true;
-                        Session["RequestedSalesMan"] = null;
-                        Session["RequestedFromID"] = null;
+                       
                         systemSet = new DataSet();
                         ProductSet = new DataSet();
                         LoadData();

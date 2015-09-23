@@ -333,14 +333,14 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Sent Quantity" HeaderStyle-Width="50px">
                                         <ItemTemplate>
-                                            <asp:Label ID="RequestedFrom" CssClass="" runat="server" Text='<%# Eval("SendQuantity") %>' Width="110px"></asp:Label>
+                                            <asp:Label ID="RequestedFrom" CssClass="" runat="server" Text='<%# Eval("SendQuantity") %>' Width="50px"></asp:Label>
                                         </ItemTemplate>
                                         <ItemStyle Width="50px" HorizontalAlign="Left" />
                                     </asp:TemplateField>
 
                                     <asp:TemplateField HeaderText="Bonus Quantity" HeaderStyle-Width="50px">
                                         <ItemTemplate>
-                                            <asp:Label ID="RequestedFrom" CssClass="" runat="server" Text='<%# Eval("BonusQuantity") %>' Width="110px"></asp:Label>
+                                            <asp:Label ID="RequestedFrom" CssClass="" runat="server" Text='<%# Eval("BonusQuantity") %>' Width="50px"></asp:Label>
                                         </ItemTemplate>
                                         <ItemStyle Width="50px" HorizontalAlign="Left" />
                                     </asp:TemplateField>
