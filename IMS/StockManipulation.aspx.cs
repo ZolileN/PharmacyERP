@@ -66,7 +66,8 @@ namespace IMS
                     print.Columns.Add("GreenRainCode", typeof(string));
                     print.Columns.Add("BarCode", typeof(string));
                     print.Columns.Add("prodDesc", typeof(string));
-                    print.Columns.Add("Expiry", typeof(string));
+                    print.Columns.Add("batchNo", typeof(string));
+                    print.Columns.Add("Expiry", typeof(string));                   
                     print.Columns.Add("Quantity", typeof(float));
                     print.Columns.Add("CostPrice", typeof(string));
                     print.Columns.Add("SalePrice", typeof(string));
@@ -793,7 +794,7 @@ namespace IMS
 
                         if ((productID).CompareTo(Convert.ToInt32(dr["SerialNum"].ToString())) == 0 && found == false)
                         {
-                            Print.Rows.Add(dr["ProductID"].ToString(), dr["StockID"].ToString(), dr["UPC"].ToString(), dr["GreenRainCode"].ToString(), dr["BarCode"].ToString(), dr["prodDesc"].ToString(), dr["Expiry"].ToString(), float.Parse(dr["Qauntity"].ToString(),
+                            Print.Rows.Add(dr["ProductID"].ToString(), dr["StockID"].ToString(), dr["UPC"].ToString(), dr["GreenRainCode"].ToString(), dr["BarCode"].ToString(), dr["prodDesc"].ToString(), dr["batchNo"].ToString(), dr["Expiry"].ToString(), float.Parse(dr["Qauntity"].ToString(),
         System.Globalization.CultureInfo.InvariantCulture), dr["CostPrice"].ToString(), dr["SalePrice"].ToString());
 
 

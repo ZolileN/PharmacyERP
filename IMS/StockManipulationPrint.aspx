@@ -209,13 +209,18 @@
                       
                    
 
-
+                    <asp:TemplateField HeaderText="Batch No.">
+                        <ItemTemplate>
+                            <asp:Label ID="lblBatchNo" CssClass="col-md-2 control-label"  runat="server" Text='<%# Eval("batchNo")%>' Width="65px"></asp:Label>
+                        </ItemTemplate>
+                         <ItemStyle  Width="65px" HorizontalAlign="Left"/>
+                    </asp:TemplateField>
 
                      <asp:TemplateField HeaderText="Expiry">
                         <ItemTemplate>
                             <asp:Label ID="lblExpiry" CssClass="col-md-2 control-label"  runat="server" Text='<%# Eval(("Expiry").ToString(), "{0:dd/MM/yyyy}")%>' Width="68px"></asp:Label>
                         </ItemTemplate>
-                         <ItemStyle  Width="100px" HorizontalAlign="Left"/>
+                         <ItemStyle  Width="75px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
 
                       <asp:TemplateField HeaderText="Qty">

@@ -190,7 +190,12 @@
                          <ItemStyle  Width="170px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
                    
-
+                   <asp:TemplateField HeaderText="Batch No.">
+                        <ItemTemplate>
+                            <asp:Label ID="lblBatchNo" CssClass="col-md-2 control-label"  runat="server" Text='<%# Eval("batchNo")%>' Width="100px"></asp:Label>
+                        </ItemTemplate>
+                         <ItemStyle  Width="100px" HorizontalAlign="Left"/>
+                    </asp:TemplateField>
 
 
                      <asp:TemplateField HeaderText="Expiry">
