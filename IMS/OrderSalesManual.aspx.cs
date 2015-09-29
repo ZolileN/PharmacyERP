@@ -1090,16 +1090,41 @@ namespace IMS
                     //In case of Re-Generate SO, Delete the OrderDetailEntries for that Order and Add stock First.. 
                     if (btnAccept.Text.Equals("RE-GENERATE ORDER"))
                     {
-                        UpdateStockPlus(orderDetID, Total);
-                        if (connection.State == ConnectionState.Closed)
+                        if (Session["UserChangedOrdDetID"] != null)
                         {
-                            connection.Open();
+                            List<int> UserChangedOrdDetID = new List<int>();
+                            UserChangedOrdDetID = (List<int>)Session["UserChangedOrdDetID"];
+
+                            for(int j=0;j<UserChangedOrdDetID.Count;j++)
+                            {
+                                int OrdDetID_User = UserChangedOrdDetID[j];
+
+                                if(OrdDetID_User != orderDetID)
+                                {
+                                    UpdateStockPlus(orderDetID, Total);
+                                    if (connection.State == ConnectionState.Closed)
+                                    {
+                                        connection.Open();
+                                    }
+                                    SqlCommand comm = new SqlCommand("sp_DeleteFromtblSaleOrderDetail_Receive", connection);
+                                    comm.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
+                                    comm.CommandType = CommandType.StoredProcedure;
+                                    comm.ExecuteNonQuery();
+                                }
+                            }
                         }
-                        SqlCommand comm = new SqlCommand("sp_DeleteFromtblSaleOrderDetail_Receive", connection);
-                        comm.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
-                        comm.CommandType = CommandType.StoredProcedure;
-                        comm.ExecuteNonQuery();
-                         
+                        else
+                        {
+                            UpdateStockPlus(orderDetID, Total);
+                            if (connection.State == ConnectionState.Closed)
+                            {
+                                connection.Open();
+                            }
+                            SqlCommand comm = new SqlCommand("sp_DeleteFromtblSaleOrderDetail_Receive", connection);
+                            comm.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
+                            comm.CommandType = CommandType.StoredProcedure;
+                            comm.ExecuteNonQuery();
+                        }
                     }
                     if (connection.State == ConnectionState.Closed)
                     {
@@ -1119,7 +1144,25 @@ namespace IMS
 
                     if ((quan + bonus) <= RemainingStock)
                     {
-                        UpdateStockMinus(orderDetID, Total, ProductID, Discount, bonus, quan);
+                        if (Session["UserChangedOrdDetID"] != null)
+                        {
+                            List<int> UserChangedOrdDetID = new List<int>();
+                            UserChangedOrdDetID = (List<int>)Session["UserChangedOrdDetID"];
+
+                            for (int j = 0; j < UserChangedOrdDetID.Count; j++)
+                            {
+                                int OrdDetID_User = UserChangedOrdDetID[j];
+
+                                if (OrdDetID_User != orderDetID)
+                                {
+                                    UpdateStockMinus(orderDetID, Total, ProductID, Discount, bonus, quan);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            UpdateStockMinus(orderDetID, Total, ProductID, Discount, bonus, quan);
+                        }
                     }
                     else
                     {

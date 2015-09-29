@@ -243,6 +243,12 @@ namespace IMS
                             float SalePrice = float.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblSalePrice")).Text);
                             long BarCode = long.Parse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblBarCode")).Text);
                             int OrderDetailID = int.Parse(Session["OderDetailID"].ToString());
+
+                            List<int> OrdDetID = new List<int>();
+                            OrdDetID.Add(OrderDetailID);
+
+                            Session["UserChangedOrdDetID"] = OrdDetID;
+
                             DateTime Expiry = Convert.ToDateTime(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblExpiry")).Text);
                             String Batch = ((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblBatch")).Text.ToString();
 
