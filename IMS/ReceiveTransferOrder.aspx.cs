@@ -86,6 +86,12 @@ namespace IMS
 
                 DataTable distinctRequests = dsDistinct.DefaultView.ToTable(true, "TransferBy");
 
+                if (ds.Tables[0].Rows.Count == 0)
+                {
+                    btnAcceptAll.Visible = false;
+                    btnGenTransferAll.Visible = false;
+                }
+
                 repReceiveTransfer.DataSource = distinctRequests;
                 repReceiveTransfer.DataBind();
             }

@@ -100,7 +100,7 @@ namespace IMS
                 }
                 SqlCommand command = new SqlCommand("sp_GetSystems_ByID", connection);
                 command.CommandType = CommandType.StoredProcedure;
-
+              //  command.Parameters.AddWithValue("@accept", 1);
                 command.Parameters.AddWithValue("@p_StoreId", StoreId);
 
                 SqlDataAdapter sA = new SqlDataAdapter(command);

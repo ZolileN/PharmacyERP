@@ -130,7 +130,7 @@ namespace IMS
                      Label lblDetailsID = (Label)dgvReceiveOurTransfers.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblTransferDetailID");
                      Session["TransferDetailsID"] = lblDetailsID.Text;
 
-                     Response.Redirect("ReceiveRequestTransfers.aspx");
+                     Response.Redirect("ReceiveRequestTransfers.aspx", false);
                  }
             }
             catch(Exception ex)

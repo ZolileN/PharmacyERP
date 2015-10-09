@@ -31,6 +31,15 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.Literal lbllogin;
         
         /// <summary>
+        /// FirstLast control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal FirstLast;
+        
+        /// <summary>
         /// imgLogout control.
         /// </summary>
         /// <remarks>

@@ -171,6 +171,7 @@ namespace IMS.StoreManagement.StoreRequests
 
         protected void btnGenerateRequest_Click(object sender, EventArgs e)
         {
+            //Creating a request to other Pharmacy
             DataTable distinctStores = dtStatic.DefaultView.ToTable(true, "SystemID");
             foreach (DataRow dr in distinctStores.Rows)
             {

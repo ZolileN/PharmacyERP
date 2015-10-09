@@ -73,10 +73,12 @@
                 
                 <div class="logo">
                 </div>
-           
-            <div class="userInfo no-print">
+                <div style="  float: left;  margin-left: 412px;  font-size: 16px;  color: #FFF;  font-weight: bold;  margin-top: 19px;">
+                    <asp:Literal ID="lbllogin" runat="server" visible="false"> </asp:Literal>
+                </div>
+                                <div class="userInfo no-print">
                 <span>
-                <asp:Literal ID="lbllogin" runat="server" visible="false"></asp:Literal>
+                    <asp:Literal ID="FirstLast" runat="server" visible="false"> </asp:Literal>
                     </span>
               
                  <asp:ImageButton id="imgLogout" runat="server" ImageUrl="images/logoutIcon.png"  OnClick="Unnamed_Click" />

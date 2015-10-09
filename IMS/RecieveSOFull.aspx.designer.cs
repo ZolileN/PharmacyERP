@@ -85,6 +85,24 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.Label RetQty;
         
         /// <summary>
+        /// sendBonusQty control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label sendBonusQty;
+        
+        /// <summary>
+        /// RetBonusQty control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label RetBonusQty;
+        
+        /// <summary>
         /// StockDisplayGrid control.
         /// </summary>
         /// <remarks>

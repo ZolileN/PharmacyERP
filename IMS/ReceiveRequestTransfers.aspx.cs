@@ -107,11 +107,13 @@ namespace IMS
                     decimal CP, SP;
                     DateTime Expiry;
                     string BatchNumber;
-
+                    
                     Label lblentryID = (Label)dgvReceiveOurTransfersEntry.Rows[i].FindControl("lblentryID");
                     int.TryParse(lblentryID.Text.ToString(), out entryID);
                     Label lblDetailsID = (Label)dgvReceiveOurTransfersEntry.Rows[i].FindControl("lblTransferDetailID");
-                    int.TryParse(lblDetailsID.Text.ToString(), out TransferDetID);
+                    
+                    //int.TryParse(lblDetailsID.Text.ToString(), out TransferDetID);
+                    int.TryParse(Session["TransferDetailsID"].ToString(), out TransferDetID);
                     Label lblReceivedQty = (Label)dgvReceiveOurTransfersEntry.Rows[i].FindControl("lblReceivedQty");
                     int.TryParse(lblReceivedQty.Text.ToString(), out ReceivedQty);
 

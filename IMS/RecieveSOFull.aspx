@@ -51,6 +51,15 @@
             
            
         </tr>
+           <tr>
+             <td><b>Sent Bonus Quantity</b></td>
+             <td><asp:Label runat="server" ID="sendBonusQty" CssClass="" /></td>
+             <td class="auto-style1"></td>
+             <td><b>Returned Bonus Quantity</b></td>
+            <td> <asp:Label runat="server" ID="RetBonusQty" CssClass="" /></td>
+            
+           
+        </tr>
       
        
     </table>
@@ -193,9 +202,16 @@
                                         </ItemTemplate>
                                         <ItemStyle  HorizontalAlign="Left" />
                                     </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Returned<br>Bonus Qty" >
+                                        <ItemTemplate>
+                                            <asp:Label ID="ReturnedBonusQuantity"  runat="server" Text='<%# Eval("ReturnedBonusQuantity") %>' ></asp:Label>
+                                        </ItemTemplate>
+                                        <ItemStyle  HorizontalAlign="Left" />
+                                    </asp:TemplateField>
                       <asp:TemplateField HeaderText="Cost<br>Price"  >
                         <ItemTemplate>
-                            <asp:Literal ID="lblSales"  runat="server" Text='<%# Eval("SalePrice") %>' ></asp:Literal>
+                            <asp:Literal ID="lblSales"  runat="server" Text='<%# Math.Round(Convert.ToDouble(Eval("SalePrice")), 2).ToString() %>' ></asp:Literal>
                         </ItemTemplate>
                         
                           <ItemStyle   HorizontalAlign="Left"/>
@@ -228,14 +244,14 @@
                                         <ItemStyle   HorizontalAlign="Left" />
 
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Sent Quantity"   >
+                                    <asp:TemplateField HeaderText="Sent<br>Quantity"   >
                                         <ItemTemplate>
                                             <asp:Label ID="SendQuantity"  runat="server" Text='<%# Eval("SendQuantity") %>'  ></asp:Label>
                                         </ItemTemplate>
                                         <ItemStyle   HorizontalAlign="Left" />
                                     </asp:TemplateField>
 
-                                    <asp:TemplateField HeaderText="Bonus Quantity"  >
+                                    <asp:TemplateField HeaderText="Bonus<br>Quantity"  >
                                         <ItemTemplate>
                                             <asp:Label ID="BonusQuantity"   runat="server" Text='<%# Eval("BonusQuantity") %>'  ></asp:Label>
                                         </ItemTemplate>

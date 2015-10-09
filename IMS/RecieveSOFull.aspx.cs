@@ -156,6 +156,8 @@ namespace IMS
 
                 sendQty.Text = ds.Tables[0].Rows[0]["SentQuantity"].ToString();
                 RetQty.Text = ds.Tables[0].Rows[0]["ReturnedQuantity"].ToString();
+                sendBonusQty.Text = ds.Tables[0].Rows[0]["SentBonusQuantity"].ToString();
+                RetBonusQty.Text = ds.Tables[0].Rows[0]["ReturnedBonusQuantity"].ToString();
             }
             catch (Exception ex)
             {

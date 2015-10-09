@@ -53,7 +53,9 @@ namespace IMS
                         dv = ds.Tables[0].DefaultView;
                         dv.RowFilter = "U_EmpID = '" + UserName.Text + "'";
                         dt = dv.ToTable();
-                        
+
+                        Session["firstNamelastName"] = dt.Rows[0]["U_FirstName"].ToString() +" "+ dt.Rows[0]["U_LastName"].ToString();
+
                         switch(dt.Rows[0]["RoleName"].ToString())
                         {
                             case "WareHouse":

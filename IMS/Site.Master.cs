@@ -68,6 +68,8 @@ namespace IMS
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            FirstLast.Text = Session["firstNamelastName"].ToString();
+            FirstLast.Visible = true;
             headofficeNav.Visible = storeNav.Visible = warehouseNav.Visible = false;
             if (Session["UserName"] !=null){
                 lbllogin.Text = Session["UserName"].ToString();
