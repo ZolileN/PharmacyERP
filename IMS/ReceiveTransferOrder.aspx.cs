@@ -169,12 +169,12 @@ namespace IMS
                 Label lblAvailableQty = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblAvailableQty");
                 Label lblSentQty = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblSentQty");
                 Label lblProductID = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblProductID");
-                Label lblRequestedBonusQty = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblRequestedBonusQty");
+             //   Label lblRequestedBonusQty = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblRequestedBonusQty");
 
                 int.TryParse(lblTransferNo.Text.ToString(), out TransferNo);
                 int.TryParse(lblTransferDetailsID.Text.ToString(), out TransferDetailNo);
                 int.TryParse(lblRequestedQty.Text.ToString(), out RequestedQty);
-                int.TryParse(lblRequestedBonusQty.Text.ToString(), out ReqestedBonusQty);
+               // int.TryParse(lblRequestedBonusQty.Text.ToString(), out ReqestedBonusQty);
                 int.TryParse(lblAvailableQty.Text.ToString(), out AvailableQty);
                 int.TryParse(lblSentQty.Text.ToString(), out TransferedQty);
                 int.TryParse(lblProductID.Text.ToString(), out ProductId);
@@ -184,7 +184,7 @@ namespace IMS
                 {
                     Session["TransferDetailID"] = TransferDetailNo;
                     Session["TransferedQty"] = RequestedQty;
-                    Response.Redirect("ReceiveTransferDetails_ReceiveEntry.aspx");
+                    Response.Redirect("ReceiveTransferDetails_ReceiveEntry.aspx", false);
                 }
                 if (e.CommandName == "AcceptProductTransfer")
                 {
@@ -198,7 +198,7 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_RequestedQty", RequestedQty);
                     command.Parameters.AddWithValue("@p_TransferedQty", TransferedQty); 
                     
-                    command.Parameters.AddWithValue("@p_TransferedBonusQty", ReqestedBonusQty);
+                 //   command.Parameters.AddWithValue("@p_TransferedBonusQty", ReqestedBonusQty);
                     
                     command.Parameters.AddWithValue("@p_AvailableQty", AvailableQty);
                     command.Parameters.AddWithValue("@p_Status", "Accepted");
@@ -223,13 +223,13 @@ namespace IMS
                     {
                         if (TransferedQty == 0)
                         {
-                            RequestedQty = RequestedQty + ReqestedBonusQty;// Remove Requested and Bonus   
-                            UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty, ReqestedBonusQty);
+                            //RequestedQty = RequestedQty + ReqestedBonusQty;// Remove Requested and Bonus   
+                            UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty);
                         }
                         else
                         {
-                            TransferedQty = TransferedQty + ReqestedBonusQty;
-                            UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty, ReqestedBonusQty);
+                           // TransferedQty = TransferedQty + ReqestedBonusQty;
+                            UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty);
                         }
                     }
                     LoadRepeater();
@@ -360,12 +360,12 @@ namespace IMS
                             if (TransferedQty == 0)
                             {
                                 RequestedQty = RequestedQty + TransferedBonusQty;
-                                UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty, TransferedBonusQty);
+                                UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty);
                             }
                             else
                             {
                                 TransferedQty = TransferedQty + TransferedBonusQty;
-                                UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty, TransferedBonusQty);
+                                UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty);
                             }
                         }
                         //if (RequestedQty != TransferedQty)
@@ -456,7 +456,7 @@ namespace IMS
             }
 
         }
-        private void UpdateStockMinus(int TransferDetailID, int ProductID, int quantity, int Sent, int TransferedBonusQty)
+        private void UpdateStockMinus(int TransferDetailID, int ProductID, int quantity, int Sent)
         {
             try
             {
@@ -523,7 +523,7 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_TransferredQty", stockSet[id]);
 
                         command.Parameters.AddWithValue("@p_RequestedQty", dt.Rows[0]["RequestedQty"]);
-                        command.Parameters.AddWithValue("@p_RequestedBonusQty", TransferedBonusQty);
+                        //command.Parameters.AddWithValue("@p_RequestedBonusQty", TransferedBonusQty);
 
                         command.Parameters.AddWithValue("@p_BarCode", dt.Rows[0]["BarCode"]);
                         
@@ -669,12 +669,12 @@ namespace IMS
                             if (TransferedQty == 0)
                             {
                                 RequestedQty = TransferedBonusQty + RequestedQty;
-                                UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty, TransferedBonusQty);
+                                UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty);
                             }
                             else
                             {
                                 TransferedQty = TransferedBonusQty + TransferedQty;
-                                UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty, TransferedBonusQty);
+                                UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty);
                             }
                         }
                         Button btnAcceptTransferOrder = (Button)repReceiveTransfer.Items[0].FindControl("btnAcceptTransferOrder");

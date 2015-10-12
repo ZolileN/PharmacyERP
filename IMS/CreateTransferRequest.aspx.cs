@@ -13,6 +13,13 @@ using System.Web.UI.WebControls;
 
 namespace IMS.StoreManagement.StoreRequests
 {
+
+    // Edited By Shahid 09-10-15
+    // Need to Remove Bonus and Discount
+    // Making Bonus and Discount fields Visisble=False in aspx and here commenting the original code for future use.
+    // In SQL Proceedure, making the Bonus And Discount field null by default and even not removing the Fields there
+
+
     public partial class CreateTransferRequest : System.Web.UI.Page
     {
         public DataTable dtTransfer = new DataTable();
@@ -39,8 +46,13 @@ namespace IMS.StoreManagement.StoreRequests
                     dtStatic.Columns.Add("RequestedFrom");
                     dtStatic.Columns.Add("RequestedTo");
                     dtStatic.Columns.Add("RequestedQty");
-                    dtStatic.Columns.Add("BonusQty");
-                    dtStatic.Columns.Add("PercentageDiscount");
+                    //dtStatic.Columns.Add("BonusQty");
+                    //dtStatic.Columns.Add("PercentageDiscount");
+
+                    if (dtStatic.Rows.Count == 0) {
+                        btnGenerateRequest.Visible = false;
+                    }
+
                 }
                 expHandler.CheckForErrorMessage(Session);
             }
@@ -157,16 +169,22 @@ namespace IMS.StoreManagement.StoreRequests
 
         protected void btnAddRequest_Click(object sender, EventArgs e)
         {
-          
-            dtStatic.Rows.Add(lblProductId.Text, lblStoreId.Text, txtSearch.Text, Session["UserSys"].ToString(), txtStore.Text, txtTransferredQty.Text, txtBonusQty.Text,txtPercentageDiscount.Text);
+
+            if (dtStatic.Rows.Count >= 0)
+            {
+                btnGenerateRequest.Visible = true;
+            }
+
+            //dtStatic.Rows.Add(lblProductId.Text, lblStoreId.Text, txtSearch.Text, Session["UserSys"].ToString(), txtStore.Text, txtTransferredQty.Text, txtBonusQty.Text,txtPercentageDiscount.Text);
+            dtStatic.Rows.Add(lblProductId.Text, lblStoreId.Text, txtSearch.Text, Session["UserSys"].ToString(), txtStore.Text, txtTransferredQty.Text);
             dgvCreateTransfer.DataSource = dtStatic;
             dgvCreateTransfer.DataBind();
             Session["TransferRequestGrid"] = dtStatic;
             txtSearch.Text = "";
             txtStore.Text = "";
             txtTransferredQty.Text = "";
-            txtBonusQty.Text = "";
-            txtPercentageDiscount.Text = "";
+            //txtBonusQty.Text = "";
+            //txtPercentageDiscount.Text = "";
         }
 
         protected void btnGenerateRequest_Click(object sender, EventArgs e)
@@ -309,13 +327,13 @@ namespace IMS.StoreManagement.StoreRequests
                                     {
                                         command.Parameters.AddWithValue("@p_RequestedQty", DBNull.Value);
                                     }
-                                    int BonusQty = 0;
-                                    double DiscountPercentage;
-                                    int.TryParse(drDetails["BonusQty"].ToString(),out BonusQty);
-                                    double.TryParse(drDetails["PercentageDiscount"].ToString(), out DiscountPercentage);
+                                    //int BonusQty = 0;
+                                    //double DiscountPercentage;
+                                    //int.TryParse(drDetails["BonusQty"].ToString(),out BonusQty);
+                                    //double.TryParse(drDetails["PercentageDiscount"].ToString(), out DiscountPercentage);
 
-                                    command.Parameters.AddWithValue("@p_ReqBonusQty", BonusQty);
-                                    command.Parameters.AddWithValue("@p_Discount", DiscountPercentage);
+                                    //command.Parameters.AddWithValue("@p_ReqBonusQty", BonusQty);
+                                    //command.Parameters.AddWithValue("@p_Discount", DiscountPercentage);
 
                                     command.Parameters.AddWithValue("@p_TransferStatus", "Initiated");
 
@@ -430,14 +448,14 @@ namespace IMS.StoreManagement.StoreRequests
                                             command.Parameters.AddWithValue("@p_RequestedQty", DBNull.Value);
                                         }
 
-                                        int BonusQty = 0;
+                                        //int BonusQty = 0;
                                         
-                                        double DiscountPercentage;
-                                        int.TryParse(drDetails["BonusQty"].ToString(), out BonusQty);
-                                        double.TryParse(drDetails["PercentageDiscount"].ToString(), out DiscountPercentage);
+                                        //double DiscountPercentage;
+                                        //int.TryParse(drDetails["BonusQty"].ToString(), out BonusQty);
+                                        //double.TryParse(drDetails["PercentageDiscount"].ToString(), out DiscountPercentage);
 
-                                        command.Parameters.AddWithValue("@p_ReqBonusQty", BonusQty);
-                                        command.Parameters.AddWithValue("@p_Discount", DiscountPercentage);
+                                        //command.Parameters.AddWithValue("@p_ReqBonusQty", BonusQty);
+                                        //command.Parameters.AddWithValue("@p_Discount", DiscountPercentage);
 
 
                                         command.Parameters.AddWithValue("@p_TransferStatus", "Initiated");
@@ -655,17 +673,17 @@ namespace IMS.StoreManagement.StoreRequests
                     int TransferedQty = 0;
                     int.TryParse(tbTransferedQty.Text.ToString(), out TransferedQty);
 
-                    TextBox txtBonusQty = (TextBox)dgvCreateTransfer.Rows[rowindex].FindControl("txtBonusQty");
-                    int BonusQty = 0;
-                    int.TryParse(txtBonusQty.Text.ToString(), out BonusQty);
+                  //  TextBox txtBonusQty = (TextBox)dgvCreateTransfer.Rows[rowindex].FindControl("txtBonusQty");
+                   // int BonusQty = 0;
+                  //  int.TryParse(txtBonusQty.Text.ToString(), out BonusQty);
 
-                    TextBox txtPercentageDiscount = (TextBox)dgvCreateTransfer.Rows[rowindex].FindControl("txtPercentageDiscount");
-                    float PercentDiscount = 0;
-                    float.TryParse(txtPercentageDiscount.Text.ToString(), out PercentDiscount);
+                  //  TextBox txtPercentageDiscount = (TextBox)dgvCreateTransfer.Rows[rowindex].FindControl("txtPercentageDiscount");
+                 //   float PercentDiscount = 0;
+                  //  float.TryParse(txtPercentageDiscount.Text.ToString(), out PercentDiscount);
 
                     dtStatic.Rows[rowindex]["RequestedQty"] = TransferedQty;
-                    dtStatic.Rows[rowindex]["BonusQty"] = BonusQty;
-                    dtStatic.Rows[rowindex]["PercentageDiscount"] = PercentDiscount;
+                  //  dtStatic.Rows[rowindex]["BonusQty"] = BonusQty;
+                   // dtStatic.Rows[rowindex]["PercentageDiscount"] = PercentDiscount;
                     dtStatic.AcceptChanges();
                      
 

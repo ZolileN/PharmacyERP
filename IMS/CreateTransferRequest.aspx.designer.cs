@@ -157,42 +157,6 @@ namespace IMS.StoreManagement.StoreRequests {
         protected global::System.Web.UI.WebControls.TextBox txtTransferredQty;
         
         /// <summary>
-        /// lblBonusQty control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblBonusQty;
-        
-        /// <summary>
-        /// txtBonusQty control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBonusQty;
-        
-        /// <summary>
-        /// lblDiscount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDiscount;
-        
-        /// <summary>
-        /// txtPercentageDiscount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPercentageDiscount;
-        
-        /// <summary>
         /// btnAddRequest control.
         /// </summary>
         /// <remarks>

@@ -2,7 +2,13 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
+    <style>
+        .ProductName {
+            width:300px;
+            white-space:normal;
+            display:block;
+        }
+        </style>
       <table width="100%">
 
         <tbody><tr>
@@ -57,7 +63,7 @@
 
                                 <asp:TemplateField HeaderText="Product Description">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblDescription" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("ProductDescription") %>' Width="140px"></asp:Label>
+                                        <asp:Label ID="lblDescription" CssClass="ProductName" runat="server" Text='<%# Eval("ProductDescription") %>'></asp:Label>
                                     </ItemTemplate>
 
                                     <ItemStyle Width="150px" HorizontalAlign="Left" />
@@ -97,37 +103,37 @@
 
                                 </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="Request Qty">
+                                <asp:TemplateField HeaderText="Requested Qty">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblRequestedQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("RequestedQty") %>' Width="140px"></asp:Label>
+                                        <asp:Label ID="lblRequestedQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("RequestedQty") %>' Width="100px"></asp:Label>
                                     </ItemTemplate>
 
-                                    <ItemStyle Width="150px" HorizontalAlign="Left" />
+                                    <ItemStyle Width="100px" HorizontalAlign="Left" />
                                 </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="Requested Bonus Qty">
+                                <%--<asp:TemplateField HeaderText="Requested Bonus Qty">
                                     <ItemTemplate>
                                         <asp:Label ID="lblRequestedBonusQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("RequestedBonusQty") %>' Width="140px"></asp:Label>
                                     </ItemTemplate>
 
                                     <ItemStyle Width="150px" HorizontalAlign="Left" />
 
-                                </asp:TemplateField>
+                                </asp:TemplateField>--%>
 
                                 <asp:TemplateField HeaderText="Available Stock">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblAvailableQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("AvailableQty") %>' Width="140px"></asp:Label>
+                                        <asp:Label ID="lblAvailableQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("AvailableQty") %>' Width="100px"></asp:Label>
                                     </ItemTemplate>
 
-                                    <ItemStyle Width="150px" HorizontalAlign="Left" />
+                                    <ItemStyle Width="100px" HorizontalAlign="Left" />
                                 </asp:TemplateField>
 
                                 <asp:TemplateField HeaderText="Sent Qty">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblSentQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("SentQty") %>' Width="140px"></asp:Label>
+                                        <asp:Label ID="lblSentQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("SentQty") %>' Width="80px"></asp:Label>
                                     </ItemTemplate>
-
-                                    <ItemStyle Width="150px" HorizontalAlign="Left" />
+                                    
+                                    <ItemStyle Width="80px" HorizontalAlign="Left" />
                                 </asp:TemplateField>
 
                                 <asp:TemplateField HeaderText="">

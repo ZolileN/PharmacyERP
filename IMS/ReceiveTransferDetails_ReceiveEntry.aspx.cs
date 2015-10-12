@@ -33,7 +33,7 @@ namespace IMS
         {
             int TransferDetID, Userid = 0;
             int.TryParse(Session["UserSys"].ToString(), out Userid);
-
+            
             DataSet ds = new DataSet();
             int.TryParse(Session["TransferDetailID"].ToString(), out TransferDetID); 
             if (connection.State == ConnectionState.Closed)
@@ -92,14 +92,14 @@ namespace IMS
                 Label lblStockID = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblStockID");
                 Label lblAvailableStock = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblAvailableStock");
                 TextBox txtTransferedQty = (TextBox)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("txtSendQty");
-                TextBox txtTransferedBonusQty = (TextBox)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("txtBonusQty");
+                //TextBox txtTransferedBonusQty = (TextBox)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("txtBonusQty");
 
                 double.TryParse(lblBarCode.Text.ToString(), out Barcode);
                 int.TryParse(lblAvailableStock.Text.ToString(), out AvailableQty);
                 int.TryParse(lblRequestedQty.Text.ToString(), out ReqQty);
                 
                 int.TryParse(txtTransferedQty.Text.ToString(), out TransferedQty);
-                int.TryParse(txtTransferedBonusQty.Text.ToString(), out TransferedBonusQty);
+               // int.TryParse(txtTransferedBonusQty.Text.ToString(), out TransferedBonusQty);
 
                 int.TryParse(lblTransferDetailsID.Text.ToString(), out TransferDetID);
                 int.TryParse(lblProductID.Text.ToString(), out ProdctID);
@@ -122,7 +122,7 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_RequestDate", RequestDate);
                     command.Parameters.AddWithValue("@p_ReqQty", ReqQty);
                     command.Parameters.AddWithValue("@p_TransferQty", TransferedQty);
-                    command.Parameters.AddWithValue("@p_TransferBonusQty", TransferedBonusQty);
+                  //  command.Parameters.AddWithValue("@p_TransferBonusQty", TransferedBonusQty);
                     command.Parameters.AddWithValue("@p_Barcode", Barcode);
                     command.Parameters.AddWithValue("@p_ProdctID", ProdctID);
                     command.Parameters.AddWithValue("@p_StockId", StockId);
@@ -136,7 +136,7 @@ namespace IMS
                     command.ExecuteNonQuery();
 
                     //Update Stock
-                    UpdateStockMinus(TransferDetID, ProdctID, AvailableQty, TransferedQty, Expiry, StockId, CP, SP, BatchNo, ReqQty, Barcode, TransferedBonusQty);
+                    UpdateStockMinus(TransferDetID, ProdctID, AvailableQty, TransferedQty, Expiry, StockId, CP, SP, BatchNo, ReqQty, Barcode);
 
                     if (!Session["UserRole"].ToString().Equals("WareHouse"))
                     {
@@ -233,7 +233,7 @@ namespace IMS
             }
         }
 
-        private void UpdateStockMinus(int TransferDetailID, int ProductID, int quantity, int Sent, DateTime Expiry, int StockID, decimal CP, decimal SP, string BatchNO, int ReqQty, double Barcode, int TransferedBonusQty)
+        private void UpdateStockMinus(int TransferDetailID, int ProductID, int quantity, int Sent, DateTime Expiry, int StockID, decimal CP, decimal SP, string BatchNO, int ReqQty, double Barcode)
         {
             try
             {
@@ -241,7 +241,7 @@ namespace IMS
                 {
                     connection.Open();
                 }
-                Sent = Sent + TransferedBonusQty;
+             //   Sent = Sent + TransferedBonusQty;
 
                 SqlCommand command;
                 command = new SqlCommand("Sp_UpdateStockBy_ExpiryStockID", connection);

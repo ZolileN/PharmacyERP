@@ -14,7 +14,13 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
+    <style>
+        .ProductName {
+            width:350px;
+            white-space:normal;
+            display:block;
+        }
+    </style>
      <table width="100%">
 
         <tbody><tr>
@@ -76,7 +82,7 @@
            <td>
                <asp:TextBox ID="txtTransferredQty" runat="server" style="width:60px" CssClass="form-control product" ></asp:TextBox>
             </td>
-           <td>
+           <%--<td>
                <asp:Label ID="lblBonusQty"  AssociatedControlID="txtBonusQty" runat="server">Bonus Quantity</asp:Label>
            </td>
            <td>
@@ -87,7 +93,7 @@
            </td>
            <td>
                <asp:TextBox ID="txtPercentageDiscount" runat="server" style="width:60px" CssClass="form-control product" ></asp:TextBox>
-            </td>
+            </td>--%>
            <td>
                <asp:Button ID="btnAddRequest" runat="server" Text="Add Request" CssClass="btn btn-primary btn-sm" OnClick="btnAddRequest_Click"   />
                 
@@ -103,7 +109,7 @@
                OnRowCommand="dgvCreateTransfer_RowCommand" >
                  <Columns>
 
-                      <asp:TemplateField HeaderText="Action" HeaderStyle-Width ="200px">
+                      <asp:TemplateField HeaderText="Action" HeaderStyle-Width ="100px">
                         <ItemTemplate>
                             <asp:Button CssClass="btn btn-default edit-btn" ID="btnEdit" Text="Edit" runat="server" CommandName="Edit"  CommandArgument='<%# Container.DataItemIndex %>'/>
                             <span onclick="return confirm('Are you sure you want to delete this record?')">
@@ -130,7 +136,7 @@
 
                      <asp:TemplateField HeaderText="ProductID" Visible="false" HeaderStyle-Width ="110px">
                         <ItemTemplate>
-                            <asp:Label ID="lblProductID" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("ProductID") %>' Width="100px" ></asp:Label>
+                            <asp:Label ID="lblProductID" CssClass="col-md-2 control-label  " runat="server" Text='<%# Eval("ProductID") %>' Width="100px" ></asp:Label>
                         </ItemTemplate>
                         <ItemStyle  Width="110px" HorizontalAlign="Left"/>
 
@@ -138,7 +144,7 @@
 
                    <asp:TemplateField HeaderText="SystemID" Visible="false" HeaderStyle-Width ="110px">
                         <ItemTemplate>
-                            <asp:Label ID="lblSystemID" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("SystemID") %>' Width="100px" ></asp:Label>
+                            <asp:Label ID="lblSystemID" CssClass="col-md-2 control-label ProductName" runat="server" Text='<%# Eval("SystemID") %>' Width="100px" ></asp:Label>
                         </ItemTemplate>
                         <ItemStyle  Width="110px" HorizontalAlign="Left"/>
 
@@ -149,7 +155,7 @@
 
                       <asp:TemplateField HeaderText="Product<br>Description" Visible="true" HeaderStyle-Width ="60px" HeaderStyle-Wrap="true">
                         <ItemTemplate>
-                            <asp:Label ID="ProductName" CssClass="" runat="server" Text='<%# Eval("Product_Name") %>'></asp:Label>
+                            <asp:Label ID="ProductName" CssClass="ProductName" runat="server" Text='<%# Eval("Product_Name") %>'></asp:Label>
                         </ItemTemplate>
                          <ItemStyle  Width="60px" HorizontalAlign="Left" Wrap="true"/>
                     </asp:TemplateField> 
@@ -172,7 +178,7 @@
                         <ItemStyle  Width="150px" HorizontalAlign="Left"/>
                     </asp:TemplateField> 
 
-                      <asp:TemplateField HeaderText="Bonus Qty"  HeaderStyle-Width ="150px">
+                      <%--<asp:TemplateField HeaderText="Bonus Qty"  HeaderStyle-Width ="150px">
                         <ItemTemplate>
                             <asp:Label ID="lblBonusQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("BonusQty") %>'  Width="140px"></asp:Label>
                         </ItemTemplate>
@@ -192,7 +198,7 @@
                               <asp:TextBox ID="txtPercentageDiscount" runat="server" Text='<%# Eval("PercentageDiscount") %>'  Width="140px" ></asp:TextBox>
                           </EditItemTemplate>
                         <ItemStyle  Width="150px" HorizontalAlign="Left"/>
-                    </asp:TemplateField> 
+                    </asp:TemplateField> --%>
                      
                     
                  </Columns>
