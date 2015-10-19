@@ -203,14 +203,14 @@
                             <ItemStyle Width="150px" HorizontalAlign="Left" />
                         </asp:TemplateField>
 
-                        <asp:TemplateField HeaderText="Requested Bonus Qty" HeaderStyle-Width="150px">
+                        <asp:TemplateField HeaderText="Requested Bonus Qty" HeaderStyle-Width="150px" Visible="false">
                             <ItemTemplate>
                                 <asp:Label ID="BonusQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("BonusQty") %>' Width="140px"></asp:Label>
                             </ItemTemplate>
                             <ItemStyle Width="150px" HorizontalAlign="Left" />
                         </asp:TemplateField>
 
-                        <asp:TemplateField HeaderText="Percentage Discount" HeaderStyle-Width="150px">
+                        <asp:TemplateField HeaderText="Percentage Discount" HeaderStyle-Width="150px" Visible="false">
                             <ItemTemplate>
                                 <asp:Label ID="PercentageDiscount" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("PercentageDiscount") %>' Width="140px"></asp:Label>
                             </ItemTemplate>
