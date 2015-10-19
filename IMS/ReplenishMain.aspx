@@ -45,7 +45,7 @@
             <tr>
             <td><asp:label ID="lblToDate" runat="server">To:</asp:label></td>
             <td>
-                <asp:TextBox ID="txtToDate" runat="server" Visible="false"></asp:TextBox>
+                <asp:TextBox ID="txtToDate" runat="server" Visible="false" ></asp:TextBox>
             </td>
             <td></td>
             </tr>
@@ -78,4 +78,23 @@
                $(function () { $("#<%= txtFromDate.ClientID %>").datepicker(); });
                $(function () { $("#<%= txtToDate.ClientID %>").datepicker(); });
           </script>
+           <script type="text/javascript">
+               function changeValues() {
+
+                   var date1 = new Date(document.getElementById("MainContent_txtToDate").value);
+
+                   var date2 = new Date(document.getElementById("MainContent_txtFromDate").value);
+
+                   var timeDiff = Math.abs(date1.getTime() - date2.getTime());
+                   var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                   //alert(diffDays);
+                  // var SystemQuan = document.getElementById("txtToDate").value;
+                  //var PhysicalQuan = document.getElementById("txtFromDate").value;
+                  //var Result = Date(PhysicalQuan) - Date(SystemQuan);
+
+                   document.getElementById("MainContent_txtReplenishDays").value = diffDays;
+
+                   return;
+               }
+            </script>
 </asp:Content>

@@ -79,6 +79,15 @@ namespace IMS
                 DataSet ds = new DataSet();
                 SqlDataAdapter dA = new SqlDataAdapter(command);
                 dA.Fill(ds);
+
+                if(ds.Tables[0]== null || ds.Tables[0].Rows.Count <=0 )
+                {
+                    command = new SqlCommand("sp_GetReplenishmentTranferDetails_ByID", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@p_OrderID", OrderID);
+                    dA = new SqlDataAdapter(command);
+                    dA.Fill(ds);
+                }
                 gvReplenismentPO.DataSource = ds;
                 gvReplenismentPO.DataBind();
 

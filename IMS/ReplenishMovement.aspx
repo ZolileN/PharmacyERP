@@ -37,7 +37,7 @@
                         <tr>
         	                <td colspan="6">
                                     <asp:Label ID="hdnVendorID" runat="server" Visible="false" Text='<%# Eval("VendorID") %>' CommandArgument='<%# Container.DataItemIndex %>'/>
-    		                        <h4 class="fl-l"><%#Eval("VendorName") %></h4>
+    		                        <h4 class="fl-l"><asp:Label runat="server" ID ="hdnVendorName" Text = '<%#Eval("VendorName") %>' ></asp:Label></h4>
                                     <asp:Button ID="btnCreatePO" runat="server" CommandName="CreatePO"  CommandArgument='<%# Eval("VendorID").ToString() %>' CssClass="btn btn-success fl-r" Text="Create PO"/>
                             </td>
                         </tr>

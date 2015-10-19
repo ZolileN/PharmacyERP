@@ -499,19 +499,7 @@
                             </li>
                             <li><a href="#">Manage Purchase Orders</a>
                                  <ul>
-                                     <li class="hasChild"><a href="#">Generate PO</a>
-
-                                        <ul>
-                                            
-                                            <li class="hasChild"><a href="#">Auto PO</a>
-                                            <ul>
-                                                <li><a href="ReplenishMain.aspx?Param=Movement">Replenish (Movement)</a></li>
-                                                <li><a href="ReplenishMain.aspx?Param=Calculation">Replenish (Calculation)</a></li>
-                                            </ul>
-                                            </li>
-                                           
-                                       </ul>
-
+                                     <li><a href="ReplenishMain.aspx?Param=Calculation">Replenishment</a>
                                     </li>                                           
                                          <li><a href="SelectWarehouse.aspx">Item Request to Store</a></li>   
                                             <li><a href="SelectVendor.aspx">Direct Pharmacy Purchase</a></li>

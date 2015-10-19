@@ -34,6 +34,8 @@ namespace IMS
                 if (!IsPostBack)
                 {
                     String Parameter = "";
+                    txtToDate.Attributes.Add("onchange", "changeValues();return false;");
+
                     if (Request.QueryString["Param"] != null)
                     {
                         Parameter = Request.QueryString["Param"].ToString();
@@ -124,14 +126,27 @@ namespace IMS
                 DataSet  ds = new DataSet();
                 SqlDataAdapter dA = new SqlDataAdapter(cmd);
                 dA.Fill(ds);
-                ddlVendorNames.DataSource = ds.Tables[0];
-                ddlVendorNames.DataValueField = "VendorID";
-                ddlVendorNames.DataTextField = "VendorName";
-                ddlVendorNames.DataBind();
 
-                ddlVendorNames.Items.Add("All Vendors");
+                DataTable dtVendors = ds.Tables[0];
 
-                ddlVendorNames.SelectedIndex = ddlVendorNames.Items.IndexOf(ddlVendorNames.Items.FindByValue("All Vendors"));
+                for (int i = 0; i < ds.Tables[1].Rows.Count;i++)
+                {
+                    DataRow dtRow = dtVendors.NewRow();
+                    dtRow["OrderRequestedFor"] = Convert.ToInt32(ds.Tables[1].Rows[i]["OrderRequestBy"].ToString());
+                    dtRow["SupName"] = ds.Tables[1].Rows[i]["SystemName"].ToString();
+
+                    dtVendors.Rows.Add(dtRow);
+                    dtVendors.AcceptChanges();
+                }
+
+                    ddlVendorNames.DataSource = ds.Tables[0];
+                    ddlVendorNames.DataValueField = "OrderRequestedFor";
+                    ddlVendorNames.DataTextField = "SupName";
+                    ddlVendorNames.DataBind();
+
+                    ddlVendorNames.Items.Add("All Vendors");
+
+                   ddlVendorNames.SelectedIndex = ddlVendorNames.Items.IndexOf(ddlVendorNames.Items.FindByValue("All Vendors"));
 
             }
             catch(Exception ex)

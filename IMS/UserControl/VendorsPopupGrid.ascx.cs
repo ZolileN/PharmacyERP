@@ -354,6 +354,7 @@ namespace IMS.UserControl
                                         dtChanged.Rows[i]["VendorID"] = NewVendorID;
                                         dtChanged.Rows[i]["VendorName"] = NewVendorName;
                                         dtChanged.AcceptChanges();
+                                        break;
                                     }
                                 }
                                 Session["DataTableView"] = dtChanged;
@@ -366,6 +367,8 @@ namespace IMS.UserControl
                                 ViewState.Remove("repVenID");
                                 ViewState.Remove("displaySearch");
                                 #endregion
+
+                                break;
                             }
                             else
                             {
