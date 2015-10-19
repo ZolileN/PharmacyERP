@@ -63,8 +63,10 @@ namespace IMS.UserControl
             // Clear the error from the server.
             Server.ClearError();
         }
-        public void LoadData()
+        public bool LoadData()
         {
+            DataSet ds = new DataSet();
+
             #region Display Requests
             try
             {
@@ -77,7 +79,7 @@ namespace IMS.UserControl
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_RequestedByID", Session["UserSys"]);
                 command.Parameters.AddWithValue("@p_OrderDate", DBNull.Value);
-                DataSet ds = new DataSet();
+                
 
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
@@ -95,7 +97,19 @@ namespace IMS.UserControl
             {
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
+
+               
             }
+
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
             #endregion
         }
         protected void StockDisplayGrid_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
@@ -157,9 +171,10 @@ namespace IMS.UserControl
                     connection.Close();
             }
         }
-        public void populateGrid() 
+        public bool populateGrid() 
         {
-            LoadData();
+           bool x = LoadData();
+           return x;
         }
 
         protected void StockDisplayGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)

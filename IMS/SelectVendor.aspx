@@ -45,7 +45,7 @@
 
            </td>
            <td>
-               <asp:Button ID="btnContinue" runat="server"  Text="Continue" CssClass="btn btn-primary btn-sm continue" OnClick="btnContinue_Click" Visible="false"/>
+               <asp:Button ID="btnContinue" runat="server"  Text="Continue" CssClass="btn btn-primary btn-sm continue" OnClick="btnContinue_Click1" Visible="false"/>
            	  
            </td>
             <cc1:ModalPopupExtender ID="mpeCongratsMessageDiv" runat="server" BackgroundCssClass="overLaypop"
@@ -64,10 +64,13 @@
                         </div>
              
 	<img src="images/po-img.png" width="344" height="344" class="poImg">
+    
+    <asp:Button ID="btnSelect" runat="server" Visible="false" />
+
     <asp:Label id="lblSelectStore"  runat="server" visible="false"/>
          <cc1:ModalPopupExtender ID="mpeOrdersPopupDiv" runat="server" BackgroundCssClass="overLaypop"
-                       RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="btnContinue" ClientIDMode="AutoID"
-                       PopupControlID="OrdersPopupG"   >
+                       RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="lblSelectVendor" ClientIDMode="AutoID"
+                       PopupControlID="OrdersPopupG">
                     </cc1:ModalPopupExtender>
 
                 <div id="OrdersPopupG" class="congrats-cont" style="display: none; ">

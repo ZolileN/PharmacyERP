@@ -410,7 +410,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', e
 .body-cont{
     min-height:380px;
 	padding:17px;
-	background:url(../Images/body-bg-w.jpg) repeat-y;
+	position:relative;
+    background:url(../Images/body-bg-w.jpg) repeat-y;
 	-moz-border-radius-topleft: 0px;
 	-moz-border-radius-topright: 0px;
 	-moz-border-radius-bottomright: 7px;
@@ -421,6 +422,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', e
 	-moz-box-shadow: 0px 1px 1px 1px #ebedf2;
 	box-shadow: 0px 1px 1px 1px #ebedf2;
 	behavior: url(PIE.htc);
+
 	}
 	
 .dg-tbl, .frm-tbl{
@@ -1461,3 +1463,101 @@ table.table-striped tr td {
     color: #F00 !important;
     font-weight: bold;
 }
+
+.pharmacyNotifications {
+  display: none; 
+  width: 488px;
+  margin-left: -244px;
+}
+.pnOverlay {
+display:none;
+}
+
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,700,600);
+
+
+#steps {
+  width: 900px;
+  margin: 13px auto;
+}
+
+.step {
+  width: 40px;
+  height: 40px;
+  background-color: #E6EBE6;
+  display: inline-block;
+  border: 4px solid;
+  border-color: transparent;
+  border-radius: 50%;
+  color: #cdd0da;
+  font-weight: 600;
+  text-align: center;
+  line-height: 35px;
+  -webkit-box-sizing:content-box;
+}
+
+.step:first-child {
+  line-height: 40px;
+}
+
+.step:nth-child(n+2) {
+  margin: 0 0 0 231px;
+  transform: translate(0, -4px);
+}
+
+.step:nth-child(n+2):before {
+  width: 226px;
+  height: 3px;
+  display: block;
+  background-color: #E6EBE6;
+  transform: translate(-234px, 21px);
+  content: '';
+}
+
+.step:after {
+  width: 150px;
+  display: block;
+  transform: translate(-55px, 3px);
+  color: #818698;
+  content: attr(data-desc);
+  font-weight: 400;
+  font-size: 13px;
+}
+
+.step:first-child:after {
+  transform: translate(-55px, -1px);
+}
+
+.step.active {
+  border-color: #73b5e8;
+  color: #73b5e8;
+}
+
+.step.active:before {
+  background: linear-gradient(to right, #58bb58 0%, #73b5e8 100%);
+}
+
+.step.active:after {
+  color: #73b5e8;
+}
+
+.step.done {
+  background-color: #58bb58;
+  border-color: #58bb58;
+  color: white;
+}
+
+.step.done:before {
+  background-color: #58bb58;
+}
+
+
+.reset_transferDet {
+      position: absolute;
+      top: 103px;
+      left: 94px;
+      width: 99px;
+      height: 72px;
+      opacity: 0;
+    }

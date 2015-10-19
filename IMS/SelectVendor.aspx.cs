@@ -34,6 +34,14 @@ namespace IMS
             log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             if (!IsPostBack)
             {
+
+                bool display = ordersPopupGrid.populateGrid();
+
+                if (display.Equals(true))
+                {
+                    mpeOrdersPopupDiv.Show();
+                }
+
                 try
                 {
                     btnContinue.Visible = false;
@@ -115,10 +123,14 @@ namespace IMS
         {
             string Vendorname = txtVendor.Text;
             Session["Vendorname"] = Vendorname;
-            ordersPopupGrid.populateGrid();
-            mpeOrdersPopupDiv.Show();
+            bool display = ordersPopupGrid.populateGrid();
 
-            //Response.Redirect("ManualPurchase.aspx?" + Vendorname);
+            if (display.Equals(false))
+            {
+                mpeOrdersPopupDiv.Show();
+            }
+
+            Response.Redirect("ManualPurchase.aspx?" + Vendorname);
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
@@ -127,6 +139,15 @@ namespace IMS
             Session["txtVendor"] = Text;
             VendorsPopupGrid.PopulateGrid();
             mpeCongratsMessageDiv.Show();
+        }
+
+        protected void btnContinue_Click1(object sender, EventArgs e)
+        {
+            string Vendorname = txtVendor.Text;
+            Session["Vendorname"] = Vendorname;
+            
+
+           // Response.Redirect("ManualPurchase.aspx?" + Vendorname);
         }
     }
 }
