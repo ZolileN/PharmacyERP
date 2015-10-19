@@ -29,7 +29,7 @@
         </tr>
         <tr>
 
-             <asp:GridView ID="dgvReceiveOurTransfers" CssClass="table table-striped table-bordered table-condensed" Visible="true" runat="server" AllowPaging="false" PageSize="10"
+             <asp:GridView ID="dgvReceiveOurTransfers" CssClass="table table-striped table-bordered table-condensed" Visible="true" runat="server" AllowPaging="true" PageSize="100"
                             AutoGenerateColumns="false" OnRowDataBound="dgvReceiveOurTransfers_RowDataBound" OnRowCommand="dgvReceiveOurTransfers_RowCommand">
                             <Columns>
 

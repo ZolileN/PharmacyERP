@@ -41,7 +41,7 @@ namespace IMS
                     Session["RequestedFromID"] = null;
                     StockAt.Enabled = true;
                     ddlSalesman.Enabled = true;
-
+                    bool _newOrder = false;
                   //  txtIvnoice.Text = "SO-" + DateTime.Now.TimeOfDay.Hours + "_" + DateTime.Now.TimeOfDay.Minutes;
                    // txtIvnoice.Enabled = false;
                     if (Session["OrderNumberSO"] != null && Session["OrderSalesDetail"] != null && Session["OrderSalesDetail"].Equals(true) && Session["ViewSalesOrders"] != null)
@@ -49,11 +49,12 @@ namespace IMS
                         if (Session["ViewSalesOrders"] != null && Session["ViewSalesOrders"].Equals(true))
                         {
                             btnAccept.Text = "RE-GENERATE ORDER";
-
+                            _newOrder = true;
                             Session["ViewSalesOrders"] = false;
                         }
                         if (Session["OrderSalesDetail"].Equals(true))
                         {
+                            _newOrder = true;
                             btnAccept.Text = "RE-GENERATE ORDER";
                         }
                         Session["ViewSalesOrders"] = null;
@@ -172,6 +173,9 @@ namespace IMS
                     {
                         connection.Open();
                     }
+
+                    if (_newOrder == false) { 
+
                     SqlCommand commnd = new SqlCommand("sp_GetUserPendingSaleOrders", connection);
                     commnd.Parameters.AddWithValue("@p_LoggedinnUserId", int.Parse(Session["UserSys"].ToString()));
                     commnd.CommandType = CommandType.StoredProcedure;
@@ -185,7 +189,8 @@ namespace IMS
                         uc_PendingSalesOrderPopUp.BindGrid();
                         mpeNonGeneratedSOsPopup.Show();
                     }
-                   
+
+                    }
                     
 
                 }

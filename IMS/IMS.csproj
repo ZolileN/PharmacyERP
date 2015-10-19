@@ -244,9 +244,12 @@
     <Content Include="AcceptOrder.aspx" />
     <Content Include="AcceptPurchaseOrder.aspx" />
     <Content Include="Images\logoutIcon.png" />
+    <Content Include="Notification.aspx" />
+    <Content Include="Scripts\PharmacyCustom.js" />
     <Content Include="StockCostAdjustment.aspx" />
     <Content Include="StockManipulation.aspx" />
     <Content Include="StockManipulationPrint.aspx" />
+    <Content Include="Style\notifications.css" />
     <Content Include="Unused Pages\AcceptSalesOrders.aspx" />
     <Content Include="AddDepartment.aspx" />
     <Content Include="AddEditCategory.aspx" />
@@ -1292,6 +1295,13 @@
     </Compile>
     <Compile Include="AcceptPurchaseOrder.aspx.designer.cs">
       <DependentUpon>AcceptPurchaseOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Notification.aspx.cs">
+      <DependentUpon>Notification.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Notification.aspx.designer.cs">
+      <DependentUpon>Notification.aspx</DependentUpon>
     </Compile>
     <Compile Include="ProfitabilitySummary.cs">
       <DependentUpon>ProfitabilitySummary.rpt</DependentUpon>

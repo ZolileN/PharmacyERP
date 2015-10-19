@@ -31,6 +31,51 @@ namespace IMS.StoreManagement.StoreRequests {
         protected global::System.Web.UI.WebControls.Button btnGoBack;
         
         /// <summary>
+        /// reset_transferDet control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button reset_transferDet;
+        
+        /// <summary>
+        /// step1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl step1;
+        
+        /// <summary>
+        /// step2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl step2;
+        
+        /// <summary>
+        /// step3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl step3;
+        
+        /// <summary>
+        /// step4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl step4;
+        
+        /// <summary>
         /// lblProd control.
         /// </summary>
         /// <remarks>
@@ -38,15 +83,6 @@ namespace IMS.StoreManagement.StoreRequests {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblProd;
-        
-        /// <summary>
-        /// lblProductId control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProductId;
         
         /// <summary>
         /// txtSearch control.
@@ -67,24 +103,6 @@ namespace IMS.StoreManagement.StoreRequests {
         protected global::System.Web.UI.WebControls.Button btnSearchProduct;
         
         /// <summary>
-        /// mpeCongratsMessageDiv control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::AjaxControlToolkit.ModalPopupExtender mpeCongratsMessageDiv;
-        
-        /// <summary>
-        /// ProductsPopupGrid control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::IMS.UserControl.ProductsPopupGrid ProductsPopupGrid;
-        
-        /// <summary>
         /// lblSelectStore control.
         /// </summary>
         /// <remarks>
@@ -94,13 +112,13 @@ namespace IMS.StoreManagement.StoreRequests {
         protected global::System.Web.UI.WebControls.Label lblSelectStore;
         
         /// <summary>
-        /// lblStoreId control.
+        /// lblProduct control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblStoreId;
+        protected global::System.Web.UI.WebControls.Label lblProduct;
         
         /// <summary>
         /// txtStore control.
@@ -119,24 +137,6 @@ namespace IMS.StoreManagement.StoreRequests {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSelectStore;
-        
-        /// <summary>
-        /// mpeStoresPopupDiv control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::AjaxControlToolkit.ModalPopupExtender mpeStoresPopupDiv;
-        
-        /// <summary>
-        /// StoresPopupGrid control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::IMS.UserControl.StoresPopup StoresPopupGrid;
         
         /// <summary>
         /// lbQty control.
@@ -164,6 +164,60 @@ namespace IMS.StoreManagement.StoreRequests {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAddRequest;
+        
+        /// <summary>
+        /// StoresPopup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView StoresPopup;
+        
+        /// <summary>
+        /// StockDisplayGrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView StockDisplayGrid;
+        
+        /// <summary>
+        /// SelectProduct control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button SelectProduct;
+        
+        /// <summary>
+        /// SelectStore control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button SelectStore;
+        
+        /// <summary>
+        /// noPharmacy control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl noPharmacy;
+        
+        /// <summary>
+        /// startOver control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button startOver;
         
         /// <summary>
         /// dgvCreateTransfer control.

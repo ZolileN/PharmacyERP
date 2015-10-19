@@ -71,7 +71,10 @@ namespace IMSDataAccess
             Sp_GetAssociatedStores,
             Sp_GetCategories,
             Sp_GetAllSubCategory,
-            Sp_GetSubCatBasic
+            Sp_GetSubCatBasic,
+            sp_GetNewNotificationTransferRequest,
+            sp_GetAllPendingTransferRequests,
+            
 
 
         }
@@ -103,7 +106,8 @@ namespace IMSDataAccess
             Sp_AddRecivedOrderDetails,
             Sp_UpdateSystems,
             Sp_UpdateNewUser,
-            Sp_UpdateSubCategory
+            Sp_UpdateSubCategory,
+            sp_SetSeen
 
         }
     }

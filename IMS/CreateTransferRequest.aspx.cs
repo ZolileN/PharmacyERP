@@ -23,6 +23,7 @@ namespace IMS.StoreManagement.StoreRequests
     public partial class CreateTransferRequest : System.Web.UI.Page
     {
         public DataTable dtTransfer = new DataTable();
+        public static DataSet ProductSet;
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataTable dtStatic;
         private ILog log;
@@ -46,8 +47,19 @@ namespace IMS.StoreManagement.StoreRequests
                     dtStatic.Columns.Add("RequestedFrom");
                     dtStatic.Columns.Add("RequestedTo");
                     dtStatic.Columns.Add("RequestedQty");
+
+                    DataColumn[] keyColumns = new DataColumn[1];
+                    keyColumns[0] = dtStatic.Columns["ProductID"];
+                    dtStatic.PrimaryKey = keyColumns;
+                   
+
                     //dtStatic.Columns.Add("BonusQty");
                     //dtStatic.Columns.Add("PercentageDiscount");
+
+                    SelectProduct.Visible = false;
+                    SelectStore.Visible = false;
+
+                    step_1();
 
                     if (dtStatic.Rows.Count == 0) {
                         btnGenerateRequest.Visible = false;
@@ -152,39 +164,320 @@ namespace IMS.StoreManagement.StoreRequests
         protected void btnSearchProduct_Click(object sender, EventArgs e)
         {
             String Text = txtSearch.Text + '%';
-            Session["Text"] = Text;
+           // Session["Text"] = Text;
             Session["IsOpenedFromCreateTransferReq"] = true;
-             
-            ProductsPopupGrid.PopulateStoreUserGrid();
-            mpeCongratsMessageDiv.Show();
+            SelectProduct.Visible = true;
+            ViewState["ProductName"] = Text;
+            PopulateProductGrid(Text);
+           // ProductsPopupGrid.PopulateStoreUserGrid();
+            //mpeCongratsMessageDiv.Show();
         }
 
         protected void btnSelectStore_Click(object sender, EventArgs e)
         {
-            Session["ProductId"] = lblProductId.Text;
+            //Session["ProductId"] = lblProduct.Text;
 
-            StoresPopupGrid.PopulateStoreWithStock();
-            mpeStoresPopupDiv.Show();
+            //StoresPopupGrid.PopulateStoreWithStock();
+            //mpeStoresPopupDiv.Show();
         }
 
         protected void btnAddRequest_Click(object sender, EventArgs e)
         {
+
+            step_default();
 
             if (dtStatic.Rows.Count >= 0)
             {
                 btnGenerateRequest.Visible = true;
             }
 
+            
+            
+
+           
+          
+
             //dtStatic.Rows.Add(lblProductId.Text, lblStoreId.Text, txtSearch.Text, Session["UserSys"].ToString(), txtStore.Text, txtTransferredQty.Text, txtBonusQty.Text,txtPercentageDiscount.Text);
-            dtStatic.Rows.Add(lblProductId.Text, lblStoreId.Text, txtSearch.Text, Session["UserSys"].ToString(), txtStore.Text, txtTransferredQty.Text);
+            dtStatic.Rows.Add(ViewState["ProductID"].ToString(), ViewState["StoreID"].ToString(), ViewState["Product_Name"].ToString(), Session["UserSys"].ToString(), ViewState["SystemName"].ToString(), txtTransferredQty.Text);
             dgvCreateTransfer.DataSource = dtStatic;
             dgvCreateTransfer.DataBind();
             Session["TransferRequestGrid"] = dtStatic;
             txtSearch.Text = "";
-            txtStore.Text = "";
+         //   txtStore.Text = "";
             txtTransferredQty.Text = "";
             //txtBonusQty.Text = "";
             //txtPercentageDiscount.Text = "";
+        }
+
+        protected void StockDisplayGrid_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+
+        }
+
+        protected void StockDisplayGrid_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+
+        }
+
+        protected void SelectProduct_Click(object sender, EventArgs e)
+        {
+            foreach (GridViewRow row in StockDisplayGrid.Rows)
+            {
+                if (row.RowType == DataControlRowType.DataRow)
+                {
+                    CheckBox chkRow = (row.Cells[0].FindControl("chkCtrl") as CheckBox);
+                    if (chkRow.Checked)
+                    {
+                       // Control ctl = this.Parent.Parent;
+                        TextBox ltMetaTags = null;
+                     //   GridView gvStockDisplayGrid = (GridView)ctl.FindControl("StockDisplayGrid");
+
+                        //ltMetaTags = (TextBox)ctl.FindControl("txtSearch");
+
+                        Label lbProdId = (row.Cells[0].FindControl("lblProductID") as Label);
+                        //if (lbProdId != null)
+                        //{
+                        //    lbProdId.Text = Server.HtmlDecode(row.Cells[4].Text);
+                        //}
+
+                        
+
+                        Label ProdName = row.Cells[0].Controls[0].FindControl("ProductName") as Label;
+
+                        
+
+                        //DataSet dsProducts_ProdPopUp = new DataSet();
+                        //dsProducts_ProdPopUp.Tables.Add((DataTable)Session["dsProdcts"]);
+
+                        DataTable ProductsList = (DataTable)Session["TransferRequestGrid"];
+
+                        if (ProductsList != null && ProductsList.Rows.Count > 0 && ProductsList.Rows.Count > 0)
+                        {
+                            
+
+                            DataRow drs = ProductsList.Rows.Find("ProductID = '" + lbProdId.Text + "'");
+                            if (drs!=null)
+                            {
+                                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Product already added to the Sales Order.')", true);
+                                return;
+                            }
+                        }
+
+                        
+                        if (ltMetaTags != null)
+                        {
+                            ltMetaTags.Text = Server.HtmlDecode(row.Cells[1].Text);
+
+                        }
+
+                       // lblProduct.Text = lbProdId.Text;
+                        ViewState["Product_Name"] = ProdName.Text;
+                           ViewState["ProductID"] = lbProdId.Text;
+
+
+                        if (StockDisplayGrid != null)
+                        {
+                            StockDisplayGrid.DataSource = null;
+                            StockDisplayGrid.DataBind();
+                            PopulateGrid();
+                        }
+
+                    }
+                }
+             
+            }
+
+        }
+
+        public void SelectStore_Click(object sender, EventArgs e)
+        {
+            foreach (GridViewRow row in StoresPopup.Rows)
+            {
+                if (row.RowType == DataControlRowType.DataRow)
+                {
+                    CheckBox chkRow = (row.Cells[0].FindControl("chkCtrl") as CheckBox);
+                    if (chkRow.Checked)
+                    {
+
+
+
+                        Label lblStoreID = (row.Cells[0].FindControl("SystemID") as Label);//row.Cells[0].Controls[0].FindControl("SystemID") as Label;
+                        Label lblSystemName = (row.Cells[0].FindControl("SystemName") as Label);
+                        //if (lblStoreID != null)
+                        //{
+                        //    lblStoreID.Text = Server.HtmlDecode(row.Cells[5].Text);
+                        //}
+                            //lProduct.Text = lblStoreID.Text;
+
+
+
+                        if (StoresPopup != null)
+                        {
+                            StoresPopup.DataSource = null;
+                            StoresPopup.DataBind();
+                            SelectStore.Visible = false;
+                        }
+                      
+
+                        step_4();
+
+                        ViewState["StoreID"] = lblStoreID.Text;
+                        ViewState["SystemName"] = lblSystemName.Text;
+
+                    }
+                }
+
+            }
+        }
+
+        public void PopulateGrid()
+        {
+            //SelectProduct.Visible = false;
+            //DataTable dt = new DataTable();
+            //DataSet ds = new DataSet();
+            //#region Getting Product Details
+            //try
+            //{
+            //    int id;
+            //    if (int.TryParse(Session["UserSys"].ToString(), out id))
+            //    {
+            //        if (connection.State == ConnectionState.Closed)
+            //        {
+            //            connection.Open();
+            //        }
+            //        SqlCommand command = new SqlCommand("dbo.Sp_GetSystems_ByRoles", connection);
+            //        command.CommandType = CommandType.StoredProcedure;
+            //        if (Session["txtStore"] == null)
+            //        {
+            //            command.Parameters.AddWithValue("@p_systemName", DBNull.Value);
+            //        }
+            //        else
+            //        {
+            //            command.Parameters.AddWithValue("@p_systemName", Session["txtStore"].ToString());
+            //        }
+            //        command.Parameters.AddWithValue("@p_RoleName", "Store");
+            //        SqlDataAdapter SA = new SqlDataAdapter(command);
+            //        SA.Fill(ds);
+            //        StoresPopup.DataSource = ds;
+            //        StoresPopup.DataBind();
+            //        SelectStore.Visible = true;
+
+            //    }
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    if (connection.State == ConnectionState.Open)
+            //        connection.Close();
+            //    throw ex;
+            //}
+            //finally
+            //{
+            //    if (connection.State == ConnectionState.Open)
+            //        connection.Close();
+            //}
+            //#endregion
+
+
+            try
+            {
+
+                step_3();
+
+                
+                SelectProduct.Visible = false;
+                DataSet dsResults = new DataSet();
+                int ProductID = int.Parse(ViewState["ProductID"].ToString());
+                int LogedInStoreID;
+                int.TryParse(Session["UserSys"].ToString(), out LogedInStoreID);
+
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("sp_GetStoreByProductID", connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("@p_LogedInStoreID", LogedInStoreID);
+                command.Parameters.AddWithValue("@ProductID", ProductID);
+                SqlDataAdapter da = new SqlDataAdapter(command);
+                da.Fill(dsResults);
+
+                StoresPopup.DataSource = dsResults;
+                StoresPopup.DataBind();
+                SelectStore.Visible = true;
+                if (dsResults.Tables[0].Rows.Count == 0) {
+                    SelectStore.Visible = false;
+                    noPharmacy.Visible = true;
+                }
+
+                
+            }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
+
+
+
+
+        }
+
+        public void PopulateProductGrid(String ProductName = "")
+        {
+            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
+
+            step_2();
+
+
+            #region Getting Product Details
+            try
+            {
+                int id;
+                if (int.TryParse(Session["UserSys"].ToString(), out id))
+                {
+                    DataSet ds2 = new DataSet();
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
+                    SqlCommand command = new SqlCommand("dbo.Sp_GetStockByName_OtherStoreStock", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@p_prodName", ProductName);
+                    command.Parameters.AddWithValue("@p_SysID", id);
+                    command.Parameters.AddWithValue("@p_isStore", false);
+
+                    SqlDataAdapter SA = new SqlDataAdapter(command);
+
+                    SA.Fill(ds2);
+                    
+
+                    StockDisplayGrid.DataSource = ds2;
+                    StockDisplayGrid.DataBind();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
+            #endregion
         }
 
         protected void btnGenerateRequest_Click(object sender, EventArgs e)
@@ -214,7 +507,7 @@ namespace IMS.StoreManagement.StoreRequests
                                 SqlCommand command = new SqlCommand("sp_getStock_Quantity", connection);
                                 command.CommandType = CommandType.StoredProcedure;
                                 command.Parameters.AddWithValue("@p_ProductID", Convert.ToInt32(drDetails["ProductID"].ToString()));
-                                command.Parameters.AddWithValue("@p_SysID", Convert.ToInt32(lblStoreId.Text.ToString()));
+                                command.Parameters.AddWithValue("@p_SysID", drDetails["SystemID"].ToString());
 
 
                                 DataSet QuantitySet = new DataSet();
@@ -622,7 +915,7 @@ namespace IMS.StoreManagement.StoreRequests
         protected void dgvCreateTransfer_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             dgvCreateTransfer.PageIndex = e.NewPageIndex;
-            BindGrid();
+            //PopulateProductGrid(ViewState["ProductName"].ToString());
         }
         protected void dgvCreateTransfer_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
@@ -706,5 +999,122 @@ namespace IMS.StoreManagement.StoreRequests
                 BindGrid();
             }
         }
+
+        protected void StockDisplayGrid_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            StockDisplayGrid.PageIndex = e.NewPageIndex;
+            PopulateProductGrid(ViewState["ProductName"].ToString());
+        }
+
+        protected void StoresPopup_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            StoresPopup.PageIndex = e.NewPageIndex;
+            PopulateGrid();
+        }
+
+        public void step_1()
+        {
+            step1.Attributes["class"] += " active";
+            StockDisplayGrid.Visible = false;
+            StoresPopup.Visible = false;
+            lbQty.Visible = false;
+            txtTransferredQty.Visible = false;
+            btnAddRequest.Visible = false;
+            noPharmacy.Visible = false;
+        }
+        public void step_2()
+        {
+            step1.Attributes.Add("class", step1.Attributes["class"].ToString().Replace("active", ""));
+            step2.Attributes["class"] += " active";
+
+            StoresPopup.Visible = false;
+            StockDisplayGrid.Visible = true;
+
+            lblProd.Visible = false;
+            txtSearch.Visible = false;
+            btnSearchProduct.Visible = false;
+
+            noPharmacy.Visible = false;
+
+
+        }
+        public void step_3()
+        {
+            step1.Attributes.Add("class", step1.Attributes["class"].ToString().Replace("active", ""));
+            step2.Attributes.Add("class", step2.Attributes["class"].ToString().Replace("active", ""));
+            step3.Attributes["class"] += " active";
+            StoresPopup.Visible = true;
+            StockDisplayGrid.Visible = false;
+
+            noPharmacy.Visible = false;
+        }
+        public void step_4()
+        {
+            step1.Attributes.Add("class", step1.Attributes["class"].ToString().Replace("active", ""));
+            step2.Attributes.Add("class", step2.Attributes["class"].ToString().Replace("active", ""));
+            step3.Attributes.Add("class", step3.Attributes["class"].ToString().Replace("active", ""));
+            step4.Attributes["class"] += " active";
+
+            StoresPopup.Visible = false;
+            StockDisplayGrid.Visible = false;
+
+            lbQty.Visible = true;
+            txtTransferredQty.Visible = true;
+            btnAddRequest.Visible = true;
+
+            noPharmacy.Visible = false;
+
+
+        }
+        public void step_default()
+        {
+            step4.Attributes.Add("class", step4.Attributes["class"].ToString().Replace("active", ""));
+            step1.Attributes.Add("class", step1.Attributes["class"].ToString() + " active");
+            StoresPopup.Visible = false;
+            StockDisplayGrid.Visible = false;
+
+            lblProd.Visible = true;
+            txtSearch.Visible = true;
+            btnSearchProduct.Visible = true;
+            lbQty.Visible = false;
+            txtTransferredQty.Visible = false;
+            btnAddRequest.Visible = false;
+
+            noPharmacy.Visible = false;
+
+        }
+
+        protected void reset_Click(object sender, EventArgs e)
+        {
+            step2.Attributes.Add("class", step2.Attributes["class"].ToString().Replace("active", ""));
+            step3.Attributes.Add("class", step3.Attributes["class"].ToString().Replace("active", ""));
+            step4.Attributes.Add("class", step4.Attributes["class"].ToString().Replace("active", ""));
+            step1.Attributes.Add("class", step1.Attributes["class"].ToString() + " active");
+
+            lblProd.Visible = true;
+            txtSearch.Visible = true;
+            btnSearchProduct.Visible = true;
+
+            lbQty.Visible = false;
+            txtTransferredQty.Visible = false;
+            btnAddRequest.Visible = false;
+
+            StoresPopup.Visible = false;
+            StockDisplayGrid.Visible = false;
+
+            noPharmacy.Visible = false;
+
+            ViewState["ProductID"] = null;
+            ViewState["ProductName"] = null;
+            ViewState["StoreID"]=null;
+            ViewState["Product_Name"] = null;
+            ViewState["SystemName"] = null;
+
+        }
+
+
+
     }
+
+    
 }
