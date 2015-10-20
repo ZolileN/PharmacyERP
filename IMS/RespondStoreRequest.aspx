@@ -30,7 +30,7 @@
                                 <asp:Literal ID="litStoreName" runat="server" ></asp:Literal>
                             </h4>
                             <%-- This option is temporarily hidden --%>
-                            <asp:Button ID="btnGenTransfer" runat="server" Visible="true" CssClass="btn btn-info fl-r" Text="Generate SO" CommandName="GenTransferOrder" />
+                            <asp:Button ID="btnGenTransfer" runat="server" Visible="false" CssClass="btn btn-info fl-r" Text="Generate SO" CommandName="GenTransferOrder" />
                             <asp:Button ID="btnAcceptTransferOrder" runat="server" CssClass="btn btn-success fl-r acceptAll" Text="Accept All" Visible="false" CommandName="AcceptTransferOrder"/>
 
                         </td>
@@ -87,7 +87,7 @@
 
                                 <asp:TemplateField HeaderText="Request Date">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblRequestDate" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("RequestedDate") %>' Width="100px"></asp:Label>
+                                        <asp:Label ID="lblRequestDate" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("RequestedDate").ToString().Substring(0, 10) %>' Width="100px"></asp:Label>
                                     </ItemTemplate>
 
                                     <ItemStyle Width="100px" HorizontalAlign="Left" />

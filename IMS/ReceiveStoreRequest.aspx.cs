@@ -40,12 +40,13 @@ namespace IMS
                     #endregion
 
                     #region Populating Request Status DropDown
-                    ddlReqStatus.Items.Add("Complete");
-                    ddlReqStatus.Items.Add("Incomplete");
-                    ddlReqStatus.Items.Add("Both");
+                    ddlReqStatus.Items.Add(new ListItem("Complete", "Completed"));
+                    ddlReqStatus.Items.Add(new ListItem("Incomplete", "Partial"));
+                    ddlReqStatus.Items.Add(new ListItem("Initiated", "Initiated"));
+                    //ddlReqStatus.Items.Add("Both");
                     if (ddlReqStatus != null)
                     {
-                        ddlReqStatus.Items.Insert(0, "Select Request Status");
+                        ddlReqStatus.Items.Insert(0, "All");
                         ddlReqStatus.SelectedIndex = 0;
                     }
 

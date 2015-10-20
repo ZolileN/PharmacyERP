@@ -125,7 +125,7 @@
 
             <asp:TemplateField HeaderText="Action">
                 <ItemTemplate>
-                    <asp:CheckBox ID="chkCtrl" runat="server" onClick="checkBoxOperation(this);" />
+                    <asp:CheckBox ID="chkCtrl" runat="server" onClick="checkBoxOp(this);" />
                 </ItemTemplate>
             </asp:TemplateField>
 
@@ -333,6 +333,24 @@
         function checkBoxOperation(checkbox) {
 
             var GridVwHeaderChckbox = document.getElementById("<%=StockDisplayGrid.ClientID %>");
+            var count = 0;
+            for (i = 1; i < GridVwHeaderChckbox.rows.length; i++) {
+                if (GridVwHeaderChckbox.rows[i].cells[0].getElementsByTagName("INPUT")[0] != checkbox) {
+                    GridVwHeaderChckbox.rows[i].cells[0].getElementsByTagName("INPUT")[0].checked = false;
+                }
+
+
+            }
+
+
+
+        }
+
+
+
+        function checkBoxOp(checkbox) {
+
+            var GridVwHeaderChckbox = document.getElementById("<%=StoresPopup.ClientID %>");
             var count = 0;
             for (i = 1; i < GridVwHeaderChckbox.rows.length; i++) {
                 if (GridVwHeaderChckbox.rows[i].cells[0].getElementsByTagName("INPUT")[0] != checkbox) {

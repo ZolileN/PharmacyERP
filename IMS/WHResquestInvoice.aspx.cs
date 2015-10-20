@@ -134,11 +134,17 @@ namespace IMS
                 SqlCommand command = new SqlCommand("Sp_GetGenTODetails_OrdID", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@p_OrderID", OrderID);
-
                 DataSet ds = new DataSet();
-
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
+
+               
+                DataView dv = ds.Tables[0].DefaultView;
+                dv.RowFilter = "Status = 'Accepted'";
+                DataTable dt = dv.ToTable();
+
+
+
                 ProductSet = ds;
                 StockDisplayGrid.DataSource = null;
                 StockDisplayGrid.DataSource = ds.Tables[0];

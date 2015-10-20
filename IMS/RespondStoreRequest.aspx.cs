@@ -16,12 +16,14 @@ namespace IMS
 {
     public partial class RespondStoreRequest : System.Web.UI.Page
     {
+        public bool generateSO = false;
         private ILog log;
         private string pageURL;
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         protected void Page_Load(object sender, EventArgs e)
-        {
+        {   
+
             try
             {
                 System.Uri url = Request.Url;
@@ -131,7 +133,28 @@ namespace IMS
             
                 SqlDataAdapter da = new SqlDataAdapter(command);
                 da.Fill(ds);
-               
+
+                foreach (DataTable table in ds.Tables)
+                {
+                    foreach (DataRow row in table.Rows)
+                    {
+                        foreach (DataColumn column in table.Columns)
+                        {
+                            object item = row[column];
+
+                            if (item.Equals("Accepted")) {
+                                Button genTransfer = (Button)e.Item.FindControl("btnGenTransfer");
+                                genTransfer.Visible = true;
+                                
+
+                            }
+
+                            // read column and item
+                        }
+                    }
+                }
+
+
                 dgvReceiveTransfer.DataSource = ds;
                 dgvReceiveTransfer.DataBind();
 
@@ -815,6 +838,7 @@ namespace IMS
                 }
                 if (e.CommandName == "AcceptProductTransfer")
                 {
+                    GridView gvReceiveTransfer = (GridView)sender;
                     if (AvailableQty > 0 && (RequestedQty+requestedBonusQty <= AvailableQty)) 
                     {
                         bool isSuccessful = false;
@@ -867,13 +891,6 @@ namespace IMS
                         }
                         command.Parameters.AddWithValue("@p_TransferedBonusQty", requestedBonusQty);
                         command.Parameters.AddWithValue("@p_AvailableQty", AvailableQty);
-                        command.Parameters.AddWithValue("@p_Status", "Accepted");
-                        command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
-                        command.Parameters.AddWithValue("@p_ProductID", ProductId);
-                        command.Parameters.AddWithValue("@p_Discount", Discount);
-                        command.Parameters.AddWithValue("@p_TransferToUserID", userID);
-                        command.CommandType = CommandType.StoredProcedure;
-                        command.ExecuteNonQuery();
 
                         Button btnAccept = (Button)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("btnAccept");
                         btnAccept.Visible = false;
@@ -883,6 +900,42 @@ namespace IMS
                         btnEdit.Visible = false;
                         HtmlGenericControl btnStaticAccepted = (HtmlGenericControl)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("btnStaticAccepted");
                         btnStaticAccepted.Visible = true;  
+
+                        bool status = false;
+
+                        foreach (GridViewRow row in gvReceiveTransfer.Rows)
+                        {
+                            if (((HtmlGenericControl)row.FindControl("btnStaticAccepted")).Visible == false && ((HtmlGenericControl)row.FindControl("lblStaticDeny")).Visible == false)
+                            {
+                                status = true;
+
+                            }
+
+
+                        }
+
+
+                        if (status == true)
+                        {
+
+                            command.Parameters.AddWithValue("@p_MStatus", "Partial");
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@p_MStatus", "Completed");
+                        }
+
+                        
+                        command.Parameters.AddWithValue("@p_Status", "Accepted");
+
+                        command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
+                        command.Parameters.AddWithValue("@p_ProductID", ProductId);
+                        command.Parameters.AddWithValue("@p_Discount", Discount);
+                        command.Parameters.AddWithValue("@p_TransferToUserID", userID);
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.ExecuteNonQuery();
+
+                        
                         //if (RequestedQty != TransferedQty)
                         //{
                         //    if (TransferedQty == 0)
@@ -902,6 +955,8 @@ namespace IMS
                 }
                 if (e.CommandName == "DenyProductTransfer")
                 {
+                    GridView gvReceiveTransfer = (GridView)sender;
+
                     if (connection.State == ConnectionState.Closed)
                     {
                         connection.Open();
@@ -912,12 +967,6 @@ namespace IMS
                     command.Parameters.AddWithValue("@p_RequestedTransferedQty", TransferedQty);
                     command.Parameters.AddWithValue("@p_ReceivedQty", 0);
                     command.Parameters.AddWithValue("@p_AvailableQty", AvailableQty);
-                    command.Parameters.AddWithValue("@p_Status", "Denied");
-                    command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
-                    command.Parameters.AddWithValue("@p_ProductID", ProductId);
-
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.ExecuteNonQuery();
 
 
                     Button btnAccept = (Button)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("btnAccept");
@@ -929,6 +978,45 @@ namespace IMS
 
                     HtmlGenericControl lblStaticDeny = (HtmlGenericControl)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblStaticDeny");
                     lblStaticDeny.Visible = true;  
+
+
+
+                    bool status = false;
+                    
+                    foreach (GridViewRow row in gvReceiveTransfer.Rows)
+                    {
+                        if (((HtmlGenericControl)row.FindControl("btnStaticAccepted")).Visible == false && ((HtmlGenericControl)row.FindControl("lblStaticDeny")).Visible == false)
+                        {
+                            status = true;
+                            
+                        }
+                        
+
+                    }
+
+
+                    if (status == true)
+                    {
+
+                        command.Parameters.AddWithValue("@p_MStatus", "Partial");
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_MStatus", "Completed");
+                    }
+
+                    command.Parameters.AddWithValue("@p_Status", "Denied");
+
+                    
+                    
+                    command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
+                    command.Parameters.AddWithValue("@p_ProductID", ProductId);
+
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.ExecuteNonQuery();
+
+
+                    
 
                 }
 
@@ -962,6 +1050,7 @@ namespace IMS
         {
             if (status.Equals("Accepted"))
             {
+
                 return true;
             }
             else
