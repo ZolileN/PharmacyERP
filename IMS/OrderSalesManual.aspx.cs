@@ -97,7 +97,7 @@ namespace IMS
                                             break;
                                         }
                                     }
-                                    StockAt.Enabled = false;
+                                    //StockAt.Enabled = false;
                                 }
 
                             }
@@ -208,7 +208,7 @@ namespace IMS
                                 break;
                             }
                         }
-                        StockAt.Enabled = false;
+                       // StockAt.Enabled = false;
                     }
 
                 }
@@ -227,7 +227,7 @@ namespace IMS
                                 break;
                             }
                         }
-                        ddlSalesman.Enabled = false;
+                        //ddlSalesman.Enabled = false;
                     }
 
                 }
@@ -315,7 +315,7 @@ namespace IMS
                                 break;
                             }
                         }
-                        ddlSalesman.Enabled = false;
+                       // ddlSalesman.Enabled = false;
                     }
 
                 }
@@ -1985,8 +1985,8 @@ namespace IMS
                 SelectProduct.Visible = false;
                 SelectBonus.Text = "";
                // SelectDiscount.Text = "";
-                StockAt.Enabled = false;
-                ddlSalesman.Enabled = false;
+               // StockAt.Enabled = false;
+                //ddlSalesman.Enabled = false;
                 SelectQuantity.Text = "";
 
                 SelectProduct.SelectedIndex = -1;
@@ -2360,7 +2360,40 @@ namespace IMS
             if (StockAt.SelectedIndex > -1)
             {
                 Session["RequestedFromID"] = StockAt.SelectedValue;
+
+                #region New Store Selected
+
+                if (StockDisplayGrid.Rows.Count!=null && StockDisplayGrid.Rows.Count > 0)
+                {
+                    try
+                    {
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
+                        SqlCommand command = new SqlCommand("sp_UpdateRequestTO_existingorder", connection);
+                        command.Parameters.AddWithValue("@p_StoreId", Convert.ToInt32(StockAt.SelectedValue.ToString()));
+                        command.Parameters.AddWithValue("@p_OrderID", Convert.ToInt32(Session["OrderNumberSO"].ToString()));
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.ExecuteNonQuery();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                    finally
+                    {
+                        if (connection.State == ConnectionState.Open)
+                        {
+                            connection.Close();
+                        }
+                    }
+                }
+                #endregion
             }
+
+          
         }
 
         protected void btnPacking_Click(object sender, EventArgs e)
@@ -2383,7 +2416,8 @@ namespace IMS
 
         protected void ddlSalesman_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            StockAt.SelectedIndex = -1;
+
             #region Re-Populating System Types
             try
             {
@@ -2436,6 +2470,37 @@ namespace IMS
                     connection.Close();
             }
             #endregion
+
+            #region New SalesMan Selected
+
+            if (ddlSalesman.SelectedIndex > -1 && StockDisplayGrid.Rows.Count > 0)
+            {
+                try
+                {
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
+                    SqlCommand command = new SqlCommand("sp_UpdateSalesMan_existingorder", connection);
+                    command.Parameters.AddWithValue("@p_SalesmanId", Convert.ToInt32(ddlSalesman.SelectedValue.ToString()));
+                    command.Parameters.AddWithValue("@p_OrderID", Convert.ToInt32(Session["OrderNumberSO"].ToString()));
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.ExecuteNonQuery();
+
+                }
+                catch(Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                      if (connection.State == ConnectionState.Open)
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+            #endregion
         }
 
         protected void btnMapPreviousOrders_Click(object sender, EventArgs e)
@@ -2482,6 +2547,45 @@ namespace IMS
 
         protected void lblSosPopup_Click(object sender, EventArgs e)
         {
+        }
+
+        protected void StockAt_SelectedIndexChanged1(object sender, EventArgs e)
+        {
+            if (StockAt.SelectedIndex > 0)
+            {
+                Session["RequestedFromID"] = StockAt.SelectedValue;
+
+                #region New Store Selected
+
+                if (StockDisplayGrid.Rows.Count >0)
+                {
+                    try
+                    {
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
+                        SqlCommand command = new SqlCommand("sp_UpdateRequestTO_existingorder", connection);
+                        command.Parameters.AddWithValue("@p_StoreId", Convert.ToInt32(StockAt.SelectedValue.ToString()));
+                        command.Parameters.AddWithValue("@p_OrderID", Convert.ToInt32(Session["OrderNumberSO"].ToString()));
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.ExecuteNonQuery();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                    finally
+                    {
+                        if (connection.State == ConnectionState.Open)
+                        {
+                            connection.Close();
+                        }
+                    }
+                }
+                #endregion
+            }
         }
 
         

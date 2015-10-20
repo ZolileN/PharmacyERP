@@ -208,7 +208,7 @@ namespace IMS.UserControl
                                     break;
                                 }
                             }
-                            ddlStore.Enabled = false;
+                           // ddlStore.Enabled = false;
                         }
 
                         if(ddlSalesMan!=null)
@@ -224,7 +224,7 @@ namespace IMS.UserControl
                                 }
                             }
                             //ddlSalesMan.SelectedIndex = Convert.ToInt32(dt.Rows[0]["SalesManID"].ToString());
-                            ddlSalesMan.Enabled = false;
+                           // ddlSalesMan.Enabled = false;
                         }
                         if (gvStockDisplayGrid != null)
                         {

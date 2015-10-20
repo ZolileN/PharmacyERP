@@ -20,7 +20,7 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                     <asp:BoundField DataField="Product_Name" HeaderText="Product Name"   />
+                     <%--<asp:BoundField DataField="Product_Name" HeaderText="Product Name"   /> --%>
 
                      <asp:TemplateField HeaderText="UPC">
                         <ItemTemplate>
