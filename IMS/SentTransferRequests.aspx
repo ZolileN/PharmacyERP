@@ -82,7 +82,7 @@
                                     <ItemStyle Width="150px" HorizontalAlign="Left" />
                                 </asp:TemplateField>
                                 
-                                 <asp:TemplateField HeaderText="TransferedBonusQty" >
+                                 <asp:TemplateField HeaderText="TransferedBonusQty" Visible="false" >
                                     <ItemTemplate>
                                         <asp:Label ID="lblTransferedBonusQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("TransferedBonusQty") %>' Width="140px"></asp:Label>
                                     </ItemTemplate>

@@ -154,8 +154,8 @@ namespace IMS
             Session["MODE"] = null;
             Session["MODE"] = "ADD";
             Session.Remove("dsProducts_MP");
-
-
+            Session["PageMasterProduct"] = "false";
+            
             //Session.Remove("MS_ItemNo");
             //Session.Remove("MS_ItemName");
             //Session.Remove("MS_ItemType");

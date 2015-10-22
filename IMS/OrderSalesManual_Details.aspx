@@ -90,7 +90,7 @@
 
                       <asp:TemplateField HeaderText="Unit<br>CostPrice"  HeaderStyle-Width ="120px">
                         <ItemTemplate>
-                            <asp:Label ID="lblCostPrice" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("UCostPrice") %>' ></asp:Label>
+                            <asp:Label ID="lblCostPrice" CssClass="col-md-2 control-label" runat="server" Text='<%# Convert.ToDecimal(Eval("UCostPrice")).ToString("#.##") %>' ></asp:Label>
                         </ItemTemplate>
                           <ItemStyle  Width="60px" HorizontalAlign="Left"/>
                       </asp:TemplateField>
