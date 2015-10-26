@@ -73,7 +73,7 @@ namespace IMS
             // Clear the error from the server.
             Server.ClearError();
         }
-        private void BindGrid()
+        private void BindGrid(String SearchText="")
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
@@ -85,25 +85,31 @@ namespace IMS
                 {
                     if (connection.State == ConnectionState.Closed)
                         connection.Open();
-                    String Query;
-                    SqlCommand command;
+                    String Query = null;
+                    SqlCommand command = null;
                     if (Convert.ToInt32(Session["UserSys"]).Equals(1))
                     {
                         Query = "sp_GetProductsList";
-                        command = new SqlCommand(Query, connection);                        
+                        command = new SqlCommand(Query, connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@p_SearchText", SearchText);
                     }
                     else
                     {
                         command = new SqlCommand("Sp_GetProductStoreMapping", connection);
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@p_StoreID", id);
+                        command.Parameters.AddWithValue("@p_SearchText", SearchText);
                     }
                     SqlDataAdapter SA = new SqlDataAdapter(command);                    
                    
-                    ProductSet = null;
+                  //  ProductSet = null;
+                    
+                    
+
                     SA.Fill(ds);
                     Session["dsProducts_MP"] = ds;
-                    ProductSet = ds;
+                  //  ProductSet = ds;
                     StockDisplayGrid.DataSource = ds;
                     StockDisplayGrid.DataBind();
                 }
@@ -454,10 +460,13 @@ namespace IMS
 
         protected void btnSearchProduct_Click(object sender, ImageClickEventArgs e)
         {
-            String Text = txtSearch.Text + '%';
+            String Text = txtSearch.Text;
             Session["Text"] = Text;
-            ProductsPopupGrid.PopulateGridForPM();
-            mpeCongratsMessageDiv.Show();
+          //  ProductsPopupGrid.PopulateGridForPM();
+          //  mpeCongratsMessageDiv.Show();
+
+            BindGrid(Text);
+
         }
     }
 }
