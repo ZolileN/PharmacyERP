@@ -29,20 +29,26 @@ namespace IMS
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            try
             {
-                
-                txtPhysicalQuantity.Attributes.Add("onchange", "changeValues();return false;");
-                // for Testing - must Remove after linkage
-                //Session["AdjustmentPorductID"] = 236456;
-                //Session["AdjustmentStockID"] = 50052;
-                // ----------------------------------------    
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-                if (Session["AdjustmentPorductID"] != null && Session["AdjustmentPorductID"].ToString() != "" &&
-                    Session["AdjustmentStockID"]!=null && Session["AdjustmentStockID"].ToString()!="") 
+                if (!IsPostBack)
                 {
-                    try
+
+                    txtPhysicalQuantity.Attributes.Add("onchange", "changeValues();return false;");
+                    // for Testing - must Remove after linkage
+                    //Session["AdjustmentPorductID"] = 236456;
+                    //Session["AdjustmentStockID"] = 50052;
+                    // ----------------------------------------    
+
+                    if (Session["AdjustmentPorductID"] != null && Session["AdjustmentPorductID"].ToString() != "" &&
+                        Session["AdjustmentStockID"] != null && Session["AdjustmentStockID"].ToString() != "")
                     {
+
+                        
                         int ProductID = Convert.ToInt32(Session["AdjustmentPorductID"].ToString());
                         int StockID = Convert.ToInt32(Session["AdjustmentStockID"].ToString());
                         ViewState["productID"] = ProductID;
@@ -67,20 +73,42 @@ namespace IMS
                             }
                         }
 
+                        btnSave.Enabled = true;
+                        btnCancel.Enabled = true;
                         LoadData(ProductID, StockID);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw ex;
-                    }
-                    finally
-                    {
 
                     }
                 }
+
+                expHandler.CheckForErrorMessage(Session);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+
             }
         }
 
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
         public void LoadData(int ProductID, int StockID)
         {
             try

@@ -43,8 +43,8 @@
                      <asp:Button ID="btnRefresh" runat="server" OnClick="btnRefresh_Click" Enabled="true" Text="ADD TO PRINT" CssClass="btn btn-info"/>
                      <asp:Button ID="btnPrint" runat="server" OnClick="btnPrint_Click" Text="PRINT" CssClass="btn btn-success btn-large" Visible="true" />
                      <asp:Button ID="btnUpdate" runat="server" OnClick="btnUpdate_Click" Text="STOCK & PRICE ADJUSTMENT" CssClass="btn btn-success btn-large" Visible="true" />
-                     <asp:Button ID="btnUpdatePrice" runat="server" OnClick="btnUpdatePrice_Click" Text="PRICE ADJUSTMENT" CssClass="btn btn-success btn-large" Visible="true" />
-                     <asp:Button ID="btnUpdateStock" runat="server" OnClick="btnUpdateStock_Click" Text="STOCK ADJUSTMENT" CssClass="btn btn-success btn-large" Visible="true" />
+                     <asp:Button ID="btnUpdatePrice" runat="server" OnClick="btnUpdatePrice_Click" Text="PRICE ADJUSTMENT" CssClass="btn btn-success btn-large" Visible="False" />
+                     <asp:Button ID="btnUpdateStock" runat="server" OnClick="btnUpdateStock_Click" Text="STOCK ADJUSTMENT" CssClass="btn btn-success btn-large" Visible="False" />
                      <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnBack_Click"/>
                      <asp:Button ID="btnFax" runat="server" Text="FAX" CssClass="btn btn-large no-print" Visible="false" />
                      <asp:Button ID="btnEmail" runat="server"  Text="EMAIL" CssClass="btn btn-large no-print" Visible="false" />

@@ -425,7 +425,7 @@ namespace IMS.UserControl
                         Label lbProdId = (Label)ctl.FindControl("lblProductId");
                         if (lbProdId != null)
                         {
-                            lbProdId.Text = Server.HtmlDecode(row.Cells[5].Text);
+                            lbProdId.Text = Server.HtmlDecode(row.Cells[4].Text);
                         }
 
                         //DataSet dsProducts_ProdPopUp = new DataSet();
@@ -459,7 +459,7 @@ namespace IMS.UserControl
                         }
                         if (ltMetaTags != null)
                         {
-                            ltMetaTags.Text = Server.HtmlDecode(row.Cells[1].Text);
+                            ltMetaTags.Text = Server.HtmlDecode(row.Cells[2].Text);
 
                         }
                         if (gvStockDisplayGrid!=null)
@@ -467,10 +467,12 @@ namespace IMS.UserControl
                             gvStockDisplayGrid.DataSource = null;
                             gvStockDisplayGrid.DataBind();
                         }
+
+                        Session.Remove("Text");
                          
                     }
                 }
-                Session.Remove("Text");
+               
             }
 
         }

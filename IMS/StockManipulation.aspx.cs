@@ -39,8 +39,8 @@ namespace IMS
                         btnRefresh.Visible = false;
                         btnPrint.Visible = false;
                         btnUpdate.Visible = true;
-                        btnUpdatePrice.Visible = true;
-                        btnUpdateStock.Visible = true;
+                        //btnUpdatePrice.Visible = true;
+                        //btnUpdateStock.Visible = true;
                         
                     }
                     else if (Request.QueryString["Param"].ToString().Equals("Printing"))
@@ -79,6 +79,9 @@ namespace IMS
 
                     Session.Remove("dsProdcts");
                     Session.Remove("dsProducts_MP");
+
+                    Session.Remove("AdjustmentPorductID");
+                    Session.Remove("AdjustmentStockID");
 
                     #region remove print sessions
 
@@ -284,6 +287,7 @@ namespace IMS
                         }
                     }
                     #endregion
+
                     if (Request.QueryString["Id"] != null)
                     {
                         BindByProductID();
