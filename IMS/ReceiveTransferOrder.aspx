@@ -1,7 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ReceiveTransferOrder.aspx.cs" Inherits="IMS.ReceiveTransferOrder" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+<%--<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>--%>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+
+    
     <style>
         .ProductName {
             width:300px;
@@ -9,23 +12,24 @@
             display:block;
         }
         </style>
-      <table width="100%">
+
+    <table width="100%">
 
         <tbody><tr>
         	<td> <h4 id="topHead">Send Transfer Request(s)</h4></td>
             <td align="right">
-                <asp:Button ID="btnAcceptAll" runat="server" CssClass="btn btn-success acptAllTransfers" Text="Accept All Transfers" OnClick="btnAcceptAll_Click" />
-                <asp:Button ID="btnGenTransferAll" runat="server" CssClass="btn btn-info" Text="Generate All Transfers" OnClick="btnGenTransferAll_Click" />
+                <asp:Button ID="btnAcceptAll" Visible="false" runat="server" CssClass="btn btn-success acptAllTransfers" Text="Accept All Transfers" OnClick="btnAcceptAll_Click" />
+                <asp:Button ID="btnGenTransferAll" Visible="false" runat="server" CssClass="btn btn-info" Text="Generate All Transfers" OnClick="btnGenTransferAll_Click" />
                 <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default" Text="Back" OnClick="btnBack_Click" />
 
             </td>
         </tr>
 		<tr><td height="5"></td></tr>
     </tbody></table>
-    <hr>
-     
-     <br>
+    
+   
 
+    
     <asp:Repeater ID="repReceiveTransfer" runat="server" OnItemDataBound="repReceiveTransfer_ItemDataBound" OnItemCommand="repReceiveTransfer_ItemCommand">
 
         <ItemTemplate>
@@ -47,6 +51,7 @@
 
 
                     <tr>
+                        <td>
                         <asp:GridView ID="dgvReceiveTransfer" CssClass="table table-striped table-bordered table-condensed" Visible="true" runat="server" AllowPaging="false" PageSize="10"
                             AutoGenerateColumns="false"  OnRowCommand="dgvReceiveTransfer_RowCommand" OnRowDataBound="dgvReceiveTransfer_RowDataBound"  >
                             <Columns>
@@ -111,14 +116,14 @@
                                     <ItemStyle Width="100px" HorizontalAlign="Left" />
                                 </asp:TemplateField>
 
-                                <%--<asp:TemplateField HeaderText="Requested Bonus Qty">
+                                <asp:TemplateField HeaderText="Requested Bonus Qty" Visible="false">
                                     <ItemTemplate>
                                         <asp:Label ID="lblRequestedBonusQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("RequestedBonusQty") %>' Width="140px"></asp:Label>
                                     </ItemTemplate>
 
                                     <ItemStyle Width="150px" HorizontalAlign="Left" />
 
-                                </asp:TemplateField>--%>
+                                </asp:TemplateField>
 
                                 <asp:TemplateField HeaderText="Available Stock">
                                     <ItemTemplate>
@@ -145,12 +150,13 @@
 
                                         </span>
                                         <span class="accepted"  ID="btnStaticAccepted" runat="server" Visible="false"  >Accepted</span>
-                                       <span class="denied"  ID="lblStaticDeny" runat="server" Visible="false"  >Denied</span>  
+                                       <span class="denied"  ID="lblStaticDeny" runat="server" Visible="false">Denied</span>  
                                        
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
                         </asp:GridView>
+                        </td>
                     </tr>
                 </tbody>
             </table>

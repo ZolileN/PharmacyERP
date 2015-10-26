@@ -130,7 +130,7 @@
   }
 }
 body {
-  background-color: #225877;
+  
   font-family: 'Open Sans', sans-serif;
 }
 
@@ -138,6 +138,7 @@ body {
   position: absolute;
   left: 10px;
   bottom: 10px;
+  z-index:9;
 }
 
 .notify {

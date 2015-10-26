@@ -116,7 +116,7 @@ namespace IMS
                 GridView dgvReceiveTransfer = (GridView)e.Item.FindControl("dgvReceiveTransfer");
                 Literal litStoreName = (Literal)e.Item.FindControl("litStoreName");
                 Label lblStoreID = (Label)e.Item.FindControl("lblStoreID");
-
+                Button btnAcceptTransferOrder = (Button)e.Item.FindControl("btnAcceptTransferOrder");
                 DataSet ds = new DataSet();
                 int Userid;
                 if (connection.State == ConnectionState.Closed)
@@ -135,6 +135,26 @@ namespace IMS
                 SqlDataAdapter da = new SqlDataAdapter(command);
                 da.Fill(ds);
                 dsStatic = ds;
+
+                int totalRows = ds.Tables[0].Rows.Count;
+                int i = 0;
+
+                foreach (DataTable table in ds.Tables)
+                {
+                    foreach (DataRow row in table.Rows)
+                    {
+                        if (row["TransferStatus"].ToString() == "Accepted" || row["TransferStatus"].ToString() == "Denied")
+                        {
+                            i++;
+
+                        }
+                    }
+                }
+
+                if (i == totalRows) {
+                    btnAcceptTransferOrder.Visible = false;
+                }
+
                 dgvReceiveTransfer.DataSource = ds;
                 dgvReceiveTransfer.DataBind();
 
@@ -295,7 +315,8 @@ namespace IMS
             {
                 if (e.CommandName == "AcceptTransferOrder")
                 {
-                    GridView gvReceiveTransfer = (GridView)repReceiveTransfer.Items[0].FindControl("dgvReceiveTransfer");
+                   // GridView gvReceiveTransfer = (GridView)repReceiveTransfer.Items[0].FindControl("dgvReceiveTransfer");
+                    GridView gvReceiveTransfer = (GridView)e.Item.FindControl("dgvReceiveTransfer");
                     for (int i = 0; i < gvReceiveTransfer.Rows.Count; i++)
                     {
                         int TransferNo, TransferDetailNo, RequestedQty, TransferedQty,  AvailableQty, ProductId, TransferedBonusQty;
@@ -315,7 +336,7 @@ namespace IMS
                         int.TryParse(lblTransferNo.Text.ToString(), out TransferNo);
                         int.TryParse(lblTransferDetailsID.Text.ToString(), out TransferDetailNo);
                         int.TryParse(lblRequestedQty.Text.ToString(), out RequestedQty);
-                        int.TryParse(lblRequestedBonusQty.Text.ToString(), out TransferedBonusQty);
+                   //     int.TryParse(lblRequestedBonusQty.Text.ToString(), out TransferedBonusQty);
 
                         int.TryParse(lblAvailableQty.Text.ToString(), out AvailableQty);
                         int.TryParse(lblSentQty.Text.ToString(), out TransferedQty);
@@ -338,7 +359,7 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_ProductID", ProductId);
                         command.Parameters.AddWithValue("@p_TransferToUserID", userID);
                          
-                        command.Parameters.AddWithValue("@p_TransferedBonQty", TransferedBonusQty);
+                     //   command.Parameters.AddWithValue("@p_TransferedBonQty", TransferedBonusQty);
  
                         command.CommandType = CommandType.StoredProcedure;
                         command.ExecuteNonQuery();
@@ -359,12 +380,12 @@ namespace IMS
                         {
                             if (TransferedQty == 0)
                             {
-                                RequestedQty = RequestedQty + TransferedBonusQty;
+                               
                                 UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty);
                             }
                             else
                             {
-                                TransferedQty = TransferedQty + TransferedBonusQty;
+                               
                                 UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty);
                             }
                         }
@@ -559,6 +580,10 @@ namespace IMS
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+                if (Convert.ToInt32(((Label)e.Row.FindControl("lblAvailableQty") as Label).Text) == 0) {
+                    Button btnEdit = (Button)e.Row.FindControl("btnEdit");
+                    btnEdit.Visible = false;
+                }
                  
                 if (dsStatic.Tables[0].Rows[e.Row.RowIndex]["TransferStatus"].ToString() == "Accepted" || dsStatic.Tables[0].Rows[e.Row.RowIndex]["TransferStatus"].ToString() == "Received")
                 {

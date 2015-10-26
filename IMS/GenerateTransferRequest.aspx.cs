@@ -31,7 +31,8 @@ namespace IMS
                 if (!IsPostBack)
                 {
                     dsDistinct = (DataTable)Session["TransferRequestGrid"];
-                    distinctStores = dsDistinct.DefaultView.ToTable(true, "SystemID");
+                    distinctStores = dsDistinct.DefaultView.ToTable(true, "RequestedFrom","SystemID");
+                    
                     drpTransferDetailsReport.DataSource = distinctStores;
                     drpTransferDetailsReport.DataBind();
 
@@ -88,16 +89,21 @@ namespace IMS
                 dtGridSource.Columns.Add("PercentageDiscount");
 
 
-                int StoreId = Convert.ToInt32(((DataRowView)e.Item.DataItem).Row[0].ToString());
+                int FromID = Convert.ToInt32(((DataRowView)e.Item.DataItem).Row[0].ToString());
+                int ToID = Convert.ToInt32(((DataRowView)e.Item.DataItem).Row[1].ToString());
                 DataSet ds = new DataSet();
                 if (connection.State == ConnectionState.Closed)
                 {
                     connection.Open();
                 }
-                SqlCommand command = new SqlCommand("sp_GetSystems_ByID", connection);
+                
+                //SqlCommand command = new SqlCommand("sp_GetSystems_ByID", connection);
+                SqlCommand command = new SqlCommand("sp_GetSystems_Transfers_ByID", connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.AddWithValue("@p_StoreId", StoreId);
+                command.Parameters.AddWithValue("@p_FromID", FromID);
+                command.Parameters.AddWithValue("@p_ToID", ToID);
+
 
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
@@ -111,19 +117,19 @@ namespace IMS
                 Label lblToSystemPhone = (Label)e.Item.FindControl("lblToSystemPhone");
                 Label lblToSystemEmail = (Label)e.Item.FindControl("lblToSystemEmail");
                 
-                lblFROMSystemName.Text = ds.Tables[0].Rows[0]["FROMName"].ToString();
-                lblFROMSystemAddress.Text = ds.Tables[0].Rows[0]["FROMAdress"].ToString();
-                lblFROMSystemPhone.Text = ds.Tables[0].Rows[0]["FROMPhone"].ToString();
-                lblFROMSystemEmail.Text = ds.Tables[0].Rows[0]["FROMFax"].ToString();
-                lblToSystemName.Text = ds.Tables[0].Rows[0]["ToName"].ToString();
-                lblToSystemAddress.Text = ds.Tables[0].Rows[0]["ToAddress"].ToString();
-                lblToSystemPhone.Text = ds.Tables[0].Rows[0]["ToPhone"].ToString();
-                lblToSystemEmail.Text = ds.Tables[0].Rows[0]["ToFax"].ToString();
+                lblFROMSystemName.Text = ds.Tables[0].Rows[0]["SystemName"].ToString();
+                lblFROMSystemAddress.Text = ds.Tables[0].Rows[0]["SystemAddress"].ToString();
+                lblFROMSystemPhone.Text = ds.Tables[0].Rows[0]["SystemPhone"].ToString();
+                lblFROMSystemEmail.Text = ds.Tables[0].Rows[0]["SystemFax"].ToString();
+                lblToSystemName.Text = ds.Tables[1].Rows[0]["SystemName"].ToString();
+                lblToSystemAddress.Text = ds.Tables[1].Rows[0]["SystemAddress"].ToString();
+                lblToSystemPhone.Text = ds.Tables[1].Rows[0]["SystemPhone"].ToString();
+                lblToSystemEmail.Text = ds.Tables[1].Rows[0]["SystemFax"].ToString();
 
 
                 GridView dgvTransferDisplay = (GridView)e.Item.FindControl("dgvTransferDisplay");
 
-                DataRow[] drList = dsDistinct.Select("SystemID = '" + StoreId + "'");
+                DataRow[] drList = dsDistinct.Select("SystemID = '" + ToID + "'");
 
                 //dtGridSource.DefaultView.RowFilter = "SystemID = " + StoreId;
                 //dtGridSource.DefaultView.ToTable();

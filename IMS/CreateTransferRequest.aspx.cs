@@ -1104,6 +1104,9 @@ namespace IMS.StoreManagement.StoreRequests
 
             noPharmacy.Visible = false;
 
+            SelectProduct.Visible = false;
+            SelectStore.Visible = false;
+
             ViewState["ProductID"] = null;
             ViewState["ProductName"] = null;
             ViewState["StoreID"]=null;

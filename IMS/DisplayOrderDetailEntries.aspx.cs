@@ -736,12 +736,23 @@ namespace IMS
         {
             try
             {
+
+                
+
                 if (e.Row.RowType == DataControlRowType.DataRow)
                 {
                     TextBox txtReturnedQuantity = (TextBox)e.Row.FindControl("txtAddExpDate");
+
+                    LinkButton btnUpdate = (LinkButton)e.Row.FindControl("btnUpdate");
+
+                    btnUpdate.Attributes.Add("onclick", "return updateCheck(" + e.Row.RowIndex + ");");
+
                     if (txtReturnedQuantity != null)
                     {
+                        
                         txtReturnedQuantity.Attributes.Add("onselect", "CheckExpiry(" + e.Row.RowIndex + ");return false;");
+
+                        
 
                     }
                 }

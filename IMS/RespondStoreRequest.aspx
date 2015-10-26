@@ -19,8 +19,11 @@
      
      <br>
     <asp:Repeater ID="repReceiveTransfer" runat="server" OnItemDataBound="repReceiveTransfer_ItemDataBound" OnItemCommand="repReceiveTransfer_ItemCommand">
-
+        
         <ItemTemplate>
+           
+
+        
             <table class="table table-striped table-bordered table-condensed" rules="all" id="MainContent_StockDisplayGrid" style="border-collapse: collapse;" border="1" cellspacing="0">
                 <tbody>
                     <tr>
@@ -156,7 +159,8 @@
                     </tr>
                 </tbody>
             </table>
-
+            
+            
 
         </ItemTemplate>
 

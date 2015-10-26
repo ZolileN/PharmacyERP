@@ -7,26 +7,68 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using log4net;
+using IMS.Util;
 
 namespace IMS
 {
     public partial class ReceiveTransferDetails_ReceiveEntry : System.Web.UI.Page
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
-
+        private ILog log;
+        private string pageURL;
         public static DataTable dtReceiveEnty;
-
+        private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         public int Sent;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack)
+            try
             {
+                System.Uri url = Request.Url;
+                pageURL = url.AbsolutePath.ToString();
+                log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-                dtReceiveEnty = new DataTable();
-                lblTotalTransferQty.Text = Session["TransferedQty"].ToString();
-                Sent = Convert.ToInt32(lblTotalTransferQty.Text.ToString());
-                BindGrid();
+
+
+                if (!IsPostBack)
+                {
+
+                    dtReceiveEnty = new DataTable();
+                    lblTotalTransferQty.Text = Session["TransferedQty"].ToString();
+                    Sent = Convert.ToInt32(lblTotalTransferQty.Text.ToString());
+                    BindGrid();
+                }
+
+                expHandler.CheckForErrorMessage(Session);
+
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+
+            }
+        }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            // Void Page_Load(System.Object, System.EventArgs)
+            // Handle specific exception.
+            if (exc is HttpUnhandledException || exc.TargetSite.Name.ToLower().Contains("page_load"))
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.Remote, Session, Server, Response, log, exc);
+            }
+            else
+            {
+                expHandler.GenerateExpResponse(pageURL, RedirectionStrategy.local, Session, Server, Response, log, exc);
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
 
         private void BindGrid()
@@ -64,92 +106,104 @@ namespace IMS
 
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < dgvReceiveTransferDetailsReceive.Rows.Count; i++)
+            try
             {
-                TextBox txtSentQuantity = (TextBox)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("txtSendQty");
-                txtSentQuantity.Attributes.Add("onchange", "Validate(" + i + ");return false;");
-            }
-            for (int i = 0; i < dgvReceiveTransferDetailsReceive.Rows.Count; i++)
-            {
-                DateTime RequestDate, Expiry;
-                int TransferedQty, TransferedBonusQty, TransferDetID, StockId, ProdctID,  ReqQty = 0, AvailableQty ;
-                decimal CP, SP;
-                double Barcode;
-
-
-                // Label lblentryID = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblentryID");
-                Label lblRequestedBonusQty = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblRequestedBonusQty");
-                Label lblTransferDetailsID = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblTransferDetailsID"); 
-                Label lblProductID = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblProductID");
-
-                Label lblBarCode = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblBarCode");
-                Label lblRequestedDate = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblRequestedDate");
-                Label lblRequestedQty = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblRequestedQty");
-                Label lblSP = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblSP");
-                Label lblCP = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblCP");
-                Label lblExpiryDate = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblExpiryDate");
-                Label lblBatchNumber = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblBatchNumber");
-                Label lblStockID = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblStockID");
-                Label lblAvailableStock = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblAvailableStock");
-                TextBox txtTransferedQty = (TextBox)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("txtSendQty");
-                //TextBox txtTransferedBonusQty = (TextBox)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("txtBonusQty");
-
-                double.TryParse(lblBarCode.Text.ToString(), out Barcode);
-                int.TryParse(lblAvailableStock.Text.ToString(), out AvailableQty);
-                int.TryParse(lblRequestedQty.Text.ToString(), out ReqQty);
-                
-                int.TryParse(txtTransferedQty.Text.ToString(), out TransferedQty);
-               // int.TryParse(txtTransferedBonusQty.Text.ToString(), out TransferedBonusQty);
-
-                int.TryParse(lblTransferDetailsID.Text.ToString(), out TransferDetID);
-                int.TryParse(lblProductID.Text.ToString(), out ProdctID);
-                int.TryParse(lblStockID.Text.ToString(), out StockId);
-                DateTime.TryParse(lblRequestedDate.Text.ToString(), out RequestDate);
-                DateTime.TryParse(lblExpiryDate.Text.ToString(), out Expiry);
-                Decimal.TryParse(lblCP.Text.ToString(), out CP);
-                Decimal.TryParse(lblSP.Text.ToString(), out SP);
-                string BatchNo = lblBatchNumber.Text.ToString();
-                int userID = Convert.ToInt32(Session["UserID"].ToString());
-
-                if (TransferedQty > 0)
+                for (int i = 0; i < dgvReceiveTransferDetailsReceive.Rows.Count; i++)
                 {
-                    if (connection.State == ConnectionState.Closed)
-                    {
-                        connection.Open();
-                    }
-                    SqlCommand command = new SqlCommand("sp_UpdateTransferReceiveEntry", connection);
-                    command.Parameters.AddWithValue("@p_TransferDetID", TransferDetID);
-                    command.Parameters.AddWithValue("@p_RequestDate", RequestDate);
-                    command.Parameters.AddWithValue("@p_ReqQty", ReqQty);
-                    command.Parameters.AddWithValue("@p_TransferQty", TransferedQty);
-                  //  command.Parameters.AddWithValue("@p_TransferBonusQty", TransferedBonusQty);
-                    command.Parameters.AddWithValue("@p_Barcode", Barcode);
-                    command.Parameters.AddWithValue("@p_ProdctID", ProdctID);
-                    command.Parameters.AddWithValue("@p_StockId", StockId);
-                    command.Parameters.AddWithValue("@p_Expiry", Expiry);
-                    command.Parameters.AddWithValue("@p_CP", CP);
-                    command.Parameters.AddWithValue("@p_SP", SP);
-                    command.Parameters.AddWithValue("@p_BatchNo", BatchNo);
-                    command.Parameters.AddWithValue("@p_TransferToUserID", userID);
+                    TextBox txtSentQuantity = (TextBox)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("txtSendQty");
+                    txtSentQuantity.Attributes.Add("onchange", "Validate(" + i + ");return false;");
+                }
+                for (int i = 0; i < dgvReceiveTransferDetailsReceive.Rows.Count; i++)
+                {
+                    DateTime RequestDate, Expiry;
+                    int TransferedQty, TransferedBonusQty, TransferDetID, StockId, ProdctID, ReqQty = 0, AvailableQty;
+                    decimal CP, SP;
+                    double Barcode;
 
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.ExecuteNonQuery();
 
-                    //Update Stock
-                    UpdateStockMinus(TransferDetID, ProdctID, AvailableQty, TransferedQty, Expiry, StockId, CP, SP, BatchNo, ReqQty, Barcode);
+                    // Label lblentryID = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblentryID");
+                    Label lblRequestedBonusQty = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblRequestedBonusQty");
+                    Label lblTransferDetailsID = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblTransferDetailsID");
+                    Label lblProductID = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblProductID");
 
-                    if (!Session["UserRole"].ToString().Equals("WareHouse"))
+                    Label lblBarCode = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblBarCode");
+                    Label lblRequestedDate = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblRequestedDate");
+                    Label lblRequestedQty = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblRequestedQty");
+                    Label lblSP = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblSP");
+                    Label lblCP = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblCP");
+                    Label lblExpiryDate = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblExpiryDate");
+                    Label lblBatchNumber = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblBatchNumber");
+                    Label lblStockID = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblStockID");
+                    Label lblAvailableStock = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblAvailableStock");
+                    TextBox txtTransferedQty = (TextBox)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("txtSendQty");
+                    //TextBox txtTransferedBonusQty = (TextBox)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("txtBonusQty");
+
+                    double.TryParse(lblBarCode.Text.ToString(), out Barcode);
+                    int.TryParse(lblAvailableStock.Text.ToString(), out AvailableQty);
+                    int.TryParse(lblRequestedQty.Text.ToString(), out ReqQty);
+
+                    int.TryParse(txtTransferedQty.Text.ToString(), out TransferedQty);
+                    // int.TryParse(txtTransferedBonusQty.Text.ToString(), out TransferedBonusQty);
+
+                    int.TryParse(lblTransferDetailsID.Text.ToString(), out TransferDetID);
+                    int.TryParse(lblProductID.Text.ToString(), out ProdctID);
+                    int.TryParse(lblStockID.Text.ToString(), out StockId);
+                    DateTime.TryParse(lblRequestedDate.Text.ToString(), out RequestDate);
+                    DateTime.TryParse(lblExpiryDate.Text.ToString(), out Expiry);
+                    Decimal.TryParse(lblCP.Text.ToString(), out CP);
+                    Decimal.TryParse(lblSP.Text.ToString(), out SP);
+                    string BatchNo = lblBatchNumber.Text.ToString();
+                    int userID = Convert.ToInt32(Session["UserID"].ToString());
+
+                    if (TransferedQty > 0)
                     {
-                        Response.Redirect("ReceiveTransferOrder.aspx");
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
+                        SqlCommand command = new SqlCommand("sp_UpdateTransferReceiveEntry", connection);
+                        command.Parameters.AddWithValue("@p_TransferDetID", TransferDetID);
+                        command.Parameters.AddWithValue("@p_RequestDate", RequestDate);
+                        command.Parameters.AddWithValue("@p_ReqQty", ReqQty);
+                        command.Parameters.AddWithValue("@p_TransferQty", TransferedQty);
+                        //  command.Parameters.AddWithValue("@p_TransferBonusQty", TransferedBonusQty);
+                        command.Parameters.AddWithValue("@p_Barcode", Barcode);
+                        command.Parameters.AddWithValue("@p_ProdctID", ProdctID);
+                        command.Parameters.AddWithValue("@p_StockId", StockId);
+                        command.Parameters.AddWithValue("@p_Expiry", Expiry);
+                        command.Parameters.AddWithValue("@p_CP", CP);
+                        command.Parameters.AddWithValue("@p_SP", SP);
+                        command.Parameters.AddWithValue("@p_BatchNo", BatchNo);
+                        command.Parameters.AddWithValue("@p_TransferToUserID", userID);
+
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.ExecuteNonQuery();
+
+                        //Update Stock
+                        UpdateStockMinus(TransferDetID, ProdctID, AvailableQty, TransferedQty, Expiry, StockId, CP, SP, BatchNo, ReqQty, Barcode);
+
+                        if (!Session["UserRole"].ToString().Equals("WareHouse"))
+                        {
+                            Response.Redirect("ReceiveTransferOrder.aspx");
+                        }
+                        else
+                        {
+                            Response.Redirect("RespondStoreRequest.aspx", false);
+                        }
+
                     }
-                    else
-                    {
-                        Response.Redirect("RespondStoreRequest.aspx", false);
-                    }
-                   
                 }
             }
-             
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
         }
 
         private void UpdateStockPlus(int TransferDetailID, int ProductID, int Quantity)
@@ -316,7 +370,7 @@ namespace IMS
                     if (Quantity < Convert.ToInt32(dtTemp.Rows[i]["RequestedQty"]))
                     {
                         dtReceiveEnty.Rows[i]["SentQty"] = Quantity;
-                        dtTemp.Rows[i + 1]["RequestedQty"] = Convert.ToInt32(dtTemp.Rows[i]["RequestedQty"]) - Quantity;
+                        dtTemp.Rows[i]["RequestedQty"] = Convert.ToInt32(dtTemp.Rows[i]["RequestedQty"]) - Quantity;
                         dtReceiveEnty.AcceptChanges();
                         Sent = Sent - Quantity;
                     }
@@ -343,7 +397,7 @@ namespace IMS
                     if (Quantity < Convert.ToInt32(dtTemp.Rows[i]["RequestedQty"]))
                     {
                         dtReceiveEnty.Rows[i]["BonusQty"] = Quantity;
-                        dtTemp.Rows[i + 1]["RequestedQty"] = Convert.ToInt32(dtTemp.Rows[i]["RequestedQty"]) - Quantity;
+                        dtTemp.Rows[i]["RequestedQty"] = Convert.ToInt32(dtTemp.Rows[i]["RequestedQty"]) - Quantity;
                         dtReceiveEnty.AcceptChanges();
                         Sent = Sent - Quantity;
                     }

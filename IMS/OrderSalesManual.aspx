@@ -291,7 +291,7 @@
 
                     <asp:TemplateField HeaderText="Cost<br>Price" HeaderStyle-Width="60px">
                         <ItemTemplate>
-                            <asp:Label ID="lblSales" CssClass="" runat="server" Text='<%# Eval("SalePrice") %>'></asp:Label>
+                            <asp:Label ID="lblSales" CssClass="" runat="server" Text='<%# Convert.ToDecimal(Eval("SalePrice")).ToString("#.##") %>'></asp:Label>
                         </ItemTemplate>
 
                         <ItemStyle Width="60px" HorizontalAlign="Left" />

@@ -12,11 +12,11 @@ $(document).ready(function () {
             $($(result).find(".Transfers").find(".TransferCount")).each(function () {
 
                 if (i == 0) {
-                    $("#trYours").text($(this).text());
+                    $("#trOthers").text($(this).text());
                 }
                 else if (i == 1) {
                    
-                    $("#trOthers").text($(this).text());
+                    $("#trYours").text($(this).text());
                 }
                 i++;
 
