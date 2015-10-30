@@ -38,7 +38,8 @@
         	                <td colspan="6">
                                     <asp:Label ID="hdnVendorID" runat="server" Visible="false" Text='<%# Eval("VendorID") %>' CommandArgument='<%# Container.DataItemIndex %>'/>
     		                        <h4 class="fl-l"><asp:Label runat="server" ID ="hdnVendorName" Text = '<%#Eval("VendorName") %>' ></asp:Label></h4>
-                                    <asp:Button ID="btnCreatePO" runat="server" CommandName="CreatePO"  CommandArgument='<%# Eval("VendorID").ToString() %>' CssClass="btn btn-success fl-r" Text="Create PO"/>
+                                    <asp:Button ID="btnCreatePO" runat="server" CommandName="CreatePO"  CommandArgument='<%# Container.DataItemIndex %>' CssClass="btn btn-success fl-r" Text="Create PO"/>
+                                    <asp:Label ID="isWareHouse" Visible="false" runat="server" Text='<%# Eval("isWareHouse") %>'></asp:Label>
                             </td>
                         </tr>
                             <tr><td>

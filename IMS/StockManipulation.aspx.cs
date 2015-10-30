@@ -475,7 +475,7 @@ namespace IMS
                         connection.Open();
 
                     }
-                    SqlCommand command = new SqlCommand("sp_ViewInventory_byFilters", connection);
+                    SqlCommand command = new SqlCommand("Sp_FetchProductsByFilters", connection);
                     command.CommandTimeout = 0;
                     #region with parameter approach
                     command.CommandType = CommandType.StoredProcedure;

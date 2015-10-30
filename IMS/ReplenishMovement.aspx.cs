@@ -47,6 +47,9 @@ namespace IMS
                         int ReplenishDays = 0;
                         int.TryParse((Session["ReplenishDays"].ToString()), out ReplenishDays);
 
+                         //Session["DataTableView"] = null;
+                         //Session["DataTableUpdate"] = null;
+
                         LoadData_SalesDate(Days, ReplenishDays, FromDate,ToDate);
                         ViewState["VendorID"] = -1;
                         DisplayMainGrid((DataTable)Session["DataTableView"]);
@@ -106,18 +109,20 @@ namespace IMS
                 displayTable.Clear();
                 displayTable.Columns.Add("VendorID", typeof(int));
                 displayTable.Columns.Add("VendorName", typeof(String));
+                displayTable.Columns.Add("isWareHouse", typeof(int));
 
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     int VendorID = Convert.ToInt32(dt.Rows[i]["VendorID"].ToString());
                     String VendorName = dt.Rows[i]["VendorName"].ToString();
-                    displayTable.Rows.Add(VendorID, VendorName);
+                    String isWareHouse = dt.Rows[i]["isWareHouse"].ToString();
+                    displayTable.Rows.Add(VendorID, VendorName, isWareHouse);
                     displayTable.AcceptChanges();
                 }
 
                 DataView dv = displayTable.DefaultView;
                 displayTable = null;
-                displayTable = dv.ToTable(true, "VendorID", "VendorName");
+                displayTable = dv.ToTable(true, "VendorID", "VendorName", "isWareHouse");
                 gvVendorNames.DataSource = null;
                 gvVendorNames.DataSource = displayTable;
                 gvVendorNames.DataBind();
@@ -199,7 +204,8 @@ namespace IMS
                 {
                     connection.Open();
                 }
-                SqlCommand cmd = new SqlCommand("sp_ReplenishProducts_Calculation", connection);
+                //sp_ReplenishProducts_Calculation
+                SqlCommand cmd = new SqlCommand("Sp_ReplenishProducts_Calculation_WHFlag", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@p_SystemID", SystemID);
                 cmd.Parameters.AddWithValue("@p_DaysDifference", DateDifference);
@@ -220,7 +226,7 @@ namespace IMS
                     dv.RowFilter = "VendorID = '" + VendorID + "'";
                     dt = dv.ToTable();
                 }
-                else
+                else 
                 {
                     dt = ds.Tables[0];
                 }
@@ -253,12 +259,12 @@ namespace IMS
 
                     String SelectVendorName = hdnVendorName.Text.ToString();
 
-                    if (ViewState["VendorID"].Equals(VendorID))
-                    {
-
-                    }
-                    else
-                    {
+                    //if (ViewState["VendorID"].Equals(VendorID))
+                    //{
+                        
+                    //}
+                    //else
+                    //{
 
                         GridView gvProductList = (GridView)e.Row.FindControl("gvVendorProducts");
 
@@ -272,8 +278,8 @@ namespace IMS
                         gvProductList.DataSource = dt;
                         gvProductList.DataBind();
 
-                        ViewState["VendorID"] = VendorID;
-                    }
+                        //ViewState["VendorID"] = VendorID;
+                    //}
 
                 }
             }
@@ -460,8 +466,15 @@ namespace IMS
 
         protected void gvVendorProducts_RowEditing(object sender, GridViewEditEventArgs e)
         {
+
             
-            ((GridView)sender).EditIndex = e.NewEditIndex;
+            GridView grid = ((GridView)(sender));
+
+            
+
+            grid.EditIndex = e.NewEditIndex;
+           
+            
             //DisplayMainGrid((DataTable)Session["DataTableView"]);
         }
 
@@ -474,6 +487,7 @@ namespace IMS
         {
             ((GridView)sender).EditIndex = -1;
             DisplayMainGrid((DataTable)Session["DataTableView"]);
+
         }
 
         protected void gvVendorProducts_RowDeleting(object sender, GridViewDeleteEventArgs e)
@@ -551,14 +565,31 @@ namespace IMS
                 {
                     String Vendor = e.CommandArgument.ToString();
                     int VendorID = 0;
-                    int.TryParse(Vendor, out VendorID);
+                   // int.TryParse(Vendor, out VendorID);
+
+                    
+
+                    int.TryParse(((Label)gvVendorNames.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("hdnVendorID")).Text, out VendorID);
+
                     if (VendorID > 0)
                     {
                         int SystemID = 0;
                         int.TryParse(Session["UserSys"].ToString(), out SystemID);
 
+                        
+                        int isWareHouse = 0;
+                        int.TryParse(((Label)gvVendorNames.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("isWareHouse")).Text, out isWareHouse);
+
+                        GridView gridview = (GridView)gvVendorNames.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("gvVendorProducts");
+
+                        String SelectVendorName = ((Label)gvVendorNames.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("hdnVendorName")).Text;
+
                         DataView dv = ((DataTable)Session["DataTableView"]).DefaultView;
-                        dv.RowFilter = "VendorID = '" + VendorID + "'";
+                     //   dv.RowFilter = "VendorID = '" + VendorID + "'";
+                        dv.RowFilter = "VendorID = '" + VendorID + "' AND VendorName = '" + SelectVendorName + "'";
+
+                        
+
                         DataTable dtChanged = dv.ToTable();
                         dtChanged.Columns.Add("StoreID", typeof(int));
 
@@ -568,7 +599,7 @@ namespace IMS
                         }
                         SqlCommand command = new SqlCommand();
 
-                        if (VendorID ==1)
+                        if (VendorID == 1 && isWareHouse==1)
                         {
                             #region  Creating Transfer Order
 
@@ -666,7 +697,7 @@ namespace IMS
 
                         for (int i = 0; i < dtChanged.Rows.Count; i++)
                         {
-                            if (VendorID == 1)
+                            if (VendorID == 1 && isWareHouse==1)
                             {
                                 #region Linking to Transfer Detail table
 
@@ -757,7 +788,7 @@ namespace IMS
                         #region Updating Replenishment Columns in tablSales
                         DataTable dtUpdateSales = (DataTable)Session["DataTableUpdate"];
 
-                        if (VendorID == 1)
+                        if (VendorID == 1 && isWareHouse==1)
                         {
                             OrderNumber = Convert.ToInt32(Session["TransferNo"].ToString());
                             command = new SqlCommand("sp_getTransferDetails_TransferID", connection);
@@ -795,7 +826,7 @@ namespace IMS
                                     command.Parameters.AddWithValue("@SaleID", Convert.ToInt32(dtUpdated.Rows[j]["SaleID"].ToString()));
                                     command.Parameters.AddWithValue("@ProductID", ProductID);
                                     command.Parameters.AddWithValue("@OrderID", OrderNumber);
-                                    if (VendorID == 1)
+                                    if (VendorID == 1 && isWareHouse == 1)
                                     {
                                         command.Parameters.AddWithValue("@OrderDetailID", Convert.ToInt32(dtOrdDetails.Rows[i]["TransferDetailID"].ToString()));
                                     }

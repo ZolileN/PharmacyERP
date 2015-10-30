@@ -132,7 +132,7 @@ namespace IMS
                 for (int i = 0; i < ds.Tables[1].Rows.Count;i++)
                 {
                     DataRow dtRow = dtVendors.NewRow();
-                    dtRow["OrderRequestedFor"] = Convert.ToInt32(ds.Tables[1].Rows[i]["OrderRequestBy"].ToString());
+                    dtRow["OrderRequestedFor"] = Convert.ToInt32(ds.Tables[1].Rows[i]["OrderRequestBy"].ToString())+1212;
                     dtRow["SupName"] = ds.Tables[1].Rows[i]["SystemName"].ToString();
 
                     dtVendors.Rows.Add(dtRow);
