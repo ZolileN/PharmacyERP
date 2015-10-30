@@ -353,6 +353,10 @@ namespace IMS.UserControl
                                     {
                                         dtChanged.Rows[i]["VendorID"] = NewVendorID;
                                         dtChanged.Rows[i]["VendorName"] = NewVendorName;
+                                        if(MainVendorID.ToString().Equals(NewVendorID))
+                                        {
+                                             dtChanged.Rows[i]["isWareHouse"] = 0; 
+                                        }
                                         dtChanged.AcceptChanges();
                                         break;
                                     }
