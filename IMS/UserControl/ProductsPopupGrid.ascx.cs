@@ -467,10 +467,12 @@ namespace IMS.UserControl
                             gvStockDisplayGrid.DataSource = null;
                             gvStockDisplayGrid.DataBind();
                         }
+
+                        Session.Remove("Text");
                          
                     }
                 }
-                Session.Remove("Text");
+               
             }
 
         }
