@@ -11,6 +11,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 
     <script src="Scripts/SearchSuggest.js"></script>
+   
+       
+   
     <style>
         .suggest_link {
             background-color: #FFFFFF;
@@ -372,17 +375,25 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#MainContent_btnAccept").click(function () {
-                
-                $("#ctl01").submit(function (e) {
+            var isAccepting = false;
 
-                    if ($("#MainContent_StockAt").val() == 'Select System') {
-                        e.preventDefault();
-                        alert("Please select pharmacy");
-                    }
-                        
-                });
+            $("#MainContent_btnAccept").click(function (e) {
                 
+                if (isAccepting == false) {
+                    isAccepting = true;
+                    $("#ctl01").submit(function (e) {
+
+                        if ($("#MainContent_StockAt").val() == 'Select System') {
+                            e.preventDefault();
+                            alert("Please select pharmacy");
+                        }
+
+                    });
+
+                }
+                else if (isAccepting == true) {
+                    e.preventDefault();
+                }
             })
         });
 

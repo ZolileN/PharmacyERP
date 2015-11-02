@@ -22,6 +22,14 @@
         <hr>
            
         <table width="100%" border="0" cellspacing="5" cellpadding="10" class="formTbl">
+
+             <tr>
+                <td><label>Select System</label></td>
+                <td><asp:CheckBox ID="chkAllSystems" runat="server" Checked="true" Enabled="true" Text="Universal Change" />
+                </td>
+                <td></td>
+            </tr>
+
           <tr>
                 <td><label>Bar Code</label></td>
                 <td><asp:TextBox ID="txtBarcode" runat="server" Text="" Enabled="false"></asp:TextBox></td>
@@ -48,7 +56,7 @@
           </tr>
                                  
                                  
-                                  <tr>
+          <tr>
            
             <td><label>Adjustment in Quantity</label></td>
             <td><asp:TextBox ID="txtAdjustmentQuantity" runat="server" Text="" Enabled="false"></asp:TextBox></td>
@@ -56,7 +64,14 @@
             <td><asp:TextBox ID="txtExpiry" runat="server" Text="" Enabled="false"></asp:TextBox></td>
                                                
           </tr>
-                                 
+          
+          <tr>
+                <td><label>Batch Number</label></td>
+                <td><asp:TextBox ID="txtBatch" runat="server" Text="" Enabled="true"></asp:TextBox>
+                </td>
+                <td></td>
+          </tr>
+                                   
           <tr>
             
             <td><label>Current Cost Price</label></td>

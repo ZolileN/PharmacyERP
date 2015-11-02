@@ -49,6 +49,15 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.Button btnGoBack;
         
         /// <summary>
+        /// chkAllSystems control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkAllSystems;
+        
+        /// <summary>
         /// txtBarcode control.
         /// </summary>
         /// <remarks>
@@ -119,6 +128,15 @@ namespace IMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtExpiry;
+        
+        /// <summary>
+        /// txtBatch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBatch;
         
         /// <summary>
         /// txtPrevCP control.

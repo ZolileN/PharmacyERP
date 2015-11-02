@@ -1075,6 +1075,7 @@ namespace IMS
         }
         protected void btnAccept_Click(object sender, EventArgs e)
         {
+           // btnAccept.Enabled = false;
             for (int i = 0; i < StockDisplayGrid.Rows.Count; i++)
             {
 

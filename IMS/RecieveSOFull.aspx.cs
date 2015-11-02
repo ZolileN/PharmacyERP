@@ -158,6 +158,11 @@ namespace IMS
                 RetQty.Text = ds.Tables[0].Rows[0]["ReturnedQuantity"].ToString();
                 sendBonusQty.Text = ds.Tables[0].Rows[0]["SentBonusQuantity"].ToString();
                 RetBonusQty.Text = ds.Tables[0].Rows[0]["ReturnedBonusQuantity"].ToString();
+
+                if(ds.Tables[0].Rows[0]["Status"].ToString().Equals("Complete"))
+                {
+                    btnAcceptAll.Enabled = false;
+                }
             }
             catch (Exception ex)
             {

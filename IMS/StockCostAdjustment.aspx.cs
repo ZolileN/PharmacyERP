@@ -45,7 +45,7 @@ namespace IMS
                     // ----------------------------------------    
 
                     if (Session["AdjustmentPorductID"] != null && Session["AdjustmentPorductID"].ToString() != "" &&
-                        Session["AdjustmentStockID"] != null && Session["AdjustmentStockID"].ToString() != "")
+                        Session["AdjustmentStockID"] != null && Session["AdjustmentStockID"].ToString() != "" && Session["AdjustmentStockID"].ToString() != "-1")
                     {
 
                         
@@ -77,6 +77,11 @@ namespace IMS
                         btnCancel.Enabled = true;
                         LoadData(ProductID, StockID);
 
+                    }
+                    else
+                    {
+                        WebMessageBoxUtil.Show("Stock Not Present");
+                        //Response.Redirect("StockManipulation?Param=Adjustment", false);
                     }
                 }
 
@@ -137,7 +142,7 @@ namespace IMS
                     txtSystemQuantity.Text = dt.Rows[0]["Quantity"].ToString();
                     txtPhysicalQuantity.Text = dt.Rows[0]["Quantity"].ToString();
 
-
+                    txtBatch.Text = dt.Rows[0]["BatchNumber"].ToString();
                     txtExpiry.Text = dt.Rows[0]["ExpiryDate"].ToString();
 
                     txtPrevCP.Text = dt.Rows[0]["UnitCost"].ToString();
@@ -176,8 +181,10 @@ namespace IMS
 
                 DateTime Expiry = DateTime.Parse(txtExpiry.Text.ToString());
 
+                String BatchNo = txtBatch.Text.ToString();
                 int UserID = Convert.ToInt32(Session["UserID"].ToString());
                 int SystemID = Convert.ToInt32(Session["UserSys"].ToString());
+
                 #endregion
 
 
@@ -192,6 +199,7 @@ namespace IMS
                 command.Parameters.AddWithValue("@p_NewCP", NewCP);
                 command.Parameters.AddWithValue("@p_PrevSP", PrevSP);
                 command.Parameters.AddWithValue("@p_NewSP", NewSP);
+                command.Parameters.AddWithValue("@p_Batch", BatchNo);
                 command.Parameters.AddWithValue("@p_Reason", txtReason.Text.ToString());
 
                 command.Parameters.AddWithValue("@p_UserID", UserID);
