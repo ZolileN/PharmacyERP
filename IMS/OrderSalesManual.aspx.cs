@@ -2060,6 +2060,19 @@ namespace IMS
             }
             #endregion
 
+            float TCost = 0;
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                float Cost = 0;
+                if (float.TryParse(ds.Tables[0].Rows[i]["itemTOTALPrice"].ToString(), out Cost))
+                {
+                    TCost += Cost;
+                }
+            }
+            lblttlcst.Visible = true;
+            lblTotalCostALL.Visible = true;
+            lblTotalCostALL.Text = TCost.ToString();
+
         }
         protected void btnRefresh_Click(object sender, EventArgs e)
         {

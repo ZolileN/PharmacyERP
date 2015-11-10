@@ -111,7 +111,7 @@
                             <asp:LinkButton  ID="btnCancel" CssClass="btn btn-default btn-sm" Text="Cancel" runat="server" CommandName="Cancel" />
                         </EditItemTemplate>
                           <FooterTemplate>
-                            <asp:Button ID="btnAddRecord" CssClass="btn btn-primary btn-sm"  runat="server" Text="Save" OnClientClick="return CheckExpiry();" CommandName="AddRec"></asp:Button>
+                            <asp:Button ID="btnAddRecord" CssClass="btn btn-primary btn-sm"  OnClientClick="return updateCheckSave();" runat="server" Text="Save" CommandName="AddRec"></asp:Button>
                         </FooterTemplate>
                     </asp:TemplateField>
 
@@ -328,6 +328,28 @@
           <link rel="stylesheet" href="Style/jquery-ui.css" />
           <script>
 
+
+             // OnClientClick = "return CheckExpiry();"
+
+              function updateCheckSave() {
+
+
+
+
+                  var expiry = "MainContent_StockDisplayGrid_txtAddExpDate";
+                  var batch = "MainContent_StockDisplayGrid_txtAddBatch";
+                  var expiryVal = $("#" + expiry).val();
+                  var batchVal = $("#" + batch).val();
+                  if (expiryVal == '' || batchVal == '') {
+
+                      alert("Please Enter Expiry/Batch Number. Incase you don't know, please fill with any");
+                      return false;
+                  }
+
+                  CheckExpiry();
+
+              }
+
               function updateCheck(id) {
 
                   
@@ -385,8 +407,9 @@
 
                   if (diffDays <= 90) {
                       alert("Expiry for this stock is less than 90 days");
-                     
+                      return false;
                   }
+                  return true;
               }
               
           </script>

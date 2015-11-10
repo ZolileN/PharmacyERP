@@ -745,7 +745,10 @@ namespace IMS
 
                     LinkButton btnUpdate = (LinkButton)e.Row.FindControl("btnUpdate");
 
+                    //Button btnSave = (Button)e.Row.FindControl("btnAddRecord");
+
                     btnUpdate.Attributes.Add("onclick", "return updateCheck(" + e.Row.RowIndex + ");");
+                    //btnSave.Attributes.Add("onclick", "return updateCheckSave();");
 
                     if (txtReturnedQuantity != null)
                     {

@@ -316,14 +316,16 @@ namespace IMS
 
         protected void btnGoBack_Click(object sender, EventArgs e)
         {
-            if (!Session["UserRole"].ToString().Equals("WareHouse"))
-            {
-                Response.Redirect("StoreMain.aspx", false);
-            }
-            else 
-            {
-                Response.Redirect("WarehouseMain.aspx", false);
-            }
+            //if (!Session["UserRole"].ToString().Equals("WareHouse"))
+            //{
+            //    Response.Redirect("StoreMain.aspx", false);
+            //}
+            //else 
+            //{
+            //    Response.Redirect("WarehouseMain.aspx", false);
+            //}
+
+            Response.Redirect("RespondStoreRequest.aspx", false);
         }
 
         protected void dgvReceiveTransferDetailsReceive_RowDataBound(object sender, GridViewRowEventArgs e)

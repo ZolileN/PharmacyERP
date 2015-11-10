@@ -238,6 +238,24 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.GridView StockDisplayGrid;
         
         /// <summary>
+        /// lblttlcst control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblttlcst;
+        
+        /// <summary>
+        /// lblTotalCostALL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalCostALL;
+        
+        /// <summary>
         /// btnPacking control.
         /// </summary>
         /// <remarks>

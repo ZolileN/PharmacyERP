@@ -57,7 +57,7 @@
 
                                 <asp:TemplateField HeaderText="Product Description">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblDescription" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("ProductDescription") %>' Width="140px"></asp:Label>
+                                        <asp:Label ID="lblDescription" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("ProductDescription") %>' Width="300px"></asp:Label>
                                     </ItemTemplate>
 
                                     <ItemStyle Width="150px" HorizontalAlign="Left" />
@@ -104,7 +104,7 @@
 
                                     <ItemStyle Width="60px" HorizontalAlign="Left" />
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Request Bonus Qty" HeaderStyle-Width="50px">
+                                <asp:TemplateField HeaderText="Request Bonus Qty" HeaderStyle-Width="50px" Visible="false">
                                     <ItemTemplate>
                                         <asp:Label ID="lblReqBonQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("RequestedBonusQty") %>' Width="60px"></asp:Label>
                                     </ItemTemplate>
@@ -127,7 +127,7 @@
 
                                     <ItemStyle Width="60px" HorizontalAlign="Left" />
                                 </asp:TemplateField>
-                                 <asp:TemplateField HeaderText="Sent Bonus Qty" HeaderStyle-Width="50px">
+                                 <asp:TemplateField HeaderText="Sent Bonus Qty" HeaderStyle-Width="50px" Visible="false">
                                     <ItemTemplate>
                                         <asp:Label ID="lblSentBonQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("TransferedBonusQty") %>' Width="60px"></asp:Label>
                                     </ItemTemplate>

@@ -300,19 +300,19 @@
                         <ItemStyle Width="60px" HorizontalAlign="Left" />
                     </asp:TemplateField>
 
-                    <%--<asp:TemplateField HeaderText="Discount %"  >
+                    <asp:TemplateField HeaderText="Discount %"  >
                                         <ItemTemplate>
                                             <asp:Label ID="DiscountPercentage" CssClass="" runat="server" Text='<%# Eval("Discount") %>' Width="110px"></asp:Label>
                                         </ItemTemplate>
                                         <ItemStyle Width="50px" HorizontalAlign="Left" />
-                     </asp:TemplateField>--%>
+                     </asp:TemplateField>
 
 
-                    <asp:TemplateField HeaderText="OrderStatus" Visible="false" HeaderStyle-Width="110px">
+                    <asp:TemplateField HeaderText="Total Sale<br>Price" Visible="true" HeaderStyle-Width="60px">
                         <ItemTemplate>
-                            <asp:Label ID="lblStatus" CssClass="" runat="server" Text='<%# Eval("Status") %>' Width="100px"></asp:Label>
+                            <asp:Label ID="lblStatus" CssClass="" runat="server" Text='<%# Eval("itemTOTALPrice") %>' Width="80px"></asp:Label>
                         </ItemTemplate>
-                        <ItemStyle Width="110px" HorizontalAlign="Left" />
+                        <ItemStyle Width="80px" HorizontalAlign="Left" />
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="DETAILS" HeaderStyle-Width="200px">
@@ -348,9 +348,9 @@
                                         <ItemStyle Width="50px" HorizontalAlign="Left" />
                                     </asp:TemplateField>
 
-                                    <asp:TemplateField HeaderText="Discount %" HeaderStyle-Width="50px" Visible="false">
+                                    <asp:TemplateField HeaderText="Discount %" HeaderStyle-Width="50px" Visible="true">
                                         <ItemTemplate>
-                                            <asp:Label ID="RequestedFrom" CssClass="" runat="server" Text='<%# Eval("DiscountPercentage") %>' Width="110px"></asp:Label>
+                                            <asp:Label ID="DiscountPer" CssClass="" runat="server" Text='<%# Eval("DiscountPercentage") %>' Width="110px"></asp:Label>
                                         </ItemTemplate>
                                         <ItemStyle Width="50px" HorizontalAlign="Left" />
                                     </asp:TemplateField>
@@ -363,7 +363,15 @@
                 </Columns>
             </asp:GridView>
             <br />
+            <table ID="tblDsp" cellpadding="4" cellspacing="0" align="right" visible="false">
+        	<tr>
+            	<td><asp:Label ID="lblttlcst" runat="server" AssociatedControlID="lblTotalCostALL" Visible="false">Total Cost:</asp:Label></td>
+                <td><asp:Label ID="lblTotalCostALL" Visible="false" runat="server" Style="font-weight: 700"></asp:Label></td>
 
+
+	           
+            </tr>
+         </table>
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

@@ -59,10 +59,10 @@
                <asp:TextBox runat="server" ID="SelectQuantity"  autocomplete="off" style="width:60px"  />
            </td>
            <td>
-               <asp:Label runat="server" AssociatedControlID="SelectPrice" CssClass="control-label">Bonus Quantity</asp:Label>
+               <asp:Label runat="server" AssociatedControlID="SelectPrice" Visible="false" CssClass="control-label">Bonus Quantity</asp:Label>
            </td>
            <td>
-               <asp:TextBox runat="server" ID="SelectPrice"  autocomplete="off"  style="width:60px"/>
+               <asp:TextBox runat="server" ID="SelectPrice" autocomplete="off" Visible="false"  style="width:60px"/>
            </td>
            <td>
                <asp:Label runat="server" AssociatedControlID="txtDiscount" CssClass="control-label">Discount %</asp:Label>
@@ -179,7 +179,7 @@
                           <ItemStyle  Width="60px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
 
-                      <asp:TemplateField HeaderText="Bonus<br>Qty"  HeaderStyle-Width ="110px">
+                     <asp:TemplateField HeaderText="Bonus<br>Qty"  HeaderStyle-Width ="110px" Visible="false">
                         <ItemTemplate>
                             <asp:Label ID="lblBonusQuantity" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Bonus") %>' ></asp:Label>
                         </ItemTemplate>
@@ -189,6 +189,7 @@
                             </EditItemTemplate>
                           <ItemStyle  Width="90px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
+
                       <asp:TemplateField HeaderText="Unit<br>Cost Price" HeaderStyle-Width="110px">
                     <ItemTemplate>
                         <asp:Label ID="lblUnitCost" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("UnitCost") %>'></asp:Label>

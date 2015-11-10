@@ -167,6 +167,7 @@ namespace IMS
                 userPwd.Text = PwdValue;
                 //uPwd.TextMode = TextBoxMode.Password;
                 ddlURole.SelectedValue = ds2.Tables[0].Rows[0]["U_RolesID"].ToString();
+                ddlSysID.SelectedValue = ds2.Tables[0].Rows[0]["SystemID"].ToString();
                 ddlURole.Enabled = false;
                 fName.Text = ds2.Tables[0].Rows[0]["U_FirstName"].ToString();
                 lstName.Text = ds2.Tables[0].Rows[0]["U_LastName"].ToString();

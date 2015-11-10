@@ -127,6 +127,10 @@ namespace IMS
                     Label packSize = (Label)e.Row.FindControl("packSize2");
                     Label Label3 = (Label)e.Row.FindControl("Label3");
 
+                    LinkButton btnUpdate = (LinkButton)e.Row.FindControl("btnUpdate");
+
+                    btnUpdate.Attributes.Add("onclick", "return updateCheck(" + e.Row.RowIndex + ");");
+
                     // TextBox tbDatePicker = (TextBox)e.Row.FindControl("txtExpDate");
 
                     //// ScriptManager.RegisterStartupScript(this, GetType(), "myFunction", "myFunction();", true);
@@ -466,7 +470,7 @@ namespace IMS
                         }
                         command.ExecuteNonQuery(); 
                         #endregion
-                        WebMessageBoxUtil.Show("Stock Successfully Added");
+                        WebMessageBoxUtil.Show("Operation Successfull");
                     }
                     else
                     {

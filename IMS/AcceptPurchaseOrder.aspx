@@ -289,4 +289,24 @@
               }
               
           </script>
+          <script type="text/javascript">
+              function updateCheck(id) {
+
+
+
+
+                  var expiry = "MainContent_StockDisplayGrid_txtExpDate_" + id;
+                  var batch = "MainContent_StockDisplayGrid_txtBatch_" + id;
+                  var expiryVal = $("#" + expiry).val();
+                  var batchVal = $("#" + batch).val();
+                  if (expiryVal == '' || batchVal == '') {
+
+                      alert("Please Enter Expiry/Batch Number. Incase you don't know, please fill with any");
+                      return false;
+                  }
+
+                  return true;
+
+              }
+          </script>
 </asp:Content>
