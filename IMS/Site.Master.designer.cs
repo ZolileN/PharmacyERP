@@ -58,31 +58,40 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.ImageButton imgLogout;
         
         /// <summary>
-        /// warehouseNav control.
+        /// warehouseNavigation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal warehouseNav;
+        protected global::System.Web.UI.WebControls.Panel warehouseNavigation;
         
         /// <summary>
-        /// storeNav control.
+        /// WHReports control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal storeNav;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor WHReports;
         
         /// <summary>
-        /// headofficeNav control.
+        /// storeNavigation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal headofficeNav;
+        protected global::System.Web.UI.WebControls.Panel storeNavigation;
+        
+        /// <summary>
+        /// headofficeNavigation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel headofficeNavigation;
         
         /// <summary>
         /// MainContent control.
