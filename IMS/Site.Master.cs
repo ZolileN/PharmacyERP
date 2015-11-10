@@ -92,11 +92,34 @@ namespace IMS
             HttpContext.Current.Response.Write(htmlForm.ToString());
             HttpContext.Current.Response.End();
         }
+        public void logo_click(object sender, EventArgs e) {
+            String UserRole = Session["UserRole"].ToString();
 
+            switch (UserRole)
+            {
+                case "WareHouse":
+                    
+                    Response.Redirect("WarehouseMain.aspx", false);
+
+
+                    break;
+                case "Store":
+                    
+                    Response.Redirect("StoreMain.aspx", false);
+                    break;
+                case "HeadOffice":
+                   
+                    Response.Redirect("HeadOfficeMain.aspx", false);
+                    break;
+
+            }
+
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
 
             WHReports.ServerClick += new EventHandler(WHReports_Login);
+            logo.ServerClick += new EventHandler(logo_click);
 
             FirstLast.Text = Session["firstNamelastName"].ToString();
             FirstLast.Visible = true;

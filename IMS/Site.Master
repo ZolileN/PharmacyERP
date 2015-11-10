@@ -150,7 +150,7 @@
       <form runat="server">
         <div class="top-head">
                 
-                <div class="logo">
+                <div class="logo"><a runat="server" id="logo" href="#" style="display:block;width: 168px;height: 26px;"></a>
                 </div>
                 <div style="  float: left;  margin-left: 412px;  font-size: 16px;  color: #FFF;  font-weight: bold;  margin-top: 19px;">
                     <asp:Literal ID="lbllogin" runat="server" visible="false"> </asp:Literal>
