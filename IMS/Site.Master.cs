@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Text;
 
 namespace IMS
 {
@@ -66,33 +67,89 @@ namespace IMS
             }
         }
 
+
+        void WHReports_Login(object sender, EventArgs e)
+        {
+            string auth_key = Session["key"].ToString();
+            string username = Session["LoginID"].ToString();
+            string Url = System.Configuration.ConfigurationManager.AppSettings["SecretLogin"]; 
+            string formId = "LoginForm";
+
+            System.Diagnostics.Debug.WriteLine(auth_key + " " +username);
+
+
+            StringBuilder htmlForm = new StringBuilder();
+            htmlForm.AppendLine("<html>");
+            htmlForm.AppendLine(String.Format("<body onload='document.forms[\"{0}\"].submit()'>", formId));
+            htmlForm.AppendLine(String.Format("<form id='{0}' method='POST' action='{1}'>", formId, Url));
+            htmlForm.AppendLine("<input type='hidden' name='UserName' id='UserName' value='"+username+"' />");
+            htmlForm.AppendLine("<input type='hidden' name='auth_key' id='auth_key' value='" + auth_key+ "' />");
+            htmlForm.AppendLine("</form>");
+            htmlForm.AppendLine("</body>");
+            htmlForm.AppendLine("</html>");
+
+            HttpContext.Current.Response.Clear();
+            HttpContext.Current.Response.Write(htmlForm.ToString());
+            HttpContext.Current.Response.End();
+        }
+        public void logo_click(object sender, EventArgs e) {
+            String UserRole = Session["UserRole"].ToString();
+
+            switch (UserRole)
+            {
+                case "WareHouse":
+                    
+                    Response.Redirect("WarehouseMain.aspx", false);
+
+
+                    break;
+                case "Store":
+                    
+                    Response.Redirect("StoreMain.aspx", false);
+                    break;
+                case "HeadOffice":
+                   
+                    Response.Redirect("HeadOfficeMain.aspx", false);
+                    break;
+
+            }
+
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
+            WHReports.ServerClick += new EventHandler(WHReports_Login);
+            logo.ServerClick += new EventHandler(logo_click);
+
             FirstLast.Text = Session["firstNamelastName"].ToString();
             FirstLast.Visible = true;
-            headofficeNav.Visible = storeNav.Visible = warehouseNav.Visible = StoreBlock.Visible = false;
+            headofficeNavigation.Visible = storeNavigation.Visible = StoreBlock.Visible = false;
+            warehouseNavigation.Visible = false;
             if (Session["UserName"] !=null){
                 lbllogin.Text = Session["UserName"].ToString();
                 lbllogin.Visible = true;
             }
             if (Session["userRole"].ToString() == "WareHouse")
             {
-                warehouseNav.Visible = true;
+                warehouseNavigation.Visible = true;
               
             }
             else if (Session["userRole"].ToString() == "HeadOffice")
             {
 
-                headofficeNav.Visible = true;
+                headofficeNavigation.Visible = true;
              
             }
             else if (Session["userRole"].ToString() == "Store")
             {
                 StoreBlock.Visible = true;
-                storeNav.Visible = true;
+                storeNavigation.Visible = true;
              
             }
+
+
+
+
         }
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)

@@ -1,0 +1,718 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="IMS_PharmacyReports.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> Reports</title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <script type="text/javascript" src="Scripts/jquery.min.js"></script>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="Style/theme.css" rel="stylesheet" type="text/css"  />
+    <link href="Style/fonts.css" rel="stylesheet" type="text/css"  />
+    <script type="text/javascript">
+
+        function stopRKey(evt) {
+            var evt = (evt) ? evt : ((event) ? event : null);
+            var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+            if ((evt.keyCode == 13) && (node.type == "text")) { return false; }
+        }
+
+        document.onkeypress = stopRKey;
+
+    </script>
+    <style>
+        @media print {
+            .no-print, .no-print * {
+                display: none !important;
+            }
+        }
+
+         .userInfo{
+                  -webkit-border-radius: 10px;
+                  border-radius: 10px;
+                  background:#FFF;
+                  padding:6px 45px 7px 10px;
+                  position: absolute;
+                  top: 16px;
+                  right: 3px;
+
+        }
+        .userInfo span{
+            display:inline-block;
+            float:left;
+
+        }
+        .userInfo input{
+            position:absolute;
+            display:inline-block;
+            top:-8px;
+            right:-5px;
+            left:auto !important;
+            outline:none;
+            border:0px;
+
+        }
+        
+    </style>
+   
+       
+                                                                                                                                                                                                           
+
+ <asp:ContentPlaceHolder runat="server" ID="HeadContent" />
+</head>
+<body>
+    <div class="container ">
+
+        <div runat="server" id="StoreBlock" >
+             <link href="Style/font-awesome/css/font-awesome.css"  type="text/css"  rel="stylesheet" />
+            <link href="Style/font-awesome/css/font-awesome.min.css"  type="text/css"  rel="stylesheet" />
+            <link type="text/css" href="Style/notifications.css" rel="stylesheet" />
+            <script type="text/javascript" src="Scripts/PharmacyCustom.js"></script>
+
+            <div class="center notification icon">
+              <svg class="svg-left" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<g class="bell">
+	<g>
+		<rect x="182.508" y="-46.756" fill="none" width="146.983" height="388.404"/>
+		<path class="heilu" d="M182.508,341.648c-19.196,0-15.356-22.486-12.066-25.777c3.291-3.291,2.396-58.963,9.828-97.075
+			c7.432-38.112,49.958-57.82,59.669-63.422c0-5.976,4.855-17.928,16.061-17.928c11.205,0,16.061,11.952,16.061,17.928
+			c9.711,5.603,52.237,25.311,59.669,63.422s6.538,93.784,9.828,97.075c3.291,3.291,7.13,25.777-12.066,25.777H182.508z"/>
+	</g>
+	<path class="pendulum" d="M221.996,354.81c0,10.904-8.84,19.744-19.744,19.744s-19.744-8.84-19.744-19.744H221.996z"/>
+</g>
+</svg>
+              <div class="notification-number">0</div>
+            </div>
+
+          <div class="notifications NotificationsHolder"></div>
+
+            <div class="overLaypop pnOverlay"></div>
+
+            <div class="popupMain pharmacyNotifications" id="notifications">
+            
+                    <div class="popupHead">
+                        Notifications
+                    <input class="close" value="" type="submit">
+                    </div>
+     
+                    <div class="bodyPop">
+
+                        <table class="table table-striped table-bordered table-condensed" cellspacing="10">
+
+                            <tr>
+                                <td><a href="SentTransferRequests.aspx"> Requests Accepted</a>:</td><td><span id="trYours"></span></td>
+                                
+                            </tr>
+                            <tr>
+                                
+                                <td><a href="ReceiveTransferOrder.aspx"> Requests By Others</a>:</td><td><span id="trOthers"></span></td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            <%--<div class="notifications">
+
+                <div class="notify gr">
+    <div class="circle s">
+      <svg class="svg-light" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<g class="kokokello" >
+	<g>
+		<rect x="182.508" y="-46.756" fill="none" width="146.983" height="388.404"/>
+		<path class="heilu" d="M182.508,341.648c-19.196,0-15.356-22.486-12.066-25.777c3.291-3.291,2.396-58.963,9.828-97.075
+			c7.432-38.112,49.958-57.82,59.669-63.422c0-5.976,4.855-17.928,16.061-17.928c11.205,0,16.061,11.952,16.061,17.928
+			c9.711,5.603,52.237,25.311,59.669,63.422s6.538,93.784,9.828,97.075c3.291,3.291,7.13,25.777-12.066,25.777H182.508z"/>
+	</g>
+	<path class="kili" d="M221.996,354.81c0,10.904-8.84,19.744-19.744,19.744s-19.744-8.84-19.744-19.744H221.996z"/>
+</g>
+</svg>
+    </div>
+    <div class="info">
+      <span>New Transfer Request</span>
+      <span>165MB <a href="#">Codepen.io</a> 1:41 PM</span>
+    </div> 
+  </div> 
+  
+</div> --%>
+
+        </div>
+
+      <form runat="server">
+        <div class="top-head">
+                
+                <div class="logo">
+                </div>
+                <div style="  float: left;  margin-left: 489px;  font-size: 16px;  color: #FFF;  font-weight: bold;  margin-top: 19px;">
+                    Pharmacy Reports
+                </div>
+                                <div class="userInfo no-print">
+                <span>
+                   Shahid <asp:Literal ID="FirstLast" runat="server" visible="false"> </asp:Literal>
+                    </span>
+              
+                 <asp:ImageButton id="imgLogout" runat="server" ImageUrl="images/logoutIcon.png"  />
+                    
+                       <%--<a runat="server" href="~/IMSLogin.aspx" onclick="Unnamed_Click">Logout</a>--%>
+               </div>
+            </div>
+
+   
+       <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="bootstrap" />
+                <asp:ScriptReference Name="respond" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+        
+       <%-- <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" runat="server" >E-Inventory</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                   
+                    <asp:LoginView runat="server" ViewStateMode="Disabled">
+                        <AnonymousTemplate>
+                            <%--<ul class="nav navbar-nav navbar-right">
+                                <li><asp:Button if="btnLogout" runat="server" Text="Logout" OnClick="Unnamed_Click"/></li>
+                                <li><a runat="server" href="~/IMSLogin.aspx" onclick="Unnamed_Click">Logout</a></li>
+                            </ul>--%><%--
+                        </AnonymousTemplate>
+                        <LoggedInTemplate>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> !</a></li>
+                                <li>
+                                    <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
+                                </li>
+                            </ul>
+                        </LoggedInTemplate>
+                    </asp:LoginView>
+                </div>
+            </div>
+        </div>--%>
+
+          <div class="navs-cont no-print">
+                <div class="navigation no-print ">
+                    
+                    <asp:Literal runat="server" ID="warehouseNav">
+                    <ul class="main-menu no-print">
+                            <li><a href="#">Sales</a>
+
+                               <ul>
+                                    <li class="hasChild"><a href="#">Daily Sales Summary Report</a>
+
+                                        <ul>
+                                            <li><a href="#">Bill Wise Report</a></li>
+                                            <li><a href="#">By Credit</a></li>
+                                            <li><a href="#">By Cash</a></li>
+                                        </ul>
+
+                                    </li>
+                                    <li class="hasChild"><a href="#">Daily Sales Detail Invoices Report</a>
+                                            
+                                        <ul>
+                                            <li><a href="#">Bill Wise Report</a></li>
+                                            <li><a href="#">By Credit</a></li>
+                                            <li><a href="#">By Cash</a></li>
+
+
+                                        </ul>
+
+                                    </li>
+                                    <li><a href="#">End of Day Report</a></li>
+                               </ul>
+
+                            </li>
+                            <li><a href="#">Inventory</a>
+
+                                         <ul>
+
+                                             <li><a href="#">Expiry Drug Item Report</a></li>
+                                             <li><a href="#">Expiry of Next 90 Days</a></li>
+                                             <li><a href="#">Total Stock/Drug Items</a></li>
+                                             <li><a href="#">Drug/Item Movement</a></li>
+                                             <li><a href="#">Drug Item Batch Movement</a></li>
+                                             <li><a href="#">List of Drug/Items</a></li>
+                                             <li><a href="#">Minimum Low Stock</a></li>
+                                             <li><a href="#">Initial Stock Report</a></li>
+                                             <li><a href="#">Drug/Items Not Listed in HAAD</a></li>
+                                             <li><a href="#">Drug/Items Not Listed in DHA</a></li>
+
+			                                <li class="hasChild"><a href="#">Inventory Analysis Reports</a>
+				                                <ul>
+					                                <li><a href="#">Inventory Product Alert Report</a></li>
+					                                <li><a href="#">Inventory Department wise</a></li>
+					                                <li><a href="#">Inventory Category Wise</a></li>
+					                                <li><a href="#">Inventory Sub Category Wise</a></li>
+					                                <li><a href="#">Inventory Vendor wise</a></li>
+					                                <li><a href="#">Near to expire Inventory</a></li>
+					                                <li><a href="#">inventory consumption by store</a></li>
+				                                </ul>
+			                                </li>
+                                            <li class="hasChild"><a href="#">Trending &amp; Profit  Analysis Reports</a>
+				                                <ul>
+					                                <li><a href="#">Inventory with highest trend </a></li>
+					                                <li><a href="#">inventory with lowest trend</a></li>
+					                                <li><a href="#">inventory giving greater Profit</a></li>
+					                                <li><a href="#">inventory which cost most</a></li>
+				                                </ul>
+			                                </li>
+                                            <li class="hasChild"><a href="#">Head Office Reports</a>
+				                                <ul>
+					                                <li><a href="#">Inventory Count - Head Office</a></li>
+					                                <li><a href="#">Inventory Count Variance - Head Office</a></li>
+				                                </ul>
+			                                </li>
+                                             <li class="hasChild"><a href="#">Other Inventory Reports</a>
+				                                <ul>
+					                                <li><a href="#">Inventory adjustments - Account Balances </a></li>
+					                                <li><a href="#">Random Inventory Count Check list - Account Transactions</a></li>
+					                                <li><a href="#">Inventory Movements History - Daily Transaction Log / Summary</a></li> 
+					                                <li><a href="#">Inventory Ledger - Quantity Audit </a></li>
+					                                <li><a href="#">Product Inventory - Inventory Valuation </a></li>
+					                                <li><a href="#">Inventory Allocation</a></li>
+				                                </ul>
+			                                </li>
+                                            <li class="hasChild"><a href="#">Inventory Master Listing Reports</a>
+				                                <ul>
+					                                <li><a href="#">Master Price List</a></li>
+					                                <li><a href="#">Master Quantity List </a></li>
+					                                <li><a href="#">Master Value List</a></li>
+				                                </ul>
+			                                </li>
+                                             <li class="hasChild"><a href="#">Inventory Store Listing Reports</a>
+				                                <ul>
+					                                <li><a href="#">Snapshot Store Price List</a></li>
+					                                <li><a href="#">Snapshot Store Quantity List</a></li>
+					                                <li><a href="#">Quantity Discrepancy List </a></li>
+				                                </ul>
+			                                </li>
+                                             <li class="hasChild"><a href="#">Other Inventory Listing Reports</a>
+				                                <ul>
+					                                <li><a href="#">Supplier List</a></li>
+					                                <li><a href="#">Alias List</a></li>
+					                                <li><a href="#">Substitute List</a></li>
+					                                <li><a href="#">Serial Number List</a></li>
+					                                <li><a href="#">Item Movement</a></li>
+					                                <li><a href="#">Offline Inventory List</a></li>
+					                                <li><a href="#">Trending Products List</a></li>
+				                                </ul>
+			                                </li>
+		                                </ul>
+
+                            </li>
+                            <li><a href="#">Purchase</a>
+
+                                <ul>
+                                    <li><a href="#">Purchase Reports</a></li>
+                                    <li><a href="#">Purchase Returns Reports</a></li>
+                                    <li><a href="#">Supplier Wise Item Report</a></li>
+                                </ul>
+
+                            </li>
+
+                        <li><a href="#">Internal Transfers</a>
+
+                                <ul>
+                                    <li><a href="#">Transfer Send Report</a></li>
+                                    <li><a href="#">Transfer Rquest Report</a></li>
+                                    
+                                </ul>
+
+                            </li>
+                            
+                             
+                            <li><a href="#">OLD Reports</a>
+                            	<ul>
+                                	<li><a href="#">Print PO</a></li>
+                                	<li><a href="#">Packing List</a></li>
+                                    <li><a href="#">Stock Report</a></li>
+                                    <li><a href="#">Print Stock</a></li>
+
+                                    
+                                    
+                                    
+                                   
+	           <li><a href="#">All Reports</a></li>
+               
+                   <li><a href="rpt_ItemSold_Selection.aspx?Param=Date">Item Sold Detail Report </a></li>
+                   <li><a href="rpt_ItemSold_Selection.aspx?Param=Profitability">Profitability Report </a></li>
+                   <li><a href="rpt_ItemSold_Selection.aspx?Param=ProfitabilitySummary">Profitability Summary Report </a></li>
+                   
+
+               
+                   <li><a href="rpt_ItemPurchase_Selection.aspx?Param=Date">Item Purchase Detail Report </a></li>
+                   <li><a href="rpt_NearestExpiry.aspx">Nearest Expiry Item Report </a></li>
+                   <li><a href="rpt_POSSALES_Selection.aspx">POS Item Sold Report </a></li>
+               
+
+	           <li class="hasChild"><a href="#">Sale Reports</a>
+		            <ul>
+                        
+                
+
+			    <li class="hasChild"><a href="#">Summary Sales Daily Reports</a>
+				<ul>
+                	<li>
+						<a href="#"> Daily Sales by Sales Rep</a>
+                    </li>
+					<li>
+    				<a href="#"> Daily Sales by Store</a>
+                    </li>
+                   	<li>
+                   <a href="#"> Daily Sales by Cashier</a>
+                   </li>
+                   <li>
+                   <a href="#"> Daily Sales by Supplier</a>
+                   </li>
+                   <li>
+                    <a href="#"> Daily Sales by Register</a>
+                   </li>
+                   <li>
+                    <a href="#"> Daily Sales by Category</a>
+                   </li>
+                   <li>
+                    <a href="#"> Daily Sales by Department</a>
+                    </li>
+				</ul>
+			</li>
+            <li class="hasChild"><a href="#">Sales Tax Reports</a>
+				<ul>
+					<li><a href="#">Summary Tax Collected Daily </a></li>
+					<li><a href="#">Detailed Tax Collected</a></li>
+				</ul>
+			</li>
+            <li class="hasChild"><a href="#">Sales History Reports</a>
+				<ul>
+					<li><a href="#">Sales History</a></li>
+					<li><a href="#">Consolidated Sales</a></li>
+                    <li><a href="#">History-Slow Moving Items</a></li>
+                    <li><a href="#">Yearly Sales History - None Moving Items</a></li>
+                    <li><a href="#">Period Sales History - Open to buy</a></li>
+                    <li><a href="#">Sales by Till</a></li>
+				</ul>
+			</li>
+             <li class="hasChild"><a href="#">Cost/Sales Analysis Reports</a>
+				<ul>
+					<li><a href="#">Regional Cost/Sales</a></li>
+					<li><a href="#">Store Cost/Sales</a></li>
+                    <li><a href="#">Department Cost/Sales</a></li>
+				</ul>
+			</li>
+            <li class="hasChild"><a href="#">Other Sales Reports</a>
+				<ul>
+					<li><a href="#">Detailed Sales</a></li>
+					<li><a href="#">Sales Summary - Network Status and Error Logs</a></li>
+					<li><a href="#">Sales by Volume - Standard Margins</a></li>
+					<li><a href="#">Returns report - Promotional Margins</a></li>
+					<li><a href="#">Sales by Value - Fast Moving Items</a></li>
+					<li><a href="#">Sales by assistant - Daily Customer listing</a></li>
+				</ul>
+			</li>
+		</ul>
+	            </li>
+                <li class="hasChild"><a href="#">Inventory Reports</a>
+		            <ul>
+			            <li class="hasChild"><a href="#">Inventory Analysis Reports</a>
+				            <ul>
+					            <li><a href="#">Inventory Product Alert Report</a></li>
+					            <li><a href="#">Inventory Department wise</a></li>
+					            <li><a href="#">Inventory Category Wise</a></li>
+					            <li><a href="#">Inventory Sub Category Wise</a></li>
+					            <li><a href="#">Inventory Vendor wise</a></li>
+					            <li><a href="#">Near to expire Inventory</a></li>
+					            <li><a href="#">inventory consumption by store</a></li>
+				            </ul>
+			            </li>
+                        <li class="hasChild"><a href="#">Trending &amp; Profit  Analysis Reports</a>
+				            <ul>
+					            <li><a href="#">Inventory with highest trend </a></li>
+					            <li><a href="#">inventory with lowest trend</a></li>
+					            <li><a href="#">inventory giving greater Profit</a></li>
+					            <li><a href="#">inventory which cost most</a></li>
+				            </ul>
+			            </li>
+                        <li class="hasChild"><a href="#">Head Office Reports</a>
+				            <ul>
+					            <li><a href="#">Inventory Count - Head Office</a></li>
+					            <li><a href="#">Inventory Count Variance - Head Office</a></li>
+				            </ul>
+			            </li>
+                         <li class="hasChild"><a href="#">Other Inventory Reports</a>
+				            <ul>
+					            <li><a href="#">Inventory adjustments - Account Balances </a></li>
+					            <li><a href="#">Random Inventory Count Check list - Account Transactions</a></li>
+					            <li><a href="#">Inventory Movements History - Daily Transaction Log / Summary</a></li> 
+					            <li><a href="#">Inventory Ledger - Quantity Audit </a></li>
+					            <li><a href="#">Product Inventory - Inventory Valuation </a></li>
+					            <li><a href="#">Inventory Allocation</a></li>
+				            </ul>
+			            </li>
+                        <li class="hasChild"><a href="#">Inventory Master Listing Reports</a>
+				            <ul>
+					            <li><a href="#">Master Price List</a></li>
+					            <li><a href="#">Master Quantity List </a></li>
+					            <li><a href="#">Master Value List</a></li>
+				            </ul>
+			            </li>
+                         <li class="hasChild"><a href="#">Inventory Store Listing Reports</a>
+				            <ul>
+					            <li><a href="#">Snapshot Store Price List</a></li>
+					            <li><a href="#">Snapshot Store Quantity List</a></li>
+					            <li><a href="#">Quantity Discrepancy List </a></li>
+				            </ul>
+			            </li>
+                         <li class="hasChild"><a href="#">Other Inventory Listing Reports</a>
+				            <ul>
+					            <li><a href="#">Supplier List</a></li>
+					            <li><a href="#">Alias List</a></li>
+					            <li><a href="#">Substitute List</a></li>
+					            <li><a href="#">Serial Number List</a></li>
+					            <li><a href="#">Item Movement</a></li>
+					            <li><a href="#">Offline Inventory List</a></li>
+					            <li><a href="#">Trending Products List</a></li>
+				            </ul>
+			            </li>
+		            </ul>
+	            </li>
+
+                <li class="hasChild"><a href="#">Order Reports</a>
+		            <ul>
+			<li class="hasChild"><a href="#">Quotes &amp; BackOrder  Reports</a>
+				<ul>
+					<li><a href="#">Backorders—Summary</a></li>
+					<li><a href="#">Backorders—Detailed</a></li>
+					<li><a href="#">Quotes—Summary</a></li>
+					<li><a href="#">Quotes—Detailed</a></li>
+				</ul>
+			</li>
+            <li class="hasChild"><a href="#">Purchase &amp; Sales Order Reports</a>
+				<ul>
+					<li><a href="#">Sales orders </a></li>
+					<li><a href="#">Purchase orders</a></li>
+                    <li><a href="#">Purchase Orders - Value Audit</a></li>
+				</ul>
+			</li>
+            <li class="hasChild"><a href="#">Sales History Reports</a>
+				<ul>
+					<li><a href="#">Sales History</a></li>
+					<li><a href="#">Consolidated Sales History-Slow Moving Items</a></li>
+                    <li><a href="#">Yearly Sales History - None Moving Items</a></li>
+					<li><a href="#">Period Sales History - Open to buy</a></li>
+                   <li><a href="#">Sales by Till</a></li>
+				</ul>
+			</li>
+             <li class="hasChild"><a href="#">Inventory Order Reprots</a>
+				<ul>
+					<li><a href="#">Inventory Transfer In</a></li>
+					<li><a href="#">Suggested Orders - Excess Inventory</a></li>
+				</ul>
+			</li>
+            <li class="hasChild"><a href="#">Dispatch Order Reports</a>
+				<ul>
+					<li><a href="#">Goods Received Note - Suggested Dispatch Orders </a></li>
+                    <li><a href="#">Goods on Order - Dispatch Orders  </a></li>
+                  	<li><a href="#">Dispatch Orders - Classification Totals E.G. Department totals  </a></li>
+				</ul>
+			</li>
+             <li class="hasChild"><a href="#">Other Order Reports</a>
+				<ul>
+					<li><a href="#">Work orders</a></li>
+					<li><a href="#">Margin Report</a></li>
+                 	<li><a href="#">Back Order Report - Best Customer report</a></li>
+                    <li><a href="#">Branch Orders - Head Office </a></li>
+				</ul>
+			</li>
+            
+		</ul>
+	            </li>
+
+                <li class="hasChild"><a href="#">Store Specific Reports</a>
+		            <ul>
+			
+                <li><a href="#">Branch Performance Report - Price Override report</a></li>
+               <li><a href="#">Picking list - Branch Goods Received / Dispatch Report</a></li>
+                <li><a href="#">Branch Product Change Report</a></li>
+                <li><a href="#">Branch Promotional Price Report</a></li>
+                <li><a href="#">Branch Inventory Change Report</a></li>
+                <li><a href="#">Branch Price Change Report</a></li>
+		</ul>
+	            </li>
+            
+                 <li class="hasChild"><a href="#">Top Performers Reports</a>
+		                <ul>
+			                <li><a href="#">Top Sales Reps</a></li>
+                          <li><a href="#">Top Customers</a></li>
+                         <li> <a href="#">Top Cashiers</a></li>
+                       <li> <a href="#">Top Suppliers</a></li>
+                         <li> <a href="#">Top Items</a></li>
+                       <li> <a href="#">Top Departments</a></li>
+                       <li>  <a href="#">Top Categories</a></li>
+		                </ul>
+	             </li>
+
+                 <li class="hasChild"><a href="#">Other Reports</a>
+		                <ul>
+			                <li><a href="#">Loyalty Scheme Report</a></li>
+                          <li> <a href="#">Overstock reports based upon weeks covered required</a></li>
+                           <li> <a href="#">Suggested Replenishment base upon sales history</a></li>
+                          <li>  <a href="#">Random Inventory Count Variance - Cash Reconciliation </a></li>
+                          <li>  <a href="#">Aged Inventory - Currency Change Report </a> </li>
+		                </ul>
+	             </li>
+
+                            	</ul>
+                            </li>
+                       
+	                    </ul>
+            </asp:Literal>
+            <asp:Literal runat="server" ID="storeNav">
+                 <ul class="main-menu no-print">
+                            <li><a href="#">Manage Inventory</a>
+                                        <ul>
+                                            <li><a href="ManageProducts.aspx">Manage Products</a></li>
+                                    <li><a href="ManageSubCategory.aspx">Manage SubCategories</a></li>
+                                    <li><a href="ManageCategory.aspx">Manage Categories</a></li>
+                                    <li><a href="ManageDepartment.aspx">Manage Departments</a></li>
+                                           <%-- <li><a href="AddStock.aspx">Add Stock</a></li>
+                                            <li><a href="SelectionStock.aspx">Edit Stock</a></li>--%>
+                                            <li><a href="ViewInventory.aspx">Current Stock</a></li>
+                                       </ul>
+                            </li>
+                            <li><a href="#">Manage Purchase Orders</a>
+                                 <ul>
+                                     <li><a href="ReplenishMain.aspx?Param=Calculation">Replenishment</a>
+                                    </li>                                           
+                                         <li><a href="SelectWarehouse.aspx">Item Request to Store</a></li>   
+                                            <li><a href="SelectVendor.aspx">Direct Pharmacy Purchase</a></li>
+                                     <!--<li><a href="ViewPlacedOrders.aspx">View Store Purchase</a></li>-->
+                                       </ul>
+
+                                </li>
+                           
+                          <%--  <li><a href="StoreTransfers_StoreRequests.aspx">Store Transfers</a></li>
+                            <li><a href="ReceiveStock.aspx">Store Receivings</a></li>--%>
+
+                            <li><a href="#">Pharmacy Requests</a>
+                                <ul>
+                                   
+                                    <%--<li><a href="StoreRequests.aspx">Manual Generate Requests</a></li>--%>
+                                    <li><a href="CreateTransferRequest.aspx">Create Transfer Request</a></li> 
+
+                                    <li class="hasChild"><a href="StoreRequests.aspx">Manage Transfers</a>
+                                     <ul>
+                                                <li><a href="SentTransferRequests.aspx">Receive Transfer Request</a></li>
+                                                <li><a href="ReceiveTransferOrder.aspx"> Send Transfer Request</a></li>
+                                     </ul>
+                                    </li>
+                                </ul> 
+                            </li>
+                            
+	                    </ul>
+            </asp:Literal>
+
+            <asp:Literal runat="server" ID="headofficeNav">
+                    
+                <ul class="main-menu">
+                            <li><a href="ManageStore.aspx">Manage Pharmacy</a></li>
+                            <li><a href="ManageWarehouse.aspx">Manage Store</a></li>
+                            <li><a href="CompanySettings.aspx">Manage Company Information</a></li>
+                            <li><a href="Reports.aspx">View Reports</a></li>
+                            <li><a href="RegisterUsers.aspx">Register Users</a></li>
+	                    </ul>
+                    
+            </asp:Literal>
+	                   
+                <div style="clear: left;"></div>
+                
+            </div><div style="clear: left;"></div>
+
+          </div>
+          <div style="clear: left;"></div>
+
+        <div class="body-cont">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+            
+            
+            
+            
+        </div>
+
+        
+
+    </form>
+
+   </div>
+
+      <div class="footer no-print">
+
+              <div class="fcont">
+
+            
+                <p>&copy; <%: DateTime.Now.Year %> - Software Alliance LLC.</p>
+
+                       
+            
+
+              </div>
+
+          </div>
+
+        <script>
+            $(document).ready(function () {
+
+                $(".table-striped").parent("div").addClass("putScroll");
+
+
+                var h = $(document).height();
+                $(".overLaypop").height(h);
+
+                $(".opPop").click(function (e) {
+                    e.preventDefault();
+                    var pH = $(".popupMain").height();
+                    var pH = pH / 2;
+                    var pH = 0 - pH;
+                    $(".popupMain").css("margin-top", pH);
+
+                    $(".popupMain, .overLaypop").fadeIn();
+                });
+
+                $(".close").click(function () {
+
+                    $(".popupMain, .overLaypop").fadeOut();
+
+                });
+
+            });
+        </script>
+</body>
+</html>
