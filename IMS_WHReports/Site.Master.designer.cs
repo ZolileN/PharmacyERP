@@ -55,7 +55,16 @@ namespace IMS_WHReports {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal warehouseNav;
+        protected global::System.Web.UI.WebControls.Panel warehouseNav;
+        
+        /// <summary>
+        /// InventoryLogin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor InventoryLogin;
         
         /// <summary>
         /// storeNav control.
@@ -64,7 +73,7 @@ namespace IMS_WHReports {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal storeNav;
+        protected global::System.Web.UI.WebControls.Panel storeNav;
         
         /// <summary>
         /// headofficeNav control.
@@ -73,7 +82,7 @@ namespace IMS_WHReports {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal headofficeNav;
+        protected global::System.Web.UI.WebControls.Panel headofficeNav;
         
         /// <summary>
         /// MainContent control.

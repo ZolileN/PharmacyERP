@@ -29,104 +29,103 @@ namespace IMS_WHReports
 
             if (!IsPostBack) {
 
-                string[] keys = Request.Form.AllKeys;
-                for (int i = 0; i < keys.Length; i++)
-                {
-                    Response.Write(keys[i] + ": " + Request.Form[keys[i]] + "<br>");
+                String key = null;
+                String UserName = null;
+
+                try{
+                    key = Request.Form["auth_key"].ToString();
+                    UserName = Request.Form["UserName"].ToString();
+                }
+                catch(NullReferenceException ex){
+                
                 }
 
-                String key = Request.Form["auth_key"].ToString();
+                if (key != null && UserName != null) {
 
-                string Password = StringCipher.Decrypt(key, "oouEAoBOOoRQy93PA2BmOQ");
+                    
+                    
+                   
+                    Session["key"] = key = Request.Form["auth_key"].ToString();
 
-                String UserName = Request.Form["UserName"].ToString();
+                    string Password = StringCipher.Decrypt(key, "oouEAoBOOoRQy93PA2BmOQ");
 
-                try
-                {
-                    DropDownList userList = new DropDownList();
-                    if (connection.State == ConnectionState.Closed)
+                    Session["LoginID"] = UserName = Request.Form["UserName"].ToString();
+
+                    try
                     {
-                        connection.Open();
-                    }
-                    SqlCommand command = new SqlCommand("sp_GetAllUsers", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-                    DataSet ds = new DataSet();
-                    SqlDataAdapter sA = new SqlDataAdapter(command);
-                    sA.Fill(ds);
-                    userList.DataSource = ds.Tables[0];
-                    userList.DataTextField = "U_EmpID";
-                    userList.DataValueField = "U_Password";
-                    userList.DataBind();
-
-                    if (userList.Items.FindByText(UserName) != null)
-                    {
-                        string orgPass = userList.Items.FindByText(UserName).Value;
-                        if (orgPass.ToLower().Equals(Password.ToLower()))
+                        DropDownList userList = new DropDownList();
+                        if (connection.State == ConnectionState.Closed)
                         {
-                            DataTable dt = new DataTable();
-                            DataView dv = new DataView();
-                            dv = ds.Tables[0].DefaultView;
-                            dv.RowFilter = "U_EmpID = '" + UserName + "'";
-                            dt = dv.ToTable();
+                            connection.Open();
+                        }
+                        SqlCommand command = new SqlCommand("sp_GetAllUsers", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        DataSet ds = new DataSet();
+                        SqlDataAdapter sA = new SqlDataAdapter(command);
+                        sA.Fill(ds);
+                        userList.DataSource = ds.Tables[0];
+                        userList.DataTextField = "U_EmpID";
+                        userList.DataValueField = "U_Password";
+                        userList.DataBind();
 
-                            Session["firstNamelastName"] = dt.Rows[0]["U_FirstName"].ToString() + " " + dt.Rows[0]["U_LastName"].ToString();
-
-                            switch (dt.Rows[0]["RoleName"].ToString())
+                        if (userList.Items.FindByText(UserName) != null)
+                        {
+                            string orgPass = userList.Items.FindByText(UserName).Value;
+                            if (orgPass.ToLower().Equals(Password.ToLower()))
                             {
-                                case "WareHouse":
-                                    Session["UserName"] = dt.Rows[0]["SystemName"].ToString();
-                                    Session["UserSys"] = dt.Rows[0]["SystemID"].ToString();
-                                    Session["UserID"] = dt.Rows[0]["UserID"].ToString();
-                                    Session["UserEmail"] = dt.Rows[0]["U_Email"].ToString();
-                                    Session["isHeadOffice"] = false;
-                                    Session["UserRole"] = "WareHouse";
-                                    System.Diagnostics.Debug.WriteLine("Logged In");
-                                    Response.Redirect("Default.aspx", false);
+                                DataTable dt = new DataTable();
+                                DataView dv = new DataView();
+                                dv = ds.Tables[0].DefaultView;
+                                dv.RowFilter = "U_EmpID = '" + UserName + "'";
+                                dt = dv.ToTable();
+
+                                Session["firstNamelastName"] = dt.Rows[0]["U_FirstName"].ToString() + " " + dt.Rows[0]["U_LastName"].ToString();
+
+                                switch (dt.Rows[0]["RoleName"].ToString())
+                                {
+                                    case "WareHouse":
+                                        Session["UserName"] = dt.Rows[0]["SystemName"].ToString();
+                                        Session["UserSys"] = dt.Rows[0]["SystemID"].ToString();
+                                        Session["UserID"] = dt.Rows[0]["UserID"].ToString();
+                                        Session["UserEmail"] = dt.Rows[0]["U_Email"].ToString();
+                                        Session["isHeadOffice"] = false;
+                                        Session["UserRole"] = "WareHouse";
+                                        System.Diagnostics.Debug.WriteLine("Logged In");
+                                        Response.Redirect("Default.aspx", false);
 
 
-                                    break;
-                                case "Store":
-                                    Session["UserName"] = dt.Rows[0]["SystemName"].ToString();
-                                    Session["UserSys"] = dt.Rows[0]["SystemID"].ToString();
-                                    Session["UserEmail"] = dt.Rows[0]["U_Email"].ToString();
-                                    Session["UserID"] = dt.Rows[0]["UserID"].ToString();
-                                    Session["isHeadOffice"] = false;
-                                    Session["UserRole"] = "Store";
-                                    
-                                    Response.Redirect("StoreMain.aspx", false);
-                                    break;
-                                case "HeadOffice":
-                                    Session["UserName"] = dt.Rows[0]["SystemName"].ToString();
-                                    Session["isHeadOffice"] = true;
-                                    Session["UserID"] = dt.Rows[0]["UserID"].ToString();
-                                    Session["UserEmail"] = dt.Rows[0]["U_Email"].ToString();
-                                    Session["UserRole"] = "HeadOffice";
-                                    Response.Redirect("HeadOfficeMain.aspx", false);
-                                    break;
-
+                                        break;
+                                    default:
+                                        Response.Redirect("Default.aspx", false);
+                                        break;
+                                  
+                                }
                             }
                         }
-                    }
-                    else
-                    {
+                        else
+                        {
 
-                  //      WebMessageBoxUtil.Show("Invalid username or password.");
-                        return;
-                    }
+                            //      WebMessageBoxUtil.Show("Invalid username or password.");
+                            return;
+                        }
 
-                }
-                catch (Exception exp)
-                {
-                    if (log.IsErrorEnabled)
-                    {
-                        log.Error(expHandler.GenerateLogString(exp));
                     }
+                    catch (Exception exp)
+                    {
+                        if (log.IsErrorEnabled)
+                        {
+                            log.Error(expHandler.GenerateLogString(exp));
+                        }
+                    }
+                    finally
+                    {
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
+                    }
+                
                 }
-                finally
-                {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
-                }
+
+                
             }
 
         }
@@ -194,31 +193,17 @@ namespace IMS_WHReports
                                 string key = StringCipher.Encrypt(Password.Text, "oouEAoBOOoRQy93PA2BmOQ");
                                 Session["key"] = key;
 
-                                Response.Redirect("WarehouseMain.aspx", false);
+                                Response.Redirect("Default.aspx", false);
                                 
 
                                 break;
-                            case "Store":
-                                Session["UserName"] = dt.Rows[0]["SystemName"].ToString();
-                                Session["UserSys"] = dt.Rows[0]["SystemID"].ToString();
-                                Session["UserEmail"] = dt.Rows[0]["U_Email"].ToString();
-                                Session["UserID"] = dt.Rows[0]["UserID"].ToString();
-                                Session["isHeadOffice"] = false;
-                                Session["UserRole"] = "Store";
 
-                                 string StoreKey = StringCipher.Encrypt(Password.Text, "oouEAoBOOoRQy93PA2BmOQ");
-                                 Session["key"] = StoreKey;
+                            default:
+                                
 
-                                Response.Redirect("StoreMain.aspx",false);
+                                Response.Redirect("IMSLogin.aspx",false);
                                 break;
-                            case "HeadOffice":
-                                Session["UserName"] = dt.Rows[0]["SystemName"].ToString();
-                                Session["isHeadOffice"] = true;
-                                Session["UserID"] = dt.Rows[0]["UserID"].ToString();
-                                Session["UserEmail"] = dt.Rows[0]["U_Email"].ToString();
-                                Session["UserRole"] = "HeadOffice";
-                                Response.Redirect("HeadOfficeMain.aspx", false);
-                                break;
+                           
                                
                         }
                     }

@@ -157,7 +157,7 @@
                 </div>
                                 <div class="userInfo no-print">
                 <span>
-                   Shahid <asp:Literal ID="FirstLast" runat="server" visible="false"> </asp:Literal>
+                   <asp:Literal ID="FirstLast" runat="server" visible="false"> </asp:Literal>
                     </span>
               
                  <asp:ImageButton id="imgLogout" runat="server" ImageUrl="images/logoutIcon.png"  />
@@ -223,8 +223,9 @@
           <div class="navs-cont no-print">
                 <div class="navigation no-print ">
                     
-                    <asp:Literal runat="server" ID="warehouseNav">
+                    <asp:Panel runat="server" ID="warehouseNav">
                     <ul class="main-menu no-print">
+                            <li><a href="#" runat="server" id="InventoryLogin"><--Go Back to Main</a></li>
                             <li><a href="#">Sales</a>
 
                                <ul>
@@ -249,6 +250,40 @@
 
                                     </li>
                                     <li><a href="#">End of Day Report</a></li>
+                                   <li class="hasChild"><a href="#">Sales History Reports</a>
+				                            <ul>
+					                            <li><a href="#">Sales History</a></li>
+					                            <li><a href="#">Consolidated Sales</a></li>
+                                                <li><a href="#">History-Slow Moving Items</a></li>
+                                                <li><a href="#">Yearly Sales History - None Moving Items</a></li>
+                                                <li><a href="#">Period Sales History - Open to buy</a></li>
+                                                <li><a href="#">Sales by Till</a></li>
+				                            </ul>
+			                            </li>
+                                    <li class="hasChild"><a href="#">Cost/Sales Analysis Reports</a>
+				                    <ul>
+					                    
+					                    <li><a href="#">Store Cost/Sales</a></li>
+                                        <li><a href="#">Department Cost/Sales</a></li>
+				                    </ul>
+			                    </li>
+
+                                   <li class="hasChild"><a href="#">Other Sales Reports</a>
+				                    <ul>
+					                    
+					                    <li><a href="#">Sales by Value - Fast Moving Items</a></li>
+					                    <li><a href="#">Sales by assistant - Daily Customer listing</a></li>
+				                    </ul>
+			                    </li>
+                                <li class="hasChild"><a href="#">Internal Transfers</a>
+
+                                <ul>
+                                    <li><a href="#">Transfer Send Report</a></li>
+                                    <li><a href="#">Transfer Rquest Report</a></li>
+                                    
+                                </ul>
+
+                            </li>
                                </ul>
 
                             </li>
@@ -257,11 +292,11 @@
                                          <ul>
 
                                              <li><a href="#">Expiry Drug Item Report</a></li>
-                                             <li><a href="#">Expiry of Next 90 Days</a></li>
-                                             <li><a href="#">Total Stock/Drug Items</a></li>
+                                             
+                                             
                                              <li><a href="#">Drug/Item Movement</a></li>
-                                             <li><a href="#">Drug Item Batch Movement</a></li>
-                                             <li><a href="#">List of Drug/Items</a></li>
+                                             
+                                             
                                              <li><a href="#">Minimum Low Stock</a></li>
                                              <li><a href="#">Initial Stock Report</a></li>
                                              <li><a href="#">Drug/Items Not Listed in HAAD</a></li>
@@ -278,55 +313,19 @@
 					                                <li><a href="#">inventory consumption by store</a></li>
 				                                </ul>
 			                                </li>
-                                            <li class="hasChild"><a href="#">Trending &amp; Profit  Analysis Reports</a>
-				                                <ul>
-					                                <li><a href="#">Inventory with highest trend </a></li>
-					                                <li><a href="#">inventory with lowest trend</a></li>
-					                                <li><a href="#">inventory giving greater Profit</a></li>
-					                                <li><a href="#">inventory which cost most</a></li>
-				                                </ul>
-			                                </li>
-                                            <li class="hasChild"><a href="#">Head Office Reports</a>
-				                                <ul>
-					                                <li><a href="#">Inventory Count - Head Office</a></li>
-					                                <li><a href="#">Inventory Count Variance - Head Office</a></li>
-				                                </ul>
-			                                </li>
+                                            
+                                           
                                              <li class="hasChild"><a href="#">Other Inventory Reports</a>
 				                                <ul>
 					                                <li><a href="#">Inventory adjustments - Account Balances </a></li>
 					                                <li><a href="#">Random Inventory Count Check list - Account Transactions</a></li>
 					                                <li><a href="#">Inventory Movements History - Daily Transaction Log / Summary</a></li> 
-					                                <li><a href="#">Inventory Ledger - Quantity Audit </a></li>
-					                                <li><a href="#">Product Inventory - Inventory Valuation </a></li>
-					                                <li><a href="#">Inventory Allocation</a></li>
+					                                
 				                                </ul>
 			                                </li>
-                                            <li class="hasChild"><a href="#">Inventory Master Listing Reports</a>
-				                                <ul>
-					                                <li><a href="#">Master Price List</a></li>
-					                                <li><a href="#">Master Quantity List </a></li>
-					                                <li><a href="#">Master Value List</a></li>
-				                                </ul>
-			                                </li>
-                                             <li class="hasChild"><a href="#">Inventory Store Listing Reports</a>
-				                                <ul>
-					                                <li><a href="#">Snapshot Store Price List</a></li>
-					                                <li><a href="#">Snapshot Store Quantity List</a></li>
-					                                <li><a href="#">Quantity Discrepancy List </a></li>
-				                                </ul>
-			                                </li>
-                                             <li class="hasChild"><a href="#">Other Inventory Listing Reports</a>
-				                                <ul>
-					                                <li><a href="#">Supplier List</a></li>
-					                                <li><a href="#">Alias List</a></li>
-					                                <li><a href="#">Substitute List</a></li>
-					                                <li><a href="#">Serial Number List</a></li>
-					                                <li><a href="#">Item Movement</a></li>
-					                                <li><a href="#">Offline Inventory List</a></li>
-					                                <li><a href="#">Trending Products List</a></li>
-				                                </ul>
-			                                </li>
+                                            
+                                             
+                                             
 		                                </ul>
 
                             </li>
@@ -336,22 +335,25 @@
                                     <li><a href="#">Purchase Reports</a></li>
                                     <li><a href="#">Purchase Returns Reports</a></li>
                                     <li><a href="#">Supplier Wise Item Report</a></li>
+                                    <li><a href="#">Purchase Order - Value Audit</a></li>
                                 </ul>
 
                             </li>
 
-                        <li><a href="#">Internal Transfers</a>
-
-                                <ul>
-                                    <li><a href="#">Transfer Send Report</a></li>
-                                    <li><a href="#">Transfer Rquest Report</a></li>
-                                    
-                                </ul>
-
-                            </li>
+                        <li><a href="#">Top Performers Reports</a>
+		                <ul>
+			                <li><a href="#">Top Sales Reps</a></li>
+                          <li><a href="#">Top Customers</a></li>
+                         <li> <a href="#">Top Cashiers</a></li>
+                       <li> <a href="#">Top Suppliers</a></li>
+                         <li> <a href="#">Top Items</a></li>
+                       <li> <a href="#">Top Departments</a></li>
+                       <li>  <a href="#">Top Categories</a></li>
+		                </ul>
+	             </li>
                             
                              
-                            <li><a href="#">OLD Reports</a>
+                            <%--<li><a href="#">OLD Reports</a>
                             	<ul>
                                 	<li><a href="#">Print PO</a></li>
                                 	<li><a href="#">Packing List</a></li>
@@ -591,11 +593,11 @@
 	             </li>
 
                             	</ul>
-                            </li>
+                            </li>--%>
                        
 	                    </ul>
-            </asp:Literal>
-            <asp:Literal runat="server" ID="storeNav">
+            </asp:Panel>
+            <asp:Panel runat="server" ID="storeNav">
                  <ul class="main-menu no-print">
                             <li><a href="#">Manage Inventory</a>
                                         <ul>
@@ -638,9 +640,9 @@
                             </li>
                             
 	                    </ul>
-            </asp:Literal>
+            </asp:Panel>
 
-            <asp:Literal runat="server" ID="headofficeNav">
+            <asp:Panel runat="server" ID="headofficeNav">
                     
                 <ul class="main-menu">
                             <li><a href="ManageStore.aspx">Manage Pharmacy</a></li>
@@ -650,7 +652,7 @@
                             <li><a href="RegisterUsers.aspx">Register Users</a></li>
 	                    </ul>
                     
-            </asp:Literal>
+            </asp:Panel>
 	                   
                 <div style="clear: left;"></div>
                 
