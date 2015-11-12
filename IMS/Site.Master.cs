@@ -146,8 +146,7 @@ namespace IMS
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            WHReports.ServerClick += new EventHandler(WHReports_Login);
-            PharmacyReports.ServerClick += new EventHandler(PharmacyReports_Login);
+            
             logo.ServerClick += new EventHandler(logo_click);
 
             FirstLast.Text = Session["firstNamelastName"].ToString();
@@ -161,6 +160,8 @@ namespace IMS
             if (Session["userRole"].ToString() == "WareHouse")
             {
                 warehouseNavigation.Visible = true;
+                WHReports.ServerClick += new EventHandler(WHReports_Login);
+                PharmacyReports.ServerClick += new EventHandler(PharmacyReports_Login);
               
             }
             else if (Session["userRole"].ToString() == "HeadOffice")
@@ -171,6 +172,8 @@ namespace IMS
             }
             else if (Session["userRole"].ToString() == "Store")
             {
+                
+                self_PharmacyReports.ServerClick += new EventHandler(PharmacyReports_Login);
                 StoreBlock.Visible = true;
                 storeNavigation.Visible = true;
              

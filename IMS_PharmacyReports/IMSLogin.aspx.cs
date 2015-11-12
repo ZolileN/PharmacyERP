@@ -96,8 +96,23 @@ namespace IMS_PharmacyReports
 
 
                                         break;
-                                    default:
+
+                                    case "Store":
+                                        Session["UserName"] = dt.Rows[0]["SystemName"].ToString();
+                                        Session["UserSys"] = dt.Rows[0]["SystemID"].ToString();
+                                        Session["UserEmail"] = dt.Rows[0]["U_Email"].ToString();
+                                        Session["UserID"] = dt.Rows[0]["UserID"].ToString();
+                                        Session["isHeadOffice"] = false;
+                                        Session["UserRole"] = "Store";
+                                        Session["LoginID"] = UserName;
+                                        string StoreKey = StringCipher.Encrypt(Password, "oouEAoBOOoRQy93PA2BmOQ");
+                                        Session["key"] = StoreKey;
+
                                         Response.Redirect("Default.aspx", false);
+                                        break;
+
+                                    default:
+                                        Response.Redirect("IMSLogin.aspx", false);
                                         break;
 
                                 }
@@ -190,6 +205,7 @@ namespace IMS_PharmacyReports
                                 Session["isHeadOffice"] = false;
                                 Session["UserRole"] = "WareHouse";
 
+                                Session["LoginID"] = UserName.Text;
 
                                 string key = StringCipher.Encrypt(Password.Text, "oouEAoBOOoRQy93PA2BmOQ");
                                 Session["key"] = key;
@@ -197,6 +213,20 @@ namespace IMS_PharmacyReports
                                 Response.Redirect("Default.aspx", false);
 
 
+                                break;
+
+                            case "Store":
+                                Session["UserName"] = dt.Rows[0]["SystemName"].ToString();
+                                Session["UserSys"] = dt.Rows[0]["SystemID"].ToString();
+                                Session["UserEmail"] = dt.Rows[0]["U_Email"].ToString();
+                                Session["UserID"] = dt.Rows[0]["UserID"].ToString();
+                                Session["isHeadOffice"] = false;
+                                Session["UserRole"] = "Store";
+                                Session["LoginID"] = UserName.Text;
+                                string StrKey = StringCipher.Encrypt(Password.Text, "oouEAoBOOoRQy93PA2BmOQ");
+                                Session["key"] = StrKey;
+
+                                Response.Redirect("Default.aspx", false);
                                 break;
 
                             default:

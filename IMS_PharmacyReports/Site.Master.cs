@@ -72,6 +72,9 @@ namespace IMS_PharmacyReports
         {
             string auth_key = Session["key"].ToString();
             string username = Session["LoginID"].ToString();
+
+            System.Diagnostics.Debug.WriteLine(username + "  UserName");
+
             string Url = System.Configuration.ConfigurationManager.AppSettings["eInventoryMain"];
             string formId = "LoginForm";
 
@@ -114,6 +117,14 @@ namespace IMS_PharmacyReports
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
             Context.GetOwinContext().Authentication.SignOut();
+        }
+
+    
+
+        protected void Unnamed_Click(object sender, EventArgs e)
+        {
+            Session.Abandon();
+            Response.Redirect("~/IMSLogin.aspx", false);
         }
     }
 

@@ -160,7 +160,7 @@
                    <asp:Literal ID="FirstLast" runat="server" visible="false"> </asp:Literal>
                     </span>
               
-                 <asp:ImageButton id="imgLogout" runat="server" ImageUrl="images/logoutIcon.png"  />
+                 <asp:ImageButton id="imgLogout" runat="server" ImageUrl="images/logoutIcon.png" OnClick="Unnamed_Click"  />
                     
                        <%--<a runat="server" href="~/IMSLogin.aspx" onclick="Unnamed_Click">Logout</a>--%>
                </div>

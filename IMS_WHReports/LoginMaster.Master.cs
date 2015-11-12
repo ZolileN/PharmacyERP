@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace IMS
+namespace IMS_WHReports
 {
     public partial class LoginMaster : System.Web.UI.MasterPage
     {

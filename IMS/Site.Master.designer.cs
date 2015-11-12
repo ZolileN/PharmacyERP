@@ -103,6 +103,15 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.Panel storeNavigation;
         
         /// <summary>
+        /// self_PharmacyReports control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor self_PharmacyReports;
+        
+        /// <summary>
         /// headofficeNavigation control.
         /// </summary>
         /// <remarks>

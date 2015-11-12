@@ -113,6 +113,11 @@ namespace IMS_WHReports
         {
             Context.GetOwinContext().Authentication.SignOut();
         }
+        protected void Unnamed_Click(object sender, EventArgs e)
+        {
+            Session.Abandon();
+            Response.Redirect("~/IMSLogin.aspx", false);
+        }
     }
 
 }

@@ -90,11 +90,16 @@ namespace IMS_WHReports
                                         Session["UserEmail"] = dt.Rows[0]["U_Email"].ToString();
                                         Session["isHeadOffice"] = false;
                                         Session["UserRole"] = "WareHouse";
-                                        System.Diagnostics.Debug.WriteLine("Logged In");
+
+                                        
+
+                                        
                                         Response.Redirect("Default.aspx", false);
 
 
                                         break;
+
+
                                     default:
                                         Response.Redirect("Default.aspx", false);
                                         break;
@@ -188,8 +193,8 @@ namespace IMS_WHReports
                                 Session["UserEmail"] = dt.Rows[0]["U_Email"].ToString();
                                 Session["isHeadOffice"] = false;
                                 Session["UserRole"] = "WareHouse";
-                                
 
+                                Session["LoginID"] = UserName.Text;
                                 string key = StringCipher.Encrypt(Password.Text, "oouEAoBOOoRQy93PA2BmOQ");
                                 Session["key"] = key;
 

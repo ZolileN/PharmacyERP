@@ -357,6 +357,15 @@
                                     </li>
                                 </ul> 
                             </li>
+
+                           <li>
+
+                             <a href="#">Reports</a>
+                             <ul>
+                                 
+                                 <li><a href="#" runat="server" id="self_PharmacyReports">Pharmacy Reports</a></li>
+                             </ul>
+                         </li>        
                             
 	                    </ul>
             </asp:Panel>
