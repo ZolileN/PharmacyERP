@@ -1,7 +1,7 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(IMS_PharmacyReports.Startup))]
+[assembly: OwinStartupAttribute("OwinPharmacyStartup", typeof(IMS_PharmacyReports.Startup))]
 namespace IMS_PharmacyReports
 {
     public partial class Startup {

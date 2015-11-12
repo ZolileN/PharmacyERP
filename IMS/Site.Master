@@ -293,7 +293,7 @@
              <a href="#">Reports</a>
              <ul>
                  <li><a href="#" runat="server" id="WHReports">Warehouse Reports</a></li>
-                 <li><a href="#">Pharmacy Reports</a></li>
+                 <li><a href="#" runat="server" id="PharmacyReports">Pharmacy Reports</a></li>
              </ul>
          </li>                  
          
@@ -357,6 +357,15 @@
                                     </li>
                                 </ul> 
                             </li>
+
+                           <li>
+
+                             <a href="#">Reports</a>
+                             <ul>
+                                 
+                                 <li><a href="#" runat="server" id="self_PharmacyReports">Pharmacy Reports</a></li>
+                             </ul>
+                         </li>        
                             
 	                    </ul>
             </asp:Panel>

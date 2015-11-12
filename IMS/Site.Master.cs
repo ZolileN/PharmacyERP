@@ -92,6 +92,34 @@ namespace IMS
             HttpContext.Current.Response.Write(htmlForm.ToString());
             HttpContext.Current.Response.End();
         }
+
+
+
+        void PharmacyReports_Login(object sender, EventArgs e)
+        {
+            string auth_key = Session["key"].ToString();
+            string username = Session["LoginID"].ToString();
+            string Url = System.Configuration.ConfigurationManager.AppSettings["SecretLoginPharmacy"];
+            string formId = "LoginForm";
+
+            System.Diagnostics.Debug.WriteLine(auth_key + " " + username);
+
+
+            StringBuilder htmlForm = new StringBuilder();
+            htmlForm.AppendLine("<html>");
+            htmlForm.AppendLine(String.Format("<body onload='document.forms[\"{0}\"].submit()'>", formId));
+            htmlForm.AppendLine(String.Format("<form id='{0}' method='POST' action='{1}'>", formId, Url));
+            htmlForm.AppendLine("<input type='hidden' name='UserName' id='UserName' value='" + username + "' />");
+            htmlForm.AppendLine("<input type='hidden' name='auth_key' id='auth_key' value='" + auth_key + "' />");
+            htmlForm.AppendLine("</form>");
+            htmlForm.AppendLine("</body>");
+            htmlForm.AppendLine("</html>");
+
+            HttpContext.Current.Response.Clear();
+            HttpContext.Current.Response.Write(htmlForm.ToString());
+            HttpContext.Current.Response.End();
+        }
+
         public void logo_click(object sender, EventArgs e) {
             String UserRole = Session["UserRole"].ToString();
 
@@ -118,7 +146,7 @@ namespace IMS
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            WHReports.ServerClick += new EventHandler(WHReports_Login);
+            
             logo.ServerClick += new EventHandler(logo_click);
 
             FirstLast.Text = Session["firstNamelastName"].ToString();
@@ -132,6 +160,8 @@ namespace IMS
             if (Session["userRole"].ToString() == "WareHouse")
             {
                 warehouseNavigation.Visible = true;
+                WHReports.ServerClick += new EventHandler(WHReports_Login);
+                PharmacyReports.ServerClick += new EventHandler(PharmacyReports_Login);
               
             }
             else if (Session["userRole"].ToString() == "HeadOffice")
@@ -142,6 +172,8 @@ namespace IMS
             }
             else if (Session["userRole"].ToString() == "Store")
             {
+                
+                self_PharmacyReports.ServerClick += new EventHandler(PharmacyReports_Login);
                 StoreBlock.Visible = true;
                 storeNavigation.Visible = true;
              

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -1042,9 +1042,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
     <Content Include="LoginMaster.Master" />
+
     <Content Include="crystalreportviewers13\ActiveXControls\crviewer.dep" />
     <Content Include="crystalreportviewers13\crsmarttag.jsp" />
     <Content Include="crystalreportviewers13\preview.jsp" />
+
+    <None Include="Properties\PublishProfiles\DPS.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="ReportFormat_simple.aspx" />
     <Content Include="ReportPrinting.aspx" />
@@ -1623,6 +1626,7 @@
       <Project>{4b10c05f-57b4-4868-b3c4-26c67ba98bb0}</Project>
       <Name>IMS</Name>
     </ProjectReference>
+<<<<<<< HEAD
   </ItemGroup>
   <ItemGroup>
     <Content Include="NearestExpiryItems.rpt">
@@ -1665,6 +1669,8 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_POSSALES.cs</LastGenOutput>
     </Content>
+=======
+>>>>>>> origin/master
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

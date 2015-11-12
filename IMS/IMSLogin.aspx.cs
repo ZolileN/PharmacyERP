@@ -26,6 +26,135 @@ namespace IMS
             pageURL = url.AbsolutePath.ToString();
             log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             expHandler.CheckForErrorMessage(Session);
+
+            if (!IsPostBack)
+            {
+
+                String key = null;
+                String UserName = null;
+
+                try
+                {
+                    key = Request.Form["auth_key"].ToString();
+                    UserName = Request.Form["UserName"].ToString();
+                }
+                catch (NullReferenceException ex)
+                {
+
+                }
+
+                if (key != null && UserName != null)
+                {
+
+
+
+
+                    Session["key"] = key = Request.Form["auth_key"].ToString();
+
+                    string Password = StringCipher.Decrypt(key, "oouEAoBOOoRQy93PA2BmOQ");
+
+                    Session["LoginID"] = UserName = Request.Form["UserName"].ToString();
+
+                    try
+                    {
+                        DropDownList userList = new DropDownList();
+                        if (connection.State == ConnectionState.Closed)
+                        {
+                            connection.Open();
+                        }
+                        SqlCommand command = new SqlCommand("sp_GetAllUsers", connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        DataSet ds = new DataSet();
+                        SqlDataAdapter sA = new SqlDataAdapter(command);
+                        sA.Fill(ds);
+                        userList.DataSource = ds.Tables[0];
+                        userList.DataTextField = "U_EmpID";
+                        userList.DataValueField = "U_Password";
+                        userList.DataBind();
+
+                        if (userList.Items.FindByText(UserName) != null)
+                        {
+                            string orgPass = userList.Items.FindByText(UserName).Value;
+                            if (orgPass.ToLower().Equals(Password.ToLower()))
+                            {
+                                DataTable dt = new DataTable();
+                                DataView dv = new DataView();
+                                dv = ds.Tables[0].DefaultView;
+                                dv.RowFilter = "U_EmpID = '" + UserName + "'";
+                                dt = dv.ToTable();
+
+                                Session["firstNamelastName"] = dt.Rows[0]["U_FirstName"].ToString() + " " + dt.Rows[0]["U_LastName"].ToString();
+
+                                switch (dt.Rows[0]["RoleName"].ToString())
+                                {
+                                    case "WareHouse":
+                                        Session["UserName"] = dt.Rows[0]["SystemName"].ToString();
+                                        Session["UserSys"] = dt.Rows[0]["SystemID"].ToString();
+                                        Session["UserID"] = dt.Rows[0]["UserID"].ToString();
+                                        Session["UserEmail"] = dt.Rows[0]["U_Email"].ToString();
+                                        Session["isHeadOffice"] = false;
+                                        Session["UserRole"] = "WareHouse";
+                                        Session["LoginID"] = UserName;
+
+                                        string enKey = StringCipher.Encrypt(Password, "oouEAoBOOoRQy93PA2BmOQ");
+                                        Session["key"] = enKey;
+
+                                        Response.Redirect("WarehouseMain.aspx", false);
+
+
+                                        break;
+                                    case "Store":
+                                        Session["UserName"] = dt.Rows[0]["SystemName"].ToString();
+                                        Session["UserSys"] = dt.Rows[0]["SystemID"].ToString();
+                                        Session["UserEmail"] = dt.Rows[0]["U_Email"].ToString();
+                                        Session["UserID"] = dt.Rows[0]["UserID"].ToString();
+                                        Session["isHeadOffice"] = false;
+                                        Session["UserRole"] = "Store";
+                                        Session["LoginID"] = UserName;
+                                        string StoreKey = StringCipher.Encrypt(Password, "oouEAoBOOoRQy93PA2BmOQ");
+                                        Session["key"] = StoreKey;
+
+                                        Response.Redirect("StoreMain.aspx", false);
+                                        break;
+                                    case "HeadOffice":
+                                        Session["UserName"] = dt.Rows[0]["SystemName"].ToString();
+                                        Session["isHeadOffice"] = true;
+                                        Session["UserID"] = dt.Rows[0]["UserID"].ToString();
+                                        Session["UserEmail"] = dt.Rows[0]["U_Email"].ToString();
+                                        Session["UserRole"] = "HeadOffice";
+                                        Response.Redirect("HeadOfficeMain.aspx", false);
+                                        break;
+
+                                }
+                            }
+                        }
+                        else
+                        {
+
+                            //      WebMessageBoxUtil.Show("Invalid username or password.");
+                            return;
+                        }
+
+                    }
+                    catch (Exception exp)
+                    {
+                        if (log.IsErrorEnabled)
+                        {
+                            log.Error(expHandler.GenerateLogString(exp));
+                        }
+                    }
+                    finally
+                    {
+                        if (connection.State == ConnectionState.Open)
+                            connection.Close();
+                    }
+
+                }
+
+
+            }
+
+
         }
 
         private void Page_Error(object sender, EventArgs e)
