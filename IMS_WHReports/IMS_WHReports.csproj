@@ -1626,7 +1626,6 @@
       <Project>{4b10c05f-57b4-4868-b3c4-26c67ba98bb0}</Project>
       <Name>IMS</Name>
     </ProjectReference>
-<<<<<<< HEAD
   </ItemGroup>
   <ItemGroup>
     <Content Include="NearestExpiryItems.rpt">
@@ -1669,8 +1668,6 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rpt_POSSALES.cs</LastGenOutput>
     </Content>
-=======
->>>>>>> origin/master
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
