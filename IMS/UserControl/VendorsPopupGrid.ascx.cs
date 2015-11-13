@@ -353,9 +353,22 @@ namespace IMS.UserControl
                                     {
                                         dtChanged.Rows[i]["VendorID"] = NewVendorID;
                                         dtChanged.Rows[i]["VendorName"] = NewVendorName;
-                                        if(MainVendorID.ToString().Equals(NewVendorID))
+                                        if (MainVendorID.ToString().Equals(NewVendorID) && NewVendorName.ToLower().Contains("al ahliya"))
                                         {
-                                             dtChanged.Rows[i]["isWareHouse"] = 0; 
+                                             dtChanged.Rows[i]["isWareHouse"] = 1; 
+                                        }
+
+                                        else if (MainVendorID.ToString().Equals(NewVendorID) && !(NewVendorName.ToLower().Contains("al ahliya")))
+                                        {
+                                            dtChanged.Rows[i]["isWareHouse"] = 0; 
+                                        }
+                                        else if (NewVendor == 1 && NewVendorName.ToLower().Contains("al ahliya"))
+                                        {
+                                            dtChanged.Rows[i]["isWareHouse"] = 1;
+                                        }
+                                        else if (NewVendor != 1)
+                                        {
+                                            dtChanged.Rows[i]["isWareHouse"] = 0;
                                         }
                                         dtChanged.AcceptChanges();
                                         break;
