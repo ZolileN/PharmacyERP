@@ -150,6 +150,16 @@ namespace IMS
 
                     txtPrevSP.Text = dt.Rows[0]["SP"].ToString();
                     txtNewSP.Text = dt.Rows[0]["SP"].ToString();
+
+                    if (Convert.ToInt64(dt.Rows[0]["Status"].ToString()) == 1) {
+                        status.Checked = true;
+                    }
+                    else
+                    {
+                        status.Checked = false;
+                    }
+
+
                 }
             }
             catch(Exception ex)
@@ -185,6 +195,13 @@ namespace IMS
                 int UserID = Convert.ToInt32(Session["UserID"].ToString());
                 int SystemID = Convert.ToInt32(Session["UserSys"].ToString());
 
+                int Status = 0;
+                if (status.Checked)
+                {
+                    Status = 1;
+                }
+                
+
                 #endregion
 
 
@@ -205,7 +222,7 @@ namespace IMS
                 command.Parameters.AddWithValue("@p_UserID", UserID);
                 command.Parameters.AddWithValue("@p_SystemID", SystemID);
                 command.Parameters.AddWithValue("@p_Expiry", Expiry);
-
+                command.Parameters.AddWithValue("@p_Status", Status);
                 command.ExecuteNonQuery();
 
                 txtAdjustmentQuantity.Text = (NewStock - CurrentStock).ToString();

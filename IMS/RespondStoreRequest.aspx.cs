@@ -470,6 +470,8 @@ namespace IMS
                                 float Discount;
                                 command.Parameters.AddWithValue("@p_Discount", DBNull.Value);
 
+                                System.Diagnostics.Debug.WriteLine(_row["CostPrice"] + "\t" + _row["SalePrice"]);
+
                                 DataSet LinkResult = new DataSet();
                                 SqlDataAdapter sA = new SqlDataAdapter(command);
                                 sA.Fill(LinkResult);

@@ -171,6 +171,14 @@
                         </ItemTemplate>
                          <ItemStyle  Width="330px" HorizontalAlign="Left"/>
                     </asp:TemplateField>
+                    
+                 <asp:TemplateField Visible="true" HeaderText="Status" HeaderStyle-Width="20px">
+                        <ItemTemplate>
+                            <asp:Label ID="status" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Status") %>' Width="20px"></asp:Label>
+                        </ItemTemplate>
+                        <ItemStyle Width="20px" HorizontalAlign="Left" />
+                    </asp:TemplateField>   
+                    
                      <asp:TemplateField HeaderText="Strength" Visible="false" HeaderStyle-Width ="125px">
                         <ItemTemplate>
                             <asp:Label ID="ProductStrength" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("strength") %>'  Width="125px" ></asp:Label>

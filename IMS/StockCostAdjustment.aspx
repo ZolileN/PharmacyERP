@@ -27,7 +27,8 @@
                 <td><label>Select System</label></td>
                 <td><asp:CheckBox ID="chkAllSystems" runat="server" Checked="true" Enabled="true" Text="Universal Change" />
                 </td>
-                <td></td>
+                <td><label>Change Status</label></td>
+                 <td><asp:CheckBox ID="status" runat="server" Checked="true" Enabled="true" Text="Status" /></td>
             </tr>
 
           <tr>
