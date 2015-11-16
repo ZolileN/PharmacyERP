@@ -124,7 +124,7 @@
                 AutoGenerateColumns="false" OnPageIndexChanging="StockDisplayGrid_PageIndexChanging" OnRowEditing="dgvStockDisplayGrid_RowEditing" OnRowDeleting="dgvStockDisplayGrid_RowDeleting"
                 OnRowCommand="StockDisplayGrid_RowCommand" OnRowDataBound="StockDisplayGrid_RowDataBound">
                 <Columns>
-                    <asp:TemplateField HeaderText="Action" Visible="true">
+                    <asp:TemplateField HeaderText="Action" Visible="false">
                         <ItemTemplate>
                             <asp:LinkButton CssClass="btn btn-default add-btn" ID="btnAdd" Visible="false" Text="Add" runat="server" CommandName="AddVal" CommandArgument='<%# Container.DisplayIndex%>' />
                             <asp:LinkButton CssClass="btn btn-default edit-btn" ID="btnEdit" Visible="false" Text="Edit" runat="server" CommandName="Edit" CommandArgument='<%# Container.DisplayIndex%>' />
@@ -146,6 +146,14 @@
                         </ItemTemplate>
                         <ItemStyle Width="330px" HorizontalAlign="Left" />
                     </asp:TemplateField>
+
+                    <asp:TemplateField Visible="true" HeaderText="Status" HeaderStyle-Width="20px">
+                        <ItemTemplate>
+                            <asp:Label ID="status" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("Status") %>' Width="20px"></asp:Label>
+                        </ItemTemplate>
+                        <ItemStyle Width="20px" HorizontalAlign="Left" />
+                    </asp:TemplateField>
+
                     <asp:TemplateField HeaderText="Strength" Visible="false" HeaderStyle-Width="125px">
                         <ItemTemplate>
                             <asp:Label ID="ProductStrength" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("strength") %>' Width="125px"></asp:Label>
