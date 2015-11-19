@@ -45,7 +45,7 @@
                             AutoGenerateColumns="false"  OnRowCommand="dgvReceiveTransfer_RowCommand" OnRowDataBound="dgvReceiveTransfer_RowDataBound"  >
                             <Columns>
 
-                                <asp:TemplateField HeaderText="Action">
+                                <asp:TemplateField HeaderText="Action" Visible="false">
                                     <ItemTemplate>
                                         <asp:Button CssClass="btn btn-default edit-btn" ID="btnEdit" Text="Edit" runat="server" Visible= '<%# !IsStatusComplete((String) Eval("Status")) %>' CommandName="Edit" CommandArgument='<%# Container.DataItemIndex %>' />
                                     </ItemTemplate>
@@ -122,14 +122,16 @@
 
                                 <asp:TemplateField HeaderText="Sent Qty" HeaderStyle-Width="50px">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblSentQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("SentQty") %>' Width="60px"></asp:Label>
+                                        <asp:Label ID="lblSentQty" Visible="false" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("SentQty") %>' Width="60px"></asp:Label>
+                                        <asp:TextBox ID="SentQty" CssClass="" runat="server" Text='<%# Eval("SentQty") %>' Enabled='<%# !IsStatusComplete((String) Eval("Status")) %>'  Width="50px"></asp:TextBox> 
                                     </ItemTemplate>
 
                                     <ItemStyle Width="60px" HorizontalAlign="Left" />
                                 </asp:TemplateField>
-                                 <asp:TemplateField HeaderText="Sent Bonus Qty" HeaderStyle-Width="50px" Visible="false">
+                                 <asp:TemplateField HeaderText="Sent Bonus Qty" HeaderStyle-Width="50px" Visible="true">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblSentBonQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("TransferedBonusQty") %>' Width="60px"></asp:Label>
+                                        <asp:Label ID="lblSentBonQty" Visible="false" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("TransferedBonusQty") %>' Width="60px"></asp:Label>
+                                        <asp:TextBox ID="SentBonQty" CssClass="" runat="server" Text='<%# Eval("TransferedBonusQty") %>' Enabled='<%# !IsStatusComplete((String) Eval("Status")) %>'  Width="50px"></asp:TextBox> <%--Enabled='<%# !IsStatusComplete((String) Eval("Status")) %>'--%>
                                     </ItemTemplate>
 
                                     <ItemStyle Width="60px" HorizontalAlign="Left" />
@@ -167,7 +169,32 @@
 
     </asp:Repeater>
     
-  
+  <script>
+
+      function Validate(id) {
+
+          var availableStockID = "MainContent_repReceiveTransfer_dgvReceiveTransfer_"+id+"_lblAvailableQty_" + id;
+          var SentQtyID = "MainContent_repReceiveTransfer_dgvReceiveTransfer_"+id+"_SentQty_" + id;
+          var availableQty = document.getElementById(availableStockID).innerHTML;
+          var SentQty = document.getElementById(SentQtyID).value;
+
+          var sentQty = Number(SentQty);
+          var availQty = Number(availableQty);
+
+          if (sentQty == 0 || sentQty == "") {
+              alert("Sent Quantity cannot be 0 or empty");
+              return false;
+          }
+
+          if (availQty < sentQty) {
+              alert("Available Stock  " + availQty + " is less than Transfered Stock  " + sendQty);
+              return false;
+          }
+
+          return true;
+      }
+
+  </script>
   
   
   

@@ -147,6 +147,10 @@ namespace IMS
         {
 
             
+            if(Session["firstNamelastName"]==null){
+                Response.Redirect("IMSLogin.aspx", true);
+            }
+
             logo.ServerClick += new EventHandler(logo_click);
 
             FirstLast.Text = Session["firstNamelastName"].ToString();

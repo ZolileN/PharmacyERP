@@ -807,7 +807,7 @@ namespace IMS
         {
             try
             {
-                int TransferNo, TransferDetailNo, RequestedQty, requestedBonusQty, TransferedQty, transferedBonusQty, ReceivedQty, AvailableQty, ProductId, Discount;
+                int TransferNo, TransferDetailNo, RequestedQty, TransferedQty, transferedBonusQty, ReceivedQty, AvailableQty, ProductId, Discount;
                 int LogedInStoreID;
                  int userID = Convert.ToInt32(Session["UserID"].ToString());
                 int.TryParse(Session["UserSys"].ToString(), out LogedInStoreID);
@@ -816,21 +816,21 @@ namespace IMS
                 Label lblTransferDetailsID = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblTransferDetailsID");
                 Label lblRequestedQty = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblRequestedQty");
                 Label lblAvailableQty = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblAvailableQty");
-                Label lblSentQty = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblSentQty");
+                TextBox SentQty = (TextBox)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("SentQty");
                 Label lblProductID = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblProductID");
-                Label lblRequestedBonQty = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblReqBonQty");
-                Label lblSentBonQty = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblSentBonQty");
+                //Label lblRequestedBonQty = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblReqBonQty");
+                TextBox SentBonQty = (TextBox)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("SentBonQty");
                 TextBox txtRequestedFrom = (TextBox)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("RequestedFrom");
 
                 int.TryParse(txtRequestedFrom.Text.ToString(), out Discount);
                 int.TryParse(lblTransferNo.Text.ToString(), out TransferNo);
                 int.TryParse(lblTransferDetailsID.Text.ToString(), out TransferDetailNo);
                 int.TryParse(lblRequestedQty.Text.ToString(), out RequestedQty);
-                int.TryParse(lblRequestedBonQty.Text.ToString(), out requestedBonusQty);
+               // int.TryParse(lblRequestedBonQty.Text.ToString(), out requestedBonusQty);
 
                 int.TryParse(lblAvailableQty.Text.ToString(), out AvailableQty);
-                int.TryParse(lblSentQty.Text.ToString(), out TransferedQty);
-                int.TryParse(lblSentBonQty.Text.ToString(), out transferedBonusQty);
+                int.TryParse(SentQty.Text.ToString(), out TransferedQty);
+                int.TryParse(SentBonQty.Text.ToString(), out transferedBonusQty);
                 int.TryParse(lblProductID.Text.ToString(), out ProductId);
                 if (e.CommandName == "Edit")
                 {
@@ -841,28 +841,28 @@ namespace IMS
                 if (e.CommandName == "AcceptProductTransfer")
                 {
                     GridView gvReceiveTransfer = (GridView)sender;
-                    if (AvailableQty > 0 && (RequestedQty+requestedBonusQty <= AvailableQty)) 
+                    if (AvailableQty > 0 && (TransferedQty + transferedBonusQty <= AvailableQty)) 
                     {
                         bool isSuccessful = false;
                         //update transfer entry first
-                        if (RequestedQty != TransferedQty || requestedBonusQty != transferedBonusQty)
+                        if (RequestedQty != TransferedQty)
                         {
                             if (TransferedQty == 0)
                             {
                                 if (transferedBonusQty == 0)
                                 {
-                                    UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty, requestedBonusQty);
+                                    UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty, transferedBonusQty);
                                 }
                                 else
                                 {
-                                    UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, RequestedQty, transferedBonusQty);
+                                    UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty, transferedBonusQty);
                                 }
                             }
                             else
                             {
                                 if (transferedBonusQty == 0)
                                 {
-                                    UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty, requestedBonusQty);
+                                    UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty, transferedBonusQty);
                                 }
                                 else
                                 {
@@ -891,7 +891,7 @@ namespace IMS
                         {
                             command.Parameters.AddWithValue("@p_TransferedQty", TransferedQty);
                         }
-                        command.Parameters.AddWithValue("@p_TransferedBonusQty", requestedBonusQty);
+                        command.Parameters.AddWithValue("@p_TransferedBonusQty", transferedBonusQty);
                         command.Parameters.AddWithValue("@p_AvailableQty", AvailableQty);
 
                         Button btnAccept = (Button)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("btnAccept");
@@ -1069,6 +1069,28 @@ namespace IMS
         }
         protected void dgvReceiveTransfer_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+
+            try
+            {
+                if (e.Row.RowType == DataControlRowType.DataRow)
+                {
+                    Button accept = (Button)e.Row.FindControl("btnAccept");
+
+                    DataRowView drv = (DataRowView)e.Row.DataItem;
+                    int id = (int)e.Row.RowIndex;
+
+
+                    accept.Attributes.Add("onclick", "return Validate(" + id + ");");
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                //throw;
+            }
+            
+
             //if (e.Row.RowType == DataControlRowType.DataRow)
             //{
             //    Button abc = (Button)e.Row.FindControl("btnAccept");
