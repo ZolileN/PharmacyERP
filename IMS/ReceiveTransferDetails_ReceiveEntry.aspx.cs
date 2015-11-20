@@ -136,26 +136,35 @@ namespace IMS
                     Label lblStockID = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblStockID");
                     Label lblAvailableStock = (Label)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("lblAvailableStock");
                     TextBox txtTransferedQty = (TextBox)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("txtSendQty");
-                    //TextBox txtTransferedBonusQty = (TextBox)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("txtBonusQty");
+                    TextBox txtTransferedBonusQty = (TextBox)dgvReceiveTransferDetailsReceive.Rows[i].FindControl("txtBonusQty");
 
                     double.TryParse(lblBarCode.Text.ToString(), out Barcode);
                     int.TryParse(lblAvailableStock.Text.ToString(), out AvailableQty);
                     int.TryParse(lblRequestedQty.Text.ToString(), out ReqQty);
 
                     int.TryParse(txtTransferedQty.Text.ToString(), out TransferedQty);
-                    // int.TryParse(txtTransferedBonusQty.Text.ToString(), out TransferedBonusQty);
+                    int.TryParse(txtTransferedBonusQty.Text.ToString(), out TransferedBonusQty);
 
                     int.TryParse(lblTransferDetailsID.Text.ToString(), out TransferDetID);
                     int.TryParse(lblProductID.Text.ToString(), out ProdctID);
                     int.TryParse(lblStockID.Text.ToString(), out StockId);
                     DateTime.TryParse(lblRequestedDate.Text.ToString(), out RequestDate);
-                    DateTime.TryParse(lblExpiryDate.Text.ToString(), out Expiry);
+
+                    if (lblExpiryDate.Text.ToString() == null || lblExpiryDate.Text.ToString().Equals(""))
+                    {
+                        Expiry = System.DateTime.Now;
+                    }
+                    else
+                    {
+                        DateTime.TryParse(lblExpiryDate.Text.ToString(), out Expiry);
+                    }
+                   
                     Decimal.TryParse(lblCP.Text.ToString(), out CP);
                     Decimal.TryParse(lblSP.Text.ToString(), out SP);
                     string BatchNo = lblBatchNumber.Text.ToString();
                     int userID = Convert.ToInt32(Session["UserID"].ToString());
 
-                    if (TransferedQty > 0)
+                    if (TransferedQty > 0 || TransferedBonusQty > 0)
                     {
                         if (connection.State == ConnectionState.Closed)
                         {
@@ -166,7 +175,7 @@ namespace IMS
                         command.Parameters.AddWithValue("@p_RequestDate", RequestDate);
                         command.Parameters.AddWithValue("@p_ReqQty", ReqQty);
                         command.Parameters.AddWithValue("@p_TransferQty", TransferedQty);
-                        //  command.Parameters.AddWithValue("@p_TransferBonusQty", TransferedBonusQty);
+                        command.Parameters.AddWithValue("@p_TransferBonusQty", TransferedBonusQty);
                         command.Parameters.AddWithValue("@p_Barcode", Barcode);
                         command.Parameters.AddWithValue("@p_ProdctID", ProdctID);
                         command.Parameters.AddWithValue("@p_StockId", StockId);
@@ -180,7 +189,8 @@ namespace IMS
                         command.ExecuteNonQuery();
 
                         //Update Stock
-                        UpdateStockMinus(TransferDetID, ProdctID, AvailableQty, TransferedQty, Expiry, StockId, CP, SP, BatchNo, ReqQty, Barcode);
+                        int TotalQuantitySent = TransferedQty + TransferedBonusQty;
+                        UpdateStockMinus(TransferDetID, ProdctID, AvailableQty, TotalQuantitySent, Expiry, StockId, CP, SP, BatchNo, ReqQty, Barcode);
 
                         if (!Session["UserRole"].ToString().Equals("WareHouse"))
                         {
@@ -295,7 +305,7 @@ namespace IMS
                 {
                     connection.Open();
                 }
-             //   Sent = Sent + TransferedBonusQty;
+               // Sent = Sent + TransferedBonusQty;
 
                 SqlCommand command;
                 command = new SqlCommand("Sp_UpdateStockBy_ExpiryStockID", connection);

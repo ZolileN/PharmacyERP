@@ -45,7 +45,7 @@
                             AutoGenerateColumns="false"  OnRowCommand="dgvReceiveTransfer_RowCommand" OnRowDataBound="dgvReceiveTransfer_RowDataBound"  >
                             <Columns>
 
-                                <asp:TemplateField HeaderText="Action" Visible="false">
+                                <asp:TemplateField HeaderText="Action" Visible="true">
                                     <ItemTemplate>
                                         <asp:Button CssClass="btn btn-default edit-btn" ID="btnEdit" Text="Edit" runat="server" Visible= '<%# !IsStatusComplete((String) Eval("Status")) %>' CommandName="Edit" CommandArgument='<%# Container.DataItemIndex %>' />
                                     </ItemTemplate>

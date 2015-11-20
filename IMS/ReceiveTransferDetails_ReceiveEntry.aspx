@@ -143,14 +143,14 @@
                                     <ItemStyle Width="150px" HorizontalAlign="Left" />
                                 </asp:TemplateField>
 
-                               <%-- <asp:TemplateField HeaderText="Bonus Qty">
+                                <asp:TemplateField HeaderText="Bonus Qty">
                                     <ItemTemplate>
                                          <asp:TextBox ID="txtBonusQty" runat="server" CssClass="grid-input-form" Text='<%# Eval("BonusQty") %>' Width="140px"></asp:TextBox>
 
                                     </ItemTemplate>
                                     
                                     <ItemStyle Width="150px" HorizontalAlign="Left" />
-                                </asp:TemplateField>--%>
+                                </asp:TemplateField>
                                  
                             </Columns>
                         </asp:GridView>
@@ -182,10 +182,10 @@
                 TotalSentQty = Number(TotalSentQty) + sent;
                 var TotalSent = document.getElementById("MainContent_lblTotalTransferQty").innerHTML;
 
-                if (TotalSent < TotalSentQty) {
+                /*if (TotalSent < TotalSentQty) {
                     alert("Total Sent Quantity  " + TotalSent + " is less than sum of Sent " + TotalSentQty);
                     return false;
-                }
+                }*/
                 
             }
 
