@@ -34,6 +34,7 @@ namespace IMS
             {
                 try
                 {
+                    checkProductALL.Checked = true;
                     // need to change now for new fcked up logic 
 
                     if (Session["MODE"].Equals("ADD"))
@@ -478,6 +479,15 @@ namespace IMS
                             else
                             {
                                 command.Parameters.AddWithValue("@p_Active", 0);
+                            }
+
+                            if (checkProductALL.Checked == true)
+                            {
+                                command.Parameters.AddWithValue("@p_AllStoreProduct", 1);
+                            }
+                            else
+                            {
+                                command.Parameters.AddWithValue("@p_AllStoreProduct", 0);
                             }
                             command.Parameters.AddWithValue("@p_form", ItemForm.Text.ToString());
                             command.Parameters.AddWithValue("@p_strength", ItemStrength.Text.ToString());

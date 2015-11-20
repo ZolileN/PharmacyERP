@@ -68,6 +68,22 @@
 
          <table cellspacing="5" cellpadding="5" border="0" width="100%" class="formTbl">
              <tr>
+                 <td><asp:Label runat="server" AssociatedControlID="chkActive" CssClass="control-label">Active</asp:Label> </td>
+                 <td>  <asp:CheckBox ID="chkActive" runat="server">
+                       
+                     </asp:CheckBox>
+                 </td>
+                 <td><asp:Label runat="server" AssociatedControlID="checkProductALL" CssClass="control-label">Product for ALL</asp:Label> </td>
+                 <td>
+                      <asp:CheckBox ID="checkProductALL" runat="server">
+                       
+                     </asp:CheckBox>
+                 </td>
+                 <%--<td colspan="100%"><asp:Button ID="btnCreateProduct" runat="server" OnClick="btnCreateProduct_Click"  Text="ADD" CssClass="btn btn-primary" ValidationGroup="exSave"/>
+                 <asp:Button ID="btnCancelProduct" runat="server" OnClick="btnCancelProduct_Click" Text="CANCEL" CssClass="btn btn-default" />
+                 <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnGoBack_Click"/></td>--%>
+             </tr>
+             <tr>
                  <td>
                 <asp:Label runat="server" AssociatedControlID="BarCodeSerial" CssClass="control-label">BarCode Serial</asp:Label>
                  </td>
@@ -145,17 +161,7 @@
                  <td><asp:Label runat="server" AssociatedControlID="bonus50" CssClass="control-label">Bonus Quantity 50</asp:Label></td>
                  <td> <asp:TextBox runat="server" ID="bonus50" CssClass="form-control" /></td>
              </tr>
-             <tr>
-                 <td><asp:Label runat="server" AssociatedControlID="chkActive" CssClass="control-label">Active</asp:Label> </td>
-                 <td>  <asp:CheckBox ID="chkActive" runat="server">
-                       
-                     </asp:CheckBox>
-                 </td>
-                 <td></td>
-                 <%--<td colspan="100%"><asp:Button ID="btnCreateProduct" runat="server" OnClick="btnCreateProduct_Click"  Text="ADD" CssClass="btn btn-primary" ValidationGroup="exSave"/>
-                 <asp:Button ID="btnCancelProduct" runat="server" OnClick="btnCancelProduct_Click" Text="CANCEL" CssClass="btn btn-default" />
-                 <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnGoBack_Click"/></td>--%>
-             </tr>
+             
                 </table>
      <script type="text/javascript">
          function ValidateForm() {
