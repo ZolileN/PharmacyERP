@@ -32,6 +32,7 @@ namespace IMS
 
             if (!IsPostBack)
             {
+                checkProdcutALL.Checked = true;
                 try
                 {
                     // need to change now for new fcked up logic 
@@ -479,6 +480,15 @@ namespace IMS
                             {
                                 command.Parameters.AddWithValue("@p_Active", 0);
                             }
+
+                            if (checkProdcutALL.Checked == true)
+                            {
+                                command.Parameters.AddWithValue("@p_AllStoreProduct", 1);
+                            }
+                            else
+                            {
+                                command.Parameters.AddWithValue("@p_AllStoreProduct", 0);
+                            }
                             command.Parameters.AddWithValue("@p_form", ItemForm.Text.ToString());
                             command.Parameters.AddWithValue("@p_strength", ItemStrength.Text.ToString());
                             command.Parameters.AddWithValue("@p_packtype", PackType.Text.ToString());
@@ -502,7 +512,7 @@ namespace IMS
                                 connection.Close();
                         }
 
-                        if (x == 1)
+                        if (x > 0)
                         {
                             WebMessageBoxUtil.Show("Record Inserted Successfully");
                             Session["PageMasterProduct"] = "false";
