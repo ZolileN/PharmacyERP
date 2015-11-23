@@ -67,13 +67,13 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.CheckBox chkActive;
         
         /// <summary>
-        /// checkProdcutALL control.
+        /// checkProductALL control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox checkProdcutALL;
+        protected global::System.Web.UI.WebControls.CheckBox checkProductALL;
         
         /// <summary>
         /// BarCodeSerial control.

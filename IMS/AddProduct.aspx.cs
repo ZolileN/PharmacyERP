@@ -32,9 +32,9 @@ namespace IMS
 
             if (!IsPostBack)
             {
-                checkProdcutALL.Checked = true;
                 try
                 {
+                    checkProductALL.Checked = true;
                     // need to change now for new fcked up logic 
 
                     if (Session["MODE"].Equals("ADD"))
@@ -481,7 +481,7 @@ namespace IMS
                                 command.Parameters.AddWithValue("@p_Active", 0);
                             }
 
-                            if (checkProdcutALL.Checked == true)
+                            if (checkProductALL.Checked == true)
                             {
                                 command.Parameters.AddWithValue("@p_AllStoreProduct", 1);
                             }

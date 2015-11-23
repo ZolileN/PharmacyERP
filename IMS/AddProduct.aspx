@@ -74,12 +74,12 @@
                      </asp:CheckBox>
                  </td>
 
-                 <td><asp:Label runat="server" AssociatedControlID="checkProdcutALL" CssClass="control-label">Product For ALL</asp:Label> </td>
-                 <td> <asp:CheckBox ID="checkProdcutALL" runat="server">
+                 <td><asp:Label runat="server" AssociatedControlID="checkProductALL" CssClass="control-label">Product for ALL</asp:Label> </td>
+                 <td>
+                      <asp:CheckBox ID="checkProductALL" runat="server">
                        
                      </asp:CheckBox>
                  </td>
-                 
                  <%--<td colspan="100%"><asp:Button ID="btnCreateProduct" runat="server" OnClick="btnCreateProduct_Click"  Text="ADD" CssClass="btn btn-primary" ValidationGroup="exSave"/>
                  <asp:Button ID="btnCancelProduct" runat="server" OnClick="btnCancelProduct_Click" Text="CANCEL" CssClass="btn btn-default" />
                  <asp:Button ID="btnGoBack" runat="server" CssClass="btn btn-default btn-large" Text="Go Back" OnClick="btnGoBack_Click"/></td>--%>
