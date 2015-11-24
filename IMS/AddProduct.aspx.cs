@@ -35,6 +35,7 @@ namespace IMS
                 try
                 {
                     checkProductALL.Checked = true;
+                    chkActive.Checked = true;
                     // need to change now for new fcked up logic 
 
                     if (Session["MODE"].Equals("ADD"))
