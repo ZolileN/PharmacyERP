@@ -80,7 +80,7 @@ namespace IMS_PharmacyReports
                                 dv.RowFilter = "U_EmpID = '" + UserName + "'";
                                 dt = dv.ToTable();
 
-                                Session["firstNamelastName"] = dt.Rows[0]["U_FirstName"].ToString() + " " + dt.Rows[0]["U_LastName"].ToString();
+                                Session["firstNamelastName"] = dt.Rows[0]["U_FirstName"].ToString();
 
                                 switch (dt.Rows[0]["RoleName"].ToString())
                                 {
@@ -193,7 +193,7 @@ namespace IMS_PharmacyReports
                         dv.RowFilter = "U_EmpID = '" + UserName.Text + "'";
                         dt = dv.ToTable();
 
-                        Session["firstNamelastName"] = dt.Rows[0]["U_FirstName"].ToString() +" "+ dt.Rows[0]["U_LastName"].ToString();
+                        Session["firstNamelastName"] = dt.Rows[0]["U_FirstName"].ToString();
 
                         switch(dt.Rows[0]["RoleName"].ToString())
                         {
