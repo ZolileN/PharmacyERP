@@ -179,7 +179,7 @@
              }
 
              
-             var check = document.getElementById("MainContent_checkProdcutALL");
+             var check = document.getElementById("MainContent_checkProductALL");
              console.log(check.checked)
              if (check.checked) {
 
