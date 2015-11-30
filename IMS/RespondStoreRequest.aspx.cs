@@ -845,31 +845,32 @@ namespace IMS
                     {
                         bool isSuccessful = false;
                         //update transfer entry first
-                        if (RequestedQty != TransferedQty)
-                        {
-                            if (TransferedQty == 0)
-                            {
-                                if (transferedBonusQty == 0)
-                                {
-                                    UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty, transferedBonusQty);
-                                }
-                                else
-                                {
-                                    UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty, transferedBonusQty);
-                                }
-                            }
-                            else
-                            {
-                                if (transferedBonusQty == 0)
-                                {
-                                    UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty, transferedBonusQty);
-                                }
-                                else
-                                {
-                                    UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty, transferedBonusQty);
-                                }
-                            }
-                        }
+                        UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty, transferedBonusQty);
+                        //if (RequestedQty != TransferedQty)
+                        //{
+                        //    if (TransferedQty == 0)
+                        //    {
+                        //        if (transferedBonusQty == 0)
+                        //        {
+                        //            UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty, transferedBonusQty);
+                        //        }
+                        //        else
+                        //        {
+                        //            UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty, transferedBonusQty);
+                        //        }
+                        //    }
+                        //    else
+                        //    {
+                        //        if (transferedBonusQty == 0)
+                        //        {
+                        //            UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty, transferedBonusQty);
+                        //        }
+                        //        else
+                        //        {
+                        //            UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty, transferedBonusQty);
+                        //        }
+                        //    }
+                        //}
                        
 
                         
@@ -997,15 +998,15 @@ namespace IMS
                     }
 
 
-                    if (status == true)
-                    {
+                    //if (status == true)
+                    //{
 
-                        command.Parameters.AddWithValue("@p_MStatus", "Partial");
-                    }
-                    else
-                    {
-                        command.Parameters.AddWithValue("@p_MStatus", "Completed");
-                    }
+                    //    command.Parameters.AddWithValue("@p_MStatus", "Partial");
+                    //}
+                    //else
+                    //{
+                    //    command.Parameters.AddWithValue("@p_MStatus", "Completed");
+                    //}
 
                     command.Parameters.AddWithValue("@p_Status", "Denied");
 
