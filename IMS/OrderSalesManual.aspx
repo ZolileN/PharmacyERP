@@ -106,7 +106,7 @@
             <td>
                 <asp:Label runat="server" AssociatedControlID="StockAt" CssClass="control-label">Select Pharmacy </asp:Label></td>
             <td>
-                <asp:DropDownList runat="server" ID="StockAt" CssClass="form-control" Width="280"  OnSelectedIndexChanged="StockAt_SelectedIndexChanged1" AutoPostBack="true"/>
+                <asp:DropDownList runat="server" ID="StockAt" CssClass="form-control" Width="280" OnSelectedIndexChanged="StockAt_SelectedIndexChanged1" AutoPostBack="true"/>
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="StockAt" CssClass="text-danger" ErrorMessage="The Store field is required." ValidationGroup="ExSave" /></td>
 
 
@@ -383,6 +383,16 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
+
+            
+            var defaultVal = $("#MainContent_StockAt option:selected").text();
+            $("#MainContent_StockAt").change(function (e) {
+                var newVal = $("#MainContent_StockAt option:selected").text();
+                if (defaultVal != "Select System" && defaultVal != newVal) {
+                    alert("You're changing pharmacy");
+                }
+            })
+
             var isAccepting = false;
 
             $("#MainContent_btnAccept").click(function (e) {
