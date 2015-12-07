@@ -117,10 +117,10 @@
         </tr>
             <tr>
                 <td>
-                    <asp:label ID="lblExpiry" runat="server"><b>Nearest Expiry:</b></asp:label>
+                    <asp:label ID="lblExpiry" runat="server" Visible="false"><b>Nearest Expiry:</b></asp:label>
                 </td>
                 <td>
-                    <asp:TextBox ID="txtExpiry" Text="" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtExpiry" Text="" runat="server" Visible="false"></asp:TextBox>
                 </td>
             </tr>
 

@@ -18,7 +18,7 @@
              
             <asp:TemplateField HeaderText="Department Name">
                 <ItemTemplate>
-                    <asp:Label ID="lblDeptName" runat="server" Text='<%# Eval("Department") %>'></asp:Label>
+                    <asp:Label ID="lblDeptName" runat="server" Text='<%# Eval("Name") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             

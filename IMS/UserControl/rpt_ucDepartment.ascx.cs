@@ -94,7 +94,7 @@ namespace IMS
                 DataSet dsCustomers = new DataSet();
                 dA.Fill(dsCustomers);
 
-                gdvDepartment.DataSource = dsCustomers.Tables[1];
+                gdvDepartment.DataSource = dsCustomers.Tables[0];
                 gdvDepartment.DataBind();
 
             }
