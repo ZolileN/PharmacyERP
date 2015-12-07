@@ -1131,6 +1131,10 @@ namespace IMS
                             comm.CommandType = CommandType.StoredProcedure;
                             comm.ExecuteNonQuery();
                         }
+                        Session["RequestedFromID"] = null;
+                        Session["RequestedFromID"] = StockAt.SelectedItem.Value;
+                      //  if (Session["ExistingOrder"].Equals(true)) { Session["RequestedFromID"] = Session["SystemID"]; }
+                        Session["SelectedIndexValue"] = StockAt.SelectedItem;
                     }
                     if (connection.State == ConnectionState.Closed)
                     {
@@ -1213,7 +1217,7 @@ namespace IMS
                 Session["OrderSalesDetail"] = false;
                 Session["RequestedFromID"] = StockAt.SelectedItem.Value;
                 Session["SelectedIndexValue"] = StockAt.SelectedItem;
-                if (Session["ExistingOrder"].Equals(true)) { Session["RequestedFromID"] = Session["SystemID"]; }
+                if (Session["ExistingOrder"].Equals(true) && !btnAccept.Text.Equals("RE-GENERATE ORDER")) { Session["RequestedFromID"] = Session["SystemID"]; }
 
                 Response.Redirect("ViewPackingList_SO.aspx", false);
             }
