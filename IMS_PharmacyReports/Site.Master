@@ -289,7 +289,19 @@
                             </li>
                             <li><a href="#">Inventory</a>
 
-                                         <ul>
+                                <ul>
+                                    <li><a href="#">Expiry Drug Item Report</a></li>
+                                    <li><a href="#">Item Movement By Pharmacy Report</a></li>
+                                    <li><a href="#">Inventory Threshold Report</a></li>
+                                    <li><a href="#">Non-HAAD List Report</a></li>
+                                    <li><a href="#">Non-DHA List Report</a></li>
+                                    <li><a href="#">Inventory Detail Report</a></li>
+                                    <li><a href="#">Inventory Summary Report</a></li>
+                                    <li><a href="#">Inventory By Vendor Report</a></li>
+                                    <li><a href="#">Inventory Adjustment Report</a></li>
+                                </ul>
+
+                                        <!-- <ul>
 
                                              <li><a href="#">Expiry Drug Item Report</a></li>
                                              
@@ -326,7 +338,7 @@
                                             
                                              
                                              
-		                                </ul>
+		                                </ul>-->
 
                             </li>
                             <li><a href="#">Purchase</a>
