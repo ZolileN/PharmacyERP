@@ -245,6 +245,7 @@
     <Content Include="AcceptPurchaseOrder.aspx" />
     <Content Include="Images\logoutIcon.png" />
     <Content Include="Notification.aspx" />
+    <Content Include="ReceivedTransferOrders.aspx" />
     <Content Include="Scripts\PharmacyCustom.js" />
     <Content Include="StockCostAdjustment.aspx" />
     <Content Include="StockManipulation.aspx" />
@@ -1314,6 +1315,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Profitability.rpt</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReceivedTransferOrders.aspx.cs">
+      <DependentUpon>ReceivedTransferOrders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReceivedTransferOrders.aspx.designer.cs">
+      <DependentUpon>ReceivedTransferOrders.aspx</DependentUpon>
     </Compile>
     <Compile Include="StockCostAdjustment.aspx.cs">
       <DependentUpon>StockCostAdjustment.aspx</DependentUpon>

@@ -926,7 +926,8 @@ input.login:focus{
 	height:25px !important;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
-	}
+    text-align: justify;
+}
 
 input.ap-main, textarea.ap-main, input[disabled], input[type="text"],input[type="password"]{
 	width:190px;

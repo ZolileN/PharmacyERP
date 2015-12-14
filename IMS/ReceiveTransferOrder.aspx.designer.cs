@@ -13,6 +13,24 @@ namespace IMS {
     public partial class ReceiveTransferOrder {
         
         /// <summary>
+        /// litddSelectPharmacy control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litddSelectPharmacy;
+        
+        /// <summary>
+        /// ddPharmacy control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddPharmacy;
+        
+        /// <summary>
         /// btnAcceptAll control.
         /// </summary>
         /// <remarks>

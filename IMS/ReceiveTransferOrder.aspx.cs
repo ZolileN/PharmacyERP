@@ -30,8 +30,9 @@ namespace IMS
                 log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
                 if (!IsPostBack)
                 {
-                    LoadRepeater();
+                     
                     //Add Previously subtracted Stock
+                    PopulateddPharmacy();
 
                 }
                 expHandler.CheckForErrorMessage(Session);
@@ -47,6 +48,50 @@ namespace IMS
 
             }
         }
+
+        private void PopulateddPharmacy()
+        {
+            #region Populating Department DropDown
+            try
+            {
+                int Userid;
+                if(connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("sp_GetPharmacyDetials_TransferDetailUserID", connection);
+                int.TryParse(Session["UserSys"].ToString(), out Userid);
+                command.Parameters.AddWithValue("@UserID", Userid);
+                command.CommandType = CommandType.StoredProcedure;
+                command.ExecuteNonQuery();
+                SqlDataAdapter da = new SqlDataAdapter(command);
+                DataSet ds = new DataSet();
+                da.Fill(ds);
+                ddPharmacy.DataSource = ds.Tables[0];
+
+
+
+                ddPharmacy.DataValueField = "TransferBy";
+                ddPharmacy.DataTextField = "SystemName";
+                ddPharmacy.DataBind();
+                if (ddPharmacy != null)
+                {
+                    ddPharmacy.Items.Insert(0, "Select Pharmacy");
+                    ddPharmacy.Items.Insert(1, "All");
+                    ddPharmacy.SelectedIndex = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            #endregion
+        }
+
         private void Page_Error(object sender, EventArgs e)
         {
             Exception exc = Server.GetLastError();
@@ -63,37 +108,72 @@ namespace IMS
             // Clear the error from the server.
             Server.ClearError();
         }
-        private void LoadRepeater()
+        private void LoadRepeater(int RequestedPharmacyID)
         {
             try
             {
-                DataSet ds = new DataSet();
-                int Userid;
-                if (connection.State == ConnectionState.Closed)
+                if(RequestedPharmacyID == 1)
                 {
-                    connection.Open();
+                    DataSet ds = new DataSet();
+                    int Userid;
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
+                    SqlCommand command = new SqlCommand("sp_getTransferDetails_UserId", connection);
+                    int.TryParse(Session["UserSys"].ToString(), out Userid);
+                    command.Parameters.AddWithValue("@UserID", Userid);
+
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.ExecuteNonQuery();
+                    SqlDataAdapter da = new SqlDataAdapter(command);
+                    da.Fill(ds);
+                    DataTable dsDistinct = ds.Tables[0];
+                    dtStatic = ds.Tables[0];
+
+                    DataTable distinctRequests = dsDistinct.DefaultView.ToTable(true, "TransferID");
+
+                    if (ds.Tables[0].Rows.Count == 0)
+                    {
+                        btnAcceptAll.Visible = false;
+                        btnGenTransferAll.Visible = false;
+                    }
+
+                    repReceiveTransfer.DataSource = distinctRequests;
+                    repReceiveTransfer.DataBind();
                 }
-                SqlCommand command = new SqlCommand("sp_getTransferDetails_UserId", connection);
-                int.TryParse(Session["UserSys"].ToString(), out Userid);
-                command.Parameters.AddWithValue("@UserID", Userid);
-
-                command.CommandType = CommandType.StoredProcedure;
-                command.ExecuteNonQuery();
-                SqlDataAdapter da = new SqlDataAdapter(command);
-                da.Fill(ds);
-                DataTable dsDistinct = ds.Tables[0];
-                dtStatic = ds.Tables[0];
-
-                DataTable distinctRequests = dsDistinct.DefaultView.ToTable(true, "TransferBy");
-
-                if (ds.Tables[0].Rows.Count == 0)
+                else
                 {
-                    btnAcceptAll.Visible = false;
-                    btnGenTransferAll.Visible = false;
-                }
+                    DataSet ds = new DataSet();
+                    int Userid;
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
+                    SqlCommand command = new SqlCommand("sp_getTransferDetails_UserId", connection);
+                    int.TryParse(Session["UserSys"].ToString(), out Userid);
+                    command.Parameters.AddWithValue("@UserID", Userid);
+                    command.Parameters.AddWithValue("@p_RequestedPharmacyID", RequestedPharmacyID);
 
-                repReceiveTransfer.DataSource = distinctRequests;
-                repReceiveTransfer.DataBind();
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.ExecuteNonQuery();
+                    SqlDataAdapter da = new SqlDataAdapter(command);
+                    da.Fill(ds);
+                    DataTable dsDistinct = ds.Tables[0];
+                    dtStatic = ds.Tables[0];
+
+                    DataTable distinctRequests = dsDistinct.DefaultView.ToTable(true, "TransferID");
+
+                    if (ds.Tables[0].Rows.Count == 0)
+                    {
+                        btnAcceptAll.Visible = false;
+                        btnGenTransferAll.Visible = false;
+                    }
+
+                    repReceiveTransfer.DataSource = distinctRequests;
+                    repReceiveTransfer.DataBind();
+                }
+                
             }
             catch (Exception ex)
             {
@@ -115,6 +195,9 @@ namespace IMS
             {
                 GridView dgvReceiveTransfer = (GridView)e.Item.FindControl("dgvReceiveTransfer");
                 Literal litStoreName = (Literal)e.Item.FindControl("litStoreName");
+
+                Literal litReqNo = (Literal)e.Item.FindControl("litReqNo");
+
                 Label lblStoreID = (Label)e.Item.FindControl("lblStoreID");
                 Button btnAcceptTransferOrder = (Button)e.Item.FindControl("btnAcceptTransferOrder");
                 DataSet ds = new DataSet();
@@ -123,12 +206,12 @@ namespace IMS
                 {
                     connection.Open();
                 }
-                int TransferBy = Convert.ToInt32(((DataRowView)e.Item.DataItem).Row[0].ToString());
+                int TransferID = Convert.ToInt32(((DataRowView)e.Item.DataItem).Row[0].ToString());
 
                 SqlCommand command = new SqlCommand("sp_getUserTransferDetails_TransferID", connection);
                 int.TryParse(Session["UserSys"].ToString(), out Userid);
                 command.Parameters.AddWithValue("@UserID", Userid);
-                command.Parameters.AddWithValue("@TransferBy", TransferBy);
+                command.Parameters.AddWithValue("@TransferID", TransferID);
 
                 command.CommandType = CommandType.StoredProcedure;
                 command.ExecuteNonQuery();
@@ -158,6 +241,7 @@ namespace IMS
                 dgvReceiveTransfer.DataSource = ds;
                 dgvReceiveTransfer.DataBind();
 
+                litReqNo.Text = ds.Tables[0].Rows[0]["TransferID"].ToString();
                 litStoreName.Text = ds.Tables[0].Rows[0]["RequestedBy"].ToString();
                 lblStoreID.Text = ds.Tables[0].Rows[0]["StoreID"].ToString();
             }
@@ -237,8 +321,7 @@ namespace IMS
                     btnEdit.Visible = false;
                     //Button btnStaticAccepted = (Button)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("btnStaticAccepted");
                     //btnStaticAccepted.Visible = true;
-                    HtmlGenericControl btnStaticAccepted = (HtmlGenericControl)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("btnStaticAccepted");
-                    btnStaticAccepted.Visible = true;  
+                  
                     if (RequestedQty != TransferedQty)
                     {
                         if (TransferedQty == 0)
@@ -252,7 +335,9 @@ namespace IMS
                             UpdateStockMinus(TransferDetailNo, ProductId, AvailableQty, TransferedQty);
                         }
                     }
-                    LoadRepeater();
+                    LoadRepeater(1);
+                    HtmlGenericControl btnStaticAccepted = (HtmlGenericControl)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("btnStaticAccepted");
+                    btnStaticAccepted.Visible = true;  
                 }
                 if (e.CommandName == "DenyProductTransfer")
                 {
@@ -285,7 +370,7 @@ namespace IMS
                     lblStaticDeny.Visible = true;  
                     //Label lblStaticDeny = (Label)dgvReceiveTransfer.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblStaticDeny");
                     //lblStaticDeny.Visible = true;
-                    LoadRepeater();
+                    LoadRepeater(1);
                      
                 }
 
@@ -405,7 +490,7 @@ namespace IMS
                         Button btnAcceptTransferOrder = (Button)repReceiveTransfer.Items[0].FindControl("btnAcceptTransferOrder");
 
                         btnAcceptTransferOrder.Visible = false;
-                        LoadRepeater();
+                        LoadRepeater(1);
                     }
                 } 
                 if (e.CommandName == "GenTransferOrder")
@@ -414,11 +499,13 @@ namespace IMS
 
                     DataTable distinctOrders = dtStatic.DefaultView.ToTable(true, "TransferBy");
 
+                    Literal litReqNo = (Literal)e.Item.FindControl("litReqNo");
+
                     Literal litStoreName = (Literal)e.Item.FindControl("litStoreName");
                     Label lblStoreID = (Label)e.Item.FindControl("lblStoreID");
 
                     string abc = lblStoreID.Text;
-
+                    int TransferID = int.Parse(litReqNo.Text.ToString());
                     
                     GridView gvReceiveTransfer = (GridView)repReceiveTransfer.Items[0].FindControl("dgvReceiveTransfer");
                     int TransferNo, TransferDetailNo, RequestedQty, TransferedQty, AvailableQty, ProductId;
@@ -452,6 +539,7 @@ namespace IMS
                      
                     command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
                     command.Parameters.AddWithValue("@p_SystemID", SystemID);
+                    command.Parameters.AddWithValue("@p_TransferID", TransferID);
 
                     command.CommandType = CommandType.StoredProcedure;
                     command.ExecuteNonQuery();
@@ -705,7 +793,7 @@ namespace IMS
                         Button btnAcceptTransferOrder = (Button)repReceiveTransfer.Items[0].FindControl("btnAcceptTransferOrder");
 
                         btnAcceptTransferOrder.Visible = false;
-                        LoadRepeater();
+                        LoadRepeater(1);
                     }
                 }
             }
@@ -735,6 +823,7 @@ namespace IMS
                     int TransferNo, TransferDetailNo, RequestedQty, TransferedQty, AvailableQty, ProductId;
                     int LogedInStoreID;
 
+                     
 
                     int.TryParse(Session["UserSys"].ToString(), out LogedInStoreID);
 
@@ -771,7 +860,7 @@ namespace IMS
 
                     command.Parameters.AddWithValue("@p_LogedinnStore", LogedInStoreID);
                     command.Parameters.AddWithValue("@p_SystemID", DBNull.Value);
-
+                    command.Parameters.AddWithValue("@p_TransferID", TransferNo);
 
                     command.CommandType = CommandType.StoredProcedure;
                     command.ExecuteNonQuery();
@@ -806,6 +895,28 @@ namespace IMS
         protected void btnBack_Click(object sender, EventArgs e)
         {
             Response.Redirect("StoreMain.aspx", false);
+        }
+
+        protected void ddPharmacy_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                int PharmacyId;
+                if(this.ddPharmacy.SelectedValue.ToString() == "All")
+                {
+                    PharmacyId = 1;
+                }
+                else
+                {
+                    PharmacyId = int.Parse(this.ddPharmacy.SelectedValue.ToString());
+                }
+
+                LoadRepeater(PharmacyId);
+            }
+            catch  
+            {
+                  
+            }
         }
   
  
