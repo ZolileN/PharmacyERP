@@ -74,6 +74,8 @@ namespace IMSDataAccess
             Sp_GetSubCatBasic,
             sp_GetNewNotificationTransferRequest,
             sp_GetAllPendingTransferRequests,
+            sp_rptInventoryListDetailsReport,
+            sp_rptInventorySummaryReport
             
 
 

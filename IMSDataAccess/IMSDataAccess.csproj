@@ -55,6 +55,7 @@
     <Compile Include="DataAccessBase.cs" />
     <Compile Include="DataBaseHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DAL\ReportDAL.cs" />
     <Compile Include="SqlHelper.cs" />
     <Compile Include="StoredProcedure.cs" />
   </ItemGroup>

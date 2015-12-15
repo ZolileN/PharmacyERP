@@ -104,7 +104,7 @@
                 Abu Dhabi - U.A.E.<br />
                 Email : ahliya.pharmaceutical@gmail.com
             </td>
-            <td width="21%"><img src="Images/apt-logo.gif" /></td>
+            <tsd width="21%"><img src="Images/apt-logo.gif" /></td>
             <td width="40%" align="right" valign="top"><span  class="arabic scHead">الأهلية</span>
             <span class="arabic afH">لتجارة الأدوية</span><br />
             هاتف : 6584223-02 فاكس:6584229-02<br />

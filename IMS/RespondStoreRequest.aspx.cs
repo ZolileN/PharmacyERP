@@ -447,7 +447,7 @@ namespace IMS
                                 //{
                                 //    command.Parameters.AddWithValue("@p_ProductID", ProductNumber);
                                 //}
-                                if (int.TryParse(_row["RequestedQty"].ToString(), out Quantity))
+                                if (int.TryParse(_row["TransferedQty"].ToString(), out Quantity))
                                 {
                                     command.Parameters.AddWithValue("@p_OrderQuantity", Quantity);
                                 }
@@ -456,7 +456,7 @@ namespace IMS
                                     command.Parameters.AddWithValue("@p_OrderQuantity", DBNull.Value);
                                 }
 
-                                if (int.TryParse(_row["RequestedBonusQty"].ToString(), out BonusOrdered))
+                                if (int.TryParse(_row["TransferedBonusQty"].ToString(), out BonusOrdered))
                                 {
                                     command.Parameters.AddWithValue("@p_BonusQuantity", BonusOrdered);
                                 }

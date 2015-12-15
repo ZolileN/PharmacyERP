@@ -386,7 +386,33 @@ namespace IMS
                 }
             }
         }
-        
+
+        protected void SendMail()
+        {
+            // Gmail Address from where you send the mail
+            var fromAddress = "syedbasitali2012@gmail.com";
+            // any address where the email will be sending
+            var toAddress = "syedbasitali2012@gmail.com";
+            //Password of your gmail address
+            const string fromPassword = "123456";
+            // Passing the values and make a email formate to display
+            string subject = "test";
+            string body = "From: " + fromAddress + "\n";
+            body += "Subject: " + "test test test" + "\n";
+            body += "test: \n test test test" + "test message body"  + "\n";
+            // smtp settings
+            var smtp = new System.Net.Mail.SmtpClient();
+            {
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587;
+                smtp.EnableSsl = true;
+                smtp.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+                smtp.Credentials = new NetworkCredential(fromAddress, fromPassword);
+                smtp.Timeout = 20000;
+            }
+            // Passing values to smtp object
+            smtp.Send(fromAddress, toAddress, subject, body);
+        }
 
         public override void VerifyRenderingInServerForm(Control control)
         {
@@ -432,7 +458,7 @@ namespace IMS
             {
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
-                throw ex;
+                
             }
             finally
             {
