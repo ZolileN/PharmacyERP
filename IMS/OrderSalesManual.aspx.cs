@@ -23,6 +23,7 @@ namespace IMS
         public static bool FirstOrder;
         private ILog log;
         private string pageURL;
+        public static List<int> OrdDetID = new List<int>();
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -2340,10 +2341,16 @@ namespace IMS
                     {
                         connection.Open();
                     }
+
+                    
+                    OrdDetID.Add(Convert.ToInt32(OrderDetailID.Text));
+
+                    Session["UserChangedOrdDetID"] = OrdDetID;
+                    
                     SqlCommand command = new SqlCommand("sp_getSaleOrderDetail", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@p_OrderDetID", Convert.ToInt32(OrderDetailID.Text));
-
+                    
                     DataSet ds = new DataSet();
 
                     SqlDataAdapter sA = new SqlDataAdapter(command);

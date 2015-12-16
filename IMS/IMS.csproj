@@ -299,8 +299,12 @@
     <Content Include="AcceptPurchaseOrder.aspx" />
     <Content Include="Images\logoutIcon.png" />
     <Content Include="Notification.aspx" />
+
     <Content Include="rpt_HaadMedicinesList.aspx" />
     <Content Include="rpt_NonHaadMedicinesList.aspx" />
+
+    <Content Include="rpt_InventorySummaryReport.aspx" />
+
     <Content Include="Scripts\PharmacyCustom.js" />
     <Content Include="StockCostAdjustment.aspx" />
     <Content Include="StockManipulation.aspx" />
@@ -1259,6 +1263,7 @@
     <Content Include="UserStoreManagment.aspx" />
     <Content Include="UtillityFunctions.aspx" />
     <Content Include="VendorsPopup.aspx" />
+    <Content Include="rpt_InventoryListDetailsReport.aspx" />
     <Content Include="ViewInventory.aspx" />
     <Content Include="ViewPackingList.aspx" />
     <Content Include="ViewPackingList_SO.aspx" />
@@ -1352,10 +1357,23 @@
     <Compile Include="AcceptPurchaseOrder.aspx.designer.cs">
       <DependentUpon>AcceptPurchaseOrder.aspx</DependentUpon>
     </Compile>
+
     <Compile Include="HaadMedicinesList.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>HaadMedicinesList.rpt</DependentUpon>
+
+    <Compile Include="InventorySummaryReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventorySummaryReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ItemListDetailsReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ItemListDetailsReport.rpt</DependentUpon>
+
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Notification.aspx.cs">
@@ -1377,6 +1395,7 @@
       <DependentUpon>Profitability.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+
     <Compile Include="rpt_HaadMedicinesList.aspx.cs">
       <DependentUpon>rpt_HaadMedicinesList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1390,6 +1409,14 @@
     </Compile>
     <Compile Include="rpt_NonHaadMedicinesList.aspx.designer.cs">
       <DependentUpon>rpt_NonHaadMedicinesList.aspx</DependentUpon>
+
+    <Compile Include="rpt_InventorySummaryReport.aspx.cs">
+      <DependentUpon>rpt_InventorySummaryReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rpt_InventorySummaryReport.aspx.designer.cs">
+      <DependentUpon>rpt_InventorySummaryReport.aspx</DependentUpon>
+
     </Compile>
     <Compile Include="StockCostAdjustment.aspx.cs">
       <DependentUpon>StockCostAdjustment.aspx</DependentUpon>
@@ -2327,6 +2354,13 @@
     <Compile Include="VendorsPopup.aspx.designer.cs">
       <DependentUpon>VendorsPopup.aspx</DependentUpon>
     </Compile>
+    <Compile Include="rpt_InventoryListDetailsReport.aspx.cs">
+      <DependentUpon>rpt_InventoryListDetailsReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rpt_InventoryListDetailsReport.aspx.designer.cs">
+      <DependentUpon>rpt_InventoryListDetailsReport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ViewInventory.aspx.cs">
       <DependentUpon>ViewInventory.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2453,9 +2487,19 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ProfitabilitySummary.cs</LastGenOutput>
     </Content>
+
     <EmbeddedResource Include="HaadMedicinesList.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>HaadMedicinesList.cs</LastGenOutput>
+
+    <EmbeddedResource Include="InventorySummaryReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>InventorySummaryReport.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItemListDetailsReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ItemListDetailsReport.cs</LastGenOutput>
+
     </EmbeddedResource>
     <EmbeddedResource Include="Report\barcode_Print.rdlc" />
     <Content Include="rpt_POSSALES.rpt">
