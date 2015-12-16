@@ -48,60 +48,104 @@
     <Reference Include="BarcodeLib">
       <HintPath>..\..\..\..\..\work\ims\reference\bar-code\barcode_src\BarcodeLib\bin\Debug\BarcodeLib.dll</HintPath>
     </Reference>
-    <Reference Include="CrystalDecisions.CrystalReports.Design, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="CrystalDecisions.CrystalReports.TemplateEngine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+    <Reference Include="CRVsPackageLib">
+      <HintPath>..\..\..\dotnet\dotnet\CRVsPackageLib.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="CrystalDecisions.Data.AdoDotNetInterop, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <Private>True</Private>
+    <Reference Include="CrystalDecisions.CrystalReports.Design">
+      <HintPath>..\..\..\dotnet\dotnet\CrystalDecisions.CrystalReports.Design.dll</HintPath>
     </Reference>
-    <Reference Include="CrystalDecisions.Enterprise.Viewing.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+    <Reference Include="CrystalDecisions.CrystalReports.Engine">
+      <HintPath>..\..\..\dotnet\dotnet\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.TemplateEngine">
+      <HintPath>..\..\..\dotnet\dotnet\CrystalDecisions.CrystalReports.TemplateEngine.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.Data.AdoDotNetInterop">
+      <HintPath>..\..\..\dotnet\dotnet\CrystalDecisions.Data.AdoDotNetInterop.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.Enterprise.Viewing.ReportSource">
+      <HintPath>..\..\..\dotnet\dotnet\CrystalDecisions.Enterprise.Viewing.ReportSource.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.ClientDoc, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\dotnet\dotnet\CrystalDecisions.ReportAppServer.ClientDoc.dll</HintPath>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.CommLayer, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\dotnet\dotnet\CrystalDecisions.ReportAppServer.CommLayer.dll</HintPath>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.CommonControls, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\dotnet\dotnet\CrystalDecisions.ReportAppServer.CommonControls.dll</HintPath>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.CommonObjectModel, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\dotnet\dotnet\CrystalDecisions.ReportAppServer.CommonObjectModel.dll</HintPath>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.Controllers, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\dotnet\dotnet\CrystalDecisions.ReportAppServer.Controllers.dll</HintPath>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.CubeDefModel, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\dotnet\dotnet\CrystalDecisions.ReportAppServer.CubeDefModel.dll</HintPath>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.DataDefModel, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\dotnet\dotnet\CrystalDecisions.ReportAppServer.DataDefModel.dll</HintPath>
     </Reference>
-    <Reference Include="CrystalDecisions.ReportAppServer.DataSetConversion, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportAppServer.DataSetConversion, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\dotnet\dotnet\CrystalDecisions.ReportAppServer.DataSetConversion.dll</HintPath>
+    </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.ObjectFactory, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\dotnet\dotnet\CrystalDecisions.ReportAppServer.ObjectFactory.dll</HintPath>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.Prompting, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\dotnet\dotnet\CrystalDecisions.ReportAppServer.Prompting.dll</HintPath>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.ReportDefModel, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\dotnet\dotnet\CrystalDecisions.ReportAppServer.ReportDefModel.dll</HintPath>
     </Reference>
     <Reference Include="CrystalDecisions.ReportAppServer.XmlSerialize, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\dotnet\dotnet\CrystalDecisions.ReportAppServer.XmlSerialize.dll</HintPath>
     </Reference>
-    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
-    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
-    <Reference Include="CrystalDecisions.VSDesigner, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
-    <Reference Include="CrystalDecisions.Web, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
-    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource">
+      <HintPath>..\..\..\dotnet\dotnet\CrystalDecisions.ReportSource.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.Shared">
+      <HintPath>..\..\..\dotnet\dotnet\CrystalDecisions.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.VSDesigner">
+      <HintPath>..\..\..\dotnet\dotnet\CrystalDecisions.VSDesigner.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.Web">
+      <HintPath>..\..\..\dotnet\dotnet\CrystalDecisions.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.Windows.Forms">
+      <HintPath>..\..\..\dotnet\dotnet\CrystalDecisions.Windows.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="FlashControlV71">
+      <HintPath>..\..\..\dotnet\dotnet\FlashControlV71.dll</HintPath>
+    </Reference>
     <Reference Include="itextsharp">
       <HintPath>C:\Users\abdul.haseeb\Downloads\itextsharp-all-5.5.5\itextsharp-dll-core\itextsharp.dll</HintPath>
     </Reference>
@@ -112,7 +156,7 @@
       <HintPath>C:\Users\abdul.haseeb\Downloads\itextsharp-all-5.5.5\itextsharp-dll-xtra\itextsharp.xtra.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
-      <HintPath>C:\Users\moiz.rauf\Documents\Visual Studio 2013\Projects\ErrorTest\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+      <HintPath>..\..\..\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
@@ -135,6 +179,16 @@
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>C:\Windows\assembly\GAC_MSIL\office\15.0.0.0__71e9bce111e9429c\OFFICE.DLL</HintPath>
+    </Reference>
+    <Reference Include="SAPBusinessObjects.WPF.Viewer">
+      <HintPath>..\..\..\dotnet\dotnet\SAPBusinessObjects.WPF.Viewer.dll</HintPath>
+    </Reference>
+    <Reference Include="SAPBusinessObjects.WPF.ViewerShared">
+      <HintPath>..\..\..\dotnet\dotnet\SAPBusinessObjects.WPF.ViewerShared.dll</HintPath>
+    </Reference>
+    <Reference Include="ShockwaveFlashObjects">
+      <HintPath>..\..\..\dotnet\dotnet\ShockwaveFlashObjects.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
@@ -245,6 +299,8 @@
     <Content Include="AcceptPurchaseOrder.aspx" />
     <Content Include="Images\logoutIcon.png" />
     <Content Include="Notification.aspx" />
+    <Content Include="rpt_HaadMedicinesList.aspx" />
+    <Content Include="rpt_NonHaadMedicinesList.aspx" />
     <Content Include="Scripts\PharmacyCustom.js" />
     <Content Include="StockCostAdjustment.aspx" />
     <Content Include="StockManipulation.aspx" />
@@ -1296,6 +1352,12 @@
     <Compile Include="AcceptPurchaseOrder.aspx.designer.cs">
       <DependentUpon>AcceptPurchaseOrder.aspx</DependentUpon>
     </Compile>
+    <Compile Include="HaadMedicinesList.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HaadMedicinesList.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Notification.aspx.cs">
       <DependentUpon>Notification.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1314,6 +1376,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Profitability.rpt</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="rpt_HaadMedicinesList.aspx.cs">
+      <DependentUpon>rpt_HaadMedicinesList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rpt_HaadMedicinesList.aspx.designer.cs">
+      <DependentUpon>rpt_HaadMedicinesList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="rpt_NonHaadMedicinesList.aspx.cs">
+      <DependentUpon>rpt_NonHaadMedicinesList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rpt_NonHaadMedicinesList.aspx.designer.cs">
+      <DependentUpon>rpt_NonHaadMedicinesList.aspx</DependentUpon>
     </Compile>
     <Compile Include="StockCostAdjustment.aspx.cs">
       <DependentUpon>StockCostAdjustment.aspx</DependentUpon>
@@ -2377,6 +2453,10 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ProfitabilitySummary.cs</LastGenOutput>
     </Content>
+    <EmbeddedResource Include="HaadMedicinesList.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>HaadMedicinesList.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Report\barcode_Print.rdlc" />
     <Content Include="rpt_POSSALES.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

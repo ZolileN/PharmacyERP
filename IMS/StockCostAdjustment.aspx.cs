@@ -223,6 +223,7 @@ namespace IMS
                 command.Parameters.AddWithValue("@p_SystemID", SystemID);
                 command.Parameters.AddWithValue("@p_Expiry", Expiry);
                 command.Parameters.AddWithValue("@p_Status", Status);
+                command.Parameters.AddWithValue("@p_UniversalChange", chkAllSystems.Checked==true ? 1 :0);
                 command.ExecuteNonQuery();
 
                 txtAdjustmentQuantity.Text = (NewStock - CurrentStock).ToString();
