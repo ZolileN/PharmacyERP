@@ -288,37 +288,13 @@
  
                            
          
-   
-                         <li>
-
-             <a href="#">Reports</a>
-             <!-- <ul>
-                 <li><a href="#" runat="server" id="WHReports">Warehouse Reports</a></li>
-                 <li><a href="#" runat="server" id="PharmacyReports">Pharmacy Reports</a></li>
-             </ul>--><ul>
-                                	<!--<li><a href="#">Print PO</a></li>
-                                	<li><a href="#">Packing List</a></li>
-                                    <li><a href="#">Stock Report</a></li>
-                                    <li><a href="#">Print Stock</a></li>-->
-                                    
-                                    
-                                    
-                
+         <li><a href="#">All Reports</a></li>
                <!--<li><a href="rpt_SalesSummary_Selection.aspx">Item Sold Summary</a>-->
                <!--<li class="hasChild"><a href="#">Item Sold Reports</a>
                <ul>-->
-                   <li><a href="rpt_HaadMedicinesList.aspx">HAAD Medicine List</a></li>
-                   <li><a href="rpt_NonHaadMedicinesList.aspx">Non-HAAD Medicine List</a></li>
-
-                   <li><a href="rpt_InventoryAdjustmentReport.aspx">Inventory Adjustment Report</a></li>
-                   <li><a href="rpt_InventoryListDetailsReport.aspx">Inventory Detail Report</a></li>
-                   <li><a href="rpt_InventorySummaryReport.aspx">Inventory Summary Report</a></li>
-                   <li><a href="rpt_InventoryReportByVendor.aspx">Inventory Report By Vendor</a></li>
-
-
                    <li><a href="rpt_ItemSold_Selection.aspx?Param=Date">Item Sold Detail Report </a></li>
-                   <!--<li><a href="rpt_ItemSold_Selection.aspx?Param=Profitability">Profitability Report </a></li>
-                   <li><a href="rpt_ItemSold_Selection.aspx?Param=ProfitabilitySummary">Profitability Summary Report </a></li>-->
+                   <li><a href="rpt_ItemSold_Selection.aspx?Param=Profitability">Profitability Report </a></li>
+                                    <li><a href="rpt_ItemSold_Selection.aspx?Param=ProfitabilitySummary">Profitability Summary Report </a></li>
                    <!--<li><a href="rpt_ItemSold_Selection.aspx?Param=Pharmacy">Item Sold Report by Pharmacy </a></li>
                    <li><a href="rpt_ItemSold_Selection.aspx?Param=SalesMan">Item Sold Report by SalesMan</a></li>
                    <li><a href="rpt_ItemSold_Selection.aspx?Param=Price">Item Sold Report by Price</a></li>
@@ -336,7 +312,7 @@
                <!--</ul>
                </li>-->
 
-	           <!--<li class="hasChild"><a href="#">Sale Reports</a>
+	           <li class="hasChild"><a href="#">Sale Reports</a>
 		            <ul>
                         
                 
@@ -549,10 +525,10 @@
                           <li>  <a href="#">Random Inventory Count Variance - Cash Reconciliation </a></li>
                           <li>  <a href="#">Aged Inventory - Currency Change Report </a> </li>
 		                </ul>
-	             </li>-->
+	             </li>
 
                             	</ul>
-         </li>     
+         </li>                                             
          
 
                           

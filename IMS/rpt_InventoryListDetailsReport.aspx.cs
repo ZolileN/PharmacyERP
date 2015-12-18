@@ -307,13 +307,19 @@ namespace IMS
 
         protected void btnShowREPORT_Click(object sender, EventArgs e) {
 
-            int DepartmentID = ProductDept.SelectedIndex;
+            int DepartmentID =0;
+            int.TryParse(ProductDept.SelectedValue, out DepartmentID);
 
 
+            int CategoryID = 0;
+            int.TryParse(ProductCat.SelectedValue, out CategoryID);
 
-            int CategoryID = ProductCat.SelectedIndex;
-            int subCategoryID = ProductSubCat.SelectedIndex;
+            int subCategoryID = 0;
+            int.TryParse(ProductSubCat.SelectedValue, out subCategoryID);
+            
             string ProductName = txtSearch.Value;
+
+            
 
             DataSet ds = reportbll.rpt_InventoryListDetailsReport(DepartmentID, CategoryID, subCategoryID, ProductName);
 
