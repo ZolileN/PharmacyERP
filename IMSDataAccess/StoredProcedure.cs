@@ -75,7 +75,9 @@ namespace IMSDataAccess
             sp_GetNewNotificationTransferRequest,
             sp_GetAllPendingTransferRequests,
             sp_rptInventoryListDetailsReport,
-            sp_rptInventorySummaryReport
+            sp_rptInventorySummaryReport,
+            sp_rptInventoryAdjustmentReport,
+            sp_rptInventoryReportByVendorID
             
 
 

@@ -16,14 +16,14 @@ namespace IMS {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class ItemSaleDetailReport : ReportClass {
+    public class InventoryReportByVendor : ReportClass {
         
-        public ItemSaleDetailReport() {
+        public InventoryReportByVendor() {
         }
         
         public override string ResourceName {
             get {
-                return "ItemSaleDetailReport.rpt";
+                return "InventoryReportByVendor.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace IMS {
         
         public override string FullResourceName {
             get {
-                return "IMS.ItemSaleDetailReport.rpt";
+                return "IMS.InventoryReportByVendor.rpt";
             }
             set {
                 // Do nothing
@@ -66,7 +66,7 @@ namespace IMS {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section GroupHeaderSection2 {
+        public CrystalDecisions.CrystalReports.Engine.Section GroupHeaderSection1 {
             get {
                 return this.ReportDefinition.Sections[2];
             }
@@ -82,7 +82,7 @@ namespace IMS {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section GroupFooterSection2 {
+        public CrystalDecisions.CrystalReports.Engine.Section GroupFooterSection1 {
             get {
                 return this.ReportDefinition.Sections[4];
             }
@@ -106,7 +106,7 @@ namespace IMS {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_InternalCustomer {
+        public CrystalDecisions.Shared.IParameterField Parameter_VendorName {
             get {
                 return this.DataDefinition.ParameterFields[0];
             }
@@ -114,81 +114,17 @@ namespace IMS {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_FromDate {
+        public CrystalDecisions.Shared.IParameterField Parameter_p_VendorID {
             get {
                 return this.DataDefinition.ParameterFields[1];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_ToDate {
-            get {
-                return this.DataDefinition.ParameterFields[2];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_Customer {
-            get {
-                return this.DataDefinition.ParameterFields[3];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_Department {
-            get {
-                return this.DataDefinition.ParameterFields[4];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_BarterCustomer {
-            get {
-                return this.DataDefinition.ParameterFields[5];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_Category {
-            get {
-                return this.DataDefinition.ParameterFields[6];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_Subcategory {
-            get {
-                return this.DataDefinition.ParameterFields[7];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_Product {
-            get {
-                return this.DataDefinition.ParameterFields[8];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_SalesMan {
-            get {
-                return this.DataDefinition.ParameterFields[9];
             }
         }
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedItemSaleDetailReport : Component, ICachedReport {
+    public class CachedInventoryReportByVendor : Component, ICachedReport {
         
-        public CachedItemSaleDetailReport() {
+        public CachedInventoryReportByVendor() {
         }
         
         [Browsable(false)]
@@ -225,7 +161,7 @@ namespace IMS {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            ItemSaleDetailReport rpt = new ItemSaleDetailReport();
+            InventoryReportByVendor rpt = new InventoryReportByVendor();
             rpt.Site = this.Site;
             return rpt;
         }

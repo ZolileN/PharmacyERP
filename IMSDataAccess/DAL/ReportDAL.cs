@@ -38,6 +38,43 @@ namespace IMSDataAccess
             return ds;
         }
 
+
+        public DataSet rpt_InventoryAdjustmentReport(int DepartmentID, int CategoryID, int subCategoryID, string ProductName,
+            DateTime From, DateTime To, int FilterBy, int SystemID)
+        {
+
+            DataSet ds;
+            String StoredProcedureName = StoredProcedure.Select.sp_rptInventoryAdjustmentReport.ToString();
+            SqlParameter[] parameters = {   
+                                            new SqlParameter("@p_DeptID", DepartmentID), 
+                                            new SqlParameter("@p_CatID", CategoryID), 
+                                            new SqlParameter("@p_subCatID", subCategoryID), 
+                                            new SqlParameter("@p_prodName", ProductName), 
+                                            new SqlParameter("@p_from", From), 
+                                            new SqlParameter("@p_to", To), 
+                                            new SqlParameter("@p_filterby", FilterBy), 
+                                            new SqlParameter("@p_SystemID", SystemID), 
+                                                                                   };
+            DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
+            ds = dbHelper.Run(base.ConnectionString, parameters);
+            return ds;
+        }
+
+
+
+        public DataSet rpt_InventoryReportByVendor(int Vendor)
+        {
+
+            DataSet ds;
+            String StoredProcedureName = StoredProcedure.Select.sp_rptInventoryReportByVendorID.ToString();
+            SqlParameter[] parameters = {   
+                                            new SqlParameter("@p_VendorID", Vendor), 
+                                         };
+            DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
+            ds = dbHelper.Run(base.ConnectionString, parameters);
+            return ds;
+        }
+
         
     }
 }

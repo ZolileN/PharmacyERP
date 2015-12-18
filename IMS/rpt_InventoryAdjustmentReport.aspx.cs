@@ -21,10 +21,10 @@ using IMSBusinessLogic;
 using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
 using System.Drawing.Printing;
-
+using System.Web.UI.WebControls;
 namespace IMS
 {
-    public partial class rpt_InventoryListDetailsReport : System.Web.UI.Page
+    public partial class rpt_InventoryAdjustmentReport : System.Web.UI.Page
     {
         private ILog log;
         private string pageURL;
@@ -71,7 +71,7 @@ namespace IMS
                         ProductDept.DataBind();
                         if (ProductDept != null)
                         {
-                            ProductDept.Items.Insert(0, "Select Department");
+                            ProductDept.Items.Insert(0, "All Department");
                             ProductDept.SelectedIndex = 0;
                         }
                     }
@@ -103,7 +103,7 @@ namespace IMS
                         ProductCat.DataBind();
                         if (ProductCat != null)
                         {
-                            ProductCat.Items.Insert(0, "Select Category");
+                            ProductCat.Items.Insert(0, "All Category");
                             ProductCat.SelectedIndex = 0;
                         }
                     }
@@ -136,7 +136,7 @@ namespace IMS
 
                         if (ProductSubCat != null)
                         {
-                            ProductSubCat.Items.Insert(0, "Select Sub Category");
+                            ProductSubCat.Items.Insert(0, "All Sub Category");
                             ProductSubCat.SelectedIndex = 0;
                         }
                     }
@@ -154,43 +154,66 @@ namespace IMS
                     }
                     #endregion
 
-                  
+
+                    #region Filter By
+                    filterby.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Quantity","1"));
+                    filterby.Items.Insert(1, new System.Web.UI.WebControls.ListItem("Cost Price","2"));
+                    #endregion
+
+
 
                     
-
-                    #region Populating Stores
-                    try
+                    if (Session["UserRole"].ToString().Equals("WareHouse"))
                     {
-                        DataSet dsS = new DataSet();
-                        if (connection.State == ConnectionState.Closed)
+                        try
                         {
-                            connection.Open();
+                            DataSet dsS = new DataSet();
+                            if (connection.State == ConnectionState.Closed)
+                            {
+                                connection.Open();
 
+                            }
+                            
+                            SqlCommand command = new SqlCommand("sp_GetAllInternalPharmacy", connection);
+                            command.CommandType = CommandType.StoredProcedure;
+                            SqlDataAdapter sA = new SqlDataAdapter(command);
+                            sA.Fill(dsS);
+
+                            pharmacyList.DataSource = dsS;
+                            pharmacyList.DataTextField = "SystemName";
+                            pharmacyList.DataValueField = "SystemID";
+                            pharmacyList.DataBind();
+
+                            int SystemID = int.Parse(Session["UserSys"].ToString());
+
+                            if (pharmacyList != null)
+                            {
+                                pharmacyList.Items.Insert(0, new System.Web.UI.WebControls.ListItem(Session["UserName"].ToString(), SystemID.ToString()));
+                                pharmacyList.SelectedIndex = 0;
+                            }
                         }
-                        SqlCommand command = new SqlCommand("Sp_GetSystem_ByID", connection);
-                        command.CommandType = CommandType.StoredProcedure;
-
-                        command.Parameters.AddWithValue("@p_SystemID", DBNull.Value);
-                        SqlDataAdapter sA = new SqlDataAdapter(command);
-                        sA.Fill(dsS);
-                        
-                       
-                    }
-                    catch (Exception ex)
-                    {
-
-                        if (connection.State == ConnectionState.Open)
-                            connection.Close();
-                        throw ex;
-                    }
-                    finally
-                    {
-                        if (connection.State == ConnectionState.Open)
+                        catch (Exception ex)
                         {
-                            connection.Close();
+
+                            if (connection.State == ConnectionState.Open)
+                                connection.Close();
+                            throw ex;
+                        }
+                        finally
+                        {
+                            if (connection.State == ConnectionState.Open)
+                                connection.Close();
                         }
                     }
-                    #endregion
+                    else if (Session["UserRole"].ToString().Equals("Store"))
+                    {
+                        int SystemID = int.Parse(Session["UserSys"].ToString());
+                        pharmacyList.Items.Insert(0, new System.Web.UI.WebControls.ListItem(Session["UserName"].ToString(), SystemID.ToString()));
+                        pharmacyList.SelectedIndex = 0;
+                        pharmacyList.Enabled = false;
+                    }
+
+                    
                    
                 }
                 expHandler.CheckForErrorMessage(Session);
@@ -292,18 +315,6 @@ namespace IMS
 
        
 
-        protected void btnRefresh_Click(object sender, EventArgs e)
-        {//txtSearch.Text=""; original value
-            txtSearch.Value = "";
-           
-            ProductSubCat.SelectedIndex = -1;
-            ProductCat.SelectedIndex = -1;
-            ProductDept.SelectedIndex = -1;
-
-            
-            
-            
-        }
 
         protected void btnShowREPORT_Click(object sender, EventArgs e) {
 
@@ -314,12 +325,22 @@ namespace IMS
             int CategoryID = ProductCat.SelectedIndex;
             int subCategoryID = ProductSubCat.SelectedIndex;
             string ProductName = txtSearch.Value;
+            string From = DateTextBoxFrom.Text;
+            string To = DateTextBoxTo.Text;
+            int FilterBy = int.Parse(filterby.SelectedValue);
+            int SystemID = int.Parse(pharmacyList.SelectedValue);
 
-            DataSet ds = reportbll.rpt_InventoryListDetailsReport(DepartmentID, CategoryID, subCategoryID, ProductName);
+
+            DateTime dateFrom = Convert.ToDateTime(From);
+            DateTime dateTo = Convert.ToDateTime(To);
+
+            DataSet ds = reportbll.rpt_InventoryAdjustmentReport(DepartmentID, CategoryID, subCategoryID, ProductName, dateFrom,
+                dateTo, FilterBy, SystemID
+                );
 
            
 
-            myReportDocument.Load(Server.MapPath("~/ItemListDetailsReport.rpt"));
+            myReportDocument.Load(Server.MapPath("~/InventoryAdjustmentReport.rpt"));
             App_Code.Barcode dsReport = new App_Code.Barcode();
             dsReport.Tables[0].Merge((DataTable)ds.Tables[0]);
             myReportDocument.SetDataSource(dsReport.Tables[0]);
@@ -356,14 +377,17 @@ namespace IMS
                 myReportDocument.SetParameterValue("Department", ProductDept.SelectedItem.Text);
             }
 
-            
+            myReportDocument.SetParameterValue("DateFrom", From);
+            myReportDocument.SetParameterValue("DateTo", To);
+            myReportDocument.SetParameterValue("Pharmacy", pharmacyList.SelectedItem.Text);
+            myReportDocument.SetParameterValue("Quantity", filterby.SelectedItem.Text);
             
             
             
             
 
             Session["ReportDocument"] = myReportDocument;
-            Session["ReportPrinting_Redirection"] = "rpt_InventoryListDetailsReport.aspx";
+            Session["ReportPrinting_Redirection"] = "rpt_InventoryAdjustmentReport.aspx";
 
             Response.Redirect("CrystalReportViewer.aspx");
 

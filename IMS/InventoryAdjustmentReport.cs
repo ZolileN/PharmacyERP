@@ -16,14 +16,14 @@ namespace IMS {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class ItemSaleDetailReport : ReportClass {
+    public class InventoryAdjustmentReport : ReportClass {
         
-        public ItemSaleDetailReport() {
+        public InventoryAdjustmentReport() {
         }
         
         public override string ResourceName {
             get {
-                return "ItemSaleDetailReport.rpt";
+                return "InventoryAdjustmentReport.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace IMS {
         
         public override string FullResourceName {
             get {
-                return "IMS.ItemSaleDetailReport.rpt";
+                return "IMS.InventoryAdjustmentReport.rpt";
             }
             set {
                 // Do nothing
@@ -66,7 +66,7 @@ namespace IMS {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section GroupHeaderSection2 {
+        public CrystalDecisions.CrystalReports.Engine.Section Section3 {
             get {
                 return this.ReportDefinition.Sections[2];
             }
@@ -74,7 +74,7 @@ namespace IMS {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section Section3 {
+        public CrystalDecisions.CrystalReports.Engine.Section Section4 {
             get {
                 return this.ReportDefinition.Sections[3];
             }
@@ -82,7 +82,7 @@ namespace IMS {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section GroupFooterSection2 {
+        public CrystalDecisions.CrystalReports.Engine.Section Section5 {
             get {
                 return this.ReportDefinition.Sections[4];
             }
@@ -90,23 +90,7 @@ namespace IMS {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section Section4 {
-            get {
-                return this.ReportDefinition.Sections[5];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section Section5 {
-            get {
-                return this.ReportDefinition.Sections[6];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_InternalCustomer {
+        public CrystalDecisions.Shared.IParameterField Parameter_p_DeptID {
             get {
                 return this.DataDefinition.ParameterFields[0];
             }
@@ -114,7 +98,7 @@ namespace IMS {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_FromDate {
+        public CrystalDecisions.Shared.IParameterField Parameter_p_CatID {
             get {
                 return this.DataDefinition.ParameterFields[1];
             }
@@ -122,7 +106,7 @@ namespace IMS {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_ToDate {
+        public CrystalDecisions.Shared.IParameterField Parameter_p_subCatID {
             get {
                 return this.DataDefinition.ParameterFields[2];
             }
@@ -130,7 +114,7 @@ namespace IMS {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_Customer {
+        public CrystalDecisions.Shared.IParameterField Parameter_p_ProdName {
             get {
                 return this.DataDefinition.ParameterFields[3];
             }
@@ -138,7 +122,7 @@ namespace IMS {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_Department {
+        public CrystalDecisions.Shared.IParameterField Parameter_p_from {
             get {
                 return this.DataDefinition.ParameterFields[4];
             }
@@ -146,7 +130,7 @@ namespace IMS {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_BarterCustomer {
+        public CrystalDecisions.Shared.IParameterField Parameter_p_to {
             get {
                 return this.DataDefinition.ParameterFields[5];
             }
@@ -154,7 +138,7 @@ namespace IMS {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_Category {
+        public CrystalDecisions.Shared.IParameterField Parameter_p_filterby {
             get {
                 return this.DataDefinition.ParameterFields[6];
             }
@@ -162,7 +146,7 @@ namespace IMS {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_Subcategory {
+        public CrystalDecisions.Shared.IParameterField Parameter_p_SystemID {
             get {
                 return this.DataDefinition.ParameterFields[7];
             }
@@ -178,17 +162,65 @@ namespace IMS {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_SalesMan {
+        public CrystalDecisions.Shared.IParameterField Parameter_Category {
             get {
                 return this.DataDefinition.ParameterFields[9];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_Department {
+            get {
+                return this.DataDefinition.ParameterFields[10];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_subCategory {
+            get {
+                return this.DataDefinition.ParameterFields[11];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_DateFrom {
+            get {
+                return this.DataDefinition.ParameterFields[12];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_DateTo {
+            get {
+                return this.DataDefinition.ParameterFields[13];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_Pharmacy {
+            get {
+                return this.DataDefinition.ParameterFields[14];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_Quantity {
+            get {
+                return this.DataDefinition.ParameterFields[15];
             }
         }
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedItemSaleDetailReport : Component, ICachedReport {
+    public class CachedInventoryAdjustmentReport : Component, ICachedReport {
         
-        public CachedItemSaleDetailReport() {
+        public CachedInventoryAdjustmentReport() {
         }
         
         [Browsable(false)]
@@ -225,7 +257,7 @@ namespace IMS {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            ItemSaleDetailReport rpt = new ItemSaleDetailReport();
+            InventoryAdjustmentReport rpt = new InventoryAdjustmentReport();
             rpt.Site = this.Site;
             return rpt;
         }

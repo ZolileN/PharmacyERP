@@ -395,7 +395,12 @@ namespace IMS.UserControl
                     checkBoxIndex++;
                 }
 
-                string ProdID = "ID " + checkBoxIndex + "-" + productSet.Tables[0].Rows[i]["ProductID"].ToString();
+                if (int.Parse(productSet.Tables[0].Rows[i]["ProductID"].ToString()) == 205672)
+                {
+                    System.Diagnostics.Debug.WriteLine("Try");
+                }
+
+                string ProdID = "ID " + checkBoxIndex + "-" + productSet.Tables[0].Rows[i]["ProductID"].ToString() + "-" + productSet.Tables[0].Rows[i]["SP"].ToString() + "-" + productSet.Tables[0].Rows[i]["UnitCost"].ToString();
                 
                 if (!CheckBoxArray.Contains(ProdID))
                 {
@@ -756,6 +761,11 @@ namespace IMS.UserControl
                     {
                         connection.Open();
                     }
+
+                    String ProductsDelimmited = "";
+                    String SPDelimmited = "";
+                    String UnitCostDelimmited = "";
+                    
                     try
                     {
                         foreach (var item in CheckBoxArray)
@@ -763,24 +773,68 @@ namespace IMS.UserControl
                             if (item.ToString().Contains("ID"))
                             {
                                 string[] key = item.ToString().Split('-');
+
+                                
+
                                 try
                                 {
-                                    SqlCommand command = new SqlCommand("Sp_AddNewStoreProduct", connection);
-                                    command.CommandType = CommandType.StoredProcedure;
-                                    command.Parameters.AddWithValue("@p_ProductID", int.Parse(key[1]));
-                                    command.Parameters.AddWithValue("@p_StoreID", int.Parse(lbstoreId.Text));
-                                    command.ExecuteNonQuery();
-
+                                    ProductsDelimmited = ProductsDelimmited + key[1] + ",";
                                 }
-                                catch (Exception ex)
+                                catch (IndexOutOfRangeException ex)
                                 {
-                                    string message = expHandler.GenerateLogString(ex);
-                                    log.Error(message);
+
+                                    System.Diagnostics.Debug.WriteLine(ex.ToString());
                                 }
+                                 try{   SPDelimmited = SPDelimmited + key[2] + ",";
+                                 }
+                                 catch (IndexOutOfRangeException ex)
+                                 {
+                                     SPDelimmited = SPDelimmited + "null,";
+                                     System.Diagnostics.Debug.WriteLine(ex.ToString());
+                                 }
+                                 try
+                                 {
+                                     UnitCostDelimmited = UnitCostDelimmited + key[3] + ",";
+                                 }
+                                catch (IndexOutOfRangeException ex) {
+                                    UnitCostDelimmited = UnitCostDelimmited  + "null,";
+                                    System.Diagnostics.Debug.WriteLine(ex.ToString());
+                                }
+                                 
+                                
+                                //System.Diagnostics.Debug.WriteLine("Success");
+
+
 
 
                             }
                         }
+
+                        ProductsDelimmited = ProductsDelimmited.Substring(0, ProductsDelimmited.Length - 1);
+                        SPDelimmited = SPDelimmited.Substring(0, SPDelimmited.Length - 1);
+                        UnitCostDelimmited = UnitCostDelimmited.Substring(0, UnitCostDelimmited.Length - 1);
+
+                        System.Diagnostics.Debug.WriteLine(ProductsDelimmited);
+                        System.Diagnostics.Debug.WriteLine(SPDelimmited);
+                        System.Diagnostics.Debug.WriteLine(UnitCostDelimmited);
+                        try
+                        {
+                            SqlCommand command = new SqlCommand("sp_copyProfileStoreProduct", connection);
+                            command.CommandType = CommandType.StoredProcedure;
+                            command.Parameters.AddWithValue("@p_StoreID", int.Parse(lbstoreId.Text));
+                            command.Parameters.AddWithValue("@p_ProductIDs", ProductsDelimmited);
+                            command.Parameters.AddWithValue("@p_SPs", SPDelimmited);
+                            command.Parameters.AddWithValue("@p_UnitCosts", UnitCostDelimmited);
+
+                            command.ExecuteNonQuery();
+
+                        }
+                        catch (Exception ex)
+                        {
+                            string message = expHandler.GenerateLogString(ex);
+                            log.Error(message);
+                        }
+
                     }
                     catch (Exception ex)
                     {

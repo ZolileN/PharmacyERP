@@ -245,6 +245,8 @@
     <Content Include="AcceptPurchaseOrder.aspx" />
     <Content Include="Images\logoutIcon.png" />
     <Content Include="Notification.aspx" />
+    <Content Include="rpt_InventoryReportByVendor.aspx" />
+    <Content Include="rpt_InventoryAdjustmentReport.aspx" />
     <Content Include="rpt_InventorySummaryReport.aspx" />
     <Content Include="Scripts\PharmacyCustom.js" />
     <Content Include="StockCostAdjustment.aspx" />
@@ -1298,6 +1300,18 @@
     <Compile Include="AcceptPurchaseOrder.aspx.designer.cs">
       <DependentUpon>AcceptPurchaseOrder.aspx</DependentUpon>
     </Compile>
+    <Compile Include="InventoryAdjustmentReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventoryAdjustmentReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="InventoryReportByVendor.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventoryReportByVendor.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="InventorySummaryReport.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1328,6 +1342,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Profitability.rpt</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="rpt_InventoryReportByVendor.aspx.cs">
+      <DependentUpon>rpt_InventoryReportByVendor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rpt_InventoryReportByVendor.aspx.designer.cs">
+      <DependentUpon>rpt_InventoryReportByVendor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="rpt_InventoryAdjustmentReport.aspx.cs">
+      <DependentUpon>rpt_InventoryAdjustmentReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rpt_InventoryAdjustmentReport.aspx.designer.cs">
+      <DependentUpon>rpt_InventoryAdjustmentReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="rpt_InventorySummaryReport.aspx.cs">
       <DependentUpon>rpt_InventorySummaryReport.aspx</DependentUpon>
@@ -2405,6 +2433,14 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ProfitabilitySummary.cs</LastGenOutput>
     </Content>
+    <EmbeddedResource Include="InventoryAdjustmentReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>InventoryAdjustmentReport.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InventoryReportByVendor.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>InventoryReportByVendor.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="InventorySummaryReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>InventorySummaryReport.cs</LastGenOutput>

@@ -21,10 +21,10 @@ using IMSBusinessLogic;
 using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
 using System.Drawing.Printing;
-
+using System.Web.UI.WebControls;
 namespace IMS
 {
-    public partial class rpt_InventoryListDetailsReport : System.Web.UI.Page
+    public partial class rpt_InventoryReportByVendor : System.Web.UI.Page
     {
         private ILog log;
         private string pageURL;
@@ -47,32 +47,21 @@ namespace IMS
                     Session.Remove("dsProdcts");
                     Session.Remove("dsProducts_MP");
 
-                    #region remove print sessions
-
-                    Session.Remove("Search_DepID");
-                    Session.Remove("Search_CatID");
-                    Session.Remove("Search_SubCatID");
-                    Session.Remove("Search_ProdIdOrg");
-                    Session.Remove("Search_ProdType");
-                    Session.Remove("Search_ProdId");
-                    Session.Remove("Search_ProdName");
-                    Session.Remove("Search_Active");
-
-                    #endregion
+                    
 
                    
 
-                    #region Populating Product Department DropDown
+                    #region Populating Vendor DropDown
                     try
                     {
-                        ProductDept.DataSource = DepartmentBLL.GetAllDepartment(); ;
-                        ProductDept.DataTextField = "Name";
-                        ProductDept.DataValueField = "DepId";
-                        ProductDept.DataBind();
-                        if (ProductDept != null)
+                        VendorID.DataSource = VendorBLL.GetAllVendors();
+                        VendorID.DataTextField = "SupName";
+                        VendorID.DataValueField = "SuppID";
+                        VendorID.DataBind();
+                        if (VendorID != null)
                         {
-                            ProductDept.Items.Insert(0, "Select Department");
-                            ProductDept.SelectedIndex = 0;
+                            VendorID.Items.Insert(0, "All Vendors");
+                            VendorID.SelectedIndex = 0;
                         }
                     }
                     catch (Exception ex)
@@ -88,109 +77,8 @@ namespace IMS
                             connection.Close();
                     }
                     #endregion
-
-                    #region Populating Category Dropdown
-                    try
-                    {
-                        //connection.Open();
-                        //SqlCommand command = new SqlCommand("Select * From tblCategory", connection);
-                        //DataSet ds = new DataSet();
-                        //SqlDataAdapter sA = new SqlDataAdapter(command);
-                        //sA.Fill(ds);
-                        ProductCat.DataSource = InventoryBLL.GetCategoryBasic(connection);
-                        ProductCat.DataTextField = "Name";
-                        ProductCat.DataValueField = "CategoryID";
-                        ProductCat.DataBind();
-                        if (ProductCat != null)
-                        {
-                            ProductCat.Items.Insert(0, "Select Category");
-                            ProductCat.SelectedIndex = 0;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-
-                        if (connection.State == ConnectionState.Open)
-                            connection.Close();
-                        throw ex;
-                    }
-                    finally
-                    {
-                        if (connection.State == ConnectionState.Open)
-                            connection.Close();
-                    }
-                    #endregion
-
-                    #region Populating SubCategory Dropdown
-                    try
-                    {
-                        //connection.Open();
-                        //SqlCommand command = new SqlCommand("Select * From tblSub_Category", connection);
-                        //DataSet ds = new DataSet();
-                        //SqlDataAdapter sA = new SqlDataAdapter(command);
-                        //sA.Fill(ds);
-                        ProductSubCat.DataSource = SubCategoryBLL.GetSubCategoriesBasic();
-                        ProductSubCat.DataTextField = "Name";
-                        ProductSubCat.DataValueField = "Sub_CatID";
-                        ProductSubCat.DataBind();
-
-                        if (ProductSubCat != null)
-                        {
-                            ProductSubCat.Items.Insert(0, "Select Sub Category");
-                            ProductSubCat.SelectedIndex = 0;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-
-                        if (connection.State == ConnectionState.Open)
-                            connection.Close();
-                        throw ex;
-                    }
-                    finally
-                    {
-                        if (connection.State == ConnectionState.Open)
-                            connection.Close();
-                    }
-                    #endregion
-
-                  
 
                     
-
-                    #region Populating Stores
-                    try
-                    {
-                        DataSet dsS = new DataSet();
-                        if (connection.State == ConnectionState.Closed)
-                        {
-                            connection.Open();
-
-                        }
-                        SqlCommand command = new SqlCommand("Sp_GetSystem_ByID", connection);
-                        command.CommandType = CommandType.StoredProcedure;
-
-                        command.Parameters.AddWithValue("@p_SystemID", DBNull.Value);
-                        SqlDataAdapter sA = new SqlDataAdapter(command);
-                        sA.Fill(dsS);
-                        
-                       
-                    }
-                    catch (Exception ex)
-                    {
-
-                        if (connection.State == ConnectionState.Open)
-                            connection.Close();
-                        throw ex;
-                    }
-                    finally
-                    {
-                        if (connection.State == ConnectionState.Open)
-                        {
-                            connection.Close();
-                        }
-                    }
-                    #endregion
                    
                 }
                 expHandler.CheckForErrorMessage(Session);
@@ -292,70 +180,22 @@ namespace IMS
 
        
 
-        protected void btnRefresh_Click(object sender, EventArgs e)
-        {//txtSearch.Text=""; original value
-            txtSearch.Value = "";
-           
-            ProductSubCat.SelectedIndex = -1;
-            ProductCat.SelectedIndex = -1;
-            ProductDept.SelectedIndex = -1;
-
-            
-            
-            
-        }
 
         protected void btnShowREPORT_Click(object sender, EventArgs e) {
 
-            int DepartmentID = ProductDept.SelectedIndex;
+            int Vendor = VendorID.SelectedIndex;
 
 
-
-            int CategoryID = ProductCat.SelectedIndex;
-            int subCategoryID = ProductSubCat.SelectedIndex;
-            string ProductName = txtSearch.Value;
-
-            DataSet ds = reportbll.rpt_InventoryListDetailsReport(DepartmentID, CategoryID, subCategoryID, ProductName);
+            DataSet ds = reportbll.rpt_InventoryReportByVendor(Vendor);
 
            
 
-            myReportDocument.Load(Server.MapPath("~/ItemListDetailsReport.rpt"));
+            myReportDocument.Load(Server.MapPath("~/InventoryReportByVendor.rpt"));
             App_Code.Barcode dsReport = new App_Code.Barcode();
             dsReport.Tables[0].Merge((DataTable)ds.Tables[0]);
             myReportDocument.SetDataSource(dsReport.Tables[0]);
 
-
-            if (ProductName.Equals(""))
-            {
-                myReportDocument.SetParameterValue("Product", "All");
-            }
-            else {
-                myReportDocument.SetParameterValue("Product", ProductName);
-            }
-            if (ProductSubCat.SelectedIndex == 0)
-            {
-                myReportDocument.SetParameterValue("Subcategory", "All");
-            }
-            else {
-                myReportDocument.SetParameterValue("Subcategory", ProductSubCat.SelectedItem.Text);
-            }
-            if (ProductCat.SelectedIndex == 0)
-            {
-                myReportDocument.SetParameterValue("Category", "All");
-            }
-            else {
-                myReportDocument.SetParameterValue("Category", ProductCat.SelectedItem.Text);
-                
-            }
-
-            if (ProductDept.SelectedIndex == 0)
-            {
-                myReportDocument.SetParameterValue("Department", "All");
-            }
-            else {
-                myReportDocument.SetParameterValue("Department", ProductDept.SelectedItem.Text);
-            }
-
+            myReportDocument.SetParameterValue("VendorName", VendorID.SelectedItem.Text);
             
             
             
@@ -363,7 +203,7 @@ namespace IMS
             
 
             Session["ReportDocument"] = myReportDocument;
-            Session["ReportPrinting_Redirection"] = "rpt_InventoryListDetailsReport.aspx";
+            Session["ReportPrinting_Redirection"] = "rpt_InventoryReportByVendor.aspx";
 
             Response.Redirect("CrystalReportViewer.aspx");
 
@@ -423,25 +263,7 @@ namespace IMS
       
 
         
-        protected void btnPrint_Click(object sender, EventArgs e)
-        {
-
-            #region Setting  parameters
-            Session["Search_DepID"] = ProductDept.SelectedValue.ToString();
-            Session["Search_CatID"] = ProductCat.SelectedValue.ToString();
-            Session["Search_SubCatID"] = ProductSubCat.SelectedValue.ToString();
-            
-           
-            Session["Search_ProdId"] = "";
-            Session["Search_ProdName"] = txtSearch.Value.ToString();
-           
-
-            #endregion
-
-            Response.Redirect("Inventory_Print.aspx",false);
-
-
-        }
+      
 
         protected void btnSearchProduct_Click1(object sender, ImageClickEventArgs e)
         {

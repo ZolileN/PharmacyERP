@@ -45,6 +45,38 @@ namespace IMSBusinessLogic
             return dsResults;
         }
 
+
+        public DataSet rpt_InventoryAdjustmentReport(int DepartmentID, int CategoryID, int subCategoryID, string ProductName,
+            DateTime From, DateTime To, int FilterBy, int SystemID)
+        {
+            DataSet dsResults = new DataSet();
+            try
+            {
+                dsResults = reportdal.rpt_InventoryAdjustmentReport(DepartmentID, CategoryID, subCategoryID, ProductName,
+            From, To, FilterBy, SystemID);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return dsResults;
+        }
+
+
+        public DataSet rpt_InventoryReportByVendor(int Vendor)
+        {
+            DataSet dsResults = new DataSet();
+            try
+            {
+                dsResults = reportdal.rpt_InventoryReportByVendor(Vendor);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return dsResults;
+        }
+
         
     }
 }
