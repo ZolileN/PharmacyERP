@@ -79,6 +79,14 @@ namespace IMS.UserControl
                 command.CommandType = CommandType.StoredProcedure;
                 if (Session["SP_Purchase"] != null && Session["SP_Purchase"].ToString().Equals("Expiry"))
                 {
+                    if (Session["SearchItemProduct_RPT"] != null && Session["SearchItemProduct_RPT"].ToString() != "")
+                    {
+                        command.Parameters.AddWithValue("@p_Search", Session["SearchItemProduct_RPT"].ToString());
+                    }
+                    else
+                    {
+                        command.Parameters.AddWithValue("@p_Search", DBNull.Value);
+                    }
                 }
                 else
                 {

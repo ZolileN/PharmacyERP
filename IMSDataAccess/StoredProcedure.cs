@@ -78,6 +78,8 @@ namespace IMSDataAccess
             sp_rptInventorySummaryReport,
             sp_rptInventoryAdjustmentReport,
             sp_rptInventoryReportByVendorID
+            SP_Get_HAAD_Medicine_By_Sub_Category
+
             
 
 
