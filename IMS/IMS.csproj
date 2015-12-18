@@ -2523,11 +2523,11 @@
     <EmbeddedResource Include="InventoryReportByVendor.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>InventoryReportByVendor.cs</LastGenOutput>
-
+	</EmbeddedResource>
     <EmbeddedResource Include="HaadMedicinesList.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>HaadMedicinesList.cs</LastGenOutput>
-
+	
     </EmbeddedResource>
     <EmbeddedResource Include="InventorySummaryReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
