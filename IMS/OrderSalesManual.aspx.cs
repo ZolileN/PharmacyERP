@@ -123,6 +123,15 @@ namespace IMS
                            // txtIvnoice.Enabled = false;
                         }
                         BindGrid();
+
+                        List<int> OrderDetailIDs = new List<int>();
+                        for (int i = 0; i < ((DataSet)Session["dsProdcts"]).Tables[0].Rows.Count; i++)
+                        {
+                            OrderDetailIDs.Add(Convert.ToInt32(((DataSet)Session["dsProdcts"]).Tables[0].Rows[i]["OrderDetailID"]));
+                        }
+
+                        Session["PrevOrdDetailID"] = OrderDetailIDs;
+                        Session["UserChangedOrdDetID"] = OrderDetailIDs;
                     }
                     else
                     {
@@ -338,6 +347,7 @@ namespace IMS
             #endregion
         }
 
+        #region Stock Manipulation Procedures
         private void UpdateStockMinus(int orderDetailID, int quantity, int ProductID, float Discount, int Bonus, int Sent)
         {
             try
@@ -556,6 +566,8 @@ namespace IMS
             }
         }
 
+        #endregion
+
         public DataSet GetSystems(int ID)
         {
             DataSet ds = new DataSet();
@@ -591,7 +603,7 @@ namespace IMS
             return ds;
         }
 
-
+        #region Mapping Procedures
         public void RegenerationSO_MappingChanges(int SalesOrder)
         {
             DataSet dsPrevMappedValues = new DataSet();
@@ -708,7 +720,6 @@ namespace IMS
                 if (connection.State.Equals(ConnectionState.Open)) { connection.Close(); }
             }
         }
-        
 
         public void UnMappedValues(int SO_ID, int ProductID, int QuantitySold, int BonusGiven, DateTime ExpiryDate)
         {
@@ -1074,6 +1085,8 @@ namespace IMS
             }
             #endregion
         }
+
+        #endregion
         protected void btnAccept_Click(object sender, EventArgs e)
         {
            // btnAccept.Enabled = false;
@@ -1092,21 +1105,47 @@ namespace IMS
                 float Discount = 0;
                 float.TryParse(SelectDiscount.Text.ToString(), out Discount);
                 int RemainingStock = 0;
+
+                List<int> OrdDetIDChanged = (List<int>)Session["PrevOrdDetailID"];
+                
                 try
                 {
                     //In case of Re-Generate SO, Delete the OrderDetailEntries for that Order and Add stock First.. 
                     if (btnAccept.Text.Equals("RE-GENERATE ORDER"))
                     {
-                        if (Session["UserChangedOrdDetID"] != null)
+                        if (OrdDetIDChanged.Contains(orderDetID))
                         {
-                            List<int> UserChangedOrdDetID = new List<int>();
-                            UserChangedOrdDetID = (List<int>)Session["UserChangedOrdDetID"];
-
-                            for(int j=0;j<UserChangedOrdDetID.Count;j++)
+                        }
+                        else
+                        {
+                            if (Session["UserChangedOrdDetID"] != null)
                             {
-                                int OrdDetID_User = UserChangedOrdDetID[j];
+                                List<int> UserChangedOrdDetID = new List<int>();
+                                UserChangedOrdDetID = (List<int>)Session["UserChangedOrdDetID"];
 
-                                if(OrdDetID_User != orderDetID)
+                                if (UserChangedOrdDetID.Count > 0)
+                                {
+                                    for (int j = 0; j < UserChangedOrdDetID.Count; j++)
+                                    {
+                                        int OrdDetID_User = UserChangedOrdDetID[j];
+
+                                        if (OrdDetID_User != orderDetID)
+                                        {
+
+                                            UpdateStockPlus(orderDetID, Total);
+                                            if (connection.State == ConnectionState.Closed)
+                                            {
+                                                connection.Open();
+                                            }
+                                            SqlCommand comm = new SqlCommand("sp_DeleteFromtblSaleOrderDetail_Receive", connection);
+                                            comm.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
+                                            comm.CommandType = CommandType.StoredProcedure;
+                                            comm.ExecuteNonQuery();
+
+                                        }
+                                    }
+                                }
+                                else
                                 {
                                     UpdateStockPlus(orderDetID, Total);
                                     if (connection.State == ConnectionState.Closed)
@@ -1118,19 +1157,27 @@ namespace IMS
                                     comm.CommandType = CommandType.StoredProcedure;
                                     comm.ExecuteNonQuery();
                                 }
+
+                                //Session["UserChangedOrdDetID"] = null;
                             }
-                        }
-                        else
-                        {
-                            UpdateStockPlus(orderDetID, Total);
-                            if (connection.State == ConnectionState.Closed)
+                            else
                             {
-                                connection.Open();
+                               // if (OrdDetIDChanged.Contains(orderDetID))
+                              //  {
+                               // }
+                             //   else
+                             //   {
+                                    UpdateStockPlus(orderDetID, Total);
+                                    if (connection.State == ConnectionState.Closed)
+                                    {
+                                        connection.Open();
+                                    }
+                                    SqlCommand comm = new SqlCommand("sp_DeleteFromtblSaleOrderDetail_Receive", connection);
+                                    comm.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
+                                    comm.CommandType = CommandType.StoredProcedure;
+                                    comm.ExecuteNonQuery();
+                              //  }
                             }
-                            SqlCommand comm = new SqlCommand("sp_DeleteFromtblSaleOrderDetail_Receive", connection);
-                            comm.Parameters.AddWithValue("@p_OrderDetailID", orderDetID);
-                            comm.CommandType = CommandType.StoredProcedure;
-                            comm.ExecuteNonQuery();
                         }
                         Session["RequestedFromID"] = null;
                         Session["RequestedFromID"] = StockAt.SelectedItem.Value;
@@ -1149,30 +1196,52 @@ namespace IMS
                     DataSet QuantitySet = new DataSet();
                     SqlDataAdapter sA = new SqlDataAdapter(command);
                     sA.Fill(QuantitySet);
-                    if (QuantitySet != null && QuantitySet.Tables.Count > 0 && QuantitySet.Tables[0].Rows.Count > 0 && QuantitySet.Tables[0].Rows[0][0].ToString().Trim().Length > 0)
+                    if (QuantitySet != null && QuantitySet.Tables.Count > 0 && QuantitySet.Tables[0].Rows.Count > 
+                        0 && QuantitySet.Tables[0].Rows[0][0].ToString().Trim().Length > 0)
                         RemainingStock = Convert.ToInt32(QuantitySet.Tables[0].Rows[0][0].ToString());
 
 
                     if ((quan + bonus) <= RemainingStock)
                     {
-                        if (Session["UserChangedOrdDetID"] != null)
+                        if (OrdDetIDChanged.Contains(orderDetID))
                         {
-                            List<int> UserChangedOrdDetID = new List<int>();
-                            UserChangedOrdDetID = (List<int>)Session["UserChangedOrdDetID"];
-
-                            for (int j = 0; j < UserChangedOrdDetID.Count; j++)
+                        }
+                        else
+                        {
+                            if (Session["UserChangedOrdDetID"] != null)
                             {
-                                int OrdDetID_User = UserChangedOrdDetID[j];
+                                List<int> UserChangedOrdDetID = new List<int>();
+                                UserChangedOrdDetID = (List<int>)Session["UserChangedOrdDetID"];
 
-                                if (OrdDetID_User != orderDetID)
+                                if (UserChangedOrdDetID.Count > 0)
+                                {
+                                    for (int j = 0; j < UserChangedOrdDetID.Count; j++)
+                                    {
+                                        int OrdDetID_User = UserChangedOrdDetID[j];
+
+                                        if (OrdDetID_User != orderDetID)
+                                        {
+
+                                            UpdateStockMinus(orderDetID, Total, ProductID, Discount, bonus, quan);
+
+                                        }
+                                    }
+                                }
+                                else
                                 {
                                     UpdateStockMinus(orderDetID, Total, ProductID, Discount, bonus, quan);
                                 }
                             }
-                        }
-                        else
-                        {
-                            UpdateStockMinus(orderDetID, Total, ProductID, Discount, bonus, quan);
+                            else
+                            {
+                                //if (OrdDetIDChanged.Contains(orderDetID))
+                                // {
+                                //}
+                                //else
+                                //{
+                                UpdateStockMinus(orderDetID, Total, ProductID, Discount, bonus, quan);
+                                //}
+                            }
                         }
                     }
                     else
@@ -1190,6 +1259,8 @@ namespace IMS
                 }
                 finally
                 {
+                    Session["UserChangedOrdDetID"] = null;
+                   // Session["PrevOrdDetailID"] =null;
                     if (connection.State == ConnectionState.Open)
                         connection.Close();
                 }
@@ -1398,6 +1469,7 @@ namespace IMS
 
                 else if (e.CommandName.Equals("UpdateStock"))
                 {
+                  
                     //lblProductID
                     int quan = 0; 
                     int.TryParse(((TextBox)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("txtQuantity")).Text,out quan);
@@ -1410,10 +1482,30 @@ namespace IMS
                     int ProductID = 0;
                     int.TryParse(((Label)StockDisplayGrid.Rows[StockDisplayGrid.EditIndex].FindControl("lblProductID")).Text,out ProductID);
                     int TotalQuantity = quan + bonus;
+
+                    if (btnAccept.Text == "RE-GENERATE ORDER")
+                    {
+                        if (TotalQuantity != (Convert.ToInt32(Session["PreviousValueMain"].ToString())))
+                        {
+                            WebMessageBoxUtil.Show("You have changed the quantity of the existing Order, its prefered that you adjust its expiry manually," +
+                                                    "otherwise, System will automatically adjust it, in that case the already selected expiry may get changed.");
+
+                            List<int> OrdDetID = (List<int>)Session["PrevOrdDetailID"];
+                            OrdDetID.Remove(orderDetID);
+                            Session["PrevOrdDetailID"] = OrdDetID;
+                            Session["UserChangedOrdDetID"] = OrdDetID;
+                        }
+                        else
+                        {
+                          
+                        }
+                    }
+
                     if (quan + bonus > 0)
                     {
                         if (TotalQuantity <= (availablestock + Convert.ToInt32(Session["PreviousValueMain"].ToString())))
                         {
+                          
                             UpdateStockPlus(orderDetID, Convert.ToInt32(Session["PreviousValueMain"].ToString()));
                             if (connection.State == ConnectionState.Closed)
                             {
@@ -1990,8 +2082,8 @@ namespace IMS
                 txtProduct.Text = "";
                 SelectProduct.Visible = false;
                 SelectBonus.Text = "";
-               // SelectDiscount.Text = "";
-               // StockAt.Enabled = false;
+                //SelectDiscount.Text = "";
+                //StockAt.Enabled = false;
                 //ddlSalesman.Enabled = false;
                 SelectQuantity.Text = "";
 
@@ -2036,6 +2128,25 @@ namespace IMS
                 sA.Fill(ds);
                 Session["dsProdcts"] = ds;
                 ProductSet = ds;
+                //ds.Tables[0].Columns.Add("ChangedStatus", typeof(System.Int32));
+                    
+                //if (btnAccept.Text == "RE-GENERATE ORDER")
+                //{
+                //    foreach (DataRow dr in ds.Tables[0].Rows)
+                //    {
+                //        dr["ChangedStatus"] = 1;
+                //    }
+                //}
+                //else
+                //{
+                //    foreach (DataRow dr in ds.Tables[0].Rows)
+                //    {
+                //        dr["ChangedStatus"] = 2;
+                //    }
+                //}
+                
+                    
+
                 StockDisplayGrid.DataSource = null;
                 StockDisplayGrid.DataSource = ds.Tables[0];
                 StockDisplayGrid.DataBind();
@@ -2345,7 +2456,7 @@ namespace IMS
                     
                     OrdDetID.Add(Convert.ToInt32(OrderDetailID.Text));
 
-                    Session["UserChangedOrdDetID"] = OrdDetID;
+                   // Session["UserChangedOrdDetID"] = OrdDetID;
                     
                     SqlCommand command = new SqlCommand("sp_getSaleOrderDetail", connection);
                     command.CommandType = CommandType.StoredProcedure;
