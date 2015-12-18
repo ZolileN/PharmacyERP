@@ -1,4 +1,5 @@
 ﻿using CrystalDecisions.CrystalReports.Engine;
+using IMSBusinessLogic;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,12 +15,14 @@ namespace IMS
     public partial class rpt_HaadMedicinesList : System.Web.UI.Page
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
+        ReportBLL reportbll = new ReportBLL();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                
                 LoadCatgeory();
+                if (drpCat.SelectedIndex != -1)
                 LoadSubCatgeory();
             }
         }
@@ -95,16 +98,10 @@ namespace IMS
         {
             try
             {
-                if (connection.State == ConnectionState.Closed) { connection.Open(); }
-                SqlCommand command = new SqlCommand("SP_Get_HAAD_Medicine_By_Sub_Category", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@Sub_CategoryID", DrpSubCat.SelectedValue);
+               
 
-                SqlDataAdapter sdA = new SqlDataAdapter(command);
-                DataSet ds = new DataSet();
-                sdA.Fill(ds);
-
-
+                DataSet ds = reportbll.rpt_HaadNonHaadMedicinesList(Int32.Parse(DrpSubCat.SelectedValue));
+                
                 ReportDocument myReportDocument = new ReportDocument();
 
                 myReportDocument.Load(Server.MapPath("~/HaadMedicinesList.rpt"));
@@ -125,13 +122,11 @@ namespace IMS
             {
                 throw ex;
             }
-            finally
-            {
-                if (connection.State == ConnectionState.Open) { connection.Close(); }
-            }
+           
         }
         protected void btnCreateReport_Click(object sender, EventArgs e)
         {
+            if(DrpSubCat.SelectedIndex!=-1)
             LoadReportData();
 
         }

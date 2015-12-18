@@ -38,6 +38,17 @@ namespace IMSDataAccess
             return ds;
         }
 
+        public DataSet rpt_HaadNonHaadMedicinesList(int Sub_CategoryID)
+        {
+            DataSet ds;
+            String StoredProcedureName = StoredProcedure.Select.SP_Get_HAAD_Medicine_By_Sub_Category.ToString();
+            SqlParameter[] parameters = {   
+                                            new SqlParameter("@Sub_CategoryID", Sub_CategoryID), 
+                                                                                   };
+            DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
+            ds = dbHelper.Run(base.ConnectionString, parameters);
+            return ds;
+        }
         
     }
 }

@@ -75,7 +75,8 @@ namespace IMSDataAccess
             sp_GetNewNotificationTransferRequest,
             sp_GetAllPendingTransferRequests,
             sp_rptInventoryListDetailsReport,
-            sp_rptInventorySummaryReport
+            sp_rptInventorySummaryReport,
+            SP_Get_HAAD_Medicine_By_Sub_Category
             
 
 
