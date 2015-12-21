@@ -1113,7 +1113,7 @@ namespace IMS
                     //In case of Re-Generate SO, Delete the OrderDetailEntries for that Order and Add stock First.. 
                     if (btnAccept.Text.Equals("RE-GENERATE ORDER"))
                     {
-                        if (OrdDetIDChanged.Contains(orderDetID))
+                        if (OrdDetIDChanged!=null && OrdDetIDChanged.Contains(orderDetID))
                         {
                         }
                         else
@@ -1203,7 +1203,7 @@ namespace IMS
 
                     if ((quan + bonus) <= RemainingStock)
                     {
-                        if (OrdDetIDChanged.Contains(orderDetID))
+                        if (OrdDetIDChanged != null && OrdDetIDChanged.Contains(orderDetID))
                         {
                         }
                         else
