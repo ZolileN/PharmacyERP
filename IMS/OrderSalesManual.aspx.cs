@@ -130,7 +130,7 @@ namespace IMS
                             OrderDetailIDs.Add(Convert.ToInt32(((DataSet)Session["dsProdcts"]).Tables[0].Rows[i]["OrderDetailID"]));
                         }
 
-                        Session["PrevOrdDetailID"] = OrderDetailIDs;
+                        if (Session["ViewSalesOrders"] != null && Session["ViewSalesOrders"].Equals(true)) { Session["PrevOrdDetailID"] = OrderDetailIDs; }
                         Session["UserChangedOrdDetID"] = OrderDetailIDs;
                     }
                     else
