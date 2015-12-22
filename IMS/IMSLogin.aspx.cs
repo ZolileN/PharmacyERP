@@ -85,6 +85,9 @@ namespace IMS
 
                                 Session["firstNamelastName"] = dt.Rows[0]["U_FirstName"].ToString();
 
+                               
+
+
                                 switch (dt.Rows[0]["RoleName"].ToString())
                                 {
                                     case "WareHouse":
@@ -206,6 +209,8 @@ namespace IMS
 
                         Session["firstNamelastName"] = dt.Rows[0]["U_FirstName"].ToString();
 
+                       
+
                         switch(dt.Rows[0]["RoleName"].ToString())
                         {
                             case "WareHouse":
@@ -215,7 +220,17 @@ namespace IMS
                                 Session["UserEmail"] = dt.Rows[0]["U_Email"].ToString();
                                 Session["isHeadOffice"] = false;
                                 Session["UserRole"] = "WareHouse";
+
+
+
                                 Session["LoginID"] = UserName.Text;
+
+                                if (dt.Rows[0]["user_RoleName"].ToString().Equals("Salesman"))
+                                {
+                                    Session["user_RoleName"] = "Salesman";
+                                    Response.Redirect("SalesmanMain.aspx", true);
+
+                                }
 
                                 string key = StringCipher.Encrypt(Password.Text, "oouEAoBOOoRQy93PA2BmOQ");
                                 Session["key"] = key;

@@ -10,141 +10,159 @@
 namespace IMS {
     
     
-    public partial class SiteMaster {
+    public partial class ItemRequestWHPH {
         
         /// <summary>
-        /// HeadContent control.
+        /// lblWH control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder HeadContent;
+        protected global::System.Web.UI.WebControls.Label lblWH;
         
         /// <summary>
-        /// WarehouseBlock control.
+        /// btnAccept control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl WarehouseBlock;
+        protected global::System.Web.UI.WebControls.Button btnAccept;
         
         /// <summary>
-        /// StoreBlock control.
+        /// btnDecline control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl StoreBlock;
+        protected global::System.Web.UI.WebControls.Button btnDecline;
         
         /// <summary>
-        /// logo control.
+        /// btnCancelOrder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor logo;
+        protected global::System.Web.UI.WebControls.Button btnCancelOrder;
         
         /// <summary>
-        /// lbllogin control.
+        /// lblProd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lbllogin;
+        protected global::System.Web.UI.WebControls.Label lblProd;
         
         /// <summary>
-        /// FirstLast control.
+        /// txtSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal FirstLast;
+        protected global::System.Web.UI.WebControls.TextBox txtSearch;
         
         /// <summary>
-        /// imgLogout control.
+        /// lblProductId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton imgLogout;
+        protected global::System.Web.UI.WebControls.Label lblProductId;
         
         /// <summary>
-        /// warehouseNavigation control.
+        /// btnSearchProduct control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel warehouseNavigation;
+        protected global::System.Web.UI.WebControls.ImageButton btnSearchProduct;
         
         /// <summary>
-        /// WHReports control.
+        /// mpeCongratsMessageDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor WHReports;
+        protected global::AjaxControlToolkit.ModalPopupExtender mpeCongratsMessageDiv;
         
         /// <summary>
-        /// PharmacyReports control.
+        /// ProductsPopupGrid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor PharmacyReports;
+        protected global::IMS.UserControl.ProductsPopupGrid ProductsPopupGrid;
         
         /// <summary>
-        /// storeNavigation control.
+        /// SelectQuantity control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel storeNavigation;
+        protected global::System.Web.UI.WebControls.TextBox SelectQuantity;
         
         /// <summary>
-        /// self_PharmacyReports control.
+        /// SelectPrice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor self_PharmacyReports;
+        protected global::System.Web.UI.WebControls.TextBox SelectPrice;
         
         /// <summary>
-        /// headofficeNavigation control.
+        /// txtDiscount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel headofficeNavigation;
+        protected global::System.Web.UI.WebControls.TextBox txtDiscount;
         
         /// <summary>
-        /// SalesmanNavigation control.
+        /// btnCreateOrder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel SalesmanNavigation;
+        protected global::System.Web.UI.WebControls.Button btnCreateOrder;
         
         /// <summary>
-        /// MainContent control.
+        /// StockDisplayGrid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
+        protected global::System.Web.UI.WebControls.GridView StockDisplayGrid;
+        
+        /// <summary>
+        /// lblttlcst control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblttlcst;
+        
+        /// <summary>
+        /// lblTotalCostALL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalCostALL;
     }
 }
