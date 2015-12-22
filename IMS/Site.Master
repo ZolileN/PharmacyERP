@@ -76,7 +76,7 @@
             <link type="text/css" href="Style/notifications.css" rel="stylesheet" />
             <script type="text/javascript" src="Scripts/WarehouseCustom.js"></script>
 
-            <div class="center notification icon">
+            <div class="center notification icon" onclick="window.location.href='ReceiveStoreRequest.aspx'">
               <svg class="svg-left" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
 <g class="bell">
 	<g>
@@ -93,33 +93,7 @@
 
           <div class="notifications NotificationsHolder"></div>
 
-            <div class="overLaypop pnOverlay"></div>
-
-            <div class="popupMain pharmacyNotifications" id="notifications">
             
-                    <div class="popupHead">
-                        Notifications
-                    <input class="close" value="" type="submit">
-                    </div>
-     
-                    <div class="bodyPop">
-
-                        <table class="table table-striped table-bordered table-condensed" cellspacing="10">
-
-                            <tr>
-                                <td><a href="SentTransferRequests.aspx"> Requests Accepted</a>:</td><td><span id="trYours"></span></td>
-                                
-                            </tr>
-                            <tr>
-                                
-                                <td><a href="ReceiveTransferOrder.aspx"> Requests By Others</a>:</td><td><span id="trOthers"></span></td>
-                            </tr>
-
-                        </table>
-
-                    </div>
-
-                </div>
             </div>
 
         <div runat="server" id="StoreBlock" >
