@@ -55,9 +55,11 @@ namespace IMS
                     {
                         LoadData(StockAt.SelectedValue);
                     }
-
+                    PopulateDropDown(null);
                 }
                 expHandler.CheckForErrorMessage(Session);
+
+                
             }
             catch (Exception ex)
             {
@@ -397,16 +399,16 @@ namespace IMS
                 //Text = Text + "%";
                 //SqlCommand command = new SqlCommand("Select * From tbl_System Where tbl_System.SystemName LIKE '" + Text + "'", connection);
                 DataSet ds = new DataSet();
-                SqlCommand command = new SqlCommand("Sp_GetAllCategories", connection);
+                SqlCommand command = new SqlCommand("Sp_getAllSystems", connection);
                 command.CommandType = CommandType.StoredProcedure;
-                if (Text != null)
+                /*if (Text != null)
                 {
                     command.Parameters.AddWithValue("@p_storeName ", Text);
                 }
                 else
                 {
                     command.Parameters.AddWithValue("@p_storeName ", DBNull.Value);
-                }
+                }*/
                 SqlDataAdapter sA = new SqlDataAdapter(command);
                 sA.Fill(ds);
                 if (StockAt.DataSource != null)
@@ -422,7 +424,7 @@ namespace IMS
                 StockAt.DataBind();
                 if (StockAt != null)
                 {
-                    StockAt.Items.Insert(0, "Select Store");
+                    StockAt.Items.Insert(0, "Select Pharmacy");
                     StockAt.SelectedIndex = 0;
                 }
             }
