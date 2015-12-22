@@ -298,13 +298,17 @@
     <Content Include="AcceptOrder.aspx" />
     <Content Include="AcceptPurchaseOrder.aspx" />
     <Content Include="Images\logoutIcon.png" />
+    <Content Include="ItemRequestWHPH.aspx" />
     <Content Include="Notification.aspx" />
+    <Content Include="Print_Request_WH_PH.aspx" />
     <Content Include="rpt_InventoryReportByVendor.aspx" />
     <Content Include="rpt_InventoryAdjustmentReport.aspx" />
     <Content Include="rpt_HaadMedicinesList.aspx" />
     <Content Include="rpt_NonHaadMedicinesList.aspx" />
     <Content Include="rpt_InventorySummaryReport.aspx" />
     <Content Include="Scripts\PharmacyCustom.js" />
+    <Content Include="Scripts\WarehouseCustom.js" />
+    <Content Include="SelectWarehousePharmacy.aspx" />
     <Content Include="StockCostAdjustment.aspx" />
     <Content Include="StockManipulation.aspx" />
     <Content Include="StockManipulationPrint.aspx" />
@@ -1271,6 +1275,7 @@
     <Content Include="ReceiveSalesOrder.aspx" />
     <Content Include="ViewSalesOrders.aspx" />
     <Content Include="ViewSwitcher.ascx" />
+    <Content Include="SalesmanMain.aspx" />
     <Content Include="WarehouseMain.aspx" />
     <Content Include="WarehouseManagement.aspx" />
     <Content Include="WarehouseSalesOrder.aspx" />
@@ -1366,6 +1371,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>InventoryReportByVendor.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="HaadMedicinesList.cs">
       <AutoGen>True</AutoGen>
@@ -1385,12 +1391,26 @@
       <DependentUpon>ItemListDetailsReport.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ItemRequestWHPH.aspx.cs">
+      <DependentUpon>ItemRequestWHPH.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ItemRequestWHPH.aspx.designer.cs">
+      <DependentUpon>ItemRequestWHPH.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Notification.aspx.cs">
       <DependentUpon>Notification.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Notification.aspx.designer.cs">
       <DependentUpon>Notification.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Print_Request_WH_PH.aspx.cs">
+      <DependentUpon>Print_Request_WH_PH.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Print_Request_WH_PH.aspx.designer.cs">
+      <DependentUpon>Print_Request_WH_PH.aspx</DependentUpon>
     </Compile>
     <Compile Include="ProfitabilitySummary.cs">
       <DependentUpon>ProfitabilitySummary.rpt</DependentUpon>
@@ -1438,6 +1458,13 @@
     </Compile>
     <Compile Include="rpt_InventorySummaryReport.aspx.designer.cs">
       <DependentUpon>rpt_InventorySummaryReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SelectWarehousePharmacy.aspx.cs">
+      <DependentUpon>SelectWarehousePharmacy.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SelectWarehousePharmacy.aspx.designer.cs">
+      <DependentUpon>SelectWarehousePharmacy.aspx</DependentUpon>
     </Compile>
     <Compile Include="StockCostAdjustment.aspx.cs">
       <DependentUpon>StockCostAdjustment.aspx</DependentUpon>
@@ -2437,6 +2464,13 @@
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SalesmanMain.aspx.cs">
+      <DependentUpon>SalesmanMain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SalesmanMain.aspx.designer.cs">
+      <DependentUpon>SalesmanMain.aspx</DependentUpon>
     </Compile>
     <Compile Include="WarehouseMain.aspx.cs">
       <DependentUpon>WarehouseMain.aspx</DependentUpon>

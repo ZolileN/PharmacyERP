@@ -10,141 +10,114 @@
 namespace IMS {
     
     
-    public partial class SiteMaster {
+    public partial class Print_Request_WH_PH {
         
         /// <summary>
-        /// HeadContent control.
+        /// btnPrint control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder HeadContent;
+        protected global::System.Web.UI.WebControls.Button btnPrint;
         
         /// <summary>
-        /// WarehouseBlock control.
+        /// btnExport control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl WarehouseBlock;
+        protected global::System.Web.UI.WebControls.Button btnExport;
         
         /// <summary>
-        /// StoreBlock control.
+        /// btnGoBack control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl StoreBlock;
+        protected global::System.Web.UI.WebControls.Button btnGoBack;
         
         /// <summary>
-        /// logo control.
+        /// lblFROMSystemName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor logo;
+        protected global::System.Web.UI.WebControls.Label lblFROMSystemName;
         
         /// <summary>
-        /// lbllogin control.
+        /// lblFROMSystemAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lbllogin;
+        protected global::System.Web.UI.WebControls.Label lblFROMSystemAddress;
         
         /// <summary>
-        /// FirstLast control.
+        /// lblFROMSystemPhone control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal FirstLast;
+        protected global::System.Web.UI.WebControls.Label lblFROMSystemPhone;
         
         /// <summary>
-        /// imgLogout control.
+        /// lblFROMSystemEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton imgLogout;
+        protected global::System.Web.UI.WebControls.Label lblFROMSystemEmail;
         
         /// <summary>
-        /// warehouseNavigation control.
+        /// lblToSystemName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel warehouseNavigation;
+        protected global::System.Web.UI.WebControls.Label lblToSystemName;
         
         /// <summary>
-        /// WHReports control.
+        /// lblToSystemAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor WHReports;
+        protected global::System.Web.UI.WebControls.Label lblToSystemAddress;
         
         /// <summary>
-        /// PharmacyReports control.
+        /// lblToSystemPhone control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor PharmacyReports;
+        protected global::System.Web.UI.WebControls.Label lblToSystemPhone;
         
         /// <summary>
-        /// storeNavigation control.
+        /// lblToSystemEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel storeNavigation;
+        protected global::System.Web.UI.WebControls.Label lblToSystemEmail;
         
         /// <summary>
-        /// self_PharmacyReports control.
+        /// dgvTransferDisplay control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor self_PharmacyReports;
-        
-        /// <summary>
-        /// headofficeNavigation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel headofficeNavigation;
-        
-        /// <summary>
-        /// SalesmanNavigation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel SalesmanNavigation;
-        
-        /// <summary>
-        /// MainContent control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
+        protected global::System.Web.UI.WebControls.GridView dgvTransferDisplay;
     }
 }

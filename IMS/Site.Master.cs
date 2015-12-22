@@ -155,17 +155,33 @@ namespace IMS
 
             FirstLast.Text = Session["firstNamelastName"].ToString();
             FirstLast.Visible = true;
-            headofficeNavigation.Visible = storeNavigation.Visible = StoreBlock.Visible = false;
+            headofficeNavigation.Visible = storeNavigation.Visible = StoreBlock.Visible = SalesmanNavigation.Visible=WarehouseBlock.Visible= false;
             warehouseNavigation.Visible = false;
             if (Session["UserName"] !=null){
                 lbllogin.Text = Session["UserName"].ToString();
                 lbllogin.Visible = true;
             }
-            if (Session["userRole"].ToString() == "WareHouse")
+
+
+
+            if (Session["userRole"]!=null && Session["userRole"].ToString() == "WareHouse")
             {
-                warehouseNavigation.Visible = true;
-                WHReports.ServerClick += new EventHandler(WHReports_Login);
-                PharmacyReports.ServerClick += new EventHandler(PharmacyReports_Login);
+
+                if (Session["user_RoleName"]!=null && "Salesman".Equals(Session["user_RoleName"].ToString()))
+                {
+                    SalesmanNavigation.Visible = true;
+                   
+
+                }
+                else {
+
+                    warehouseNavigation.Visible = true;
+                    WarehouseBlock.Visible = true;
+                    WHReports.ServerClick += new EventHandler(WHReports_Login);
+                    PharmacyReports.ServerClick += new EventHandler(PharmacyReports_Login);
+                }
+
+                
               
             }
             else if (Session["userRole"].ToString() == "HeadOffice")
