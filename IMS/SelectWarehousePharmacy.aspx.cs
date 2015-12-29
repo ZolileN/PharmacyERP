@@ -136,7 +136,10 @@ namespace IMS
                 Session["WH_ID"] = ddlWH.SelectedValue;
                 Session["PH_Name"] = ddlPH.SelectedItem.ToString();
                 Session["PH_ID"] = ddlPH.SelectedValue;
+                
                 Response.Redirect("ItemRequestWHPH.aspx");
+
+                
             }
         }
     }

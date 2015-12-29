@@ -256,6 +256,9 @@
                                        </ul>
 
                                     </li>
+
+                                     <li><a href="ViewIndirectPOWarehouse.aspx">Approve Indirect PO</a></li>
+
                                     <li><a href="ViewPlacedOrders.aspx">View PO</a></li>
                                     <li class="hasChild"><a href="#">Recieve PO</a>
 
@@ -592,7 +595,22 @@
                                      <li><a href="ReplenishMain.aspx?Param=Calculation">Replenishment</a>
                                     </li>                                           
                                          <li><a href="SelectWarehouse.aspx">Item Request to Store</a></li>   
-                                            <li><a href="SelectVendor.aspx">Direct Pharmacy Purchase</a></li>
+                                         <li class="hasChild"><a href="SelectVendor.aspx">Direct Pharmacy Purchase</a>
+
+                                             <ul>
+                                                 <li><a href="SelectVendor.aspx">Send</a></li>
+                                                 <li><a href="ViewDirectPurchaseRequests.aspx">View</a></li>
+                                             </ul>
+
+                                         </li>
+                                         <li class="hasChild">
+                                                <a href="#">Indirect Pharmacy Purchase</a>
+                                                <ul>
+
+                                                    <li><a href="SelectIndirectVendor.aspx">Send</a></li>
+                                                    <li><a href="ViewIndirectPO.aspx">View</a></li>
+                                                </ul>
+                                         </li>
                                      <!--<li><a href="ViewPlacedOrders.aspx">View Store Purchase</a></li>-->
                                        </ul>
 

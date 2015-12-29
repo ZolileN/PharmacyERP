@@ -298,8 +298,13 @@
     <Content Include="AcceptOrder.aspx" />
     <Content Include="AcceptPurchaseOrder.aspx" />
     <Content Include="Images\logoutIcon.png" />
+    <Content Include="inDirectManualPurchaseWarehouse.aspx" />
+    <Content Include="inDirectPO_Approve.aspx" />
     <Content Include="ItemRequestWHPH.aspx" />
+    <Content Include="DirectManualPurchase.aspx" />
+    <Content Include="inDirectManualPurchase.aspx" />
     <Content Include="Notification.aspx" />
+    <Content Include="inDirectPO_GENERATE.aspx" />
     <Content Include="Print_Request_WH_PH.aspx" />
     <Content Include="rpt_InventoryReportByVendor.aspx" />
     <Content Include="rpt_InventoryAdjustmentReport.aspx" />
@@ -308,6 +313,7 @@
     <Content Include="rpt_InventorySummaryReport.aspx" />
     <Content Include="Scripts\PharmacyCustom.js" />
     <Content Include="Scripts\WarehouseCustom.js" />
+    <Content Include="SelectIndirectVendor.aspx" />
     <Content Include="SelectWarehousePharmacy.aspx" />
     <Content Include="StockCostAdjustment.aspx" />
     <Content Include="StockManipulation.aspx" />
@@ -1267,9 +1273,12 @@
     <Content Include="UtillityFunctions.aspx" />
     <Content Include="VendorsPopup.aspx" />
     <Content Include="rpt_InventoryListDetailsReport.aspx" />
+    <Content Include="ViewIndirectPOWarehouse.aspx" />
     <Content Include="ViewInventory.aspx" />
     <Content Include="ViewPackingList.aspx" />
     <Content Include="ViewPackingList_SO.aspx" />
+    <Content Include="ViewDirectPurchaseRequests.aspx" />
+    <Content Include="ViewIndirectPO.aspx" />
     <Content Include="ViewPlacedOrders.aspx" />
     <Content Include="ViewPurchaseOrders.aspx" />
     <Content Include="ReceiveSalesOrder.aspx" />
@@ -1361,6 +1370,20 @@
     <Compile Include="AcceptPurchaseOrder.aspx.designer.cs">
       <DependentUpon>AcceptPurchaseOrder.aspx</DependentUpon>
     </Compile>
+    <Compile Include="inDirectManualPurchaseWarehouse.aspx.cs">
+      <DependentUpon>inDirectManualPurchaseWarehouse.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="inDirectManualPurchaseWarehouse.aspx.designer.cs">
+      <DependentUpon>inDirectManualPurchaseWarehouse.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="inDirectPO_Approve.aspx.cs">
+      <DependentUpon>inDirectPO_Approve.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="inDirectPO_Approve.aspx.designer.cs">
+      <DependentUpon>inDirectPO_Approve.aspx</DependentUpon>
+    </Compile>
     <Compile Include="InventoryAdjustmentReport.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1398,12 +1421,33 @@
     <Compile Include="ItemRequestWHPH.aspx.designer.cs">
       <DependentUpon>ItemRequestWHPH.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DirectManualPurchase.aspx.cs">
+      <DependentUpon>DirectManualPurchase.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DirectManualPurchase.aspx.designer.cs">
+      <DependentUpon>DirectManualPurchase.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="inDirectManualPurchase.aspx.cs">
+      <DependentUpon>inDirectManualPurchase.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="inDirectManualPurchase.aspx.designer.cs">
+      <DependentUpon>inDirectManualPurchase.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Notification.aspx.cs">
       <DependentUpon>Notification.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Notification.aspx.designer.cs">
       <DependentUpon>Notification.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="inDirectPO_GENERATE.aspx.cs">
+      <DependentUpon>inDirectPO_GENERATE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="inDirectPO_GENERATE.aspx.designer.cs">
+      <DependentUpon>inDirectPO_GENERATE.aspx</DependentUpon>
     </Compile>
     <Compile Include="Print_Request_WH_PH.aspx.cs">
       <DependentUpon>Print_Request_WH_PH.aspx</DependentUpon>
@@ -1458,6 +1502,13 @@
     </Compile>
     <Compile Include="rpt_InventorySummaryReport.aspx.designer.cs">
       <DependentUpon>rpt_InventorySummaryReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SelectIndirectVendor.aspx.cs">
+      <DependentUpon>SelectIndirectVendor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SelectIndirectVendor.aspx.designer.cs">
+      <DependentUpon>SelectIndirectVendor.aspx</DependentUpon>
     </Compile>
     <Compile Include="SelectWarehousePharmacy.aspx.cs">
       <DependentUpon>SelectWarehousePharmacy.aspx</DependentUpon>
@@ -2409,6 +2460,13 @@
     <Compile Include="rpt_InventoryListDetailsReport.aspx.designer.cs">
       <DependentUpon>rpt_InventoryListDetailsReport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ViewIndirectPOWarehouse.aspx.cs">
+      <DependentUpon>ViewIndirectPOWarehouse.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewIndirectPOWarehouse.aspx.designer.cs">
+      <DependentUpon>ViewIndirectPOWarehouse.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ViewInventory.aspx.cs">
       <DependentUpon>ViewInventory.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2429,6 +2487,20 @@
     </Compile>
     <Compile Include="ViewPackingList_SO.aspx.designer.cs">
       <DependentUpon>ViewPackingList_SO.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewDirectPurchaseRequests.aspx.cs">
+      <DependentUpon>ViewDirectPurchaseRequests.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewDirectPurchaseRequests.aspx.designer.cs">
+      <DependentUpon>ViewDirectPurchaseRequests.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewIndirectPO.aspx.cs">
+      <DependentUpon>ViewIndirectPO.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewIndirectPO.aspx.designer.cs">
+      <DependentUpon>ViewIndirectPO.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewPlacedOrders.aspx.cs">
       <DependentUpon>ViewPlacedOrders.aspx</DependentUpon>
