@@ -1499,7 +1499,7 @@
     </Compile>
     <Compile Include="Returns_Generate.aspx.designer.cs">
       <DependentUpon>Returns_Generate.aspx</DependentUpon>
-
+    </Compile>
     <Compile Include="rpt_InventoryReportByVendor.aspx.cs">
       <DependentUpon>rpt_InventoryReportByVendor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1551,6 +1551,7 @@
     <Compile Include="SearchVendorReturn.aspx.designer.cs">
       <DependentUpon>SearchVendorReturn.aspx</DependentUpon>
 
+    </Compile>
     <Compile Include="SelectIndirectVendor.aspx.cs">
       <DependentUpon>SelectIndirectVendor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
