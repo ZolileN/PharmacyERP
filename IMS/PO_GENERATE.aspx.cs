@@ -339,7 +339,7 @@ namespace IMS
         {
             if (PO_ToEmail.Text != null && PO_ToEmail.Text != "")
             {
-                ExportGridToPDF();
+                ExportPOToPDF();
                 DataSet dsProducts = (DataSet)Session["dsProducts_PO"];
                 String ToAddress = dsProducts.Tables[0].Rows[0]["VendorEmail"].ToString();
                 //String ToAddress = ProductSet.Tables[0].Rows[0]["VendorEmail"].ToString();
@@ -386,18 +386,68 @@ namespace IMS
                 }
             }
         }
-        
+
 
         public override void VerifyRenderingInServerForm(Control control)
         {
             //required to avoid the runtime error "
             //Control 'GridView1' of type 'GridView' must be placed inside a form tag with runat=server."
         }
+
+        private void ExportPOToPDF()
+        {
+            Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 100f, 0f);
+            try
+            {
+                String FilePath = Server.MapPath(@"~\PurchaseOrders");
+                String FileName = "PO_" + Session["OrderNumber"].ToString() + ".pdf";
+                 
+                Response.ContentType = "application/pdf";
+                Response.AddHeader("content-disposition", "attachment;filename=" + FileName);
+                Response.ContentType = System.Web.MimeMapping.GetMimeMapping(Server.MapPath(@"~\PurchaseOrders"));     
+
+                Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                StringWriter sw = new StringWriter();
+                sw.WriteLine("");
+
+                HtmlTextWriter hw = new HtmlTextWriter(sw);
+                MAINDIV.RenderControl(hw);
+                StringReader sr = new StringReader(sw.ToString());
+                
+                PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
+                HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+                PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
+                //PdfWriter.GetInstance(pdfDoc, new FileStream(Context.Server.MapPath(@"~\PurchaseOrders") +  "test.pdf", FileMode.Create));
+                pdfDoc.Open();
+                htmlparser.Parse(sr);
+                pdfDoc.Close();
+                Response.Write(pdfDoc);
+                Response.End();
+                
+            }
+            catch (Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                pdfDoc.Close();
+                Response.Write(pdfDoc);
+                Response.End();
+
+            }
+            finally
+            {
+                // MAINDIV.Visible = false;
+                // TotalCostDiv.Visible = false;
+                btnEmail.Visible = true;
+                //btnFax.Visible = true;
+                //btnPrint.Enabled = false;
+            }
+        }
         private void ExportGridToPDF()
         {
             try
             {
-                //Response.ContentType = "application/pdf";
+                Response.ContentType = "application/pdf";
                 //Response.AddHeader("content-disposition", "attachment;filename=PO_" + Session["OrderNumber"].ToString() + ".pdf");
                 //Response.Cache.SetCacheability(HttpCacheability.NoCache);
                 StringWriter sw = new StringWriter();
@@ -411,14 +461,18 @@ namespace IMS
                 HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
                 pdfDoc.Open();
 
-                htmlparser.Parse(sr);
+                
                 String FilePath = Server.MapPath(@"~\PurchaseOrders");
                 String FileName = "PO_" + Session["OrderNumber"].ToString() + ".pdf";
                 FileStream fs = new FileStream(FilePath + @"\" + FileName, FileMode.Create);
-                PdfWriter writer = PdfWriter.GetInstance(pdfDoc, fs);
-                writer.Close();
+
+                PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
+                //PdfWriter writer = PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
+               // writer.Close();
+                Response.Write(pdfDoc);
                 pdfDoc.Close();
                 fs.Close();
+                htmlparser.Parse(sr);
                 //Response.Write(pdfDoc);
                 
                 //Response.Flush();
@@ -432,7 +486,7 @@ namespace IMS
             {
                 if (connection.State == ConnectionState.Open)
                     connection.Close();
-                throw ex;
+                
             }
             finally
             {

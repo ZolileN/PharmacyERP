@@ -33,13 +33,15 @@ namespace IMSDataAccess.DAL
             ds = dbHelper.Run(base.ConnectionString);
             return ds;
         }
-        public DataSet SelectSubCategoriesBasic()
+        public DataSet SelectSubCategoriesBasic(int? CategoryID)
         {
             DataSet ds;
             StoredProcedureName = StoredProcedure.Select.Sp_GetSubCatBasic.ToString();
-
+            SqlParameter[] parameters = {   new SqlParameter("@p_CategoryID", CategoryID), 
+                                            
+                                        };
             DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
-            ds = dbHelper.Run(base.ConnectionString);
+            ds = dbHelper.Run(base.ConnectionString, parameters);
             return ds;
         }
         public DataSet GetCategoriesdd(int? DepartmentID)

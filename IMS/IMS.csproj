@@ -298,6 +298,11 @@
     <Content Include="AcceptOrder.aspx" />
     <Content Include="AcceptPurchaseOrder.aspx" />
     <Content Include="Images\logoutIcon.png" />
+
+    <Content Include="Notification.aspx" /> 
+    <Content Include="ReceivedTransferOrders.aspx" /> 
+    <Content Include="rpt_InventorySummaryReport.aspx" /> 
+
     <Content Include="inDirectManualPurchaseWarehouse.aspx" />
     <Content Include="inDirectPO_Approve.aspx" />
     <Content Include="ItemRequestWHPH.aspx" />
@@ -315,6 +320,7 @@
     <Content Include="rpt_HaadMedicinesList.aspx" />
     <Content Include="rpt_NonHaadMedicinesList.aspx" />
     <Content Include="rpt_InventorySummaryReport.aspx" />
+
     <Content Include="Scripts\PharmacyCustom.js" />
 
     <Content Include="SearchProductReturn.aspx" />
@@ -1476,6 +1482,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Profitability.rpt</DependentUpon>
       <SubType>Component</SubType>
+    </Compile> 
+    <Compile Include="ReceivedTransferOrders.aspx.cs">
+      <DependentUpon>ReceivedTransferOrders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+   
+    <Compile Include="ReceivedTransferOrders.aspx.designer.cs">
+      <DependentUpon>ReceivedTransferOrders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
 
     <Compile Include="Returns_Generate.aspx.cs">
@@ -1519,7 +1534,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="rpt_InventorySummaryReport.aspx.designer.cs">
-      <DependentUpon>rpt_InventorySummaryReport.aspx</DependentUpon>
+      <DependentUpon>rpt_InventorySummaryReport.aspx</DependentUpon> 
     </Compile>
 
     <Compile Include="SearchProductReturn.aspx.cs">
@@ -2606,7 +2621,7 @@
     <Compile Include="WHResquestInvoice.aspx.designer.cs">
       <DependentUpon>WHResquestInvoice.aspx</DependentUpon>
     </Compile>
-  </ItemGroup>
+      </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ErrorPages\" />

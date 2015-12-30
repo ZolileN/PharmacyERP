@@ -61,12 +61,14 @@ namespace IMSDataAccess
             return ds;
 		}
 											
-        public DataSet rpt_HaadNonHaadMedicinesList(int Sub_CategoryID)
+        public DataSet rpt_HaadNonHaadMedicinesList(int DeptID, int? CatID, int? Sub_CategoryID)
         {
             DataSet ds;
             String StoredProcedureName = StoredProcedure.Select.SP_Get_HAAD_Medicine_By_Sub_Category.ToString();
             SqlParameter[] parameters = {   
-                                            new SqlParameter("@Sub_CategoryID", Sub_CategoryID), 
+                                            new SqlParameter("@DeptID", DeptID),
+                                            new SqlParameter("@CatID", CatID),
+                                            new SqlParameter("@Sub_CategoryID", Sub_CategoryID),
 
                                                                                    };
             DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);

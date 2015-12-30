@@ -17,7 +17,9 @@
 
         <tbody><tr>
         	<td> <h4 id="topHead">Send Transfer Request(s)</h4></td>
-            <td align="right">
+            <td align="center">
+                <asp:Literal ID="litddSelectPharmacy" runat="server">Select Pharmacy</asp:Literal>
+                <asp:DropDownList ID="ddPharmacy" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddPharmacy_SelectedIndexChanged"  ></asp:DropDownList>
                 <asp:Button ID="btnAcceptAll" Visible="false" runat="server" CssClass="btn btn-success acptAllTransfers" Text="Accept All Transfers" OnClick="btnAcceptAll_Click" />
                 <asp:Button ID="btnGenTransferAll" Visible="false" runat="server" CssClass="btn btn-info" Text="Generate All Transfers" OnClick="btnGenTransferAll_Click" />
                 <asp:Button ID="btnBack" runat="server" CssClass="btn btn-default" Text="Back" OnClick="btnBack_Click" />
@@ -38,7 +40,8 @@
                     <tr>
                         <td colspan="10">
                             <h4 class="fl-l">
-
+                                 Request No: 
+                                 <asp:Literal ID="litReqNo" runat="server" ></asp:Literal>
                                 <asp:Literal ID="litStoreName" runat="server" ></asp:Literal>
 
                                 <asp:Label ID="lblStoreID" runat="server" Visible="false" ></asp:Label>

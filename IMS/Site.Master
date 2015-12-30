@@ -629,6 +629,7 @@
                                      <ul>
                                                 <li><a href="SentTransferRequests.aspx">Receive Transfer Request</a></li>
                                                 <li><a href="ReceiveTransferOrder.aspx"> Send Transfer Request</a></li>
+                                               <li><a href="ReceivedTransferOrders.aspx"> Completed Transfer Request</a></li>
                                      </ul>
                                     </li>
                                 </ul> 

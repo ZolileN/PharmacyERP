@@ -16,6 +16,7 @@ namespace IMS
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public static DataSet dsStatic = new DataSet();
+        public static DataTable dtStatic = new DataTable();
         private ILog log;
         private string pageURL;
         private ExceptionHandler expHandler = ExceptionHandler.GetInstance();
@@ -28,7 +29,7 @@ namespace IMS
                 log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
                 if (!IsPostBack)
                 {
-                    BindGrid();
+                    LoadRepeater();
                 }
                 expHandler.CheckForErrorMessage(Session);
             }
@@ -59,41 +60,74 @@ namespace IMS
             // Clear the error from the server.
             Server.ClearError();
         }
-        private void BindGrid()
-        {
-             try
-             {
-                 DataSet ds = new DataSet();
-                 int Userid;
-                 if (connection.State == ConnectionState.Closed)
-                 {
-                     connection.Open();
-                 }
 
-                 SqlCommand command = new SqlCommand("sp_GetOurSentTransferRequests_UserID", connection);
-                 int.TryParse(Session["UserSys"].ToString(), out Userid);
-                 command.Parameters.AddWithValue("@p_LoggedinUserID", Userid);
-                 
-                 command.CommandType = CommandType.StoredProcedure;
-                 command.ExecuteNonQuery();
-                 SqlDataAdapter da = new SqlDataAdapter(command);
-                 da.Fill(ds);
-                 dsStatic = ds;
-                 dgvReceiveOurTransfers.DataSource = ds;
-                 dgvReceiveOurTransfers.DataBind();
-             }
-             catch(Exception ex)
-             {
-                 if (connection.State == ConnectionState.Open)
-                     connection.Close();
-                 throw ex;
-             }
-            finally
-             {
-                 if (connection.State == ConnectionState.Open)
-                     connection.Close();
-             }
+        private void LoadRepeater()
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                int Userid;
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand command = new SqlCommand("sp_GetOurSentTransferRequests_UserID", connection);
+                int.TryParse(Session["UserSys"].ToString(), out Userid);
+                command.Parameters.AddWithValue("@p_LoggedinUserID", Userid);
+
+                command.CommandType = CommandType.StoredProcedure;
+                command.ExecuteNonQuery();
+                SqlDataAdapter da = new SqlDataAdapter(command);
+                da.Fill(ds);
+                DataTable dsDistinct = ds.Tables[0];
+                dtStatic = ds.Tables[0];
+
+                DataTable distinctRequests = dsDistinct.DefaultView.ToTable(true, "TransferID");
+
+                repReceivedTransferOrders.DataSource = distinctRequests;
+                repReceivedTransferOrders.DataBind();
+            }
+            catch
+            {
+                connection.Close();
+            }
         }
+
+        //private void BindGrid()
+        //{
+        //     try
+        //     {
+        //         DataSet ds = new DataSet();
+        //         int Userid;
+        //         if (connection.State == ConnectionState.Closed)
+        //         {
+        //             connection.Open();
+        //         }
+
+        //         SqlCommand command = new SqlCommand("sp_GetOurSentTransferRequests_UserID", connection);
+        //         int.TryParse(Session["UserSys"].ToString(), out Userid);
+        //         command.Parameters.AddWithValue("@p_LoggedinUserID", Userid);
+                 
+        //         command.CommandType = CommandType.StoredProcedure;
+        //         command.ExecuteNonQuery();
+        //         SqlDataAdapter da = new SqlDataAdapter(command);
+        //         da.Fill(ds);
+        //         dsStatic = ds;
+        //         dgvReceiveOurTransfers.DataSource = ds;
+        //         dgvReceiveOurTransfers.DataBind();
+        //     }
+        //     catch(Exception ex)
+        //     {
+        //         if (connection.State == ConnectionState.Open)
+        //             connection.Close();
+        //         throw ex;
+        //     }
+        //    finally
+        //     {
+        //         if (connection.State == ConnectionState.Open)
+        //             connection.Close();
+        //     }
+        //}
 
         protected void btnGenTransferAll_Click(object sender, EventArgs e)
         {
@@ -125,15 +159,64 @@ namespace IMS
         {
             try
             {
-                 if(e.CommandName == "ReceiveProductTransfer")
-                 {
-                     Label lblDetailsID = (Label)dgvReceiveOurTransfers.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblTransferDetailID");
-                     Session["TransferDetailsID"] = lblDetailsID.Text;
+                if (e.CommandName == "ReceiveProductTransfer")
+                {
+                    GridView dgvReceiveOurTransfers = (GridView)sender;
+                    Label lblDetailsID = (Label)dgvReceiveOurTransfers.Rows[Convert.ToInt32(e.CommandArgument.ToString())].FindControl("lblTransferDetailID");
+                    Session["TransferDetailsID"] = lblDetailsID.Text;
 
-                     Response.Redirect("ReceiveRequestTransfers.aspx", false);
-                 }
+                    Response.Redirect("ReceiveRequestTransfers.aspx", false);
+                }
             }
             catch(Exception ex)
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+                throw ex;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
+        }
+
+        protected void repReceivedTransferOrders_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            try
+            {
+                GridView dgvReceiveTransfer = (GridView)e.Item.FindControl("dgvReceiveOurTransfers");
+
+                Literal litReqNo = (Literal)e.Item.FindControl("litReqNo");
+
+                DataSet ds = new DataSet();
+                int Userid;
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                int TransferID = Convert.ToInt32(((DataRowView)e.Item.DataItem).Row[0].ToString());
+
+                SqlCommand command = new SqlCommand("sp_GetOurSentTransferRequests_UserID", connection);
+                int.TryParse(Session["UserSys"].ToString(), out Userid);
+                command.Parameters.AddWithValue("@p_LoggedinUserID", Userid);
+                command.Parameters.AddWithValue("@p_TransferID", TransferID);
+
+                command.CommandType = CommandType.StoredProcedure;
+                command.ExecuteNonQuery();
+                SqlDataAdapter da = new SqlDataAdapter(command);
+                da.Fill(ds);
+                dsStatic = ds;
+
+                int totalRows = ds.Tables[0].Rows.Count;
+
+                dgvReceiveTransfer.DataSource = ds;
+                dgvReceiveTransfer.DataBind();
+
+                litReqNo.Text = ds.Tables[0].Rows[0]["TransferID"].ToString();
+
+            }
+            catch (Exception ex)
             {
                 if (connection.State == ConnectionState.Open)
                     connection.Close();

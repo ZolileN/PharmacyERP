@@ -46,6 +46,11 @@ namespace IMS
                 drpCat.DataTextField = "Name";
                 drpCat.DataValueField = "CategoryID";
                 drpCat.DataBind();
+                if (ds != null)
+                {
+                    drpCat.Items.Insert(0, "All");
+                    drpCat.SelectedIndex = 0;
+                }
 
             }
             catch (Exception ex)
@@ -61,10 +66,18 @@ namespace IMS
         {
             try
             {
+                int? CategoryId ;
+                string selectedSubCategory = drpCat.SelectedValue;
+                
+                if (selectedSubCategory.Equals("All"))
+                    CategoryId = null;
+                else
+                    CategoryId = Int32.Parse(drpCat.SelectedValue);
+
                 if (connection.State == ConnectionState.Closed) { connection.Open(); }
                 SqlCommand command = new SqlCommand("SP_GetSubCatByCatWise", connection);
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@CatgId", drpCat.SelectedValue);
+                command.Parameters.AddWithValue("@CatgId", CategoryId);
 
                 SqlDataAdapter sdA = new SqlDataAdapter(command);
                 DataSet ds = new DataSet();
@@ -75,6 +88,11 @@ namespace IMS
                 DrpSubCat.DataTextField = "Name";
                 DrpSubCat.DataValueField = "Sub_CatID";
                 DrpSubCat.DataBind();
+                if (ds != null)
+                {
+                    DrpSubCat.Items.Insert(0, "All");
+                    DrpSubCat.SelectedIndex = 0;
+                }
 
             }
             catch (Exception ex)
@@ -98,9 +116,19 @@ namespace IMS
         {
             try
             {
-               
+                int? SubCategory,CatID;
+                string selectedSubCategory = DrpSubCat.SelectedValue;
+                string selectedCategory = drpCat.SelectedValue;
+                if (selectedCategory.Equals("All"))
+                    CatID = null;
+                else
+                    CatID = Int32.Parse(drpCat.SelectedValue);
 
-                DataSet ds = reportbll.rpt_HaadNonHaadMedicinesList(Int32.Parse(DrpSubCat.SelectedValue));
+                if (selectedSubCategory.Equals("All"))
+                    SubCategory = null;
+                else
+                    SubCategory = Int32.Parse(DrpSubCat.SelectedValue);
+                DataSet ds = reportbll.rpt_HaadNonHaadMedicinesList(4028, CatID, SubCategory);
                 
                 ReportDocument myReportDocument = new ReportDocument();
 

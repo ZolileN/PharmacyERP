@@ -21,6 +21,7 @@ using IMSBusinessLogic;
 using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
 using System.Drawing.Printing;
+using IMSCommon;
 
 namespace IMS
 {
@@ -129,7 +130,8 @@ namespace IMS
                         //DataSet ds = new DataSet();
                         //SqlDataAdapter sA = new SqlDataAdapter(command);
                         //sA.Fill(ds);
-                        ProductSubCat.DataSource = SubCategoryBLL.GetSubCategoriesBasic();
+                        int? CatID = null;
+                        ProductSubCat.DataSource = SubCategoryBLL.GetSubCategoriesBasic(CatID);
                         ProductSubCat.DataTextField = "Name";
                         ProductSubCat.DataValueField = "Sub_CatID";
                         ProductSubCat.DataBind();
@@ -457,8 +459,110 @@ namespace IMS
             //mpeCongratsMessageDiv.Show();
         }
 
-    
+        protected void ProductDept_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int DeptId;
+            string SelectedDropDown = this.ProductDept.SelectedValue.ToString();
+            if (ProductDept.SelectedValue.ToString().Equals("Select Department"))
+            {
+                DeptId = 0;
+            }
+            else
+                DeptId = int.Parse(this.ProductDept.SelectedValue.ToString());
+            this.ProductCat.DataSource = null;
+            LoadCategoryDD(DeptId);
+        }
 
-        
+        private void LoadCategoryDD(int DeptId)
+        {
+            try
+            {
+                if (DeptId > 0)
+                {
+                    Category objCategory = new Category();
+                    objCategory.DepartmentID = DeptId;
+                    ProductCat.DataSource = InventoryBLL.GetDepartmentCategory(connection, objCategory);
+                    ProductCat.DataTextField = "Name";
+                    ProductCat.DataValueField = "CategoryID";
+                    ProductCat.DataBind();
+                    if (ProductCat != null)
+                    {
+                        ProductCat.Items.Insert(0, "All Category");
+                        ProductCat.SelectedIndex = 0;
+                    }
+                }
+                else
+                {
+                    ProductCat.DataSource = InventoryBLL.GetCategoryBasic(connection);
+                    ProductCat.DataTextField = "Name";
+                    ProductCat.DataValueField = "CategoryID";
+                    ProductCat.DataBind();
+                    if (ProductCat != null)
+                    {
+                        ProductCat.Items.Insert(0, "All Category");
+                        ProductCat.SelectedIndex = 0;
+                    }
+                }
+
+            }
+            catch
+            {
+
+                throw;
+            }
+        }
+
+        protected void ProductCat_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                int CatID;
+                string SelectedDropDown = this.ProductCat.SelectedValue.ToString();
+                if (ProductCat.SelectedValue.ToString().Equals("All Category"))
+                {
+                    CatID = 0;
+                }
+                else
+                    CatID = int.Parse(this.ProductCat.SelectedValue.ToString());
+                this.ProductSubCat.DataSource = null;
+                LoadSubCategoryDD(CatID);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        private void LoadSubCategoryDD(int CatID)
+        {
+            if (CatID > 0)
+            {
+                ProductSubCat.DataSource = SubCategoryBLL.GetSubCategoriesBasic(CatID);
+                ProductSubCat.DataTextField = "Name";
+                ProductSubCat.DataValueField = "Sub_CatID";
+                ProductSubCat.DataBind();
+                if (ProductSubCat != null)
+                {
+                    ProductSubCat.Items.Insert(0, "All Sub Category");
+                    ProductSubCat.SelectedIndex = 0;
+                }
+            }
+            else
+            {
+                int? CateID = null;
+                ProductSubCat.DataSource = SubCategoryBLL.GetSubCategoriesBasic(CateID);
+                ProductSubCat.DataTextField = "Name";
+                ProductSubCat.DataValueField = "Sub_CatID";
+                ProductSubCat.DataBind();
+
+                if (ProductSubCat != null)
+                {
+                    ProductSubCat.Items.Insert(0, "All Sub Category");
+                    ProductSubCat.SelectedIndex = 0;
+                }
+            }
+        }
     }
 }

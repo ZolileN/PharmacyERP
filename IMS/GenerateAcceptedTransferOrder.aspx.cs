@@ -84,6 +84,7 @@ namespace IMS
             try
             {
                 DataTable dtGridSource = new DataTable();
+                dtGridSource.Columns.Add("TransferID");
                 dtGridSource.Columns.Add("ProductID");
                 dtGridSource.Columns.Add("SystemID");
                 dtGridSource.Columns.Add("Product_Name");

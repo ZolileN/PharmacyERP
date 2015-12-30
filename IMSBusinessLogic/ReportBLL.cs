@@ -67,17 +67,14 @@ namespace IMSBusinessLogic
             }
             return dsResults;
         }
-		
-        public DataSet rpt_HaadNonHaadMedicinesList(int Sub_CategoryID)
+
+        public DataSet rpt_HaadNonHaadMedicinesList(int DeptID, int? CatID, int? Sub_CategoryID)
 
         {
             DataSet dsResults = new DataSet();
             try
             {
-
-             
-
-                dsResults = reportdal.rpt_HaadNonHaadMedicinesList(Sub_CategoryID);
+                dsResults = reportdal.rpt_HaadNonHaadMedicinesList(DeptID, CatID, Sub_CategoryID);
 
             }
             catch (Exception ex)
