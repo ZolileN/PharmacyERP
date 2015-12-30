@@ -25,7 +25,8 @@ namespace IMSDataAccess
             Sp_AddSalesmanSystems,
             Sp_AddNewSubCategorys,
             Sp_GetVendorById,
-            Sp_GetVendorByName
+            Sp_GetVendorByName,
+            SP_GenerateItemReturn
 
 
         }
@@ -76,7 +77,14 @@ namespace IMSDataAccess
             sp_GetAllPendingTransferRequests,
             sp_rptInventoryListDetailsReport,
             sp_rptInventorySummaryReport,
-            SP_Get_HAAD_Medicine_By_Sub_Category
+            SP_Get_HAAD_Medicine_By_Sub_Category,
+            Sp_GetStockByName,
+            SP_GetStockBatches,
+            SP_GetItemReturns,
+            SP_GetItemReturnsDetails,
+            SP_GetDepartments_NearestExpiry,
+            SP_GetCategory_NearestExpiry,
+            SP_GetSubCategory_NearestExpiry
             
 
 

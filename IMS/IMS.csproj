@@ -299,10 +299,13 @@
     <Content Include="AcceptPurchaseOrder.aspx" />
     <Content Include="Images\logoutIcon.png" />
     <Content Include="Notification.aspx" />
+    <Content Include="Returns_Generate.aspx" />
     <Content Include="rpt_HaadMedicinesList.aspx" />
     <Content Include="rpt_NonHaadMedicinesList.aspx" />
     <Content Include="rpt_InventorySummaryReport.aspx" />
     <Content Include="Scripts\PharmacyCustom.js" />
+    <Content Include="SearchProductReturn.aspx" />
+    <Content Include="SearchVendorReturn.aspx" />
     <Content Include="StockCostAdjustment.aspx" />
     <Content Include="StockManipulation.aspx" />
     <Content Include="StockManipulationPrint.aspx" />
@@ -1391,6 +1394,13 @@
       <DependentUpon>Profitability.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Returns_Generate.aspx.cs">
+      <DependentUpon>Returns_Generate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Returns_Generate.aspx.designer.cs">
+      <DependentUpon>Returns_Generate.aspx</DependentUpon>
+    </Compile>
     <Compile Include="rpt_HaadMedicinesList.aspx.cs">
       <DependentUpon>rpt_HaadMedicinesList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1411,6 +1421,20 @@
     </Compile>
     <Compile Include="rpt_InventorySummaryReport.aspx.designer.cs">
       <DependentUpon>rpt_InventorySummaryReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SearchProductReturn.aspx.cs">
+      <DependentUpon>SearchProductReturn.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SearchProductReturn.aspx.designer.cs">
+      <DependentUpon>SearchProductReturn.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SearchVendorReturn.aspx.cs">
+      <DependentUpon>SearchVendorReturn.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SearchVendorReturn.aspx.designer.cs">
+      <DependentUpon>SearchVendorReturn.aspx</DependentUpon>
     </Compile>
     <Compile Include="StockCostAdjustment.aspx.cs">
       <DependentUpon>StockCostAdjustment.aspx</DependentUpon>
