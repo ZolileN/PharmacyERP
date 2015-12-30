@@ -13,6 +13,15 @@ namespace IMS {
     public partial class rpt_NearestExpiry {
         
         /// <summary>
+        /// up1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel up1;
+        
+        /// <summary>
         /// btnCreateReport control.
         /// </summary>
         /// <remarks>
@@ -67,22 +76,13 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.TextBox txtDepartment;
         
         /// <summary>
-        /// btnSeachDepartment control.
+        /// drpDepartments control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSeachDepartment;
-        
-        /// <summary>
-        /// mpeDepartmentDiv control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::AjaxControlToolkit.ModalPopupExtender mpeDepartmentDiv;
+        protected global::System.Web.UI.WebControls.DropDownList drpDepartments;
         
         /// <summary>
         /// lblCategory control.
@@ -103,22 +103,13 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.TextBox txtCategory;
         
         /// <summary>
-        /// btnSearchCategory control.
+        /// drpCatg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSearchCategory;
-        
-        /// <summary>
-        /// mpeCategoryDiv control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::AjaxControlToolkit.ModalPopupExtender mpeCategoryDiv;
+        protected global::System.Web.UI.WebControls.DropDownList drpCatg;
         
         /// <summary>
         /// lblSubCategory control.
@@ -139,22 +130,13 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.TextBox txtSubcategory;
         
         /// <summary>
-        /// btnSearchSubcat control.
+        /// drpSubCatg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSearchSubcat;
-        
-        /// <summary>
-        /// mpeSubCategoryDiv control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::AjaxControlToolkit.ModalPopupExtender mpeSubCategoryDiv;
+        protected global::System.Web.UI.WebControls.DropDownList drpSubCatg;
         
         /// <summary>
         /// lblproduct control.

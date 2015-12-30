@@ -17,7 +17,8 @@
         </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-      
+       <asp:UpdatePanel ID="up1" runat="server">
+        <ContentTemplate> 
 
 
         <table width="100%">
@@ -40,35 +41,40 @@
             <tr>
             <td><label>Expiry Range From: </label></td>
             <td>
-                <asp:TextBox ID="txtDateFrom" runat="server"  OnClientClick="return ValidateForm();"></asp:TextBox>
+                <asp:TextBox ID="txtDateFrom" runat="server" ></asp:TextBox>
             </td>
             <td>
                  <label>Expiry Range To</label>
             </td>
             <td>
-                <asp:TextBox ID="txtDateTO" runat="server"  OnClientClick="return ValidateForm();"></asp:TextBox>
+                <asp:TextBox ID="txtDateTO" runat="server" ></asp:TextBox>
             </td>
         </tr>
 		<tr>
             <td><asp:label ID="lblDepartment"  runat="server"><b>Department:</b></asp:label></td>
             <td>
 					<asp:TextBox ID="txtDepartment" Text="" runat="server"></asp:TextBox>
-                    <asp:Button ID="btnSeachDepartment" runat="server" CssClass="search-btn getDepartment" OnClick="btnSeachDepartment_Click" />
+                <asp:DropDownList ID="drpDepartments" runat="server" AutoPostBack="true" OnSelectedIndexChanged="drpDepartments_SelectedIndexChanged"></asp:DropDownList>
+
+                    <%--<asp:Button ID="btnSeachDepartment" runat="server" CssClass="search-btn getDepartment" OnClick="btnSeachDepartment_Click" />
                     <cc1:ModalPopupExtender ID="mpeDepartmentDiv" runat="server" BackgroundCssClass="overLaypop"
                        RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="lblDepartment" ClientIDMode="AutoID"
                        PopupControlID="_DepartmentDiv">
-                    </cc1:ModalPopupExtender>
+                    </cc1:ModalPopupExtender>--%>
 			</td>
             	
 				 <td><asp:label ID="lblCategory" runat="server"><b>Category:</b></asp:label></td>
             <td>
 			
                     <asp:TextBox ID="txtCategory" Text="" runat="server"></asp:TextBox>
-                    <asp:Button ID="btnSearchCategory" runat="server" CssClass="search-btn getCategory" OnClick="btnSearchCategory_Click" />
+                                <asp:DropDownList ID="drpCatg" runat="server" AutoPostBack="true" OnSelectedIndexChanged="drpCatg_SelectedIndexChanged"></asp:DropDownList>
+
+                    
+                   <%-- <asp:Button ID="btnSearchCategory" runat="server" CssClass="search-btn getCategory" OnClick="btnSearchCategory_Click" />
                     <cc1:ModalPopupExtender ID="mpeCategoryDiv" runat="server" BackgroundCssClass="overLaypop"
                        RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="lblCategory" ClientIDMode="AutoID"
                        PopupControlID="_CategoryDiv">
-                    </cc1:ModalPopupExtender>
+                    </cc1:ModalPopupExtender>--%>
             
 			</td>
         </tr>
@@ -78,11 +84,15 @@
             <td>
 			
                     <asp:TextBox ID="txtSubcategory" Text="" runat="server"></asp:TextBox>
-                    <asp:Button ID="btnSearchSubcat" runat="server" CssClass="search-btn getSubCategory" OnClick="btnSearchSubcat_Click" />
+                                                <asp:DropDownList ID="drpSubCatg" runat="server" ></asp:DropDownList>
+
+                    
+                   
+                 <%--   <asp:Button ID="btnSearchSubcat" runat="server" CssClass="search-btn getSubCategory" OnClick="btnSearchSubcat_Click" />
                     <cc1:ModalPopupExtender ID="mpeSubCategoryDiv" runat="server" BackgroundCssClass="overLaypop"
                        RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="lblSubCategory" ClientIDMode="AutoID"
                        PopupControlID="_SubCategoryDiv">
-                    </cc1:ModalPopupExtender>
+                    </cc1:ModalPopupExtender>--%>
 			
 			</td>
             	
@@ -116,20 +126,9 @@
     <div id="_ProductDiv" class="congrats-cont" style="display: none; ">
                             <ucProductPopup:ProductPopup  id="ProductPopupGrid" runat="server"/>
                         </div>
-     <script type="text/javascript">
-         function ValidateForm() {
+    
 
-             if (document.getElementById("MainContent_txtDateFrom").value == null || document.getElementById("MainContent_txtDateFrom").value == '') {
-                 alert("Please enter Cost Price");
-                 return false;
-             }
-             if (document.getElementById("MainContent_txtDateTO").value == null || document.getElementById("MainContent_txtDateTO").value == '') {
-                 alert("Please enter Sale Price");
-                 return false;
-             }
+</ContentTemplate>
+ </asp:UpdatePanel>
 
-             return true;
-
-         }
-        </script>
 </asp:Content>

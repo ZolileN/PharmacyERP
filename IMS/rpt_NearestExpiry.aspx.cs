@@ -22,121 +22,156 @@ namespace IMS
     {
         public static SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["IMSConnectionString"].ToString());
         public ReportDocument myReportDocument = new ReportDocument();
+
+        public void loadDeapartments()
+        { 
+       
+             DataSet ds;
+            ds = NearestExpiryBLL.LoadDepartments();
+            drpDepartments.DataSource = ds;
+            drpDepartments.DataValueField = "DepId";
+            drpDepartments.DataTextField = "Name";
+            drpDepartments.DataBind();
+        }
+        public void loadCategory()
+        {
+
+            DataSet ds;
+            ds = NearestExpiryBLL.LoadCategory(Int32.Parse(drpDepartments.SelectedValue.ToString()));
+            drpCatg.DataSource = ds;
+            drpCatg.DataValueField = "CategoryID";
+            drpCatg.DataTextField = "Name";
+            drpCatg.DataBind();
+        }
+
+        public void loadSubCategory()
+        {
+
+            DataSet ds;
+            ds = NearestExpiryBLL.LoadSubCategory(Int32.Parse(drpCatg.SelectedValue.ToString()));
+            drpSubCatg.DataSource = ds;
+            drpSubCatg.DataValueField = "Sub_CatID";
+            drpSubCatg.DataTextField = "Name";
+            drpSubCatg.DataBind();
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                loadDeapartments();
+                loadCategory();
+                loadSubCategory();
 
-                if (Session["rptItemPurchaseDateF"] != null && Session["rptItemPurchaseDateF"].ToString() != "")
-                {
-                    txtDateFrom.Text = Session["rptItemPurchaseDateF"].ToString();
-                }
-                if (Session["rptItemPurchaseDateT"] != null && Session["rptItemPurchaseDateT"].ToString() != "")
-                {
-                    txtDateTO.Text = Session["rptItemPurchaseDateT"].ToString();
-                }
+                //if (Session["rptItemPurchaseDateF"] != null && Session["rptItemPurchaseDateF"].ToString() != "")
+                //{
+                //    txtDateFrom.Text = Session["rptItemPurchaseDateF"].ToString();
+                //}
+                //if (Session["rptItemPurchaseDateT"] != null && Session["rptItemPurchaseDateT"].ToString() != "")
+                //{
+                //    txtDateTO.Text = Session["rptItemPurchaseDateT"].ToString();
+                //}
 
-                Session["rptProductID"] = null;
+                //Session["rptProductID"] = null;
 
-                Session["rptSubCategoryID"] = null;
+                //Session["rptSubCategoryID"] = null;
 
-                Session["rptCategoryID"] = null;
+                //Session["rptCategoryID"] = null;
 
-                Session["rptDepartmentID"] = null;
+                //Session["rptDepartmentID"] = null;
 
-                Session["rptItemPurhcaseDateF"] = null;
+                //Session["rptItemPurhcaseDateF"] = null;
 
-                Session["rptItemPurchaseDateT"] = null;
+                //Session["rptItemPurchaseDateT"] = null;
 
-                Session["SP_Purchase"] = "Expiry";
+                //Session["SP_Purchase"] = "Expiry";
 
                 txtDateFrom.Text = System.DateTime.Now.ToShortDateString();
                 txtDateFrom.Enabled = false;
             }
         }
 
-        protected void btnCreateReport_Click(object sender, EventArgs e)
-        {
-            if (txtProduct.Text != "")
-            {
-                Session["rptProductID"] = Session["rptProductID"];
-                Session["selectionProduct"] = txtProduct.Text;
+        //protected void btnCreateReport_Click(object sender, EventArgs e)
+        //{
+        //    if (txtProduct.Text != "")
+        //    {
+        //        Session["rptProductID"] = Session["rptProductID"];
+        //        Session["selectionProduct"] = txtProduct.Text;
 
-            }
-            else
-            {
-                Session["rptProductID"] = "";
-                Session["selectionProduct"] = "All";
-            }
+        //    }
+        //    else
+        //    {
+        //        Session["rptProductID"] = "";
+        //        Session["selectionProduct"] = "All";
+        //    }
 
-            if (txtSubcategory.Text != "")
-            {
-                Session["rptSubCategoryID"] = Session["rptSubCategoryID"];
-                Session["selectionSubCategory"] = txtSubcategory.Text;
-            }
-            else
-            {
-                Session["rptSubCategoryID"] = "";
-                Session["selectionSubCategory"] = "All";
-            }
+        //    if (txtSubcategory.Text != "")
+        //    {
+        //        Session["rptSubCategoryID"] = Session["rptSubCategoryID"];
+        //        Session["selectionSubCategory"] = txtSubcategory.Text;
+        //    }
+        //    else
+        //    {
+        //        Session["rptSubCategoryID"] = "";
+        //        Session["selectionSubCategory"] = "All";
+        //    }
 
-            if (txtCategory.Text != "")
-            {
-                Session["rptCategoryID"] = Session["rptCategoryID"];
-                Session["selectionCategory"] = txtCategory.Text;
-            }
-            else
-            {
-                Session["rptCategoryID"] = "";
-                Session["selectionCategory"] = "All";
-            }
+        //    if (txtCategory.Text != "")
+        //    {
+        //        Session["rptCategoryID"] = Session["rptCategoryID"];
+        //        Session["selectionCategory"] = txtCategory.Text;
+        //    }
+        //    else
+        //    {
+        //        Session["rptCategoryID"] = "";
+        //        Session["selectionCategory"] = "All";
+        //    }
 
-            if (txtDepartment.Text != "")
-            {
-                Session["rptDepartmentID"] = Session["rptDepartmentID"];
-                Session["selectionDepartment"] = txtDepartment.Text;
-            }
-            else
-            {
-                Session["rptDepartmentID"] = "";
-                Session["selectionDepartment"] = "All";
-            }
+        //    if (txtDepartment.Text != "")
+        //    {
+        //        Session["rptDepartmentID"] = Session["rptDepartmentID"];
+        //        Session["selectionDepartment"] = txtDepartment.Text;
+        //    }
+        //    else
+        //    {
+        //        Session["rptDepartmentID"] = "";
+        //        Session["selectionDepartment"] = "All";
+        //    }
 
               
             
-            if (txtDateFrom.Text != "")
-            {
-                Session["rptItemPurchaseDateF"] = txtDateFrom.Text.ToString();
-            }
-            else
-            {
-                Session["rptItemPurchaseDateF"] = "";
-            }
+        //    if (txtDateFrom.Text != "")
+        //    {
+        //        Session["rptItemPurchaseDateF"] = txtDateFrom.Text.ToString();
+        //    }
+        //    else
+        //    {
+        //        Session["rptItemPurchaseDateF"] = "";
+        //    }
 
-            if (txtDateTO.Text != "")
-            {
+        //    if (txtDateTO.Text != "")
+        //    {
 
-                Session["rptItemPurchaseDateT"] = txtDateTO.Text.ToString();
-            }
-            else
-            {
-                DateTime dt = DateTime.Now.Date.AddMonths(6);
-                //dt = dt.AddMonths(6);
-                String ToDate = dt.ToShortDateString();
-                Session["rptItemPurchaseDateT"] = ToDate;
-            }
+        //        Session["rptItemPurchaseDateT"] = txtDateTO.Text.ToString();
+        //    }
+        //    else
+        //    {
+        //        DateTime dt = DateTime.Now.Date.AddMonths(6);
+        //        //dt = dt.AddMonths(6);
+        //        String ToDate = dt.ToShortDateString();
+        //        Session["rptItemPurchaseDateT"] = ToDate;
+        //    }
 
-                Session["rptItemPurchaseExpiry"] = "";
+        //        Session["rptItemPurchaseExpiry"] = "";
             
-                Session["rptBarterCustomers"] = "Exlude";
+        //        Session["rptBarterCustomers"] = "Exlude";
 
-                Session["rptCustomerID"] = "";
-                Session["selectionCustomers"] = "All";
+        //        Session["rptCustomerID"] = "";
+        //        Session["selectionCustomers"] = "All";
             
 
-            LoadData();
-            Response.Redirect("CrystalReportViewer.aspx");
-        }
+        //    LoadData();
+        //    Response.Redirect("CrystalReportViewer.aspx");
+        //}
 
         public void LoadData()
         {
@@ -367,7 +402,7 @@ namespace IMS
             {
                 Session["SearchItemDept_RPT"] = txtDepartment.Text.ToString();
                 DepartmentPopupGrid.LoadData();
-                mpeDepartmentDiv.Show();
+               // mpeDepartmentDiv.Show();
             }
             catch (Exception ex)
             {
@@ -387,7 +422,7 @@ namespace IMS
             {
                 Session["SearchItemCat_RPT"] = txtCategory.Text.ToString();
                 CategoryPopupGrid.LoadData();
-                mpeCategoryDiv.Show();
+                //mpeCategoryDiv.Show();
             }
             catch (Exception ex)
             {
@@ -407,7 +442,7 @@ namespace IMS
             {
                 Session["SearchItemSubCat_RPT"] = txtSubcategory.Text.ToString();
                 SubCategoryPopupGrid.LoadData();
-                mpeSubCategoryDiv.Show();
+              //  mpeSubCategoryDiv.Show();
             }
             catch (Exception ex)
             {
@@ -439,6 +474,129 @@ namespace IMS
                     connection.Close();
 
             }
+        }
+
+        protected void drpDepartments_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            loadCategory();
+            loadSubCategory();
+        }
+
+        protected void drpCatg_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            loadSubCategory();
+        }
+
+        protected void btnCreateReport_Click(object sender, EventArgs e)
+        {
+            string Filter = string.Empty;
+            string toDate=string.Empty;
+            if (drpDepartments.SelectedValue != "0") Filter = Filter + " AND tblDepartment.DepId=" + drpDepartments.SelectedValue.ToString();
+            else if (drpCatg.SelectedValue != "0") Filter = Filter + " AND tblCategory.CategoryID=" + drpCatg.SelectedValue.ToString();
+            else if (drpSubCatg.SelectedValue != "0") Filter = Filter + " AND tbl_ProductMaster.SubCategoryID=" + drpSubCatg.SelectedValue.ToString();
+            if (txtDateTO.Text.Trim() != "")
+            {
+                txtDateTO.Text.ToString();
+            }
+            else
+            {
+                DateTime dt = DateTime.Now.Date.AddMonths(6);
+                toDate = dt.ToShortDateString();
+               
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+            //Previous Code
+                if (txtProduct.Text != "")
+                {
+                    Session["rptProductID"] = Session["rptProductID"];
+                    Session["selectionProduct"] = txtProduct.Text;
+
+                }
+                else
+                {
+                    Session["rptProductID"] = "";
+                    Session["selectionProduct"] = "All";
+                }
+
+                if (txtSubcategory.Text != "")
+                {
+                    Session["rptSubCategoryID"] = Session["rptSubCategoryID"];
+                    Session["selectionSubCategory"] = txtSubcategory.Text;
+                }
+                else
+                {
+                    Session["rptSubCategoryID"] = "";
+                    Session["selectionSubCategory"] = "All";
+                }
+
+                if (txtCategory.Text != "")
+                {
+                    Session["rptCategoryID"] = Session["rptCategoryID"];
+                    Session["selectionCategory"] = txtCategory.Text;
+                }
+                else
+                {
+                    Session["rptCategoryID"] = "";
+                    Session["selectionCategory"] = "All";
+                }
+
+                if (txtDepartment.Text != "")
+                {
+                    Session["rptDepartmentID"] = Session["rptDepartmentID"];
+                    Session["selectionDepartment"] = txtDepartment.Text;
+                }
+                else
+                {
+                    Session["rptDepartmentID"] = "";
+                    Session["selectionDepartment"] = "All";
+                }
+
+
+
+                if (txtDateFrom.Text != "")
+                {
+                    Session["rptItemPurchaseDateF"] = txtDateFrom.Text.ToString();
+                }
+                else
+                {
+                    Session["rptItemPurchaseDateF"] = "";
+                }
+
+                if (txtDateTO.Text != "")
+                {
+
+                    Session["rptItemPurchaseDateT"] = txtDateTO.Text.ToString();
+                }
+                else
+                {
+                    DateTime dt = DateTime.Now.Date.AddMonths(6);
+                    //dt = dt.AddMonths(6);
+                    String ToDate = dt.ToShortDateString();
+                    Session["rptItemPurchaseDateT"] = ToDate;
+                }
+
+                    Session["rptItemPurchaseExpiry"] = "";
+
+                    Session["rptBarterCustomers"] = "Exlude";
+
+                    Session["rptCustomerID"] = "";
+                    Session["selectionCustomers"] = "All";
+
+
+                LoadData();
+                Response.Redirect("CrystalReportViewer.aspx");
+
         }
     }
 }
