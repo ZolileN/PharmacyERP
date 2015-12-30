@@ -58,11 +58,11 @@
             <td>
                 <asp:Label runat="server" AssociatedControlID="ProductDept" CssClass="control-label" Visible="true">Product Department</asp:Label></td>
             <td>
-                <asp:DropDownList runat="server" ID="ProductDept" CssClass="form-control" Width="29%" Visible="true" AppendDataBoundItems="True" /></td>
+                <asp:DropDownList runat="server" ID="ProductDept" CssClass="form-control" Width="29%" Visible="true" AppendDataBoundItems="True" AutoPostBack="True" OnSelectedIndexChanged="ProductDept_SelectedIndexChanged" /></td>
             <td>
                 <asp:Label runat="server" AssociatedControlID="ProductCat" CssClass="control-label" Visible="true">Product Category</asp:Label></td>
             <td>
-                <asp:DropDownList runat="server" ID="ProductCat" CssClass="form-control" Width="29%" Visible="true" /></td>
+                <asp:DropDownList runat="server" ID="ProductCat" CssClass="form-control" Width="29%" Visible="true" AutoPostBack="True" OnSelectedIndexChanged="ProductCat_SelectedIndexChanged" /></td>
         </tr>
         <tr>
             <td>
@@ -77,11 +77,7 @@
                 
             </td>
         </tr>
-        <tr>
-           
-           
-        </tr>
-    </table>
+        </table>
 
     <div class="form-horizontal">
         <div class="form-group">

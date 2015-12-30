@@ -172,7 +172,8 @@ namespace IMS
                         //DataSet ds = new DataSet();
                         //SqlDataAdapter sA = new SqlDataAdapter(command);
                         //sA.Fill(ds);
-                        ProductSubCat.DataSource = SubCategoryBLL.GetSubCategoriesBasic();
+                        int? CatID = null;
+                        ProductSubCat.DataSource = SubCategoryBLL.GetSubCategoriesBasic(CatID);
                         ProductSubCat.DataTextField = "Name";
                         ProductSubCat.DataValueField = "Sub_CatID";
                         ProductSubCat.DataBind();

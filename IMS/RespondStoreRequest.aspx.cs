@@ -29,7 +29,11 @@ namespace IMS
                 System.Uri url = Request.Url;
                 pageURL = url.AbsolutePath.ToString();
                 log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
+                if (!IsPostBack && Request.QueryString["TransferID"] != null && !Request.QueryString["TransferID"].Equals("")) {
+                    Session["WH_RequestedNO"] = Request.QueryString["TransferID"];
+                    LoadRepeater();
+                    
+                }
                 if (!IsPostBack)
                 {
                     LoadRepeater();

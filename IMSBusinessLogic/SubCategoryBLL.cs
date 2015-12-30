@@ -85,14 +85,14 @@ namespace IMSBusinessLogic
         
 
     
-        public static DataSet GetSubCategoriesBasic()
+        public static DataSet GetSubCategoriesBasic(int? CategoryID)
         {
 
             DataSet resultSet = new DataSet();
             try
             { 
                 SubCategoryDAL objSubCategoryDAL = new SubCategoryDAL();
-                resultSet = objSubCategoryDAL.SelectSubCategoriesBasic();
+                resultSet = objSubCategoryDAL.SelectSubCategoriesBasic(CategoryID);
 
                 //if (connection.State == ConnectionState.Closed)
                 //{
@@ -229,6 +229,11 @@ namespace IMSBusinessLogic
             {
             }
         }
-        
+
+
+        public static SubCategory GetSubCategoryByCatID(SqlConnection connection, SubCategory objSubCategory)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

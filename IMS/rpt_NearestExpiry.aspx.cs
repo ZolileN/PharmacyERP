@@ -14,6 +14,7 @@ using System.Web.UI.WebControls;
 using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
 using System.Drawing.Printing;
+using System.Globalization;
 
 namespace IMS
 {
@@ -48,6 +49,9 @@ namespace IMS
                 Session["rptItemPurchaseDateT"] = null;
 
                 Session["SP_Purchase"] = "Expiry";
+
+                txtDateFrom.Text = System.DateTime.Now.ToShortDateString();
+                txtDateFrom.Enabled = false;
             }
         }
 
@@ -111,11 +115,15 @@ namespace IMS
 
             if (txtDateTO.Text != "")
             {
+
                 Session["rptItemPurchaseDateT"] = txtDateTO.Text.ToString();
             }
             else
             {
-                Session["rptItemPurchaseDateT"] = "";
+                DateTime dt = DateTime.Now.Date.AddMonths(6);
+                //dt = dt.AddMonths(6);
+                String ToDate = dt.ToShortDateString();
+                Session["rptItemPurchaseDateT"] = ToDate;
             }
 
                 Session["rptItemPurchaseExpiry"] = "";
