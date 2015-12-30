@@ -39,9 +39,10 @@
         <tr>
             <td><asp:Label runat="server" AssociatedControlID="StockAt" CssClass="control-label">Pharmacy Name </asp:Label></td>
             <td>
-                <asp:DropDownList runat="server" ID="StockAt" CssClass="form-control product" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="StockAt_SelectedIndexChanged" DataSourceID="StockAtDataSource" DataTextField="SystemName" DataValueField="SystemID"  />
+                <asp:DropDownList runat="server" ID="StockAt" CssClass="form-control product" Width="29%" AutoPostBack="True" OnSelectedIndexChanged="StockAt_SelectedIndexChanged" />
 
-                <asp:SqlDataSource ID="StockAtDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:IMSConnectionString %>" SelectCommand="SELECT [SystemID], [SystemName] FROM [tbl_System]"></asp:SqlDataSource>
+                <!--DataSourceID="StockAtDataSource" DataTextField="SystemName" DataValueField="SystemID"-->
+                <!--<asp:SqlDataSource ID="StockAtDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:IMSConnectionString %>" SelectCommand="SELECT [SystemID], [SystemName] FROM [tbl_System]"></asp:SqlDataSource>-->
 
                 <asp:TextBox runat="server" ID="SelectProduct" CssClass="form-control product" Visible="false"/>
                 <asp:ImageButton ID="btnSearchProduct" Visible="false" runat="server" OnClick="btnSearchProduct_Click" Text="SearchProduct" Height="30px" ImageUrl="~/Images/search-icon-512.png" Width="45px" />

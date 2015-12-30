@@ -15,7 +15,7 @@
 
                
                     
-                    <div class="notify gr">
+                    <div class="notify gr" onclick="window.location.href='RespondStoreRequest?TransferID=<%#Eval("TransferID") %>'">
                             <div style="display:none" id="TID"><%#Eval("TransferID") %></div>
                             <div class="circle s">
                               <svg class="svg-light" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
@@ -33,8 +33,9 @@
                                 <div id="method" style="display:none"><%#Eval("Method") %></div>
 
                                 <div class="info" id="InitiatedToMe" style="display:none">
-                                    <span>New Transfer Request</span>
-                                    <span>From: <%#Eval("SystemName") %></span>
+                                    <span>Item Request</span>
+                                    <span>From: <%#Eval("SystemName") %></span><br />
+                                    <span>By: <%#Eval("U_EmpID") %></span>
                                 </div>
                         
                                 <div class="info" id="AcceptedOfMe" style="display:none">

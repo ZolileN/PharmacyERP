@@ -307,13 +307,19 @@ namespace IMS
 
         protected void btnShowREPORT_Click(object sender, EventArgs e) {
 
-            int DepartmentID = int.Parse(ProductDept.SelectedValue); ;
+            int DepartmentID =0;
+            int.TryParse(ProductDept.SelectedValue, out DepartmentID);
 
 
+            int CategoryID = 0;
+            int.TryParse(ProductCat.SelectedValue, out CategoryID);
 
-            int CategoryID = int.Parse(ProductCat.SelectedValue);
-            int subCategoryID = int.Parse(ProductSubCat.SelectedValue);
+            int subCategoryID = 0;
+            int.TryParse(ProductSubCat.SelectedValue, out subCategoryID);
+            
             string ProductName = txtSearch.Value;
+
+            
 
             DataSet ds = reportbll.rpt_InventoryListDetailsReport(DepartmentID, CategoryID, subCategoryID, ProductName);
 
@@ -337,14 +343,14 @@ namespace IMS
                 myReportDocument.SetParameterValue("Subcategory", "All");
             }
             else {
-                myReportDocument.SetParameterValue("Subcategory", ProductSubCat.SelectedValue);
+                myReportDocument.SetParameterValue("Subcategory", ProductSubCat.SelectedItem.Text);
             }
             if (ProductCat.SelectedIndex == 0)
             {
                 myReportDocument.SetParameterValue("Category", "All");
             }
             else {
-                myReportDocument.SetParameterValue("Category", ProductCat.SelectedValue);
+                myReportDocument.SetParameterValue("Category", ProductCat.SelectedItem.Text);
                 
             }
 
@@ -353,7 +359,7 @@ namespace IMS
                 myReportDocument.SetParameterValue("Department", "All");
             }
             else {
-                myReportDocument.SetParameterValue("Department", ProductDept.SelectedValue);
+                myReportDocument.SetParameterValue("Department", ProductDept.SelectedItem.Text);
             }
 
             

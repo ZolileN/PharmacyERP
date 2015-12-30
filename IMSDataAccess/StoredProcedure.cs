@@ -77,6 +77,7 @@ namespace IMSDataAccess
             sp_GetAllPendingTransferRequests,
             sp_rptInventoryListDetailsReport,
             sp_rptInventorySummaryReport,
+
             SP_Get_HAAD_Medicine_By_Sub_Category,
             Sp_GetStockByName,
             SP_GetStockBatches,
@@ -84,7 +85,10 @@ namespace IMSDataAccess
             SP_GetItemReturnsDetails,
             SP_GetDepartments_NearestExpiry,
             SP_GetCategory_NearestExpiry,
-            SP_GetSubCategory_NearestExpiry
+            SP_GetSubCategory_NearestExpiry,
+            sp_rptInventoryAdjustmentReport,
+            sp_rptInventoryReportByVendorID,
+            SP_Get_HAAD_Medicine_By_Sub_Category
             
 
 

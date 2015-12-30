@@ -51,14 +51,14 @@ namespace IMS
                         {
                             btnAccept.Text = "RE-GENERATE ORDER";
                             _newOrder = true;
-                            Session["ViewSalesOrders"] = false;
+                            //Session["ViewSalesOrders"] = false;
                         }
                         if (Session["OrderSalesDetail"].Equals(true))
                         {
                             _newOrder = true;
                             btnAccept.Text = "RE-GENERATE ORDER";
                         }
-                        Session["ViewSalesOrders"] = null;
+                       // Session["ViewSalesOrders"] = null;
                         Session["FirstOrderSO"] = true;
                        
                         systemSet = new DataSet();
@@ -130,8 +130,8 @@ namespace IMS
                             OrderDetailIDs.Add(Convert.ToInt32(((DataSet)Session["dsProdcts"]).Tables[0].Rows[i]["OrderDetailID"]));
                         }
 
-                        Session["PrevOrdDetailID"] = OrderDetailIDs;
-                        Session["UserChangedOrdDetID"] = OrderDetailIDs;
+                        if (Session["ViewSalesOrders"] != null && Session["ViewSalesOrders"].Equals(true)) { Session["PrevOrdDetailID"] = OrderDetailIDs; Session["ViewSalesOrders"] = false; Session["ViewSalesOrders"] = null; }
+                       // Session["UserChangedOrdDetID"] = OrderDetailIDs;
                     }
                     else
                     {
@@ -1113,7 +1113,7 @@ namespace IMS
                     //In case of Re-Generate SO, Delete the OrderDetailEntries for that Order and Add stock First.. 
                     if (btnAccept.Text.Equals("RE-GENERATE ORDER"))
                     {
-                        if (OrdDetIDChanged.Contains(orderDetID))
+                        if (OrdDetIDChanged!=null && OrdDetIDChanged.Contains(orderDetID))
                         {
                         }
                         else
@@ -1203,7 +1203,7 @@ namespace IMS
 
                     if ((quan + bonus) <= RemainingStock)
                     {
-                        if (OrdDetIDChanged.Contains(orderDetID))
+                        if (OrdDetIDChanged != null && OrdDetIDChanged.Contains(orderDetID))
                         {
                         }
                         else
@@ -1485,15 +1485,23 @@ namespace IMS
 
                     if (btnAccept.Text == "RE-GENERATE ORDER")
                     {
+                        List<int> OrdDetID = (List<int>)Session["PrevOrdDetailID"];
+                        OrdDetID.Remove(orderDetID);
+                        Session["PrevOrdDetailID"] = OrdDetID;
+
                         if (TotalQuantity != (Convert.ToInt32(Session["PreviousValueMain"].ToString())))
                         {
                             WebMessageBoxUtil.Show("You have changed the quantity of the existing Order, its prefered that you adjust its expiry manually," +
                                                     "otherwise, System will automatically adjust it, in that case the already selected expiry may get changed.");
 
-                            List<int> OrdDetID = (List<int>)Session["PrevOrdDetailID"];
-                            OrdDetID.Remove(orderDetID);
-                            Session["PrevOrdDetailID"] = OrdDetID;
-                            Session["UserChangedOrdDetID"] = OrdDetID;
+                            
+
+                            List<int> UserOrdDetID = (List<int>)Session["UserChangedOrdDetID"];
+
+                            if (UserOrdDetID.Contains(orderDetID)) { UserOrdDetID.Remove(orderDetID); }
+                            Session["UserChangedOrdDetID"] = UserOrdDetID;
+                            
+                          //  Session["UserChangedOrdDetID"] = OrdDetID;
                         }
                         else
                         {
@@ -1656,7 +1664,11 @@ namespace IMS
         protected void btnCreateOrder_Click(object sender, EventArgs e)
         {
 
-           
+           if(btnAccept.Text ==  "RE-GENERATE ORDER")
+           {
+               WebMessageBoxUtil.Show("User, you have added a new product into already generated order, you need to adjust its expiry manually, " +
+                                      "the system will not be able to select the expiry");
+           }
             int quan, bonQuan;
             quan = bonQuan = 0;
             int.TryParse(SelectQuantity.Text, out quan);
