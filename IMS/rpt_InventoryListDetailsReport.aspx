@@ -71,10 +71,10 @@
                 <asp:DropDownList runat="server" ID="ProductSubCat" CssClass="form-control" Width="29%" Visible="true" /></td>
             
             <td>
-                <asp:Label runat="server" ID="lblProd" AssociatedControlID="txtSearch" CssClass="control-label">Select Product</asp:Label></td>
+                <asp:Label runat="server" ID="lblProd" AssociatedControlID="txtSearch" CssClass="control-label">Product Criteria</asp:Label></td>
            <td>
-                <input type="text" id="txtSearch" runat="server" name="txtSearch"  />
-                
+                <input type="text" id="txtSearch" runat="server" name="txtSearch"  /><br />
+                <sub>&nbsp;e.g Panadol</sub>
             </td>
         </tr>
         </table>

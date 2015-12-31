@@ -79,7 +79,7 @@ namespace IMS
                             //btnAccept.Text = "RE-GENERATE ORDER";
                             //btnDecline.Visible = true;
                         }
-                        Session["FromViewPlacedOrders"] = null;
+                       // Session["FromViewPlacedOrders"] = null;
                         //Session["isGenOption"] = null;
                     }
                     else
@@ -687,9 +687,10 @@ namespace IMS
         protected void btnCancelOrder_Click(object sender, EventArgs e)
         {
             lblttlcst.Visible = false;
+            Session["FromViewPlacedOrders"] = null;
             if (Convert.ToInt32(Session["UserSys"]).Equals(1))
             {
-                Response.Redirect("WarehouseMain.aspx", false);
+                Response.Redirect("ViewIndirectPOWarehouse.aspx", false);
             }
             else
             {

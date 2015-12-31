@@ -98,15 +98,15 @@ namespace IMS
                         //DataSet ds = new DataSet();
                         //SqlDataAdapter sA = new SqlDataAdapter(command);
                         //sA.Fill(ds);
-                        ProductCat.DataSource = InventoryBLL.GetCategoryBasic(connection);
-                        ProductCat.DataTextField = "Name";
-                        ProductCat.DataValueField = "CategoryID";
-                        ProductCat.DataBind();
-                        if (ProductCat != null)
-                        {
-                            ProductCat.Items.Insert(0, "All Category");
+                        //ProductCat.DataSource = InventoryBLL.GetCategoryBasic(connection);
+                        //ProductCat.DataTextField = "Name";
+                        //ProductCat.DataValueField = "CategoryID";
+                        //ProductCat.DataBind();
+                        //if (ProductCat != null)
+                        //{
+                            ProductCat.Items.Insert(0, "All Categories");
                             ProductCat.SelectedIndex = 0;
-                        }
+                        //}
                     }
                     catch (Exception ex)
                     {
@@ -130,17 +130,17 @@ namespace IMS
                         //DataSet ds = new DataSet();
                         //SqlDataAdapter sA = new SqlDataAdapter(command);
                         //sA.Fill(ds);
-                        int? CatID = null;
-                        ProductSubCat.DataSource = SubCategoryBLL.GetSubCategoriesBasic(CatID);
-                        ProductSubCat.DataTextField = "Name";
-                        ProductSubCat.DataValueField = "Sub_CatID";
-                        ProductSubCat.DataBind();
+                        //int? CatID = null;
+                        //ProductSubCat.DataSource = SubCategoryBLL.GetSubCategoriesBasic(CatID);
+                        //ProductSubCat.DataTextField = "Name";
+                        //ProductSubCat.DataValueField = "Sub_CatID";
+                        //ProductSubCat.DataBind();
 
-                        if (ProductSubCat != null)
-                        {
-                            ProductSubCat.Items.Insert(0, "All Sub Category");
+                        //if (ProductSubCat != null)
+                        //{
+                            ProductSubCat.Items.Insert(0, "All Sub Categories");
                             ProductSubCat.SelectedIndex = 0;
-                        }
+                        //}
                     }
                     catch (Exception ex)
                     {
@@ -344,58 +344,70 @@ namespace IMS
                 dateTo, FilterBy, SystemID
                 );
 
-           
-
-            myReportDocument.Load(Server.MapPath("~/InventoryAdjustmentReport.rpt"));
-            App_Code.Barcode dsReport = new App_Code.Barcode();
-            dsReport.Tables[0].Merge((DataTable)ds.Tables[0]);
-            myReportDocument.SetDataSource(dsReport.Tables[0]);
-
-
-            if (ProductName.Equals(""))
+            if (ds.Tables[0].Rows.Count > 0)
             {
-                myReportDocument.SetParameterValue("Product", "All");
+
+                myReportDocument.Load(Server.MapPath("~/InventoryAdjustmentReport.rpt"));
+                App_Code.Barcode dsReport = new App_Code.Barcode();
+                dsReport.Tables[0].Merge((DataTable)ds.Tables[0]);
+                myReportDocument.SetDataSource(dsReport.Tables[0]);
+
+
+                if (ProductName.Equals(""))
+                {
+                    myReportDocument.SetParameterValue("Product", "All");
+                }
+                else
+                {
+                    myReportDocument.SetParameterValue("Product", ProductName);
+                }
+                if (ProductSubCat.SelectedIndex == 0)
+                {
+                    myReportDocument.SetParameterValue("Subcategory", "All");
+                }
+                else
+                {
+                    myReportDocument.SetParameterValue("Subcategory", ProductSubCat.SelectedItem.Text);
+                }
+                if (ProductCat.SelectedIndex == 0)
+                {
+                    myReportDocument.SetParameterValue("Category", "All");
+                }
+                else
+                {
+                    myReportDocument.SetParameterValue("Category", ProductCat.SelectedItem.Text);
+
+                }
+
+                if (ProductDept.SelectedIndex == 0)
+                {
+                    myReportDocument.SetParameterValue("Department", "All");
+                }
+                else
+                {
+                    myReportDocument.SetParameterValue("Department", ProductDept.SelectedItem.Text);
+                }
+
+                myReportDocument.SetParameterValue("DateFrom", From);
+                myReportDocument.SetParameterValue("DateTo", To);
+                myReportDocument.SetParameterValue("Pharmacy", pharmacyList.SelectedItem.Text);
+                myReportDocument.SetParameterValue("Quantity", filterby.SelectedItem.Text);
+
+
+
+
+
+                Session["ReportDocument"] = myReportDocument;
+                Session["ReportPrinting_Redirection"] = "rpt_InventoryAdjustmentReport.aspx";
+
+                Response.Redirect("CrystalReportViewer.aspx");
+
             }
             else {
-                myReportDocument.SetParameterValue("Product", ProductName);
-            }
-            if (ProductSubCat.SelectedIndex == 0)
-            {
-                myReportDocument.SetParameterValue("Subcategory", "All");
-            }
-            else {
-                myReportDocument.SetParameterValue("Subcategory", ProductSubCat.SelectedItem.Text);
-            }
-            if (ProductCat.SelectedIndex == 0)
-            {
-                myReportDocument.SetParameterValue("Category", "All");
-            }
-            else {
-                myReportDocument.SetParameterValue("Category", ProductCat.SelectedItem.Text);
-                
+                WebMessageBoxUtil.Show("There is no data against these filters");
             }
 
-            if (ProductDept.SelectedIndex == 0)
-            {
-                myReportDocument.SetParameterValue("Department", "All");
-            }
-            else {
-                myReportDocument.SetParameterValue("Department", ProductDept.SelectedItem.Text);
-            }
-
-            myReportDocument.SetParameterValue("DateFrom", From);
-            myReportDocument.SetParameterValue("DateTo", To);
-            myReportDocument.SetParameterValue("Pharmacy", pharmacyList.SelectedItem.Text);
-            myReportDocument.SetParameterValue("Quantity", filterby.SelectedItem.Text);
             
-            
-            
-            
-
-            Session["ReportDocument"] = myReportDocument;
-            Session["ReportPrinting_Redirection"] = "rpt_InventoryAdjustmentReport.aspx";
-
-            Response.Redirect("CrystalReportViewer.aspx");
 
         }
 
@@ -485,7 +497,7 @@ namespace IMS
         {
             int DeptId;
             string SelectedDropDown = this.ProductDept.SelectedValue.ToString();
-            if (ProductDept.SelectedValue.ToString().Equals("Select Department"))
+            if (ProductDept.SelectedValue.ToString().Equals("All Department"))
             {
                 DeptId = 0;
             }
@@ -493,7 +505,14 @@ namespace IMS
                 DeptId = int.Parse(this.ProductDept.SelectedValue.ToString());
             this.ProductCat.DataSource = null;
             LoadCategoryDD(DeptId);
-            
+
+            while (ProductSubCat.Items.Count > 0)
+                ProductSubCat.Items.RemoveAt(0);
+
+
+         //   ProductSubCat.Items.Clear();
+            ProductSubCat.Items.Insert(0, "All Sub Categories");
+            ProductSubCat.SelectedIndex = 0;
         }
 
         private void LoadCategoryDD(int DeptId)
@@ -510,7 +529,7 @@ namespace IMS
                     ProductCat.DataBind();
                     if (ProductCat != null)
                     {
-                        ProductCat.Items.Insert(0, "All Category");
+                        ProductCat.Items.Insert(0, "All Categories");
                         ProductCat.SelectedIndex = 0;
                     }
                 }
@@ -522,7 +541,7 @@ namespace IMS
                     ProductCat.DataBind();
                     if (ProductCat != null)
                     {
-                        ProductCat.Items.Insert(0, "All Category");
+                        ProductCat.Items.Insert(0, "All Categories");
                         ProductCat.SelectedIndex = 0;
                     }
                 }
@@ -541,7 +560,7 @@ namespace IMS
             {
                 int CatID;
                 string SelectedDropDown = this.ProductCat.SelectedValue.ToString();
-                if(ProductCat.SelectedValue.ToString().Equals("All Category"))
+                if (ProductCat.SelectedValue.ToString().Equals("All Categories"))
                 {
                     CatID = 0;
                 }
@@ -568,7 +587,7 @@ namespace IMS
                 ProductSubCat.DataBind();
                 if (ProductSubCat != null)
                 {
-                    ProductSubCat.Items.Insert(0, "All Sub Category");
+                    ProductSubCat.Items.Insert(0, "All Sub Categories");
                     ProductSubCat.SelectedIndex = 0;
                 }
             }
@@ -582,7 +601,7 @@ namespace IMS
 
                 if (ProductSubCat != null)
                 {
-                    ProductSubCat.Items.Insert(0, "All Sub Category");
+                    ProductSubCat.Items.Insert(0, "All Sub Categories");
                     ProductSubCat.SelectedIndex = 0;
                 }
             }

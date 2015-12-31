@@ -188,24 +188,30 @@ namespace IMS
 
             DataSet ds = reportbll.rpt_InventoryReportByVendor(Vendor);
 
-           
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                myReportDocument.Load(Server.MapPath("~/InventoryReportByVendor.rpt"));
+                App_Code.Barcode dsReport = new App_Code.Barcode();
+                dsReport.Tables[0].Merge((DataTable)ds.Tables[0]);
+                myReportDocument.SetDataSource(dsReport.Tables[0]);
 
-            myReportDocument.Load(Server.MapPath("~/InventoryReportByVendor.rpt"));
-            App_Code.Barcode dsReport = new App_Code.Barcode();
-            dsReport.Tables[0].Merge((DataTable)ds.Tables[0]);
-            myReportDocument.SetDataSource(dsReport.Tables[0]);
+                myReportDocument.SetParameterValue("VendorName", VendorID.SelectedItem.Text);
 
-            myReportDocument.SetParameterValue("VendorName", VendorID.SelectedItem.Text);
-            
-            
-            
-            
-            
 
-            Session["ReportDocument"] = myReportDocument;
-            Session["ReportPrinting_Redirection"] = "rpt_InventoryReportByVendor.aspx";
 
-            Response.Redirect("CrystalReportViewer.aspx");
+
+
+
+                Session["ReportDocument"] = myReportDocument;
+                Session["ReportPrinting_Redirection"] = "rpt_InventoryReportByVendor.aspx";
+
+                Response.Redirect("CrystalReportViewer.aspx");
+            }
+            else {
+                WebMessageBoxUtil.Show("There is no data against this vendor");
+            }
+
+            
 
         }
 

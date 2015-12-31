@@ -49,5 +49,41 @@ namespace IMSBusinessLogic
             return dsResults;
         }
 
+
+
+        public void SetSeenIndirectPO(int OrderID)
+        {
+
+            notificationdal.SetSeenIndirectPO(OrderID);
+        }
+
+        public DataSet sp_GetAllPendingIndirectPO(int StoreID)
+        {
+            DataSet dsResults = new DataSet();
+            try
+            {
+                dsResults = notificationdal.GetAllPendingIndirectPO(StoreID);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return dsResults;
+        }
+
+        public DataSet GetNewNotificationIndirectPO()
+        {
+            DataSet dsResults = new DataSet();
+            try
+            {
+                dsResults = notificationdal.GetNewNotificationIndirectPO();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return dsResults;
+        }
+
     }
 }
