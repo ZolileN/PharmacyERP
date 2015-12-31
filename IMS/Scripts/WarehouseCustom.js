@@ -3,7 +3,7 @@
 $(document).ready(function () {
     var i = 0;
     $.ajax({
-        url: "Notification.aspx?Method=AllPendingTR", type: 'GET', success: function (result) {
+        url: "Notification_IndirectPO.aspx?Method=AllPendingPO", type: 'GET', success: function (result) {
 
 
 
@@ -11,19 +11,28 @@ $(document).ready(function () {
 
             $($(result).find(".Transfers").find(".TransferCount")).each(function () {
 
-                if (i == 0) {
-                    //$("#trYours").text($(this).text());
-                }
-                else 
-                if (i == 1) {
 
-                    // $("#trOthers").text($(this).text());
-                    count += parseInt($(this).text());
+                if ($(this).next().text() == 'PORequest') {
+                    $("#PORequests").text($(this).text());
                 }
+                else
+                    if ($(this).next().text() == 'TransferRequest') {
+                        $("#TransferRequests").text($(this).text());
+
+
+                    }
+
+                count += parseInt($(this).text());
                 i++;
 
                
             });
+
+
+
+            
+
+
             $(".notification-number").text(count);
             if (count > 0) {
                 $(".notification").show();
@@ -50,7 +59,7 @@ $(document).ready(function () {
                         if ($(this).find("#method").text() == 'InitiatedToMe') {
 
                             $(this).find("#InitiatedToMe").css("display", "block");
-                            $("#trOthers").text(parseInt($("#trOthers").text()) + 1);
+                            $("#TransferRequests").text(parseInt($("#TransferRequests").text()) + 1);
                         }
                         //else {
                         //    $(this).find("#AcceptedOfMe").css("display", "block");
@@ -83,6 +92,63 @@ $(document).ready(function () {
                     });
 
                  
+
+
+                    console.log($(result).find(".notifications").html());
+
+
+                }
+            });
+
+
+        }, 25000
+        );
+
+
+
+
+
+
+    setInterval(
+        function () {
+
+            $.ajax({
+                url: "Notification_IndirectPo.aspx?Method=NewNotificationPO", type: 'GET', success: function (result) {
+
+
+                    $($(result).find(".notifications").find(".notify")).each(function () {
+
+                       
+
+                        
+                        $("#PORequest").text(parseInt($("#PORequest").text()) + 1);
+                       
+
+                        $(".NotificationsHolder").append($(this));
+
+                        var totalCount = 0;
+                        totalCount = parseInt($(".notification-number").text());
+                        totalCount += 1;
+                        $(".notification-number").text(totalCount);
+                        var OrderID = parseInt($(this).find("#OrderID").text());
+
+                        console.log(OrderID);
+
+                        setTimeout(function () {
+                            $.ajax({
+                                url: "Notification_IndirectPO.aspx?Method=SetSeenPO&OrderID=" + OrderID, type: 'GET', success: function (result) {
+
+                                }
+                            });
+                            $(this).remove();
+                        }, 14000);
+
+
+
+
+                    });
+
+
 
 
                     console.log($(result).find(".notifications").html());

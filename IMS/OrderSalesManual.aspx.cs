@@ -1200,6 +1200,7 @@ namespace IMS
                         0 && QuantitySet.Tables[0].Rows[0][0].ToString().Trim().Length > 0)
                         RemainingStock = Convert.ToInt32(QuantitySet.Tables[0].Rows[0][0].ToString());
 
+                    if (btnAccept.Text.Equals("RE-GENERATE ORDER")) { RemainingStock = RemainingStock + quan + bonus; }
 
                     if ((quan + bonus) <= RemainingStock)
                     {
@@ -1498,8 +1499,11 @@ namespace IMS
 
                             List<int> UserOrdDetID = (List<int>)Session["UserChangedOrdDetID"];
 
-                            if (UserOrdDetID.Contains(orderDetID)) { UserOrdDetID.Remove(orderDetID); }
-                            Session["UserChangedOrdDetID"] = UserOrdDetID;
+                            if (UserOrdDetID != null && UserOrdDetID.Count > 0)
+                            {
+                                if (UserOrdDetID.Contains(orderDetID)) { UserOrdDetID.Remove(orderDetID); }
+                                Session["UserChangedOrdDetID"] = UserOrdDetID;
+                            }
                             
                           //  Session["UserChangedOrdDetID"] = OrdDetID;
                         }
@@ -1511,8 +1515,8 @@ namespace IMS
 
                     if (quan + bonus > 0)
                     {
-                        if (TotalQuantity <= (availablestock + Convert.ToInt32(Session["PreviousValueMain"].ToString())))
-                        {
+                        //if (TotalQuantity <= (availablestock + Convert.ToInt32(Session["PreviousValueMain"].ToString())))
+                       // {
                           
                             UpdateStockPlus(orderDetID, Convert.ToInt32(Session["PreviousValueMain"].ToString()));
                             if (connection.State == ConnectionState.Closed)
@@ -1553,11 +1557,11 @@ namespace IMS
                             #endregion
 
                             #endregion
-                        }
-                        else
-                        {
-                            WebMessageBoxUtil.Show("Entered Amount Exceed Available Stock [ " + availablestock.ToString() + " ]");
-                        }
+                      //  }
+                     //   else
+                      //  {
+                          //  WebMessageBoxUtil.Show("Entered Amount Exceed Available Stock [ " + availablestock.ToString() + " ]");
+                     //   }
                     }
                     else
                     {

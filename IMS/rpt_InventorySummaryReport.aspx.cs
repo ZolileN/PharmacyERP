@@ -151,31 +151,40 @@ namespace IMS
 
             DataSet ds = reportbll.rpt_InventorySummaryReport(DepartmentID);
 
-           
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                myReportDocument.Load(Server.MapPath("~/InventorySummaryReport.rpt"));
+                App_Code.Barcode dsReport = new App_Code.Barcode();
+                try { dsReport.Tables["sp_rptInventoySummaryReport"].Merge(ds.Tables[0]); }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(ex.ToString());
+                }
 
-            myReportDocument.Load(Server.MapPath("~/InventorySummaryReport.rpt"));
-            App_Code.Barcode dsReport = new App_Code.Barcode();
-            try { dsReport.Tables["sp_rptInventoySummaryReport"].Merge(ds.Tables[0]); }
-            catch (Exception ex) {
-                System.Diagnostics.Debug.WriteLine(ex.ToString());
+                myReportDocument.SetDataSource(dsReport.Tables[0]);
+
+
+
+                myReportDocument.SetParameterValue("Department", ProductDept.SelectedItem.Text);
+
+
+
+
+
+
+
+                Session["ReportDocument"] = myReportDocument;
+                Session["ReportPrinting_Redirection"] = "rpt_InventorySummaryReport.aspx";
+
+                Response.Redirect("CrystalReportViewer.aspx");
             }
-            
-            myReportDocument.SetDataSource(dsReport.Tables[0]);
+            else {
+                WebMessageBoxUtil.Show("There is no data against these filters");
+            }
 
-
-
-            myReportDocument.SetParameterValue("Department", ProductDept.SelectedItem.Text);
-           
-            
-            
-            
-            
             
 
-            Session["ReportDocument"] = myReportDocument;
-            Session["ReportPrinting_Redirection"] = "rpt_InventorySummaryReport.aspx";
-
-            Response.Redirect("CrystalReportViewer.aspx");
+            
 
         }
 

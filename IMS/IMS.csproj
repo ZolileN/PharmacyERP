@@ -298,6 +298,9 @@
     <Content Include="AcceptOrder.aspx" />
     <Content Include="AcceptPurchaseOrder.aspx" />
     <Content Include="Images\logoutIcon.png" />
+
+    <Content Include="Notification_IndirectPO.aspx" />
+
     <Content Include="Notification.aspx" />
     <Content Include="ReceivedTransferOrders.aspx" />
     <Content Include="rpt_InventorySummaryReport.aspx" />
@@ -1440,6 +1443,13 @@
     </Compile>
     <Compile Include="inDirectManualPurchase.aspx.designer.cs">
       <DependentUpon>inDirectManualPurchase.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Notification_IndirectPO.aspx.cs">
+      <DependentUpon>Notification_IndirectPO.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Notification_IndirectPO.aspx.designer.cs">
+      <DependentUpon>Notification_IndirectPO.aspx</DependentUpon>
     </Compile>
     <Compile Include="Notification.aspx.cs">
       <DependentUpon>Notification.aspx</DependentUpon>

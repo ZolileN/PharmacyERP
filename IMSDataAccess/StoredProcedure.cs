@@ -87,8 +87,12 @@ namespace IMSDataAccess
             SP_GetCategory_NearestExpiry,
             SP_GetSubCategory_NearestExpiry,
             sp_rptInventoryAdjustmentReport,
+
             sp_rptInventoryReportByVendorID,
-            SP_RptGetNearestExpiryItems
+            SP_RptGetNearestExpiryItems,
+
+            sp_rptInventoryReportByVendorID
+
             
 
 
