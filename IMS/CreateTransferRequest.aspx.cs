@@ -486,7 +486,12 @@ namespace IMS.StoreManagement.StoreRequests
             DataTable distinctStores = dtStatic.DefaultView.ToTable(true, "SystemID");
             foreach (DataRow dr in distinctStores.Rows)
             {
-                DataRow[] drTransferDetails = dtStatic.Select("SystemID =" + dr["SystemID"].ToString());
+                DataView dv = dtStatic.DefaultView;
+                dv.RowFilter = "SystemID = " + dr["SystemID"];
+                DataTable dt2 = dv.ToTable();
+                DataRow[] drTransferDetails = dt2.Select();
+                
+                //DataRow[] drTransferDetails = dtStatic.Select("SystemID =" + dr["SystemID"].ToString());
 
                 foreach (var drDetails in drTransferDetails)
                 {

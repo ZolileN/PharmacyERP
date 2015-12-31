@@ -1,6 +1,7 @@
 ﻿using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
 using IMSBusinessLogic;
+using IMSCommon.Util;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -126,21 +127,21 @@ namespace IMS
                 else
                     SubCategory = Int32.Parse(DrpSubCat.SelectedValue);
                 DataSet ds = reportbll.rpt_HaadNonHaadMedicinesList(4029, CatID, SubCategory);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    ReportDocument myReportDocument = new ReportDocument();
+                    myReportDocument.Load(Server.MapPath("~/HaadMedicinesList.rpt"));
+                    myReportDocument.SetDataSource(ds.Tables[0]);
+                    myReportDocument.SetParameterValue("rptName", "NON HAAD LIST REPORT");
+
+                    Session["ReportDocument"] = myReportDocument;
+                    Session["ReportPrinting_Redirection"] = "rpt_NonHaadMedicinesList.aspx";
+
+                    Response.Redirect("CrystalReportViewer.aspx");
+                }
+                else
+                    WebMessageBoxUtil.Show("No data found against this Filter");
                
-                ReportDocument myReportDocument = new ReportDocument();
-
-                myReportDocument.Load(Server.MapPath("~/HaadMedicinesList.rpt"));
-
-                myReportDocument.SetDataSource(ds.Tables[0]);
-
-                myReportDocument.SetParameterValue("rptName", "NON HAAD LIST REPORT");
-
-              
-             
-                Session["ReportDocument"] = myReportDocument;
-                Session["ReportPrinting_Redirection"] = "rpt_NonHaadMedicinesList.aspx";
-
-                Response.Redirect("CrystalReportViewer.aspx");
             }
             catch (Exception ex)
             {

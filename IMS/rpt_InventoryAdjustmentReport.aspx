@@ -87,9 +87,10 @@
                 <asp:DropDownList runat="server" ID="ProductSubCat" CssClass="form-control" Width="29%" Visible="true" /></td>
             
             <td>
-                <asp:Label runat="server" ID="lblProd" AssociatedControlID="txtSearch" CssClass="control-label">Select Product</asp:Label></td>
+                <asp:Label runat="server" ID="lblProd" AssociatedControlID="txtSearch" CssClass="control-label">Product Criteria</asp:Label></td>
            <td>
-                <input type="text" id="txtSearch" runat="server" name="txtSearch"  />
+                <input type="text" id="txtSearch" runat="server" name="txtSearch"  /><br />
+               <sub>e.g Panadol</sub>
                 
             </td>
         </tr>
@@ -133,6 +134,16 @@
         function VerifyCredentials() {
            // alert($("#<%= DateTextBoxFrom.ClientID %>").val() + " " + $("#<%= DateTextBoxTo.ClientID %>").val());
             if (isDate($("#<%= DateTextBoxFrom.ClientID %>").val()) && isDate($("#<%= DateTextBoxTo.ClientID %>").val())) {
+
+                var fromDate = new Date($("#<%= DateTextBoxFrom.ClientID %>").val());
+                
+                var toDate = new Date($("#<%= DateTextBoxTo.ClientID %>").val());
+
+                if (fromDate > toDate) {
+                    alert("From Date cannot be greater than To Date");
+                    return false;
+                }
+
                 return true;
             }
             else {
