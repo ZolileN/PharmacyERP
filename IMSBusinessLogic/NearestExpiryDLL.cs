@@ -31,7 +31,27 @@ namespace IMSBusinessLogic
             return dbHelper.Run(base.ConnectionString, parameters);
         }
 
-        public DataSet LoadSubCategory(Int32 CatgID)
+        public DataSet RptGetNearestExpiryItems(string From, string To, Int32 StoredAt, Nullable<long> ProductID, Nullable<long> DepartmentID, Nullable<long> CategoryID, Nullable<long> Sub_CatID)
+        {
+            StoredProcedureName = StoredProcedure.Select.SP_RptGetNearestExpiryItems.ToString();
+
+            SqlParameter[] parameters = {   
+                                            new SqlParameter("@FromDate", From),
+                                            new SqlParameter("@ToDate", To),
+                                            new SqlParameter("@StoredAt", StoredAt),
+                                            new SqlParameter("@ProductID", ProductID),
+                                            new SqlParameter("@DepartmentID", DepartmentID),
+                                            new SqlParameter("@CategoryID", CategoryID),
+                                            new SqlParameter("@Sub_CatID", Sub_CatID)
+                                                   
+                                         
+                                        };
+
+            DataBaseHelper dbHelper = new DataBaseHelper(StoredProcedureName);
+            return dbHelper.Run(base.ConnectionString, parameters);
+        }
+
+          public DataSet LoadSubCategory(Int32 CatgID)
         {
             StoredProcedureName = StoredProcedure.Select.SP_GetSubCategory_NearestExpiry.ToString();
 

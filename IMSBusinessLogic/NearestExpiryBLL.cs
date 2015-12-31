@@ -72,5 +72,26 @@ namespace IMSBusinessLogic
             }
             return resultSet;
         }
+
+        public static DataSet RptGetNearestExpiryItems(string From, string To, Int32 StoredAt, Nullable<long> ProductID, Nullable<long> DepartmentID, Nullable<long> CategoryID, Nullable<long> Sub_CatID)
+        {
+            DataSet resultSet = new DataSet();
+            try
+            {
+                NearestExpiryDLL objProductDAL = new NearestExpiryDLL();
+
+                resultSet = objProductDAL.RptGetNearestExpiryItems(From,To,StoredAt,ProductID,DepartmentID,CategoryID,Sub_CatID);
+
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
+            finally
+            {
+
+            }
+            return resultSet;
+        }
     }
 }

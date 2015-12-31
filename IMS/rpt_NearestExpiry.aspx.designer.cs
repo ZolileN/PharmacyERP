@@ -67,15 +67,6 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.Label lblDepartment;
         
         /// <summary>
-        /// txtDepartment control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDepartment;
-        
-        /// <summary>
         /// drpDepartments control.
         /// </summary>
         /// <remarks>
@@ -94,15 +85,6 @@ namespace IMS {
         protected global::System.Web.UI.WebControls.Label lblCategory;
         
         /// <summary>
-        /// txtCategory control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCategory;
-        
-        /// <summary>
         /// drpCatg control.
         /// </summary>
         /// <remarks>
@@ -119,15 +101,6 @@ namespace IMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSubCategory;
-        
-        /// <summary>
-        /// txtSubcategory control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSubcategory;
         
         /// <summary>
         /// drpSubCatg control.
@@ -173,33 +146,6 @@ namespace IMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::AjaxControlToolkit.ModalPopupExtender mpeProductDiv;
-        
-        /// <summary>
-        /// DepartmentPopupGrid control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::IMS.rpt_ucDepartment DepartmentPopupGrid;
-        
-        /// <summary>
-        /// CategoryPopupGrid control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::IMS.UserControl.rpt_ucCategory CategoryPopupGrid;
-        
-        /// <summary>
-        /// SubCategoryPopupGrid control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::IMS.UserControl.rpt_ucSubCategory SubCategoryPopupGrid;
         
         /// <summary>
         /// ProductPopupGrid control.
