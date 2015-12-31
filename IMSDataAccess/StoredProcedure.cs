@@ -88,9 +88,11 @@ namespace IMSDataAccess
             SP_GetSubCategory_NearestExpiry,
             sp_rptInventoryAdjustmentReport,
             sp_rptInventoryReportByVendorID,
+
             sp_GetNewNotificationIndirectPO,
             sp_GetAllPendingIndirectPO,
             
+
             //SP_Get_HAAD_Medicine_By_Sub_Category
             
 
