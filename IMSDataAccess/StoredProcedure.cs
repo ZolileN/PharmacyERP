@@ -90,8 +90,8 @@ namespace IMSDataAccess
 
             sp_rptInventoryReportByVendorID,
             SP_RptGetNearestExpiryItems,
-
-            sp_rptInventoryReportByVendorID
+            sp_GetAllPendingIndirectPO, 
+            sp_GetNewNotificationIndirectPO
 
             
 
@@ -126,7 +126,8 @@ namespace IMSDataAccess
             Sp_UpdateSystems,
             Sp_UpdateNewUser,
             Sp_UpdateSubCategory,
-            sp_SetSeen
+            sp_SetSeen,
+            sp_SetSeenIndirectPO
 
         }
     }
