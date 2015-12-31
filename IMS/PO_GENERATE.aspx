@@ -5,10 +5,12 @@
 		.main{
 			font-family:"Calibri", Arial, Helvetica, sans-serif;
 			font-size:16px;
-			margin:0px auto;
 			width:747px;
 			position:relative;
-			}
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 0px;
+        }
 			
 		.invo-tbl{
 			margin-bottom:5px;
