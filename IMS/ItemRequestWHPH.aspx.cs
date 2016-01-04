@@ -28,9 +28,10 @@ namespace IMS
             {
                 Session.Remove("dsProdcts");
                 Session.Remove("dsProducts_MP");
-                if (Session["WH_Name"] != null)
+                if (Session["WH_Name"] != null && Session["PH_ID"]!=null)
                 {
                     lblWH.Text = Session["WH_Name"].ToString();
+                    lblPH.Text = Session["PH_Name"].ToString();
                     Session["WH_FirstTransfer"] = false;
                     Session["WH_TransferRequestGrid"] = null;
                    // Vendorname = Session["Vendorname"].ToString();

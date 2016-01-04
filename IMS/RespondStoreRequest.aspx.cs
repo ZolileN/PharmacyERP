@@ -1094,6 +1094,32 @@ namespace IMS
 
                 //throw;
             }
+
+
+            
+
+          
+            
+
+            if (e.Row.RowType == DataControlRowType.DataRow){
+
+                //Label BonusQty = (Label)e.Row.FindControl("lblReqBonQty");
+                //int ReqBonusQty = 0;
+                //int.TryParse(BonusQty.Text, out ReqBonusQty);
+
+
+                //e.Row.Cells[7].Visible = false;
+                
+
+                //if (ReqBonusQty > 0)
+                //{
+
+                //    e.Row.Cells[7].Visible =  true;
+
+                //}
+
+            }
+            
             
 
             //if (e.Row.RowType == DataControlRowType.DataRow)

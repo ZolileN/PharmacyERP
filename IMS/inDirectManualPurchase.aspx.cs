@@ -57,6 +57,53 @@ namespace IMS
                     if (Session["Vendorname"] != null)
                     {
                         lblVendor.Text = Session["Vendorname"].ToString();
+
+                        
+
+                        try
+                        {
+                            int id;
+                            int.TryParse(Session["UserSys"].ToString(), out id);
+                            DataSet ds = new DataSet();
+                            if (connection.State == ConnectionState.Closed)
+                            {
+                                connection.Open();
+                            }
+                            SqlCommand command = new SqlCommand("dbo.Sp_GetVendorByName", connection);
+                            command.CommandType = CommandType.StoredProcedure;
+
+                            command.Parameters.AddWithValue("@p_Supp_Name", DBNull.Value);
+
+                            command.Parameters.AddWithValue("@p_SysID", id);
+
+                            command.Parameters.AddWithValue("@p_isStore", true);
+
+                            SqlDataAdapter SA = new SqlDataAdapter(command);
+
+                            ProductSet = null;
+                            SA.Fill(ds);
+
+                            
+
+                        }
+                        catch (Exception ex)
+                        {
+                            if (connection.State == ConnectionState.Open)
+                                connection.Close();
+                            throw ex;
+                        }
+                        finally
+                        {
+                            if (connection.State == ConnectionState.Open)
+                                connection.Close();
+
+                        }
+                        
+
+                       
+
+                        
+
                         Vendorname = Session["Vendorname"].ToString();
                     }
 
@@ -848,6 +895,7 @@ namespace IMS
             mpeCongratsMessageDiv.Show();
             
         }
+
 
     }
 }

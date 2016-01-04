@@ -60,7 +60,7 @@
                                         <asp:Label ID="lblDescription" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("ProductDescription") %>' Width="300px"></asp:Label>
                                     </ItemTemplate>
 
-                                    <ItemStyle Width="150px" HorizontalAlign="Left" />
+                                    <ItemStyle Width="125px" HorizontalAlign="Left" />
                                 </asp:TemplateField>
 
                                 <asp:TemplateField Visible="false" >
@@ -104,7 +104,7 @@
 
                                     <ItemStyle Width="60px" HorizontalAlign="Left" />
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Request Bonus Qty" HeaderStyle-Width="50px" Visible="false">
+                                <asp:TemplateField HeaderText="Request<br>Bonus Qty" HeaderStyle-Width="50px">
                                     <ItemTemplate>
                                         <asp:Label ID="lblReqBonQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("RequestedBonusQty") %>' Width="60px"></asp:Label>
                                     </ItemTemplate>
@@ -112,7 +112,7 @@
                                     <ItemStyle Width="60px" HorizontalAlign="Left" />
                                 </asp:TemplateField>
 
-                                <asp:TemplateField HeaderText="Available Stock" HeaderStyle-Width="50px">
+                                <asp:TemplateField HeaderText="Available<br>Stock" HeaderStyle-Width="50px">
                                     <ItemTemplate>
                                         <asp:Label ID="lblAvailableQty" CssClass="col-md-2 control-label" runat="server" Text='<%# Eval("AvailableQty") %>' Width="60px"></asp:Label>
                                     </ItemTemplate>

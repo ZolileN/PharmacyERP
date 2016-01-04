@@ -51,7 +51,7 @@
             <cc1:ModalPopupExtender ID="mpeCongratsMessageDiv" runat="server" BackgroundCssClass="overLaypop"
                        RepositionMode="RepositionOnWindowResizeAndScroll" TargetControlID="lblSelectVendor" ClientIDMode="AutoID"
                        PopupControlID="_CongratsMessageDiv" BehaviorID="EditModalPopupMessage" >
-                    </cc1:ModalPopupExtender>
+            </cc1:ModalPopupExtender>
                     
                        
            </tr>

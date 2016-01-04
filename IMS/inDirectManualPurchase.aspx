@@ -1,19 +1,38 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="inDirectManualPurchase.aspx.cs" Inherits="IMS.inDirectManualPurchase" %>
 
 <%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="cc1" %>
- 
+
 <%@ Register TagName="ProductsPopup"  TagPrefix="UCProductsPopup" Src="~/UserControl/ProductsPopupGrid.ascx" %>
  
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+    <script src="Scripts/modernizr-2.6.2.js"></script>
+        <link href="Content/bootstrap.css" rel="stylesheet"/>
+        <link href="Content/Site.css" rel="stylesheet"/>
+
+        <script type="text/javascript" src="Scripts/jquery.min.js"></script>
+        <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <link href="Style/theme.css" rel="stylesheet" type="text/css" />
+        <link href="Style/fonts.css" rel="stylesheet" type="text/css" />
+        <script src="Scripts/jquery-ui.js"></script>
+        <script src="Scripts/general.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <style>
+        #Vendor {
+       /* display:none;*/
+
+        }
+    </style>
+       
+
     
-                        
+
     <table width="100%">
 
         <tbody><tr>
         	<td> <h4 id="topHead">Indirect Manual PO(s)</h4>
                 <asp:Label ID="lblVendor" runat="server" style="color:#2c81da"></asp:Label>
+                <asp:DropDownList runat="server" ID="vendorList"></asp:DropDownList>
         	</td>
             <td align="right">
                 <asp:Button ID="btnAccept" runat="server" OnClick="btnAccept_Click" Text="Generate Request" CssClass="btn btn-success"  />
@@ -251,5 +270,6 @@
             </tr>
          </table>
         <br />
-   
+    
+
 </asp:Content>

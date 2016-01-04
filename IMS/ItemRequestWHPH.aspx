@@ -8,7 +8,9 @@
 
         <tbody><tr>
         	<td> <h4 id="topHead">Item Request to Store</h4>
-                <asp:Label ID="lblWH" runat="server" style="color:#2c81da"></asp:Label>
+                To: <asp:Label ID="lblWH" runat="server" style="color:#2c81da"></asp:Label>
+                From: <asp:Label ID="lblPH" runat="server" style="color:#2c81da"></asp:Label>
+                
         	</td>
             <td align="right">
                 <asp:Button ID="btnAccept" runat="server" OnClick="btnAccept_Click" Text="Save & Send to Warehouse" CssClass="btn btn-success"  />
@@ -59,10 +61,10 @@
                <asp:TextBox runat="server" ID="SelectQuantity"  autocomplete="off" style="width:60px"  />
            </td>
            <td>
-               <asp:Label runat="server" AssociatedControlID="SelectPrice" Visible="false" CssClass="control-label">Bonus Quantity</asp:Label>
+               <asp:Label runat="server" AssociatedControlID="SelectPrice" Visible="true" CssClass="control-label">Bonus Quantity</asp:Label>
            </td>
            <td>
-               <asp:TextBox runat="server" ID="SelectPrice" autocomplete="off" Visible="false"  style="width:60px"/>
+               <asp:TextBox runat="server" ID="SelectPrice" autocomplete="off" Visible="true"  style="width:60px"/>
            </td>
            <td>
                <asp:Label runat="server" AssociatedControlID="txtDiscount" CssClass="control-label">Discount %</asp:Label>
